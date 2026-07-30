@@ -142,9 +142,19 @@ assert(
   'Why hero spacing must follow the why-emqx Tailwind section rhythm.',
 )
 assert(whyHero.includes('robot.webm?url') && whyHero.includes('<video') && !whyHero.includes('Agentic solution V1.gif') && !whyHero.includes('new URL('), 'Why hero must import the required robot WebM via ?url to avoid SSR hydration mismatch.')
-assert(whyHero.includes('mix-blend-mode: screen') && whyHero.includes('mask-image: radial-gradient(76% 72% at 50% 48%'), 'Why hero video must blend into the banner background.')
+assert(whyHero.includes('mix-blend-screen') && whyHero.includes('[mask-image:radial-gradient(76%_72%_at_50%_48%'), 'Why hero video must blend into the banner background with Tailwind v4 utilities.')
 assert(!whyHero.includes('&::after') && !whyHero.includes('linear-gradient(180deg, var(--dt-color-bg) 0%') && !whyHero.includes('linear-gradient(90deg, var(--dt-color-bg) 0%'), 'Why hero figure must not keep the old four-edge gradient overlay.')
-assert(whyHero.includes('max-w-[820px]') && whyHero.includes('align-self: stretch') && whyHero.includes('height: 100%') && whyHero.includes('transform: scale(1.16)'), 'Why hero video must be enlarged and stretch to match the content height.')
+assert(
+  whyHero.includes('max-w-[820px]') &&
+    whyHero.includes('self-stretch') &&
+    whyHero.includes('lg:h-full') &&
+    whyHero.includes('h-[122%]') &&
+    whyHero.includes('w-[122%]') &&
+    whyHero.includes('!max-w-none') &&
+    whyHero.includes('lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]') &&
+    !whyHero.includes('video {'),
+  'Why hero video must be enlarged with Tailwind v4 utilities without adding extra video CSS.',
+)
 assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero video must not use an outer framed card shadow.')
 assert(whyTrustTabs.includes('SectionHeading'), 'Why trust tabs must reuse SectionHeading.')
 assert(whyTrustTabs.includes('dt-segmented-tabs') && whyTrustTabs.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')

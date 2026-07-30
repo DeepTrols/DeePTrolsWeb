@@ -14,7 +14,9 @@ import robotVisualSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/img
     </div>
 
     <div class="container why-hero__body relative pt-24 pb-24 lg:pt-32 lg:pb-32">
-      <div class="why-hero__inner flex flex-col items-center gap-12 lg:flex-row lg:justify-center lg:gap-16">
+      <div
+        class="why-hero__inner flex flex-col items-center gap-12 lg:grid lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)] lg:items-stretch lg:justify-center lg:gap-16"
+      >
         <div class="why-hero__content w-full max-w-2xl text-center lg:text-left">
           <div class="why-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2">
             <Sparkles class="why-hero__badge-icon" :size="16" aria-hidden="true" />
@@ -40,11 +42,12 @@ import robotVisualSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/img
           </div>
         </div>
 
-        <div class="why-hero__visual relative w-full max-w-[820px]">
+        <div class="why-hero__visual relative isolate flex w-full max-w-[820px] self-stretch justify-self-center overflow-visible">
           <div class="why-hero__visual-glow" aria-hidden="true"></div>
-          <figure>
+          <figure class="relative m-0 h-[360px] w-full overflow-hidden lg:h-full">
             <video
               :src="robotVisualSrc"
+              class="absolute left-1/2 top-1/2 h-[122%] w-[122%] !max-w-none -translate-x-1/2 -translate-y-1/2 object-cover object-center opacity-[0.94] mix-blend-screen [filter:saturate(1.08)_contrast(1.04)] [mask-image:radial-gradient(76%_72%_at_50%_48%,#000_58%,rgba(0,0,0,0.72)_74%,transparent_100%)]"
               aria-label="DeepTrols Agentic solution 工作流示意"
               autoplay
               loop
@@ -166,15 +169,6 @@ h1 {
   line-height: 1.625;
 }
 
-.why-hero__visual {
-  justify-self: center;
-  isolation: isolate;
-  display: flex;
-  align-self: stretch;
-  align-items: stretch;
-  min-height: 360px;
-}
-
 .why-hero__visual-glow {
   position: absolute;
   inset: -12%;
@@ -185,29 +179,6 @@ h1 {
     radial-gradient(closest-side at 70% 36%, rgba(86, 154, 255, 0.14), transparent 76%);
   filter: blur(34px);
   opacity: 0.86;
-}
-
-figure {
-  position: relative;
-  display: flex;
-  width: 100%;
-  min-height: 360px;
-  margin: 0;
-  overflow: hidden;
-}
-
-video {
-  width: 100%;
-  height: 100%;
-  min-height: 360px;
-  object-fit: cover;
-  object-position: center;
-  filter: saturate(1.08) contrast(1.04);
-  mask-image: radial-gradient(76% 72% at 50% 48%, #000 58%, rgba(0, 0, 0, 0.72) 74%, transparent 100%);
-  mix-blend-mode: screen;
-  opacity: 0.94;
-  transform: scale(1.16);
-  transform-origin: center;
 }
 
 .why-hero__logos :deep(.customer-logos) {
@@ -225,19 +196,6 @@ video {
 }
 
 @media (min-width: 1024px) {
-  .why-hero__inner {
-    display: grid;
-    align-items: stretch;
-    grid-template-columns: minmax(0, 0.88fr) minmax(520px, 1fr);
-  }
-
-  .why-hero__visual,
-  figure,
-  video {
-    height: 100%;
-    min-height: 0;
-  }
-
   h1 {
     font-size: 60px;
   }
