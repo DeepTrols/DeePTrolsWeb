@@ -148,8 +148,8 @@ assert(
   whyHero.includes('max-w-[820px]') &&
     whyHero.includes('self-stretch') &&
     whyHero.includes('lg:h-full') &&
-    whyHero.includes('h-[122%]') &&
-    whyHero.includes('w-[122%]') &&
+    whyHero.includes('h-[132%]') &&
+    whyHero.includes('w-[132%]') &&
     whyHero.includes('!max-w-none') &&
     whyHero.includes('lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]') &&
     !whyHero.includes('video {'),

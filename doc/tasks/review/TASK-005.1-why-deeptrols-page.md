@@ -54,7 +54,7 @@
 14. 根据 Review 反馈重新梳理 Why 页面全局节奏：Hero 改为 EMQX why 页面 `container pt-24 pb-24 lg:pt-32 lg:pb-32` 结构，Logo 区回到同一 Hero container 内的 `mt-24 border-t pt-12 lg:mt-28`，Trust/Service/Engine 全部通过 `dt-section relative pb-32 lg:pb-44` 与 Tailwind v4 utility 控制模块间距，并新增全局 `.dt-segmented-tabs` / `.dt-segmented-tab`。
 15. 根据 Review 反馈将 Why Hero 右侧素材从 `Agentic solution V1.gif` 替换为 `robot.webm`，使用 `<video autoplay loop muted playsinline>` 承载并继续通过 `?url` 静态导入，避免 SSR/client 资源路径不一致。
 16. 根据 Review 反馈移除 Why Hero `figure` 旧四向渐变遮罩，将右侧 `robot.webm` 容器拉伸到与 `why-hero__content` 等高，并放大中间动画区域。
-17. 根据 Review 反馈将 Why Hero 视频放大方案收敛为 Tailwind CSS v4 utility：`lg:grid` / `lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]` 控制左右区域，`self-stretch` / `lg:h-full` 让裁切窗口跟随内容高度，`w-[122%]` / `h-[122%]` / `!max-w-none` 放大视频本体且不撑开 `why-hero__inner`。
+17. 根据 Review 反馈将 Why Hero 视频放大方案收敛为 Tailwind CSS v4 utility：`lg:grid` / `lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]` 控制左右区域，`self-stretch` / `lg:h-full` 让裁切窗口跟随内容高度，`w-[132%]` / `h-[132%]` / `!max-w-none` 放大视频本体且不撑开 `why-hero__inner`。
 
 ---
 ## 测试结果
@@ -74,7 +74,8 @@
 | Review fix: Tailwind v4 全局节奏 | 通过，Why Hero、Trust、Service、Engine 已切换为 Tailwind utility + 全局 `dt-*` section/tab/card 入口 |
 | Review fix: Hero WebM 素材替换 | 通过，Hero 已使用 `robot.webm` `<video>`，旧 GIF 已从版本库移除 |
 | Review fix: Hero WebM 等高放大 | 通过，`figure::after` 遮罩已移除，视觉容器与内容区等高，视频中间动画区域已放大 |
-| Review fix: Hero WebM Tailwind 裁切放大 | 通过，视频布局与放大改为 Tailwind CSS v4 utility，未新增局部视频 CSS |
+| Review fix: Hero WebM Tailwind 裁切放大 | 通过，视频布局与放大改为 Tailwind CSS v4 utility，未新增局部视频 CSS，放大比例已提升至 `132%` |
+| Review fix: Hero WebM 继续放大 | 通过，沿用 Tailwind CSS v4 utility，将视频放大比例从 `122%` 提升至 `132%` |
 | Browser verification | 通过，`127.0.0.1:3101/why-deeptrols` 桌面与移动 computed spacing 已复验，warning/error 控制台日志为 0 |
 
 ## SSR 验证
@@ -85,7 +86,7 @@
 - 使用 dev server `127.0.0.1:3101` 复验 Tailwind v4 间距：桌面 Hero body `128px/128px`、Trust `padding-bottom: 176px`、卡片 `32px` padding；移动端 Hero body `96px/96px`、Trust/Service/Engine `padding-bottom: 128px`、卡片 `28px` padding。
 - 已修复 Why 页 GIF/PNG `new URL(...).href` 导致的 SSR/client `src` hydration mismatch，改为 `?url` 静态资源导入，浏览器 warning/error 日志为 0。
 - 使用 dev server `127.0.0.1:3101` 复验 WebM：`.why-hero__visual video` 命中，`autoplay`、`loop`、`muted`、`playsinline` 生效，视频资源路径为 `/_nuxt/doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm`，浏览器 warning/error 日志为 0。
-- 使用 dev server `127.0.0.1:3101` 复验 Hero WebM 等高放大：`why-hero__content` 高度 `437px`，`why-hero__visual` 与 `figure` 高度均为 `437px`，`figure::after` 的 `content/background` 均为 `none`，视频在 `622px × 437px` 裁切窗口内渲染为 `759px × 533px`，`max-width` 为 `none`，浏览器 warning/error 日志为 0。
+- 使用 dev server `127.0.0.1:3101` 复验 Hero WebM 等高放大：`why-hero__content` 高度 `437px`，`why-hero__visual` 与 `figure` 高度均为 `437px`，`figure::after` 的 `content/background` 均为 `none`，视频在 `622px × 437px` 裁切窗口内渲染为 `821px × 577px`，`max-width` 为 `none`，浏览器 warning/error 日志为 0。
 - 生产预览服务已停止。
 
 ## 已知问题
