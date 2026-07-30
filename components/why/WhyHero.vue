@@ -40,7 +40,7 @@ import robotVisualSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/img
           </div>
         </div>
 
-        <div class="why-hero__visual relative w-full max-w-[760px]">
+        <div class="why-hero__visual relative w-full max-w-[820px]">
           <div class="why-hero__visual-glow" aria-hidden="true"></div>
           <figure>
             <video
@@ -169,6 +169,10 @@ h1 {
 .why-hero__visual {
   justify-self: center;
   isolation: isolate;
+  display: flex;
+  align-self: stretch;
+  align-items: stretch;
+  min-height: 360px;
 }
 
 .why-hero__visual-glow {
@@ -185,27 +189,25 @@ h1 {
 
 figure {
   position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 360px;
   margin: 0;
-
-  &::after {
-    position: absolute;
-    inset: -1px;
-    background:
-      linear-gradient(180deg, var(--dt-color-bg) 0%, rgba(21, 21, 21, 0.68) 9%, rgba(21, 21, 21, 0) 24%, rgba(21, 21, 21, 0) 76%, rgba(21, 21, 21, 0.7) 91%, var(--dt-color-bg) 100%),
-      linear-gradient(90deg, var(--dt-color-bg) 0%, rgba(21, 21, 21, 0.66) 8%, rgba(21, 21, 21, 0) 24%, rgba(21, 21, 21, 0) 76%, rgba(21, 21, 21, 0.66) 92%, var(--dt-color-bg) 100%);
-    content: "";
-    pointer-events: none;
-  }
+  overflow: hidden;
 }
 
 video {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
+  min-height: 360px;
   object-fit: cover;
+  object-position: center;
   filter: saturate(1.08) contrast(1.04);
   mask-image: radial-gradient(76% 72% at 50% 48%, #000 58%, rgba(0, 0, 0, 0.72) 74%, transparent 100%);
   mix-blend-mode: screen;
   opacity: 0.94;
+  transform: scale(1.16);
+  transform-origin: center;
 }
 
 .why-hero__logos :deep(.customer-logos) {
@@ -225,7 +227,15 @@ video {
 @media (min-width: 1024px) {
   .why-hero__inner {
     display: grid;
+    align-items: stretch;
     grid-template-columns: minmax(0, 0.88fr) minmax(520px, 1fr);
+  }
+
+  .why-hero__visual,
+  figure,
+  video {
+    height: 100%;
+    min-height: 0;
   }
 
   h1 {
