@@ -32,6 +32,8 @@ const requiredFiles = [
   'doc/tasks/README.md',
   'doc/tasks/TASK_TEMPLATE.md',
   'doc/tasks/in-progress/TASK-002.1-design-system-harness-refactor.md',
+  'doc/tasks/review/TASK-002.2-code-audit-component-refactor.md',
+  'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/HOME_PAGE_BASELINE.md',
   'doc/engineering/HARNESS_ENGINEERING.md',
   'doc/product/BRAND_GUIDE.md',
@@ -47,6 +49,27 @@ const requiredFiles = [
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
   'components/common/SectionHeading.vue',
+  'components/layout/SiteFooter.vue',
+  'components/layout/FooterSubscribe.vue',
+  'components/layout/FooterMain.vue',
+  'components/layout/FooterSocials.vue',
+  'components/layout/FooterBottom.vue',
+  'components/navigation/SiteHeader.vue',
+  'components/navigation/SiteHeaderDesktopNav.vue',
+  'components/navigation/SiteHeaderActions.vue',
+  'components/navigation/SiteHeaderMobileNav.vue',
+  'components/navigation/SiteHeaderMenuButton.vue',
+  'components/navigation/MegaMenuPanel.vue',
+  'components/navigation/MegaPanelServices.vue',
+  'components/home/HomeCaseSlide.vue',
+  'components/home/HomeCasesControls.vue',
+  'components/home/HomeEcosystemVisual.vue',
+  'components/home/ecosystem-visuals/EcosystemTokenVisual.vue',
+  'components/home/ecosystem-visuals/EcosystemAgentVisual.vue',
+  'components/home/ecosystem-visuals/EcosystemInfraVisual.vue',
+  'components/home/ecosystem-visuals/EcosystemReportVisual.vue',
+  'data/footer.ts',
+  'data/ecosystemVisual.ts',
   'data/why.ts',
   'pages/why-deeptrols.vue',
   'components/why/WhyHero.vue',
@@ -64,13 +87,28 @@ const tokens = read('assets/scss/main.scss')
 const packageJson = read('package.json')
 const baseButton = read('components/common/BaseButton.vue')
 const sectionHeading = read('components/common/SectionHeading.vue')
+const header = read('components/navigation/SiteHeader.vue')
+const headerDesktopNav = read('components/navigation/SiteHeaderDesktopNav.vue')
+const headerActions = read('components/navigation/SiteHeaderActions.vue')
+const headerMobileNav = read('components/navigation/SiteHeaderMobileNav.vue')
+const megaMenu = read('components/navigation/MegaMenuPanel.vue')
+const megaPanelServices = read('components/navigation/MegaPanelServices.vue')
 const homeCta = read('components/home/HomeCta.vue')
 const homeCases = read('components/home/HomeCases.vue')
+const homeCaseSlide = read('components/home/HomeCaseSlide.vue')
+const homeCasesControls = read('components/home/HomeCasesControls.vue')
 const homeInsights = read('components/home/HomeInsights.vue')
 const homeSolutions = read('components/home/HomeSolutions.vue')
 const productSystem = read('components/home/HomeProductSystem.vue')
 const ecosystem = read('components/home/HomeEcosystem.vue')
+const ecosystemVisual = read('components/home/HomeEcosystemVisual.vue')
+const ecosystemVisualData = read('data/ecosystemVisual.ts')
 const footer = read('components/layout/SiteFooter.vue')
+const footerSubscribe = read('components/layout/FooterSubscribe.vue')
+const footerMain = read('components/layout/FooterMain.vue')
+const footerSocials = read('components/layout/FooterSocials.vue')
+const footerBottom = read('components/layout/FooterBottom.vue')
+const footerData = read('data/footer.ts')
 const whyData = read('data/why.ts')
 const whyPage = read('pages/why-deeptrols.vue')
 const whyHero = read('components/why/WhyHero.vue')
@@ -116,11 +154,37 @@ for (const [name, source] of [
 }
 
 assert(homeCases.includes('SectionHeading'), 'HomeCases must reuse SectionHeading.')
+assert(homeCases.includes('HomeCaseSlide') && homeCases.includes('HomeCasesControls'), 'HomeCases must compose slide and control subcomponents.')
+assert(homeCaseSlide.includes('BaseButton') && homeCaseSlide.includes('阅读案例'), 'HomeCaseSlide must reuse BaseButton for story CTAs.')
+assert(homeCasesControls.includes('dt-icon-button'), 'HomeCasesControls must reuse shared icon button styling.')
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
 assert(homeSolutions.includes('dt-tab-list') && homeSolutions.includes('dt-tab'), 'HomeSolutions tabs must use shared dt-tab classes.')
 assert(productSystem.includes('dt-product-card') && productSystem.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
-assert(footer.includes('dt-button dt-button--primary dt-button--lg'), 'Footer subscribe button must reuse dt-button classes.')
+assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')
+assert(
+  header.includes('SiteHeaderDesktopNav') &&
+    header.includes('SiteHeaderActions') &&
+    header.includes('SiteHeaderMobileNav') &&
+    header.includes('SiteHeaderMenuButton') &&
+    headerDesktopNav.includes('<div style="position:relative;">') &&
+    headerActions.includes('登录OPS') &&
+    headerMobileNav.includes('mobile-navigation'),
+  'Header must remain split into desktop nav, actions, menu button, and mobile nav subcomponents.',
+)
+assert(megaMenu.includes('MegaPanelServices') && megaPanelServices.includes('mega-panel__service'), 'MegaMenu services layout must stay in a dedicated subcomponent.')
+assert(footerSubscribe.includes('dt-button dt-button--primary dt-button--lg'), 'Footer subscribe button must reuse dt-button classes.')
+assert(
+  footer.includes('FooterSubscribe') &&
+    footer.includes('FooterMain') &&
+    footer.includes('FooterSocials') &&
+    footer.includes('FooterBottom') &&
+    footerMain.includes('footerColumns') &&
+    footerSocials.includes('footerSocials') &&
+    footerBottom.includes('京公网安备100861001010000号') &&
+    footerData.includes('数曜·数据治理平台'),
+  'Footer must stay split into content, socials, bottom legal, and data modules.',
+)
 assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why page must reuse global Header and Footer.')
 assert(whyPage.includes('WhyHero') && whyPage.includes('WhyTrustTabs') && whyPage.includes('WhyServiceReset') && whyPage.includes('WhyEngine'), 'Why page sections are incomplete.')
 assert(whyHero.includes('BaseButton') && whyHero.includes('HomeCustomerLogos'), 'Why hero must reuse BaseButton and HomeCustomerLogos.')
@@ -189,15 +253,21 @@ for (const file of filesToScan) {
     assert(source.includes('lang="scss"'), `${file} must use <style scoped lang="scss">.`)
   }
 
+  if (file.endsWith('.vue')) {
+    const lineCount = source.split(/\r?\n/).length
+    assert(lineCount <= 300, `${file} exceeds the 300-line component limit (${lineCount}).`)
+  }
+
   const sourceWithoutRequiredNavWrapper = source.replace(' style="position:relative;"', '')
   assert(!/\sstyle=/.test(sourceWithoutRequiredNavWrapper), `${file} contains an inline style attribute.`)
 }
 
-assert(!footer.includes('class="site-footer__locale"'), 'Footer locale switcher must remain removed.')
+const footerSources = [footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData].join('\n')
+assert(!footerSources.includes('class="site-footer__locale"'), 'Footer locale switcher must remain removed.')
 assert(
-  footer.indexOf('class="site-footer__main"') > -1 &&
-    footer.indexOf('class="site-footer__socials"') > footer.indexOf('</nav>') &&
-    footer.indexOf('class="site-footer__rule site-footer__rule--bottom"') > footer.indexOf('class="site-footer__socials"'),
+  footer.indexOf('<FooterMain') > -1 &&
+    footer.indexOf('<FooterSocials') > footer.indexOf('<FooterMain') &&
+    footer.indexOf('class="site-footer__rule site-footer__rule--bottom"') > footer.indexOf('<FooterSocials'),
   'Footer socials must be a sibling after site-footer__main and before bottom rule.',
 )
 

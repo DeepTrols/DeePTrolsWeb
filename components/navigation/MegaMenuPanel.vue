@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ArrowRight } from '@lucide/vue'
+import MegaPanelServices from '~/components/navigation/MegaPanelServices.vue'
 import type { NavColumn, NavItem, NavLink } from '~/data/navigation'
 
 defineProps<{
@@ -17,23 +18,7 @@ function linksFor(column: NavColumn): NavLink[] {
 
 <template>
   <div class="container mega-panel" :class="`mega-panel--${item.layout ?? 'default'}`">
-    <template v-if="item.layout === 'services'">
-      <div class="mega-panel__services">
-        <NuxtLink
-          v-for="feature in item.features"
-          :key="feature.title"
-          :to="feature.href"
-          class="mega-panel__service"
-          @click="$emit('navigate')"
-        >
-          <component :is="feature.icon" :size="21" aria-hidden="true" />
-          <span>
-            <strong>{{ feature.title }}</strong>
-            <small>{{ feature.description }}</small>
-          </span>
-        </NuxtLink>
-      </div>
-    </template>
+    <MegaPanelServices v-if="item.layout === 'services'" :features="item.features" @navigate="$emit('navigate')" />
 
     <template v-else>
       <div
@@ -171,8 +156,7 @@ function linksFor(column: NavColumn): NavLink[] {
 }
 
 .mega-panel__link,
-.mega-panel__feature,
-.mega-panel__service {
+.mega-panel__feature {
   color: var(--dt-color-text);
   transition:
     background-color 180ms ease,
@@ -212,8 +196,7 @@ function linksFor(column: NavColumn): NavLink[] {
 }
 
 .mega-panel__link strong,
-.mega-panel__feature strong,
-.mega-panel__service strong {
+.mega-panel__feature strong {
   display: block;
   color: #ffffff;
   font-size: 14px;
@@ -222,8 +205,7 @@ function linksFor(column: NavColumn): NavLink[] {
 }
 
 .mega-panel__link small,
-.mega-panel__feature small,
-.mega-panel__service small {
+.mega-panel__feature small {
   display: block;
   margin-top: 5px;
   color: var(--dt-color-text-muted);
@@ -275,32 +257,6 @@ function linksFor(column: NavColumn): NavLink[] {
   &:hover {
     border-color: rgba(166, 133, 255, 0.38);
     background: rgba(94, 78, 255, 0.09);
-    transform: translateY(-2px);
-  }
-}
-
-.mega-panel__services {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 24px;
-  width: min(100%, 760px);
-  padding: 8px 0;
-}
-
-.mega-panel__service {
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: 14px;
-  min-height: 92px;
-  border-radius: var(--dt-radius-sm);
-  padding: 16px;
-
-  svg {
-    color: var(--dt-color-secondary);
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.055);
     transform: translateY(-2px);
   }
 }
