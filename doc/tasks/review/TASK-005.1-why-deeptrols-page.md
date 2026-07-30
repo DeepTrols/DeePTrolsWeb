@@ -49,6 +49,7 @@
 9. 将 `doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/WhyDeepTrols.md` 和 `imgs/` 需求素材纳入版本控制。
 10. 根据 Review 反馈调整 Banner 右侧 GIF：去掉外层线框、背景卡片与重阴影，使用光晕、边缘 mask 与 `mix-blend-mode: screen` 让素材融入 Banner 背景。
 11. 根据 Review 反馈继续放大 Banner 右侧 GIF 至 `760px` 视觉宽度，并增加上下左右四向渐变遮罩，让素材边缘逐渐接近 Banner 背景色。
+12. 根据 Review 反馈修正 `why-hero__content` 层级：`为什么选择 DeepTrols` 作为 eyebrow，H1 使用 `数据、知识、智能统一` 与渐变 `企业级AI应用服务商`，描述与 CTA 保持 EMQX why 页面 Hero 节奏。
 
 ---
 ## 测试结果
@@ -63,10 +64,12 @@
 | `pnpm harness:engineering` | 通过 |
 | Review fix: Banner GIF 融合 | 通过，已移除外层线框并补充视觉契约 |
 | Review fix: Banner GIF 四向遮罩与尺寸 | 通过，已放大 GIF 并增加上下左右渐变遮罩 |
+| Review fix: Hero 内容层级 | 通过，已按 EMQX why 页面层级修正 eyebrow、H1、描述与 CTA 节奏 |
 
 ## SSR 验证
 - 使用生产构建 `HOST=127.0.0.1 PORT=3700 node .output/server/index.mjs` 启动预览。
 - `/why-deeptrols` SSR HTML 命中 `为什么选择`、`数据、知识、智能统一`、`立即咨询`、`为什么DeepTrols值得信赖`、四个 Tab、`业务价值可衡量，AI成果可持续`、`重塑引擎`、`DeepTrolsOPS企业AI引擎`、`FDE企业AI服务指南`、`site-header`、`site-footer`、`Agentic solution V1` 与 `fangangaishu`。
+- 使用生产构建 `HOST=127.0.0.1 PORT=3701 node .output/server/index.mjs` 复验 Hero 内容层级，SSR HTML 中 `为什么选择 DeepTrols`、`数据、知识、智能统一`、`企业级AI应用服务商`、描述和 CTA 均命中，且核心文案顺序正确。
 - 生产预览服务已停止。
 
 ## 已知问题

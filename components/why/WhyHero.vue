@@ -15,11 +15,11 @@ const agenticSolutionSrc = new URL('../../doc/product/PAGE_REQUIREMENTS/WhyDeepT
 
     <div class="container why-hero__inner">
       <div class="why-hero__content">
-        <p class="why-hero__eyebrow">企业级AI应用服务商</p>
+        <p class="why-hero__eyebrow">为什么选择 DeepTrols</p>
         <h1 id="why-hero-title">
-          为什么选择 <span>DeepTrols</span>
+          数据、知识、智能统一
+          <span>企业级AI应用服务商</span>
         </h1>
-        <p class="why-hero__subtitle">数据、知识、智能统一</p>
         <p class="why-hero__description">
           从数据工程、知识工程到智能体应用，DeepTrols 为企业提供可落地、可交付、可持续演进的 AI 服务。
         </p>
@@ -100,11 +100,11 @@ const agenticSolutionSrc = new URL('../../doc/product/PAGE_REQUIREMENTS/WhyDeepT
 }
 
 .why-hero__content {
-  max-width: 720px;
+  max-width: 760px;
 }
 
 .why-hero__eyebrow {
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   color: var(--dt-color-accent-muted);
   font-size: 16px;
   font-weight: 600;
@@ -112,11 +112,14 @@ const agenticSolutionSrc = new URL('../../doc/product/PAGE_REQUIREMENTS/WhyDeepT
 }
 
 h1 {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   margin: 0;
   color: var(--dt-color-text-highlighted);
-  font-size: 48px;
+  font-size: 52px;
   font-weight: 760;
-  line-height: 1.08;
+  line-height: 1.05;
   letter-spacing: 0;
 
   span {
@@ -126,27 +129,19 @@ h1 {
   }
 }
 
-.why-hero__subtitle {
-  margin: 22px 0 0;
-  color: var(--dt-color-text-highlighted);
-  font-size: 24px;
-  font-weight: 650;
-  line-height: 1.35;
-}
-
 .why-hero__description {
-  max-width: 640px;
-  margin: 18px 0 0;
+  max-width: 660px;
+  margin: 24px 0 0;
   color: var(--dt-color-text-muted);
-  font-size: 18px;
-  line-height: 1.75;
+  font-size: 20px;
+  line-height: 1.7;
 }
 
 .why-hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  margin-top: 36px;
+  margin-top: 40px;
 }
 
 .why-hero__visual {
@@ -215,11 +210,7 @@ img {
   }
 
   h1 {
-    font-size: 72px;
-  }
-
-  .why-hero__description {
-    font-size: 20px;
+    font-size: 76px;
   }
 
   .why-hero__glow--left {
@@ -242,8 +233,8 @@ img {
     font-size: 42px;
   }
 
-  .why-hero__subtitle {
-    font-size: 20px;
+  .why-hero__description {
+    font-size: 18px;
   }
 }
 </style>
