@@ -58,6 +58,7 @@
 8. 新增 `doc/engineering/HOME_PAGE_BASELINE.md`，约束后续页面默认遵循 HOME 基准。
 9. 新增 `doc/engineering/HARNESS_ENGINEERING.md` 与 `scripts/harness-check.mjs`，让 Harness Engineering 可执行。
 10. 更新产品与工程文档，使其与当前 HOME 页面、Header、Footer、CTA、生态与视觉基准一致。
+11. 恢复本地 Git 仓库，新增 `.gitignore`，排除依赖、构建产物、系统文件与旧重复素材目录。
 11. 移除 Hero canvas/Tres 残留依赖：`@tresjs/core`、`three`、`@types/three`。
 12. 更新视觉契约测试，使其检查公共设计系统复用，而不是鼓励页面内重复 CSS。
 
@@ -96,13 +97,14 @@
 ## Git
 | 字段             | 内容 |
 |----------------|----|
-| Branch         | 无法确认：当前目录不是 Git 仓库 |
-| Commit Message | refactor(TASK-002.1): add design system harness |
-| Commit Hash    | 未提交：当前目录缺少 `.git` |
-| Git Status     | 失败：`fatal: not a git repository (or any of the parent directories): .git` |
+| Branch         | `main` |
+| Commit Message | `chore(TASK-002.1): initialize project repository` |
+| Commit Hash    | `4c34240` |
+| Git Status     | 通过：本地 Git 仓库已恢复 |
+| Git Push       | 未执行：尚未配置远程 `origin` |
 
 ## 完成说明
-已完成代码规范排查、公共设计系统抽取、HOME 基准文档、Harness Engineering 脚本、产品文档同步与废弃依赖移除。任务保持 In Progress，因为当前目录不是 Git 仓库，无法 commit / push，也无法进入 Review。
+已完成代码规范排查、公共设计系统抽取、HOME 基准文档、Harness Engineering 脚本、产品文档同步、废弃依赖移除与本地 Git 恢复。任务保持 In Progress，因为当前仓库尚未配置远程 `origin`，无法 push 到 GitHub，也无法进入 Review。
 
 ## 测试结果
 | 命令 | 结果 |
@@ -121,5 +123,5 @@
 - Footer 顺序满足 `site-footer__main` -> `site-footer__socials` -> `site-footer__rule site-footer__rule--bottom`。
 
 ## 已知问题
-- 当前目录不是 Git 仓库，`git status`、commit 与 push 无法执行。因此任务不能移动至 review。
+- 当前仓库尚未配置远程 `origin`，`git push` 无法执行。因此任务不能移动至 review。
 - `SiteHeader.vue`、`SiteFooter.vue`、`HomeCases.vue`、`HomeEcosystemVisual.vue` 等组件仍超过 300 行；本任务已先抽取公共视觉入口，后续建议单独拆分结构组件与 SVG 动画组件。
