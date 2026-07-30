@@ -40,10 +40,19 @@ const requiredFiles = [
   'doc/product/PRODUCT_VISION.md',
   'doc/product/SITE_MAP.md',
   'doc/product/PAGE_REQUIREMENTS/HOME/HOME.md',
+  'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/WhyDeepTrols.md',
+  'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/Agentic solution V1.gif',
+  'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
   'components/common/SectionHeading.vue',
+  'data/why.ts',
+  'pages/why-deeptrols.vue',
+  'components/why/WhyHero.vue',
+  'components/why/WhyTrustTabs.vue',
+  'components/why/WhyServiceReset.vue',
+  'components/why/WhyEngine.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -62,6 +71,12 @@ const homeSolutions = read('components/home/HomeSolutions.vue')
 const productSystem = read('components/home/HomeProductSystem.vue')
 const ecosystem = read('components/home/HomeEcosystem.vue')
 const footer = read('components/layout/SiteFooter.vue')
+const whyData = read('data/why.ts')
+const whyPage = read('pages/why-deeptrols.vue')
+const whyHero = read('components/why/WhyHero.vue')
+const whyTrustTabs = read('components/why/WhyTrustTabs.vue')
+const whyService = read('components/why/WhyServiceReset.vue')
+const whyEngine = read('components/why/WhyEngine.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -104,6 +119,16 @@ assert(homeSolutions.includes('dt-tab-list') && homeSolutions.includes('dt-tab')
 assert(productSystem.includes('dt-product-card') && productSystem.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
 assert(footer.includes('dt-button dt-button--primary dt-button--lg'), 'Footer subscribe button must reuse dt-button classes.')
+assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why page must reuse global Header and Footer.')
+assert(whyPage.includes('WhyHero') && whyPage.includes('WhyTrustTabs') && whyPage.includes('WhyServiceReset') && whyPage.includes('WhyEngine'), 'Why page sections are incomplete.')
+assert(whyHero.includes('BaseButton') && whyHero.includes('HomeCustomerLogos'), 'Why hero must reuse BaseButton and HomeCustomerLogos.')
+assert(whyHero.includes('Agentic solution V1.gif'), 'Why hero must use the required Agentic solution GIF.')
+assert(whyTrustTabs.includes('SectionHeading'), 'Why trust tabs must reuse SectionHeading.')
+assert(whyTrustTabs.includes('dt-tab-list') && whyTrustTabs.includes('dt-tab'), 'Why trust tabs must use shared dt-tab classes.')
+assert(whyTrustTabs.includes('dt-product-card') && whyTrustTabs.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
+assert(whyService.includes('SectionHeading') && whyService.includes('fangangaishu@2x.png'), 'Why service section must use SectionHeading and required overview image.')
+assert(whyEngine.includes('SectionHeading') && whyEngine.includes('whyEngineLinks'), 'Why engine section must reuse SectionHeading and configured links.')
+assert(whyData.includes('label: \'面向技术层\'') && whyData.includes('label: \'面向业务层\'') && whyData.includes('label: \'面向服务层\'') && whyData.includes('label: \'面向长期价值\''), 'Why page must define four trust tabs.')
 
 const filesToScan = [
   ...listFiles('components', (path) => path.endsWith('.vue')),
