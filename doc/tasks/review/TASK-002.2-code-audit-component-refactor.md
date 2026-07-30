@@ -116,7 +116,7 @@
 |----|----|
 | Branch | `main` |
 | Commit Message | `refactor(TASK-002.2): audit and split oversized components` |
-| Commit Hash | 待更新 |
+| Commit Hash | `c898afd` |
 
 ## 完成说明
 本轮已修复审计中发现的超长组件问题，并将约束写入测试与 Harness。未跟踪目录 `doc/product/PAGE_REQUIREMENTS/PRODUCT/` 属于既有工作区内容，本任务未修改。
