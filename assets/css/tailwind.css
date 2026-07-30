@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-dt-primary: var(--dt-color-primary);
+  --color-dt-primary-dark: var(--dt-color-primary-dark);
+  --color-dt-secondary: var(--dt-color-secondary);
+  --color-dt-accent: var(--dt-color-accent);
+  --color-dt-bg: var(--dt-color-bg);
+  --color-dt-bg-soft: var(--dt-color-bg-soft);
+  --color-dt-bg-elevated: var(--dt-color-bg-elevated);
+  --color-dt-text: var(--dt-color-text);
+  --color-dt-text-muted: var(--dt-color-text-muted);
+  --color-dt-text-soft: var(--dt-color-text-soft);
+  --color-dt-text-highlighted: var(--dt-color-text-highlighted);
+  --radius-dt-xs: var(--dt-radius-xs);
+  --radius-dt-sm: var(--dt-radius-sm);
+  --radius-dt-md: var(--dt-radius-md);
+  --radius-dt-lg: var(--dt-radius-lg);
+  --radius-dt-ui: var(--dt-ui-radius);
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
