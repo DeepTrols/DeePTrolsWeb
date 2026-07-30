@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Sparkles } from '@lucide/vue'
 import BaseButton from '~/components/common/BaseButton.vue'
 import HomeCustomerLogos from '~/components/home/HomeCustomerLogos.vue'
 
@@ -15,14 +16,24 @@ const agenticSolutionSrc = new URL('../../doc/product/PAGE_REQUIREMENTS/WhyDeepT
 
     <div class="container why-hero__inner">
       <div class="why-hero__content">
-        <p class="why-hero__eyebrow">为什么选择 DeepTrols</p>
-        <h1 id="why-hero-title">
-          数据、知识、智能统一
-          <span>企业级AI应用服务商</span>
-        </h1>
-        <p class="why-hero__description">
-          从数据工程、知识工程到智能体应用，DeepTrols 为企业提供可落地、可交付、可持续演进的 AI 服务。
-        </p>
+        <div class="why-hero__badge">
+          <Sparkles class="why-hero__badge-icon" :size="16" aria-hidden="true" />
+          <span>为什么选择 DeepTrols</span>
+        </div>
+
+        <div class="why-hero__title-block">
+          <h1 id="why-hero-title">
+            <span class="why-hero__title-line">数据、知识、智能统一</span>
+            <span class="why-hero__title-gradient">企业级AI应用服务商</span>
+          </h1>
+        </div>
+
+        <div class="why-hero__description-block">
+          <p class="why-hero__description">
+            从数据工程、知识工程到智能体应用，DeepTrols 为企业提供可落地、可交付、可持续演进的 AI 服务。
+          </p>
+        </div>
+
         <div class="why-hero__actions">
           <BaseButton href="/contact" variant="primary" size="lg">立即咨询</BaseButton>
           <BaseButton href="/about" variant="secondary" size="lg">关于我们</BaseButton>
@@ -100,48 +111,79 @@ const agenticSolutionSrc = new URL('../../doc/product/PAGE_REQUIREMENTS/WhyDeepT
 }
 
 .why-hero__content {
-  max-width: 760px;
+  width: 100%;
+  max-width: 672px;
+  text-align: center;
 }
 
-.why-hero__eyebrow {
-  margin: 0 0 20px;
-  color: var(--dt-color-accent-muted);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-}
-
-h1 {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin: 0;
-  color: var(--dt-color-text-highlighted);
-  font-size: 52px;
-  font-weight: 760;
-  line-height: 1.05;
-  letter-spacing: 0;
+.why-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(94, 78, 255, 0.2);
+  border-radius: 9999px;
+  background: var(--dt-color-primary-soft);
+  color: var(--dt-color-primary);
+  padding: 8px 16px;
 
   span {
-    background: var(--dt-gradient-text);
-    background-clip: text;
-    color: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 }
 
+.why-hero__badge-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: var(--dt-color-primary);
+}
+
+.why-hero__title-block {
+  margin: 0;
+}
+
+h1 {
+  margin: 0 0 24px;
+  color: var(--dt-color-text-highlighted);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.why-hero__title-line,
+.why-hero__title-gradient {
+  display: block;
+}
+
+.why-hero__title-gradient {
+  background: var(--dt-gradient-text);
+  background-clip: text;
+  color: transparent;
+}
+
+.why-hero__description-block {
+  margin: 0;
+}
+
 .why-hero__description {
-  max-width: 660px;
-  margin: 24px 0 0;
+  max-width: 576px;
+  margin: 0 auto 32px;
   color: var(--dt-color-text-muted);
-  font-size: 20px;
-  line-height: 1.7;
+  font-size: 18px;
+  line-height: 1.625;
 }
 
 .why-hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
-  margin-top: 40px;
+  justify-content: center;
+  gap: 16px;
 }
 
 .why-hero__visual {
@@ -198,6 +240,16 @@ img {
   padding-top: 48px;
 }
 
+@media (min-width: 640px) {
+  h1 {
+    font-size: 48px;
+  }
+
+  .why-hero__description {
+    font-size: 20px;
+  }
+}
+
 @media (min-width: 1024px) {
   .why-hero {
     padding-top: 164px;
@@ -209,8 +261,21 @@ img {
     gap: 64px;
   }
 
+  .why-hero__content {
+    text-align: left;
+  }
+
   h1 {
-    font-size: 76px;
+    font-size: 60px;
+  }
+
+  .why-hero__description {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .why-hero__actions {
+    justify-content: flex-start;
   }
 
   .why-hero__glow--left {
@@ -227,14 +292,6 @@ img {
 @media (max-width: 640px) {
   .why-hero {
     padding-top: 112px;
-  }
-
-  h1 {
-    font-size: 42px;
-  }
-
-  .why-hero__description {
-    font-size: 18px;
   }
 }
 </style>

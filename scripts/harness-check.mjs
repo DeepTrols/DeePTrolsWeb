@@ -122,7 +122,15 @@ assert(footer.includes('dt-button dt-button--primary dt-button--lg'), 'Footer su
 assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why page must reuse global Header and Footer.')
 assert(whyPage.includes('WhyHero') && whyPage.includes('WhyTrustTabs') && whyPage.includes('WhyServiceReset') && whyPage.includes('WhyEngine'), 'Why page sections are incomplete.')
 assert(whyHero.includes('BaseButton') && whyHero.includes('HomeCustomerLogos'), 'Why hero must reuse BaseButton and HomeCustomerLogos.')
-assert(whyHero.includes('<p class="why-hero__eyebrow">为什么选择 DeepTrols</p>') && whyHero.includes('数据、知识、智能统一') && whyHero.includes('<span>企业级AI应用服务商</span>'), 'Why hero content hierarchy must follow the why-emqx replacement mapping.')
+assert(
+  whyHero.includes('class="why-hero__badge"') &&
+    whyHero.includes('<Sparkles class="why-hero__badge-icon"') &&
+    whyHero.includes('<span>为什么选择 DeepTrols</span>') &&
+    whyHero.includes('class="why-hero__title-line">数据、知识、智能统一</span>') &&
+    whyHero.includes('class="why-hero__title-gradient">企业级AI应用服务商</span>'),
+  'Why hero content hierarchy must follow the why-emqx replacement mapping.',
+)
+assert(whyHero.includes('font-size: 36px') && whyHero.includes('font-size: 48px') && whyHero.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
 assert(whyHero.includes('Agentic solution V1.gif'), 'Why hero must use the required Agentic solution GIF.')
 assert(whyHero.includes('mix-blend-mode: screen') && whyHero.includes('mask-image: radial-gradient(76% 72% at 50% 48%'), 'Why hero GIF must blend into the banner background.')
 assert(whyHero.includes('linear-gradient(180deg, var(--dt-color-bg) 0%') && whyHero.includes('linear-gradient(90deg, var(--dt-color-bg) 0%'), 'Why hero GIF must include four-edge gradient overlay to the banner background.')
