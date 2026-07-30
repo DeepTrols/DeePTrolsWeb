@@ -106,4 +106,6 @@
 | Global Spacing Fix Commit Hash | `f344623` |
 | Hero WebM Fix Commit Message | `fix(TASK-005.1): replace why hero gif with webm` |
 | Hero WebM Fix Commit Hash | `876d80e` |
+| Hero WebM Stage Fix Commit Message | `fix(TASK-005.1): enlarge why hero video stage` |
+| Hero WebM Stage Fix Commit Hash | `a5ef281` |
 | Git Push | 通过：已推送至 `origin/main` |
