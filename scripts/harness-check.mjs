@@ -123,6 +123,8 @@ assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why pa
 assert(whyPage.includes('WhyHero') && whyPage.includes('WhyTrustTabs') && whyPage.includes('WhyServiceReset') && whyPage.includes('WhyEngine'), 'Why page sections are incomplete.')
 assert(whyHero.includes('BaseButton') && whyHero.includes('HomeCustomerLogos'), 'Why hero must reuse BaseButton and HomeCustomerLogos.')
 assert(whyHero.includes('Agentic solution V1.gif'), 'Why hero must use the required Agentic solution GIF.')
+assert(whyHero.includes('mix-blend-mode: screen') && whyHero.includes('mask-image: radial-gradient(76% 72% at 50% 48%'), 'Why hero GIF must blend into the banner background.')
+assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero GIF must not use an outer framed card shadow.')
 assert(whyTrustTabs.includes('SectionHeading'), 'Why trust tabs must reuse SectionHeading.')
 assert(whyTrustTabs.includes('dt-tab-list') && whyTrustTabs.includes('dt-tab'), 'Why trust tabs must use shared dt-tab classes.')
 assert(whyTrustTabs.includes('dt-product-card') && whyTrustTabs.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')

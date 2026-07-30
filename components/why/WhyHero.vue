@@ -152,33 +152,36 @@ h1 {
 .why-hero__visual {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 620px;
   justify-self: center;
+  isolation: isolate;
 }
 
 .why-hero__visual-glow {
   position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  background: linear-gradient(45deg, rgba(94, 78, 255, 0.15), rgba(86, 154, 255, 0.06));
-  filter: blur(24px);
-  transform: rotate(3deg);
+  inset: -12%;
+  z-index: -1;
+  border-radius: 9999px;
+  background:
+    radial-gradient(closest-side at 50% 46%, rgba(94, 78, 255, 0.24), transparent 72%),
+    radial-gradient(closest-side at 70% 36%, rgba(86, 154, 255, 0.14), transparent 76%);
+  filter: blur(34px);
+  opacity: 0.86;
 }
 
 figure {
   position: relative;
-  overflow: hidden;
   margin: 0;
-  border: 1px solid var(--dt-color-line);
-  border-radius: 24px;
-  background: rgba(39, 30, 53, 0.4);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
 }
 
 img {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  filter: saturate(1.08) contrast(1.04);
+  mask-image: radial-gradient(76% 72% at 50% 48%, #000 58%, rgba(0, 0, 0, 0.72) 74%, transparent 100%);
+  mix-blend-mode: screen;
+  opacity: 0.94;
 }
 
 .why-hero__logos {
