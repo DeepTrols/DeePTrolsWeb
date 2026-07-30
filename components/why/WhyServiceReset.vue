@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import SectionHeading from '~/components/common/SectionHeading.vue'
+import serviceOverviewSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png?url'
 import { whyServiceItems } from '~/data/why'
-
-const serviceOverviewSrc = new URL('../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png', import.meta.url).href
 </script>
 
 <template>
-  <section class="why-service" aria-labelledby="why-service-title">
+  <section class="why-service dt-section relative pb-32 lg:pb-44" aria-labelledby="why-service-title">
     <div class="container why-service__grid">
       <div class="why-service__content">
         <SectionHeading
@@ -36,11 +35,6 @@ const serviceOverviewSrc = new URL('../../doc/product/PAGE_REQUIREMENTS/WhyDeepT
 </template>
 
 <style scoped lang="scss">
-.why-service {
-  padding-bottom: 128px;
-  background: var(--dt-color-bg);
-}
-
 .why-service__grid {
   display: grid;
   align-items: center;
@@ -107,10 +101,6 @@ img {
 }
 
 @media (min-width: 1024px) {
-  .why-service {
-    padding-bottom: 176px;
-  }
-
   .why-service__grid {
     grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1fr);
     gap: 72px;

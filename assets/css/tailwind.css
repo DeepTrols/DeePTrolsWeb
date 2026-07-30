@@ -8,6 +8,9 @@
   --color-dt-bg: var(--dt-color-bg);
   --color-dt-bg-soft: var(--dt-color-bg-soft);
   --color-dt-bg-elevated: var(--dt-color-bg-elevated);
+  --color-dt-primary-soft: var(--dt-color-primary-soft);
+  --color-dt-line: var(--dt-color-line);
+  --color-dt-line-strong: var(--dt-color-line-strong);
   --color-dt-text: var(--dt-color-text);
   --color-dt-text-muted: var(--dt-color-text-muted);
   --color-dt-text-soft: var(--dt-color-text-soft);

@@ -33,6 +33,13 @@ doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/Agentic solution V1.gif
 参考https://www.emqx.com/zh/why-emqx 中的
 <section class="relative pb-32 lg:pb-44"><div class="container"><div class="mb-12 text-center lg:mb-16"><h2 class="mb-4 md:mb-6 text-highlighted text-4xl sm:text-5xl font-bold tracking-tight leading-[1.2] !mb-8">为什么团队都选择 EMQX</h2>……
 
+实现约束：
+- section 必须使用 `dt-section relative pb-32 lg:pb-44`
+- 标题区必须使用 `mb-12 text-center lg:mb-16`
+- Tab 必须使用全局 `.dt-segmented-tabs` + `.dt-segmented-tab`
+- 卡片网格必须使用 `grid gap-5 md:grid-cols-2 lg:gap-6`
+- 卡片必须复用 `.dt-product-card`、`.dt-product-card__accent`、`.dt-icon-box`，并使用 Tailwind v4 utility 表达 `min-h-[280px] !p-7 lg:!p-8`、`!size-12`
+
 使用4个Tab
 Tab1:面向技术层
 

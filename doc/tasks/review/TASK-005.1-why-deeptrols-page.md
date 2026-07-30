@@ -41,7 +41,7 @@
 1. 新增 `data/why.ts`，集中维护 Why 页面 Tabs、重塑服务与重塑引擎内容。
 2. 新增 `/why-deeptrols` 路由页面，复用公共 `SiteHeader` 与 `SiteFooter`。
 3. 新增 `components/why/WhyHero.vue`，按需求实现 EMQX why 页面风格的深色网格 Banner、主标题、CTA 与指定 GIF 视觉素材。
-4. 新增 `components/why/WhyTrustTabs.vue`，实现“为什么DeepTrols值得信赖”四组 Tab，复用 `SectionHeading`、`.dt-tab-list`、`.dt-tab`、`.dt-product-card` 与 `.dt-icon-box`。
+4. 新增 `components/why/WhyTrustTabs.vue`，实现“为什么DeepTrols值得信赖”四组 Tab，复用 `SectionHeading`、`.dt-segmented-tabs`、`.dt-segmented-tab`、`.dt-product-card` 与 `.dt-icon-box`。
 5. 新增 `components/why/WhyServiceReset.vue`，实现“业务价值可衡量，AI成果可持续”与需求指定 `fangangaishu@2x.png` 图片展示。
 6. 新增 `components/why/WhyEngine.vue`，实现“重塑引擎”说明和左侧两张 EMQX 风格资源入口卡片。
 7. 新增 `tests/why-content.spec.ts`，覆盖 Why 页面导航、Tabs、内容与素材契约。
@@ -51,6 +51,7 @@
 11. 根据 Review 反馈继续放大 Banner 右侧 GIF 至 `760px` 视觉宽度，并增加上下左右四向渐变遮罩，让素材边缘逐渐接近 Banner 背景色。
 12. 根据 Review 反馈修正 `why-hero__content` 层级：使用 EMQX why Hero 同款 badge、H1 双行 block、描述块和 CTA actions 结构，`为什么选择 DeepTrols` 作为 badge，H1 使用 `数据、知识、智能统一` 与渐变 `企业级AI应用服务商`。
 13. 根据 Review 反馈移除 Why Hero 底部 padding，并将 `why-trust` 区域调整为 EMQX why 页面节奏：`pb-32/lg:pb-44`、标题区 `mb-12/lg:mb-16`、Tab 下 2x2 卡片、每个 Tab 4 张卡片、卡片 `p-7/lg:p-8` 与 48px icon。
+14. 根据 Review 反馈重新梳理 Why 页面全局节奏：Hero 改为 EMQX why 页面 `container pt-24 pb-24 lg:pt-32 lg:pb-32` 结构，Logo 区回到同一 Hero container 内的 `mt-24 border-t pt-12 lg:mt-28`，Trust/Service/Engine 全部通过 `dt-section relative pb-32 lg:pb-44` 与 Tailwind v4 utility 控制模块间距，并新增全局 `.dt-segmented-tabs` / `.dt-segmented-tab`。
 
 ---
 ## 测试结果
@@ -67,12 +68,16 @@
 | Review fix: Banner GIF 四向遮罩与尺寸 | 通过，已放大 GIF 并增加上下左右渐变遮罩 |
 | Review fix: Hero 内容层级 | 通过，已补齐 badge、H1 block、描述块、actions 结构与 EMQX 4xl/5xl/6xl 字号节奏 |
 | Review fix: Hero padding 与 Trust 卡片布局 | 通过，Hero 底部 padding 已清零，Trust 区已改为 EMQX 2x2 卡片节奏 |
+| Review fix: Tailwind v4 全局节奏 | 通过，Why Hero、Trust、Service、Engine 已切换为 Tailwind utility + 全局 `dt-*` section/tab/card 入口 |
+| Browser verification | 通过，`127.0.0.1:3101/why-deeptrols` 桌面与移动 computed spacing 已复验，warning/error 控制台日志为 0 |
 
 ## SSR 验证
 - 使用生产构建 `HOST=127.0.0.1 PORT=3700 node .output/server/index.mjs` 启动预览。
 - `/why-deeptrols` SSR HTML 命中 `为什么选择`、`数据、知识、智能统一`、`立即咨询`、`为什么DeepTrols值得信赖`、四个 Tab、`业务价值可衡量，AI成果可持续`、`重塑引擎`、`DeepTrolsOPS企业AI引擎`、`FDE企业AI服务指南`、`site-header`、`site-footer`、`Agentic solution V1` 与 `fangangaishu`。
 - 使用生产构建 `HOST=127.0.0.1 PORT=3701 node .output/server/index.mjs` 复验 Hero 内容层级，SSR HTML 中 `为什么选择 DeepTrols`、`数据、知识、智能统一`、`企业级AI应用服务商`、描述和 CTA 均命中，且核心文案顺序正确。
 - 使用生产构建 `HOST=127.0.0.1 PORT=3702 node .output/server/index.mjs` 复验页面可访问，并通过源码契约检查 Hero badge、H1 双行 block、描述块、actions、字号和对齐规则。
+- 使用 dev server `127.0.0.1:3101` 复验 Tailwind v4 间距：桌面 Hero body `128px/128px`、Trust `padding-bottom: 176px`、卡片 `32px` padding；移动端 Hero body `96px/96px`、Trust/Service/Engine `padding-bottom: 128px`、卡片 `28px` padding。
+- 已修复 Why 页 GIF/PNG `new URL(...).href` 导致的 SSR/client `src` hydration mismatch，改为 `?url` 静态资源导入，浏览器 warning/error 日志为 0。
 - 生产预览服务已停止。
 
 ## 已知问题

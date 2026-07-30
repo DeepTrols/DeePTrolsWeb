@@ -19,11 +19,13 @@
 ## Visual Baseline
 1. 页面背景使用 `#151515`，不得新增浅色 `section--light` 白底区域。
 2. 内容区默认使用项目 `.container` 断点：移动端 `1rem` padding，桌面按 Tailwind container 节奏，宽屏最大 `96rem` 仅用于客户故事等特殊宽屏模块。
-3. Header 高度固定为 `72px`，使用 `bg-default/95` 等效深色背景、弱边框、`backdrop-blur` 与轻阴影。
-4. Header container 必须与页面内容宽度一致，不允许单独猜测宽度。
-5. Header logo 使用 `/logo-while.svg`，当前宽度为 `200px`；Footer logo 当前宽度为 `240px`。
-6. Footer 使用 HOME 当前结构：订阅区、分隔线、`site-footer__main`、与 main 平级的 `site-footer__socials`、底部分隔线、备案与版权。
-7. Hero 与区域一共享视频背景：`public/花瓣素材_+暖蓝光泄漏背景可循环_465316undefined (1) 2.mp4`；Hero 内不得恢复 canvas / TresJS。
+3. 常规页面 Hero 参考 EMQX why 页面节奏：外层 section 不写局部 padding，内部 `.container` 使用 Tailwind v4 utility `pt-24 pb-24 lg:pt-32 lg:pb-32`。
+4. 常规页面 Hero 后续模块统一使用 `dt-section relative pb-32 lg:pb-44`，不要在页面 scoped CSS 中重复声明 section `padding-bottom`。
+5. Header 高度固定为 `72px`，使用 `bg-default/95` 等效深色背景、弱边框、`backdrop-blur` 与轻阴影。
+6. Header container 必须与页面内容宽度一致，不允许单独猜测宽度。
+7. Header logo 使用 `/logo-while.svg`，当前宽度为 `200px`；Footer logo 当前宽度为 `240px`。
+8. Footer 使用 HOME 当前结构：订阅区、分隔线、`site-footer__main`、与 main 平级的 `site-footer__socials`、底部分隔线、备案与版权。
+9. HOME Hero 与区域一共享视频背景：`public/花瓣素材_+暖蓝光泄漏背景可循环_465316undefined (1) 2.mp4`；Hero 内不得恢复 canvas / TresJS。
 
 ---
 ## Typography
@@ -44,6 +46,7 @@
 | Section 标题 | `components/common/SectionHeading.vue` |
 | 通用按钮样式 | `.dt-button`、`.dt-button--primary`、`.dt-button--secondary`、`.dt-button--ghost` |
 | Tab 列表 | `.dt-tab-list` + `.dt-tab` |
+| Why / 对比页圆角分段 Tab | `.dt-segmented-tabs` + `.dt-segmented-tab` |
 | EMQX Platform 风格能力卡片 | `.dt-product-card` + `.dt-product-card__accent` + `.dt-icon-box` |
 | Ecosystem 卡片 | `.dt-ecosystem-card` + `.dt-card-tag` |
 | CTA 面板 | `.dt-cta-panel` |
@@ -64,7 +67,8 @@
 2. 项目语义 token 与公共组件层在 `assets/scss/main.scss` 中维护。
 3. 由于当前 Nuxt 构建链路不会处理 Vue scoped SCSS 中的 `@apply`，禁止在 `assets/` 与 `components/` 中提交 `@apply`，避免产物残留无效 CSS。
 4. 新页面的组件样式必须使用 `<style scoped lang="scss">`，并优先引用 `dt-*` 公共类。
-5. 色彩、hover、按钮、tab、卡片、标题不得在页面内重新发明。
+5. 页面级间距优先直接在模板中使用 Tailwind v4 utilities，例如 `pt-24 pb-24 lg:pt-32 lg:pb-32`、`pb-32 lg:pb-44`、`mb-12 lg:mb-16`、`grid gap-5 md:grid-cols-2 lg:gap-6`。
+6. 色彩、hover、按钮、tab、卡片、标题不得在页面内重新发明。
 
 ---
 ## Documentation Rule

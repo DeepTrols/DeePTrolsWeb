@@ -4,7 +4,7 @@ import { whyEngineLinks } from '~/data/why'
 </script>
 
 <template>
-  <section class="why-engine" aria-labelledby="why-engine-title">
+  <section class="why-engine dt-section relative pb-32 lg:pb-44" aria-labelledby="why-engine-title">
     <div class="container why-engine__grid">
       <div class="why-engine__links">
         <NuxtLink v-for="link in whyEngineLinks" :key="link.title" class="group why-engine__link" :to="link.href">
@@ -34,11 +34,6 @@ import { whyEngineLinks } from '~/data/why'
 </template>
 
 <style scoped lang="scss">
-.why-engine {
-  padding-bottom: 128px;
-  background: var(--dt-color-bg);
-}
-
 .why-engine__grid {
   display: grid;
   gap: 48px;
@@ -128,10 +123,6 @@ p {
 }
 
 @media (min-width: 1024px) {
-  .why-engine {
-    padding-bottom: 176px;
-  }
-
   .why-engine__grid {
     grid-template-columns: minmax(420px, 0.9fr) minmax(0, 1fr);
     gap: 72px;
