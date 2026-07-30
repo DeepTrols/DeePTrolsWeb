@@ -50,6 +50,7 @@
 10. 根据 Review 反馈调整 Banner 右侧 GIF：去掉外层线框、背景卡片与重阴影，使用光晕、边缘 mask 与 `mix-blend-mode: screen` 让素材融入 Banner 背景。
 11. 根据 Review 反馈继续放大 Banner 右侧 GIF 至 `760px` 视觉宽度，并增加上下左右四向渐变遮罩，让素材边缘逐渐接近 Banner 背景色。
 12. 根据 Review 反馈修正 `why-hero__content` 层级：使用 EMQX why Hero 同款 badge、H1 双行 block、描述块和 CTA actions 结构，`为什么选择 DeepTrols` 作为 badge，H1 使用 `数据、知识、智能统一` 与渐变 `企业级AI应用服务商`。
+13. 根据 Review 反馈移除 Why Hero 底部 padding，并将 `why-trust` 区域调整为 EMQX why 页面节奏：`pb-32/lg:pb-44`、标题区 `mb-12/lg:mb-16`、Tab 下 2x2 卡片、每个 Tab 4 张卡片、卡片 `p-7/lg:p-8` 与 48px icon。
 
 ---
 ## 测试结果
@@ -65,6 +66,7 @@
 | Review fix: Banner GIF 融合 | 通过，已移除外层线框并补充视觉契约 |
 | Review fix: Banner GIF 四向遮罩与尺寸 | 通过，已放大 GIF 并增加上下左右渐变遮罩 |
 | Review fix: Hero 内容层级 | 通过，已补齐 badge、H1 block、描述块、actions 结构与 EMQX 4xl/5xl/6xl 字号节奏 |
+| Review fix: Hero padding 与 Trust 卡片布局 | 通过，Hero 底部 padding 已清零，Trust 区已改为 EMQX 2x2 卡片节奏 |
 
 ## SSR 验证
 - 使用生产构建 `HOST=127.0.0.1 PORT=3700 node .output/server/index.mjs` 启动预览。

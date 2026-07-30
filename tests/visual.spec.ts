@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
+import { whyTrustTabs } from '../data/why'
 
 const root = process.cwd()
 
@@ -79,6 +80,9 @@ describe('visual implementation contract', () => {
     expect(hero).toContain('class="why-hero__title-line">数据、知识、智能统一</span>')
     expect(hero).toContain('class="why-hero__title-gradient">企业级AI应用服务商</span>')
     expect(hero).toContain('max-width: 672px')
+    expect(hero).toContain('padding: 144px 0 0')
+    expect(hero).not.toContain('padding: 144px 0 96px')
+    expect(hero).not.toContain('padding-bottom: 112px')
     expect(hero).toContain('text-align: center')
     expect(hero).toContain('text-align: left')
     expect(hero).toContain('font-size: 36px')
@@ -108,6 +112,19 @@ describe('visual implementation contract', () => {
     expect(tabs).toContain('class="dt-tab"')
     expect(tabs).toContain('class="why-trust__card dt-product-card"')
     expect(tabs).toContain('class="why-trust__icon dt-icon-box"')
+    expect(tabs).toContain('padding-bottom: 128px')
+    expect(tabs).toContain('padding-bottom: 176px')
+    expect(tabs).toContain('margin-bottom: 48px')
+    expect(tabs).toContain('margin-bottom: 64px')
+    expect(tabs).toContain('gap: 20px')
+    expect(tabs).toContain('gap: 24px')
+    expect(tabs).toContain('grid-template-columns: repeat(2, minmax(0, 1fr))')
+    expect(tabs).toContain('min-height: 280px')
+    expect(tabs).toContain('padding: 28px')
+    expect(tabs).toContain('padding: 32px')
+    expect(tabs).toContain('width: 48px')
+    expect(tabs).toContain('height: 48px')
+    expect(tabs).not.toContain('grid-template-columns: repeat(4, minmax(0, 1fr))')
     expect(service).toContain('业务价值可衡量，AI成果可持续')
     expect(service).toContain('fangangaishu@2x.png')
     expect(service).toContain('SectionHeading')
@@ -118,6 +135,8 @@ describe('visual implementation contract', () => {
     expect(data).toContain("label: '面向业务层'")
     expect(data).toContain("label: '面向服务层'")
     expect(data).toContain("label: '面向长期价值'")
+    expect(whyTrustTabs).toHaveLength(4)
+    expect(whyTrustTabs.every((tab) => tab.features.length === 4)).toBe(true)
     expect(data).toContain('DeepTrolsOPS企业AI引擎')
     expect(data).toContain('FDE企业AI服务指南')
     expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/Agentic solution V1.gif'))).toBe(true)

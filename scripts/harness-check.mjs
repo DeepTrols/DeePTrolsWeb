@@ -131,6 +131,7 @@ assert(
   'Why hero content hierarchy must follow the why-emqx replacement mapping.',
 )
 assert(whyHero.includes('font-size: 36px') && whyHero.includes('font-size: 48px') && whyHero.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
+assert(whyHero.includes('padding: 144px 0 0') && !whyHero.includes('padding: 144px 0 96px') && !whyHero.includes('padding-bottom: 112px'), 'Why hero bottom padding must remain removed.')
 assert(whyHero.includes('Agentic solution V1.gif'), 'Why hero must use the required Agentic solution GIF.')
 assert(whyHero.includes('mix-blend-mode: screen') && whyHero.includes('mask-image: radial-gradient(76% 72% at 50% 48%'), 'Why hero GIF must blend into the banner background.')
 assert(whyHero.includes('linear-gradient(180deg, var(--dt-color-bg) 0%') && whyHero.includes('linear-gradient(90deg, var(--dt-color-bg) 0%'), 'Why hero GIF must include four-edge gradient overlay to the banner background.')
@@ -139,9 +140,18 @@ assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero GIF must not use 
 assert(whyTrustTabs.includes('SectionHeading'), 'Why trust tabs must reuse SectionHeading.')
 assert(whyTrustTabs.includes('dt-tab-list') && whyTrustTabs.includes('dt-tab'), 'Why trust tabs must use shared dt-tab classes.')
 assert(whyTrustTabs.includes('dt-product-card') && whyTrustTabs.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
+assert(whyTrustTabs.includes('padding-bottom: 128px') && whyTrustTabs.includes('padding-bottom: 176px'), 'Why trust section must follow pb-32/lg:pb-44 rhythm.')
+assert(whyTrustTabs.includes('grid-template-columns: repeat(2, minmax(0, 1fr))') && !whyTrustTabs.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX grid.')
+assert(whyTrustTabs.includes('padding: 28px') && whyTrustTabs.includes('padding: 32px') && whyTrustTabs.includes('width: 48px') && whyTrustTabs.includes('height: 48px'), 'Why trust cards must follow EMQX card padding and icon size.')
 assert(whyService.includes('SectionHeading') && whyService.includes('fangangaishu@2x.png'), 'Why service section must use SectionHeading and required overview image.')
 assert(whyEngine.includes('SectionHeading') && whyEngine.includes('whyEngineLinks'), 'Why engine section must reuse SectionHeading and configured links.')
 assert(whyData.includes('label: \'面向技术层\'') && whyData.includes('label: \'面向业务层\'') && whyData.includes('label: \'面向服务层\'') && whyData.includes('label: \'面向长期价值\''), 'Why page must define four trust tabs.')
+const whyTrustFeatureGroups = [...whyData.matchAll(/label: '[^']+',[\s\S]*?features: \[([\s\S]*?)\n {4}\],/g)]
+assert(
+  whyTrustFeatureGroups.length === 4 &&
+    whyTrustFeatureGroups.every(([, group]) => (group.match(/\n {8}title: /g) ?? []).length === 4),
+  'Each Why trust tab must define four feature cards.',
+)
 
 const filesToScan = [
   ...listFiles('components', (path) => path.endsWith('.vue')),

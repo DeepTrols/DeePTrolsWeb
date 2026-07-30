@@ -59,7 +59,7 @@ const agenticSolutionSrc = new URL('../../doc/product/PAGE_REQUIREMENTS/WhyDeepT
   position: relative;
   overflow: hidden;
   background: var(--dt-color-bg);
-  padding: 144px 0 96px;
+  padding: 144px 0 0;
   isolation: isolate;
 }
 
@@ -253,7 +253,6 @@ img {
 @media (min-width: 1024px) {
   .why-hero {
     padding-top: 164px;
-    padding-bottom: 112px;
   }
 
   .why-hero__inner {

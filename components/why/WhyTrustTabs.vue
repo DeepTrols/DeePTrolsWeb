@@ -10,12 +10,13 @@ const activeTab = computed(() => whyTrustTabs.find((tab) => tab.key === activeKe
 <template>
   <section class="why-trust" aria-labelledby="why-trust-title">
     <div class="container">
-      <SectionHeading
-        eyebrow="Why DeepTrols"
-        title="为什么DeepTrols值得信赖"
-        title-id="why-trust-title"
-        align="center"
-      />
+      <div class="why-trust__heading">
+        <SectionHeading
+          title="为什么DeepTrols值得信赖"
+          title-id="why-trust-title"
+          align="center"
+        />
+      </div>
 
       <div class="why-trust__tabs dt-tab-list" role="tablist" aria-label="DeepTrols 信赖维度">
         <button
@@ -60,30 +61,50 @@ const activeTab = computed(() => whyTrustTabs.find((tab) => tab.key === activeKe
 
 <style scoped lang="scss">
 .why-trust {
-  padding: 128px 0;
+  position: relative;
+  padding-bottom: 128px;
   background: var(--dt-color-bg);
+}
+
+.why-trust__heading {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.why-trust :deep(.section-heading) {
+  max-width: none;
+}
+
+.why-trust :deep(h2) {
+  margin-bottom: 32px;
 }
 
 .why-trust__tabs {
   justify-content: center;
-  margin-top: 48px;
+  margin-bottom: 32px;
 }
 
 .why-trust__panel {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  margin-top: 32px;
+  gap: 20px;
 }
 
 .why-trust__card {
-  min-height: 236px;
+  min-height: 280px;
+  padding: 28px;
 }
 
 .why-trust__card-head {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
+}
+
+.why-trust__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
 }
 
 p {
@@ -117,11 +138,20 @@ span {
 
 @media (min-width: 1024px) {
   .why-trust {
-    padding: 176px 0;
+    padding-bottom: 176px;
+  }
+
+  .why-trust__heading {
+    margin-bottom: 64px;
   }
 
   .why-trust__panel {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .why-trust__card {
+    padding: 32px;
   }
 }
 </style>
