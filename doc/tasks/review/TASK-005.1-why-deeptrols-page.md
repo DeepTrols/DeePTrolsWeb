@@ -48,6 +48,7 @@
 8. 更新 `tests/visual.spec.ts` 与 `scripts/harness-check.mjs`，将 Why 页面纳入公共视觉与 Harness Engineering 约束。
 9. 将 `doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/WhyDeepTrols.md` 和 `imgs/` 需求素材纳入版本控制。
 10. 根据 Review 反馈调整 Banner 右侧 GIF：去掉外层线框、背景卡片与重阴影，使用光晕、边缘 mask 与 `mix-blend-mode: screen` 让素材融入 Banner 背景。
+11. 根据 Review 反馈继续放大 Banner 右侧 GIF 至 `760px` 视觉宽度，并增加上下左右四向渐变遮罩，让素材边缘逐渐接近 Banner 背景色。
 
 ---
 ## 测试结果
@@ -61,6 +62,7 @@
 | `pnpm build` | 通过；仅有 Nuxt/Rolldown plugin timing 性能提示 |
 | `pnpm harness:engineering` | 通过 |
 | Review fix: Banner GIF 融合 | 通过，已移除外层线框并补充视觉契约 |
+| Review fix: Banner GIF 四向遮罩与尺寸 | 通过，已放大 GIF 并增加上下左右渐变遮罩 |
 
 ## SSR 验证
 - 使用生产构建 `HOST=127.0.0.1 PORT=3700 node .output/server/index.mjs` 启动预览。

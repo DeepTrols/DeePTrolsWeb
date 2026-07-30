@@ -152,7 +152,7 @@ h1 {
 .why-hero__visual {
   position: relative;
   width: 100%;
-  max-width: 620px;
+  max-width: 760px;
   justify-self: center;
   isolation: isolate;
 }
@@ -172,6 +172,16 @@ h1 {
 figure {
   position: relative;
   margin: 0;
+
+  &::after {
+    position: absolute;
+    inset: -1px;
+    background:
+      linear-gradient(180deg, var(--dt-color-bg) 0%, rgba(21, 21, 21, 0.68) 9%, rgba(21, 21, 21, 0) 24%, rgba(21, 21, 21, 0) 76%, rgba(21, 21, 21, 0.7) 91%, var(--dt-color-bg) 100%),
+      linear-gradient(90deg, var(--dt-color-bg) 0%, rgba(21, 21, 21, 0.66) 8%, rgba(21, 21, 21, 0) 24%, rgba(21, 21, 21, 0) 76%, rgba(21, 21, 21, 0.66) 92%, var(--dt-color-bg) 100%);
+    content: "";
+    pointer-events: none;
+  }
 }
 
 img {
@@ -200,8 +210,8 @@ img {
   }
 
   .why-hero__inner {
-    grid-template-columns: minmax(0, 1fr) minmax(420px, 0.78fr);
-    gap: 72px;
+    grid-template-columns: minmax(0, 0.88fr) minmax(520px, 1fr);
+    gap: 64px;
   }
 
   h1 {

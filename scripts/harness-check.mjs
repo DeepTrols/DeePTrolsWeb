@@ -124,6 +124,8 @@ assert(whyPage.includes('WhyHero') && whyPage.includes('WhyTrustTabs') && whyPag
 assert(whyHero.includes('BaseButton') && whyHero.includes('HomeCustomerLogos'), 'Why hero must reuse BaseButton and HomeCustomerLogos.')
 assert(whyHero.includes('Agentic solution V1.gif'), 'Why hero must use the required Agentic solution GIF.')
 assert(whyHero.includes('mix-blend-mode: screen') && whyHero.includes('mask-image: radial-gradient(76% 72% at 50% 48%'), 'Why hero GIF must blend into the banner background.')
+assert(whyHero.includes('linear-gradient(180deg, var(--dt-color-bg) 0%') && whyHero.includes('linear-gradient(90deg, var(--dt-color-bg) 0%'), 'Why hero GIF must include four-edge gradient overlay to the banner background.')
+assert(whyHero.includes('max-width: 760px'), 'Why hero GIF visual size must remain enlarged.')
 assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero GIF must not use an outer framed card shadow.')
 assert(whyTrustTabs.includes('SectionHeading'), 'Why trust tabs must reuse SectionHeading.')
 assert(whyTrustTabs.includes('dt-tab-list') && whyTrustTabs.includes('dt-tab'), 'Why trust tabs must use shared dt-tab classes.')
