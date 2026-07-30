@@ -113,4 +113,6 @@
 | Hero WebM Stage Fix Commit Hash | `a5ef281` |
 | Hero WebM Tailwind Crop Fix Commit Message | `fix(TASK-005.1): use tailwind hero video crop` |
 | Hero WebM Tailwind Crop Fix Commit Hash | `f86fabe` |
+| Hero WebM Larger Crop Fix Commit Message | `fix(TASK-005.1): enlarge why hero video crop` |
+| Hero WebM Larger Crop Fix Commit Hash | `cd7bba8` |
 | Git Push | 通过：已推送至 `origin/main` |
