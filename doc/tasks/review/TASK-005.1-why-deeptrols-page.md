@@ -101,4 +101,6 @@
 | Hero Spacing/Trust Fix Commit Hash | `02f7b0d` |
 | Global Spacing Fix Commit Message | `fix(TASK-005.1): align why page global spacing` |
 | Global Spacing Fix Commit Hash | `f344623` |
+| Hero WebM Fix Commit Message | `fix(TASK-005.1): replace why hero gif with webm` |
+| Hero WebM Fix Commit Hash | `876d80e` |
 | Git Push | 通过：已推送至 `origin/main` |
