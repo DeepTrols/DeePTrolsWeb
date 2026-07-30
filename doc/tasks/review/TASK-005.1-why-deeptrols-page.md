@@ -85,4 +85,6 @@
 | Commit Hash | `1ec1a39` |
 | Review Fix Commit Message | `fix(TASK-005.1): blend why hero visual` |
 | Review Fix Commit Hash | `47b2fde` |
+| Hero Content Fix Commit Message | `fix(TASK-005.1): match why hero emqx content block` |
+| Hero Content Fix Commit Hash | `002b889` |
 | Git Push | 通过：已推送至 `origin/main` |
