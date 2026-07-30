@@ -96,4 +96,6 @@
 | Hero Content Fix Commit Hash | `002b889` |
 | Hero Spacing/Trust Fix Commit Message | `fix(TASK-005.1): align why trust cards and hero spacing` |
 | Hero Spacing/Trust Fix Commit Hash | `02f7b0d` |
+| Global Spacing Fix Commit Message | `fix(TASK-005.1): align why page global spacing` |
+| Global Spacing Fix Commit Hash | `f344623` |
 | Git Push | 通过：已推送至 `origin/main` |
