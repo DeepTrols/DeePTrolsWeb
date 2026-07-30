@@ -11,7 +11,7 @@
 |------|----------|
 | 编号   | TASK-005.1 |
 | Epic | EPIC-005 |
-| 状态   | In Progress |
+| 状态   | Review |
 | 优先级  | P0       |
 | 负责人  | Codex    |
 
@@ -74,5 +74,5 @@
 |----|----|
 | Branch | `main` |
 | Commit Message | `feat(TASK-005.1): implement why deeptrols page` |
-| Commit Hash | 待提交 |
-| Git Push | 待执行 |
+| Commit Hash | `1ec1a39` |
+| Git Push | 通过：已推送至 `origin/main` |
