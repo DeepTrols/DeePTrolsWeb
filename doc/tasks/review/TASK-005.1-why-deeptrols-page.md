@@ -77,4 +77,6 @@
 | Branch | `main` |
 | Commit Message | `feat(TASK-005.1): implement why deeptrols page` |
 | Commit Hash | `1ec1a39` |
+| Review Fix Commit Message | `fix(TASK-005.1): blend why hero visual` |
+| Review Fix Commit Hash | `47b2fde` |
 | Git Push | 通过：已推送至 `origin/main` |
