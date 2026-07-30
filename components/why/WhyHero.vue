@@ -47,7 +47,7 @@ import robotVisualSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/img
           <figure class="relative m-0 h-[360px] w-full overflow-hidden lg:h-full">
             <video
               :src="robotVisualSrc"
-              class="absolute left-1/2 top-1/2 h-[132%] w-[132%] !max-w-none -translate-x-1/2 -translate-y-1/2 object-cover object-center opacity-[0.94] mix-blend-screen [filter:saturate(1.08)_contrast(1.04)] [mask-image:radial-gradient(76%_72%_at_50%_48%,#000_58%,rgba(0,0,0,0.72)_74%,transparent_100%)]"
+              class="absolute left-1/2 top-[46%] h-[132%] w-[132%] !max-w-none -translate-x-1/2 -translate-y-1/2 object-cover object-center opacity-[0.94] mix-blend-screen [filter:saturate(1.08)_contrast(1.04)] [mask-image:radial-gradient(76%_72%_at_50%_48%,#000_58%,rgba(0,0,0,0.72)_74%,transparent_100%)]"
               aria-label="DeepTrols Agentic solution 工作流示意"
               autoplay
               loop

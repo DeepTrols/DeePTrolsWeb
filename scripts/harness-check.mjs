@@ -151,6 +151,7 @@ assert(
     whyHero.includes('h-[132%]') &&
     whyHero.includes('w-[132%]') &&
     whyHero.includes('!max-w-none') &&
+    whyHero.includes('top-[46%]') &&
     whyHero.includes('lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]') &&
     !whyHero.includes('video {'),
   'Why hero video must be enlarged with Tailwind v4 utilities without adding extra video CSS.',

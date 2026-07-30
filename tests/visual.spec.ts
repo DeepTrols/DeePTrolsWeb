@@ -113,6 +113,7 @@ describe('visual implementation contract', () => {
     expect(hero).toContain('h-[132%]')
     expect(hero).toContain('w-[132%]')
     expect(hero).toContain('!max-w-none')
+    expect(hero).toContain('top-[46%]')
     expect(hero).toContain('-translate-x-1/2')
     expect(hero).not.toContain('&::after')
     expect(hero).not.toContain('linear-gradient(180deg, var(--dt-color-bg) 0%')
