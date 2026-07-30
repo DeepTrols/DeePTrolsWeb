@@ -114,9 +114,9 @@
 | Branch         | `main` |
 | Commit Message | `chore(TASK-002.1): initialize project repository` |
 | Commit Hash    | `4c34240` |
-| Git Pull       | 未执行：尚未配置远程 `origin` |
+| Git Pull       | 未合并：按当前本地代码为准覆盖远端旧历史 |
 | Git Status     | 通过：本地 Git 仓库已恢复 |
-| Git Push       | 未执行：尚未配置远程 `origin` |
+| Git Push       | 通过：已推送至 `origin/main` |
 
 ## 测试结果
 | 命令 | 结果 |
@@ -181,9 +181,8 @@
 - `/private/tmp/deeptrols-emqx-width-hero-1920.png`
 
 ## 已知问题
-- 当前仓库尚未配置远程 `origin`，`git pull` 与 `git push` 无法执行。因此任务不能移动至 review。
 - 旧 dev server 仍有 `3000/3100/3200/3400` 残留监听；沙盒内 HTTP 不可达。当前最新预览使用非沙盒启动的 `http://127.0.0.1:3500/`。
 - Hero 运行代码已移除 TresJS/canvas 入口；后续 `TASK-002.1` 已移除 `@tresjs/core`、`three`、`@types/three` 残留依赖。
 
 ## 完成说明
-首页首版功能、EMQX 对齐修正、质量检查与浏览器验证已完成；本地 Git 已恢复并创建提交，推送因缺少远程 `origin` 阻塞，任务保持 In Progress。
+首页首版功能、EMQX 对齐修正、质量检查、浏览器验证、本地 Git 恢复与 GitHub 推送已完成；远端 `main` 已按当前本地提交覆盖，不合并远端旧历史。

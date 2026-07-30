@@ -101,10 +101,10 @@
 | Commit Message | `chore(TASK-002.1): initialize project repository` |
 | Commit Hash    | `4c34240` |
 | Git Status     | 通过：本地 Git 仓库已恢复 |
-| Git Push       | 未执行：尚未配置远程 `origin` |
+| Git Push       | 通过：已推送至 `origin/main` |
 
 ## 完成说明
-已完成代码规范排查、公共设计系统抽取、HOME 基准文档、Harness Engineering 脚本、产品文档同步、废弃依赖移除与本地 Git 恢复。任务保持 In Progress，因为当前仓库尚未配置远程 `origin`，无法 push 到 GitHub，也无法进入 Review。
+已完成代码规范排查、公共设计系统抽取、HOME 基准文档、Harness Engineering 脚本、产品文档同步、废弃依赖移除、本地 Git 恢复与 GitHub 推送。远端 `main` 已按当前本地提交覆盖，不合并远端旧历史。
 
 ## 测试结果
 | 命令 | 结果 |
@@ -123,5 +123,4 @@
 - Footer 顺序满足 `site-footer__main` -> `site-footer__socials` -> `site-footer__rule site-footer__rule--bottom`。
 
 ## 已知问题
-- 当前仓库尚未配置远程 `origin`，`git push` 无法执行。因此任务不能移动至 review。
 - `SiteHeader.vue`、`SiteFooter.vue`、`HomeCases.vue`、`HomeEcosystemVisual.vue` 等组件仍超过 300 行；本任务已先抽取公共视觉入口，后续建议单独拆分结构组件与 SVG 动画组件。
