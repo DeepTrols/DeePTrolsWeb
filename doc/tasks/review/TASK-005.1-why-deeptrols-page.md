@@ -89,4 +89,6 @@
 | Review Fix Commit Hash | `47b2fde` |
 | Hero Content Fix Commit Message | `fix(TASK-005.1): match why hero emqx content block` |
 | Hero Content Fix Commit Hash | `002b889` |
+| Hero Spacing/Trust Fix Commit Message | `fix(TASK-005.1): align why trust cards and hero spacing` |
+| Hero Spacing/Trust Fix Commit Hash | `02f7b0d` |
 | Git Push | 通过：已推送至 `origin/main` |
