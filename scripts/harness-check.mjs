@@ -41,7 +41,7 @@ const requiredFiles = [
   'doc/product/SITE_MAP.md',
   'doc/product/PAGE_REQUIREMENTS/HOME/HOME.md',
   'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/WhyDeepTrols.md',
-  'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/Agentic solution V1.gif',
+  'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm',
   'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
@@ -141,11 +141,11 @@ assert(
     !whyHero.includes('padding-bottom: 112px'),
   'Why hero spacing must follow the why-emqx Tailwind section rhythm.',
 )
-assert(whyHero.includes('Agentic solution V1.gif?url') && !whyHero.includes('new URL('), 'Why hero must import the required GIF via ?url to avoid SSR hydration mismatch.')
-assert(whyHero.includes('mix-blend-mode: screen') && whyHero.includes('mask-image: radial-gradient(76% 72% at 50% 48%'), 'Why hero GIF must blend into the banner background.')
-assert(whyHero.includes('linear-gradient(180deg, var(--dt-color-bg) 0%') && whyHero.includes('linear-gradient(90deg, var(--dt-color-bg) 0%'), 'Why hero GIF must include four-edge gradient overlay to the banner background.')
-assert(whyHero.includes('max-w-[760px]'), 'Why hero GIF visual size must remain enlarged.')
-assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero GIF must not use an outer framed card shadow.')
+assert(whyHero.includes('robot.webm?url') && whyHero.includes('<video') && !whyHero.includes('Agentic solution V1.gif') && !whyHero.includes('new URL('), 'Why hero must import the required robot WebM via ?url to avoid SSR hydration mismatch.')
+assert(whyHero.includes('mix-blend-mode: screen') && whyHero.includes('mask-image: radial-gradient(76% 72% at 50% 48%'), 'Why hero video must blend into the banner background.')
+assert(whyHero.includes('linear-gradient(180deg, var(--dt-color-bg) 0%') && whyHero.includes('linear-gradient(90deg, var(--dt-color-bg) 0%'), 'Why hero video must include four-edge gradient overlay to the banner background.')
+assert(whyHero.includes('max-w-[760px]'), 'Why hero video visual size must remain enlarged.')
+assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero video must not use an outer framed card shadow.')
 assert(whyTrustTabs.includes('SectionHeading'), 'Why trust tabs must reuse SectionHeading.')
 assert(whyTrustTabs.includes('dt-segmented-tabs') && whyTrustTabs.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
 assert(whyTrustTabs.includes('dt-product-card') && whyTrustTabs.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')

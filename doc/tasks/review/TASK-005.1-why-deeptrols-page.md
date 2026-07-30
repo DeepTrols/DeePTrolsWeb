@@ -33,7 +33,7 @@
 1. 新增 `/why-deeptrols` 路由页面，复用公共 Header 与 Footer。
 2. 按需求实现 Banner、客户 Logo、为什么值得信赖 Tabs、重塑服务、重塑引擎。
 3. 使用 HOME 页面视觉基准、公共按钮、公共标题、公共 Tab 与公共卡片样式。
-4. 接入需求指定素材：`Agentic solution V1.gif` 与 `fangangaishu@2x.png`。
+4. 接入需求指定素材：`robot.webm` 与 `fangangaishu@2x.png`。
 5. 增加内容与视觉契约测试。
 
 ---
@@ -52,6 +52,7 @@
 12. 根据 Review 反馈修正 `why-hero__content` 层级：使用 EMQX why Hero 同款 badge、H1 双行 block、描述块和 CTA actions 结构，`为什么选择 DeepTrols` 作为 badge，H1 使用 `数据、知识、智能统一` 与渐变 `企业级AI应用服务商`。
 13. 根据 Review 反馈移除 Why Hero 底部 padding，并将 `why-trust` 区域调整为 EMQX why 页面节奏：`pb-32/lg:pb-44`、标题区 `mb-12/lg:mb-16`、Tab 下 2x2 卡片、每个 Tab 4 张卡片、卡片 `p-7/lg:p-8` 与 48px icon。
 14. 根据 Review 反馈重新梳理 Why 页面全局节奏：Hero 改为 EMQX why 页面 `container pt-24 pb-24 lg:pt-32 lg:pb-32` 结构，Logo 区回到同一 Hero container 内的 `mt-24 border-t pt-12 lg:mt-28`，Trust/Service/Engine 全部通过 `dt-section relative pb-32 lg:pb-44` 与 Tailwind v4 utility 控制模块间距，并新增全局 `.dt-segmented-tabs` / `.dt-segmented-tab`。
+15. 根据 Review 反馈将 Why Hero 右侧素材从 `Agentic solution V1.gif` 替换为 `robot.webm`，使用 `<video autoplay loop muted playsinline>` 承载并继续通过 `?url` 静态导入，避免 SSR/client 资源路径不一致。
 
 ---
 ## 测试结果
@@ -69,19 +70,21 @@
 | Review fix: Hero 内容层级 | 通过，已补齐 badge、H1 block、描述块、actions 结构与 EMQX 4xl/5xl/6xl 字号节奏 |
 | Review fix: Hero padding 与 Trust 卡片布局 | 通过，Hero 底部 padding 已清零，Trust 区已改为 EMQX 2x2 卡片节奏 |
 | Review fix: Tailwind v4 全局节奏 | 通过，Why Hero、Trust、Service、Engine 已切换为 Tailwind utility + 全局 `dt-*` section/tab/card 入口 |
+| Review fix: Hero WebM 素材替换 | 通过，Hero 已使用 `robot.webm` `<video>`，旧 GIF 已从版本库移除 |
 | Browser verification | 通过，`127.0.0.1:3101/why-deeptrols` 桌面与移动 computed spacing 已复验，warning/error 控制台日志为 0 |
 
 ## SSR 验证
 - 使用生产构建 `HOST=127.0.0.1 PORT=3700 node .output/server/index.mjs` 启动预览。
-- `/why-deeptrols` SSR HTML 命中 `为什么选择`、`数据、知识、智能统一`、`立即咨询`、`为什么DeepTrols值得信赖`、四个 Tab、`业务价值可衡量，AI成果可持续`、`重塑引擎`、`DeepTrolsOPS企业AI引擎`、`FDE企业AI服务指南`、`site-header`、`site-footer`、`Agentic solution V1` 与 `fangangaishu`。
+- `/why-deeptrols` SSR HTML 命中 `为什么选择`、`数据、知识、智能统一`、`立即咨询`、`为什么DeepTrols值得信赖`、四个 Tab、`业务价值可衡量，AI成果可持续`、`重塑引擎`、`DeepTrolsOPS企业AI引擎`、`FDE企业AI服务指南`、`site-header`、`site-footer`、`robot.webm` 与 `fangangaishu`。
 - 使用生产构建 `HOST=127.0.0.1 PORT=3701 node .output/server/index.mjs` 复验 Hero 内容层级，SSR HTML 中 `为什么选择 DeepTrols`、`数据、知识、智能统一`、`企业级AI应用服务商`、描述和 CTA 均命中，且核心文案顺序正确。
 - 使用生产构建 `HOST=127.0.0.1 PORT=3702 node .output/server/index.mjs` 复验页面可访问，并通过源码契约检查 Hero badge、H1 双行 block、描述块、actions、字号和对齐规则。
 - 使用 dev server `127.0.0.1:3101` 复验 Tailwind v4 间距：桌面 Hero body `128px/128px`、Trust `padding-bottom: 176px`、卡片 `32px` padding；移动端 Hero body `96px/96px`、Trust/Service/Engine `padding-bottom: 128px`、卡片 `28px` padding。
 - 已修复 Why 页 GIF/PNG `new URL(...).href` 导致的 SSR/client `src` hydration mismatch，改为 `?url` 静态资源导入，浏览器 warning/error 日志为 0。
+- 使用 dev server `127.0.0.1:3101` 复验 WebM：`.why-hero__visual video` 命中，`autoplay`、`loop`、`muted`、`playsinline` 生效，视频资源路径为 `/_nuxt/doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm`，浏览器 warning/error 日志为 0。
 - 生产预览服务已停止。
 
 ## 已知问题
-- `Agentic solution V1.gif` 为需求指定素材，源文件约 28MB，生产构建会按原素材打包；如后续需要性能优化，应由产品确认是否允许转码或替换素材。
+- `robot.webm` 为需求指定素材，源文件约 16MB，生产构建会按原素材打包；如后续需要性能优化，应由产品确认是否允许进一步压缩。
 
 ---
 ## Git

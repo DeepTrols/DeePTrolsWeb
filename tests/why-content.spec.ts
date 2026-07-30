@@ -55,7 +55,7 @@ describe('why deeptrols content contract', () => {
   })
 
   it('uses the required Why page source assets from the product brief', () => {
-    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/Agentic solution V1.gif'))).toBe(true)
+    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm'))).toBe(true)
     expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png'))).toBe(true)
   })
 })

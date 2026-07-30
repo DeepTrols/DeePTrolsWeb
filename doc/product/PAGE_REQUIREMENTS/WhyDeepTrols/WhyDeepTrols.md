@@ -19,7 +19,7 @@ MQTT平台 -> 企业级AI应用服务商
 
 <div class="relative w-full max-w-lg" style="opacity: 1; transform: none;"><div class="pointer-events-none absolute inset-0 rotate-3 rounded-3xl bg-gradient-to-tr from-primary/15 to-primary/5 blur-2xl"></div><div class="relative grid grid-cols-2 gap-4 sm:gap-5"><div class=""><div class="group h-full rounded-2xl border border-default bg-default/70 p-6 shadow-xl shadow-primary/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-primary/10 sm:p-8 dark:bg-muted/40"><div class="mb-2 text-4xl font-black tracking-tight sm:text-5xl"><span class="gradient">
 这部分修改为
-doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/Agentic solution V1.gif
+doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm
 请调整到适合的宽高
 
 

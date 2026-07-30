@@ -2,7 +2,7 @@
 import { Sparkles } from '@lucide/vue'
 import BaseButton from '~/components/common/BaseButton.vue'
 import HomeCustomerLogos from '~/components/home/HomeCustomerLogos.vue'
-import agenticSolutionSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/Agentic solution V1.gif?url'
+import robotVisualSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm?url'
 </script>
 
 <template>
@@ -43,7 +43,15 @@ import agenticSolutionSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols
         <div class="why-hero__visual relative w-full max-w-[760px]">
           <div class="why-hero__visual-glow" aria-hidden="true"></div>
           <figure>
-            <img :src="agenticSolutionSrc" alt="DeepTrols Agentic solution 工作流示意" />
+            <video
+              :src="robotVisualSrc"
+              aria-label="DeepTrols Agentic solution 工作流示意"
+              autoplay
+              loop
+              muted
+              playsinline
+              preload="metadata"
+            ></video>
           </figure>
         </div>
       </div>
@@ -190,7 +198,7 @@ figure {
   }
 }
 
-img {
+video {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
