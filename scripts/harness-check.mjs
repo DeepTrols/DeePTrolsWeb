@@ -33,7 +33,9 @@ const requiredFiles = [
   'doc/tasks/TASK_TEMPLATE.md',
   'doc/tasks/in-progress/TASK-002.1-design-system-harness-refactor.md',
   'doc/tasks/review/TASK-002.2-code-audit-component-refactor.md',
+  'doc/tasks/review/TASK-002.3-common-section-components.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
+  'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/HOME_PAGE_BASELINE.md',
   'doc/engineering/HARNESS_ENGINEERING.md',
   'doc/product/BRAND_GUIDE.md',
@@ -49,6 +51,13 @@ const requiredFiles = [
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
   'components/common/SectionHeading.vue',
+  'components/common/PageHero.vue',
+  'components/common/HeroLogoStrip.vue',
+  'components/common/TrustTabsSection.vue',
+  'components/common/ServiceShowcaseSection.vue',
+  'components/common/EngineLinksSection.vue',
+  'components/common/ProductSystemSection.vue',
+  'components/common/CtaSection.vue',
   'components/layout/SiteFooter.vue',
   'components/layout/FooterSubscribe.vue',
   'components/layout/FooterMain.vue',
@@ -73,6 +82,7 @@ const requiredFiles = [
   'data/why.ts',
   'pages/why-deeptrols.vue',
   'components/why/WhyHero.vue',
+  'components/why/WhyHeroLogos.vue',
   'components/why/WhyTrustTabs.vue',
   'components/why/WhyServiceReset.vue',
   'components/why/WhyEngine.vue',
@@ -87,6 +97,13 @@ const tokens = read('assets/scss/main.scss')
 const packageJson = read('package.json')
 const baseButton = read('components/common/BaseButton.vue')
 const sectionHeading = read('components/common/SectionHeading.vue')
+const pageHero = read('components/common/PageHero.vue')
+const heroLogoStrip = read('components/common/HeroLogoStrip.vue')
+const trustTabsSection = read('components/common/TrustTabsSection.vue')
+const serviceShowcaseSection = read('components/common/ServiceShowcaseSection.vue')
+const engineLinksSection = read('components/common/EngineLinksSection.vue')
+const productSystemSection = read('components/common/ProductSystemSection.vue')
+const ctaSection = read('components/common/CtaSection.vue')
 const header = read('components/navigation/SiteHeader.vue')
 const headerDesktopNav = read('components/navigation/SiteHeaderDesktopNav.vue')
 const headerActions = read('components/navigation/SiteHeaderActions.vue')
@@ -112,6 +129,7 @@ const footerData = read('data/footer.ts')
 const whyData = read('data/why.ts')
 const whyPage = read('pages/why-deeptrols.vue')
 const whyHero = read('components/why/WhyHero.vue')
+const whyHeroLogos = read('components/why/WhyHeroLogos.vue')
 const whyTrustTabs = read('components/why/WhyTrustTabs.vue')
 const whyService = read('components/why/WhyServiceReset.vue')
 const whyEngine = read('components/why/WhyEngine.vue')
@@ -145,7 +163,7 @@ assert(sectionHeading.includes('titleId'), 'SectionHeading must support titleId 
 assert(sectionHeading.includes('nowrapSubtitle'), 'SectionHeading must support nowrapSubtitle.')
 
 for (const [name, source] of [
-  ['HomeCta', homeCta],
+  ['CtaSection', ctaSection],
   ['HomeCases', homeCases],
   ['HomeInsights', homeInsights],
   ['HomeSolutions', homeSolutions],
@@ -159,7 +177,10 @@ assert(homeCaseSlide.includes('BaseButton') && homeCaseSlide.includes('阅读案
 assert(homeCasesControls.includes('dt-icon-button'), 'HomeCasesControls must reuse shared icon button styling.')
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
 assert(homeSolutions.includes('dt-tab-list') && homeSolutions.includes('dt-tab'), 'HomeSolutions tabs must use shared dt-tab classes.')
-assert(productSystem.includes('dt-product-card') && productSystem.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
+assert(productSystem.includes('ProductSystemSection') && productSystem.includes('<EnterpriseFlow />'), 'HomeProductSystem must pass its flow chart through ProductSystemSection.')
+assert(productSystemSection.includes('dt-product-card') && productSystemSection.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
+assert(!productSystemSection.includes('EnterpriseFlow'), 'ProductSystemSection must not depend on a concrete flow chart implementation.')
+assert(homeCta.includes('CtaSection') && ctaSection.includes('dt-cta-panel'), 'HomeCta must reuse the shared CtaSection.')
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
 assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')
 assert(
@@ -186,51 +207,54 @@ assert(
   'Footer must stay split into content, socials, bottom legal, and data modules.',
 )
 assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why page must reuse global Header and Footer.')
-assert(whyPage.includes('WhyHero') && whyPage.includes('WhyTrustTabs') && whyPage.includes('WhyServiceReset') && whyPage.includes('WhyEngine'), 'Why page sections are incomplete.')
-assert(whyHero.includes('BaseButton') && whyHero.includes('HomeCustomerLogos'), 'Why hero must reuse BaseButton and HomeCustomerLogos.')
+assert(whyPage.includes('WhyHero') && whyPage.includes('WhyHeroLogos') && whyPage.includes('WhyTrustTabs') && whyPage.includes('WhyServiceReset') && whyPage.includes('WhyEngine'), 'Why page sections are incomplete.')
+assert(whyHero.includes('PageHero') && pageHero.includes('BaseButton'), 'Why hero must reuse the shared PageHero and BaseButton.')
+assert(!whyHero.includes('HomeCustomerLogos') && !whyHero.includes('why-hero__logos'), 'WhyHero must not own the hero logo strip.')
+assert(whyHeroLogos.includes('HeroLogoStrip') && whyHeroLogos.includes('HomeCustomerLogos'), 'Why hero logos must be extracted into a dedicated component.')
+assert(heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28'), 'HeroLogoStrip must own the hero logo spacing rhythm.')
 assert(
-  whyHero.includes('class="why-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2"') &&
-    whyHero.includes('<Sparkles class="why-hero__badge-icon"') &&
-    whyHero.includes('<span>为什么选择 DeepTrols</span>') &&
-    whyHero.includes('class="why-hero__title-line">数据、知识、智能统一</span>') &&
-    whyHero.includes('class="why-hero__title-gradient">企业级AI应用服务商</span>'),
+  pageHero.includes('class="page-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2"') &&
+    pageHero.includes('class="page-hero__badge-icon"') &&
+    whyHero.includes('badge="为什么选择 DeepTrols"') &&
+    whyHero.includes('title-line="数据、知识、智能统一"') &&
+    whyHero.includes('title-gradient="企业级AI应用服务商"'),
   'Why hero content hierarchy must follow the why-emqx replacement mapping.',
 )
-assert(whyHero.includes('font-size: 36px') && whyHero.includes('font-size: 48px') && whyHero.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
+assert(pageHero.includes('font-size: 36px') && pageHero.includes('font-size: 48px') && pageHero.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
 assert(
-  whyHero.includes('relative overflow-hidden bg-dt-bg') &&
-    whyHero.includes('pt-24 pb-24 lg:pt-32 lg:pb-32') &&
-    whyHero.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28') &&
-    !whyHero.includes('padding: 144px') &&
-    !whyHero.includes('padding-bottom: 112px'),
+  pageHero.includes('relative overflow-hidden bg-dt-bg') &&
+    pageHero.includes('pt-24 pb-24 lg:pt-32 lg:pb-32') &&
+    heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28') &&
+    !pageHero.includes('padding: 144px') &&
+    !pageHero.includes('padding-bottom: 112px'),
   'Why hero spacing must follow the why-emqx Tailwind section rhythm.',
 )
 assert(whyHero.includes('robot.webm?url') && whyHero.includes('<video') && !whyHero.includes('Agentic solution V1.gif') && !whyHero.includes('new URL('), 'Why hero must import the required robot WebM via ?url to avoid SSR hydration mismatch.')
 assert(whyHero.includes('mix-blend-screen') && whyHero.includes('[mask-image:radial-gradient(76%_72%_at_50%_48%'), 'Why hero video must blend into the banner background with Tailwind v4 utilities.')
 assert(!whyHero.includes('&::after') && !whyHero.includes('linear-gradient(180deg, var(--dt-color-bg) 0%') && !whyHero.includes('linear-gradient(90deg, var(--dt-color-bg) 0%'), 'Why hero figure must not keep the old four-edge gradient overlay.')
 assert(
-  whyHero.includes('max-w-[820px]') &&
-    whyHero.includes('self-stretch') &&
+  pageHero.includes('max-w-[820px]') &&
+    pageHero.includes('self-stretch') &&
     whyHero.includes('lg:h-full') &&
     whyHero.includes('h-[132%]') &&
     whyHero.includes('w-[132%]') &&
     whyHero.includes('!max-w-none') &&
     whyHero.includes('top-[46%]') &&
-    whyHero.includes('lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]') &&
+    pageHero.includes('lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]') &&
     !whyHero.includes('video {'),
   'Why hero video must be enlarged with Tailwind v4 utilities without adding extra video CSS.',
 )
 assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero video must not use an outer framed card shadow.')
-assert(whyTrustTabs.includes('SectionHeading'), 'Why trust tabs must reuse SectionHeading.')
-assert(whyTrustTabs.includes('dt-segmented-tabs') && whyTrustTabs.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
-assert(whyTrustTabs.includes('dt-product-card') && whyTrustTabs.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
-assert(whyTrustTabs.includes('class="why-trust dt-section relative pb-32 lg:pb-44"'), 'Why trust section must use Tailwind pb-32/lg:pb-44 rhythm.')
-assert(whyTrustTabs.includes('class="why-trust__heading mb-12 text-center lg:mb-16"'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
-assert(whyTrustTabs.includes('grid gap-5 md:grid-cols-2 lg:gap-6') && !whyTrustTabs.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
-assert(whyTrustTabs.includes('min-h-[280px] !p-7 lg:!p-8') && whyTrustTabs.includes('!size-12 !rounded-xl'), 'Why trust cards must follow EMQX Tailwind card padding and icon size.')
-assert(whyService.includes('dt-section relative pb-32 lg:pb-44') && whyEngine.includes('dt-section relative pb-32 lg:pb-44'), 'Why service and engine sections must share the EMQX section rhythm.')
-assert(whyService.includes('SectionHeading') && whyService.includes('fangangaishu@2x.png?url') && !whyService.includes('new URL('), 'Why service section must use SectionHeading and import the required overview image via ?url.')
-assert(whyEngine.includes('SectionHeading') && whyEngine.includes('whyEngineLinks'), 'Why engine section must reuse SectionHeading and configured links.')
+assert(whyTrustTabs.includes('TrustTabsSection') && trustTabsSection.includes('SectionHeading'), 'Why trust tabs must reuse TrustTabsSection and SectionHeading.')
+assert(trustTabsSection.includes('dt-segmented-tabs') && trustTabsSection.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
+assert(trustTabsSection.includes('dt-product-card') && trustTabsSection.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
+assert(trustTabsSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why trust section must use Tailwind pb-32/lg:pb-44 rhythm.')
+assert(trustTabsSection.includes('mb-12 text-center lg:mb-16'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
+assert(trustTabsSection.includes('grid gap-5 md:grid-cols-2 lg:gap-6') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
+assert(trustTabsSection.includes('min-h-[280px] !p-7 lg:!p-8') && trustTabsSection.includes('!size-12 !rounded-xl'), 'Why trust cards must follow EMQX Tailwind card padding and icon size.')
+assert(serviceShowcaseSection.includes('dt-section relative pb-32 lg:pb-44') && engineLinksSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why service and engine sections must share the EMQX section rhythm.')
+assert(whyService.includes('ServiceShowcaseSection') && serviceShowcaseSection.includes('SectionHeading') && whyService.includes('fangangaishu@2x.png?url') && !whyService.includes('new URL('), 'Why service section must use ServiceShowcaseSection and import the required overview image via ?url.')
+assert(whyEngine.includes('EngineLinksSection') && whyEngine.includes('whyEngineLinks') && engineLinksSection.includes('SectionHeading'), 'Why engine section must reuse EngineLinksSection and configured links.')
 assert(whyData.includes('label: \'面向技术层\'') && whyData.includes('label: \'面向业务层\'') && whyData.includes('label: \'面向服务层\'') && whyData.includes('label: \'面向长期价值\''), 'Why page must define four trust tabs.')
 const whyTrustFeatureGroups = [...whyData.matchAll(/label: '[^']+',[\s\S]*?features: \[([\s\S]*?)\n {4}\],/g)]
 assert(

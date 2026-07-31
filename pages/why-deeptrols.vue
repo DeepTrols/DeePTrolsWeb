@@ -3,6 +3,7 @@ import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import WhyEngine from '~/components/why/WhyEngine.vue'
 import WhyHero from '~/components/why/WhyHero.vue'
+import WhyHeroLogos from '~/components/why/WhyHeroLogos.vue'
 import WhyServiceReset from '~/components/why/WhyServiceReset.vue'
 import WhyTrustTabs from '~/components/why/WhyTrustTabs.vue'
 
@@ -19,6 +20,7 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content" class="why-page">
       <WhyHero />
+      <WhyHeroLogos />
       <WhyTrustTabs />
       <WhyServiceReset />
       <WhyEngine />

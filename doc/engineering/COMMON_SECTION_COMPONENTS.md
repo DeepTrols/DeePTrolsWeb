@@ -1,0 +1,100 @@
+# 公共页面区块组件
+
+> Version: 2026-07-31
+
+本文件约束官网后续页面复用区块的方式。除非页面需求明确提出特殊结构，否则应优先复用本文件中的公共组件，避免各页面在标题层级、间距、按钮、卡片和 hover 行为上出现偏差。
+
+## Hero
+公共组件：`components/common/PageHero.vue`
+
+适用场景：
+- Why、About、Product、Solution 等页面首屏。
+- 需要 EMQX 风格背景网格、左右 glow、胶囊 eyebrow、双行标题、描述与两个 CTA 的页面。
+
+使用要求：
+- 页面组件只传入 `badge`、`titleLine`、`titleGradient`、`description`、`actions`。
+- 视觉素材通过 `#visual` slot 传入。
+- `PageHero` 不承载客户 logo；logo 必须通过独立区块渲染。
+
+## Hero Logo Strip
+公共组件：`components/common/HeroLogoStrip.vue`
+
+适用场景：
+- Hero 下方的客户 logo 或合作伙伴 logo 区域。
+
+使用要求：
+- 通过默认 slot 传入 logo 列表组件。
+- Why DeepTrols 当前使用 `components/why/WhyHeroLogos.vue` 接入 `HomeCustomerLogos`。
+
+## Trust Tabs
+公共组件：`components/common/TrustTabsSection.vue`
+
+适用场景：
+- 多维度说明“为什么选择/为什么可信/能力优势”的 tab + 卡片区块。
+
+使用要求：
+- Tab 使用 `.dt-segmented-tabs` 与 `.dt-segmented-tab`。
+- 卡片使用 `.dt-product-card`、`.dt-product-card__accent`、`.dt-icon-box`。
+- 卡片网格固定为 `grid gap-5 md:grid-cols-2 lg:gap-6`。
+- 每个 tab 建议 4 张卡片，保持 Why 页面基准节奏。
+
+## Service Showcase
+公共组件：`components/common/ServiceShowcaseSection.vue`
+
+适用场景：
+- 左侧标题与能力列表，右侧图像/方案图的服务说明区块。
+
+使用要求：
+- 能力列表数据通过 `items` 传入。
+- 右侧图片通过 `imageSrc` 与 `imageAlt` 传入。
+- 不在页面内重复实现卡片 hover、圆角和间距。
+
+## Engine Links
+公共组件：`components/common/EngineLinksSection.vue`
+
+适用场景：
+- 左侧链接卡片，右侧说明文字的资源/引擎/方法论推荐区块。
+
+使用要求：
+- 链接数据通过 `links` 传入。
+- 右侧标题区继续使用 `SectionHeading`。
+- 链接卡片 hover 上移和 glow 效果由公共组件统一控制。
+
+## Product System
+公共组件：`components/common/ProductSystemSection.vue`
+
+适用场景：
+- 产品体系、平台体系、能力架构类区块。
+
+使用要求：
+- 标题、移动端输入输出能力和底部产品卡片通过 props 传入。
+- 桌面流程图通过 `#desktop-flow` slot 传入。
+- 公共组件不得直接依赖 `EnterpriseFlow.client.vue` 或任何具体流程图，后续页面可自由传入自己的流程图。
+- 底部卡片保持 `.dt-product-card`、`.dt-product-card__accent`、`.dt-icon-box`。
+
+## CTA
+公共组件：`components/common/CtaSection.vue`
+
+适用场景：
+- 页面底部行动号召。
+
+使用要求：
+- 使用 `dt-cta-panel` 与 `BaseButton`。
+- 页面只传入标题、描述和按钮数组。
+- 不在页面内复制 CTA panel 样式。
+
+## 质量约束
+- 所有公共区块组件必须小于等于 300 行。
+- 公共区块组件必须使用 `<script setup lang="ts">` 与 `<style scoped lang="scss">`。
+- 禁止在公共组件中使用未处理的 `@apply`。
+- 禁止新增 inline style。Header 主导航规定的 `style="position:relative;"` 是唯一例外。
+- 修改公共区块后必须执行：
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm test:visual
+pnpm harness:engineering
+pnpm build
+```
