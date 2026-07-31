@@ -104,7 +104,7 @@
 |----|----|
 | Branch | `main` |
 | Commit Message | `refactor(TASK-002.3): extract shared section components` |
-| Commit Hash | 待更新 |
+| Commit Hash | `40f07b5` |
 
 ## 完成说明
 公共区块已抽离，Why/Home 页面现有视觉和内容由页面封装组件传入公共组件。`doc/product/PAGE_REQUIREMENTS/PRODUCT/` 仍为未跟踪目录，本任务未修改。
