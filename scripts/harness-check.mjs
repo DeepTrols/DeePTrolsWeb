@@ -34,6 +34,7 @@ const requiredFiles = [
   'doc/tasks/in-progress/TASK-002.1-design-system-harness-refactor.md',
   'doc/tasks/review/TASK-002.2-code-audit-component-refactor.md',
   'doc/tasks/review/TASK-002.3-common-section-components.md',
+  'doc/tasks/review/TASK-002.4-why-logo-strip-cta-fix.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/HOME_PAGE_BASELINE.md',
@@ -207,11 +208,27 @@ assert(
   'Footer must stay split into content, socials, bottom legal, and data modules.',
 )
 assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why page must reuse global Header and Footer.')
-assert(whyPage.includes('WhyHero') && whyPage.includes('WhyHeroLogos') && whyPage.includes('WhyTrustTabs') && whyPage.includes('WhyServiceReset') && whyPage.includes('WhyEngine'), 'Why page sections are incomplete.')
+assert(
+  whyPage.includes('WhyHero') &&
+    whyPage.includes('WhyHeroLogos') &&
+    whyPage.includes('WhyTrustTabs') &&
+    whyPage.includes('WhyServiceReset') &&
+    whyPage.includes('WhyEngine') &&
+    whyPage.includes('CtaSection') &&
+    whyPage.includes('whyCtaActions'),
+  'Why page sections are incomplete.',
+)
 assert(whyHero.includes('PageHero') && pageHero.includes('BaseButton'), 'Why hero must reuse the shared PageHero and BaseButton.')
 assert(!whyHero.includes('HomeCustomerLogos') && !whyHero.includes('why-hero__logos'), 'WhyHero must not own the hero logo strip.')
 assert(whyHeroLogos.includes('HeroLogoStrip') && whyHeroLogos.includes('HomeCustomerLogos'), 'Why hero logos must be extracted into a dedicated component.')
-assert(heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28'), 'HeroLogoStrip must own the hero logo spacing rhythm.')
+assert(
+  whyHero.includes('flush-bottom') &&
+    heroLogoStrip.includes('class="container"') &&
+    heroLogoStrip.includes('hero-logo-strip__inner mt-24 border-t border-dt-line pt-12 lg:mt-28') &&
+    heroLogoStrip.includes('padding-bottom: 96px') &&
+    heroLogoStrip.includes('padding-bottom: 128px'),
+  'HeroLogoStrip must restore the original contained width and hero logo spacing rhythm.',
+)
 assert(
   pageHero.includes('class="page-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2"') &&
     pageHero.includes('class="page-hero__badge-icon"') &&
@@ -223,7 +240,8 @@ assert(
 assert(pageHero.includes('font-size: 36px') && pageHero.includes('font-size: 48px') && pageHero.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
 assert(
   pageHero.includes('relative overflow-hidden bg-dt-bg') &&
-    pageHero.includes('pt-24 pb-24 lg:pt-32 lg:pb-32') &&
+    pageHero.includes('pt-24 lg:pt-32') &&
+    pageHero.includes("flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'") &&
     heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28') &&
     !pageHero.includes('padding: 144px') &&
     !pageHero.includes('padding-bottom: 112px'),

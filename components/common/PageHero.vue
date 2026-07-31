@@ -18,10 +18,12 @@ withDefaults(
     description: string
     actions: PageHeroAction[]
     visualLabel?: string
+    flushBottom?: boolean
   }>(),
   {
     badgeIcon: undefined,
     visualLabel: undefined,
+    flushBottom: false,
   },
 )
 </script>
@@ -34,7 +36,10 @@ withDefaults(
       <div class="page-hero__glow page-hero__glow--right"></div>
     </div>
 
-    <div class="container page-hero__body relative pt-24 pb-24 lg:pt-32 lg:pb-32">
+    <div
+      class="container page-hero__body relative pt-24 lg:pt-32"
+      :class="flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'"
+    >
       <div
         class="page-hero__inner flex flex-col items-center gap-12 lg:grid lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)] lg:items-stretch lg:justify-center lg:gap-16"
       >

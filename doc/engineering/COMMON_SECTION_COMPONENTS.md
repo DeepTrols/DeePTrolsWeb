@@ -24,6 +24,8 @@
 
 使用要求：
 - 通过默认 slot 传入 logo 列表组件。
+- 组件内部自带 `.container`，不要在页面外层重复包裹容器。
+- 当 logo strip 紧跟 `PageHero` 时，Hero 应启用 `flushBottom`，由 `HeroLogoStrip` 承接底部留白。
 - Why DeepTrols 当前使用 `components/why/WhyHeroLogos.vue` 接入 `HomeCustomerLogos`。
 
 ## Trust Tabs

@@ -19,6 +19,7 @@ const heroActions = [
     description="从数据工程、知识工程到智能体应用，DeepTrols 为企业提供可落地、可交付、可持续演进的 AI 服务。"
     :actions="heroActions"
     visual-label="DeepTrols Agentic solution 工作流示意"
+    flush-bottom
   >
     <template #visual>
       <figure class="why-hero__figure relative m-0 h-[360px] w-full overflow-hidden lg:h-full">
