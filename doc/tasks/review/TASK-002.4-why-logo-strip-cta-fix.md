@@ -84,7 +84,7 @@
 |----|----|
 | Branch | `main` |
 | Commit Message | `fix(TASK-002.4): restore why logo strip rhythm` |
-| Commit Hash | 提交后回填 |
+| Commit Hash | `12d32a0` |
 
 ## 完成说明
 已修复 Why DeepTrols 页面 Hero Logo Strip 抽离后的宽度和区块间距问题，并在 Footer 前增加复用型 CTA 区块。相关约束已进入 Visual Test 与 Harness Engineering，防止后续公共组件复用时再次偏移。
