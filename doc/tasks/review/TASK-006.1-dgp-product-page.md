@@ -117,7 +117,7 @@
 |----|----|
 | Branch | `main` |
 | Commit Message | `fix(TASK-006.1): refine data governance product layout` |
-| Commit Hash | 待回填 |
+| Commit Hash | `3792bb4ebcf4c4130723dc4ff9f6bbaf13004586` |
 
 ## 完成说明
 已按照 DGP.md 完成产品页实现，并根据复核反馈修复 Hero 视觉尺寸、核心/能力卡片、产品架构占位、企业级数据治理配图、应用场景 tabs 与产品页源码级 class 结构。页面内容、区块结构、Hero 本地素材、公共组件复用和 Harness Engineering 均已纳入验证。
