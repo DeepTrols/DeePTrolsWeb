@@ -16,7 +16,7 @@ const activeUseCase = computed(() => dgpUseCases.find((item) => item.key === act
       >
         推动企业数据基础设施建设
       </h2>
-      <p class="mb-6 text-center text-base text-default md:mb-8 md:text-xl lg:mb-12 sm:text-lg !mb-6">
+      <p class="mb-6 text-center text-base text-default md:mb-8 md:text-xl lg:mb-12 lg:whitespace-nowrap sm:text-lg !mb-6">
         构建统一的数据治理体系，帮助企业实现数据标准化、资产化与智能化，持续释放数据价值。
       </p>
 

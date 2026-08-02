@@ -12,7 +12,7 @@ import { dgpEvolutionItems } from '~/data/dgp'
       >
         企业数据治理体系的演进
       </h2>
-      <p class="mb-6 text-base text-default md:mb-8 md:text-xl lg:mb-12 sm:text-lg !mb-0">
+      <p class="mb-6 text-base text-default md:mb-8 md:text-xl lg:mb-12 lg:whitespace-nowrap sm:text-lg !mb-0">
         数曜·治理数据平台提供统一的数据治理底座，贯通数据接入、治理、资产与服务，持续沉淀高质量、可信赖的数据资产。
       </p>
     </div>

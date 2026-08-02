@@ -204,6 +204,8 @@ assert(baseButton.includes('data-slot="label"'), 'BaseButton must own data-slot=
 assert(baseButton.includes('data-slot="trailingIcon"'), 'BaseButton must own data-slot="trailingIcon".')
 assert(sectionHeading.includes('titleId'), 'SectionHeading must support titleId for aria-labelledby.')
 assert(sectionHeading.includes('nowrapSubtitle'), 'SectionHeading must support nowrapSubtitle.')
+assert(sectionHeading.includes('section-heading--nowrap-subtitle'), 'SectionHeading nowrap mode must expose a desktop-wide wrapper class.')
+assert(sectionHeading.includes('max-width: none'), 'SectionHeading nowrap mode must remove the desktop max-width limit.')
 
 for (const [name, source] of [
   ['CtaSection', ctaSection],
@@ -390,7 +392,8 @@ assert(
     dgpPage.includes('DgpEvolutionSection') &&
     dgpPage.includes('DgpUseCasesSection') &&
     dgpPage.includes('CtaSection') &&
-    dgpPage.includes('title-id="dgp-cta-title"'),
+    dgpPage.includes('title-id="dgp-cta-title"') &&
+    dgpPage.includes('nowrap-subtitle'),
   'DGP page must compose the required product sections with global Header, Footer, and CtaSection.',
 )
 assert(
@@ -419,8 +422,8 @@ assert(
     dgpArchitecture.includes('ProductSystemFlowFrame') &&
     dgpArchitecture.includes('产品架构图占位符') &&
     dgpArchitecture.includes('content-flush') &&
-    dgpArchitecture.includes(':heading-wide="false"') &&
-    dgpArchitecture.includes(':nowrap-subtitle="false"') &&
+    !dgpArchitecture.includes(':heading-wide="false"') &&
+    !dgpArchitecture.includes(':nowrap-subtitle="false"') &&
     dgpArchitecture.includes('SystemCards') &&
     !dgpArchitecture.includes('EnterpriseFlow'),
   'DGP architecture must reuse ProductSystemSection, flow background placeholder, and SystemCards without a flow chart.',
@@ -431,6 +434,7 @@ assert(
     dgpEvolution.includes('mb-12 flex flex-col items-center gap-2 text-center lg:mb-16') &&
     dgpEvolution.includes('text-sm font-semibold uppercase tracking-wide text-primary') &&
     dgpEvolution.includes('text-4xl font-bold leading-[1.2] tracking-tight text-highlighted') &&
+    dgpEvolution.includes('lg:whitespace-nowrap') &&
     dgpEvolution.includes('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80') &&
     dgpEvolution.includes('lg:grid-cols-2 lg:gap-12') &&
     dgpEvolution.includes('图片占位符') &&
@@ -443,6 +447,7 @@ assert(
   dgpUseCases.includes('class="pb-32 lg:pb-44"') &&
     dgpUseCases.includes('text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted') &&
     dgpUseCases.includes('text-center text-base text-default') &&
+    dgpUseCases.includes('lg:whitespace-nowrap') &&
     dgpUseCases.includes('role="tablist"') &&
     dgpUseCases.includes('data-slot="root"') &&
     dgpUseCases.includes('data-slot="list"') &&

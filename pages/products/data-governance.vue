@@ -26,6 +26,7 @@ useSeoMeta({
         title-id="dgp-core-value-title"
         subtitle="让治理好的数据，安全、高效、稳定地供给业务"
         :items="dgpCoreValues"
+        nowrap-subtitle
       />
       <DgpArchitecture />
       <ProductFeatureGridSection
@@ -34,6 +35,7 @@ useSeoMeta({
         title-id="dgp-capability-title"
         subtitle="统一连接企业多源数据，构建覆盖接入、治理、资产与服务的全生命周期数据治理体系，让数据真正成为企业数字化与 AI 创新的核心生产力。"
         :items="dgpCapabilities"
+        nowrap-subtitle
       />
       <DgpEvolutionSection />
       <DgpUseCasesSection />

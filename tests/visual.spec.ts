@@ -87,6 +87,7 @@ describe('visual implementation contract', () => {
     expect(page).toContain('为什么选择数曜·治理数据平台')
     expect(page).toContain('开启企业数据治理新征程')
     expect(page).toContain('title-id="dgp-cta-title"')
+    expect(page).toContain('nowrap-subtitle')
     expect(page).not.toContain('top-padding')
 
     expect(hero).toContain('PageHero')
@@ -128,8 +129,8 @@ describe('visual implementation contract', () => {
     expect(architecture).toContain('ProductSystemFlowFrame')
     expect(architecture).toContain('产品架构图占位符')
     expect(architecture).toContain('content-flush')
-    expect(architecture).toContain(':heading-wide="false"')
-    expect(architecture).toContain(':nowrap-subtitle="false"')
+    expect(architecture).not.toContain(':heading-wide="false"')
+    expect(architecture).not.toContain(':nowrap-subtitle="false"')
     expect(architecture).toContain('SystemCards')
     expect(architecture).not.toContain('EnterpriseFlow')
 
@@ -144,6 +145,7 @@ describe('visual implementation contract', () => {
     expect(evolution).toContain('mb-12 flex flex-col items-center gap-2 text-center lg:mb-16')
     expect(evolution).toContain('text-sm font-semibold uppercase tracking-wide text-primary')
     expect(evolution).toContain('text-4xl font-bold leading-[1.2] tracking-tight text-highlighted')
+    expect(evolution).toContain('lg:whitespace-nowrap')
     expect(evolution).toContain('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80')
     expect(evolution).toContain('lg:grid-cols-2 lg:gap-12')
     expect(evolution).toContain('图片占位符')
@@ -154,6 +156,7 @@ describe('visual implementation contract', () => {
     expect(useCases).toContain('class="pb-32 lg:pb-44"')
     expect(useCases).toContain('text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted')
     expect(useCases).toContain('text-center text-base text-default')
+    expect(useCases).toContain('lg:whitespace-nowrap')
     expect(useCases).toContain('role="tablist"')
     expect(useCases).toContain('data-slot="root"')
     expect(useCases).toContain('data-slot="list"')
@@ -347,6 +350,8 @@ describe('visual implementation contract', () => {
     const footerSources = [siteFooter, footerSubscribe, footerMain, footerSocials, footerBottom, footerData].join('\n')
     const enterpriseFlow = readComponent('components/flow/EnterpriseFlow.client.vue')
 
+    expect(sectionHeading).toContain('section-heading--nowrap-subtitle')
+    expect(sectionHeading).toContain('max-width: none')
     expect(tailwind).toContain('@import "tailwindcss"')
     expect(tailwind).toContain('@theme inline')
     expect(tailwind).toContain('--color-dt-primary: var(--dt-color-primary)')

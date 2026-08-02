@@ -21,7 +21,14 @@ withDefaults(
 </script>
 
 <template>
-  <header class="section-heading dt-section-heading" :class="[`section-heading--${align}`, `section-heading--${tone}`]">
+  <header
+    class="section-heading dt-section-heading"
+    :class="[
+      `section-heading--${align}`,
+      `section-heading--${tone}`,
+      { 'section-heading--nowrap-subtitle': nowrapSubtitle },
+    ]"
+  >
     <p v-if="eyebrow" class="section-heading__eyebrow">{{ eyebrow }}</p>
     <h2 :id="titleId">{{ title }}</h2>
     <p v-if="subtitle" class="section-heading__subtitle" :class="{ 'section-heading__subtitle--nowrap': nowrapSubtitle }">
@@ -69,6 +76,12 @@ h2 {
 .section-heading__subtitle--nowrap {
   @media (min-width: 1024px) {
     white-space: nowrap;
+  }
+}
+
+.section-heading--nowrap-subtitle {
+  @media (min-width: 1024px) {
+    max-width: none;
   }
 }
 
