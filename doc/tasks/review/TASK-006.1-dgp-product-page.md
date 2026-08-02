@@ -103,7 +103,7 @@
 |----|----|
 | Branch | `main` |
 | Commit Message | `feat(TASK-006.1): implement data governance product page` |
-| Commit Hash | 待回填 |
+| Commit Hash | `2c9f661457b83fe36abe12b77094b25e65342c79` |
 
 ## 完成说明
 已按照 DGP.md 完成产品页实现。页面内容、区块结构、Hero 本地素材、公共组件复用和 Harness Engineering 均已纳入验证。
