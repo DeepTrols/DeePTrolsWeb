@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import SectionHeading from '~/components/common/SectionHeading.vue'
 
-defineProps<{
-  eyebrow: string
-  title: string
-  titleId: string
-  subtitle: string
-}>()
+withDefaults(
+  defineProps<{
+    eyebrow: string
+    title: string
+    titleId: string
+    subtitle: string
+    contentFlush?: boolean
+  }>(),
+  {
+    contentFlush: false,
+  },
+)
 </script>
 
 <template>
   <section class="section product-system" :aria-labelledby="titleId">
     <div class="container">
       <SectionHeading
-        :id="titleId"
+        :title-id="titleId"
         :eyebrow="eyebrow"
         :title="title"
         :subtitle="subtitle"
@@ -21,7 +27,7 @@ defineProps<{
         nowrap-subtitle
       />
 
-      <div class="product-system__content">
+      <div class="product-system__content" :class="{ '!mt-0': contentFlush }">
         <slot />
       </div>
     </div>

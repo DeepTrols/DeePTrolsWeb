@@ -64,6 +64,84 @@ describe('visual implementation contract', () => {
     expect(readComponent('components/home/HomeProductSystemMobileFlow.vue')).toContain('product-system__mobile-flow')
   })
 
+  it('keeps the DGP product page aligned with its requirement document', () => {
+    const page = readComponent('pages/products/data-governance.vue')
+    const hero = readComponent('components/product/dgp/DgpHero.vue')
+    const heroVisual = readComponent('components/product/dgp/DgpHeroVisual.vue')
+    const featureGrid = readComponent('components/common/ProductFeatureGridSection.vue')
+    const architecture = readComponent('components/product/dgp/DgpArchitecture.vue')
+    const systemCards = readComponent('components/common/SystemCards.vue')
+    const evolution = readComponent('components/product/dgp/DgpEvolutionSection.vue')
+    const useCases = readComponent('components/product/dgp/DgpUseCasesSection.vue')
+    const data = readComponent('data/dgp.ts')
+
+    expect(page).toContain('SiteHeader')
+    expect(page).toContain('SiteFooter')
+    expect(page).toContain('DgpHero')
+    expect(page).toContain('ProductFeatureGridSection')
+    expect(page).toContain('DgpArchitecture')
+    expect(page).toContain('DgpEvolutionSection')
+    expect(page).toContain('DgpUseCasesSection')
+    expect(page).toContain('CtaSection')
+    expect(page).toContain('为什么选择数曜·治理数据平台')
+    expect(page).toContain('开启企业数据治理新征程')
+    expect(page).toContain('title-id="dgp-cta-title"')
+
+    expect(hero).toContain('PageHero')
+    expect(hero).toContain('import { Database }')
+    expect(hero).toContain('badge="数曜·数据治理平台"')
+    expect(hero).toContain('title-line="可用、可管、可信"')
+    expect(hero).toContain('title-gradient="企业数据底座"')
+    expect(hero).toContain('visual-label="SHUYAODGP_HORE_WEBM"')
+    expect(hero).toContain('DgpHeroVisual')
+
+    expect(heroVisual).toContain('ban-shape1.png?url')
+    expect(heroVisual).toContain('ban-shape2.png?url')
+    expect(heroVisual).toContain('ban-shape3.png?url')
+    expect(heroVisual).toContain('ruizhi1.png?url')
+    expect(heroVisual).toContain('<animateMotion')
+    expect(heroVisual).toContain('motion-safe:animate-pulse')
+    expect(heroVisual).not.toContain('esenruizhi.com')
+
+    expect(featureGrid).toContain('SectionHeading')
+    expect(featureGrid).toContain("props.topPadding ? 'pt-24' : ''")
+    expect(featureGrid).toContain('md:grid-cols-2 lg:grid-cols-4')
+    expect(featureGrid).toContain(':title-id="titleId"')
+    expect(featureGrid).not.toContain('<style')
+
+    expect(architecture).toContain('ProductSystemSection')
+    expect(architecture).toContain('content-flush')
+    expect(architecture).toContain('SystemCards')
+    expect(architecture).not.toContain('EnterpriseFlow')
+
+    expect(systemCards).toContain('mt-10 grid gap-4 md:grid-cols-3 lg:mt-12')
+    expect(systemCards).toContain('rounded-2xl border border-dt-line')
+    expect(systemCards).toContain('hover:border-dt-primary/40')
+    expect(systemCards).not.toContain('<style')
+
+    expect(evolution).toContain('企业数据治理体系的演进')
+    expect(evolution).toContain('lg:grid-cols-2 lg:gap-12')
+    expect(evolution).toContain('图片占位符')
+    expect(evolution).not.toContain('<style')
+
+    expect(useCases).toContain('role="tablist"')
+    expect(useCases).toContain('class="dt-tab"')
+    expect(useCases).toContain('role="tabpanel"')
+    expect(useCases).toContain('BaseButton')
+    expect(useCases).toContain('了解更多')
+    expect(useCases).not.toContain('<style')
+
+    for (const text of [
+      '让数据快速可用',
+      '数据接入',
+      '数据集成',
+      '政务数据治理',
+      '物联数据汇聚与治理',
+    ]) {
+      expect(data).toContain(text)
+    }
+  })
+
   it('keeps the Why DeepTrols page on the shared HOME baseline', () => {
     const page = readComponent('pages/why-deeptrols.vue')
     const pageHero = readComponent('components/common/PageHero.vue')

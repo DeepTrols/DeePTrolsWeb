@@ -36,6 +36,7 @@ const requiredFiles = [
   'doc/tasks/review/TASK-002.3-common-section-components.md',
   'doc/tasks/review/TASK-002.4-why-logo-strip-cta-fix.md',
   'doc/tasks/review/TASK-002.5-product-system-section-split.md',
+  'doc/tasks/review/TASK-006.1-dgp-product-page.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/HOME_PAGE_BASELINE.md',
@@ -49,6 +50,11 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/WhyDeepTrols.md',
   'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm',
   'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/DGP.md',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape1.png',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape2.png',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape3.png',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ruizhi1.png',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
@@ -58,9 +64,11 @@ const requiredFiles = [
   'components/common/TrustTabsSection.vue',
   'components/common/ServiceShowcaseSection.vue',
   'components/common/EngineLinksSection.vue',
+  'components/common/ProductFeatureGridSection.vue',
   'components/common/ProductSystemSection.vue',
   'components/common/ProductSystemFlowFrame.vue',
   'components/common/ProductSystemCards.vue',
+  'components/common/SystemCards.vue',
   'components/common/CtaSection.vue',
   'components/layout/SiteFooter.vue',
   'components/layout/FooterSubscribe.vue',
@@ -86,12 +94,19 @@ const requiredFiles = [
   'data/footer.ts',
   'data/ecosystemVisual.ts',
   'data/why.ts',
+  'data/dgp.ts',
   'pages/why-deeptrols.vue',
+  'pages/products/data-governance.vue',
   'components/why/WhyHero.vue',
   'components/why/WhyHeroLogos.vue',
   'components/why/WhyTrustTabs.vue',
   'components/why/WhyServiceReset.vue',
   'components/why/WhyEngine.vue',
+  'components/product/dgp/DgpHero.vue',
+  'components/product/dgp/DgpHeroVisual.vue',
+  'components/product/dgp/DgpArchitecture.vue',
+  'components/product/dgp/DgpEvolutionSection.vue',
+  'components/product/dgp/DgpUseCasesSection.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -108,9 +123,11 @@ const heroLogoStrip = read('components/common/HeroLogoStrip.vue')
 const trustTabsSection = read('components/common/TrustTabsSection.vue')
 const serviceShowcaseSection = read('components/common/ServiceShowcaseSection.vue')
 const engineLinksSection = read('components/common/EngineLinksSection.vue')
+const productFeatureGridSection = read('components/common/ProductFeatureGridSection.vue')
 const productSystemSection = read('components/common/ProductSystemSection.vue')
 const productSystemFlowFrame = read('components/common/ProductSystemFlowFrame.vue')
 const productSystemCards = read('components/common/ProductSystemCards.vue')
+const systemCards = read('components/common/SystemCards.vue')
 const ctaSection = read('components/common/CtaSection.vue')
 const header = read('components/navigation/SiteHeader.vue')
 const headerDesktopNav = read('components/navigation/SiteHeaderDesktopNav.vue')
@@ -143,6 +160,13 @@ const whyHeroLogos = read('components/why/WhyHeroLogos.vue')
 const whyTrustTabs = read('components/why/WhyTrustTabs.vue')
 const whyService = read('components/why/WhyServiceReset.vue')
 const whyEngine = read('components/why/WhyEngine.vue')
+const dgpData = read('data/dgp.ts')
+const dgpPage = read('pages/products/data-governance.vue')
+const dgpHero = read('components/product/dgp/DgpHero.vue')
+const dgpHeroVisual = read('components/product/dgp/DgpHeroVisual.vue')
+const dgpArchitecture = read('components/product/dgp/DgpArchitecture.vue')
+const dgpEvolution = read('components/product/dgp/DgpEvolutionSection.vue')
+const dgpUseCases = read('components/product/dgp/DgpUseCasesSection.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -221,6 +245,21 @@ assert(
   'Home product mobile flow must be isolated from ProductSystemSection.',
 )
 assert(productSystemCards.includes('dt-product-card') && productSystemCards.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
+assert(
+  productFeatureGridSection.includes('SectionHeading') &&
+    productFeatureGridSection.includes("props.topPadding ? 'pt-24' : ''") &&
+    productFeatureGridSection.includes('md:grid-cols-2 lg:grid-cols-4') &&
+    productFeatureGridSection.includes(':title-id="titleId"') &&
+    !productFeatureGridSection.includes('<style'),
+  'ProductFeatureGridSection must provide a Tailwind-only reusable product feature grid.',
+)
+assert(
+  systemCards.includes('mt-10 grid gap-4 md:grid-cols-3 lg:mt-12') &&
+    systemCards.includes('rounded-2xl border border-dt-line') &&
+    systemCards.includes('hover:border-dt-primary/40') &&
+    !systemCards.includes('<style'),
+  'SystemCards must provide the FlowMQ-like Tailwind system card grid.',
+)
 assert(homeCta.includes('CtaSection') && ctaSection.includes('dt-cta-panel'), 'HomeCta must reuse the shared CtaSection.')
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
 assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')
@@ -320,6 +359,85 @@ assert(
     whyTrustFeatureGroups.every(([, group]) => (group.match(/\n {8}title: /g) ?? []).length === 4),
   'Each Why trust tab must define four feature cards.',
 )
+assert(
+  dgpPage.includes('SiteHeader') &&
+    dgpPage.includes('SiteFooter') &&
+    dgpPage.includes('DgpHero') &&
+    dgpPage.includes('ProductFeatureGridSection') &&
+    dgpPage.includes('DgpArchitecture') &&
+    dgpPage.includes('DgpEvolutionSection') &&
+    dgpPage.includes('DgpUseCasesSection') &&
+    dgpPage.includes('CtaSection') &&
+    dgpPage.includes('title-id="dgp-cta-title"'),
+  'DGP page must compose the required product sections with global Header, Footer, and CtaSection.',
+)
+assert(
+  dgpHero.includes('PageHero') &&
+    dgpHero.includes('import { Database }') &&
+    dgpHero.includes('badge="数曜·数据治理平台"') &&
+    dgpHero.includes('title-line="可用、可管、可信"') &&
+    dgpHero.includes('title-gradient="企业数据底座"') &&
+    dgpHero.includes('visual-label="SHUYAODGP_HORE_WEBM"') &&
+    dgpHero.includes('DgpHeroVisual'),
+  'DGP hero must follow the PageHero contract from DGP.md.',
+)
+assert(
+  dgpHeroVisual.includes('ban-shape1.png?url') &&
+    dgpHeroVisual.includes('ban-shape2.png?url') &&
+    dgpHeroVisual.includes('ban-shape3.png?url') &&
+    dgpHeroVisual.includes('ruizhi1.png?url') &&
+    dgpHeroVisual.includes('<animateMotion') &&
+    dgpHeroVisual.includes('motion-safe:animate-pulse') &&
+    !dgpHeroVisual.includes('esenruizhi.com'),
+  'DGP hero visual must use local assets and looped Tailwind/SVG animation.',
+)
+assert(
+  dgpArchitecture.includes('ProductSystemSection') &&
+    dgpArchitecture.includes('content-flush') &&
+    dgpArchitecture.includes('SystemCards') &&
+    !dgpArchitecture.includes('EnterpriseFlow'),
+  'DGP architecture must reuse ProductSystemSection and SystemCards without a flow chart.',
+)
+assert(
+  dgpEvolution.includes('企业数据治理体系的演进') &&
+    dgpEvolution.includes('lg:grid-cols-2 lg:gap-12') &&
+    dgpEvolution.includes('图片占位符') &&
+    !dgpEvolution.includes('<style'),
+  'DGP evolution section must keep the required alternating Tailwind layout.',
+)
+assert(
+  dgpUseCases.includes('role="tablist"') &&
+    dgpUseCases.includes('class="dt-tab"') &&
+    dgpUseCases.includes('role="tabpanel"') &&
+    dgpUseCases.includes('BaseButton') &&
+    dgpUseCases.includes('了解更多') &&
+    !dgpUseCases.includes('<style'),
+  'DGP use cases must keep the shared tab and button implementation.',
+)
+const dgpSources = [dgpData, dgpPage, dgpHero, dgpArchitecture, dgpEvolution, dgpUseCases].join('\n')
+for (const text of [
+  '为什么选择数曜·治理数据平台',
+  '让治理好的数据，安全、高效、稳定地供给业务',
+  '数据接入 → 智能治理 → 数据赋能',
+  '专为企业数据治理打造',
+  '企业数据治理体系的演进',
+  '推动企业数据基础设施建设',
+  '开启企业数据治理新征程',
+]) {
+  assert(dgpSources.includes(text), `DGP requirement text is missing: ${text}`)
+}
+for (const text of [
+  '让数据快速可用',
+  '统一数据服务出口',
+  '保障调用安全可控',
+  '支撑高并发稳定服务',
+  '数据集成',
+  '数据资产',
+  '政务数据治理',
+  '物联数据汇聚与治理',
+]) {
+  assert(dgpData.includes(text), `DGP configured content is missing: ${text}`)
+}
 
 const filesToScan = [
   ...listFiles('components', (path) => path.endsWith('.vue')),

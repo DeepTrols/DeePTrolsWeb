@@ -76,6 +76,32 @@
 - 底部卡片使用 `components/common/ProductSystemCards.vue`，并保持 `.dt-product-card`、`.dt-product-card__accent`、`.dt-icon-box`。
 - 公共 section 不得直接依赖 `EnterpriseFlow.client.vue`、VueFlow、流程图 fallback、移动端输入输出数据或卡片循环。
 
+## Product Feature Grid
+公共组件：`components/common/ProductFeatureGridSection.vue`
+
+适用场景：
+- 产品页的核心价值、产品能力、优势能力等“标题 + 卡片网格”区块。
+- DGP 当前用于“核心价值”和“产品能力”。
+
+使用要求：
+- 必须传入 `eyebrow`、`title`、`titleId`、`subtitle` 与 `items`。
+- 默认四列节奏为 `grid gap-5 lg:gap-6`、`md:grid-cols-2 lg:grid-cols-4`。
+- 需要承接 Hero 后留白时使用 `topPadding`，对应 `pt-24`。
+- 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
+
+## System Cards
+公共组件：`components/common/SystemCards.vue`
+
+适用场景：
+- 产品架构、能力阶段、平台阶段等 3 列阶段说明卡片。
+- 可作为 `ProductSystemSection` 默认 slot 的内容；如页面有自定义流程图，应在 slot 中自行组合流程图与 `SystemCards`。
+
+使用要求：
+- 根布局保持 `mt-10 grid gap-4 md:grid-cols-3 lg:mt-12`。
+- 卡片保持 `rounded-2xl border border-dt-line`、`hover:border-dt-primary/40` 的公共 hover 节奏。
+- 组件只接收 `cards` 数据，不包含产品页专属文案。
+- 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
+
 ## CTA
 公共组件：`components/common/CtaSection.vue`
 
@@ -89,7 +115,7 @@
 
 ## 质量约束
 - 所有公共区块组件必须小于等于 300 行。
-- 公共区块组件必须使用 `<script setup lang="ts">` 与 `<style scoped lang="scss">`。
+- 公共区块组件必须使用 `<script setup lang="ts">`；需要新增组件样式时必须使用 `<style scoped lang="scss">`，Tailwind-only 组件可以不声明 `<style>`。
 - 禁止在公共组件中使用未处理的 `@apply`。
 - 禁止新增 inline style。Header 主导航规定的 `style="position:relative;"` 是唯一例外。
 - 修改公共区块后必须执行：
