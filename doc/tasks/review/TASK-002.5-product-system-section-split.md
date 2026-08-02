@@ -93,7 +93,7 @@
 |----|----|
 | Branch | `main` |
 | Commit Message | `refactor(TASK-002.5): split product system section content` |
-| Commit Hash | 待更新 |
+| Commit Hash | `32eb15f` |
 
 ## 完成说明
 已将 Product System 的公共 section 骨架与 VueFlow、移动端业务结构、产品卡片渲染拆分。后续页面复用 `ProductSystemSection` 时只继承背景、布局与标题排版，可自由传入自己的流程图和内容组件。
