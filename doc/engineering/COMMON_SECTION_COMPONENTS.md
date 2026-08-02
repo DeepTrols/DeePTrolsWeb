@@ -69,10 +69,12 @@
 - 产品体系、平台体系、能力架构类区块。
 
 使用要求：
-- 标题、移动端输入输出能力和底部产品卡片通过 props 传入。
-- 桌面流程图通过 `#desktop-flow` slot 传入。
-- 公共组件不得直接依赖 `EnterpriseFlow.client.vue` 或任何具体流程图，后续页面可自由传入自己的流程图。
-- 底部卡片保持 `.dt-product-card`、`.dt-product-card__accent`、`.dt-icon-box`。
+- `ProductSystemSection` 只负责 section 背景、`.container`、`SectionHeading` 与内容布局。
+- 桌面流程图外框使用 `components/common/ProductSystemFlowFrame.vue`，具体流程图由页面或业务组件传入。
+- HOME 当前 VueFlow 由 `components/home/HomeProductSystemFlow.vue` 组合 `ProductSystemFlowFrame` 与 `EnterpriseFlow.client.vue`。
+- HOME 移动端输入输出结构由 `components/home/HomeProductSystemMobileFlow.vue` 承载，不写入公共 section。
+- 底部卡片使用 `components/common/ProductSystemCards.vue`，并保持 `.dt-product-card`、`.dt-product-card__accent`、`.dt-icon-box`。
+- 公共 section 不得直接依赖 `EnterpriseFlow.client.vue`、VueFlow、流程图 fallback、移动端输入输出数据或卡片循环。
 
 ## CTA
 公共组件：`components/common/CtaSection.vue`

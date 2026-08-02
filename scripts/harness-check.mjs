@@ -35,6 +35,7 @@ const requiredFiles = [
   'doc/tasks/review/TASK-002.2-code-audit-component-refactor.md',
   'doc/tasks/review/TASK-002.3-common-section-components.md',
   'doc/tasks/review/TASK-002.4-why-logo-strip-cta-fix.md',
+  'doc/tasks/review/TASK-002.5-product-system-section-split.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/HOME_PAGE_BASELINE.md',
@@ -58,6 +59,8 @@ const requiredFiles = [
   'components/common/ServiceShowcaseSection.vue',
   'components/common/EngineLinksSection.vue',
   'components/common/ProductSystemSection.vue',
+  'components/common/ProductSystemFlowFrame.vue',
+  'components/common/ProductSystemCards.vue',
   'components/common/CtaSection.vue',
   'components/layout/SiteFooter.vue',
   'components/layout/FooterSubscribe.vue',
@@ -73,6 +76,8 @@ const requiredFiles = [
   'components/navigation/MegaPanelServices.vue',
   'components/home/HomeCaseSlide.vue',
   'components/home/HomeCasesControls.vue',
+  'components/home/HomeProductSystemFlow.vue',
+  'components/home/HomeProductSystemMobileFlow.vue',
   'components/home/HomeEcosystemVisual.vue',
   'components/home/ecosystem-visuals/EcosystemTokenVisual.vue',
   'components/home/ecosystem-visuals/EcosystemAgentVisual.vue',
@@ -104,6 +109,8 @@ const trustTabsSection = read('components/common/TrustTabsSection.vue')
 const serviceShowcaseSection = read('components/common/ServiceShowcaseSection.vue')
 const engineLinksSection = read('components/common/EngineLinksSection.vue')
 const productSystemSection = read('components/common/ProductSystemSection.vue')
+const productSystemFlowFrame = read('components/common/ProductSystemFlowFrame.vue')
+const productSystemCards = read('components/common/ProductSystemCards.vue')
 const ctaSection = read('components/common/CtaSection.vue')
 const header = read('components/navigation/SiteHeader.vue')
 const headerDesktopNav = read('components/navigation/SiteHeaderDesktopNav.vue')
@@ -118,6 +125,8 @@ const homeCasesControls = read('components/home/HomeCasesControls.vue')
 const homeInsights = read('components/home/HomeInsights.vue')
 const homeSolutions = read('components/home/HomeSolutions.vue')
 const productSystem = read('components/home/HomeProductSystem.vue')
+const homeProductSystemFlow = read('components/home/HomeProductSystemFlow.vue')
+const homeProductSystemMobileFlow = read('components/home/HomeProductSystemMobileFlow.vue')
 const ecosystem = read('components/home/HomeEcosystem.vue')
 const ecosystemVisual = read('components/home/HomeEcosystemVisual.vue')
 const ecosystemVisualData = read('data/ecosystemVisual.ts')
@@ -178,9 +187,40 @@ assert(homeCaseSlide.includes('BaseButton') && homeCaseSlide.includes('阅读案
 assert(homeCasesControls.includes('dt-icon-button'), 'HomeCasesControls must reuse shared icon button styling.')
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
 assert(homeSolutions.includes('dt-tab-list') && homeSolutions.includes('dt-tab'), 'HomeSolutions tabs must use shared dt-tab classes.')
-assert(productSystem.includes('ProductSystemSection') && productSystem.includes('<EnterpriseFlow />'), 'HomeProductSystem must pass its flow chart through ProductSystemSection.')
-assert(productSystemSection.includes('dt-product-card') && productSystemSection.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
-assert(!productSystemSection.includes('EnterpriseFlow'), 'ProductSystemSection must not depend on a concrete flow chart implementation.')
+assert(
+  productSystem.includes('ProductSystemSection') &&
+    productSystem.includes('HomeProductSystemFlow') &&
+    productSystem.includes('HomeProductSystemMobileFlow') &&
+    productSystem.includes('ProductSystemCards'),
+  'HomeProductSystem must compose the shared section, flow, mobile flow, and card components.',
+)
+assert(
+  productSystemSection.includes('SectionHeading') &&
+    productSystemSection.includes('product-system__content') &&
+    !productSystemSection.includes('role="img"') &&
+    !productSystemSection.includes('product-system__mobile-flow') &&
+    !productSystemSection.includes('v-for="card in cards"') &&
+    !productSystemSection.includes('flowFallbackText') &&
+    !productSystemSection.includes('EnterpriseFlow'),
+  'ProductSystemSection must only own the shared section background, layout, and typography.',
+)
+assert(
+  homeProductSystemFlow.includes('ProductSystemFlowFrame') &&
+    homeProductSystemFlow.includes('shouldRenderFlow') &&
+    homeProductSystemFlow.includes('<EnterpriseFlow v-if="shouldRenderFlow" />') &&
+    productSystemFlowFrame.includes('role="img"') &&
+    productSystemFlowFrame.includes('height: 560px') &&
+    productSystemFlowFrame.includes('rgba(148, 163, 184, 0.12) 1px') &&
+    productSystemFlowFrame.includes('background-size: 48px 48px'),
+  'Product system VueFlow must be isolated behind a dedicated flow frame component.',
+)
+assert(
+  homeProductSystemMobileFlow.includes('product-system__mobile-flow') &&
+    homeProductSystemMobileFlow.includes('inputs') &&
+    homeProductSystemMobileFlow.includes('outputs'),
+  'Home product mobile flow must be isolated from ProductSystemSection.',
+)
+assert(productSystemCards.includes('dt-product-card') && productSystemCards.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
 assert(homeCta.includes('CtaSection') && ctaSection.includes('dt-cta-panel'), 'HomeCta must reuse the shared CtaSection.')
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
 assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')
@@ -291,8 +331,8 @@ for (const file of filesToScan) {
   const source = read(file)
   assert(!source.includes('@apply'), `${file} contains @apply, which is not processed by the current Nuxt build.`)
 
-  if (file.endsWith('.vue') && file.startsWith('components/')) {
-    assert(source.includes('lang="scss"'), `${file} must use <style scoped lang="scss">.`)
+  if (file.endsWith('.vue') && file.startsWith('components/') && source.includes('<style')) {
+    assert(source.includes('<style scoped lang="scss">'), `${file} must use <style scoped lang="scss">.`)
   }
 
   if (file.endsWith('.vue')) {
