@@ -20,6 +20,7 @@ const heroActions = [
     :actions="heroActions"
     visual-label="DeepTrols Agentic solution 工作流示意"
     flush-bottom
+    visual-size="large"
   >
     <template #visual>
       <figure class="why-hero__figure relative m-0 h-[360px] w-full overflow-hidden lg:h-full">

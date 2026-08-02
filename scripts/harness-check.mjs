@@ -249,14 +249,19 @@ assert(
   productFeatureGridSection.includes('SectionHeading') &&
     productFeatureGridSection.includes("props.topPadding ? 'pt-24' : ''") &&
     productFeatureGridSection.includes('md:grid-cols-2 lg:grid-cols-4') &&
+    productFeatureGridSection.includes('auto-rows-fr items-stretch') &&
+    productFeatureGridSection.includes('class="size-6"') &&
+    productFeatureGridSection.includes('text-base leading-relaxed') &&
     productFeatureGridSection.includes(':title-id="titleId"') &&
+    !productFeatureGridSection.includes('min-h-[') &&
     !productFeatureGridSection.includes('<style'),
-  'ProductFeatureGridSection must provide a Tailwind-only reusable product feature grid.',
+  'ProductFeatureGridSection must provide a Tailwind-only reusable icon product feature grid.',
 )
 assert(
-  systemCards.includes('mt-10 grid gap-4 md:grid-cols-3 lg:mt-12') &&
+  systemCards.includes('mt-10 grid auto-rows-fr items-stretch gap-4 md:grid-cols-3 lg:mt-12') &&
     systemCards.includes('rounded-2xl border border-dt-line') &&
     systemCards.includes('hover:border-dt-primary/40') &&
+    !systemCards.includes('min-h-[') &&
     !systemCards.includes('<style'),
   'SystemCards must provide the FlowMQ-like Tailwind system card grid.',
 )
@@ -312,6 +317,7 @@ assert(
   pageHero.includes('class="page-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2"') &&
     pageHero.includes('class="page-hero__badge-icon"') &&
     whyHero.includes('badge="为什么选择 DeepTrols"') &&
+    whyHero.includes('visual-size="large"') &&
     whyHero.includes('title-line="数据、知识、智能统一"') &&
     whyHero.includes('title-gradient="企业级AI应用服务商"'),
   'Why hero content hierarchy must follow the why-emqx replacement mapping.',
@@ -332,6 +338,8 @@ assert(!whyHero.includes('&::after') && !whyHero.includes('linear-gradient(180de
 assert(
   pageHero.includes('max-w-[820px]') &&
     pageHero.includes('self-stretch') &&
+    pageHero.includes("visualSize: 'default'") &&
+    pageHero.includes("'max-w-lg self-center'") &&
     whyHero.includes('lg:h-full') &&
     whyHero.includes('h-[132%]') &&
     whyHero.includes('w-[132%]') &&
@@ -378,6 +386,7 @@ assert(
     dgpHero.includes('title-line="可用、可管、可信"') &&
     dgpHero.includes('title-gradient="企业数据底座"') &&
     dgpHero.includes('visual-label="SHUYAODGP_HORE_WEBM"') &&
+    !dgpHero.includes('visual-size="large"') &&
     dgpHero.includes('DgpHeroVisual'),
   'DGP hero must follow the PageHero contract from DGP.md.',
 )
@@ -393,26 +402,36 @@ assert(
 )
 assert(
   dgpArchitecture.includes('ProductSystemSection') &&
+    dgpArchitecture.includes('ProductSystemFlowFrame') &&
+    dgpArchitecture.includes('产品架构图占位符') &&
     dgpArchitecture.includes('content-flush') &&
     dgpArchitecture.includes('SystemCards') &&
     !dgpArchitecture.includes('EnterpriseFlow'),
-  'DGP architecture must reuse ProductSystemSection and SystemCards without a flow chart.',
+  'DGP architecture must reuse ProductSystemSection, flow background placeholder, and SystemCards without a flow chart.',
 )
 assert(
   dgpEvolution.includes('企业数据治理体系的演进') &&
     dgpEvolution.includes('lg:grid-cols-2 lg:gap-12') &&
     dgpEvolution.includes('图片占位符') &&
+    !dgpEvolution.includes('border border-dt-line bg-dt-bg-soft/40') &&
     !dgpEvolution.includes('<style'),
   'DGP evolution section must keep the required alternating Tailwind layout.',
 )
 assert(
   dgpUseCases.includes('role="tablist"') &&
-    dgpUseCases.includes('class="dt-tab"') &&
+    dgpUseCases.includes('data-slot="root"') &&
+    dgpUseCases.includes('data-slot="list"') &&
+    dgpUseCases.includes('data-slot="trigger"') &&
+    dgpUseCases.includes('data-slot="indicator"') &&
+    dgpUseCases.includes('data-slot="label"') &&
+    dgpUseCases.includes('px-5 py-4 text-base font-medium') &&
+    dgpUseCases.includes('border-b border-dt-line') &&
     dgpUseCases.includes('role="tabpanel"') &&
     dgpUseCases.includes('BaseButton') &&
     dgpUseCases.includes('了解更多') &&
+    !dgpUseCases.includes('class="dt-tab"') &&
     !dgpUseCases.includes('<style'),
-  'DGP use cases must keep the shared tab and button implementation.',
+  'DGP use cases must keep the EMQX product tabs and shared button implementation.',
 )
 const dgpSources = [dgpData, dgpPage, dgpHero, dgpArchitecture, dgpEvolution, dgpUseCases].join('\n')
 for (const text of [

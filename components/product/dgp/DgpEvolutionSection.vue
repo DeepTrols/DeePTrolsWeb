@@ -42,16 +42,11 @@ import { dgpEvolutionItems } from '~/data/dgp'
           </div>
 
           <div
-            class="relative min-h-[280px] overflow-hidden rounded-2xl border border-dt-line bg-dt-bg-soft/40 lg:min-h-[340px]"
+            class="relative min-h-[280px] overflow-hidden lg:min-h-[340px]"
             :class="index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : 'lg:col-start-2 lg:row-start-1'"
             role="img"
             :aria-label="`${item.title} 配图占位符`"
           >
-            <div
-              class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:44px_44px] bg-[position:center_center]"
-              aria-hidden="true"
-            ></div>
-            <div class="absolute inset-8 rounded-2xl border border-dt-line-strong bg-dt-bg/60" aria-hidden="true"></div>
             <div class="absolute inset-0 grid place-items-center text-sm font-medium text-dt-text-muted">
               图片占位符
             </div>

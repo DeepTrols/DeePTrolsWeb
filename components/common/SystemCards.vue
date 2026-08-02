@@ -10,11 +10,11 @@ defineProps<{
 </script>
 
 <template>
-  <div class="mt-10 grid gap-4 md:grid-cols-3 lg:mt-12">
+  <div class="mt-10 grid auto-rows-fr items-stretch gap-4 md:grid-cols-3 lg:mt-12">
     <article
       v-for="(card, index) in cards"
       :key="card.title"
-      class="group relative flex min-h-[248px] flex-col overflow-hidden rounded-2xl border border-dt-line bg-dt-bg-soft/30 p-5 transition-all duration-300 hover:border-dt-primary/40 hover:bg-dt-bg-soft/50"
+      class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-dt-line bg-dt-bg-soft/30 p-5 transition-all duration-300 hover:border-dt-primary/40 hover:bg-dt-bg-soft/50"
     >
       <div
         class="pointer-events-none absolute inset-0 bg-gradient-to-br from-dt-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"

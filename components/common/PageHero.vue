@@ -19,11 +19,13 @@ withDefaults(
     actions: PageHeroAction[]
     visualLabel?: string
     flushBottom?: boolean
+    visualSize?: 'default' | 'large'
   }>(),
   {
     badgeIcon: undefined,
     visualLabel: undefined,
     flushBottom: false,
+    visualSize: 'default',
   },
 )
 </script>
@@ -41,7 +43,12 @@ withDefaults(
       :class="flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'"
     >
       <div
-        class="page-hero__inner flex flex-col items-center gap-12 lg:grid lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)] lg:items-stretch lg:justify-center lg:gap-16"
+        class="page-hero__inner flex flex-col items-center gap-12 lg:grid lg:justify-center lg:gap-16"
+        :class="
+          visualSize === 'large'
+            ? 'lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)] lg:items-stretch'
+            : 'lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:items-center'
+        "
       >
         <div class="page-hero__content w-full max-w-2xl text-center lg:text-left">
           <div class="page-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2">
@@ -80,7 +87,8 @@ withDefaults(
         </div>
 
         <div
-          class="page-hero__visual relative isolate flex w-full max-w-[820px] self-stretch justify-self-center overflow-visible"
+          class="page-hero__visual relative isolate flex w-full justify-self-center overflow-visible"
+          :class="visualSize === 'large' ? 'max-w-[820px] self-stretch' : 'max-w-lg self-center'"
           :aria-label="visualLabel"
         >
           <div class="page-hero__visual-glow" aria-hidden="true"></div>

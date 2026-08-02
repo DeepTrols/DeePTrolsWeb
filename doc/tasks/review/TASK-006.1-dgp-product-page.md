@@ -48,6 +48,11 @@
 6. 新增 `SystemCards.vue`，用于产品架构阶段卡片；`DgpArchitecture.vue` 复用 `ProductSystemSection.vue`，不引入流程图。
 7. 新增 DGP 企业级数据治理演进区块与应用场景 tab 区块，缺失图片按需求使用占位符。
 8. 更新公共区块文档与 Harness Engineering，确保 DGP 页、公共产品组件和本地素材引用被持续检查。
+9. 修复 `PageHero` 视觉尺寸：默认恢复产品页正常尺寸，Why DeepTrols 显式使用 `visualSize="large"`。
+10. 修复核心价值与产品能力卡片：补齐 icon，移除固定高度，使用内容高度与网格拉齐机制控制卡片高度。
+11. 修复产品架构：恢复 `ProductSystemFlowFrame` 网格背景占位，仍不引入实际流程图。
+12. 修复企业级数据治理配图占位：移除配图区域边框与背景。
+13. 修复应用场景：按 EMQX 产品页 tabs 结构改为 `data-slot="root/list/trigger/indicator/label"`、底部主色指示条与产品页式 tab hover。
 
 ---
 ## 验收标准
@@ -77,6 +82,8 @@
 | `components/common/ProductFeatureGridSection.vue` | 新增产品核心价值/能力公共网格区块。 |
 | `components/common/SystemCards.vue` | 新增产品系统阶段卡片公共组件。 |
 | `components/common/ProductSystemSection.vue` | 增加 `contentFlush` 支持，并修复 `SectionHeading` 标题 prop。 |
+| `components/common/PageHero.vue` | 增加 `visualSize`，隔离 Why 页大视觉与产品页正常视觉尺寸。 |
+| `components/why/WhyHero.vue` | 显式启用 `visual-size="large"`。 |
 | `tests/dgp-content.spec.ts` | 新增 DGP 内容契约测试。 |
 | `tests/visual.spec.ts` | 增加 DGP 页面视觉/结构契约测试。 |
 | `scripts/harness-check.mjs` | 增加 DGP 页与公共产品区块 Harness 检查。 |
@@ -96,14 +103,15 @@
 | `pnpm build` | 通过 |
 | Browser `http://127.0.0.1:3101/products/data-governance` | 通过，7 个 section、4 个 tab、本地图片加载成功、无 console error |
 | Browser Mobile 390px | 通过，无横向溢出、核心内容可见、无 console error |
+| Browser DGP 修复验证 | 通过，Hero 视觉约 512px，核心价值/产品能力 icon 完整，卡片 `min-height:auto`，架构占位 560px，演进配图背景透明，tabs 可切换 |
 
 ---
 ## Git
 | 字段 | 内容 |
 |----|----|
 | Branch | `main` |
-| Commit Message | `feat(TASK-006.1): implement data governance product page` |
-| Commit Hash | `2c9f661457b83fe36abe12b77094b25e65342c79` |
+| Commit Message | `fix(TASK-006.1): align data governance product sections` |
+| Commit Hash | 待回填 |
 
 ## 完成说明
-已按照 DGP.md 完成产品页实现。页面内容、区块结构、Hero 本地素材、公共组件复用和 Harness Engineering 均已纳入验证。
+已按照 DGP.md 完成产品页实现，并根据复核反馈修复 Hero 视觉尺寸、核心/能力卡片、产品架构占位、企业级数据治理配图与应用场景 tabs。页面内容、区块结构、Hero 本地素材、公共组件复用和 Harness Engineering 均已纳入验证。

@@ -14,6 +14,7 @@
 使用要求：
 - 页面组件只传入 `badge`、`titleLine`、`titleGradient`、`description`、`actions`。
 - 视觉素材通过 `#visual` slot 传入。
+- 默认 `visualSize` 为 `default`，右侧视觉保持产品页正常尺寸；只有 Why DeepTrols 这类明确需要放大视觉的页面可以传入 `visualSize="large"`。
 - `PageHero` 不承载客户 logo；logo 必须通过独立区块渲染。
 
 ## Hero Logo Strip
@@ -85,7 +86,9 @@
 
 使用要求：
 - 必须传入 `eyebrow`、`title`、`titleId`、`subtitle` 与 `items`。
+- `items` 可传入 `icon`，产品页卡片应默认带 icon，保持 FlowMQ 式图标盒。
 - 默认四列节奏为 `grid gap-5 lg:gap-6`、`md:grid-cols-2 lg:grid-cols-4`。
+- 卡片不得使用固定高度；通过 `auto-rows-fr`、`h-full` 与内容高度共同决定同一网格内的卡片高度。
 - 需要承接 Hero 后留白时使用 `topPadding`，对应 `pt-24`。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
 
@@ -97,8 +100,9 @@
 - 可作为 `ProductSystemSection` 默认 slot 的内容；如页面有自定义流程图，应在 slot 中自行组合流程图与 `SystemCards`。
 
 使用要求：
-- 根布局保持 `mt-10 grid gap-4 md:grid-cols-3 lg:mt-12`。
+- 根布局保持 `mt-10 grid auto-rows-fr items-stretch gap-4 md:grid-cols-3 lg:mt-12`。
 - 卡片保持 `rounded-2xl border border-dt-line`、`hover:border-dt-primary/40` 的公共 hover 节奏。
+- 卡片不得使用固定高度；架构区需要流程图背景但暂不引入流程图时，必须先组合 `ProductSystemFlowFrame` 作为占位。
 - 组件只接收 `cards` 数据，不包含产品页专属文案。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
 

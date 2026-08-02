@@ -17,8 +17,8 @@ const nodes = [
 </script>
 
 <template>
-  <figure class="relative m-0 h-[360px] w-full overflow-visible sm:h-[420px] lg:h-full">
-    <div class="relative mx-auto h-full min-h-[360px] w-full max-w-[680px] overflow-visible">
+  <figure class="relative m-0 h-[340px] w-full overflow-visible sm:h-[400px] lg:h-[460px]">
+    <div class="relative mx-auto h-full min-h-[340px] w-full max-w-[560px] overflow-visible">
       <img
         :src="shapeOneSrc"
         alt=""
