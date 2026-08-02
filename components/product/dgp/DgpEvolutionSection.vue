@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import SectionHeading from '~/components/common/SectionHeading.vue'
 import { dgpEvolutionItems } from '~/data/dgp'
 </script>
 
 <template>
-  <section class="bg-dt-bg pb-32 lg:pb-44" aria-labelledby="dgp-evolution-title">
-    <div class="container">
-      <div class="mb-12 text-center lg:mb-16">
-        <SectionHeading
-          eyebrow="企业级数据治理"
-          title="企业数据治理体系的演进"
-          title-id="dgp-evolution-title"
-          subtitle="数曜·治理数据平台提供统一的数据治理底座，贯通数据接入、治理、资产与服务，持续沉淀高质量、可信赖的数据资产。"
-          align="center"
-        />
-      </div>
+  <section class="container pb-32 lg:pb-44" aria-labelledby="dgp-evolution-title">
+    <div class="mb-12 flex flex-col items-center gap-2 text-center lg:mb-16">
+      <span class="text-sm font-semibold uppercase tracking-wide text-primary">企业级数据治理</span>
+      <h2
+        id="dgp-evolution-title"
+        class="mb-4 text-4xl font-bold leading-[1.2] tracking-tight text-highlighted md:mb-6 sm:text-5xl !mb-0"
+      >
+        企业数据治理体系的演进
+      </h2>
+      <p class="mb-6 text-base text-default md:mb-8 md:text-xl lg:mb-12 sm:text-lg !mb-0">
+        数曜·治理数据平台提供统一的数据治理底座，贯通数据接入、治理、资产与服务，持续沉淀高质量、可信赖的数据资产。
+      </p>
+    </div>
 
+    <div>
       <div class="grid gap-10">
         <div
           v-for="(item, index) in dgpEvolutionItems"
@@ -27,14 +29,18 @@ import { dgpEvolutionItems } from '~/data/dgp'
             :class="index % 2 === 1 ? 'lg:col-start-2 lg:pl-12' : 'lg:col-start-1 lg:pr-12'"
           >
             <article
-              class="rounded-2xl border border-dt-line bg-dt-bg p-6 backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-dt-primary/40"
+              class="rounded-2xl border border-dt-line bg-dt-bg p-6 backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-primary/40"
             >
-              <p class="text-sm font-semibold uppercase tracking-wide text-dt-primary/75">{{ item.eyebrow }}</p>
-              <h3 class="mt-4 text-2xl font-bold leading-tight text-dt-text-highlighted sm:text-3xl">{{ item.title }}</h3>
-              <p class="mt-4 text-base leading-relaxed text-dt-text-muted sm:text-lg">{{ item.description }}</p>
-              <ul class="mt-6 grid gap-3">
-                <li v-for="bullet in item.bullets" :key="bullet" class="flex items-center gap-3 text-sm text-dt-text">
-                  <span class="size-1.5 rounded-full bg-dt-primary shadow-[0_0_14px_rgba(94,78,255,0.65)]" aria-hidden="true"></span>
+              <div>
+                <span class="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80">
+                  {{ item.eyebrow }}
+                </span>
+              </div>
+              <h3 class="mt-6 text-2xl font-bold leading-tight text-highlighted">{{ item.title }}</h3>
+              <p class="mt-4 text-base leading-relaxed text-muted">{{ item.description }}</p>
+              <ul class="mt-6 space-y-3">
+                <li v-for="bullet in item.bullets" :key="bullet" class="flex items-start gap-3 text-sm leading-relaxed text-default">
+                  <span class="mt-2 size-1.5 shrink-0 rounded-full bg-primary shadow-[0_0_14px_rgba(94,78,255,0.65)]" aria-hidden="true"></span>
                   <span>{{ bullet }}</span>
                 </li>
               </ul>

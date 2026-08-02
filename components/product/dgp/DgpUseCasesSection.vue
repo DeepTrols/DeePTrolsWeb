@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import BaseButton from '~/components/common/BaseButton.vue'
-import SectionHeading from '~/components/common/SectionHeading.vue'
 import { dgpUseCases } from '~/data/dgp'
 
 const activeKey = ref(dgpUseCases[0]?.key ?? '')
@@ -9,17 +8,17 @@ const activeUseCase = computed(() => dgpUseCases.find((item) => item.key === act
 </script>
 
 <template>
-  <section class="bg-dt-bg pb-32 lg:pb-44 !pb-0" aria-labelledby="dgp-use-cases-title">
+  <section class="pb-32 lg:pb-44" aria-labelledby="dgp-use-cases-title">
     <div class="container">
-      <div class="mb-12 text-center lg:mb-16">
-        <SectionHeading
-          eyebrow="应用场景"
-          title="推动企业数据基础设施建设"
-          title-id="dgp-use-cases-title"
-          subtitle="构建统一的数据治理体系，帮助企业实现数据标准化、资产化与智能化，持续释放数据价值。"
-          align="center"
-        />
-      </div>
+      <h2
+        id="dgp-use-cases-title"
+        class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted md:mb-6 sm:text-5xl"
+      >
+        推动企业数据基础设施建设
+      </h2>
+      <p class="mb-6 text-center text-base text-default md:mb-8 md:text-xl lg:mb-12 sm:text-lg !mb-6">
+        构建统一的数据治理体系，帮助企业实现数据标准化、资产化与智能化，持续释放数据价值。
+      </p>
 
       <div
         dir="ltr"

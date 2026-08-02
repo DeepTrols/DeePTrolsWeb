@@ -53,6 +53,10 @@
 11. 修复产品架构：恢复 `ProductSystemFlowFrame` 网格背景占位，仍不引入实际流程图。
 12. 修复企业级数据治理配图占位：移除配图区域边框与背景。
 13. 修复应用场景：按 EMQX 产品页 tabs 结构改为 `data-slot="root/list/trigger/indicator/label"`、底部主色指示条与产品页式 tab hover。
+14. 修复核心价值区块：移除 `pt-24`，卡片 icon 去掉 `mb-6`，h3/p 改为指定的 `text-[15px]` 与 `text-sm` FlowMQ 式结构。
+15. 修复产品能力区块：与核心价值复用同一卡片结构，并统一核心价值、产品能力、产品架构副标题宽度为 760px。
+16. 修复企业级数据治理：按 EMQX `products/emqx` 的 `section.container`、heading、pill eyebrow、卡片排版与间距结构重写。
+17. 修复应用场景：按 EMQX `products/emqx-neuron` 的 h2/p/tabs 结构重写，去掉旧 `SectionHeading` 与 `!pb-0`。
 
 ---
 ## 验收标准
@@ -84,6 +88,7 @@
 | `components/common/ProductSystemSection.vue` | 增加 `contentFlush` 支持，并修复 `SectionHeading` 标题 prop。 |
 | `components/common/PageHero.vue` | 增加 `visualSize`，隔离 Why 页大视觉与产品页正常视觉尺寸。 |
 | `components/why/WhyHero.vue` | 显式启用 `visual-size="large"`。 |
+| `assets/css/tailwind.css` | 增加 EMQX 风格文本色别名，映射到 DeepTrols 设计 token。 |
 | `tests/dgp-content.spec.ts` | 新增 DGP 内容契约测试。 |
 | `tests/visual.spec.ts` | 增加 DGP 页面视觉/结构契约测试。 |
 | `scripts/harness-check.mjs` | 增加 DGP 页与公共产品区块 Harness 检查。 |
@@ -104,14 +109,15 @@
 | Browser `http://127.0.0.1:3101/products/data-governance` | 通过，7 个 section、4 个 tab、本地图片加载成功、无 console error |
 | Browser Mobile 390px | 通过，无横向溢出、核心内容可见、无 console error |
 | Browser DGP 修复验证 | 通过，Hero 视觉约 512px，核心价值/产品能力 icon 完整，卡片 `min-height:auto`，架构占位 560px，演进配图背景透明，tabs 可切换 |
+| Browser DGP 最新修复验证 | 通过，核心价值无 `pt-24`，h3/p class 与要求一致，核心/能力/架构副标题宽度均为 760px，应用场景无横向溢出 |
 
 ---
 ## Git
 | 字段 | 内容 |
 |----|----|
 | Branch | `main` |
-| Commit Message | `fix(TASK-006.1): align data governance product sections` |
-| Commit Hash | `14d528192199334d42d38ef1bae4383f59d32b39` |
+| Commit Message | `fix(TASK-006.1): refine data governance product layout` |
+| Commit Hash | 待回填 |
 
 ## 完成说明
-已按照 DGP.md 完成产品页实现，并根据复核反馈修复 Hero 视觉尺寸、核心/能力卡片、产品架构占位、企业级数据治理配图与应用场景 tabs。页面内容、区块结构、Hero 本地素材、公共组件复用和 Harness Engineering 均已纳入验证。
+已按照 DGP.md 完成产品页实现，并根据复核反馈修复 Hero 视觉尺寸、核心/能力卡片、产品架构占位、企业级数据治理配图、应用场景 tabs 与产品页源码级 class 结构。页面内容、区块结构、Hero 本地素材、公共组件复用和 Harness Engineering 均已纳入验证。

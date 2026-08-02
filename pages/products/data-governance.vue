@@ -26,7 +26,6 @@ useSeoMeta({
         title-id="dgp-core-value-title"
         subtitle="让治理好的数据，安全、高效、稳定地供给业务"
         :items="dgpCoreValues"
-        top-padding
       />
       <DgpArchitecture />
       <ProductFeatureGridSection

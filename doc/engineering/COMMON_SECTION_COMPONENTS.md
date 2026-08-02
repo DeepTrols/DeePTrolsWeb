@@ -89,7 +89,7 @@
 - `items` 可传入 `icon`，产品页卡片应默认带 icon，保持 FlowMQ 式图标盒。
 - 默认四列节奏为 `grid gap-5 lg:gap-6`、`md:grid-cols-2 lg:grid-cols-4`。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`h-full` 与内容高度共同决定同一网格内的卡片高度。
-- 需要承接 Hero 后留白时使用 `topPadding`，对应 `pt-24`。
+- 产品页特性区块默认不使用 `pt-24`，区块之间只保留 `pb-32 lg:pb-44` 节奏。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
 
 ## System Cards

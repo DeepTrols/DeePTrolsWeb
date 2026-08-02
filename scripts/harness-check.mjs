@@ -190,6 +190,15 @@ for (const token of [
   assert(tokens.includes(token), `Missing shared design token or class: ${token}`)
 }
 
+for (const token of [
+  '--color-primary: var(--dt-color-primary)',
+  '--color-highlighted: var(--dt-color-text-highlighted)',
+  '--color-muted: var(--dt-color-text-muted)',
+  '--color-default: var(--dt-color-text)',
+]) {
+  assert(tailwind.includes(token), `Missing Tailwind v4 color alias: ${token}`)
+}
+
 assert(baseButton.includes('data-slot="base"'), 'BaseButton must own data-slot="base".')
 assert(baseButton.includes('data-slot="label"'), 'BaseButton must own data-slot="label".')
 assert(baseButton.includes('data-slot="trailingIcon"'), 'BaseButton must own data-slot="trailingIcon".')
@@ -247,11 +256,16 @@ assert(
 assert(productSystemCards.includes('dt-product-card') && productSystemCards.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
 assert(
   productFeatureGridSection.includes('SectionHeading') &&
-    productFeatureGridSection.includes("props.topPadding ? 'pt-24' : ''") &&
+    productFeatureGridSection.includes('class="relative bg-dt-bg pb-32 lg:pb-44"') &&
+    !productFeatureGridSection.includes('pt-24') &&
     productFeatureGridSection.includes('md:grid-cols-2 lg:grid-cols-4') &&
     productFeatureGridSection.includes('auto-rows-fr items-stretch') &&
-    productFeatureGridSection.includes('class="size-6"') &&
-    productFeatureGridSection.includes('text-base leading-relaxed') &&
+    productFeatureGridSection.includes('rounded-xl bg-gradient-to-br from-primary/20 to-primary/5') &&
+    !productFeatureGridSection.includes('mb-6') &&
+    productFeatureGridSection.includes('class="size-5"') &&
+    productFeatureGridSection.includes('relative mt-4 text-[15px] font-semibold leading-snug text-highlighted') &&
+    productFeatureGridSection.includes('relative mt-2 flex-1 text-sm leading-relaxed text-muted') &&
+    !productFeatureGridSection.includes('text-base leading-relaxed') &&
     productFeatureGridSection.includes(':title-id="titleId"') &&
     !productFeatureGridSection.includes('min-h-[') &&
     !productFeatureGridSection.includes('<style'),
@@ -405,20 +419,31 @@ assert(
     dgpArchitecture.includes('ProductSystemFlowFrame') &&
     dgpArchitecture.includes('产品架构图占位符') &&
     dgpArchitecture.includes('content-flush') &&
+    dgpArchitecture.includes(':heading-wide="false"') &&
+    dgpArchitecture.includes(':nowrap-subtitle="false"') &&
     dgpArchitecture.includes('SystemCards') &&
     !dgpArchitecture.includes('EnterpriseFlow'),
   'DGP architecture must reuse ProductSystemSection, flow background placeholder, and SystemCards without a flow chart.',
 )
 assert(
   dgpEvolution.includes('企业数据治理体系的演进') &&
+    dgpEvolution.includes('class="container pb-32 lg:pb-44"') &&
+    dgpEvolution.includes('mb-12 flex flex-col items-center gap-2 text-center lg:mb-16') &&
+    dgpEvolution.includes('text-sm font-semibold uppercase tracking-wide text-primary') &&
+    dgpEvolution.includes('text-4xl font-bold leading-[1.2] tracking-tight text-highlighted') &&
+    dgpEvolution.includes('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80') &&
     dgpEvolution.includes('lg:grid-cols-2 lg:gap-12') &&
     dgpEvolution.includes('图片占位符') &&
     !dgpEvolution.includes('border border-dt-line bg-dt-bg-soft/40') &&
+    !dgpEvolution.includes('SectionHeading') &&
     !dgpEvolution.includes('<style'),
   'DGP evolution section must keep the required alternating Tailwind layout.',
 )
 assert(
-  dgpUseCases.includes('role="tablist"') &&
+  dgpUseCases.includes('class="pb-32 lg:pb-44"') &&
+    dgpUseCases.includes('text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted') &&
+    dgpUseCases.includes('text-center text-base text-default') &&
+    dgpUseCases.includes('role="tablist"') &&
     dgpUseCases.includes('data-slot="root"') &&
     dgpUseCases.includes('data-slot="list"') &&
     dgpUseCases.includes('data-slot="trigger"') &&
@@ -430,6 +455,8 @@ assert(
     dgpUseCases.includes('BaseButton') &&
     dgpUseCases.includes('了解更多') &&
     !dgpUseCases.includes('class="dt-tab"') &&
+    !dgpUseCases.includes('SectionHeading') &&
+    !dgpUseCases.includes('!pb-0') &&
     !dgpUseCases.includes('<style'),
   'DGP use cases must keep the EMQX product tabs and shared button implementation.',
 )

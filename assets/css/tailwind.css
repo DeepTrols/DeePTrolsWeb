@@ -15,6 +15,10 @@
   --color-dt-text-muted: var(--dt-color-text-muted);
   --color-dt-text-soft: var(--dt-color-text-soft);
   --color-dt-text-highlighted: var(--dt-color-text-highlighted);
+  --color-primary: var(--dt-color-primary);
+  --color-highlighted: var(--dt-color-text-highlighted);
+  --color-muted: var(--dt-color-text-muted);
+  --color-default: var(--dt-color-text);
   --radius-dt-xs: var(--dt-radius-xs);
   --radius-dt-sm: var(--dt-radius-sm);
   --radius-dt-md: var(--dt-radius-md);

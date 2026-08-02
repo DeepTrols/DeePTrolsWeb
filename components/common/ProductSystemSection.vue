@@ -8,15 +8,19 @@ withDefaults(
     titleId: string
     subtitle: string
     contentFlush?: boolean
+    headingWide?: boolean
+    nowrapSubtitle?: boolean
   }>(),
   {
     contentFlush: false,
+    headingWide: true,
+    nowrapSubtitle: true,
   },
 )
 </script>
 
 <template>
-  <section class="section product-system" :aria-labelledby="titleId">
+  <section class="section product-system" :class="{ 'product-system--heading-wide': headingWide }" :aria-labelledby="titleId">
     <div class="container">
       <SectionHeading
         :title-id="titleId"
@@ -24,7 +28,7 @@ withDefaults(
         :title="title"
         :subtitle="subtitle"
         align="center"
-        nowrap-subtitle
+        :nowrap-subtitle="nowrapSubtitle"
       />
 
       <div class="product-system__content" :class="{ '!mt-0': contentFlush }">
@@ -39,7 +43,7 @@ withDefaults(
   background: transparent;
 }
 
-.product-system :deep(.section-heading) {
+.product-system--heading-wide :deep(.section-heading) {
   max-width: none;
 }
 
@@ -54,7 +58,7 @@ withDefaults(
 }
 
 @media (min-width: 1024px) {
-  .product-system :deep(.section-heading__subtitle) {
+  .product-system--heading-wide :deep(.section-heading__subtitle) {
     white-space: nowrap;
   }
 
