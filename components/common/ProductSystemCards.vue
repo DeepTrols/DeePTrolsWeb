@@ -34,10 +34,6 @@ defineProps<{
   gap: 16px;
 }
 
-.product-system__card {
-  min-height: 216px;
-}
-
 .product-system__card-header {
   display: flex;
   align-items: center;

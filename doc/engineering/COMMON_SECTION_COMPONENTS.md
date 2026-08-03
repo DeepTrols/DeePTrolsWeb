@@ -39,6 +39,7 @@
 - Tab 使用 `.dt-segmented-tabs` 与 `.dt-segmented-tab`。
 - 卡片使用 `.dt-product-card`、`.dt-product-card__accent`、`.dt-icon-box`。
 - 卡片网格固定为 `grid gap-5 md:grid-cols-2 lg:gap-6`。
+- 卡片不得写固定 `min-height`；高度由内容和当前网格行决定。
 - 每个 tab 建议 4 张卡片，保持 Why 页面基准节奏。
 
 ## Service Showcase
@@ -62,6 +63,17 @@
 - 链接数据通过 `links` 传入。
 - 右侧标题区继续使用 `SectionHeading`。
 - 链接卡片 hover 上移和 glow 效果由公共组件统一控制。
+
+## Card Radius And Height
+适用范围：
+- 带 icon 的普通信息卡、能力卡、链接卡、产品阶段卡。
+- 不包含 Solutions、Cases、Insights、Deliverables 等媒体卡、走马灯卡或视觉展示面板。
+
+使用要求：
+- Card 外框圆角统一以 DGP 页面为基准：`rounded-2xl` / `var(--dt-radius-lg)` / 16px。
+- Icon 外框圆角统一以 DGP 页面为基准：`rounded-xl` / `var(--dt-radius-md)` / 12px。
+- 普通信息卡不得写固定高度或固定 `min-height`；需要同一行等高时使用 grid 的 `auto-rows-fr`、`items-stretch` 与卡片自身 `h-full`。
+- 公共卡片优先使用 `.dt-product-card` 与 `.dt-icon-box`；生态卡使用 `.dt-ecosystem-card` 时也必须遵守同一圆角和高度基准。
 
 ## Product System
 公共组件：`components/common/ProductSystemSection.vue`

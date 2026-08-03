@@ -60,7 +60,7 @@ const activeTab = computed(() => props.tabs.find((tab) => tab.key === activeKey.
         <article
           v-for="feature in activeTab.features"
           :key="feature.title"
-          class="trust-tabs-section__card dt-product-card min-h-[280px] !p-7 lg:!p-8"
+          class="trust-tabs-section__card dt-product-card !p-7 lg:!p-8"
         >
           <div class="trust-tabs-section__card-accent dt-product-card__accent"></div>
           <div class="trust-tabs-section__card-head flex items-center gap-4">

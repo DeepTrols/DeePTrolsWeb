@@ -61,7 +61,7 @@ defineProps<{
   display: flex;
   gap: 18px;
   border: 1px solid var(--dt-color-line);
-  border-radius: 24px;
+  border-radius: var(--dt-radius-lg);
   background: rgba(39, 30, 53, 0.3);
   padding: 24px;
   transition:
@@ -97,7 +97,7 @@ p {
   overflow: hidden;
   margin: 0;
   border: 1px solid var(--dt-color-line);
-  border-radius: 24px;
+  border-radius: var(--dt-radius-lg);
   background:
     radial-gradient(80% 80% at 50% 0%, rgba(94, 78, 255, 0.18), transparent 65%),
     var(--dt-color-bg-soft);

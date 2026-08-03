@@ -61,6 +61,7 @@
 11. 恢复本地 Git 仓库，新增 `.gitignore`，排除依赖、构建产物、系统文件与旧重复素材目录。
 11. 移除 Hero canvas/Tres 残留依赖：`@tresjs/core`、`three`、`@types/three`。
 12. 更新视觉契约测试，使其检查公共设计系统复用，而不是鼓励页面内重复 CSS。
+13. 统一 HOME、Why DeepTrols 与 DGP 的带 icon 信息卡视觉基准：card 圆角采用 DGP `rounded-2xl` / 16px，icon 外框采用 DGP `rounded-xl` / 12px，普通信息卡移除固定高度。
 
 ---
 ## 验收标准
@@ -81,6 +82,10 @@
 | `assets/scss/main.scss` | 全局 token 与公共组件层 |
 | `components/common/BaseButton.vue` | 公共按钮 |
 | `components/common/SectionHeading.vue` | 公共标题 |
+| `components/common/ProductSystemCards.vue` | 移除普通产品卡固定高度，复用公共 card/icon 圆角 |
+| `components/common/TrustTabsSection.vue` | 移除 Why trust 卡固定高度，保留 DGP icon 圆角 |
+| `components/common/ServiceShowcaseSection.vue` | 统一服务卡片圆角到 DGP card 基准 |
+| `components/common/EngineLinksSection.vue` | 统一引擎链接卡片与 icon 圆角到 DGP 基准 |
 | `components/home/**` | 首页重复按钮、tab 与标题复用 |
 | `components/layout/SiteFooter.vue` | Footer 订阅按钮复用公共按钮 |
 | `doc/engineering/**` | HOME 基准与 Harness Engineering 文档 |
@@ -111,10 +116,11 @@
 |----|----|
 | `pnpm lint` | 通过 |
 | `pnpm typecheck` | 通过 |
-| `pnpm test` | 通过，8 tests |
-| `pnpm test:visual` | 通过，4 tests |
+| `pnpm test` | 通过，4 个测试文件 / 17 个测试 |
+| `pnpm test:visual` | 通过，6 个视觉契约测试 |
 | `pnpm build` | 通过；仅有 Nuxt/Rolldown plugin timing 性能提示 |
 | `pnpm harness:engineering` | 通过 |
+| Browser card radius verification | 通过，HOME、Why DeepTrols、DGP 的带 icon 信息卡 card 圆角均为 16px，icon 外框均为 12px，普通卡 `min-height:auto`，无横向溢出，无 console error |
 
 ## SSR 验证
 - 使用生产构建 `HOST=127.0.0.1 PORT=3600 node .output/server/index.mjs` 启动预览。

@@ -61,7 +61,7 @@ defineProps<{
   gap: 20px;
   overflow: hidden;
   border: 1px solid var(--dt-color-line);
-  border-radius: 24px;
+  border-radius: var(--dt-radius-lg);
   background: rgba(39, 30, 53, 0.3);
   padding: 24px;
   transition:
@@ -104,7 +104,7 @@ defineProps<{
   align-items: center;
   justify-content: center;
   border: 1px solid var(--dt-color-line);
-  border-radius: 16px;
+  border-radius: var(--dt-radius-md);
   background: #ffffff;
   color: #151515;
 }

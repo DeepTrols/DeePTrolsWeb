@@ -140,7 +140,7 @@ import { ecosystemCards } from '~/data/home'
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
-  border-radius: var(--dt-radius-lg);
+  border-radius: var(--dt-radius-md);
   background: var(--dt-color-bg-elevated);
   color: var(--dt-color-text-highlighted);
 }

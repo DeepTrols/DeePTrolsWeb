@@ -206,6 +206,9 @@ assert(sectionHeading.includes('titleId'), 'SectionHeading must support titleId 
 assert(sectionHeading.includes('nowrapSubtitle'), 'SectionHeading must support nowrapSubtitle.')
 assert(sectionHeading.includes('section-heading--nowrap-subtitle'), 'SectionHeading nowrap mode must expose a desktop-wide wrapper class.')
 assert(sectionHeading.includes('max-width: none'), 'SectionHeading nowrap mode must remove the desktop max-width limit.')
+assert(tokens.includes('.dt-icon-box') && tokens.includes('border-radius: var(--dt-radius-md)'), 'Shared icon boxes must use the DGP rounded-xl radius baseline.')
+assert(tokens.includes('.dt-product-card') && tokens.includes('border-radius: var(--dt-radius-lg)'), 'Shared product cards must use the DGP rounded-2xl radius baseline.')
+assert(!tokens.includes('min-height: 280px'), 'Shared ecosystem cards must not define a fixed minimum height.')
 
 for (const [name, source] of [
   ['CtaSection', ctaSection],
@@ -256,6 +259,7 @@ assert(
   'Home product mobile flow must be isolated from ProductSystemSection.',
 )
 assert(productSystemCards.includes('dt-product-card') && productSystemCards.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
+assert(!productSystemCards.includes('min-height'), 'Product system cards must not define a fixed card height.')
 assert(
   productFeatureGridSection.includes('SectionHeading') &&
     productFeatureGridSection.includes('class="relative bg-dt-bg pb-32 lg:pb-44"') &&
@@ -283,6 +287,7 @@ assert(
 )
 assert(homeCta.includes('CtaSection') && ctaSection.includes('dt-cta-panel'), 'HomeCta must reuse the shared CtaSection.')
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
+assert(ecosystem.includes('border-radius: var(--dt-radius-md)'), 'Ecosystem icon boxes must use the DGP rounded-xl radius baseline.')
 assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')
 assert(
   header.includes('SiteHeaderDesktopNav') &&
@@ -372,8 +377,10 @@ assert(trustTabsSection.includes('dt-product-card') && trustTabsSection.includes
 assert(trustTabsSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why trust section must use Tailwind pb-32/lg:pb-44 rhythm.')
 assert(trustTabsSection.includes('mb-12 text-center lg:mb-16'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
 assert(trustTabsSection.includes('grid gap-5 md:grid-cols-2 lg:gap-6') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
-assert(trustTabsSection.includes('min-h-[280px] !p-7 lg:!p-8') && trustTabsSection.includes('!size-12 !rounded-xl'), 'Why trust cards must follow EMQX Tailwind card padding and icon size.')
+assert(trustTabsSection.includes('dt-product-card !p-7 lg:!p-8') && !trustTabsSection.includes('min-h-[280px]') && trustTabsSection.includes('!size-12 !rounded-xl'), 'Why trust cards must use DGP card radius/icon radius and avoid fixed card height.')
 assert(serviceShowcaseSection.includes('dt-section relative pb-32 lg:pb-44') && engineLinksSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why service and engine sections must share the EMQX section rhythm.')
+assert(serviceShowcaseSection.includes('border-radius: var(--dt-radius-lg)') && !serviceShowcaseSection.includes('border-radius: 24px'), 'Why service cards must use the DGP rounded-2xl radius baseline.')
+assert(engineLinksSection.includes('border-radius: var(--dt-radius-lg)') && engineLinksSection.includes('border-radius: var(--dt-radius-md)') && !engineLinksSection.includes('border-radius: 24px'), 'Why engine cards and icon boxes must use the DGP radius baseline.')
 assert(whyService.includes('ServiceShowcaseSection') && serviceShowcaseSection.includes('SectionHeading') && whyService.includes('fangangaishu@2x.png?url') && !whyService.includes('new URL('), 'Why service section must use ServiceShowcaseSection and import the required overview image via ?url.')
 assert(whyEngine.includes('EngineLinksSection') && whyEngine.includes('whyEngineLinks') && engineLinksSection.includes('SectionHeading'), 'Why engine section must reuse EngineLinksSection and configured links.')
 assert(whyData.includes('label: \'面向技术层\'') && whyData.includes('label: \'面向业务层\'') && whyData.includes('label: \'面向服务层\'') && whyData.includes('label: \'面向长期价值\''), 'Why page must define four trust tabs.')
