@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SectionHeading from '~/components/common/SectionHeading.vue'
+import SectionHeader from '~/components/common/section/SectionHeader.vue'
+import SectionShell from '~/components/common/section/SectionShell.vue'
 
 withDefaults(
   defineProps<{
@@ -20,35 +21,32 @@ withDefaults(
 </script>
 
 <template>
-  <section class="section product-system" :class="{ 'product-system--heading-wide': headingWide }" :aria-labelledby="titleId">
-    <div class="container">
-      <SectionHeading
-        :title-id="titleId"
-        :eyebrow="eyebrow"
-        :title="title"
-        :subtitle="subtitle"
-        align="center"
-        :nowrap-subtitle="nowrapSubtitle"
-      />
+  <SectionShell
+    class="product-system"
+    :class="{ 'product-system--heading-wide': headingWide }"
+    :title-id="titleId"
+    background="transparent"
+  >
+    <SectionHeader
+      :title-id="titleId"
+      :eyebrow="eyebrow"
+      :title="title"
+      :subtitle="subtitle"
+      align="center"
+      :nowrap-subtitle="nowrapSubtitle"
+      :width="headingWide ? 'wide' : 'default'"
+      subtitle-size="large"
+    />
 
-      <div class="product-system__content" :class="{ '!mt-0': contentFlush }">
-        <slot />
-      </div>
+    <div class="product-system__content" :class="{ '!mt-0': contentFlush }">
+      <slot />
     </div>
-  </section>
+  </SectionShell>
 </template>
 
 <style scoped lang="scss">
 .product-system {
   background: transparent;
-}
-
-.product-system--heading-wide :deep(.section-heading) {
-  max-width: none;
-}
-
-.product-system :deep(.section-heading__subtitle) {
-  font-size: 20px;
 }
 
 .product-system__content {
@@ -58,10 +56,6 @@ withDefaults(
 }
 
 @media (min-width: 1024px) {
-  .product-system--heading-wide :deep(.section-heading__subtitle) {
-    white-space: nowrap;
-  }
-
   .product-system__content {
     margin-top: 48px;
   }

@@ -1,20 +1,22 @@
 <script setup lang="ts">
+import SectionHeader from '~/components/common/section/SectionHeader.vue'
 import { dgpEvolutionItems } from '~/data/dgp'
 </script>
 
 <template>
   <section class="container pb-32 lg:pb-44" aria-labelledby="dgp-evolution-title">
     <div class="mb-12 flex flex-col items-center gap-2 text-center lg:mb-16">
-      <span class="text-sm font-semibold uppercase tracking-wide text-primary">企业级数据治理</span>
-      <h2
-        id="dgp-evolution-title"
-        class="mb-4 text-4xl font-bold leading-[1.2] tracking-tight text-highlighted md:mb-6 sm:text-5xl !mb-0"
-      >
-        企业数据治理体系的演进
-      </h2>
-      <p class="mb-6 text-base text-default md:mb-8 md:text-xl lg:mb-12 lg:whitespace-nowrap sm:text-lg !mb-0">
-        数曜·治理数据平台提供统一的数据治理底座，贯通数据接入、治理、资产与服务，持续沉淀高质量、可信赖的数据资产。
-      </p>
+      <SectionHeader
+        eyebrow="企业级数据治理"
+        title="企业数据治理体系的演进"
+        title-id="dgp-evolution-title"
+        subtitle="数曜·治理数据平台提供统一的数据治理底座，贯通数据接入、治理、资产与服务，持续沉淀高质量、可信赖的数据资产。"
+        align="center"
+        width="wide"
+        eyebrow-size="sm"
+        eyebrow-tone="primary"
+        nowrap-subtitle
+      />
     </div>
 
     <div>

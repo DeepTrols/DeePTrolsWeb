@@ -39,6 +39,7 @@ const requiredFiles = [
   'doc/tasks/review/TASK-006.1-dgp-product-page.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
+  'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',
   'doc/engineering/HOME_PAGE_BASELINE.md',
   'doc/engineering/HARNESS_ENGINEERING.md',
   'doc/product/BRAND_GUIDE.md',
@@ -59,6 +60,16 @@ const requiredFiles = [
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
   'components/common/SectionHeading.vue',
+  'components/common/section/SectionHeader.vue',
+  'components/common/section/SectionShell.vue',
+  'components/common/card/BaseCard.vue',
+  'components/common/card/IconBox.vue',
+  'components/common/card/CardText.vue',
+  'components/common/card/CardGrid.vue',
+  'components/common/card/FeatureCard.vue',
+  'components/common/tabs/BaseTabs.vue',
+  'components/common/carousel/CarouselRoot.vue',
+  'components/common/carousel/CarouselControls.vue',
   'components/common/PageHero.vue',
   'components/common/HeroLogoStrip.vue',
   'components/common/TrustTabsSection.vue',
@@ -115,9 +126,20 @@ for (const file of requiredFiles) {
 
 const tailwind = read('assets/css/tailwind.css')
 const tokens = read('assets/scss/main.scss')
+const componentAudit = read('doc/engineering/COMPONENT_REFINEMENT_AUDIT.md')
 const packageJson = read('package.json')
 const baseButton = read('components/common/BaseButton.vue')
 const sectionHeading = read('components/common/SectionHeading.vue')
+const sectionHeader = read('components/common/section/SectionHeader.vue')
+const sectionShell = read('components/common/section/SectionShell.vue')
+const baseCard = read('components/common/card/BaseCard.vue')
+const iconBox = read('components/common/card/IconBox.vue')
+const cardText = read('components/common/card/CardText.vue')
+const cardGrid = read('components/common/card/CardGrid.vue')
+const featureCard = read('components/common/card/FeatureCard.vue')
+const baseTabs = read('components/common/tabs/BaseTabs.vue')
+const carouselRoot = read('components/common/carousel/CarouselRoot.vue')
+const carouselControls = read('components/common/carousel/CarouselControls.vue')
 const pageHero = read('components/common/PageHero.vue')
 const heroLogoStrip = read('components/common/HeroLogoStrip.vue')
 const trustTabsSection = read('components/common/TrustTabsSection.vue')
@@ -202,10 +224,33 @@ for (const token of [
 assert(baseButton.includes('data-slot="base"'), 'BaseButton must own data-slot="base".')
 assert(baseButton.includes('data-slot="label"'), 'BaseButton must own data-slot="label".')
 assert(baseButton.includes('data-slot="trailingIcon"'), 'BaseButton must own data-slot="trailingIcon".')
+assert(componentAudit.includes('SectionHeader') && componentAudit.includes('BaseCard') && componentAudit.includes('BaseTabs'), 'Component refinement audit must document the extracted component baseline.')
 assert(sectionHeading.includes('titleId'), 'SectionHeading must support titleId for aria-labelledby.')
 assert(sectionHeading.includes('nowrapSubtitle'), 'SectionHeading must support nowrapSubtitle.')
-assert(sectionHeading.includes('section-heading--nowrap-subtitle'), 'SectionHeading nowrap mode must expose a desktop-wide wrapper class.')
-assert(sectionHeading.includes('max-width: none'), 'SectionHeading nowrap mode must remove the desktop max-width limit.')
+assert(sectionHeading.includes('SectionHeader'), 'SectionHeading must stay as a compatibility wrapper around SectionHeader.')
+assert(sectionHeader.includes("align?: 'left' | 'center' | 'right'"), 'SectionHeader must support left, center, and right alignment.')
+assert(sectionHeader.includes('level?: 1 | 2 | 3'), 'SectionHeader must support semantic heading levels.')
+assert(sectionHeader.includes('slots.actions'), 'SectionHeader must support an actions slot.')
+assert(sectionHeader.includes('section-heading--nowrap-subtitle'), 'SectionHeader nowrap mode must expose a desktop-wide wrapper class.')
+assert(sectionHeader.includes('max-width: none'), 'SectionHeader nowrap mode must remove the desktop max-width limit.')
+assert(sectionHeader.includes('class="section-heading dt-section-heading"'), 'SectionHeader must own the canonical section heading classes.')
+assert(sectionShell.includes('pb-32 lg:pb-44') && sectionShell.includes('container') && sectionShell.includes('max-w-[96rem]'), 'SectionShell must centralize section spacing and container widths.')
+assert(baseCard.includes('NuxtLink') && baseCard.includes('dt-card--adaptive') && baseCard.includes('dt-card__accent'), 'BaseCard must centralize card shell, link semantics, accent, and adaptive height.')
+assert(iconBox.includes('dt-icon-box') && iconBox.includes('dt-icon-box--gradient'), 'IconBox must centralize icon shell classes and gradient tone.')
+assert(cardText.includes('card-text__title') && cardText.includes('card-text__description'), 'CardText must centralize card title and description typography.')
+assert(cardGrid.includes('auto-rows-fr items-stretch') && cardGrid.includes('md:grid-cols-2 lg:grid-cols-4'), 'CardGrid must centralize equal-height responsive card grids.')
+assert(featureCard.includes('BaseCard') && featureCard.includes('IconBox') && featureCard.includes('CardText'), 'FeatureCard must compose the base card, icon, and text atoms.')
+assert(
+  baseTabs.includes('role="tablist"') &&
+    baseTabs.includes('role="tab"') &&
+    baseTabs.includes('dt-tab-list') &&
+    baseTabs.includes('dt-segmented-tabs') &&
+    baseTabs.includes("variant === 'underline'") &&
+    baseTabs.includes('handleKeydown'),
+  'BaseTabs must centralize ARIA, keyboard behavior, and pill/segmented/underline variants.',
+)
+assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
+assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
 assert(
   tokens.includes('--dt-card-radius: var(--dt-radius-lg)') &&
     tokens.includes('--dt-icon-box-radius: var(--dt-radius-md)') &&
@@ -233,7 +278,8 @@ assert(homeCases.includes('HomeCaseSlide') && homeCases.includes('HomeCasesContr
 assert(homeCaseSlide.includes('BaseButton') && homeCaseSlide.includes('阅读案例'), 'HomeCaseSlide must reuse BaseButton for story CTAs.')
 assert(homeCasesControls.includes('dt-icon-button'), 'HomeCasesControls must reuse shared icon button styling.')
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
-assert(homeSolutions.includes('dt-tab-list') && homeSolutions.includes('dt-tab'), 'HomeSolutions tabs must use shared dt-tab classes.')
+assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTabs') && homeSolutions.includes('variant="pill"'), 'HomeSolutions must compose the shared BaseTabs pill variant.')
+assert(baseTabs.includes('dt-tab-list') && baseTabs.includes('dt-tab'), 'BaseTabs must own shared dt-tab classes.')
 assert(
   productSystem.includes('ProductSystemSection') &&
     productSystem.includes('HomeProductSystemFlow') &&
@@ -242,7 +288,9 @@ assert(
   'HomeProductSystem must compose the shared section, flow, mobile flow, and card components.',
 )
 assert(
-  productSystemSection.includes('SectionHeading') &&
+  productSystemSection.includes('SectionShell') &&
+    productSystemSection.includes('SectionHeader') &&
+    productSystemSection.includes('subtitle-size="large"') &&
     productSystemSection.includes('product-system__content') &&
     !productSystemSection.includes('role="img"') &&
     !productSystemSection.includes('product-system__mobile-flow') &&
@@ -267,22 +315,30 @@ assert(
     homeProductSystemMobileFlow.includes('outputs'),
   'Home product mobile flow must be isolated from ProductSystemSection.',
 )
-assert(productSystemCards.includes('dt-product-card') && productSystemCards.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
-assert(productSystemCards.includes('dt-card--adaptive'), 'Product system cards must use shared adaptive card height.')
+assert(productSystemCards.includes('BaseCard') && productSystemCards.includes('CardGrid') && productSystemCards.includes('IconBox'), 'Product system cards must compose shared card primitives.')
+assert(baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
+assert(baseCard.includes('dt-card--adaptive'), 'Product system cards must use shared adaptive card height.')
 assert(!productSystemCards.includes('min-height'), 'Product system cards must not define a fixed card height.')
 assert(
-  productFeatureGridSection.includes('SectionHeading') &&
-    productFeatureGridSection.includes('class="relative bg-dt-bg pb-32 lg:pb-44"') &&
+  productFeatureGridSection.includes('SectionShell') &&
+    productFeatureGridSection.includes('SectionHeader') &&
+    productFeatureGridSection.includes('CardGrid') &&
+    productFeatureGridSection.includes('FeatureCard') &&
+    sectionShell.includes('pb-32 lg:pb-44') &&
+    sectionShell.includes('bg-dt-bg') &&
     !productFeatureGridSection.includes('pt-24') &&
-    productFeatureGridSection.includes('md:grid-cols-2 lg:grid-cols-4') &&
-    productFeatureGridSection.includes('auto-rows-fr items-stretch') &&
-    productFeatureGridSection.includes('dt-card dt-card--adaptive dt-card--feature') &&
-    productFeatureGridSection.includes('dt-card__accent') &&
-    productFeatureGridSection.includes('dt-icon-box dt-icon-box--gradient') &&
+    cardGrid.includes('md:grid-cols-2 lg:grid-cols-4') &&
+    cardGrid.includes('auto-rows-fr items-stretch') &&
+    featureCard.includes('BaseCard') &&
+    featureCard.includes('IconBox') &&
+    featureCard.includes('CardText') &&
+    baseCard.includes('dt-card--feature') &&
+    baseCard.includes('dt-card__accent') &&
+    iconBox.includes('dt-icon-box--gradient') &&
     !productFeatureGridSection.includes('mb-6') &&
-    productFeatureGridSection.includes('class="size-5"') &&
-    productFeatureGridSection.includes('relative mt-4 text-[15px] font-semibold leading-snug text-highlighted') &&
-    productFeatureGridSection.includes('relative mt-2 flex-1 text-sm leading-relaxed text-muted') &&
+    featureCard.includes('iconSize: 20') &&
+    featureCard.includes("titleSize: 'sm'") &&
+    featureCard.includes("descriptionSize: 'sm'") &&
     !productFeatureGridSection.includes('text-base leading-relaxed') &&
     productFeatureGridSection.includes(':title-id="titleId"') &&
     !productFeatureGridSection.includes('min-h-[') &&
@@ -290,8 +346,11 @@ assert(
   'ProductFeatureGridSection must provide a Tailwind-only reusable icon product feature grid.',
 )
 assert(
-  systemCards.includes('mt-10 grid auto-rows-fr items-stretch gap-4 md:grid-cols-3 lg:mt-12') &&
-    systemCards.includes('dt-card dt-card--adaptive dt-card--feature') &&
+  systemCards.includes('CardGrid') &&
+    systemCards.includes('FeatureCard') &&
+    systemCards.includes('columns="three" gap="sm"') &&
+    systemCards.includes('mt-10 lg:mt-12') &&
+    cardGrid.includes('md:grid-cols-3') &&
     systemCards.includes('dt-icon-box dt-icon-box--gradient') &&
     !systemCards.includes('min-h-[') &&
     !systemCards.includes('<style'),
@@ -383,36 +442,47 @@ assert(
   'Why hero video must be enlarged with Tailwind v4 utilities without adding extra video CSS.',
 )
 assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero video must not use an outer framed card shadow.')
-assert(whyTrustTabs.includes('TrustTabsSection') && trustTabsSection.includes('SectionHeading'), 'Why trust tabs must reuse TrustTabsSection and SectionHeading.')
-assert(trustTabsSection.includes('dt-segmented-tabs') && trustTabsSection.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
-assert(trustTabsSection.includes('dt-product-card') && trustTabsSection.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
-assert(trustTabsSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why trust section must use Tailwind pb-32/lg:pb-44 rhythm.')
+assert(whyTrustTabs.includes('TrustTabsSection') && trustTabsSection.includes('SectionHeader'), 'Why trust tabs must reuse TrustTabsSection and SectionHeader.')
+assert(trustTabsSection.includes('BaseTabs') && baseTabs.includes('dt-segmented-tabs') && baseTabs.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
+assert(trustTabsSection.includes('BaseCard') && trustTabsSection.includes('IconBox') && baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
+assert(trustTabsSection.includes('SectionShell') && sectionShell.includes('pb-32 lg:pb-44'), 'Why trust section must use Tailwind pb-32/lg:pb-44 rhythm.')
 assert(trustTabsSection.includes('mb-12 text-center lg:mb-16'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
-assert(trustTabsSection.includes('grid gap-5 md:grid-cols-2 lg:gap-6') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
+assert(trustTabsSection.includes('CardGrid') && cardGrid.includes('gap-5 lg:gap-6') && cardGrid.includes('md:grid-cols-2') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
 assert(
-  trustTabsSection.includes('dt-product-card dt-card--adaptive !p-7 lg:!p-8') &&
+  trustTabsSection.includes('variant="product"') &&
+    trustTabsSection.includes('equal-height') &&
+    trustTabsSection.includes('!p-7 lg:!p-8') &&
+    baseCard.includes('dt-card--adaptive') &&
     !trustTabsSection.includes('min-h-[280px]') &&
-    trustTabsSection.includes('dt-icon-box !size-10') &&
+    iconBox.includes('dt-icon-box') &&
     !trustTabsSection.includes('!rounded-xl') &&
-    trustTabsSection.includes(':size="20"'),
+    trustTabsSection.includes(':size="40"') &&
+    trustTabsSection.includes(':icon-size="20"'),
   'Why trust cards must use DGP card radius/icon size and avoid fixed card height.',
 )
 assert(serviceShowcaseSection.includes('dt-section relative pb-32 lg:pb-44') && engineLinksSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why service and engine sections must share the EMQX section rhythm.')
 assert(
-  serviceShowcaseSection.includes('service-showcase__item dt-card dt-card--soft') &&
+  serviceShowcaseSection.includes('FeatureCard') &&
+    serviceShowcaseSection.includes('variant="soft"') &&
+    baseCard.includes('dt-card--soft') &&
     !serviceShowcaseSection.includes('border-radius: 24px') &&
     !serviceShowcaseSection.includes('transform: translateY(-4px)'),
   'Why service cards must use shared global card radius and hover.',
 )
 assert(
-  engineLinksSection.includes('engine-links-section__link dt-card dt-card--soft') &&
-    engineLinksSection.includes('engine-links-section__link-icon dt-icon-box') &&
+  engineLinksSection.includes('BaseCard') &&
+    engineLinksSection.includes('IconBox') &&
+    engineLinksSection.includes('CardText') &&
+    engineLinksSection.includes('variant="soft"') &&
+    engineLinksSection.includes('tone="white"') &&
+    baseCard.includes('dt-card--soft') &&
+    iconBox.includes('dt-icon-box') &&
     !engineLinksSection.includes('border-radius: 24px') &&
     !engineLinksSection.includes('transform: translateY(-4px)'),
   'Why engine cards and icon boxes must use shared global card and icon classes.',
 )
-assert(whyService.includes('ServiceShowcaseSection') && serviceShowcaseSection.includes('SectionHeading') && whyService.includes('fangangaishu@2x.png?url') && !whyService.includes('new URL('), 'Why service section must use ServiceShowcaseSection and import the required overview image via ?url.')
-assert(whyEngine.includes('EngineLinksSection') && whyEngine.includes('whyEngineLinks') && engineLinksSection.includes('SectionHeading'), 'Why engine section must reuse EngineLinksSection and configured links.')
+assert(whyService.includes('ServiceShowcaseSection') && serviceShowcaseSection.includes('SectionHeader') && whyService.includes('fangangaishu@2x.png?url') && !whyService.includes('new URL('), 'Why service section must use ServiceShowcaseSection and import the required overview image via ?url.')
+assert(whyEngine.includes('EngineLinksSection') && whyEngine.includes('whyEngineLinks') && engineLinksSection.includes('SectionHeader'), 'Why engine section must reuse EngineLinksSection and configured links.')
 assert(whyData.includes('label: \'面向技术层\'') && whyData.includes('label: \'面向业务层\'') && whyData.includes('label: \'面向服务层\'') && whyData.includes('label: \'面向长期价值\''), 'Why page must define four trust tabs.')
 const whyTrustFeatureGroups = [...whyData.matchAll(/label: '[^']+',[\s\S]*?features: \[([\s\S]*?)\n {4}\],/g)]
 assert(
@@ -468,10 +538,13 @@ assert(
 assert(
   dgpEvolution.includes('企业数据治理体系的演进') &&
     dgpEvolution.includes('class="container pb-32 lg:pb-44"') &&
-    dgpEvolution.includes('mb-12 flex flex-col items-center gap-2 text-center lg:mb-16') &&
-    dgpEvolution.includes('text-sm font-semibold uppercase tracking-wide text-primary') &&
-    dgpEvolution.includes('text-4xl font-bold leading-[1.2] tracking-tight text-highlighted') &&
-    dgpEvolution.includes('lg:whitespace-nowrap') &&
+    dgpEvolution.includes('SectionHeader') &&
+    dgpEvolution.includes('eyebrow-size="sm"') &&
+    dgpEvolution.includes('eyebrow-tone="primary"') &&
+    dgpEvolution.includes('nowrap-subtitle') &&
+    sectionHeader.includes('section-heading--eyebrow-sm') &&
+    sectionHeader.includes('section-heading--eyebrow-primary') &&
+    sectionHeader.includes('section-heading--nowrap-subtitle') &&
     dgpEvolution.includes('class="dt-card p-6 backdrop-blur-xl"') &&
     dgpEvolution.includes('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80') &&
     dgpEvolution.includes('lg:grid-cols-2 lg:gap-12') &&
@@ -486,14 +559,17 @@ assert(
     dgpUseCases.includes('text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted') &&
     dgpUseCases.includes('text-center text-base text-default') &&
     dgpUseCases.includes('lg:whitespace-nowrap') &&
-    dgpUseCases.includes('role="tablist"') &&
-    dgpUseCases.includes('data-slot="root"') &&
-    dgpUseCases.includes('data-slot="list"') &&
-    dgpUseCases.includes('data-slot="trigger"') &&
-    dgpUseCases.includes('data-slot="indicator"') &&
-    dgpUseCases.includes('data-slot="label"') &&
-    dgpUseCases.includes('px-5 py-4 text-base font-medium') &&
-    dgpUseCases.includes('border-b border-dt-line') &&
+    dgpUseCases.includes('BaseTabs') &&
+    dgpUseCases.includes('useCaseTabs') &&
+    dgpUseCases.includes('variant="underline"') &&
+    baseTabs.includes('role="tablist"') &&
+    baseTabs.includes('data-slot="root"') &&
+    baseTabs.includes('data-slot="list"') &&
+    baseTabs.includes('data-slot="trigger"') &&
+    baseTabs.includes('data-slot="indicator"') &&
+    baseTabs.includes('data-slot="label"') &&
+    baseTabs.includes('px-5 py-4 text-base font-medium') &&
+    baseTabs.includes('border-b border-dt-line') &&
     dgpUseCases.includes('role="tabpanel"') &&
     dgpUseCases.includes('BaseButton') &&
     dgpUseCases.includes('了解更多') &&

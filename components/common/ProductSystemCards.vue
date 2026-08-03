@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import BaseCard from '~/components/common/card/BaseCard.vue'
+import CardGrid from '~/components/common/card/CardGrid.vue'
+import IconBox from '~/components/common/card/IconBox.vue'
 import type { Component } from 'vue'
 
 export interface ProductSystemCard {
@@ -13,35 +16,22 @@ defineProps<{
 </script>
 
 <template>
-  <div class="product-system__cards">
-    <article v-for="card in cards" :key="card.name" class="product-system__card dt-product-card dt-card--adaptive">
-      <div class="product-system__card-accent dt-product-card__accent" aria-hidden="true"></div>
+  <CardGrid columns="four" gap="sm" class="product-system__cards">
+    <BaseCard v-for="card in cards" :key="card.name" variant="product" padding="md" accent equal-height class="product-system__card">
       <div class="product-system__card-header">
-        <div class="product-system__card-icon dt-icon-box">
-          <component :is="card.icon" :size="20" aria-hidden="true" />
-        </div>
+        <IconBox :icon="card.icon" :icon-size="20" />
         <h3>{{ card.name }}</h3>
       </div>
       <p>{{ card.description }}</p>
-    </article>
-  </div>
+    </BaseCard>
+  </CardGrid>
 </template>
 
 <style scoped lang="scss">
-.product-system__cards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
 .product-system__card-header {
   display: flex;
   align-items: center;
   gap: 16px;
-}
-
-.product-system__card-icon {
-  flex: 0 0 auto;
 }
 
 .product-system__card h3 {
@@ -63,18 +53,6 @@ defineProps<{
 @media (prefers-reduced-motion: reduce) {
   .product-system__card:hover {
     transform: none;
-  }
-}
-
-@media (min-width: 640px) {
-  .product-system__cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .product-system__cards {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 </style>

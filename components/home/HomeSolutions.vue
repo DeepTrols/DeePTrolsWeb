@@ -3,15 +3,13 @@ import { computed, ref } from 'vue'
 import { ArrowRight } from '@lucide/vue'
 import BaseButton from '~/components/common/BaseButton.vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
+import BaseTabs from '~/components/common/tabs/BaseTabs.vue'
 import { solutions } from '~/data/home'
 
 const activeKey = ref(solutions[0]?.key ?? '')
 const activeSolution = computed(() => solutions.find((solution) => solution.key === activeKey.value) ?? solutions[0])
 const activeIndex = computed(() => Math.max(solutions.findIndex((solution) => solution.key === activeKey.value), 0))
-
-function selectSolution(key: string) {
-  activeKey.value = key
-}
+const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution.key, label: solution.tab })))
 </script>
 
 <template>
@@ -27,21 +25,15 @@ function selectSolution(key: string) {
         />
       </div>
 
-      <div class="solutions__tabs dt-tab-list" role="tablist" aria-label="解决方案分类">
-        <button
-          v-for="solution in solutions"
-          :id="`solution-tab-${solution.key}`"
-          :key="solution.key"
-          type="button"
-          role="tab"
-          class="dt-tab"
-          :aria-selected="activeKey === solution.key"
-          :aria-controls="`solution-panel-${solution.key}`"
-          @click="selectSolution(solution.key)"
-        >
-          {{ solution.tab }}
-        </button>
-      </div>
+      <BaseTabs
+        v-model="activeKey"
+        class="solutions__tabs"
+        :items="solutionTabs"
+        id-prefix="solution"
+        panel-id-prefix="solution-panel"
+        label="解决方案分类"
+        variant="pill"
+      />
 
       <div
         v-if="activeSolution"

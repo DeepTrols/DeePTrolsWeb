@@ -1,6 +1,6 @@
 # 公共页面区块组件
 
-> Version: 2026-07-31
+> Version: 2026-08-03
 
 本文件约束官网后续页面复用区块的方式。除非页面需求明确提出特殊结构，否则应优先复用本文件中的公共组件，避免各页面在标题层级、间距、按钮、卡片和 hover 行为上出现偏差。
 
@@ -29,6 +29,41 @@
 - 当 logo strip 紧跟 `PageHero` 时，Hero 应启用 `flushBottom`，由 `HeroLogoStrip` 承接底部留白。
 - Why DeepTrols 当前使用 `components/why/WhyHeroLogos.vue` 接入 `HomeCustomerLogos`。
 
+## Section Shell / Header
+公共组件：
+- `components/common/section/SectionShell.vue`
+- `components/common/section/SectionHeader.vue`
+- `components/common/SectionHeading.vue` 仅作为兼容包装入口
+
+使用要求：
+- 新区块优先直接使用 `SectionShell` + `SectionHeader`。
+- `SectionShell` 负责 section 标签、container 宽度、背景和 `pb-32 lg:pb-44` 等节奏。
+- `SectionHeader` 负责 eyebrow、title、subtitle、nowrap、宽度、对齐、语义标题层级和 actions slot。
+- `SectionHeading` 只用于兼容既有 HOME 组件；后续新增页面不要继续扩展它。
+
+## Card Primitives
+公共组件：
+- `components/common/card/BaseCard.vue`
+- `components/common/card/IconBox.vue`
+- `components/common/card/CardText.vue`
+- `components/common/card/CardGrid.vue`
+- `components/common/card/FeatureCard.vue`
+
+使用要求：
+- `BaseCard` 只负责外壳、链接语义、variant、padding、accent 和自适应高度。
+- `IconBox` 统一 icon 外框圆角、尺寸和色调；不要在业务组件中重新定义 icon 外框圆角。
+- `CardText` 统一 card 标题与描述的字号层级。
+- `CardGrid` 统一 2 / 3 / 4 列和 `auto-rows-fr items-stretch` 等高行为。
+- `FeatureCard` 用于常规 icon + title + desc + optional action；复杂 media、stats、points 或右侧动画应继续使用 slot/业务组件组合，不把 props 做成万能组件。
+
+## Base Tabs
+公共组件：`components/common/tabs/BaseTabs.vue`
+
+使用要求：
+- 页面通过 `v-model`、`items`、`idPrefix`、`label` 和 `variant` 使用。
+- 视觉变体允许 `pill`、`segmented`、`underline`，但 ARIA、键盘左右切换、`data-slot` 结构统一由 `BaseTabs` 负责。
+- Tab panel 内容仍由调用方控制，避免 `BaseTabs` 绑定业务数据结构。
+
 ## Trust Tabs
 公共组件：`components/common/TrustTabsSection.vue`
 
@@ -37,8 +72,9 @@
 
 使用要求：
 - Tab 使用 `.dt-segmented-tabs` 与 `.dt-segmented-tab`。
-- 卡片使用 `.dt-product-card`、`.dt-card--adaptive`、`.dt-product-card__accent`、`.dt-icon-box`。
-- 卡片网格固定为 `grid gap-5 md:grid-cols-2 lg:gap-6`。
+- Tab 状态和 ARIA 通过 `BaseTabs(variant="segmented")` 承载。
+- 卡片使用 `BaseCard(variant="product")`、`.dt-card--adaptive`、`.dt-product-card__accent`、`IconBox`。
+- 卡片网格通过 `CardGrid(columns="two")` 承载，保持 `gap-5 md:grid-cols-2 lg:gap-6`。
 - 卡片不得写固定 `min-height`；高度由内容和当前网格行决定。
 - 每个 tab 建议 4 张卡片，保持 Why 页面基准节奏。
 
@@ -51,7 +87,7 @@
 使用要求：
 - 能力列表数据通过 `items` 传入。
 - 右侧图片通过 `imageSrc` 与 `imageAlt` 传入。
-- 能力列表卡片必须使用 `.dt-card dt-card--soft`。
+- 能力列表卡片必须使用 `FeatureCard(variant="soft")`。
 - 不在页面内重复实现卡片 hover、圆角和间距。
 
 ## Engine Links
@@ -62,8 +98,8 @@
 
 使用要求：
 - 链接数据通过 `links` 传入。
-- 右侧标题区继续使用 `SectionHeading`。
-- 链接卡片必须使用 `.dt-card dt-card--soft`；icon 外框必须使用 `.dt-icon-box`。
+- 右侧标题区继续使用 `SectionHeader`。
+- 链接卡片必须使用 `BaseCard(variant="soft")`；icon 外框必须使用 `IconBox`。
 - 链接卡片 hover 上移由全局 `.dt-card` 统一控制，局部组件只保留 glow 动效。
 
 ## Card Radius And Height
@@ -87,11 +123,11 @@
 - 产品体系、平台体系、能力架构类区块。
 
 使用要求：
-- `ProductSystemSection` 只负责 section 背景、`.container`、`SectionHeading` 与内容布局。
+- `ProductSystemSection` 只负责 section 背景、`.container`、`SectionHeader` 与内容布局。
 - 桌面流程图外框使用 `components/common/ProductSystemFlowFrame.vue`，具体流程图由页面或业务组件传入。
 - HOME 当前 VueFlow 由 `components/home/HomeProductSystemFlow.vue` 组合 `ProductSystemFlowFrame` 与 `EnterpriseFlow.client.vue`。
 - HOME 移动端输入输出结构由 `components/home/HomeProductSystemMobileFlow.vue` 承载，不写入公共 section。
-- 底部卡片使用 `components/common/ProductSystemCards.vue`，并保持 `.dt-product-card`、`.dt-card--adaptive`、`.dt-product-card__accent`、`.dt-icon-box`。
+- 底部卡片使用 `components/common/ProductSystemCards.vue`，由 `CardGrid`、`BaseCard`、`IconBox` 组合，并保持 `.dt-product-card`、`.dt-card--adaptive`、`.dt-product-card__accent`、`.dt-icon-box`。
 - 公共 section 不得直接依赖 `EnterpriseFlow.client.vue`、VueFlow、流程图 fallback、移动端输入输出数据或卡片循环。
 
 ## Product Feature Grid
@@ -105,7 +141,7 @@
 - 必须传入 `eyebrow`、`title`、`titleId`、`subtitle` 与 `items`。
 - `items` 可传入 `icon`，产品页卡片应默认带 icon，保持 FlowMQ 式图标盒。
 - 默认四列节奏为 `grid gap-5 lg:gap-6`、`md:grid-cols-2 lg:grid-cols-4`。
-- 卡片必须使用 `.dt-card dt-card--adaptive dt-card--feature` 与 `.dt-icon-box dt-icon-box--gradient`。
+- 卡片必须通过 `FeatureCard` 组合 `BaseCard` 与 `IconBox`，最终使用 `.dt-card dt-card--adaptive dt-card--feature` 与 `.dt-icon-box dt-icon-box--gradient`。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive` 共同决定同一网格内的卡片高度。
 - 产品页特性区块默认不使用 `pt-24`，区块之间只保留 `pb-32 lg:pb-44` 节奏。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
@@ -118,8 +154,8 @@
 - 可作为 `ProductSystemSection` 默认 slot 的内容；如页面有自定义流程图，应在 slot 中自行组合流程图与 `SystemCards`。
 
 使用要求：
-- 根布局保持 `mt-10 grid auto-rows-fr items-stretch gap-4 md:grid-cols-3 lg:mt-12`。
-- 卡片保持 `.dt-card dt-card--adaptive dt-card--feature` 与 `.dt-icon-box dt-icon-box--gradient`，圆角、边框、hover 和高度自适应均由全局类控制。
+- 根布局通过 `CardGrid(columns="three" gap="sm")` 承载，并在调用处保留 `mt-10 lg:mt-12`。
+- 卡片通过 `FeatureCard` 保持 `.dt-card dt-card--adaptive dt-card--feature` 与 `.dt-icon-box dt-icon-box--gradient`，圆角、边框、hover 和高度自适应均由全局类控制。
 - 卡片不得使用固定高度；架构区需要流程图背景但暂不引入流程图时，必须先组合 `ProductSystemFlowFrame` 作为占位。
 - 组件只接收 `cards` 数据，不包含产品页专属文案。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。

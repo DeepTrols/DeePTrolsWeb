@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import SectionHeading from '~/components/common/SectionHeading.vue'
+import BaseCard from '~/components/common/card/BaseCard.vue'
+import CardGrid from '~/components/common/card/CardGrid.vue'
+import IconBox from '~/components/common/card/IconBox.vue'
+import BaseTabs from '~/components/common/tabs/BaseTabs.vue'
+import SectionHeader from '~/components/common/section/SectionHeader.vue'
+import SectionShell from '~/components/common/section/SectionShell.vue'
 import type { Component } from 'vue'
 
 export interface TrustTabsFeature {
@@ -28,60 +33,41 @@ const activeTab = computed(() => props.tabs.find((tab) => tab.key === activeKey.
 </script>
 
 <template>
-  <section class="trust-tabs-section dt-section relative pb-32 lg:pb-44" :aria-labelledby="titleId">
-    <div class="container">
-      <div class="trust-tabs-section__heading mb-12 text-center lg:mb-16">
-        <SectionHeading :title="title" :title-id="titleId" align="center" />
-
-        <div class="trust-tabs-section__tabs dt-segmented-tabs" role="tablist" :aria-label="tablistLabel">
-          <button
-            v-for="tab in tabs"
-            :id="`${titleId}-tab-${tab.key}`"
-            :key="tab.key"
-            class="dt-segmented-tab"
-            type="button"
-            role="tab"
-            :aria-selected="activeKey === tab.key"
-            :aria-controls="`${titleId}-panel-${tab.key}`"
-            @click="activeKey = tab.key"
-          >
-            {{ tab.label }}
-          </button>
-        </div>
-      </div>
-
-      <div
-        v-if="activeTab"
-        :id="`${titleId}-panel-${activeTab.key}`"
-        class="trust-tabs-section__panel grid gap-5 md:grid-cols-2 lg:gap-6"
-        role="tabpanel"
-        :aria-labelledby="`${titleId}-tab-${activeTab.key}`"
-      >
-        <article
-          v-for="feature in activeTab.features"
-          :key="feature.title"
-          class="trust-tabs-section__card dt-product-card dt-card--adaptive !p-7 lg:!p-8"
-        >
-          <div class="trust-tabs-section__card-accent dt-product-card__accent"></div>
-          <div class="trust-tabs-section__card-head flex items-center gap-4">
-            <div class="trust-tabs-section__icon dt-icon-box !size-10">
-              <component :is="feature.icon" :size="20" aria-hidden="true" />
-            </div>
-            <h3>{{ feature.title }}</h3>
-          </div>
-          <p class="trust-tabs-section__subtitle">{{ feature.subtitle }}</p>
-          <p class="trust-tabs-section__description">{{ feature.description }}</p>
-        </article>
-      </div>
+  <SectionShell class="trust-tabs-section" :title-id="titleId">
+    <div class="trust-tabs-section__heading mb-12 text-center lg:mb-16">
+      <SectionHeader :title="title" :title-id="titleId" align="center" width="full" />
+      <BaseTabs v-model="activeKey" :items="tabs" :id-prefix="titleId" :label="tablistLabel" variant="segmented" class="trust-tabs-section__tabs" />
     </div>
-  </section>
+
+    <CardGrid
+      v-if="activeTab"
+      :id="`${titleId}-panel-${activeTab.key}`"
+      columns="two"
+      class="trust-tabs-section__panel"
+      role="tabpanel"
+      :aria-labelledby="`${titleId}-tab-${activeTab.key}`"
+    >
+      <BaseCard
+        v-for="feature in activeTab.features"
+        :key="feature.title"
+        variant="product"
+        padding="none"
+        accent
+        equal-height
+        class="trust-tabs-section__card !p-7 lg:!p-8"
+      >
+        <div class="trust-tabs-section__card-head flex items-center gap-4">
+          <IconBox class="trust-tabs-section__icon" :icon="feature.icon" :size="40" :icon-size="20" />
+          <h3>{{ feature.title }}</h3>
+        </div>
+        <p class="trust-tabs-section__subtitle">{{ feature.subtitle }}</p>
+        <p class="trust-tabs-section__description">{{ feature.description }}</p>
+      </BaseCard>
+    </CardGrid>
+  </SectionShell>
 </template>
 
 <style scoped lang="scss">
-.trust-tabs-section :deep(.section-heading) {
-  max-width: none;
-}
-
 .trust-tabs-section :deep(h2) {
   margin-bottom: 32px;
 }

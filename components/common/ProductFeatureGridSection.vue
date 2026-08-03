@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import SectionHeading from '~/components/common/SectionHeading.vue'
+import CardGrid from '~/components/common/card/CardGrid.vue'
+import FeatureCard from '~/components/common/card/FeatureCard.vue'
+import SectionHeader from '~/components/common/section/SectionHeader.vue'
+import SectionShell from '~/components/common/section/SectionShell.vue'
 import type { Component } from 'vue'
 
 export interface ProductFeatureGridItem {
@@ -25,46 +28,34 @@ const props = withDefaults(
   },
 )
 
-const gridClasses = computed(() => [
-  'grid auto-rows-fr items-stretch gap-5 lg:gap-6',
-  props.columns === 'two' ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-4',
-])
+const cardColumns = computed(() => (props.columns === 'two' ? 'two' : 'four'))
 </script>
 
 <template>
-  <section class="relative bg-dt-bg pb-32 lg:pb-44" :aria-labelledby="titleId">
-    <div class="container">
-      <div class="mb-12 text-center lg:mb-16">
-        <SectionHeading
-          :title-id="titleId"
-          :eyebrow="eyebrow"
-          :title="title"
-          :subtitle="subtitle"
-          align="center"
-          :nowrap-subtitle="nowrapSubtitle"
-        />
-      </div>
-
-      <div :class="gridClasses">
-        <article
-          v-for="item in items"
-          :key="item.title"
-          class="group dt-card dt-card--adaptive dt-card--feature p-5"
-        >
-          <div
-            class="dt-card__accent"
-            aria-hidden="true"
-          ></div>
-          <div
-            v-if="item.icon"
-            class="relative dt-icon-box dt-icon-box--gradient"
-          >
-            <component :is="item.icon" class="size-5" aria-hidden="true" />
-          </div>
-          <h3 class="relative mt-4 text-[15px] font-semibold leading-snug text-highlighted">{{ item.title }}</h3>
-          <p class="relative mt-2 flex-1 text-sm leading-relaxed text-muted">{{ item.description }}</p>
-        </article>
-      </div>
+  <SectionShell :title-id="titleId">
+    <div class="mb-12 text-center lg:mb-16">
+      <SectionHeader
+        :title-id="titleId"
+        :eyebrow="eyebrow"
+        :title="title"
+        :subtitle="subtitle"
+        align="center"
+        :nowrap-subtitle="nowrapSubtitle"
+        :width="nowrapSubtitle ? 'wide' : 'default'"
+      />
     </div>
-  </section>
+
+    <CardGrid :columns="cardColumns">
+      <FeatureCard
+        v-for="item in items"
+        :key="item.title"
+        :title="item.title"
+        :description="item.description"
+        :icon="item.icon"
+        title-size="sm"
+        description-size="sm"
+        tone="gradient"
+      />
+    </CardGrid>
+  </SectionShell>
 </template>

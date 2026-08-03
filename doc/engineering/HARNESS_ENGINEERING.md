@@ -1,6 +1,6 @@
 # Harness Engineering
 > Version: 1.0
-> Last Updated: 2026-07-31
+> Last Updated: 2026-08-03
 
 ## Purpose
 Harness Engineering 是 DeepTrols 官网开发的执行约束：每次任务都必须先读取任务与产品文档，再修改代码；修改后必须通过可执行检查，避免“只凭视觉猜测”和“文档、代码、测试脱节”。
@@ -56,14 +56,16 @@ pnpm harness:engineering
 5. 禁止在 `assets/` 和 `components/` 中提交 `@apply`，当前构建链路不会处理它。
 6. Header、Footer、section 宽度、字号、hover、圆角、按钮、tab 和卡片默认遵循 HOME 基准。
 7. 如果确需偏离，必须先更新页面需求文档并说明理由。
-8. Why/Home 已抽离的 Hero、Logo Strip、Trust Tabs、Service Showcase、Engine Links、Product System、CTA 必须优先复用公共组件。
+8. Why/Home/DGP 已抽离的 Hero、Logo Strip、Trust Tabs、Service Showcase、Engine Links、Product System、Product Feature Grid、CTA 必须优先复用公共组件。
+9. Section、Card、Tabs、Carousel 的基础语义与视觉基线必须优先落到 `SectionShell`、`SectionHeader`、`BaseCard`、`IconBox`、`CardText`、`CardGrid`、`FeatureCard`、`BaseTabs`、`CarouselRoot`、`CarouselControls`。
 
 ---
 ## Harness Script
 `pnpm harness:engineering` 会检查：
 - Tailwind v4 theme bridge 是否存在。
 - 公共 `dt-*` 类是否存在。
-- `BaseButton` 与 `SectionHeading` 是否提供必需 DOM/props。
+- `BaseButton`、`SectionHeader`、`SectionHeading` 兼容入口是否提供必需 DOM/props。
+- Section/Card/Tabs/Carousel 公共基础组件是否存在并承载视觉、ARIA 与交互契约。
 - 公共页面区块组件是否存在并被页面封装组件复用。
 - HOME 关键模块是否复用公共入口。
 - 组件是否使用 SCSS，是否存在非法 inline style。

@@ -1,7 +1,7 @@
 # Component Refinement Audit
 > Version: 2026-08-03
 > Scope: HOME、Why DeepTrols、数曜·数据治理平台
-> Status: Proposal only. 本文档只统计和设计拆分方案，未执行组件实现。
+> Status: Phase 1 implemented. P0 基础组件已抽离并接入 HOME、Why DeepTrols、DGP 的首批可复用位置。
 
 ## 目标
 后续页面需要直接复用组件，但不能把页面布局写死在组件里。本次拆分建议遵循：
@@ -11,7 +11,24 @@
 3. 不做“万能大组件”，避免一个组件承载所有页面场景。
 4. 页面区块组件负责组织数据与布局，基础组件负责统一视觉和交互。
 
-## 当前统计
+## 已执行：Phase 1 P0 基础组件
+2026-08-03 已按本审计建议完成第一批精细组件抽离：
+
+| 组件 | 路径 | 当前接入位置 |
+|----|----|----|
+| `SectionShell` | `components/common/section/SectionShell.vue` | `ProductFeatureGridSection`、`ProductSystemSection`、`TrustTabsSection` |
+| `SectionHeader` | `components/common/section/SectionHeader.vue` | `SectionHeading` 兼容包装、`ProductSystemSection`、`TrustTabsSection`、`ServiceShowcaseSection`、`EngineLinksSection`、`DgpEvolutionSection` |
+| `BaseCard` | `components/common/card/BaseCard.vue` | `ProductSystemCards`、`TrustTabsSection`、`EngineLinksSection` |
+| `IconBox` | `components/common/card/IconBox.vue` | `ProductSystemCards`、`TrustTabsSection`、`FeatureCard`、`EngineLinksSection` |
+| `CardText` | `components/common/card/CardText.vue` | `FeatureCard`、`EngineLinksSection` |
+| `FeatureCard` | `components/common/card/FeatureCard.vue` | `ProductFeatureGridSection`、`SystemCards`、`ServiceShowcaseSection` |
+| `CardGrid` | `components/common/card/CardGrid.vue` | `ProductFeatureGridSection`、`SystemCards`、`ProductSystemCards`、`TrustTabsSection` |
+| `BaseTabs` | `components/common/tabs/BaseTabs.vue` | `HomeSolutions`、`DgpUseCasesSection`、`TrustTabsSection` |
+| `CarouselRoot` / `CarouselControls` | `components/common/carousel/*` | 已新增基础组件，页面迁移留到下一批 carousel 专项 |
+
+验证已更新到公共组件层：`tests/visual.spec.ts` 与 `scripts/harness-check.mjs` 会同时检查页面组合关系和公共组件的视觉/ARIA 契约。
+
+## 初始统计
 | 项目 | 数量 | 说明 |
 |----|----:|----|
 | `SectionHeading` 使用 | 9 | 但 DGP Evolution、DGP Use Cases、CTA 仍有手写标题结构 |
@@ -236,8 +253,9 @@ interface BaseTabsProps {
   modelValue: string
   items: TabItem[]
   idPrefix: string
-  ariaLabel: string
+  label: string
   variant?: 'pill' | 'segmented' | 'underline'
+  panelIdPrefix?: string
 }
 ```
 
@@ -249,7 +267,6 @@ interface CarouselRootProps {
   activeIndex: number
   itemCount: number
   label: string
-  idPrefix?: string
   transition?: 'default' | 'slow' | 'none'
 }
 ```
@@ -280,11 +297,11 @@ interface CarouselRootProps {
 - `data/*.ts` 文案数据：保留页面/业务数据结构，公共组件只要求字段契约。
 
 ## 推荐执行顺序
-1. 新增 P0 基础组件，不迁移页面，只补测试和 Harness。
-2. 将 `ProductFeatureGridSection`、`SystemCards`、`ProductSystemCards` 改为基于 `BaseCard` / `IconBox` / `CardGrid`。
-3. 将 `TrustTabsSection`、`ServiceShowcaseSection`、`EngineLinksSection` 改为基于 P0 基础组件。
-4. 抽 `BaseTabs` 后迁移 Why segmented tabs、HOME Solutions pill tabs、DGP underline tabs。
-5. 抽 `CarouselRoot` 后迁移 HOME Deliverables、HOME Solutions、HOME Cases。
+1. [x] 新增 P0 基础组件，并补测试和 Harness。
+2. [x] 将 `ProductFeatureGridSection`、`SystemCards`、`ProductSystemCards` 改为基于 `BaseCard` / `IconBox` / `CardGrid`。
+3. [x] 将 `TrustTabsSection`、`ServiceShowcaseSection`、`EngineLinksSection` 改为基于 P0 基础组件。
+4. [x] 抽 `BaseTabs` 后迁移 Why segmented tabs、HOME Solutions pill tabs、DGP underline tabs。
+5. [ ] 抽 `CarouselRoot` 后迁移 HOME Deliverables、HOME Solutions、HOME Cases。
 6. 抽 `ResourceCard` / `MediaOverlayCard` / `StorySlide` 后处理 HOME Insights、HOME Cases、DGP Use Cases。
 7. 最后再拆 PageHero 和 Ecosystem 复杂视觉，避免第一轮影响已验收页面。
 

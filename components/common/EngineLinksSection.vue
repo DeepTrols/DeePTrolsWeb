@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import SectionHeading from '~/components/common/SectionHeading.vue'
+import BaseCard from '~/components/common/card/BaseCard.vue'
+import CardText from '~/components/common/card/CardText.vue'
+import IconBox from '~/components/common/card/IconBox.vue'
+import SectionHeader from '~/components/common/section/SectionHeader.vue'
 import type { Component } from 'vue'
 
 export interface EngineSectionLink {
@@ -22,20 +25,15 @@ defineProps<{
   <section class="engine-links-section dt-section relative pb-32 lg:pb-44" :aria-labelledby="titleId">
     <div class="container engine-links-section__grid">
       <div class="engine-links-section__links">
-        <NuxtLink v-for="link in links" :key="link.title" class="group engine-links-section__link dt-card dt-card--soft" :to="link.href">
+        <BaseCard v-for="link in links" :key="link.title" class="group engine-links-section__link" :href="link.href" variant="soft" padding="md">
           <div class="engine-links-section__link-glow" aria-hidden="true"></div>
-          <div class="engine-links-section__link-icon dt-icon-box">
-            <component :is="link.icon" :size="28" aria-hidden="true" />
-          </div>
-          <div>
-            <h3>{{ link.title }}</h3>
-            <p>{{ link.description }}</p>
-          </div>
-        </NuxtLink>
+          <IconBox class="engine-links-section__link-icon" :icon="link.icon" :size="56" :icon-size="28" tone="white" />
+          <CardText :title="link.title" :description="link.description" title-size="md" description-size="md" />
+        </BaseCard>
       </div>
 
       <div class="engine-links-section__content">
-        <SectionHeading :eyebrow="eyebrow" :title="title" :title-id="titleId" />
+        <SectionHeader :eyebrow="eyebrow" :title="title" :title-id="titleId" />
         <p>{{ description }}</p>
       </div>
     </div>
@@ -80,27 +78,6 @@ defineProps<{
 
 .engine-links-section__link-icon {
   position: relative;
-  width: 56px;
-  height: 56px;
-  --dt-icon-box-bg: #ffffff;
-  --dt-icon-box-color: #151515;
-  --dt-icon-box-shadow: inset 0 0 0 1px var(--dt-color-line);
-}
-
-h3 {
-  position: relative;
-  margin: 0;
-  color: var(--dt-color-text-highlighted);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.35;
-}
-
-p {
-  margin: 10px 0 0;
-  color: var(--dt-color-text-muted);
-  font-size: 16px;
-  line-height: 1.75;
 }
 
 .engine-links-section__content > p {

@@ -46,6 +46,11 @@
 7. 新增 `CtaSection`，抽离 HOME CTA 的 panel、按钮和响应式字号。
 8. 新增 `doc/engineering/COMMON_SECTION_COMPONENTS.md`，记录公共区块组件复用约束。
 9. 更新 `tests/visual.spec.ts` 与 `scripts/harness-check.mjs`，使测试和 Harness 检查公共组件复用关系。
+10. 2026-08-03 追加 P0 精细组件抽离：新增 `SectionShell`、`SectionHeader`、`BaseCard`、`IconBox`、`CardText`、`CardGrid`、`FeatureCard`、`BaseTabs`、`CarouselRoot`、`CarouselControls`。
+11. 将 `ProductFeatureGridSection`、`SystemCards`、`ProductSystemCards`、`TrustTabsSection`、`ServiceShowcaseSection`、`EngineLinksSection`、`ProductSystemSection` 改为组合 P0 公共组件。
+12. 将 HOME Solutions、DGP Use Cases、Why Trust 的 tab 统一迁移到 `BaseTabs`，保留 pill、underline、segmented 三种视觉变体。
+13. 将 `DgpEvolutionSection` 标题迁移到 `SectionHeader`，并保留页面原有 alternating layout。
+14. 新增 `doc/engineering/COMPONENT_REFINEMENT_AUDIT.md` 的 Phase 1 落地记录，并同步 `COMMON_SECTION_COMPONENTS.md` 与 `HARNESS_ENGINEERING.md`。
 
 ---
 ## 验收标准
@@ -71,6 +76,23 @@
 | `components/common/EngineLinksSection.vue` | 新增公共引擎链接区块 |
 | `components/common/ProductSystemSection.vue` | 新增公共产品体系区块，流程图走 slot |
 | `components/common/CtaSection.vue` | 新增公共 CTA 区块 |
+| `components/common/section/SectionShell.vue` | 新增公共 section 外壳组件 |
+| `components/common/section/SectionHeader.vue` | 新增公共 section 标题组件 |
+| `components/common/card/BaseCard.vue` | 新增公共 card 外壳组件 |
+| `components/common/card/IconBox.vue` | 新增公共 icon 外框组件 |
+| `components/common/card/CardText.vue` | 新增公共 card 文案组件 |
+| `components/common/card/CardGrid.vue` | 新增公共 card 网格组件 |
+| `components/common/card/FeatureCard.vue` | 新增公共功能卡组件 |
+| `components/common/tabs/BaseTabs.vue` | 新增公共 tab 状态与 ARIA 组件 |
+| `components/common/carousel/CarouselRoot.vue` | 新增公共 carousel root 组件 |
+| `components/common/carousel/CarouselControls.vue` | 新增公共 carousel 控制组件 |
+| `components/common/ProductFeatureGridSection.vue` | 改为组合 `SectionShell`、`SectionHeader`、`CardGrid`、`FeatureCard` |
+| `components/common/SystemCards.vue` | 改为组合 `CardGrid`、`FeatureCard` |
+| `components/common/ProductSystemCards.vue` | 改为组合 `CardGrid`、`BaseCard`、`IconBox` |
+| `components/home/HomeSolutions.vue` | 改为使用 `BaseTabs` |
+| `components/product/dgp/DgpUseCasesSection.vue` | 改为使用 `BaseTabs(underline)` |
+| `components/product/dgp/DgpEvolutionSection.vue` | 改为使用 `SectionHeader` |
+| `doc/engineering/COMPONENT_REFINEMENT_AUDIT.md` | 记录精细组件抽离统计、结构与 Phase 1 执行状态 |
 | `components/why/WhyHero.vue` | 改为 `PageHero` 配置封装 |
 | `components/why/WhyHeroLogos.vue` | 新增 Why Hero logo 区块 |
 | `components/why/WhyTrustTabs.vue` | 改为 `TrustTabsSection` 配置封装 |
@@ -90,21 +112,23 @@
 |----|----|
 | `pnpm lint` | 通过 |
 | `pnpm typecheck` | 通过 |
-| `pnpm test` | 通过，3 个文件、13 个测试 |
-| `pnpm test:visual` | 通过，5 个测试 |
+| `pnpm test` | 通过，4 个文件、17 个测试 |
+| `pnpm test:visual` | 通过，6 个测试 |
 | `pnpm harness:engineering` | 通过 |
 | `pnpm build` | 通过；Nuxt/Rolldown 输出 plugin timings 性能提示，不影响构建结果 |
 | `git diff --check` | 通过 |
-| `curl -I http://127.0.0.1:3199/` | 通过，HTTP 200 |
-| `curl -I http://127.0.0.1:3199/why-deeptrols` | 通过，HTTP 200 |
+| `curl -I http://127.0.0.1:43101/` | 通过，HTTP 200 |
+| `curl -I http://127.0.0.1:43101/why-deeptrols` | 通过，HTTP 200 |
+| `curl -I http://127.0.0.1:43101/products/data-governance` | 通过，HTTP 200 |
+| Browser runtime check | 通过，HOME / Why DeepTrols / DGP 均无 console error |
 
 ---
 ## Git
 | 字段 | 内容 |
 |----|----|
 | Branch | `main` |
-| Commit Message | `refactor(TASK-002.3): extract shared section components` |
-| Commit Hash | `40f07b5` |
+| Commit Message | `refactor(TASK-002.3): extract shared component primitives` |
+| Commit Hash | 本次提交后以 `git log -1 --oneline` 为准 |
 
 ## 完成说明
-公共区块已抽离，Why/Home 页面现有视觉和内容由页面封装组件传入公共组件。`doc/product/PAGE_REQUIREMENTS/PRODUCT/` 仍为未跟踪目录，本任务未修改。
+公共区块已抽离，Why/Home/DGP 页面现有视觉和内容由页面封装组件传入公共组件。2026-08-03 追加的 P0 精细组件已接入首批区块，carousel 基础组件已新增但业务 carousel 迁移留到下一批。

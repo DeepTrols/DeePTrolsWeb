@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import BaseButton from '~/components/common/BaseButton.vue'
+import BaseTabs from '~/components/common/tabs/BaseTabs.vue'
 import { dgpUseCases } from '~/data/dgp'
 
 const activeKey = ref(dgpUseCases[0]?.key ?? '')
 const activeUseCase = computed(() => dgpUseCases.find((item) => item.key === activeKey.value) ?? dgpUseCases[0])
+const useCaseTabs = computed(() => dgpUseCases.map((item) => ({ key: item.key, label: item.tab })))
 </script>
 
 <template>
@@ -20,48 +22,15 @@ const activeUseCase = computed(() => dgpUseCases.find((item) => item.key === act
         构建统一的数据治理体系，帮助企业实现数据标准化、资产化与智能化，持续释放数据价值。
       </p>
 
-      <div
-        dir="ltr"
-        data-orientation="horizontal"
-        data-slot="root"
+      <BaseTabs
+        v-model="activeKey"
         class="mb-10 flex flex-col items-center gap-2"
-      >
-        <div
-          data-slot="list"
-          class="scrollbar-hide group relative -mb-px flex w-full justify-start overflow-x-auto overflow-y-hidden border-b border-dt-line p-1 md:justify-center"
-          tabindex="0"
-          data-orientation="horizontal"
-          dir="ltr"
-          role="tablist"
-          aria-orientation="horizontal"
-          aria-label="数曜·数据治理平台应用场景"
-        >
-          <button
-            v-for="item in dgpUseCases"
-            :id="`dgp-tab-${item.key}`"
-            :key="item.key"
-            type="button"
-            data-slot="trigger"
-            data-orientation="horizontal"
-            role="tab"
-            class="group relative inline-flex min-w-0 flex-shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-5 py-4 text-base font-medium text-dt-text-muted transition-colors hover:text-dt-text-highlighted focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dt-primary disabled:cursor-not-allowed disabled:opacity-75 data-[state=active]:text-dt-text-highlighted"
-            :tabindex="activeKey === item.key ? 0 : -1"
-            :aria-selected="activeKey === item.key"
-            :aria-controls="`dgp-panel-${item.key}`"
-            :data-state="activeKey === item.key ? 'active' : 'inactive'"
-            :data-active="activeKey === item.key ? '' : undefined"
-            @click="activeKey = item.key"
-          >
-            <span
-              v-if="activeKey === item.key"
-              data-slot="indicator"
-              class="absolute inset-x-5 -bottom-px h-1 rounded-full bg-dt-primary transition-all duration-200"
-              aria-hidden="true"
-            ></span>
-            <span data-slot="label" class="truncate">{{ item.tab }}</span>
-          </button>
-        </div>
-      </div>
+        :items="useCaseTabs"
+        id-prefix="dgp"
+        panel-id-prefix="dgp-panel"
+        label="数曜·数据治理平台应用场景"
+        variant="underline"
+      />
 
       <div
         v-if="activeUseCase"

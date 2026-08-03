@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SectionHeading from '~/components/common/SectionHeading.vue'
+import FeatureCard from '~/components/common/card/FeatureCard.vue'
+import SectionHeader from '~/components/common/section/SectionHeader.vue'
 import type { Component } from 'vue'
 
 export interface ServiceShowcaseItem {
@@ -22,18 +23,25 @@ defineProps<{
   <section class="service-showcase dt-section relative pb-32 lg:pb-44" :aria-labelledby="titleId">
     <div class="container service-showcase__grid">
       <div class="service-showcase__content">
-        <SectionHeading :eyebrow="eyebrow" :title="title" :title-id="titleId" />
+        <SectionHeader :eyebrow="eyebrow" :title="title" :title-id="titleId" />
 
         <div class="service-showcase__items">
-          <article v-for="item in items" :key="item.title" class="service-showcase__item dt-card dt-card--soft">
-            <div class="service-showcase__icon dt-icon-box">
-              <component :is="item.icon" :size="20" aria-hidden="true" />
-            </div>
-            <div>
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.description }}</p>
-            </div>
-          </article>
+          <FeatureCard
+            v-for="item in items"
+            :key="item.title"
+            class="service-showcase__item"
+            :title="item.title"
+            :description="item.description"
+            :icon="item.icon"
+            layout="horizontal"
+            variant="soft"
+            padding="md"
+            title-size="md"
+            description-size="md"
+            tone="primary"
+            :show-accent="false"
+            :equal-height="false"
+          />
         </div>
       </div>
 
@@ -55,27 +63,6 @@ defineProps<{
   display: grid;
   gap: 16px;
   margin-top: 40px;
-}
-
-.service-showcase__item {
-  display: flex;
-  gap: 18px;
-  padding: 24px;
-}
-
-h3 {
-  margin: 0;
-  color: var(--dt-color-text-highlighted);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.35;
-}
-
-p {
-  margin: 10px 0 0;
-  color: var(--dt-color-text-muted);
-  font-size: 16px;
-  line-height: 1.75;
 }
 
 .service-showcase__visual {
