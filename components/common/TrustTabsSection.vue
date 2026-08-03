@@ -64,8 +64,8 @@ const activeTab = computed(() => props.tabs.find((tab) => tab.key === activeKey.
         >
           <div class="trust-tabs-section__card-accent dt-product-card__accent"></div>
           <div class="trust-tabs-section__card-head flex items-center gap-4">
-            <div class="trust-tabs-section__icon dt-icon-box !size-12 !rounded-xl">
-              <component :is="feature.icon" :size="24" aria-hidden="true" />
+            <div class="trust-tabs-section__icon dt-icon-box !size-10 !rounded-xl">
+              <component :is="feature.icon" :size="20" aria-hidden="true" />
             </div>
             <h3>{{ feature.title }}</h3>
           </div>

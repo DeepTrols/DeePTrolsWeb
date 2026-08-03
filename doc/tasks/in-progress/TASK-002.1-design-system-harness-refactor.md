@@ -62,6 +62,7 @@
 11. 移除 Hero canvas/Tres 残留依赖：`@tresjs/core`、`three`、`@types/three`。
 12. 更新视觉契约测试，使其检查公共设计系统复用，而不是鼓励页面内重复 CSS。
 13. 统一 HOME、Why DeepTrols 与 DGP 的带 icon 信息卡视觉基准：card 圆角采用 DGP `rounded-2xl` / 16px，icon 外框采用 DGP `rounded-xl` / 12px，普通信息卡移除固定高度。
+14. 修复 Why Trust technology panel 的 icon 外框尺寸比例：统一为 DGP 基准 `size-10` + 20px icon，避免 `size-12` 下圆角视觉不一致。
 
 ---
 ## 验收标准
@@ -121,6 +122,7 @@
 | `pnpm build` | 通过；仅有 Nuxt/Rolldown plugin timing 性能提示 |
 | `pnpm harness:engineering` | 通过 |
 | Browser card radius verification | 通过，HOME、Why DeepTrols、DGP 的带 icon 信息卡 card 圆角均为 16px，icon 外框均为 12px，普通卡 `min-height:auto`，无横向溢出，无 console error |
+| Browser Why Trust technology icon verification | 通过，`why-trust-title-panel-technology` 中 4 个 icon 外框均为 40×40、圆角 12px，内部 SVG 为 20×20，无横向溢出，无 console error |
 
 ## SSR 验证
 - 使用生产构建 `HOST=127.0.0.1 PORT=3600 node .output/server/index.mjs` 启动预览。

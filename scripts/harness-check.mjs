@@ -377,7 +377,13 @@ assert(trustTabsSection.includes('dt-product-card') && trustTabsSection.includes
 assert(trustTabsSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why trust section must use Tailwind pb-32/lg:pb-44 rhythm.')
 assert(trustTabsSection.includes('mb-12 text-center lg:mb-16'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
 assert(trustTabsSection.includes('grid gap-5 md:grid-cols-2 lg:gap-6') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
-assert(trustTabsSection.includes('dt-product-card !p-7 lg:!p-8') && !trustTabsSection.includes('min-h-[280px]') && trustTabsSection.includes('!size-12 !rounded-xl'), 'Why trust cards must use DGP card radius/icon radius and avoid fixed card height.')
+assert(
+  trustTabsSection.includes('dt-product-card !p-7 lg:!p-8') &&
+    !trustTabsSection.includes('min-h-[280px]') &&
+    trustTabsSection.includes('!size-10 !rounded-xl') &&
+    trustTabsSection.includes(':size="20"'),
+  'Why trust cards must use DGP card radius/icon size and avoid fixed card height.',
+)
 assert(serviceShowcaseSection.includes('dt-section relative pb-32 lg:pb-44') && engineLinksSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why service and engine sections must share the EMQX section rhythm.')
 assert(serviceShowcaseSection.includes('border-radius: var(--dt-radius-lg)') && !serviceShowcaseSection.includes('border-radius: 24px'), 'Why service cards must use the DGP rounded-2xl radius baseline.')
 assert(engineLinksSection.includes('border-radius: var(--dt-radius-lg)') && engineLinksSection.includes('border-radius: var(--dt-radius-md)') && !engineLinksSection.includes('border-radius: 24px'), 'Why engine cards and icon boxes must use the DGP radius baseline.')
