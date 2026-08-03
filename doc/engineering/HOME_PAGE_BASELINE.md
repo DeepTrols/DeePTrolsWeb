@@ -1,7 +1,7 @@
 # HOME Page Baseline
 > Version: 1.0
 > Source Page: `pages/index.vue`
-> Last Updated: 2026-07-30
+> Last Updated: 2026-08-03
 
 ## Purpose
 后续所有 DeepTrols 官网页面，除非需求文档明确提出特殊设计，否则必须以当前 HOME 页面为视觉、结构、交互和代码复用基准。
@@ -47,8 +47,11 @@
 | 通用按钮样式 | `.dt-button`、`.dt-button--primary`、`.dt-button--secondary`、`.dt-button--ghost` |
 | Tab 列表 | `.dt-tab-list` + `.dt-tab` |
 | Why / 对比页圆角分段 Tab | `.dt-segmented-tabs` + `.dt-segmented-tab` |
-| EMQX Platform 风格能力卡片 | `.dt-product-card` + `.dt-product-card__accent` + `.dt-icon-box` |
-| Ecosystem 卡片 | `.dt-ecosystem-card` + `.dt-card-tag` |
+| 全局信息卡基准 | `.dt-card` + `.dt-card--adaptive`，统一 card 圆角、hover、边框与自适应高度 |
+| DGP / 能力类卡片 | `.dt-card dt-card--adaptive dt-card--feature` + `.dt-card__accent` + `.dt-icon-box dt-icon-box--gradient` |
+| EMQX Platform 风格能力卡片 | `.dt-product-card dt-card--adaptive` + `.dt-product-card__accent` + `.dt-icon-box` |
+| 轻量链接 / 服务卡片 | `.dt-card dt-card--soft` + `.dt-icon-box` |
+| Ecosystem 卡片 | `.dt-ecosystem-card` + `.dt-card-tag` + `.dt-icon-box` |
 | CTA 面板 | `.dt-cta-panel` |
 
 禁止在新页面重复复制 `HomeCta`、`HomeCases`、`HomeInsights` 中曾经存在的局部按钮 CSS。
@@ -69,6 +72,8 @@
 4. 新页面的组件样式必须使用 `<style scoped lang="scss">`，并优先引用 `dt-*` 公共类。
 5. 页面级间距优先直接在模板中使用 Tailwind v4 utilities，例如 `pt-24 pb-24 lg:pt-32 lg:pb-32`、`pb-32 lg:pb-44`、`mb-12 lg:mb-16`、`grid gap-5 md:grid-cols-2 lg:gap-6`。
 6. 色彩、hover、按钮、tab、卡片、标题不得在页面内重新发明。
+7. 普通信息卡的外框圆角统一走 `--dt-card-radius`，icon 外层背景/边框圆角统一走 `--dt-icon-box-radius`；组件内不得再写私有 card/icon 圆角覆盖。
+8. 普通信息卡不得写固定高度或固定 `min-height`；需要同一行等高时使用 grid 的 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive`。
 
 ---
 ## Documentation Rule

@@ -25,7 +25,7 @@ defineProps<{
         <SectionHeading :eyebrow="eyebrow" :title="title" :title-id="titleId" />
 
         <div class="service-showcase__items">
-          <article v-for="item in items" :key="item.title" class="service-showcase__item">
+          <article v-for="item in items" :key="item.title" class="service-showcase__item dt-card dt-card--soft">
             <div class="service-showcase__icon dt-icon-box">
               <component :is="item.icon" :size="20" aria-hidden="true" />
             </div>
@@ -60,22 +60,7 @@ defineProps<{
 .service-showcase__item {
   display: flex;
   gap: 18px;
-  border: 1px solid var(--dt-color-line);
-  border-radius: var(--dt-radius-lg);
-  background: rgba(39, 30, 53, 0.3);
   padding: 24px;
-  transition:
-    transform var(--dt-duration-slow) ease,
-    border-color var(--dt-duration-slow) ease,
-    background-color var(--dt-duration-slow) ease,
-    box-shadow var(--dt-duration-slow) ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    border-color: rgba(94, 78, 255, 0.4);
-    background: rgba(39, 30, 53, 0.5);
-    box-shadow: 0 24px 50px rgba(94, 78, 255, 0.06);
-  }
 }
 
 h3 {
@@ -119,8 +104,6 @@ img {
 
 @media (prefers-reduced-motion: reduce) {
   .service-showcase__item {
-    transition: none;
-
     &:hover {
       transform: none;
     }

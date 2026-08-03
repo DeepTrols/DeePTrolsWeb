@@ -61,7 +61,8 @@ defineProps<{
 .product-system__mobile-card,
 .product-system__mobile-core {
   border: 1px solid var(--dt-color-line);
-  border-radius: var(--dt-radius-md);
+  min-height: auto;
+  border-radius: var(--dt-card-radius);
   background: #181524;
   padding: 22px;
 }

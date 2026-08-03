@@ -49,15 +49,15 @@ const gridClasses = computed(() => [
         <article
           v-for="item in items"
           :key="item.title"
-          class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-dt-line bg-dt-bg-soft/30 p-5 transition-all duration-300 hover:border-primary/40 hover:bg-dt-bg-soft/50"
+          class="group dt-card dt-card--adaptive dt-card--feature p-5"
         >
           <div
-            class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-dt-primary/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            class="dt-card__accent"
             aria-hidden="true"
           ></div>
           <div
             v-if="item.icon"
-            class="relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 text-primary ring-1 ring-primary/20"
+            class="relative dt-icon-box dt-icon-box--gradient"
           >
             <component :is="item.icon" class="size-5" aria-hidden="true" />
           </div>

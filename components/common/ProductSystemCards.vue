@@ -14,7 +14,7 @@ defineProps<{
 
 <template>
   <div class="product-system__cards">
-    <article v-for="card in cards" :key="card.name" class="product-system__card dt-product-card">
+    <article v-for="card in cards" :key="card.name" class="product-system__card dt-product-card dt-card--adaptive">
       <div class="product-system__card-accent dt-product-card__accent" aria-hidden="true"></div>
       <div class="product-system__card-header">
         <div class="product-system__card-icon dt-icon-box">

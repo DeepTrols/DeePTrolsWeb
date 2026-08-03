@@ -26,7 +26,7 @@ import { ecosystemCards } from '~/data/home'
           :class="`ecosystem-card--${card.variant}`"
         >
           <div class="ecosystem-card__intro">
-            <div class="ecosystem-card__icon-box">
+            <div class="ecosystem-card__icon-box dt-icon-box">
               <component :is="card.icon" class="ecosystem-card__icon" :size="24" aria-hidden="true" />
             </div>
             <h3>{{ card.title }}</h3>
@@ -134,15 +134,12 @@ import { ecosystemCards } from '~/data/home'
 }
 
 .ecosystem-card__icon-box {
-  display: flex;
   width: 48px;
   height: 48px;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 16px;
-  border-radius: var(--dt-radius-md);
-  background: var(--dt-color-bg-elevated);
-  color: var(--dt-color-text-highlighted);
+  --dt-icon-box-bg: var(--dt-color-bg-elevated);
+  --dt-icon-box-color: var(--dt-color-text-highlighted);
+  --dt-icon-box-shadow: none;
 }
 
 .ecosystem-card__icon {

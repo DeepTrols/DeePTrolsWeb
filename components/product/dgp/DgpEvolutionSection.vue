@@ -29,7 +29,7 @@ import { dgpEvolutionItems } from '~/data/dgp'
             :class="index % 2 === 1 ? 'lg:col-start-2 lg:pl-12' : 'lg:col-start-1 lg:pr-12'"
           >
             <article
-              class="rounded-2xl border border-dt-line bg-dt-bg p-6 backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-primary/40"
+              class="dt-card p-6 backdrop-blur-xl"
             >
               <div>
                 <span class="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80">

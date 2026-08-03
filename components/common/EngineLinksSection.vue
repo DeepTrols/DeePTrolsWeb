@@ -22,9 +22,9 @@ defineProps<{
   <section class="engine-links-section dt-section relative pb-32 lg:pb-44" :aria-labelledby="titleId">
     <div class="container engine-links-section__grid">
       <div class="engine-links-section__links">
-        <NuxtLink v-for="link in links" :key="link.title" class="group engine-links-section__link" :to="link.href">
+        <NuxtLink v-for="link in links" :key="link.title" class="group engine-links-section__link dt-card dt-card--soft" :to="link.href">
           <div class="engine-links-section__link-glow" aria-hidden="true"></div>
-          <div class="engine-links-section__link-icon">
+          <div class="engine-links-section__link-icon dt-icon-box">
             <component :is="link.icon" :size="28" aria-hidden="true" />
           </div>
           <div>
@@ -55,27 +55,10 @@ defineProps<{
 }
 
 .engine-links-section__link {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 20px;
-  overflow: hidden;
-  border: 1px solid var(--dt-color-line);
-  border-radius: var(--dt-radius-lg);
-  background: rgba(39, 30, 53, 0.3);
   padding: 24px;
-  transition:
-    transform var(--dt-duration-slow) ease,
-    border-color var(--dt-duration-slow) ease,
-    background-color var(--dt-duration-slow) ease,
-    box-shadow var(--dt-duration-slow) ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    border-color: rgba(94, 78, 255, 0.4);
-    background: rgba(39, 30, 53, 0.55);
-    box-shadow: 0 24px 50px rgba(94, 78, 255, 0.06);
-  }
 }
 
 .engine-links-section__link-glow {
@@ -97,16 +80,11 @@ defineProps<{
 
 .engine-links-section__link-icon {
   position: relative;
-  display: flex;
   width: 56px;
   height: 56px;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--dt-color-line);
-  border-radius: var(--dt-radius-md);
-  background: #ffffff;
-  color: #151515;
+  --dt-icon-box-bg: #ffffff;
+  --dt-icon-box-color: #151515;
+  --dt-icon-box-shadow: inset 0 0 0 1px var(--dt-color-line);
 }
 
 h3 {

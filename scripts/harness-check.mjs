@@ -206,8 +206,17 @@ assert(sectionHeading.includes('titleId'), 'SectionHeading must support titleId 
 assert(sectionHeading.includes('nowrapSubtitle'), 'SectionHeading must support nowrapSubtitle.')
 assert(sectionHeading.includes('section-heading--nowrap-subtitle'), 'SectionHeading nowrap mode must expose a desktop-wide wrapper class.')
 assert(sectionHeading.includes('max-width: none'), 'SectionHeading nowrap mode must remove the desktop max-width limit.')
-assert(tokens.includes('.dt-icon-box') && tokens.includes('border-radius: var(--dt-radius-md)'), 'Shared icon boxes must use the DGP rounded-xl radius baseline.')
-assert(tokens.includes('.dt-product-card') && tokens.includes('border-radius: var(--dt-radius-lg)'), 'Shared product cards must use the DGP rounded-2xl radius baseline.')
+assert(
+  tokens.includes('--dt-card-radius: var(--dt-radius-lg)') &&
+    tokens.includes('--dt-icon-box-radius: var(--dt-radius-md)') &&
+    tokens.includes('.dt-card') &&
+    tokens.includes('.dt-card--adaptive') &&
+    tokens.includes('.dt-card--feature') &&
+    tokens.includes('.dt-card--soft'),
+  'Shared card radius, hover, and adaptive height must be defined globally.',
+)
+assert(tokens.includes('.dt-icon-box') && tokens.includes('border-radius: var(--dt-icon-box-radius)'), 'Shared icon boxes must use the global DGP rounded-xl radius baseline.')
+assert(tokens.includes('.dt-product-card') && tokens.includes('border-radius: var(--dt-card-radius)'), 'Shared product cards must use the global DGP rounded-2xl radius baseline.')
 assert(!tokens.includes('min-height: 280px'), 'Shared ecosystem cards must not define a fixed minimum height.')
 
 for (const [name, source] of [
@@ -259,6 +268,7 @@ assert(
   'Home product mobile flow must be isolated from ProductSystemSection.',
 )
 assert(productSystemCards.includes('dt-product-card') && productSystemCards.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
+assert(productSystemCards.includes('dt-card--adaptive'), 'Product system cards must use shared adaptive card height.')
 assert(!productSystemCards.includes('min-height'), 'Product system cards must not define a fixed card height.')
 assert(
   productFeatureGridSection.includes('SectionHeading') &&
@@ -266,7 +276,9 @@ assert(
     !productFeatureGridSection.includes('pt-24') &&
     productFeatureGridSection.includes('md:grid-cols-2 lg:grid-cols-4') &&
     productFeatureGridSection.includes('auto-rows-fr items-stretch') &&
-    productFeatureGridSection.includes('rounded-xl bg-gradient-to-br from-primary/20 to-primary/5') &&
+    productFeatureGridSection.includes('dt-card dt-card--adaptive dt-card--feature') &&
+    productFeatureGridSection.includes('dt-card__accent') &&
+    productFeatureGridSection.includes('dt-icon-box dt-icon-box--gradient') &&
     !productFeatureGridSection.includes('mb-6') &&
     productFeatureGridSection.includes('class="size-5"') &&
     productFeatureGridSection.includes('relative mt-4 text-[15px] font-semibold leading-snug text-highlighted') &&
@@ -279,15 +291,15 @@ assert(
 )
 assert(
   systemCards.includes('mt-10 grid auto-rows-fr items-stretch gap-4 md:grid-cols-3 lg:mt-12') &&
-    systemCards.includes('rounded-2xl border border-dt-line') &&
-    systemCards.includes('hover:border-dt-primary/40') &&
+    systemCards.includes('dt-card dt-card--adaptive dt-card--feature') &&
+    systemCards.includes('dt-icon-box dt-icon-box--gradient') &&
     !systemCards.includes('min-h-[') &&
     !systemCards.includes('<style'),
   'SystemCards must provide the FlowMQ-like Tailwind system card grid.',
 )
 assert(homeCta.includes('CtaSection') && ctaSection.includes('dt-cta-panel'), 'HomeCta must reuse the shared CtaSection.')
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
-assert(ecosystem.includes('border-radius: var(--dt-radius-md)'), 'Ecosystem icon boxes must use the DGP rounded-xl radius baseline.')
+assert(ecosystem.includes('ecosystem-card__icon-box dt-icon-box'), 'Ecosystem icon boxes must use the shared global icon box class.')
 assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')
 assert(
   header.includes('SiteHeaderDesktopNav') &&
@@ -378,15 +390,27 @@ assert(trustTabsSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why tru
 assert(trustTabsSection.includes('mb-12 text-center lg:mb-16'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
 assert(trustTabsSection.includes('grid gap-5 md:grid-cols-2 lg:gap-6') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
 assert(
-  trustTabsSection.includes('dt-product-card !p-7 lg:!p-8') &&
+  trustTabsSection.includes('dt-product-card dt-card--adaptive !p-7 lg:!p-8') &&
     !trustTabsSection.includes('min-h-[280px]') &&
-    trustTabsSection.includes('!size-10 !rounded-xl') &&
+    trustTabsSection.includes('dt-icon-box !size-10') &&
+    !trustTabsSection.includes('!rounded-xl') &&
     trustTabsSection.includes(':size="20"'),
   'Why trust cards must use DGP card radius/icon size and avoid fixed card height.',
 )
 assert(serviceShowcaseSection.includes('dt-section relative pb-32 lg:pb-44') && engineLinksSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why service and engine sections must share the EMQX section rhythm.')
-assert(serviceShowcaseSection.includes('border-radius: var(--dt-radius-lg)') && !serviceShowcaseSection.includes('border-radius: 24px'), 'Why service cards must use the DGP rounded-2xl radius baseline.')
-assert(engineLinksSection.includes('border-radius: var(--dt-radius-lg)') && engineLinksSection.includes('border-radius: var(--dt-radius-md)') && !engineLinksSection.includes('border-radius: 24px'), 'Why engine cards and icon boxes must use the DGP radius baseline.')
+assert(
+  serviceShowcaseSection.includes('service-showcase__item dt-card dt-card--soft') &&
+    !serviceShowcaseSection.includes('border-radius: 24px') &&
+    !serviceShowcaseSection.includes('transform: translateY(-4px)'),
+  'Why service cards must use shared global card radius and hover.',
+)
+assert(
+  engineLinksSection.includes('engine-links-section__link dt-card dt-card--soft') &&
+    engineLinksSection.includes('engine-links-section__link-icon dt-icon-box') &&
+    !engineLinksSection.includes('border-radius: 24px') &&
+    !engineLinksSection.includes('transform: translateY(-4px)'),
+  'Why engine cards and icon boxes must use shared global card and icon classes.',
+)
 assert(whyService.includes('ServiceShowcaseSection') && serviceShowcaseSection.includes('SectionHeading') && whyService.includes('fangangaishu@2x.png?url') && !whyService.includes('new URL('), 'Why service section must use ServiceShowcaseSection and import the required overview image via ?url.')
 assert(whyEngine.includes('EngineLinksSection') && whyEngine.includes('whyEngineLinks') && engineLinksSection.includes('SectionHeading'), 'Why engine section must reuse EngineLinksSection and configured links.')
 assert(whyData.includes('label: \'面向技术层\'') && whyData.includes('label: \'面向业务层\'') && whyData.includes('label: \'面向服务层\'') && whyData.includes('label: \'面向长期价值\''), 'Why page must define four trust tabs.')
@@ -448,6 +472,7 @@ assert(
     dgpEvolution.includes('text-sm font-semibold uppercase tracking-wide text-primary') &&
     dgpEvolution.includes('text-4xl font-bold leading-[1.2] tracking-tight text-highlighted') &&
     dgpEvolution.includes('lg:whitespace-nowrap') &&
+    dgpEvolution.includes('class="dt-card p-6 backdrop-blur-xl"') &&
     dgpEvolution.includes('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80') &&
     dgpEvolution.includes('lg:grid-cols-2 lg:gap-12') &&
     dgpEvolution.includes('图片占位符') &&

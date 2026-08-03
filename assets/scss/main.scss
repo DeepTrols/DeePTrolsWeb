@@ -33,6 +33,13 @@
   --dt-radius-md: 12px;
   --dt-radius-lg: 16px;
   --dt-ui-radius: 0.5rem;
+  --dt-card-radius: var(--dt-radius-lg);
+  --dt-icon-box-radius: var(--dt-radius-md);
+  --dt-card-hover-border: rgba(94, 78, 255, 0.4);
+  --dt-card-feature-bg: rgba(24, 21, 36, 0.3);
+  --dt-card-feature-hover-bg: rgba(24, 21, 36, 0.5);
+  --dt-card-soft-bg: rgba(39, 30, 53, 0.3);
+  --dt-card-soft-hover-bg: rgba(39, 30, 53, 0.5);
   --dt-shadow-card: 0 18px 50px rgba(0, 0, 0, 0.22);
   --dt-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --dt-shadow-primary: 0 20px 25px -5px rgba(94, 78, 255, 0.1), 0 8px 10px -6px rgba(94, 78, 255, 0.1);
@@ -409,29 +416,55 @@ video {
     }
   }
 
-  .dt-product-card {
+  .dt-card,
+  .dt-product-card,
+  .dt-ecosystem-card {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    min-height: auto;
     overflow: hidden;
     border: 1px solid var(--dt-color-line);
-    border-radius: var(--dt-radius-lg);
-    background: var(--dt-color-bg);
-    padding: 24px;
+    border-radius: var(--dt-card-radius);
+    background: var(--dt-card-bg, var(--dt-color-bg));
     transition:
       transform var(--dt-duration-slow) ease,
       border-color var(--dt-duration-slow) ease,
+      background-color var(--dt-duration-slow) ease,
       box-shadow var(--dt-duration-slow) ease;
 
     &:hover {
       transform: translateY(-4px);
-      border-color: rgba(94, 78, 255, 0.4);
-      box-shadow:
-        0 20px 25px -5px rgba(94, 78, 255, 0.05),
-        0 8px 10px -6px rgba(94, 78, 255, 0.05);
+      border-color: var(--dt-card-hover-border);
+      background: var(--dt-card-hover-bg, var(--dt-card-bg, var(--dt-color-bg)));
+      box-shadow: var(--dt-card-hover-shadow, var(--dt-shadow-primary));
     }
   }
 
+  .dt-card--adaptive {
+    height: 100%;
+    min-height: auto;
+  }
+
+  .dt-card--feature {
+    --dt-card-bg: var(--dt-card-feature-bg);
+    --dt-card-hover-bg: var(--dt-card-feature-hover-bg);
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dt-card--soft {
+    --dt-card-bg: var(--dt-card-soft-bg);
+    --dt-card-hover-bg: var(--dt-card-soft-hover-bg);
+    --dt-card-hover-shadow: 0 24px 50px rgba(94, 78, 255, 0.06);
+  }
+
+  .dt-product-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .dt-card__accent,
   .dt-product-card__accent {
     position: absolute;
     top: 0;
@@ -443,6 +476,7 @@ video {
     transition: opacity var(--dt-duration-slow) ease;
   }
 
+  .dt-card:hover .dt-card__accent,
   .dt-product-card:hover .dt-product-card__accent {
     opacity: 1;
   }
@@ -454,31 +488,23 @@ video {
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    border-radius: var(--dt-radius-md);
-    background: var(--dt-color-primary-soft);
-    box-shadow: inset 0 0 0 1px rgba(94, 78, 255, 0.2);
-    color: var(--dt-color-primary);
+    border-radius: var(--dt-icon-box-radius);
+    background: var(--dt-icon-box-bg, var(--dt-color-primary-soft));
+    box-shadow: var(--dt-icon-box-shadow, inset 0 0 0 1px rgba(94, 78, 255, 0.2));
+    color: var(--dt-icon-box-color, var(--dt-color-primary));
+  }
+
+  .dt-icon-box--gradient {
+    --dt-icon-box-bg: linear-gradient(135deg, rgba(94, 78, 255, 0.2), rgba(94, 78, 255, 0.05));
+    --dt-icon-box-shadow: inset 0 0 0 1px rgba(94, 78, 255, 0.2);
   }
 
   .dt-ecosystem-card {
-    position: relative;
     display: flex;
     cursor: pointer;
     flex-direction: column;
-    overflow: hidden;
-    border: 1px solid var(--dt-color-line);
-    border-radius: var(--dt-radius-lg);
-    background: var(--dt-color-bg);
     padding: 24px;
     box-shadow: var(--dt-shadow-sm);
-    transition:
-      border-color var(--dt-duration-base) ease,
-      box-shadow var(--dt-duration-base) ease;
-
-    &:hover {
-      border-color: rgba(94, 78, 255, 0.4);
-      box-shadow: var(--dt-shadow-primary);
-    }
   }
 
   .dt-card-tag {
@@ -577,13 +603,17 @@ video {
   .dt-tab,
   .dt-segmented-tab,
   .dt-product-card,
+  .dt-card,
+  .dt-card__accent,
   .dt-product-card__accent,
   .dt-ecosystem-card {
     transition: none;
   }
 
   .dt-button:hover .dt-button__trailing-icon,
-  .dt-product-card:hover {
+  .dt-card:hover,
+  .dt-product-card:hover,
+  .dt-ecosystem-card:hover {
     transform: none;
   }
 }
