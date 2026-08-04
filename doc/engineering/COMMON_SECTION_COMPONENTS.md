@@ -140,7 +140,7 @@
 使用要求：
 - 必须传入 `eyebrow`、`title`、`titleId`、`subtitle` 与 `items`。
 - `items` 可传入 `icon`，产品页卡片应默认带 icon，保持 FlowMQ 式图标盒。
-- 默认四列节奏为 `grid gap-5 lg:gap-6`、`md:grid-cols-2 lg:grid-cols-4`。
+- 默认四列节奏为 `grid gap-5 lg:gap-6`、`md:grid-cols-2 lg:grid-cols-4`；需要三张应用场景卡片时可使用 `columns="three"`；需要 2×2 卡片时使用 `columns="two"`。
 - 卡片必须通过 `FeatureCard` 组合 `BaseCard` 与 `IconBox`，最终使用 `.dt-card dt-card--adaptive dt-card--feature` 与 `.dt-icon-box dt-icon-box--gradient`。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive` 共同决定同一网格内的卡片高度。
 - 产品页特性区块默认不使用 `pt-24`，区块之间只保留 `pb-32 lg:pb-44` 节奏。

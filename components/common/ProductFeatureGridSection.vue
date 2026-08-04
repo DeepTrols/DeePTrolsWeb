@@ -19,7 +19,7 @@ const props = withDefaults(
     titleId: string
     subtitle: string
     items: ProductFeatureGridItem[]
-    columns?: 'two' | 'four'
+    columns?: 'two' | 'three' | 'four'
     nowrapSubtitle?: boolean
   }>(),
   {
@@ -28,7 +28,7 @@ const props = withDefaults(
   },
 )
 
-const cardColumns = computed(() => (props.columns === 'two' ? 'two' : 'four'))
+const cardColumns = computed(() => props.columns)
 </script>
 
 <template>

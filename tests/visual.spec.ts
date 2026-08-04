@@ -216,6 +216,83 @@ describe('visual implementation contract', () => {
     }
   })
 
+  it('keeps the DLP product page aligned with its requirement document', () => {
+    const page = readComponent('pages/products/data-labeling.vue')
+    const hero = readComponent('components/product/dlp/DlpHero.vue')
+    const heroVisual = readComponent('components/product/dlp/DlpHeroVisual.vue')
+    const architecture = readComponent('components/product/dlp/DlpArchitecture.vue')
+    const timeline = readComponent('components/product/dlp/DlpCapabilityTimelineSection.vue')
+    const aiModeling = readComponent('components/product/dlp/DlpAiModelingSection.vue')
+    const featureGrid = readComponent('components/common/ProductFeatureGridSection.vue')
+    const cardGrid = readComponent('components/common/card/CardGrid.vue')
+    const data = readComponent('data/dlp.ts')
+
+    expect(page).toContain('SiteHeader')
+    expect(page).toContain('SiteFooter')
+    expect(page).toContain('DlpHero')
+    expect(page).toContain('ProductFeatureGridSection')
+    expect(page).toContain('DlpArchitecture')
+    expect(page).toContain('DlpCapabilityTimelineSection')
+    expect(page).toContain('DlpAiModelingSection')
+    expect(page).toContain('CtaSection')
+    expect(page).toContain('id="dlp-challenge"')
+    expect(page).toContain('eyebrow="挑战"')
+    expect(page).toContain('title="厌倦了低效的标签建设？"')
+    expect(page).toContain('title="构建统一的企业标签体系"')
+    expect(page).toContain('title="从数据对象到标签服务"')
+    expect(page).toContain('title="为企业 AI 场景赋能"')
+    expect(page).toContain('columns="two"')
+    expect(page).toContain('columns="three"')
+    expect(page).toContain('title-id="dlp-cta-title"')
+    expect(page).not.toContain('<style')
+
+    expect(hero).toContain('PageHero')
+    expect(hero).toContain('import { Boxes }')
+    expect(hero).toContain('badge="数曜·数据标签平台"')
+    expect(hero).toContain('title-line="协同、智能、高效"')
+    expect(hero).toContain('title-gradient="标签生产平台"')
+    expect(hero).toContain('visual-label="SHUYAODGP_HORE_WEBM"')
+    expect(hero).toContain('DlpHeroVisual')
+    expect(hero).not.toContain('visual-size="large"')
+    expect(heroVisual).toContain('图片占位符')
+    expect(heroVisual).not.toContain('<style')
+
+    expect(architecture).toContain('ProductSystemSection')
+    expect(architecture).toContain('ProductSystemFlowFrame')
+    expect(architecture).toContain('title="轻松构建企业标签体系"')
+    expect(architecture).toContain('fallback-text="标签体系架构图占位符"')
+    expect(architecture).toContain('content-flush')
+    expect(architecture).not.toContain('EnterpriseFlow')
+    expect(architecture).not.toContain('<style')
+
+    expect(featureGrid).toContain("columns?: 'two' | 'three' | 'four'")
+    expect(cardGrid).toContain('md:grid-cols-3')
+    expect(timeline).toContain('SectionHeader')
+    expect(timeline).toContain('BaseCard')
+    expect(timeline).toContain('IconBox')
+    expect(timeline).toContain('dlpTimelineItems')
+    expect(timeline).toContain('lg:left-1/2')
+    expect(timeline).toContain('space-y-[4.5rem]')
+    expect(timeline).toContain('role="img"')
+    expect(timeline).toContain('图片占位符')
+    expect(timeline).not.toContain('<style')
+    expect(aiModeling).toContain('SectionHeader')
+    expect(aiModeling).toContain('AI 辅助建标')
+    expect(aiModeling).toContain('图片占位符')
+    expect(aiModeling).not.toContain('<style')
+
+    for (const text of [
+      '标准混乱',
+      '自动化生产',
+      '统一定义标签标准',
+      '主体对象自由定义',
+      '精准用户运营',
+      '立即咨询',
+    ]) {
+      expect(data).toContain(text)
+    }
+  })
+
   it('keeps the Why DeepTrols page on the shared HOME baseline', () => {
     const page = readComponent('pages/why-deeptrols.vue')
     const pageHero = readComponent('components/common/PageHero.vue')

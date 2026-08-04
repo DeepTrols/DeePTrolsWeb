@@ -37,6 +37,7 @@ const requiredFiles = [
   'doc/tasks/review/TASK-002.4-why-logo-strip-cta-fix.md',
   'doc/tasks/review/TASK-002.5-product-system-section-split.md',
   'doc/tasks/review/TASK-006.1-dgp-product-page.md',
+  'doc/tasks/review/TASK-006.2-dlp-product-page.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',
@@ -56,6 +57,7 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape2.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape3.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ruizhi1.png',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODLP/DLP.md',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
@@ -106,8 +108,10 @@ const requiredFiles = [
   'data/ecosystemVisual.ts',
   'data/why.ts',
   'data/dgp.ts',
+  'data/dlp.ts',
   'pages/why-deeptrols.vue',
   'pages/products/data-governance.vue',
+  'pages/products/data-labeling.vue',
   'components/why/WhyHero.vue',
   'components/why/WhyHeroLogos.vue',
   'components/why/WhyTrustTabs.vue',
@@ -118,6 +122,11 @@ const requiredFiles = [
   'components/product/dgp/DgpArchitecture.vue',
   'components/product/dgp/DgpEvolutionSection.vue',
   'components/product/dgp/DgpUseCasesSection.vue',
+  'components/product/dlp/DlpHero.vue',
+  'components/product/dlp/DlpHeroVisual.vue',
+  'components/product/dlp/DlpArchitecture.vue',
+  'components/product/dlp/DlpCapabilityTimelineSection.vue',
+  'components/product/dlp/DlpAiModelingSection.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -189,6 +198,13 @@ const dgpHeroVisual = read('components/product/dgp/DgpHeroVisual.vue')
 const dgpArchitecture = read('components/product/dgp/DgpArchitecture.vue')
 const dgpEvolution = read('components/product/dgp/DgpEvolutionSection.vue')
 const dgpUseCases = read('components/product/dgp/DgpUseCasesSection.vue')
+const dlpData = read('data/dlp.ts')
+const dlpPage = read('pages/products/data-labeling.vue')
+const dlpHero = read('components/product/dlp/DlpHero.vue')
+const dlpHeroVisual = read('components/product/dlp/DlpHeroVisual.vue')
+const dlpArchitecture = read('components/product/dlp/DlpArchitecture.vue')
+const dlpTimeline = read('components/product/dlp/DlpCapabilityTimelineSection.vue')
+const dlpAiModeling = read('components/product/dlp/DlpAiModelingSection.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -239,6 +255,7 @@ assert(baseCard.includes('NuxtLink') && baseCard.includes('dt-card--adaptive') &
 assert(iconBox.includes('dt-icon-box') && iconBox.includes('dt-icon-box--gradient'), 'IconBox must centralize icon shell classes and gradient tone.')
 assert(cardText.includes('card-text__title') && cardText.includes('card-text__description'), 'CardText must centralize card title and description typography.')
 assert(cardGrid.includes('auto-rows-fr items-stretch') && cardGrid.includes('md:grid-cols-2 lg:grid-cols-4'), 'CardGrid must centralize equal-height responsive card grids.')
+assert(cardGrid.includes('md:grid-cols-3') && productFeatureGridSection.includes("columns?: 'two' | 'three' | 'four'"), 'ProductFeatureGridSection must support two, three, and four column product feature grids.')
 assert(featureCard.includes('BaseCard') && featureCard.includes('IconBox') && featureCard.includes('CardText'), 'FeatureCard must compose the base card, icon, and text atoms.')
 assert(
   baseTabs.includes('role="tablist"') &&
@@ -579,6 +596,76 @@ assert(
     !dgpUseCases.includes('<style'),
   'DGP use cases must keep the EMQX product tabs and shared button implementation.',
 )
+assert(
+  dlpPage.includes('SiteHeader') &&
+    dlpPage.includes('SiteFooter') &&
+    dlpPage.includes('DlpHero') &&
+    dlpPage.includes('ProductFeatureGridSection') &&
+    dlpPage.includes('DlpArchitecture') &&
+    dlpPage.includes('DlpCapabilityTimelineSection') &&
+    dlpPage.includes('DlpAiModelingSection') &&
+    dlpPage.includes('CtaSection') &&
+    dlpPage.includes('id="dlp-challenge"') &&
+    dlpPage.includes('columns="two"') &&
+    dlpPage.includes('columns="three"') &&
+    !dlpPage.includes('<style'),
+  'DLP page must compose the required product sections with global Header, Footer, feature grids, timeline, AI assist, and CtaSection.',
+)
+assert(
+  dlpHero.includes('PageHero') &&
+    dlpHero.includes('import { Boxes }') &&
+    dlpHero.includes('badge="数曜·数据标签平台"') &&
+    dlpHero.includes('title-line="协同、智能、高效"') &&
+    dlpHero.includes('title-gradient="标签生产平台"') &&
+    dlpHero.includes('visual-label="SHUYAODGP_HORE_WEBM"') &&
+    dlpHero.includes('DlpHeroVisual') &&
+    !dlpHero.includes('visual-size="large"'),
+  'DLP hero must follow the PageHero contract from DLP.md.',
+)
+assert(dlpHeroVisual.includes('图片占位符') && !dlpHeroVisual.includes('<style'), 'DLP hero visual must be a Tailwind-only image placeholder.')
+assert(
+  dlpArchitecture.includes('ProductSystemSection') &&
+    dlpArchitecture.includes('ProductSystemFlowFrame') &&
+    dlpArchitecture.includes('fallback-text="标签体系架构图占位符"') &&
+    dlpArchitecture.includes('content-flush') &&
+    !dlpArchitecture.includes('EnterpriseFlow') &&
+    !dlpArchitecture.includes('<style'),
+  'DLP architecture must reuse ProductSystemSection and ProductSystemFlowFrame without a flow chart.',
+)
+assert(
+  dlpTimeline.includes('SectionHeader') &&
+    dlpTimeline.includes('BaseCard') &&
+    dlpTimeline.includes('IconBox') &&
+    dlpTimeline.includes('dlpTimelineItems') &&
+    dlpTimeline.includes('lg:left-1/2') &&
+    dlpTimeline.includes('space-y-[4.5rem]') &&
+    dlpTimeline.includes('role="img"') &&
+    dlpTimeline.includes('图片占位符') &&
+    !dlpTimeline.includes('<style'),
+  'DLP core capability timeline must keep the EMQX Edge-like Tailwind-only alternating timeline.',
+)
+assert(
+  dlpAiModeling.includes('SectionHeader') &&
+    dlpAiModeling.includes('AI 辅助建标') &&
+    dlpAiModeling.includes('图片占位符') &&
+    !dlpAiModeling.includes('<style'),
+  'DLP AI modeling section must use SectionHeader and a Tailwind-only image placeholder.',
+)
+const dlpSources = [dlpData, dlpPage, dlpHero, dlpArchitecture, dlpTimeline, dlpAiModeling].join('\n')
+for (const text of [
+  '数曜·数据标签平台',
+  '协同、智能、高效',
+  '标签生产平台',
+  '厌倦了低效的标签建设？',
+  '轻松构建企业标签体系',
+  '让每一个标签创造价值',
+  '从数据对象到标签服务',
+  '通过 AI 快速完成标签设计与建模',
+  '为企业 AI 场景赋能',
+  '立即咨询',
+]) {
+  assert(dlpSources.includes(text), `DLP requirement text is missing: ${text}`)
+}
 const dgpSources = [dgpData, dgpPage, dgpHero, dgpArchitecture, dgpEvolution, dgpUseCases].join('\n')
 for (const text of [
   '为什么选择数曜·治理数据平台',
