@@ -100,7 +100,7 @@
 |----|----|
 | Branch | `main` |
 | Commit Message | `feat(TASK-006.2): implement data labeling product page` |
-| Commit Hash | 提交后更新 |
+| Commit Hash | `fa61f65` |
 
 ## 完成说明
 已完成数曜·数据标签平台页面首版实现，页面严格按 DLP.md 区块顺序组合，新增 DLP 业务组件均为 Tailwind-only，未新增 scoped CSS。当前工作区存在任务开始前已有的 `components/product/dgp/DgpHero.vue` 本地修改，本任务未修改该文件。
