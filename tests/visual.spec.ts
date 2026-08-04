@@ -223,6 +223,7 @@ describe('visual implementation contract', () => {
     const heroVisual = readComponent('components/product/dlp/DlpHeroVisual.vue')
     const architecture = readComponent('components/product/dlp/DlpArchitecture.vue')
     const timeline = readComponent('components/product/dlp/DlpCapabilityTimelineSection.vue')
+    const alternatingTimeline = readComponent('components/common/AlternatingTimelineSection.vue')
     const aiModeling = readComponent('components/product/dlp/DlpAiModelingSection.vue')
     const featureGrid = readComponent('components/common/ProductFeatureGridSection.vue')
     const cardGrid = readComponent('components/common/card/CardGrid.vue')
@@ -269,19 +270,23 @@ describe('visual implementation contract', () => {
 
     expect(featureGrid).toContain("columns?: 'two' | 'three' | 'four'")
     expect(cardGrid).toContain('md:grid-cols-3')
-    expect(timeline).toContain('SectionHeader')
+    expect(timeline).toContain('AlternatingTimelineSection')
     expect(timeline).not.toContain('BaseCard')
     expect(timeline).not.toContain('IconBox')
     expect(timeline).toContain('dlpTimelineItems')
-    expect(timeline).toContain('lg:left-1/2')
-    expect(timeline).toContain('space-y-[4.5rem]')
-    expect(timeline).toContain('class="py-4 lg:py-8"')
-    expect(timeline).toContain('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80')
+    expect(alternatingTimeline).toContain('SectionHeader')
+    expect(alternatingTimeline).toContain('lg:left-1/2')
+    expect(alternatingTimeline).toContain('space-y-[4.5rem]')
+    expect(alternatingTimeline).toContain('class="py-4 lg:py-8"')
+    expect(alternatingTimeline).toContain('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80')
+    expect(alternatingTimeline).not.toContain('BaseCard')
+    expect(alternatingTimeline).not.toContain('IconBox')
     expect(timeline).not.toContain('item.icon')
     expect(timeline).not.toContain('eyebrow-size="sm"')
     expect(timeline).not.toContain('eyebrow-tone="primary"')
-    expect(timeline).toContain('role="img"')
-    expect(timeline).toContain('图片占位符')
+    expect(alternatingTimeline).toContain('role="img"')
+    expect(alternatingTimeline).toContain('图片占位符')
+    expect(alternatingTimeline).not.toContain('<style')
     expect(timeline).not.toContain('<style')
     expect(aiModeling).toContain('SectionHeader')
     expect(aiModeling).toContain('AI 辅助建标')
@@ -297,6 +302,93 @@ describe('visual implementation contract', () => {
       '立即咨询',
     ]) {
       expect(data).toContain(text)
+    }
+  })
+
+  it('keeps the DDP product page aligned with its requirement document', () => {
+    const page = readComponent('pages/products/data-development.vue')
+    const hero = readComponent('components/product/ddp/DdpHero.vue')
+    const heroVisual = readComponent('components/product/ddp/DdpHeroVisual.vue')
+    const architecture = readComponent('components/product/ddp/DdpArchitecture.vue')
+    const timeline = readComponent('components/product/ddp/DdpCapabilityTimelineSection.vue')
+    const unified = readComponent('components/product/ddp/DdpUnifiedDevelopmentSection.vue')
+    const alternatingTimeline = readComponent('components/common/AlternatingTimelineSection.vue')
+    const featureGrid = readComponent('components/common/ProductFeatureGridSection.vue')
+    const featureCard = readComponent('components/common/card/FeatureCard.vue')
+    const cardGrid = readComponent('components/common/card/CardGrid.vue')
+    const data = readComponent('data/ddp.ts')
+
+    expect(page).toContain('SiteHeader')
+    expect(page).toContain('SiteFooter')
+    expect(page).toContain('DdpHero')
+    expect(page).toContain('ProductFeatureGridSection')
+    expect(page).toContain('DdpArchitecture')
+    expect(page).toContain('DdpCapabilityTimelineSection')
+    expect(page).toContain('DdpUnifiedDevelopmentSection')
+    expect(page).toContain('CtaSection')
+    expect(page).toContain('id="ddp-challenge"')
+    expect(page).toContain('title="数据开发，正在成为企业增长瓶颈"')
+    expect(page).toContain('title="持续释放企业数据生产力"')
+    expect(page).toContain('title="赋能企业数据工程实践"')
+    expect(page).toContain('columns="two"')
+    expect(page).toContain('columns="three"')
+    expect(page).toContain('title-id="ddp-cta-title"')
+    expect(page).not.toContain('<style')
+
+    expect(hero).toContain('PageHero')
+    expect(hero).toContain('import { Network }')
+    expect(hero).toContain('badge="数曜·数据开发平台"')
+    expect(hero).toContain('title-line="标准、智能、高效"')
+    expect(hero).toContain('title-gradient="标签生产平台"')
+    expect(hero).toContain('visual-label="SHUYAODDP_HORE_WEBM"')
+    expect(hero).toContain('DdpHeroVisual')
+    expect(hero).not.toContain('visual-size="large"')
+    expect(heroVisual).toContain('图片占位符')
+    expect(heroVisual).not.toContain('<style')
+
+    expect(architecture).toContain('ProductSystemSection')
+    expect(architecture).toContain('ProductSystemFlowFrame')
+    expect(architecture).toContain('title="构建智能数据开发体系"')
+    expect(architecture).toContain('fallback-text="数据开发体系架构图占位符"')
+    expect(architecture).toContain('content-flush')
+    expect(architecture).not.toContain('EnterpriseFlow')
+    expect(architecture).not.toContain('<style')
+
+    expect(timeline).toContain('AlternatingTimelineSection')
+    expect(timeline).toContain('ddpTimelineItems')
+    expect(timeline).toContain('title="覆盖数据开发全生命周期"')
+    expect(timeline).not.toContain('BaseCard')
+    expect(timeline).not.toContain('IconBox')
+    expect(timeline).not.toContain('<style')
+    expect(alternatingTimeline).toContain('SectionHeader')
+    expect(alternatingTimeline).toContain('lg:left-1/2')
+    expect(alternatingTimeline).toContain('space-y-[4.5rem]')
+    expect(alternatingTimeline).toContain('role="img"')
+    expect(alternatingTimeline).not.toContain('<style')
+
+    expect(unified).toContain('ProductFeatureGridSection')
+    expect(unified).toContain('ProductSystemFlowFrame')
+    expect(unified).toContain('title="统一数据开发：从接入到交付"')
+    expect(unified).toContain('ddpUnifiedDevelopmentItems')
+    expect(unified).toContain('fallback-text="统一数据开发流程图占位符"')
+    expect(unified).not.toContain('<style')
+    expect(featureGrid).toContain('<slot name="after" />')
+    expect(featureGrid).toContain(':icon-label="item.iconLabel"')
+    expect(featureCard).toContain('iconLabel?: string')
+    expect(featureCard).toContain('dt-icon-box dt-icon-box--gradient text-sm font-bold')
+    expect(cardGrid).toContain('md:grid-cols-2 lg:grid-cols-4')
+    expect(cardGrid).toContain('md:grid-cols-3')
+
+    for (const text of [
+      '数曜·数据开发平台',
+      '数据开发，正在成为企业增长瓶颈',
+      '构建智能数据开发体系',
+      '覆盖数据开发全生命周期',
+      '统一数据开发：从接入到交付',
+      '赋能企业数据工程实践',
+      '开启企业数据治理新征程',
+    ]) {
+      expect([page, hero, architecture, timeline, unified, data].join('\n')).toContain(text)
     }
   })
 

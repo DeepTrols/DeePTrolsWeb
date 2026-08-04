@@ -10,6 +10,7 @@ withDefaults(
     title: string
     description?: string
     icon?: Component
+    iconLabel?: string
     href?: string
     layout?: 'vertical' | 'horizontal'
     variant?: 'default' | 'feature' | 'soft' | 'product' | 'ecosystem' | 'media'
@@ -30,6 +31,7 @@ withDefaults(
   {
     description: undefined,
     icon: undefined,
+    iconLabel: undefined,
     href: undefined,
     layout: 'vertical',
     variant: 'feature',
@@ -58,7 +60,10 @@ withDefaults(
   >
     <div class="feature-card__inner">
       <slot name="icon">
-        <IconBox v-if="icon" :icon="icon" :size="iconBoxSize" :icon-size="iconSize" :tone="tone" />
+        <div v-if="iconLabel" class="relative dt-icon-box dt-icon-box--gradient text-sm font-bold">
+          {{ iconLabel }}
+        </div>
+        <IconBox v-else-if="icon" :icon="icon" :size="iconBoxSize" :icon-size="iconSize" :tone="tone" />
       </slot>
 
       <div class="feature-card__body">

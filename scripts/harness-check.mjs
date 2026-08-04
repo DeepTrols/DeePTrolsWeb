@@ -38,6 +38,7 @@ const requiredFiles = [
   'doc/tasks/review/TASK-002.5-product-system-section-split.md',
   'doc/tasks/review/TASK-006.1-dgp-product-page.md',
   'doc/tasks/review/TASK-006.2-dlp-product-page.md',
+  'doc/tasks/review/TASK-006.3-ddp-product-page.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',
@@ -58,6 +59,7 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape3.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ruizhi1.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODLP/DLP.md',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODDP/DDP.md',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
@@ -77,6 +79,7 @@ const requiredFiles = [
   'components/common/TrustTabsSection.vue',
   'components/common/ServiceShowcaseSection.vue',
   'components/common/EngineLinksSection.vue',
+  'components/common/AlternatingTimelineSection.vue',
   'components/common/ProductFeatureGridSection.vue',
   'components/common/ProductSystemSection.vue',
   'components/common/ProductSystemFlowFrame.vue',
@@ -109,9 +112,11 @@ const requiredFiles = [
   'data/why.ts',
   'data/dgp.ts',
   'data/dlp.ts',
+  'data/ddp.ts',
   'pages/why-deeptrols.vue',
   'pages/products/data-governance.vue',
   'pages/products/data-labeling.vue',
+  'pages/products/data-development.vue',
   'components/why/WhyHero.vue',
   'components/why/WhyHeroLogos.vue',
   'components/why/WhyTrustTabs.vue',
@@ -127,6 +132,11 @@ const requiredFiles = [
   'components/product/dlp/DlpArchitecture.vue',
   'components/product/dlp/DlpCapabilityTimelineSection.vue',
   'components/product/dlp/DlpAiModelingSection.vue',
+  'components/product/ddp/DdpHero.vue',
+  'components/product/ddp/DdpHeroVisual.vue',
+  'components/product/ddp/DdpArchitecture.vue',
+  'components/product/ddp/DdpCapabilityTimelineSection.vue',
+  'components/product/ddp/DdpUnifiedDevelopmentSection.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -154,6 +164,7 @@ const heroLogoStrip = read('components/common/HeroLogoStrip.vue')
 const trustTabsSection = read('components/common/TrustTabsSection.vue')
 const serviceShowcaseSection = read('components/common/ServiceShowcaseSection.vue')
 const engineLinksSection = read('components/common/EngineLinksSection.vue')
+const alternatingTimelineSection = read('components/common/AlternatingTimelineSection.vue')
 const productFeatureGridSection = read('components/common/ProductFeatureGridSection.vue')
 const productSystemSection = read('components/common/ProductSystemSection.vue')
 const productSystemFlowFrame = read('components/common/ProductSystemFlowFrame.vue')
@@ -205,6 +216,13 @@ const dlpHeroVisual = read('components/product/dlp/DlpHeroVisual.vue')
 const dlpArchitecture = read('components/product/dlp/DlpArchitecture.vue')
 const dlpTimeline = read('components/product/dlp/DlpCapabilityTimelineSection.vue')
 const dlpAiModeling = read('components/product/dlp/DlpAiModelingSection.vue')
+const ddpData = read('data/ddp.ts')
+const ddpPage = read('pages/products/data-development.vue')
+const ddpHero = read('components/product/ddp/DdpHero.vue')
+const ddpHeroVisual = read('components/product/ddp/DdpHeroVisual.vue')
+const ddpArchitecture = read('components/product/ddp/DdpArchitecture.vue')
+const ddpTimeline = read('components/product/ddp/DdpCapabilityTimelineSection.vue')
+const ddpUnifiedDevelopment = read('components/product/ddp/DdpUnifiedDevelopmentSection.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -257,6 +275,19 @@ assert(cardText.includes('card-text__title') && cardText.includes('card-text__de
 assert(cardGrid.includes('auto-rows-fr items-stretch') && cardGrid.includes('md:grid-cols-2 lg:grid-cols-4'), 'CardGrid must centralize equal-height responsive card grids.')
 assert(cardGrid.includes('md:grid-cols-3') && productFeatureGridSection.includes("columns?: 'two' | 'three' | 'four'"), 'ProductFeatureGridSection must support two, three, and four column product feature grids.')
 assert(featureCard.includes('BaseCard') && featureCard.includes('IconBox') && featureCard.includes('CardText'), 'FeatureCard must compose the base card, icon, and text atoms.')
+assert(featureCard.includes('iconLabel?: string') && productFeatureGridSection.includes(':icon-label="item.iconLabel"') && productFeatureGridSection.includes('<slot name="after" />'), 'FeatureCard and ProductFeatureGridSection must support numbered icon labels and after-slot composition.')
+assert(
+  alternatingTimelineSection.includes('SectionHeader') &&
+    alternatingTimelineSection.includes('lg:left-1/2') &&
+    alternatingTimelineSection.includes('space-y-[4.5rem]') &&
+    alternatingTimelineSection.includes('class="py-4 lg:py-8"') &&
+    alternatingTimelineSection.includes('role="img"') &&
+    alternatingTimelineSection.includes('图片占位符') &&
+    !alternatingTimelineSection.includes('BaseCard') &&
+    !alternatingTimelineSection.includes('IconBox') &&
+    !alternatingTimelineSection.includes('<style'),
+  'AlternatingTimelineSection must centralize the EMQX Edge-like Tailwind-only numbered timeline without cards or icons.',
+)
 assert(
   baseTabs.includes('role="tablist"') &&
     baseTabs.includes('role="tab"') &&
@@ -634,21 +665,15 @@ assert(
   'DLP architecture must reuse ProductSystemSection and ProductSystemFlowFrame without a flow chart.',
 )
 assert(
-  dlpTimeline.includes('SectionHeader') &&
+  dlpTimeline.includes('AlternatingTimelineSection') &&
     !dlpTimeline.includes('BaseCard') &&
     !dlpTimeline.includes('IconBox') &&
     dlpTimeline.includes('dlpTimelineItems') &&
-    dlpTimeline.includes('lg:left-1/2') &&
-    dlpTimeline.includes('space-y-[4.5rem]') &&
-    dlpTimeline.includes('class="py-4 lg:py-8"') &&
-    dlpTimeline.includes('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80') &&
     !dlpTimeline.includes('item.icon') &&
     !dlpTimeline.includes('eyebrow-size="sm"') &&
     !dlpTimeline.includes('eyebrow-tone="primary"') &&
-    dlpTimeline.includes('role="img"') &&
-    dlpTimeline.includes('图片占位符') &&
     !dlpTimeline.includes('<style'),
-  'DLP core capability timeline must keep the EMQX Edge-like Tailwind-only alternating timeline.',
+  'DLP core capability timeline must reuse the shared EMQX Edge-like Tailwind-only alternating timeline.',
 )
 assert(
   dlpAiModeling.includes('SectionHeader') &&
@@ -671,6 +696,87 @@ for (const text of [
   '立即咨询',
 ]) {
   assert(dlpSources.includes(text), `DLP requirement text is missing: ${text}`)
+}
+assert(
+  ddpPage.includes('SiteHeader') &&
+    ddpPage.includes('SiteFooter') &&
+    ddpPage.includes('DdpHero') &&
+    ddpPage.includes('ProductFeatureGridSection') &&
+    ddpPage.includes('DdpArchitecture') &&
+    ddpPage.includes('DdpCapabilityTimelineSection') &&
+    ddpPage.includes('DdpUnifiedDevelopmentSection') &&
+    ddpPage.includes('CtaSection') &&
+    ddpPage.includes('id="ddp-challenge"') &&
+    ddpPage.includes('columns="two"') &&
+    ddpPage.includes('columns="three"') &&
+    ddpPage.includes('title-id="ddp-cta-title"') &&
+    !ddpPage.includes('<style'),
+  'DDP page must compose the required product sections with global Header, Footer, feature grids, timeline, unified development, and CtaSection.',
+)
+assert(
+  ddpHero.includes('PageHero') &&
+    ddpHero.includes('import { Network }') &&
+    ddpHero.includes('badge="数曜·数据开发平台"') &&
+    ddpHero.includes('title-line="标准、智能、高效"') &&
+    ddpHero.includes('title-gradient="标签生产平台"') &&
+    ddpHero.includes('visual-label="SHUYAODDP_HORE_WEBM"') &&
+    ddpHero.includes('DdpHeroVisual') &&
+    !ddpHero.includes('visual-size="large"'),
+  'DDP hero must follow the PageHero contract from DDP.md.',
+)
+assert(ddpHeroVisual.includes('图片占位符') && !ddpHeroVisual.includes('<style'), 'DDP hero visual must be a Tailwind-only image placeholder.')
+assert(
+  ddpArchitecture.includes('ProductSystemSection') &&
+    ddpArchitecture.includes('ProductSystemFlowFrame') &&
+    ddpArchitecture.includes('title="构建智能数据开发体系"') &&
+    ddpArchitecture.includes('fallback-text="数据开发体系架构图占位符"') &&
+    ddpArchitecture.includes('content-flush') &&
+    !ddpArchitecture.includes('EnterpriseFlow') &&
+    !ddpArchitecture.includes('<style'),
+  'DDP architecture must reuse ProductSystemSection and ProductSystemFlowFrame without a flow chart.',
+)
+assert(
+  ddpTimeline.includes('AlternatingTimelineSection') &&
+    ddpTimeline.includes('ddpTimelineItems') &&
+    ddpTimeline.includes('title="覆盖数据开发全生命周期"') &&
+    !ddpTimeline.includes('BaseCard') &&
+    !ddpTimeline.includes('IconBox') &&
+    !ddpTimeline.includes('<style'),
+  'DDP core capability timeline must reuse the shared alternating timeline component.',
+)
+assert(
+  ddpUnifiedDevelopment.includes('ProductFeatureGridSection') &&
+    ddpUnifiedDevelopment.includes('ProductSystemFlowFrame') &&
+    ddpUnifiedDevelopment.includes('title="统一数据开发：从接入到交付"') &&
+    ddpUnifiedDevelopment.includes('ddpUnifiedDevelopmentItems') &&
+    ddpUnifiedDevelopment.includes('fallback-text="统一数据开发流程图占位符"') &&
+    !ddpUnifiedDevelopment.includes('<style'),
+  'DDP unified development section must compose ProductFeatureGridSection with ProductSystemFlowFrame through the after slot.',
+)
+const ddpSources = [ddpData, ddpPage, ddpHero, ddpArchitecture, ddpTimeline, ddpUnifiedDevelopment].join('\n')
+for (const text of [
+  '数曜·数据开发平台',
+  '标准、智能、高效',
+  '标签生产平台',
+  '数据开发，正在成为企业增长瓶颈',
+  '构建智能数据开发体系',
+  '持续释放企业数据生产力',
+  '覆盖数据开发全生命周期',
+  '统一数据开发：从接入到交付',
+  '赋能企业数据工程实践',
+  '开启企业数据治理新征程',
+]) {
+  assert(ddpSources.includes(text), `DDP requirement text is missing: ${text}`)
+}
+for (const text of [
+  '数据孤岛难破除',
+  '更快的实施数据集成',
+  '多源数据统一接入',
+  '持续集成与敏捷交付',
+  '企业数据中台',
+  'AI 数据底座',
+]) {
+  assert(ddpData.includes(text), `DDP configured content is missing: ${text}`)
 }
 const dgpSources = [dgpData, dgpPage, dgpHero, dgpArchitecture, dgpEvolution, dgpUseCases].join('\n')
 for (const text of [

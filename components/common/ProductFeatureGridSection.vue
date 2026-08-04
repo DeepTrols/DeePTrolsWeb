@@ -10,6 +10,7 @@ export interface ProductFeatureGridItem {
   title: string
   description: string
   icon?: Component
+  iconLabel?: string
 }
 
 const props = withDefaults(
@@ -52,10 +53,13 @@ const cardColumns = computed(() => props.columns)
         :title="item.title"
         :description="item.description"
         :icon="item.icon"
+        :icon-label="item.iconLabel"
         title-size="sm"
         description-size="sm"
         tone="gradient"
       />
     </CardGrid>
+
+    <slot name="after" />
   </SectionShell>
 </template>

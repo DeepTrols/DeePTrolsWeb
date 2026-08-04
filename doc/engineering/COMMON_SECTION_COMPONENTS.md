@@ -55,6 +55,7 @@
 - `CardText` 统一 card 标题与描述的字号层级。
 - `CardGrid` 统一 2 / 3 / 4 列和 `auto-rows-fr items-stretch` 等高行为。
 - `FeatureCard` 用于常规 icon + title + desc + optional action；复杂 media、stats、points 或右侧动画应继续使用 slot/业务组件组合，不把 props 做成万能组件。
+- 需要数字阶段标识时，`FeatureCard` 可传入 `iconLabel`，组件仍使用 `.dt-icon-box dt-icon-box--gradient` 统一 icon 外框。
 
 ## Base Tabs
 公共组件：`components/common/tabs/BaseTabs.vue`
@@ -142,6 +143,7 @@
 - `items` 可传入 `icon`，产品页卡片应默认带 icon，保持 FlowMQ 式图标盒。
 - 默认四列节奏为 `grid gap-5 lg:gap-6`、`md:grid-cols-2 lg:grid-cols-4`；需要三张应用场景卡片时可使用 `columns="three"`；需要 2×2 卡片时使用 `columns="two"`。
 - 卡片必须通过 `FeatureCard` 组合 `BaseCard` 与 `IconBox`，最终使用 `.dt-card dt-card--adaptive dt-card--feature` 与 `.dt-icon-box dt-icon-box--gradient`。
+- 需要在卡片网格后追加流程图、说明图等内容时，使用 `#after` slot，避免重复手写 section/header/card-grid 结构。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive` 共同决定同一网格内的卡片高度。
 - 产品页特性区块默认不使用 `pt-24`，区块之间只保留 `pb-32 lg:pb-44` 节奏。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
@@ -162,8 +164,11 @@
 
 ## Alternating Narrative Rows
 
+公共组件：`components/common/AlternatingTimelineSection.vue`
+
 适用场景：
 - 产品页中类似 EMQX Edge / EMQX 产品页的左右交错叙事区块，例如 DLP “核心能力”、DGP “企业级数据治理”。
+- 需要中轴编号、左右交错文字与视觉占位的核心能力区，例如 DLP / DDP。
 
 使用要求：
 - 顶部标题继续使用 `SectionHeader` 默认 eyebrow 样式，不在业务组件里覆盖为小号或私有色调。

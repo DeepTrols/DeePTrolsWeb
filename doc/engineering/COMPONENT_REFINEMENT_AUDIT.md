@@ -181,6 +181,16 @@ Deliverables、Solutions、Cases 都有类似结构：
 | 应用场景 | `DgpUseCasesSection.vue` | `BaseTabs(underline)`、`MediaOverlayCard` / `UseCasePanel` | P1 |
 | CTA | `CtaSection.vue` | 后续接 `SectionShell` + `SectionHeader` | P1 |
 
+### 数曜·数据开发平台
+| 区块 | 当前文件 | 可拆组件 | 优先级 |
+|----|----|----|----|
+| Hero | `DdpHero.vue` + `PageHero.vue` | `PageHero` 已复用，视觉保留 slot | Keep |
+| 挑战 / 核心优势 / 应用场景 | `ProductFeatureGridSection.vue` | `FeatureGridSection` + `FeatureCard` | P0/P1 |
+| 解决方案 | `DdpArchitecture.vue`、`ProductSystemSection.vue` | `ProductSystemFlowFrame` | P0/P1 |
+| 核心能力 | `DdpCapabilityTimelineSection.vue`、`AlternatingTimelineSection.vue` | 公共中轴交错时间线 | P0 |
+| 统一数据开发 | `DdpUnifiedDevelopmentSection.vue` | `ProductFeatureGridSection #after` + `ProductSystemFlowFrame` | P0/P1 |
+| CTA | `CtaSection.vue` | 后续接 `SectionShell` + `SectionHeader` | P1 |
+
 ## 建议 props 边界
 ### `SectionHeader`
 ```ts
