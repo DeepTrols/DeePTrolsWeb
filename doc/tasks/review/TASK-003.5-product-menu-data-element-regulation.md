@@ -83,8 +83,8 @@
 | 字段 | 内容 |
 |----|----|
 | Branch | `main` |
-| Commit Message | 提交后更新 |
-| Commit Hash | 提交后更新 |
+| Commit Message | `fix(TASK-003.5): update product menu data regulation entry` |
+| Commit Hash | `27a74d4` |
 
 ## 完成说明
 已完成产品菜单与 Footer 产品列中的产品项替换。当前工作区存在任务开始前已有的 `components/product/dgp/DgpHero.vue` 本地修改，本任务未修改该文件。
