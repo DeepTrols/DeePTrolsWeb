@@ -177,7 +177,7 @@ Deliverables、Solutions、Cases 都有类似结构：
 | 核心价值 | `ProductFeatureGridSection.vue` | `FeatureGridSection` + `FeatureCard` | P0/P1 |
 | 产品架构 | `DgpArchitecture.vue`、`ProductSystemSection.vue`、`SystemCards.vue` | `SectionShell`、`ProductSystemFlowFrame`、`CardGrid`、`FeatureCard` | P0/P1 |
 | 产品能力 | `ProductFeatureGridSection.vue` | 同核心价值 | P0/P1 |
-| 企业级数据治理 | `DgpEvolutionSection.vue` | `SectionHeader`、`AlternatingFeatureRows`、`FeatureCard`、`BulletList` | P1 |
+| 企业级数据治理 | `DgpEvolutionSection.vue` | `SectionHeader`、`AlternatingNarrativeRows`、纯文本内容块、`BulletList` | P1 |
 | 应用场景 | `DgpUseCasesSection.vue` | `BaseTabs(underline)`、`MediaOverlayCard` / `UseCasePanel` | P1 |
 | CTA | `CtaSection.vue` | 后续接 `SectionShell` + `SectionHeader` | P1 |
 

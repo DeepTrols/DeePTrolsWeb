@@ -36,6 +36,7 @@ useSeoMeta({
         title-id="dlp-advantage-title"
         subtitle="专为企业数据治理、精准运营与 AI 应用打造的一体化标签平台。"
         :items="dlpAdvantages"
+        columns="three"
         nowrap-subtitle
       />
       <DlpCapabilityTimelineSection />

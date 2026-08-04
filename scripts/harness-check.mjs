@@ -556,13 +556,14 @@ assert(
   dgpEvolution.includes('企业数据治理体系的演进') &&
     dgpEvolution.includes('class="container pb-32 lg:pb-44"') &&
     dgpEvolution.includes('SectionHeader') &&
-    dgpEvolution.includes('eyebrow-size="sm"') &&
-    dgpEvolution.includes('eyebrow-tone="primary"') &&
+    !dgpEvolution.includes('eyebrow-size="sm"') &&
+    !dgpEvolution.includes('eyebrow-tone="primary"') &&
     dgpEvolution.includes('nowrap-subtitle') &&
     sectionHeader.includes('section-heading--eyebrow-sm') &&
     sectionHeader.includes('section-heading--eyebrow-primary') &&
     sectionHeader.includes('section-heading--nowrap-subtitle') &&
-    dgpEvolution.includes('class="dt-card p-6 backdrop-blur-xl"') &&
+    dgpEvolution.includes('class="py-4 lg:py-8"') &&
+    !dgpEvolution.includes('class="dt-card p-6 backdrop-blur-xl"') &&
     dgpEvolution.includes('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80') &&
     dgpEvolution.includes('lg:grid-cols-2 lg:gap-12') &&
     dgpEvolution.includes('图片占位符') &&
@@ -634,11 +635,16 @@ assert(
 )
 assert(
   dlpTimeline.includes('SectionHeader') &&
-    dlpTimeline.includes('BaseCard') &&
-    dlpTimeline.includes('IconBox') &&
+    !dlpTimeline.includes('BaseCard') &&
+    !dlpTimeline.includes('IconBox') &&
     dlpTimeline.includes('dlpTimelineItems') &&
     dlpTimeline.includes('lg:left-1/2') &&
     dlpTimeline.includes('space-y-[4.5rem]') &&
+    dlpTimeline.includes('class="py-4 lg:py-8"') &&
+    dlpTimeline.includes('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80') &&
+    !dlpTimeline.includes('item.icon') &&
+    !dlpTimeline.includes('eyebrow-size="sm"') &&
+    !dlpTimeline.includes('eyebrow-tone="primary"') &&
     dlpTimeline.includes('role="img"') &&
     dlpTimeline.includes('图片占位符') &&
     !dlpTimeline.includes('<style'),

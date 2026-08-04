@@ -160,6 +160,18 @@
 - 组件只接收 `cards` 数据，不包含产品页专属文案。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
 
+## Alternating Narrative Rows
+
+适用场景：
+- 产品页中类似 EMQX Edge / EMQX 产品页的左右交错叙事区块，例如 DLP “核心能力”、DGP “企业级数据治理”。
+
+使用要求：
+- 顶部标题继续使用 `SectionHeader` 默认 eyebrow 样式，不在业务组件里覆盖为小号或私有色调。
+- 内容行使用 `grid gap-6 lg:grid-cols-2 lg:gap-12` 与左右交错的 `lg:col-start-*` 控制排版。
+- 文字侧必须是纯文本块，例如 `py-4 lg:py-8`，不得套 `BaseCard`、`.dt-card` 或 `IconBox`。
+- 分类标签可使用 `rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80`。
+- 视觉侧按需求放置真实图片、动画或占位图；缺失素材时可使用 Tailwind-only 占位，不加卡片边框。
+
 ## CTA
 公共组件：`components/common/CtaSection.vue`
 

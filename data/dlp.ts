@@ -2,9 +2,7 @@ import {
   Activity,
   BadgeCheck,
   Blocks,
-  Boxes,
   Database,
-  Gauge,
   Layers3,
   Network,
   ServerCog,
@@ -26,7 +24,6 @@ export interface DlpTimelineItem {
   title: string
   description: string
   bullets: string[]
-  icon: Component
 }
 
 export const dlpHeroActions = [
@@ -102,7 +99,6 @@ export const dlpTimelineItems: DlpTimelineItem[] = [
     description:
       '通过统一的标签目录、命名规范和业务口径，建立标准化标签模型，减少跨部门理解偏差与重复建设。',
     bullets: ['统一标签分类与命名规范', '支持基础、规则与组合标签', '沉淀可复用的标签模型'],
-    icon: Boxes,
   },
   {
     number: '02',
@@ -110,7 +106,6 @@ export const dlpTimelineItems: DlpTimelineItem[] = [
     title: '快速完成标签生产',
     description: '通过可视化配置与自动化计算能力，降低标签开发门槛，快速响应持续变化的业务需求。',
     bullets: ['可视化配置标签规则', '支持离线与实时计算', '自动调度标签更新任务'],
-    icon: Gauge,
   },
   {
     number: '03',
@@ -119,7 +114,6 @@ export const dlpTimelineItems: DlpTimelineItem[] = [
     description:
       '围绕质量、血缘、版本和生命周期进行统一治理，确保每个标签来源清晰、口径一致、状态可控。',
     bullets: ['追踪标签来源与加工血缘', '管理标签版本与变更记录', '监测质量、热度与使用状态'],
-    icon: ShieldCheck,
   },
   {
     number: '04',
@@ -128,7 +122,6 @@ export const dlpTimelineItems: DlpTimelineItem[] = [
     description:
       '将分散的标签转化为标准化服务，通过接口、查询与人群圈选能力，为不同业务系统提供统一调用入口。',
     bullets: ['提供统一标签查询服务', '支持 API 与批量数据输出', '支持人群筛选与标签组合'],
-    icon: Tags,
   },
   {
     number: '05',
@@ -136,7 +129,6 @@ export const dlpTimelineItems: DlpTimelineItem[] = [
     title: '驱动数据与 AI 应用',
     description: '将高质量标签快速应用于用户洞察、精准运营、风险识别和 AI 场景，让标签真正进入业务流程。',
     bullets: ['支撑用户画像与精细化运营', '服务推荐、营销与风险分析', '为模型与智能体提供标签数据'],
-    icon: Sparkles,
   },
 ]
 

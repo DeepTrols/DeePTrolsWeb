@@ -13,8 +13,6 @@ import { dgpEvolutionItems } from '~/data/dgp'
         subtitle="数曜·治理数据平台提供统一的数据治理底座，贯通数据接入、治理、资产与服务，持续沉淀高质量、可信赖的数据资产。"
         align="center"
         width="wide"
-        eyebrow-size="sm"
-        eyebrow-tone="primary"
         nowrap-subtitle
       />
     </div>
@@ -30,9 +28,7 @@ import { dgpEvolutionItems } from '~/data/dgp'
             class="lg:flex lg:items-center"
             :class="index % 2 === 1 ? 'lg:col-start-2 lg:pl-12' : 'lg:col-start-1 lg:pr-12'"
           >
-            <article
-              class="dt-card p-6 backdrop-blur-xl"
-            >
+            <div class="py-4 lg:py-8">
               <div>
                 <span class="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80">
                   {{ item.eyebrow }}
@@ -46,7 +42,7 @@ import { dgpEvolutionItems } from '~/data/dgp'
                   <span>{{ bullet }}</span>
                 </li>
               </ul>
-            </article>
+            </div>
           </div>
 
           <div
