@@ -111,7 +111,7 @@
 | Commit Message | `feat(TASK-006.2): implement data labeling product page` |
 | Commit Hash | `fa61f65` |
 | Review Fix Commit Message | `fix(TASK-006.2): align DLP timeline layout` |
-| Review Fix Commit Hash | 提交后更新 |
+| Review Fix Commit Hash | `267f4be` |
 
 ## 完成说明
 已完成数曜·数据标签平台页面首版实现，页面严格按 DLP.md 区块顺序组合，新增 DLP 业务组件均为 Tailwind-only，未新增 scoped CSS。复核阶段已将核心优势调整为桌面三列网格，并将 DLP 核心能力与 DGP 企业级数据治理恢复为 EMQX 产品页风格的无边框交错叙事排版。当前工作区存在任务开始前已有的 `components/product/dgp/DgpHero.vue` 本地修改，本任务未修改该文件。
