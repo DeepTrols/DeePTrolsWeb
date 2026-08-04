@@ -14,6 +14,20 @@ describe('home content contract', () => {
     expect(headerActions.map((item) => item.label)).toEqual(['GitHub', '语言切换', '登录OPS'])
   })
 
+  it('keeps the product menu aligned with the data product taxonomy', () => {
+    const productColumns = primaryNavigation.find((item) => item.label === '产品')?.columns ?? []
+    const productLinks = productColumns.flatMap((column) => [
+      ...(column.links ?? []),
+      ...(column.groups ?? []).flatMap((group) => group.links ?? []),
+    ])
+
+    expect(productLinks.some((link) => link.label === '数曜·数据资产管理平台')).toBe(false)
+    expect(productLinks.find((link) => link.label === '数曜·数据要素监管平台')).toMatchObject({
+      description: '支撑数据要素合规监管',
+      href: '/products/data-element-regulation',
+    })
+  })
+
   it('keeps required homepage sections populated', () => {
     expect(customerLogos).toHaveLength(9)
     expect(deliverables).toHaveLength(3)

@@ -23,7 +23,7 @@ export const footerColumns: FooterColumn[] = [
         { label: '数曜·数据治理平台', href: '/products/data-governance' },
         { label: '数曜·数据标签平台', href: '/products/data-labeling' },
         { label: '数曜·数据开发平台', href: '/products/data-development' },
-        { label: '数曜·数据资产管理平台', href: '/products/data-assets' },
+        { label: '数曜·数据要素监管平台', href: '/products/data-element-regulation' },
         { label: '博曜·企业级知识管理平台', href: '/products/knowledge-management' },
       ],
       [

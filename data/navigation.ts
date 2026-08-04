@@ -78,9 +78,9 @@ export const primaryNavigation: NavItem[] = [
             icon: Network,
           },
           {
-            label: '数曜·数据资产管理平台',
-            description: '实现数据统一管理与共享',
-            href: '/products/data-assets',
+            label: '数曜·数据要素监管平台',
+            description: '支撑数据要素合规监管',
+            href: '/products/data-element-regulation',
             icon: HardDrive,
           },
         ],
