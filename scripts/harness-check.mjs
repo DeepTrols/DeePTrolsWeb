@@ -39,6 +39,7 @@ const requiredFiles = [
   'doc/tasks/review/TASK-006.1-dgp-product-page.md',
   'doc/tasks/review/TASK-006.2-dlp-product-page.md',
   'doc/tasks/review/TASK-006.3-ddp-product-page.md',
+  'doc/tasks/review/TASK-006.4-dms-product-page.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',
@@ -60,6 +61,7 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ruizhi1.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODLP/DLP.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODDP/DDP.md',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODMS/DMS.md',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
@@ -113,10 +115,12 @@ const requiredFiles = [
   'data/dgp.ts',
   'data/dlp.ts',
   'data/ddp.ts',
+  'data/dms.ts',
   'pages/why-deeptrols.vue',
   'pages/products/data-governance.vue',
   'pages/products/data-labeling.vue',
   'pages/products/data-development.vue',
+  'pages/products/data-element-regulation.vue',
   'components/why/WhyHero.vue',
   'components/why/WhyHeroLogos.vue',
   'components/why/WhyTrustTabs.vue',
@@ -137,6 +141,12 @@ const requiredFiles = [
   'components/product/ddp/DdpArchitecture.vue',
   'components/product/ddp/DdpCapabilityTimelineSection.vue',
   'components/product/ddp/DdpUnifiedDevelopmentSection.vue',
+  'components/product/dms/DmsHero.vue',
+  'components/product/dms/DmsHeroVisual.vue',
+  'components/product/dms/DmsArchitecture.vue',
+  'components/product/dms/DmsIntelligentRegulationSection.vue',
+  'components/product/dms/DmsBusinessValueSection.vue',
+  'components/product/dms/DmsRegulationProcessSection.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -223,6 +233,14 @@ const ddpHeroVisual = read('components/product/ddp/DdpHeroVisual.vue')
 const ddpArchitecture = read('components/product/ddp/DdpArchitecture.vue')
 const ddpTimeline = read('components/product/ddp/DdpCapabilityTimelineSection.vue')
 const ddpUnifiedDevelopment = read('components/product/ddp/DdpUnifiedDevelopmentSection.vue')
+const dmsData = read('data/dms.ts')
+const dmsPage = read('pages/products/data-element-regulation.vue')
+const dmsHero = read('components/product/dms/DmsHero.vue')
+const dmsHeroVisual = read('components/product/dms/DmsHeroVisual.vue')
+const dmsArchitecture = read('components/product/dms/DmsArchitecture.vue')
+const dmsIntelligentRegulation = read('components/product/dms/DmsIntelligentRegulationSection.vue')
+const dmsBusinessValue = read('components/product/dms/DmsBusinessValueSection.vue')
+const dmsRegulationProcess = read('components/product/dms/DmsRegulationProcessSection.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -275,7 +293,13 @@ assert(cardText.includes('card-text__title') && cardText.includes('card-text__de
 assert(cardGrid.includes('auto-rows-fr items-stretch') && cardGrid.includes('md:grid-cols-2 lg:grid-cols-4'), 'CardGrid must centralize equal-height responsive card grids.')
 assert(cardGrid.includes('md:grid-cols-3') && productFeatureGridSection.includes("columns?: 'two' | 'three' | 'four'"), 'ProductFeatureGridSection must support two, three, and four column product feature grids.')
 assert(featureCard.includes('BaseCard') && featureCard.includes('IconBox') && featureCard.includes('CardText'), 'FeatureCard must compose the base card, icon, and text atoms.')
-assert(featureCard.includes('iconLabel?: string') && productFeatureGridSection.includes(':icon-label="item.iconLabel"') && productFeatureGridSection.includes('<slot name="after" />'), 'FeatureCard and ProductFeatureGridSection must support numbered icon labels and after-slot composition.')
+assert(
+  featureCard.includes('iconLabel?: string') &&
+    productFeatureGridSection.includes(':icon-label="item.iconLabel"') &&
+    productFeatureGridSection.includes('<slot name="after" />') &&
+    productFeatureGridSection.includes('<slot name="before" />'),
+  'FeatureCard and ProductFeatureGridSection must support numbered icon labels plus before/after slot composition.',
+)
 assert(
   alternatingTimelineSection.includes('SectionHeader') &&
     alternatingTimelineSection.includes('lg:left-1/2') &&
@@ -777,6 +801,100 @@ for (const text of [
   'AI 数据底座',
 ]) {
   assert(ddpData.includes(text), `DDP configured content is missing: ${text}`)
+}
+assert(
+  dmsPage.includes('SiteHeader') &&
+    dmsPage.includes('SiteFooter') &&
+    dmsPage.includes('DmsHero') &&
+    dmsPage.includes('ProductFeatureGridSection') &&
+    dmsPage.includes('DmsArchitecture') &&
+    dmsPage.includes('DmsIntelligentRegulationSection') &&
+    dmsPage.includes('DmsBusinessValueSection') &&
+    dmsPage.includes('DmsRegulationProcessSection') &&
+    dmsPage.includes('CtaSection') &&
+    dmsPage.includes('id="dms-challenge"') &&
+    dmsPage.includes('columns="three"') &&
+    dmsPage.includes('columns="two"') &&
+    dmsPage.includes('title-id="dms-cta-title"') &&
+    !dmsPage.includes('<style'),
+  'DMS page must compose the required product sections with global Header, Footer, feature grids, timeline, business value, process flow, and CtaSection.',
+)
+assert(
+  dmsHero.includes('PageHero') &&
+    dmsHero.includes('import { HardDrive }') &&
+    dmsHero.includes('badge="数曜·数据要素监管平台"') &&
+    dmsHero.includes('title-line="让数据流通更安全、更可信"') &&
+    dmsHero.includes('title-gradient="全流程监管平台"') &&
+    dmsHero.includes('visual-label="SHUYAODMS_HORE_WEBM"') &&
+    dmsHero.includes('DmsHeroVisual') &&
+    !dmsHero.includes('visual-size="large"'),
+  'DMS hero must follow the PageHero contract from DMS.md.',
+)
+assert(dmsHeroVisual.includes('图片占位符') && !dmsHeroVisual.includes('<style'), 'DMS hero visual must be a Tailwind-only image placeholder.')
+assert(
+  dmsArchitecture.includes('ProductSystemSection') &&
+    dmsArchitecture.includes('ProductSystemFlowFrame') &&
+    dmsArchitecture.includes('title="构建数据要素流通全过程监管体系"') &&
+    dmsArchitecture.includes('fallback-text="数据要素监管体系架构图占位符"') &&
+    dmsArchitecture.includes('content-flush') &&
+    !dmsArchitecture.includes('EnterpriseFlow') &&
+    !dmsArchitecture.includes('<style'),
+  'DMS architecture must reuse ProductSystemSection and ProductSystemFlowFrame without a flow chart.',
+)
+assert(
+  dmsIntelligentRegulation.includes('AlternatingTimelineSection') &&
+    dmsIntelligentRegulation.includes('dmsTimelineItems') &&
+    dmsIntelligentRegulation.includes('title="智能监管，全程守护"') &&
+    !dmsIntelligentRegulation.includes('BaseCard') &&
+    !dmsIntelligentRegulation.includes('IconBox') &&
+    !dmsIntelligentRegulation.includes('<style'),
+  'DMS intelligent regulation section must reuse the shared alternating timeline component.',
+)
+assert(
+  dmsBusinessValue.includes('SectionHeader') &&
+    dmsBusinessValue.includes('dmsValueItems') &&
+    dmsBusinessValue.includes('title="可量化的数据要素监管效能"') &&
+    dmsBusinessValue.includes('grid gap-5 md:grid-cols-2') &&
+    dmsBusinessValue.includes('rounded-2xl border border-default bg-default p-7') &&
+    dmsBusinessValue.includes('text-4xl font-bold tracking-tight text-primary lg:text-5xl') &&
+    !dmsBusinessValue.includes('<style'),
+  'DMS business value section must keep the EMQX product business-value grid rhythm with Tailwind-only markup.',
+)
+assert(
+  dmsRegulationProcess.includes('ProductFeatureGridSection') &&
+    dmsRegulationProcess.includes('ProductSystemFlowFrame') &&
+    dmsRegulationProcess.includes('dmsProcessItems') &&
+    dmsRegulationProcess.includes('<template #before>') &&
+    dmsRegulationProcess.includes('fallback-text="数据要素监管流程图占位符"') &&
+    !dmsRegulationProcess.includes('<style'),
+  'DMS regulation process must compose ProductFeatureGridSection with ProductSystemFlowFrame through the before slot.',
+)
+const dmsSources = [dmsData, dmsPage, dmsHero, dmsArchitecture, dmsIntelligentRegulation, dmsBusinessValue, dmsRegulationProcess].join('\n')
+for (const text of [
+  '数曜·数据要素监管平台',
+  '让数据流通更安全、更可信',
+  '全流程监管平台',
+  '数据流通不断扩大 监管能力亟需升级',
+  '构建数据要素流通全过程监管体系',
+  '要素全流程监管能力',
+  '智能监管，全程守护',
+  '可量化的数据要素监管效能',
+  '事前预防 → 事中监控 → 事后处置 → 监管分析',
+  '赋能多场景数据要素监管',
+  '开启智能化数据要素监管',
+]) {
+  assert(dmsSources.includes(text), `DMS requirement text is missing: ${text}`)
+}
+for (const text of [
+  '风险发现滞后',
+  '实时风险监测',
+  '统一监管规则',
+  '100%',
+  '监管规则配置',
+  '数据交易平台',
+  '数据运营机构',
+]) {
+  assert(dmsData.includes(text), `DMS configured content is missing: ${text}`)
 }
 const dgpSources = [dgpData, dgpPage, dgpHero, dgpArchitecture, dgpEvolution, dgpUseCases].join('\n')
 for (const text of [

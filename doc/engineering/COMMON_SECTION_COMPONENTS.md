@@ -144,6 +144,7 @@
 - 默认四列节奏为 `grid gap-5 lg:gap-6`、`md:grid-cols-2 lg:grid-cols-4`；需要三张应用场景卡片时可使用 `columns="three"`；需要 2×2 卡片时使用 `columns="two"`。
 - 卡片必须通过 `FeatureCard` 组合 `BaseCard` 与 `IconBox`，最终使用 `.dt-card dt-card--adaptive dt-card--feature` 与 `.dt-icon-box dt-icon-box--gradient`。
 - 需要在卡片网格后追加流程图、说明图等内容时，使用 `#after` slot，避免重复手写 section/header/card-grid 结构。
+- 需要在卡片网格前放置流程图、架构图等内容时，使用 `#before` slot；例如 DMS “监管流程”先展示流程占位，再展示阶段卡片。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive` 共同决定同一网格内的卡片高度。
 - 产品页特性区块默认不使用 `pt-24`，区块之间只保留 `pb-32 lg:pb-44` 节奏。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。

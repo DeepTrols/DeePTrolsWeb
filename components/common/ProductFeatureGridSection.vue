@@ -46,6 +46,8 @@ const cardColumns = computed(() => props.columns)
       />
     </div>
 
+    <slot name="before" />
+
     <CardGrid :columns="cardColumns">
       <FeatureCard
         v-for="item in items"

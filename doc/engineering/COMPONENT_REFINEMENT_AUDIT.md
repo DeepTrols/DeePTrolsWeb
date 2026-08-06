@@ -191,6 +191,17 @@ Deliverables、Solutions、Cases 都有类似结构：
 | 统一数据开发 | `DdpUnifiedDevelopmentSection.vue` | `ProductFeatureGridSection #after` + `ProductSystemFlowFrame` | P0/P1 |
 | CTA | `CtaSection.vue` | 后续接 `SectionShell` + `SectionHeader` | P1 |
 
+### 数曜·数据要素监管平台
+| 区块 | 当前文件 | 可拆组件 | 优先级 |
+|----|----|----|----|
+| Hero | `DmsHero.vue` + `PageHero.vue` | `PageHero` 已复用，视觉保留 slot | Keep |
+| 挑战 / 核心能力 / 应用场景 | `ProductFeatureGridSection.vue` | `FeatureGridSection` + `FeatureCard` | P0/P1 |
+| 解决方案 | `DmsArchitecture.vue`、`ProductSystemSection.vue` | `ProductSystemFlowFrame` | P0/P1 |
+| 智能监管 | `DmsIntelligentRegulationSection.vue`、`AlternatingTimelineSection.vue` | 公共中轴交错时间线 | P0 |
+| 业务价值 | `DmsBusinessValueSection.vue` | `SectionHeader` + Tailwind-only business value grid | P1 |
+| 监管流程 | `DmsRegulationProcessSection.vue` | `ProductFeatureGridSection #before` + `ProductSystemFlowFrame` | P0/P1 |
+| CTA | `CtaSection.vue` | 后续接 `SectionShell` + `SectionHeader` | P1 |
+
 ## 建议 props 边界
 ### `SectionHeader`
 ```ts
