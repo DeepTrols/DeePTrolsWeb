@@ -307,6 +307,7 @@ describe('visual implementation contract', () => {
 
   it('keeps the DDP product page aligned with its requirement document', () => {
     const page = readComponent('pages/products/data-development.vue')
+    const pageHero = readComponent('components/common/PageHero.vue')
     const hero = readComponent('components/product/ddp/DdpHero.vue')
     const heroVisual = readComponent('components/product/ddp/DdpHeroVisual.vue')
     const heroSql = readComponent('components/product/ddp/ddpHeroSql.ts')
@@ -346,7 +347,11 @@ describe('visual implementation contract', () => {
     expect(hero).toContain('title-gradient="标签生产平台"')
     expect(hero).toContain('visual-label="SHUYAODDP_HORE_WEBM"')
     expect(hero).toContain('DdpHeroVisual')
+    expect(hero).toContain('visual-size="fluid"')
     expect(hero).not.toContain('visual-size="large"')
+    expect(pageHero).toContain("visualSize?: 'default' | 'large' | 'fluid'")
+    expect(pageHero).toContain('lg:flex-row lg:items-center lg:justify-between')
+    expect(pageHero).toContain('max-w-lg xl:max-w-xl 2xl:max-w-2xl')
     expect(heroVisual).not.toContain('图片占位符')
     expect(heroVisual).not.toContain('<style')
     expect(heroVisual).toContain('SQL 开发')

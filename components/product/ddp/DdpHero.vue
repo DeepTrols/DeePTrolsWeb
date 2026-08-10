@@ -14,6 +14,7 @@ import { ddpHeroActions } from '~/data/ddp'
     title-gradient="标签生产平台"
     description="连接数据采集、处理、开发与调度全流程，打造统一的数据工程体系，为企业 AI 与数据应用提供可靠的数据底座。"
     visual-label="SHUYAODDP_HORE_WEBM"
+    visual-size="fluid"
     :actions="ddpHeroActions"
   >
     <template #visual>

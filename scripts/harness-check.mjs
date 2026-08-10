@@ -765,8 +765,15 @@ assert(
     ddpHero.includes('title-gradient="标签生产平台"') &&
     ddpHero.includes('visual-label="SHUYAODDP_HORE_WEBM"') &&
     ddpHero.includes('DdpHeroVisual') &&
+    ddpHero.includes('visual-size="fluid"') &&
     !ddpHero.includes('visual-size="large"'),
   'DDP hero must follow the PageHero contract from DDP.md.',
+)
+assert(
+  pageHero.includes("visualSize?: 'default' | 'large' | 'fluid'") &&
+    pageHero.includes('lg:flex-row lg:items-center lg:justify-between') &&
+    pageHero.includes('max-w-lg xl:max-w-xl 2xl:max-w-2xl'),
+  'PageHero fluid visual size must reproduce the EMQX data-processing responsive hero visual width.',
 )
 assert(
   ddpHeroVisual.includes('SQL 开发') &&
