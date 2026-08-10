@@ -138,6 +138,10 @@ const requiredFiles = [
   'components/product/dlp/DlpAiModelingSection.vue',
   'components/product/ddp/DdpHero.vue',
   'components/product/ddp/DdpHeroVisual.vue',
+  'components/product/ddp/ddpHeroSql.ts',
+  'components/product/ddp/useDdpHeroAnimation.ts',
+  'components/product/ddp/DdpFlowCanvas.client.vue',
+  'components/product/ddp/DdpFlowNode.vue',
   'components/product/ddp/DdpArchitecture.vue',
   'components/product/ddp/DdpCapabilityTimelineSection.vue',
   'components/product/ddp/DdpUnifiedDevelopmentSection.vue',
@@ -230,6 +234,10 @@ const ddpData = read('data/ddp.ts')
 const ddpPage = read('pages/products/data-development.vue')
 const ddpHero = read('components/product/ddp/DdpHero.vue')
 const ddpHeroVisual = read('components/product/ddp/DdpHeroVisual.vue')
+const ddpHeroSql = read('components/product/ddp/ddpHeroSql.ts')
+const ddpHeroAnimation = read('components/product/ddp/useDdpHeroAnimation.ts')
+const ddpFlowCanvas = read('components/product/ddp/DdpFlowCanvas.client.vue')
+const ddpFlowNode = read('components/product/ddp/DdpFlowNode.vue')
 const ddpArchitecture = read('components/product/ddp/DdpArchitecture.vue')
 const ddpTimeline = read('components/product/ddp/DdpCapabilityTimelineSection.vue')
 const ddpUnifiedDevelopment = read('components/product/ddp/DdpUnifiedDevelopmentSection.vue')
@@ -266,11 +274,23 @@ for (const token of [
 
 for (const token of [
   '--color-primary: var(--dt-color-primary)',
-  '--color-highlighted: var(--dt-color-text-highlighted)',
-  '--color-muted: var(--dt-color-text-muted)',
-  '--color-default: var(--dt-color-text)',
+  '--color-dimmed: var(--dt-color-text-muted)',
 ]) {
   assert(tailwind.includes(token), `Missing Tailwind v4 color alias: ${token}`)
+}
+for (const utility of [
+  '@utility bg-default',
+  'background-color: var(--dt-color-bg)',
+  '@utility border-default',
+  'border-color: var(--dt-color-line)',
+  '@utility text-default',
+  'color: var(--dt-color-text)',
+  '@utility text-muted',
+  'color: var(--dt-color-text-muted)',
+  '@utility text-highlighted',
+  'color: var(--dt-color-text-highlighted)',
+]) {
+  assert(tailwind.includes(utility), `Missing Tailwind semantic utility: ${utility}`)
 }
 
 assert(baseButton.includes('data-slot="base"'), 'BaseButton must own data-slot="base".')
@@ -748,7 +768,53 @@ assert(
     !ddpHero.includes('visual-size="large"'),
   'DDP hero must follow the PageHero contract from DDP.md.',
 )
-assert(ddpHeroVisual.includes('图片占位符') && !ddpHeroVisual.includes('<style'), 'DDP hero visual must be a Tailwind-only image placeholder.')
+assert(
+  ddpHeroVisual.includes('SQL 开发') &&
+    ddpHeroVisual.includes('可视化编排') &&
+    ddpHeroVisual.includes('h-[368px]') &&
+    ddpHeroVisual.includes('<ClientOnly>') &&
+    ddpHeroVisual.includes('DdpFlowCanvas') &&
+    ddpHeroVisual.includes('useDdpHeroAnimation') &&
+    !ddpHeroVisual.includes('图片占位符') &&
+    !ddpHeroVisual.includes('<style'),
+  'DDP hero visual must reproduce the EMQX data-processing window card with SQL/flow tabs.',
+)
+assert(
+  ddpHeroSql.includes("text: 'INSERT OVERWRITE TABLE '") &&
+    ddpHeroSql.includes("text: 'dws_user_order_summary'") &&
+    ddpHeroSql.includes("text: 'PARTITION '") &&
+    ddpHeroSql.includes('${bizdate}') &&
+    ddpHeroSql.includes("text: 'GROUP BY '") &&
+    ddpHeroSql.includes("text: 'dwd_order_detail '") &&
+    ddpHeroSql.includes("text: 'dim_user_info '") &&
+    ddpHeroSql.includes('text-emerald-600 dark:text-emerald-400') &&
+    ddpHeroSql.includes('top-[352px]'),
+  'DDP hero SQL must use the Hero.md warehouse script with the original token palette.',
+)
+assert(
+  ddpHeroAnimation.includes('LINE_REVEAL_INTERVAL_MS = 300') &&
+    ddpHeroAnimation.includes('TAB_SWITCH_INTERVAL_MS = 5000'),
+  'DDP hero animation must keep the original 300ms line reveal and 5s tab rotation.',
+)
+assert(
+  ddpFlowCanvas.includes('@vue-flow/core') &&
+    ddpFlowCanvas.includes('DWD Detail') &&
+    ddpFlowCanvas.includes('Data Transform') &&
+    ddpFlowCanvas.includes('DIM Join') &&
+    ddpFlowCanvas.includes('DWS Summary') &&
+    ddpFlowCanvas.includes('ADS Application') &&
+    ddpFlowCanvas.includes('x: 560') &&
+    ddpFlowCanvas.includes('fit-view-on-init'),
+  'DDP flow canvas must keep the original node layout with warehouse-layer content.',
+)
+assert(
+  ddpFlowNode.includes('bg-emerald-500') &&
+    ddpFlowNode.includes('bg-indigo-500') &&
+    ddpFlowNode.includes('bg-purple-500') &&
+    ddpFlowNode.includes('min-w-[190px]') &&
+    !ddpFlowNode.includes('<style'),
+  'DDP flow node must keep the original card markup and tone stripe palette.',
+)
 assert(
   ddpArchitecture.includes('ProductSystemSection') &&
     ddpArchitecture.includes('ProductSystemFlowFrame') &&

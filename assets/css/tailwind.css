@@ -16,13 +16,47 @@
   --color-dt-text-soft: var(--dt-color-text-soft);
   --color-dt-text-highlighted: var(--dt-color-text-highlighted);
   --color-primary: var(--dt-color-primary);
-  --color-highlighted: var(--dt-color-text-highlighted);
-  --color-muted: var(--dt-color-text-muted);
-  --color-default: var(--dt-color-text);
+  --color-dimmed: var(--dt-color-text-muted);
   --radius-dt-xs: var(--dt-radius-xs);
   --radius-dt-sm: var(--dt-radius-sm);
   --radius-dt-md: var(--dt-radius-md);
   --radius-dt-lg: var(--dt-radius-lg);
   --radius-dt-ui: var(--dt-ui-radius);
   --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@utility bg-default {
+  background-color: var(--dt-color-bg);
+}
+
+@utility bg-muted {
+  background-color: var(--dt-color-bg-soft);
+}
+
+@utility bg-elevated {
+  background-color: var(--dt-color-bg-elevated);
+}
+
+@utility border-default {
+  border-color: var(--dt-color-line);
+}
+
+@utility border-muted {
+  border-color: var(--dt-color-line-strong);
+}
+
+@utility ring-accented {
+  --tw-ring-color: var(--dt-color-line-strong);
+}
+
+@utility text-default {
+  color: var(--dt-color-text);
+}
+
+@utility text-muted {
+  color: var(--dt-color-text-muted);
+}
+
+@utility text-highlighted {
+  color: var(--dt-color-text-highlighted);
 }

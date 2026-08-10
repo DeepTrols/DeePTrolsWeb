@@ -5,7 +5,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css', '~/assets/scss/main.scss'],
   vite: {
-    plugins: [tailwindcss()],
+    // pnpm 将 vitest 依赖的 vite@5 提升到隐藏层，@nuxt/schema 的 vite 类型会解析到 vite@5，
+    // 与 Nuxt/tailwind 插件实际使用的 vite@8 Plugin 类型冲突，此处收敛类型以通过 typecheck。
+    plugins: [tailwindcss() as never],
   },
   app: {
     head: {
