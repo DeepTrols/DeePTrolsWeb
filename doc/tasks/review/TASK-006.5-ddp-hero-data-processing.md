@@ -125,5 +125,12 @@
 | Commit Message | feat(TASK-006.5): implement ddp hero data-processing visual |
 | Commit Hash    | `6016de3e49bcebae6f593c3fc8a463d26fdb5c41` |
 
+### 修订记录
+| 字段             | 内容 |
+|----------------|----|
+| Commit Message | fix(TASK-006.5): align ddp hero visual width with EMQX data-processing |
+| Commit Hash    | `9c0ad4ac33639dab25fdc9c255adb79ead4f6550` |
+| 说明           | `PageHero.vue` 新增 `visualSize="fluid"` 变体（`lg:flex-row lg:items-center lg:justify-between` + `max-w-lg xl:max-w-xl 2xl:max-w-2xl`），`DdpHero.vue` 使用 `visual-size="fluid"`，Hero 视觉列宽度与 EMQX data-processing 页 1:1 对齐（1440→576px、1600/1920→672px、390→358px 无横向溢出）；`harness-check.mjs` / `visual.spec.ts` 同步新增 fluid 变体契约断言。 |
+
 ## 完成说明
 已按 Hero.md 完成 `/products/data-development` Hero 右侧视觉替换：SQL 开发/可视化编排双 Tab、14 行数仓 SQL 逐行动画、数仓分层五节点 Flow 画布，样式/布局/节点位置/连线/动画时序与 EMQX data-processing 原组件保持一致。必要的接入层适配共三处并已记录于实现内容：内容区高度 320→368px（14 行 SQL 不裁切）、根节点 w-full（PageHero flex 容器撑宽）、VueFlow min-zoom 0.2（移动端 fitView 不被默认 minZoom 钳制）；另以 ClientOnly 保证 vue-flow 仅客户端渲染；随提交纳入 Tailwind 语义颜色桥（`--color-dimmed` 别名 + `bg-default/border-muted/text-muted` 等 `@utility`），保证窗口卡片语义色类取到正确设计令牌。质量门（lint/typecheck/test/harness/build）与 headless Chrome 桌面/移动端验证全部通过。
