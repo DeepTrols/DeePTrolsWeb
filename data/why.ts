@@ -16,6 +16,10 @@ import {
   Waypoints,
 } from '@lucide/vue'
 import type { Component } from 'vue'
+import boyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg?url'
+import shuyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/数曜logo.svg?url'
+import tanyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/探曜IOT logo-1.svg?url'
+import zhiyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/智曜logo.svg?url'
 
 export interface WhyTrustFeature {
   title: string
@@ -216,3 +220,55 @@ export const whyEngineLinks: WhyEngineLink[] = [
     icon: FileText,
   },
 ]
+
+export interface WhyHeroNodeConfig {
+  id: string
+  label: string
+  logo: string
+  color: string
+  glowColor: string
+  fillClass: string
+  strokeClass: string
+}
+
+// FlowMQ 原组件节点色映射：MQTT #8b5cf6 → 数曜、Kafka #3b82f6 → 探曜、AMQP #06b6d4 → 博曜，新增智曜 #f97316
+export const whyHeroNodes: WhyHeroNodeConfig[] = [
+  {
+    id: 'shuyao',
+    label: '数曜',
+    logo: shuyaoLogo,
+    color: '#8b5cf6',
+    glowColor: 'rgba(138, 92, 246, 0.77)',
+    fillClass: 'fill-violet-500/12',
+    strokeClass: 'stroke-violet-500/25',
+  },
+  {
+    id: 'tanyao',
+    label: '探曜',
+    logo: tanyaoLogo,
+    color: '#3b82f6',
+    glowColor: 'rgba(59, 130, 246, 0.55)',
+    fillClass: 'fill-blue-500/12',
+    strokeClass: 'stroke-blue-500/25',
+  },
+  {
+    id: 'boyao',
+    label: '博曜',
+    logo: boyaoLogo,
+    color: '#06b6d4',
+    glowColor: 'rgba(6, 182, 212, 0.55)',
+    fillClass: 'fill-cyan-500/12',
+    strokeClass: 'stroke-cyan-500/25',
+  },
+  {
+    id: 'zhiyao',
+    label: '智曜',
+    logo: zhiyaoLogo,
+    color: '#f97316',
+    glowColor: 'rgba(249, 115, 22, 0.55)',
+    fillClass: 'fill-orange-500/12',
+    strokeClass: 'stroke-orange-500/25',
+  },
+]
+
+export const whyHeroCenterLogo = '/logo-while.svg'

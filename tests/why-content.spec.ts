@@ -2,7 +2,13 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { primaryNavigation } from '../data/navigation'
-import { whyEngineLinks, whyServiceItems, whyTrustTabs } from '../data/why'
+import {
+  whyEngineLinks,
+  whyHeroCenterLogo,
+  whyHeroNodes,
+  whyServiceItems,
+  whyTrustTabs,
+} from '../data/why'
 
 const root = process.cwd()
 
@@ -55,7 +61,19 @@ describe('why deeptrols content contract', () => {
   })
 
   it('uses the required Why page source assets from the product brief', () => {
-    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm'))).toBe(true)
     expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png'))).toBe(true)
+    expect(existsSync(join(root, 'public/logo-while.svg'))).toBe(true)
+    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/数曜logo.svg'))).toBe(true)
+    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg'))).toBe(true)
+    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/探曜IOT logo-1.svg'))).toBe(true)
+    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/智曜logo.svg'))).toBe(true)
+  })
+
+  it('maps the FlowMQ hero diagram nodes to the four brand logos', () => {
+    expect(whyHeroNodes.map((node) => node.label)).toEqual(['数曜', '探曜', '博曜', '智曜'])
+    expect(whyHeroNodes.map((node) => node.color)).toEqual(['#8b5cf6', '#3b82f6', '#06b6d4', '#f97316'])
+    expect(whyHeroNodes.every((node) => node.logo.includes('.svg'))).toBe(true)
+    expect(whyHeroCenterLogo).toBe('/logo-while.svg')
+    expect(whyHeroNodes.every((node) => node.fillClass.startsWith('fill-'))).toBe(true)
   })
 })

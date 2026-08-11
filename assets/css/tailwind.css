@@ -25,6 +25,41 @@
   --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+@theme {
+  --animate-why-node-pulse: why-node-pulse 0.9s ease-in-out;
+  --animate-why-center-pulse: why-center-pulse 3s ease-in-out infinite;
+
+  @keyframes why-node-pulse {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    20% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes why-center-pulse {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.6;
+      transform: scale(1.06);
+    }
+  }
+}
+
 @utility bg-default {
   background-color: var(--dt-color-bg);
 }

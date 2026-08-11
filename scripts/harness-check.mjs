@@ -123,6 +123,8 @@ const requiredFiles = [
   'pages/products/data-element-regulation.vue',
   'components/why/WhyHero.vue',
   'components/why/WhyHeroLogos.vue',
+  'components/why/WhyHeroVisual.vue',
+  'components/why/useWhyHeroAnimation.ts',
   'components/why/WhyTrustTabs.vue',
   'components/why/WhyServiceReset.vue',
   'components/why/WhyEngine.vue',
@@ -213,6 +215,8 @@ const whyData = read('data/why.ts')
 const whyPage = read('pages/why-deeptrols.vue')
 const whyHero = read('components/why/WhyHero.vue')
 const whyHeroLogos = read('components/why/WhyHeroLogos.vue')
+const whyHeroVisual = read('components/why/WhyHeroVisual.vue')
+const whyHeroAnimation = read('components/why/useWhyHeroAnimation.ts')
 const whyTrustTabs = read('components/why/WhyTrustTabs.vue')
 const whyService = read('components/why/WhyServiceReset.vue')
 const whyEngine = read('components/why/WhyEngine.vue')
@@ -516,8 +520,50 @@ assert(
     !pageHero.includes('padding-bottom: 112px'),
   'Why hero spacing must follow the why-emqx Tailwind section rhythm.',
 )
-assert(whyHero.includes('robot.webm?url') && whyHero.includes('<video') && !whyHero.includes('Agentic solution V1.gif') && !whyHero.includes('new URL('), 'Why hero must import the required robot WebM via ?url to avoid SSR hydration mismatch.')
-assert(whyHero.includes('mix-blend-screen') && whyHero.includes('[mask-image:radial-gradient(76%_72%_at_50%_48%'), 'Why hero video must blend into the banner background with Tailwind v4 utilities.')
+assert(
+  whyHero.includes('WhyHeroVisual') &&
+    !whyHero.includes('<video') &&
+    !whyHero.includes('robot.webm') &&
+    !whyHero.includes('new URL('),
+  'Why hero must render the FlowMQ-style WhyHeroVisual instead of the robot video.',
+)
+assert(
+  whyHeroVisual.includes('viewBox="0 0 560 480"') &&
+    whyHeroVisual.includes('whyHeroNodes') &&
+    whyHeroVisual.includes('whyHeroCenterLogo') &&
+    whyHeroVisual.includes('useWhyHeroAnimation'),
+  'WhyHeroVisual must keep the FlowMQ 560x480 canvas and the brand node wiring.',
+)
+assert(
+  whyHeroVisual.includes('rx="16"') &&
+    whyHeroVisual.includes('why-hv-hub-ring') &&
+    !whyHeroVisual.includes('hubRingArcs') &&
+    whyHeroVisual.includes('fill-[var(--dt-color-bg-elevated)]'),
+  'Why hero center must be a rounded-rect wordmark badge and nodes must carry a solid background color like the FlowMQ hero.',
+)
+assert(
+  whyHeroAnimation.includes('ROTATE_DURATION_MS = 800') &&
+    whyHeroAnimation.includes('SETTLE_DELAY_MS = 200') &&
+    whyHeroAnimation.includes('MESSAGE_DURATION_MS = 900') &&
+    whyHeroAnimation.includes('HOLD_DURATION_MS = 400') &&
+    whyHeroAnimation.includes('START_DELAY_MS = 400') &&
+    whyHeroAnimation.includes('INITIAL_ROTATION_DEG = 270'),
+  'useWhyHeroAnimation must keep the original FlowMQ state-machine timings.',
+)
+assert(
+  whyData.includes('whyHeroNodes') &&
+    whyData.includes('whyHeroCenterLogo') &&
+    whyData.includes('数曜logo.svg?url') &&
+    whyData.includes('博曜logo.svg?url') &&
+    whyData.includes('探曜IOT logo-1.svg?url') &&
+    whyData.includes('智曜logo.svg?url') &&
+    whyData.includes("whyHeroCenterLogo = '/logo-while.svg'"),
+  'Why hero data must map the four brand node logos plus the public white wordmark center logo.',
+)
+assert(
+  tailwind.includes('--animate-why-node-pulse') && tailwind.includes('--animate-why-center-pulse'),
+  'Why hero node and center pulse animations must stay registered in the Tailwind theme.',
+)
 assert(!whyHero.includes('&::after') && !whyHero.includes('linear-gradient(180deg, var(--dt-color-bg) 0%') && !whyHero.includes('linear-gradient(90deg, var(--dt-color-bg) 0%'), 'Why hero figure must not keep the old four-edge gradient overlay.')
 assert(
   pageHero.includes('max-w-[820px]') &&
@@ -525,15 +571,11 @@ assert(
     pageHero.includes("visualSize: 'default'") &&
     pageHero.includes("'max-w-lg self-center'") &&
     whyHero.includes('lg:h-full') &&
-    whyHero.includes('h-[132%]') &&
-    whyHero.includes('w-[132%]') &&
-    whyHero.includes('!max-w-none') &&
-    whyHero.includes('top-[46%]') &&
-    pageHero.includes('lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]') &&
-    !whyHero.includes('video {'),
-  'Why hero video must be enlarged with Tailwind v4 utilities without adding extra video CSS.',
+    whyHero.includes('max-w-[728px]') &&
+    pageHero.includes('lg:grid-cols-[minmax(0,0.88fr)_minmax(520px,1fr)]'),
+  'Why hero visual must keep the large PageHero layout with the FlowMQ 1.3x size cap.',
 )
-assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero video must not use an outer framed card shadow.')
+assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero visual must not use an outer framed card shadow.')
 assert(whyTrustTabs.includes('TrustTabsSection') && trustTabsSection.includes('SectionHeader'), 'Why trust tabs must reuse TrustTabsSection and SectionHeader.')
 assert(trustTabsSection.includes('BaseTabs') && baseTabs.includes('dt-segmented-tabs') && baseTabs.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
 assert(trustTabsSection.includes('BaseCard') && trustTabsSection.includes('IconBox') && baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
