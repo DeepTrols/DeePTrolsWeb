@@ -112,11 +112,11 @@
 | 字段             | 内容 |
 |----------------|----|
 | Branch         | main |
-| Commit Message | 待提交（feat(TASK-005.2): replace why hero robot video with FlowMQ-style brand orbit animation） |
-| Commit Hash    | 待提交后填写 |
+| Commit Message | feat(TASK-005.2): replace why hero robot video with FlowMQ-style brand orbit animation |
+| Commit Hash    | `0c324053eea6da0a9faed9c611d9cecdcc6804da` |
 
 ## 完成说明
-已按 `Hero.md` 完成 EMQX FlowMQ Hero 动画 1:1 内容适配：中心 FlowMQ 替换为 DEEPTROLS logo，MQTT/AMQP/Kafka 分别替换为数曜/博曜/探曜 logo，新增智曜节点；画布、环结构、节点样式、keyframes 与状态机时序均与原组件一致，质量门全部通过，CDP 验证无 console error。Git 提交待用户确认后执行。
+已按 `Hero.md` 完成 EMQX FlowMQ Hero 动画 1:1 内容适配：中心 FlowMQ 替换为 DEEPTROLS logo，MQTT/AMQP/Kafka 分别替换为数曜/博曜/探曜 logo，新增智曜节点；画布、环结构、节点样式、keyframes 与状态机时序均与原组件一致，质量门全部通过，CDP 验证无 console error。Git 已提交至 main（`0c324053`）。
 
 ---
 ## 修订记录（用户反馈，2026-08-10）
