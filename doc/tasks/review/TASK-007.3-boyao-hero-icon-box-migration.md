@@ -88,7 +88,7 @@
 |----------------|----|
 | Branch         | main |
 | Commit Message | refactor(TASK-007.3): migrate boyao hero icon boxes to IconBox |
-| Commit Hash    |  |
+| Commit Hash    | `1a638dd` |
 
 ## 完成说明
 `page-hero__visual` 中 6 处「icon + 外框」（左上/右下卡片头部 40px 图标盒、右下 4 个应用模块 56px 图标盒）已统一改用公共 `IconBox`：新增通用 `soft` 色调（bg-soft/50 color-mix 背景 + line 内描边）精确还原原样式，图标色调经默认插槽保留；右下模块 12px 圆角零差异，卡片头部圆角按基线统一为 12px。中央能力 3 节点等插画动画件按确认保持原样。契约测试、harness 与全部质量门通过。
