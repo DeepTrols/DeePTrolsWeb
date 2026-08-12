@@ -102,7 +102,7 @@
 |----------------|----|
 | Branch         | main |
 | Commit Message | feat(TASK-006.6): implement DMS hero supervision flow visual |
-| Commit Hash    | （待回填） |
+| Commit Hash    | `ef1ef54fcad90b3c668a2403cffec8450bda677f` |
 
 ## 完成说明
 已按 `SHUYAODMS/Hero.md` 完成 EMQX smart-data-hub Hero 窗口 1:1 内容适配：三 Tab 监管流程（流通接入 → 风险识别 → 监管处置）5s 自动循环，底部三段进度条，Amber/Red 风险态；占位符移除，`visual-size="large"` 对齐 DDP/DLP/DGP 宽度；契约与测试同步更新，质量门通过，CDP 验证无 console error。
