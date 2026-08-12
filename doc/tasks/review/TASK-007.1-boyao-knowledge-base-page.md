@@ -40,7 +40,7 @@
 ---
 ## 实现内容
 1. `PageHero.vue` 新增 `after-actions` 插槽（向后兼容），新增 `components/common/HeroStatsStrip.vue` 统计条组件（70%+ 运营效率提升 / 50%+ 检索效率提升 / 200+ 服务客户）。
-2. `assets/css/tailwind.css` @theme 注册动画 tokens：`iso-float`、`value-item`、`dest-node`、`pulse-bar`、`pulse-dot`。
+2. `assets/css/tailwind.css` @theme 注册动画 tokens（Review 修复后为参考页原始时序）：`pulse-bar`、`pulse-dot`、`value-legacy`、`value-hub`、`value-flow`、`value-flow-hub`、`value-shield-hub`、`uptime-blink`。
 3. 新增公共组件：`components/common/IsoCube.vue`（CSS 3D 等距立方体，lg/sm 两档）、`components/common/card/ValueCard.vue`（split/stack 双布局 + metrics/quote）、`components/common/ProductValueSection.vue`。
 4. 新增 `data/boyao.ts`：博曜 logo 引用（`博曜logo.svg?url`）、Hero 统计、四项挑战、三张核心价值卡、六项功能、精准/高效/稳定展示、核心能力节点与 CTA 数据。
 5. 新增 `components/product/boyao/` 组件：
@@ -74,7 +74,8 @@
 | `components/common/ProductValueSection.vue` | 新增核心价值板块公共组件 |
 | `assets/css/tailwind.css` | 注册动画 keyframes tokens |
 | `data/boyao.ts` | 新增博曜页面内容数据 |
-| `components/product/boyao/*` | 新增博曜产品页区块组件 |
+| `components/product/boyao/*` | 新增博曜产品页区块组件（Review 修复后移除 `BoyaoShowcaseSection.vue`） |
+| `components/common/ServiceShowcaseSection.vue` | Review 修复：新增 subtitle / reverse / 图片占位符兜底（向后兼容） |
 | `pages/products/knowledge-base.vue` | 新增产品页路由 |
 | `tests/boyao-content.spec.ts` | 新增内容契约测试 |
 | `doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/BOYAO.md` | 纳入需求文档 |
@@ -98,6 +99,17 @@
 另有任务前已存在的未跟踪文件与本任务无关，未纳入提交：`components/common/AgentComposer.vue`、`doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/icon——logo.svg`、`doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/custom-rad-hero-bg-video.mp4`（BOYAO.md 未引用）。
 
 ---
+## Review 修复记录
+Review 阶段根据反馈完成四项修复，全部质量门重新通过：
+
+1. **page-hero__visual 对齐参考页**（`fix(TASK-007.1)` `eb6718f`）：右下卡片头部 icon 由 Building2 改回参考页的 Cloud、中央分隔 icon 由 Network 改回 Radio、应用模块网格恢复为参考页单行布局（4× col-span-2 模块 + col-span-4 业务系统文本格）、移除中央胶囊多余的 whitespace-nowrap。
+2. **挑战/功能板块 subtitle 不换行约束**（`fix(TASK-007.1)` `8430741`）：两处 `ProductFeatureGridSection` 补齐 `nowrap-subtitle`，遵守项目约束。
+3. **核心价值动画对齐参考页**（`fix(TASK-007.1)` `eb6718f`）：从 EMQX 生产 CSS 提取原始时序与几何参数重写——`IsoCube` 恢复原始 90/70px、`rotateX(55deg) rotate(-45deg)`、perspective 800px、无圆角；动画 tokens 替换为 `value-legacy`（4s 淡入淡出 .45↔.7，延迟 0/.15s/.3s）、`value-hub`（float -5px + glow 18px）、`value-flow` / `value-flow-hub`（float -4px，hub 延迟 .2s、glow 延迟 1s，目标节点延迟 .3/.5/.7s）、`value-shield-hub`、`uptime-blink`，并统一追加 `motion-reduce:animate-none`。
+4. **模块6/7/8 改用 service-showcase**（`fix(TASK-007.1)` `68d9d45`）：`ServiceShowcaseSection` 向后兼容扩展 `subtitle`、`reverse`、无图时的占位符兜底；精准/高效/稳定三个板块改用该公共组件渲染（blocks 补充 Lucide icon），删除自建的 `BoyaoShowcaseSection.vue`，契约测试补充 icon 断言。
+
+修复后复跑质量门：`pnpm lint` ✅、`pnpm typecheck` ✅、`pnpm test` ✅ 8 文件 41/41、`pnpm test:visual` ✅ 9/9、`pnpm harness:engineering` ✅、`pnpm build` ✅。
+
+---
 ## Git
 | 字段             | 内容 |
 |----------------|----|
@@ -105,6 +117,9 @@
 | Commit Message | feat(TASK-007.1): implement boyao knowledge base product page |
 | Commit Hash    | `9b6d38df60e617ce7b54e7c0d3577ad179489321` |
 | 关联提交 | `e27b9df2976987914c0ff986c53dcc45a927d3ab` fix(TASK-006.3)：DDP title-gradient 断言同步 |
+| Review 修复提交 | `8430741` nowrap 约束、`eb6718f` hero 视觉与核心价值动画对齐、`68d9d45` service-showcase 迁移 |
 
 ## 完成说明
-已按 BOYAO.md 完成 `/products/knowledge-base` 页面：PageHero（BookOpen 徽章 + 统计条 + neuron 风格知识流转动画）、四项挑战、三张核心价值卡（业务效率/知识整合/知识应用，含 IsoCube 价值动画，卡片结构已抽离为公共组件）、架构图与系统集成占位、核心能力占位、六大功能、精准/高效/稳定交替展示、CtaSection。全部新增样式为 Tailwind CSS v4 utility，keyframes 经 @theme 注册；内容契约测试与质量门全部通过。响应式与动画细节待浏览器验收。
+已按 BOYAO.md 完成 `/products/knowledge-base` 页面：PageHero（BookOpen 徽章 + 统计条 + neuron 风格知识流转动画）、四项挑战、三张核心价值卡（业务效率/知识整合/知识应用，含 IsoCube 价值动画，卡片结构已抽离为公共组件）、架构图与系统集成占位、核心能力占位、六大功能、精准/高效/稳定展示、CtaSection。全部新增样式为 Tailwind CSS v4 utility，keyframes 经 @theme 注册；内容契约测试与质量门全部通过。
+
+Review 阶段四项反馈已全部修复（见「Review 修复记录」）：hero 视觉与参考页逐像素对齐、挑战/功能 subtitle 遵守不换行约束、核心价值动画与 IsoCube 几何按 EMQX 生产 CSS 原始参数重建、精准/高效/稳定统一改用公共 `ServiceShowcaseSection`。响应式与动画细节待浏览器验收。
