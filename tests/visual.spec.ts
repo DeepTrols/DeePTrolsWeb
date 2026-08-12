@@ -375,7 +375,7 @@ describe('visual implementation contract', () => {
     expect(hero).toContain('import { Network }')
     expect(hero).toContain('badge="数曜·数据开发平台"')
     expect(hero).toContain('title-line="标准、智能、高效"')
-    expect(hero).toContain('title-gradient="标签生产平台"')
+    expect(hero).toContain('title-gradient="数据开发平台"')
     expect(hero).toContain('visual-label="SHUYAODDP_HORE_WEBM"')
     expect(hero).toContain('DdpHeroVisual')
     expect(hero).toContain('visual-size="fluid"')

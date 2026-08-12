@@ -852,7 +852,7 @@ assert(
     ddpHero.includes('import { Network }') &&
     ddpHero.includes('badge="数曜·数据开发平台"') &&
     ddpHero.includes('title-line="标准、智能、高效"') &&
-    ddpHero.includes('title-gradient="标签生产平台"') &&
+    ddpHero.includes('title-gradient="数据开发平台"') &&
     ddpHero.includes('visual-label="SHUYAODDP_HORE_WEBM"') &&
     ddpHero.includes('DdpHeroVisual') &&
     ddpHero.includes('visual-size="fluid"') &&
@@ -944,7 +944,7 @@ const ddpSources = [ddpData, ddpPage, ddpHero, ddpArchitecture, ddpTimeline, ddp
 for (const text of [
   '数曜·数据开发平台',
   '标准、智能、高效',
-  '标签生产平台',
+  '数据开发平台',
   '数据开发，正在成为企业增长瓶颈',
   '构建智能数据开发体系',
   '持续释放企业数据生产力',
