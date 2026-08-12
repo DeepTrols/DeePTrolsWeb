@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { ArrowRight } from '@lucide/vue'
 import BaseButton from '~/components/common/BaseButton.vue'
+import CarouselRoot from '~/components/common/carousel/CarouselRoot.vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
 import BaseTabs from '~/components/common/tabs/BaseTabs.vue'
 import { solutions } from '~/data/home'
@@ -35,50 +36,43 @@ const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution
         variant="pill"
       />
 
-      <div
+      <CarouselRoot
         v-if="activeSolution"
         class="solutions__carousel"
-        role="region"
-        aria-roledescription="carousel"
-        data-orientation="horizontal"
-        data-slot="root"
-        tabindex="0"
-        aria-labelledby="solutions-title"
+        :active-index="activeIndex"
+        :item-count="solutions.length"
+        labelled-by="solutions-title"
       >
-        <div class="solutions__carousel-viewport" data-slot="viewport">
-          <div class="solutions__carousel-container" data-slot="container" :data-active-slide="activeIndex">
-            <div
-              v-for="solution in solutions"
-              :id="`solution-panel-${solution.key}`"
-              :key="solution.key"
-              role="group"
-              aria-roledescription="slide"
-              data-slot="item"
-              class="solutions__carousel-item"
-              :class="`solution-panel-${solution.key}`"
-              :aria-labelledby="`solution-tab-${solution.key}`"
-              :aria-hidden="solution.key !== activeKey"
-            >
-              <NuxtLink :to="solution.href" class="group solutions__panel">
-                <img :src="solution.image" :alt="solution.title" loading="lazy" />
-                <div class="solutions__panel-content">
-                  <span class="solutions__panel-tag">{{ solution.tab }}</span>
-                  <h3>{{ solution.title }}</h3>
-                  <p>{{ solution.description }}</p>
-                  <span class="solutions__learn-more">
-                    阅读案例
-                    <ArrowRight
-                      class="iconify iconify--lucide size-4 transition group-hover:translate-x-1"
-                      :size="16"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </div>
-              </NuxtLink>
+        <div
+          v-for="solution in solutions"
+          :id="`solution-panel-${solution.key}`"
+          :key="solution.key"
+          role="group"
+          aria-roledescription="slide"
+          data-slot="item"
+          class="solutions__carousel-item"
+          :class="`solution-panel-${solution.key}`"
+          :aria-labelledby="`solution-tab-${solution.key}`"
+          :aria-hidden="solution.key !== activeKey"
+        >
+          <NuxtLink :to="solution.href" class="group solutions__panel">
+            <img :src="solution.image" :alt="solution.title" loading="lazy" />
+            <div class="solutions__panel-content">
+              <span class="solutions__panel-tag">{{ solution.tab }}</span>
+              <h3>{{ solution.title }}</h3>
+              <p>{{ solution.description }}</p>
+              <span class="solutions__learn-more">
+                阅读案例
+                <ArrowRight
+                  class="iconify iconify--lucide size-4 transition group-hover:translate-x-1"
+                  :size="16"
+                  aria-hidden="true"
+                />
+              </span>
             </div>
-          </div>
+          </NuxtLink>
         </div>
-      </div>
+      </CarouselRoot>
 
       <div class="solutions__actions">
         <BaseButton href="/solutions#use-cases" variant="secondary" size="lg" class="solutions__all-link">
@@ -113,45 +107,9 @@ const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution
 }
 
 .solutions__carousel {
-  position: relative;
-  overflow: hidden;
   border-radius: var(--dt-ui-radius);
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.solutions__carousel-viewport {
-  overflow: hidden;
-}
-
-.solutions__carousel-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  margin-inline-start: -16px;
-  transition: transform 300ms ease;
-
-  &[data-active-slide="1"] {
-    transform: translate3d(-100%, 0, 0);
-  }
-
-  &[data-active-slide="2"] {
-    transform: translate3d(-200%, 0, 0);
-  }
-
-  &[data-active-slide="3"] {
-    transform: translate3d(-300%, 0, 0);
-  }
-
-  &[data-active-slide="4"] {
-    transform: translate3d(-400%, 0, 0);
-  }
-
-  &[data-active-slide="5"] {
-    transform: translate3d(-500%, 0, 0);
-  }
+  --dt-carousel-align: flex-start;
+  --dt-carousel-gutter: -16px;
 }
 
 .solutions__carousel-item {
@@ -248,7 +206,6 @@ const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .solutions__carousel-container,
   .solutions__learn-more svg,
   .solutions__all-link {
     transition: none;

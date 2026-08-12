@@ -104,7 +104,6 @@ const requiredFiles = [
   'components/navigation/MegaMenuPanel.vue',
   'components/navigation/MegaPanelServices.vue',
   'components/home/HomeCaseSlide.vue',
-  'components/home/HomeCasesControls.vue',
   'components/home/HomeProductSystemFlow.vue',
   'components/home/HomeProductSystemMobileFlow.vue',
   'components/home/HomeEcosystemVisual.vue',
@@ -202,7 +201,6 @@ const megaPanelServices = read('components/navigation/MegaPanelServices.vue')
 const homeCta = read('components/home/HomeCta.vue')
 const homeCases = read('components/home/HomeCases.vue')
 const homeCaseSlide = read('components/home/HomeCaseSlide.vue')
-const homeCasesControls = read('components/home/HomeCasesControls.vue')
 const homeInsights = read('components/home/HomeInsights.vue')
 const homeSolutions = read('components/home/HomeSolutions.vue')
 const productSystem = read('components/home/HomeProductSystem.vue')
@@ -371,7 +369,9 @@ assert(
   'BaseTabs must centralize ARIA, keyboard behavior, and pill/segmented/underline variants.',
 )
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
+assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
+assert(carouselControls.includes('dt-icon-button'), 'CarouselControls must reuse the shared dt-icon-button baseline.')
 assert(
   tokens.includes('--dt-card-radius: var(--dt-radius-lg)') &&
     tokens.includes('--dt-icon-box-radius: var(--dt-radius-md)') &&
@@ -395,11 +395,16 @@ for (const [name, source] of [
 }
 
 assert(homeCases.includes('SectionHeading'), 'HomeCases must reuse SectionHeading.')
-assert(homeCases.includes('HomeCaseSlide') && homeCases.includes('HomeCasesControls'), 'HomeCases must compose slide and control subcomponents.')
+assert(
+  homeCases.includes('HomeCaseSlide') && homeCases.includes('CarouselRoot') && homeCases.includes('CarouselControls'),
+  'HomeCases must compose slides and controls through the shared CarouselRoot/CarouselControls components.',
+)
+assert(!homeCases.includes('cases__track') && !homeCases.includes('HomeCasesControls'), 'HomeCases must not hand-roll carousel tracks or private control components.')
+assert(!existsSync(join(root, 'components/home/HomeCasesControls.vue')), 'HomeCasesControls must stay replaced by the shared CarouselControls component.')
 assert(homeCaseSlide.includes('BaseButton') && homeCaseSlide.includes('阅读案例'), 'HomeCaseSlide must reuse BaseButton for story CTAs.')
-assert(homeCasesControls.includes('dt-icon-button'), 'HomeCasesControls must reuse shared icon button styling.')
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
 assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTabs') && homeSolutions.includes('variant="pill"'), 'HomeSolutions must compose the shared BaseTabs pill variant.')
+assert(homeSolutions.includes('CarouselRoot') && !homeSolutions.includes('solutions__carousel-container'), 'HomeSolutions must render slides through the shared CarouselRoot component without hand-rolled tracks.')
 assert(baseTabs.includes('dt-tab-list') && baseTabs.includes('dt-tab'), 'BaseTabs must own shared dt-tab classes.')
 assert(
   productSystem.includes('ProductSystemSection') &&

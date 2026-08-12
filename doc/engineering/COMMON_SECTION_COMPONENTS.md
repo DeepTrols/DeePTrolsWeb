@@ -67,6 +67,22 @@
 - 视觉变体允许 `pill`、`segmented`、`underline`，但 ARIA、键盘左右切换、`data-slot` 结构统一由 `BaseTabs` 负责。
 - Tab panel 内容仍由调用方控制，避免 `BaseTabs` 绑定业务数据结构。
 
+## Carousel
+公共组件：
+- `components/common/carousel/CarouselRoot.vue`
+- `components/common/carousel/CarouselControls.vue`
+
+适用场景：
+- 需要左右滑动切换的幻灯片区块（客户故事、解决方案面板等）。
+
+使用要求：
+- 轮播必须使用 `CarouselRoot`，不得在页面/业务组件内手写 `data-slot` 轨道、`data-active-slide` 位移或 translate3d 切换样式；`role="region"`、`aria-roledescription="carousel"`、`data-slot="root/viewport/container"` 语义由 `CarouselRoot` 集中承载（HOME_PAGE_BASELINE 轮播契约）。
+- `CarouselRoot` 接收 `activeIndex` / `itemCount`，命名经 `label`（aria-label）或 `labelledBy`（aria-labelledby）二选一传入；过渡速度 `transition` 支持 `default`（300ms）/ `slow` / `none`，最多支持 10 张幻灯片。
+- 幻灯片宽度与内容由调用方通过默认插槽控制；整屏等宽幻灯片使用 `flex: 0 0 100%`（参考 `HomeCaseSlide` / `.solutions__carousel-item`）。
+- 宿主圆角与轨道对齐/负边距槽宽通过宿主类覆盖：圆角直接写在宿主类上，对齐与槽宽使用 `--dt-carousel-align`（默认 `stretch`）与 `--dt-carousel-gutter`（默认 `0px`）变量钩子，不得使用 `:deep()` 穿透 `CarouselRoot` 内部。
+- 上一项/下一项按钮必须使用 `CarouselControls`（`previousLabel` / `nextLabel`，emit `previous` / `next`），按钮视觉沿用全局 `.dt-icon-button` 基线；外层布局（display/gap/响应式显隐）由调用方类控制。
+- 参考实现：`HomeCases`（CarouselRoot + CarouselControls + logo tabs）、`HomeSolutions`（CarouselRoot + BaseTabs 驱动）。
+
 ## Trust Tabs
 公共组件：`components/common/TrustTabsSection.vue`
 

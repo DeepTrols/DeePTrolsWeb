@@ -3,10 +3,13 @@ withDefaults(
   defineProps<{
     activeIndex: number
     itemCount: number
-    label: string
+    label?: string
+    labelledBy?: string
     transition?: 'default' | 'slow' | 'none'
   }>(),
   {
+    label: undefined,
+    labelledBy: undefined,
     transition: 'default',
   },
 )
@@ -21,6 +24,7 @@ withDefaults(
     data-slot="root"
     tabindex="0"
     :aria-label="label"
+    :aria-labelledby="labelledBy"
   >
     <div class="carousel-root__viewport" data-slot="viewport">
       <div
@@ -53,7 +57,8 @@ withDefaults(
 .carousel-root__container {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: var(--dt-carousel-align, stretch);
+  margin-inline-start: var(--dt-carousel-gutter, 0px);
 }
 
 .carousel-root__container[data-active-slide="0"] {

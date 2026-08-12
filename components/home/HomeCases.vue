@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import BaseButton from '~/components/common/BaseButton.vue'
-import HomeCasesControls from '~/components/home/HomeCasesControls.vue'
+import CarouselControls from '~/components/common/carousel/CarouselControls.vue'
+import CarouselRoot from '~/components/common/carousel/CarouselRoot.vue'
 import HomeCaseSlide from '~/components/home/HomeCaseSlide.vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
 import { customerStories } from '~/data/home'
@@ -37,7 +38,14 @@ function selectStory(index: number) {
             nowrap-subtitle
           />
 
-          <HomeCasesControls class="cases__controls" @previous="showPreviousStory" @next="showNextStory" />
+          <CarouselControls
+            class="cases__controls"
+            aria-label="客户故事切换"
+            previous-label="Previous story"
+            next-label="Next story"
+            @previous="showPreviousStory"
+            @next="showNextStory"
+          />
         </div>
 
         <div role="tablist" class="cases__logo-tabs" aria-label="客户故事列表">
@@ -55,29 +63,29 @@ function selectStory(index: number) {
           </button>
         </div>
 
-        <div
-          role="region"
-          aria-roledescription="carousel"
-          data-orientation="horizontal"
-          data-slot="root"
+        <CarouselRoot
           class="cases__carousel"
-          :aria-label="activeStory?.title"
-          tabindex="0"
+          :active-index="activeStoryIndex"
+          :item-count="storyCount"
+          :label="activeStory?.title"
         >
-          <div data-slot="viewport" class="cases__viewport">
-            <div data-slot="container" class="cases__track" :data-active-slide="activeStoryIndex">
-              <HomeCaseSlide
-                v-for="(story, index) in customerStories"
-                :key="story.title"
-                :story="story"
-                :index="index"
-                :active="index === activeStoryIndex"
-              />
-            </div>
-          </div>
-        </div>
+          <HomeCaseSlide
+            v-for="(story, index) in customerStories"
+            :key="story.title"
+            :story="story"
+            :index="index"
+            :active="index === activeStoryIndex"
+          />
+        </CarouselRoot>
 
-        <HomeCasesControls class="cases__mobile-controls" @previous="showPreviousStory" @next="showNextStory" />
+        <CarouselControls
+          class="cases__mobile-controls"
+          aria-label="客户故事切换"
+          previous-label="Previous story"
+          next-label="Next story"
+          @previous="showPreviousStory"
+          @next="showNextStory"
+        />
       </div>
     </div>
 
@@ -192,30 +200,7 @@ function selectStory(index: number) {
 }
 
 .cases__carousel {
-  position: relative;
-  overflow: hidden;
   border-radius: var(--dt-radius-lg);
-  outline: none;
-  padding: 0;
-}
-
-.cases__viewport {
-  overflow: hidden;
-}
-
-.cases__track {
-  display: flex;
-  align-items: stretch;
-  flex-direction: row;
-  transition: transform 300ms ease;
-}
-
-.cases__track[data-active-slide='1'] {
-  transform: translate3d(-100%, 0, 0);
-}
-
-.cases__track[data-active-slide='2'] {
-  transform: translate3d(-200%, 0, 0);
 }
 
 .cases__button {
@@ -229,8 +214,6 @@ function selectStory(index: number) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cases__track,
-  .cases__control,
   .cases__logo-tab,
   .cases__button {
     transition: none;
