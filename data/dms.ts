@@ -1,17 +1,95 @@
 import {
   Activity,
+  ArrowLeftRight,
   Blocks,
   Database,
   Gauge,
+  Gavel,
   HardDrive,
   Layers3,
   Network,
   ScrollText,
   ServerCog,
+  ShieldAlert,
   ShieldCheck,
   Sparkles,
 } from '@lucide/vue'
 import type { Component } from 'vue'
+
+export type DmsHeroStage = 'intake' | 'risk' | 'disposal'
+
+export interface DmsHeroTab {
+  id: DmsHeroStage
+  title: string
+  icon: Component
+}
+
+export interface DmsHeroField {
+  label: string
+  value: string
+}
+
+export interface DmsHeroRiskRule {
+  label: string
+  risk?: boolean
+}
+
+export const dmsHeroTitle = '数据要素监管中心'
+
+export const dmsHeroTabs: DmsHeroTab[] = [
+  { id: 'intake', title: '流通接入', icon: ArrowLeftRight },
+  { id: 'risk', title: '风险识别', icon: ShieldAlert },
+  { id: 'disposal', title: '监管处置', icon: Gavel },
+]
+
+export const dmsHeroIntakeBadge = '4 个接入项'
+
+export const dmsHeroIntakeFields: DmsHeroField[] = [
+  { label: '交易编号', value: 'TX-20260811-042' },
+  { label: '数据产品', value: '企业经营分析数据集' },
+  { label: '提供方', value: '数源科技' },
+  { label: '使用方', value: '智联科技' },
+  { label: '使用目的', value: '风险评估' },
+  { label: '授权期限', value: '2026-12-31' },
+]
+
+export const dmsHeroIntakeSteps = ['交易平台', '授权信息', '合同信息', '主体信息']
+
+export const dmsHeroIntakeHint = '检测到新的数据流通活动，正在进入监管流程'
+
+export const dmsHeroRiskRules: DmsHeroRiskRule[] = [
+  { label: '主体资质有效' },
+  { label: '数据产品已备案' },
+  { label: '使用目的已授权' },
+  { label: '敏感字段超范围', risk: true },
+  { label: '授权期限有效' },
+]
+
+export const dmsHeroRiskSummary: DmsHeroField[] = [
+  { label: '交易编号', value: 'TX-20260811-042' },
+  { label: '数据产品', value: '企业经营分析数据集' },
+  { label: '用途', value: '风险评估' },
+  { label: '字段', value: '128' },
+  { label: '敏感字段', value: '6' },
+  { label: '授权字段', value: '124' },
+]
+
+export const dmsHeroRiskHint = '检测到 4 个字段超出授权范围，触发监管规则'
+
+export const dmsHeroDisposalFields: DmsHeroField[] = [
+  { label: '风险等级', value: '中风险' },
+  { label: '触发规则', value: '数据使用范围校验' },
+  { label: '涉及主体', value: '智联科技' },
+  { label: '处置状态', value: '处理中' },
+]
+
+export const dmsHeroDisposalEvent = { id: 'EVT-20260811-017', level: '中风险' }
+
+export const dmsHeroDisposalSteps = ['发现风险', '生成预警', '创建工单', '通知责任方']
+
+export const dmsHeroDisposalDone = '监管工单已创建'
+
+export const dmsHeroDisposalHint = '风险事件已进入处置流程，全程留痕可追溯'
 
 export interface DmsFeatureItem {
   title: string

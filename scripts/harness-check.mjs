@@ -64,6 +64,7 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODLP/Hero.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODDP/DDP.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODMS/DMS.md',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODMS/Hero.md',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
@@ -153,6 +154,7 @@ const requiredFiles = [
   'components/product/ddp/DdpUnifiedDevelopmentSection.vue',
   'components/product/dms/DmsHero.vue',
   'components/product/dms/DmsHeroVisual.vue',
+  'components/product/dms/useDmsHeroAnimation.ts',
   'components/product/dms/DmsArchitecture.vue',
   'components/product/dms/DmsIntelligentRegulationSection.vue',
   'components/product/dms/DmsBusinessValueSection.vue',
@@ -254,6 +256,7 @@ const dmsData = read('data/dms.ts')
 const dmsPage = read('pages/products/data-element-regulation.vue')
 const dmsHero = read('components/product/dms/DmsHero.vue')
 const dmsHeroVisual = read('components/product/dms/DmsHeroVisual.vue')
+const dmsHeroAnimation = read('components/product/dms/useDmsHeroAnimation.ts')
 const dmsArchitecture = read('components/product/dms/DmsArchitecture.vue')
 const dmsIntelligentRegulation = read('components/product/dms/DmsIntelligentRegulationSection.vue')
 const dmsBusinessValue = read('components/product/dms/DmsBusinessValueSection.vue')
@@ -986,11 +989,52 @@ assert(
     dmsHero.includes('title-line="让数据流通安全、可信"') &&
     dmsHero.includes('title-gradient="全流程监管平台"') &&
     dmsHero.includes('visual-label="SHUYAODMS_HORE_WEBM"') &&
-    dmsHero.includes('DmsHeroVisual') &&
-    !dmsHero.includes('visual-size="large"'),
-  'DMS hero must follow the PageHero contract from DMS.md.',
+    dmsHero.includes('visual-size="large"') &&
+    dmsHero.includes('DmsHeroVisual'),
+  'DMS hero must follow the PageHero contract from DMS.md and Hero.md.',
 )
-assert(dmsHeroVisual.includes('图片占位符') && !dmsHeroVisual.includes('<style'), 'DMS hero visual must be a Tailwind-only image placeholder.')
+assert(
+  dmsHeroVisual.includes('dmsHeroTitle') &&
+    dmsHeroVisual.includes('dmsHeroTabs') &&
+    dmsHeroVisual.includes('dmsHeroIntakeFields') &&
+    dmsHeroVisual.includes('dmsHeroRiskRules') &&
+    dmsHeroVisual.includes('dmsHeroRiskSummary') &&
+    dmsHeroVisual.includes('dmsHeroDisposalFields') &&
+    dmsHeroVisual.includes('dmsHeroDisposalSteps') &&
+    dmsHeroVisual.includes('useDmsHeroAnimation') &&
+    dmsHeroVisual.includes('getProgressWidthClass') &&
+    dmsHeroVisual.includes('relative h-[320px]') &&
+    dmsHeroVisual.includes('flex gap-1.5 border-t border-muted px-5 py-3') &&
+    !dmsHeroVisual.includes('<style') &&
+    !dmsHeroVisual.includes('style='),
+  'DMS hero visual must be a Tailwind-only 1:1 adaptation of the EMQX smart-data-hub window hero from Hero.md.',
+)
+assert(
+  dmsHeroAnimation.includes('STAGE_DURATION_MS = 5000') &&
+    dmsHeroAnimation.includes('PROGRESS_WIDTH_CLASSES') &&
+    dmsHeroAnimation.includes('getProgressWidthClass') &&
+    dmsHeroAnimation.includes('INTAKE_STEP_INTERVAL_MS = 800') &&
+    dmsHeroAnimation.includes('RISK_SCAN_START_MS = 700') &&
+    dmsHeroAnimation.includes('RISK_SCAN_INTERVAL_MS = 500') &&
+    dmsHeroAnimation.includes('DISPOSAL_STEP_START_MS = 900') &&
+    dmsHeroAnimation.includes('DISPOSAL_STEP_INTERVAL_MS = 800') &&
+    dmsHeroAnimation.includes('DISPOSAL_DONE_DELAY_MS = 4100'),
+  'useDmsHeroAnimation must keep the smart-data-hub 5s auto-cycle and the staged supervision phase timings.',
+)
+assert(
+  dmsData.includes('dmsHeroTitle') &&
+    dmsData.includes('dmsHeroTabs') &&
+    dmsData.includes('流通接入') &&
+    dmsData.includes('风险识别') &&
+    dmsData.includes('监管处置') &&
+    dmsData.includes('TX-20260811-042') &&
+    dmsData.includes('企业经营分析数据集') &&
+    dmsData.includes('敏感字段超范围') &&
+    dmsData.includes('EVT-20260811-017') &&
+    dmsData.includes('监管工单已创建') &&
+    dmsData.includes('风险事件已进入处置流程，全程留痕可追溯'),
+  'DMS hero data must carry the supervision event script from Hero.md.',
+)
 assert(
   dmsArchitecture.includes('ProductSystemSection') &&
     dmsArchitecture.includes('ProductSystemFlowFrame') &&

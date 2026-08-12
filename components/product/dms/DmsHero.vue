@@ -14,6 +14,7 @@ import { dmsHeroActions } from '~/data/dms'
     title-gradient="全流程监管平台"
     description="保障数据安全、合规、高效流通。"
     visual-label="SHUYAODMS_HORE_WEBM"
+    visual-size="large"
     :actions="dmsHeroActions"
   >
     <template #visual>
