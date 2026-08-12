@@ -1,7 +1,11 @@
 import {
+  Activity,
   Archive,
+  BadgeCheck,
   Bot,
+  Files,
   Inbox,
+  Layers,
   Lightbulb,
   Puzzle,
   ScanText,
@@ -9,9 +13,11 @@ import {
   SearchX,
   Share2,
   ShieldCheck,
+  Table2,
   Unlink,
   Users,
   Workflow,
+  Zap,
 } from '@lucide/vue'
 import boyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg?url'
 import type { Component } from 'vue'
@@ -35,6 +41,7 @@ export interface BoyaoValueCard {
 export interface BoyaoShowcaseBlock {
   title: string
   description: string
+  icon: Component
 }
 
 export interface BoyaoShowcase {
@@ -157,15 +164,18 @@ export const boyaoShowcases: BoyaoShowcase[] = [
         title: '兼容多种文件格式',
         description:
           '一个接口，支持 PDF、Word（doc/docx）、常见图片（jpg/png/webp/tiff）、HTML 等10+种文件格式，实现多模态文档解析',
+        icon: Files,
       },
       {
         title: '支持复杂版面解析，提取多种信息要素',
         description:
           '一次请求，即可获取文字、表格、标题层级、公式、手写字符、图片信息，并且支持按Markdown和Json格式输出给大模型',
+        icon: ScanText,
       },
       {
         title: '表格识别更精准',
         description: '有线表、无线表、密集表，跨页表、单元格合并表都能精准识别',
+        icon: Table2,
       },
     ],
   },
@@ -179,11 +189,13 @@ export const boyaoShowcases: BoyaoShowcase[] = [
       {
         title: '更快、更准',
         description: '深度调优自研算法，不仅解析准，而且快，100页长文档PDF在线解析快至1.5秒。',
+        icon: Zap,
       },
       {
         title: '支持大批量离线解析',
         description:
           '支持离线自动批量解析处理，只需一次性上传大量文档，3天便可在后台高效精准解析500万页PDF。',
+        icon: Layers,
       },
     ],
   },
@@ -197,10 +209,12 @@ export const boyaoShowcases: BoyaoShowcase[] = [
       {
         title: '高成功率',
         description: '保障知识检索与智能应用可靠执行，服务成功率达 99.999%',
+        icon: BadgeCheck,
       },
       {
         title: '高稳定性',
         description: '支持高并发业务持续稳定运行，保障知识服务全天候可靠可用',
+        icon: Activity,
       },
     ],
   },

@@ -9,21 +9,33 @@ export interface ServiceShowcaseItem {
   icon: Component
 }
 
-defineProps<{
-  eyebrow: string
-  title: string
-  titleId: string
-  items: ServiceShowcaseItem[]
-  imageSrc: string
-  imageAlt: string
-}>()
+withDefaults(
+  defineProps<{
+    eyebrow: string
+    title: string
+    titleId: string
+    subtitle?: string
+    items: ServiceShowcaseItem[]
+    imageSrc?: string
+    imageAlt?: string
+    fallbackText?: string
+    reverse?: boolean
+  }>(),
+  {
+    subtitle: undefined,
+    imageSrc: undefined,
+    imageAlt: '',
+    fallbackText: undefined,
+    reverse: false,
+  },
+)
 </script>
 
 <template>
   <section class="service-showcase dt-section relative pb-32 lg:pb-44" :aria-labelledby="titleId">
-    <div class="container service-showcase__grid">
+    <div class="container service-showcase__grid" :class="reverse && 'service-showcase__grid--reverse'">
       <div class="service-showcase__content">
-        <SectionHeader :eyebrow="eyebrow" :title="title" :title-id="titleId" />
+        <SectionHeader :eyebrow="eyebrow" :title="title" :title-id="titleId" :subtitle="subtitle" />
 
         <div class="service-showcase__items">
           <FeatureCard
@@ -46,7 +58,15 @@ defineProps<{
       </div>
 
       <figure class="service-showcase__visual">
-        <img :src="imageSrc" :alt="imageAlt" />
+        <img v-if="imageSrc" :src="imageSrc" :alt="imageAlt" />
+        <div
+          v-else
+          class="service-showcase__placeholder"
+          role="img"
+          :aria-label="fallbackText ?? imageAlt ?? `${title} 配图占位符`"
+        >
+          <span v-if="fallbackText">{{ fallbackText }}</span>
+        </div>
       </figure>
     </div>
   </section>
@@ -76,6 +96,16 @@ defineProps<{
   box-shadow: var(--dt-shadow-card);
 }
 
+.service-showcase__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1120 / 660;
+  color: var(--dt-color-text-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
 img {
   width: 100%;
   aspect-ratio: 1120 / 660;
@@ -86,6 +116,16 @@ img {
   .service-showcase__grid {
     grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1fr);
     gap: 72px;
+  }
+
+  .service-showcase__grid--reverse {
+    .service-showcase__content {
+      order: 2;
+    }
+
+    .service-showcase__visual {
+      order: 1;
+    }
   }
 }
 

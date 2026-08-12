@@ -86,6 +86,7 @@ describe('BOYAO product page content contract', () => {
     expect(boyaoShowcases.map((item) => item.eyebrow)).toEqual(['精准', '高效', '稳定'])
     expect(boyaoShowcases.map((item) => item.reverse)).toEqual([false, true, false])
     expect(boyaoShowcases.every((item) => item.blocks.length >= 2)).toBe(true)
+    expect(boyaoShowcases.every((item) => item.blocks.every((block) => typeof block.icon === 'function'))).toBe(true)
   })
 
   it('uses the required CTA actions', () => {
