@@ -94,7 +94,7 @@
 |----------------|----|
 | Branch         | main |
 | Commit Message | refactor(TASK-002.6): migrate home carousels to shared CarouselRoot/CarouselControls |
-| Commit Hash    | 待填 |
+| Commit Hash    | `fa5973f` |
 
 ## 完成说明
 审计项「轮播死代码 + 重复实现」已闭环：首页两处手写轮播统一迁移至公共 `CarouselRoot` / `CarouselControls`，`HomeCasesControls.vue` 删除，harness 与契约测试升级为「必须使用公共轮播、禁止手写轨道」的正负向断言；视觉与交互零差异，六项质量门全部通过。
