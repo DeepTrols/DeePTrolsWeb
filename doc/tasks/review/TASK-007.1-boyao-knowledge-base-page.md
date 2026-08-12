@@ -103,7 +103,8 @@
 |----------------|----|
 | Branch         | main |
 | Commit Message | feat(TASK-007.1): implement boyao knowledge base product page |
-| Commit Hash    | （待回填） |
+| Commit Hash    | `9b6d38df60e617ce7b54e7c0d3577ad179489321` |
+| 关联提交 | `e27b9df2976987914c0ff986c53dcc45a927d3ab` fix(TASK-006.3)：DDP title-gradient 断言同步 |
 
 ## 完成说明
 已按 BOYAO.md 完成 `/products/knowledge-base` 页面：PageHero（BookOpen 徽章 + 统计条 + neuron 风格知识流转动画）、四项挑战、三张核心价值卡（业务效率/知识整合/知识应用，含 IsoCube 价值动画，卡片结构已抽离为公共组件）、架构图与系统集成占位、核心能力占位、六大功能、精准/高效/稳定交替展示、CtaSection。全部新增样式为 Tailwind CSS v4 utility，keyframes 经 @theme 注册；内容契约测试与质量门全部通过。响应式与动画细节待浏览器验收。
