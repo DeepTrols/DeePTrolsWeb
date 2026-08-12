@@ -101,7 +101,7 @@
 |----------------|----|
 | Branch         | main |
 | Commit Message | feat(TASK-007.2): make icon box border and fill configurable |
-| Commit Hash    |  |
+| Commit Hash    | `b6972f0` |
 
 ## 完成说明
 已将「挑战」板块 icon 外框的边框与背景封装为公共 `IconBox` 的可配置能力：`bordered` 控制 1px 内边框、`filled` 控制背景色（两者默认 true，可自由组合，满足「带边框无背景」等诉求），尺寸沿用 `size` / `iconSize`；配置经 `FeatureCard`（`iconBordered` / `iconFilled`）与 `ProductFeatureGridSection`（另含 `iconBoxSize` / `iconSize`）逐层透传，挑战/功能板块引用处可直接动态配置。圆角继续统一取自 `--dt-icon-box-radius`，未新建重复组件。所有现有调用方默认值下零视觉变化；契约测试、harness 与全部质量门通过。
