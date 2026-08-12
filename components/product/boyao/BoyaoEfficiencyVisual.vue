@@ -12,8 +12,8 @@ interface SourceItem {
 
 const sourceItems: SourceItem[] = [
   { title: '企业文档', icon: FileText, delay: '[animation-delay:0s]' },
-  { title: '业务系统', icon: Building2, delay: '[animation-delay:0.4s]' },
-  { title: '经验知识', icon: Lightbulb, delay: '[animation-delay:0.8s]' },
+  { title: '业务系统', icon: Building2, delay: '[animation-delay:0.15s]' },
+  { title: '经验知识', icon: Lightbulb, delay: '[animation-delay:0.3s]' },
 ]
 </script>
 
@@ -30,13 +30,13 @@ const sourceItems: SourceItem[] = [
         <div
           v-for="item in sourceItems"
           :key="item.title"
-          class="relative flex w-40 animate-value-item items-center gap-2.5 rounded-xl border border-default bg-default px-4 py-2.5 shadow-sm"
+          class="relative flex w-40 animate-value-legacy items-center gap-2.5 rounded-xl border border-default bg-default px-4 py-2.5 shadow-sm motion-reduce:animate-none motion-reduce:opacity-50"
           :class="item.delay"
         >
           <div class="flex size-8 items-center justify-center rounded-lg bg-muted/50">
-            <component :is="item.icon" class="size-4 text-muted" aria-hidden="true" />
+            <component :is="item.icon" class="size-4 text-dimmed" aria-hidden="true" />
           </div>
-          <span class="text-xs font-medium text-muted">{{ item.title }}</span>
+          <span class="text-xs font-medium text-dimmed">{{ item.title }}</span>
         </div>
       </div>
 
@@ -44,7 +44,7 @@ const sourceItems: SourceItem[] = [
         <ArrowRight class="size-5 text-primary/50" aria-hidden="true" />
       </div>
 
-      <div class="flex flex-col items-center">
+      <div class="flex animate-value-hub flex-col items-center motion-reduce:animate-none">
         <IsoCube size="lg">
           <img :src="boyaoLogo" alt="" class="size-10" loading="lazy" />
         </IsoCube>

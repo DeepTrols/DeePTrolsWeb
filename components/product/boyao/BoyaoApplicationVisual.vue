@@ -39,13 +39,18 @@ const applicationTags = ['智能检索', '知识问答', '智能体']
       <div
         class="flex items-center gap-2 rounded-full border border-primary/30 bg-default px-3 py-1.5 backdrop-blur-sm"
       >
-        <span class="size-1.5 animate-pulse rounded-full bg-green-500" aria-hidden="true"></span>
+        <span
+          class="size-1.5 animate-uptime-blink rounded-full bg-green-500 motion-reduce:animate-none"
+          aria-hidden="true"
+        ></span>
         <span class="text-[11px] font-medium text-muted">3秒 获取知识</span>
       </div>
 
-      <IsoCube size="sm">
-        <Sparkles class="size-8 text-primary" aria-hidden="true" />
-      </IsoCube>
+      <div class="animate-value-shield-hub motion-reduce:animate-none">
+        <IsoCube size="sm">
+          <Sparkles class="size-8 text-primary" aria-hidden="true" />
+        </IsoCube>
+      </div>
 
       <div class="flex gap-2">
         <span

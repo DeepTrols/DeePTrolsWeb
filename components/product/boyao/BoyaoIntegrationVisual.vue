@@ -16,19 +16,19 @@ const destNodes: DestNode[] = [
     title: '知识库',
     icon: Database,
     iconClass: 'text-violet-500',
-    delay: '[animation-delay:0s]',
+    delay: '[animation-delay:0.3s]',
   },
   {
     title: '知识图谱',
     icon: Share2,
     iconClass: 'text-blue-500',
-    delay: '[animation-delay:0.4s]',
+    delay: '[animation-delay:0.5s]',
   },
   {
     title: '知识应用',
     icon: Sparkles,
     iconClass: 'text-cyan-500',
-    delay: '[animation-delay:0.8s]',
+    delay: '[animation-delay:0.7s]',
   },
 ]
 </script>
@@ -42,7 +42,7 @@ const destNodes: DestNode[] = [
     </div>
 
     <div class="relative flex items-center gap-8">
-      <div class="flex flex-col items-center gap-2">
+      <div class="flex animate-value-flow flex-col items-center gap-2 motion-reduce:animate-none">
         <div class="flex size-12 items-center justify-center rounded-2xl border border-default bg-default shadow-sm">
           <Files class="size-6 text-muted" aria-hidden="true" />
         </div>
@@ -51,7 +51,7 @@ const destNodes: DestNode[] = [
 
       <ChevronsRight class="size-4 text-primary/40" aria-hidden="true" />
 
-      <div class="flex flex-col items-center">
+      <div class="flex animate-value-flow-hub flex-col items-center motion-reduce:animate-none">
         <IsoCube size="sm">
           <img :src="boyaoLogo" alt="" class="size-8" loading="lazy" />
         </IsoCube>
@@ -67,7 +67,7 @@ const destNodes: DestNode[] = [
         <div
           v-for="node in destNodes"
           :key="node.title"
-          class="flex animate-dest-node items-center gap-2 rounded-xl border border-default bg-default px-3.5 py-2 shadow-sm"
+          class="flex animate-value-flow items-center gap-2 rounded-xl border border-default bg-default px-3.5 py-2 shadow-sm motion-reduce:animate-none"
           :class="node.delay"
         >
           <component :is="node.icon" class="size-4" :class="node.iconClass" aria-hidden="true" />

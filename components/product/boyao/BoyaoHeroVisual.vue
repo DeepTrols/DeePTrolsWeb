@@ -2,13 +2,13 @@
 import {
   Bot,
   Building2,
+  Cloud,
   FileText,
   Inbox,
   Lightbulb,
   MessageCircleQuestion,
-  Network,
+  Radio,
   Search,
-  Server,
   Sparkles,
 } from '@lucide/vue'
 import { boyaoCapabilityNodes, boyaoLogo } from '~/data/boyao'
@@ -123,7 +123,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
               class="inline-flex items-center gap-2 rounded-full border border-violet-500/50 bg-default px-4 py-1.5 shadow-sm"
             >
               <img :src="boyaoLogo" alt="博曜 logo" class="size-5" loading="lazy" />
-              <span class="text-[13px] font-semibold whitespace-nowrap text-violet-500">博曜·企业级知识管理平台</span>
+              <span class="text-[13px] font-semibold text-violet-500">博曜·企业级知识管理平台</span>
             </div>
           </div>
           <div class="relative grid grid-cols-3 gap-2">
@@ -181,7 +181,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
           </div>
           <div class="relative mt-3 flex items-center justify-center gap-1">
             <div class="h-px w-8 bg-linear-to-r from-transparent via-violet-500/55 to-transparent"></div>
-            <Network class="size-3 text-violet-400/70" aria-hidden="true" />
+            <Radio class="size-3 text-violet-400/70" aria-hidden="true" />
             <div class="h-px w-8 bg-linear-to-r from-transparent via-blue-400/55 to-transparent"></div>
           </div>
         </div>
@@ -195,7 +195,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
           <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-violet-500/70 to-violet-400/40"></div>
           <div class="mb-4 flex items-center gap-3">
             <div class="flex h-10 w-10 items-center justify-center rounded-lg border border-default bg-muted/50">
-              <Building2 class="size-5 text-violet-500" aria-hidden="true" />
+              <Cloud class="size-5 text-violet-500" aria-hidden="true" />
             </div>
             <div>
               <div class="text-[15px] font-semibold text-highlighted">智能应用</div>
@@ -206,16 +206,15 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
             <div
               v-for="module in appModules"
               :key="module.title"
-              class="col-span-3 flex h-14 flex-col items-center justify-center gap-1 rounded-md border border-default bg-muted/50"
+              class="col-span-2 flex h-14 flex-col items-center justify-center gap-1 rounded-md border border-default bg-muted/50"
             >
               <component :is="module.icon" class="size-4 text-violet-400" aria-hidden="true" />
-              <span class="text-[9px] font-medium text-muted">{{ module.title }}</span>
+              <span class="text-[8px] font-medium text-muted">{{ module.title }}</span>
             </div>
             <div
-              class="col-span-12 flex h-14 items-center justify-center gap-2 rounded-md border border-default bg-muted/40 px-3 text-left"
+              class="col-span-4 flex h-14 items-center justify-center gap-2 rounded-md border border-default bg-muted/40 px-3 text-left"
             >
-              <Server class="size-4 text-violet-400" aria-hidden="true" />
-              <span class="text-[11px] font-semibold leading-[1.1] text-highlighted">业务系统</span>
+              <span class="text-[11px] font-semibold leading-[1.1] whitespace-nowrap text-highlighted">业务系统</span>
             </div>
           </div>
         </div>
