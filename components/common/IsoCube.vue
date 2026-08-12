@@ -20,7 +20,7 @@ withDefaults(
         </div>
       </div>
       <div class="iso-cube__side iso-cube__side--left border-primary/25 bg-muted"></div>
-      <div class="iso-cube__side iso-cube__side--front border-x-primary/25 bg-elevated/50"></div>
+      <div class="iso-cube__side iso-cube__side--front bg-[var(--dt-color-bg-elevated)]/50"></div>
     </div>
   </div>
 </template>
@@ -83,7 +83,6 @@ withDefaults(
 
 .iso-cube__side {
   position: absolute;
-  border-width: 1px;
 }
 
 .iso-cube__side--left {
@@ -91,6 +90,7 @@ withDefaults(
   left: 0;
   width: 20px;
   height: 100%;
+  border-width: 1px;
   transform: rotateY(-90deg) translate(-10px);
   transform-origin: left;
 }
