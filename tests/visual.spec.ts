@@ -1399,4 +1399,23 @@ describe('visual implementation contract', () => {
     expect(heroVisual).toContain('pointer-events-none relative ml-auto h-[520px] w-full max-w-[680px]')
     expect(heroVisual).not.toContain('max-w-2xl')
   })
+
+  it('renders the boyao core capability section through the shared AlternatingTimelineSection', () => {
+    const capability = readComponent('components/product/boyao/BoyaoCapabilitySection.vue')
+    const page = readComponent('pages/products/knowledge-base.vue')
+    const boyaoData = readComponent('data/boyao.ts')
+
+    expect(capability).toContain('AlternatingTimelineSection')
+    expect(capability).toContain('boyaoTimelineItems')
+    expect(capability).toContain('eyebrow="核心能力"')
+    expect(capability).toContain('title="让企业知识真正理解业务"')
+    expect(capability).toContain('title-id="boyao-capability-title"')
+    expect(capability).not.toContain('ProductSystemSection')
+    expect(boyaoData).toContain('export const boyaoTimelineItems: AlternatingTimelineItem[]')
+    expect(boyaoData).not.toContain('boyaoCapabilitiesPlaceholder')
+    expect(boyaoData).not.toContain('boyaoShowcases')
+    expect(page).toContain('BoyaoCapabilitySection')
+    expect(page).not.toContain('ServiceShowcaseSection')
+    expect(page).not.toContain('boyaoShowcases')
+  })
 })

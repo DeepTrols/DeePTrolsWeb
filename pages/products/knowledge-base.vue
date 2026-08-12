@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
-import ServiceShowcaseSection from '~/components/common/ServiceShowcaseSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import BoyaoArchitectureSection from '~/components/product/boyao/BoyaoArchitectureSection.vue'
@@ -9,7 +8,7 @@ import BoyaoCapabilitySection from '~/components/product/boyao/BoyaoCapabilitySe
 import BoyaoCoreValueSection from '~/components/product/boyao/BoyaoCoreValueSection.vue'
 import BoyaoHero from '~/components/product/boyao/BoyaoHero.vue'
 import BoyaoIntegrationSection from '~/components/product/boyao/BoyaoIntegrationSection.vue'
-import { boyaoChallenges, boyaoCtaActions, boyaoFeatures, boyaoShowcases } from '~/data/boyao'
+import { boyaoChallenges, boyaoCtaActions, boyaoFeatures } from '~/data/boyao'
 
 useSeoMeta({
   title: '博曜·企业级知识管理平台 - DeepTrols',
@@ -44,17 +43,6 @@ useSeoMeta({
         nowrap-subtitle
       />
       <BoyaoIntegrationSection />
-      <ServiceShowcaseSection
-        v-for="showcase in boyaoShowcases"
-        :key="showcase.key"
-        :eyebrow="showcase.eyebrow"
-        :title="showcase.title"
-        :title-id="`boyao-showcase-${showcase.key}`"
-        :subtitle="showcase.subtitle"
-        :items="showcase.blocks"
-        :reverse="showcase.reverse"
-        fallback-text="图片占位符"
-      />
       <CtaSection
         title="开启企业知识智能化之旅"
         title-id="boyao-cta-title"

@@ -7,7 +7,7 @@ import {
   boyaoCtaActions,
   boyaoFeatures,
   boyaoHeroStats,
-  boyaoShowcases,
+  boyaoTimelineItems,
   boyaoValueCards,
 } from '../data/boyao'
 import { primaryNavigation } from '../data/navigation'
@@ -81,12 +81,16 @@ describe('BOYAO product page content contract', () => {
     ])
   })
 
-  it('keeps the precision / speed / stability showcases with placeholders', () => {
-    expect(boyaoShowcases).toHaveLength(3)
-    expect(boyaoShowcases.map((item) => item.eyebrow)).toEqual(['精准', '高效', '稳定'])
-    expect(boyaoShowcases.map((item) => item.reverse)).toEqual([false, true, false])
-    expect(boyaoShowcases.every((item) => item.blocks.length >= 2)).toBe(true)
-    expect(boyaoShowcases.every((item) => item.blocks.every((block) => typeof block.icon === 'function'))).toBe(true)
+  it('feeds the core capability timeline with the precision / efficiency / stability items', () => {
+    expect(boyaoTimelineItems).toHaveLength(3)
+    expect(boyaoTimelineItems.map((item) => item.number)).toEqual(['01', '02', '03'])
+    expect(boyaoTimelineItems.map((item) => item.category)).toEqual(['精准', '高效', '稳定'])
+    expect(boyaoTimelineItems.map((item) => item.title)).toEqual([
+      '多模态文档解析，表格识别更精准',
+      '解析速度极快，100页快至1.5秒',
+      '稳定性极高，成功率可达99.999%',
+    ])
+    expect(boyaoTimelineItems.map((item) => item.bullets.length)).toEqual([3, 2, 2])
   })
 
   it('uses the required CTA actions', () => {

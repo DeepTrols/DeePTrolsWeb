@@ -31,7 +31,7 @@ const requiredFiles = [
   'AGENTS.md',
   'doc/tasks/README.md',
   'doc/tasks/TASK_TEMPLATE.md',
-  'doc/tasks/in-progress/TASK-002.1-design-system-harness-refactor.md',
+  'doc/tasks/completed/TASK-002.1-design-system-harness-refactor.md',
   'doc/tasks/review/TASK-002.2-code-audit-component-refactor.md',
   'doc/tasks/review/TASK-002.3-common-section-components.md',
   'doc/tasks/review/TASK-002.4-why-logo-strip-cta-fix.md',

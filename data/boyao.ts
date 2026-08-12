@@ -1,11 +1,7 @@
 import {
-  Activity,
   Archive,
-  BadgeCheck,
   Bot,
-  Files,
   Inbox,
-  Layers,
   Lightbulb,
   Puzzle,
   ScanText,
@@ -13,14 +9,13 @@ import {
   SearchX,
   Share2,
   ShieldCheck,
-  Table2,
   Unlink,
   Users,
   Workflow,
-  Zap,
 } from '@lucide/vue'
 import boyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg?url'
 import type { Component } from 'vue'
+import type { AlternatingTimelineItem } from '~/components/common/AlternatingTimelineSection.vue'
 import type { HeroStatItem } from '~/components/common/HeroStatsStrip.vue'
 import type { ValueMetric } from '~/components/common/card/ValueCard.vue'
 
@@ -36,21 +31,6 @@ export interface BoyaoValueCard {
   title: string
   description: string
   metrics?: ValueMetric[]
-}
-
-export interface BoyaoShowcaseBlock {
-  title: string
-  description: string
-  icon: Component
-}
-
-export interface BoyaoShowcase {
-  key: 'precision' | 'speed' | 'stability'
-  eyebrow: string
-  title: string
-  subtitle: string
-  reverse: boolean
-  blocks: BoyaoShowcaseBlock[]
 }
 
 export { boyaoLogo }
@@ -117,8 +97,6 @@ export const boyaoValueCards: BoyaoValueCard[] = [
   },
 ]
 
-export const boyaoCapabilitiesPlaceholder = '核心能力内容规划中，敬请期待'
-
 export const boyaoFeatures: BoyaoFeatureItem[] = [
   {
     title: '知识文档采集存储',
@@ -152,70 +130,36 @@ export const boyaoFeatures: BoyaoFeatureItem[] = [
   },
 ]
 
-export const boyaoShowcases: BoyaoShowcase[] = [
+export const boyaoTimelineItems: AlternatingTimelineItem[] = [
   {
-    key: 'precision',
-    eyebrow: '精准',
+    number: '01',
+    category: '精准',
     title: '多模态文档解析，表格识别更精准',
-    subtitle: '复杂版面也能准确理解，多模态内容一次解析、完整提取。',
-    reverse: false,
-    blocks: [
-      {
-        title: '兼容多种文件格式',
-        description:
-          '一个接口，支持 PDF、Word（doc/docx）、常见图片（jpg/png/webp/tiff）、HTML 等10+种文件格式，实现多模态文档解析',
-        icon: Files,
-      },
-      {
-        title: '支持复杂版面解析，提取多种信息要素',
-        description:
-          '一次请求，即可获取文字、表格、标题层级、公式、手写字符、图片信息，并且支持按Markdown和Json格式输出给大模型',
-        icon: ScanText,
-      },
-      {
-        title: '表格识别更精准',
-        description: '有线表、无线表、密集表，跨页表、单元格合并表都能精准识别',
-        icon: Table2,
-      },
+    description: '复杂版面也能准确理解，多模态内容一次解析、完整提取。',
+    bullets: [
+      '兼容多种文件格式 — 一个接口，支持 PDF、Word（doc/docx）、常见图片（jpg/png/webp/tiff）、HTML 等10+种文件格式，实现多模态文档解析',
+      '支持复杂版面解析，提取多种信息要素 — 一次请求，即可获取文字、表格、标题层级、公式、手写字符、图片信息，并且支持按Markdown和Json格式输出给大模型',
+      '表格识别更精准 — 有线表、无线表、密集表，跨页表、单元格合并表都能精准识别',
     ],
   },
   {
-    key: 'speed',
-    eyebrow: '高效',
+    number: '02',
+    category: '高效',
     title: '解析速度极快，100页快至1.5秒',
-    subtitle: '长文档极速处理，大批量文件也能持续高效解析。',
-    reverse: true,
-    blocks: [
-      {
-        title: '更快、更准',
-        description: '深度调优自研算法，不仅解析准，而且快，100页长文档PDF在线解析快至1.5秒。',
-        icon: Zap,
-      },
-      {
-        title: '支持大批量离线解析',
-        description:
-          '支持离线自动批量解析处理，只需一次性上传大量文档，3天便可在后台高效精准解析500万页PDF。',
-        icon: Layers,
-      },
+    description: '长文档极速处理，大批量文件也能持续高效解析。',
+    bullets: [
+      '更快、更准 — 深度调优自研算法，不仅解析准，而且快，100页长文档PDF在线解析快至1.5秒。',
+      '支持大批量离线解析 — 支持离线自动批量解析处理，只需一次性上传大量文档，3天便可在后台高效精准解析500万页PDF。',
     ],
   },
   {
-    key: 'stability',
-    eyebrow: '稳定',
+    number: '03',
+    category: '稳定',
     title: '稳定性极高，成功率可达99.999%',
-    subtitle: '高可用、高成功率，保障企业知识服务持续稳定运行。',
-    reverse: false,
-    blocks: [
-      {
-        title: '高成功率',
-        description: '保障知识检索与智能应用可靠执行，服务成功率达 99.999%',
-        icon: BadgeCheck,
-      },
-      {
-        title: '高稳定性',
-        description: '支持高并发业务持续稳定运行，保障知识服务全天候可靠可用',
-        icon: Activity,
-      },
+    description: '高可用、高成功率，保障企业知识服务持续稳定运行。',
+    bullets: [
+      '高成功率 — 保障知识检索与智能应用可靠执行，服务成功率达 99.999%',
+      '高稳定性 — 支持高并发业务持续稳定运行，保障知识服务全天候可靠可用',
     ],
   },
 ]
