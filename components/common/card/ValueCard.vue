@@ -56,7 +56,7 @@ withDefaults(
         </ul>
 
         <blockquote v-if="quote" class="mt-8 border-l-2 border-primary pl-4">
-          <p class="text-[15px] italic leading-relaxed text-highlighted/80">"{{ quote.text }}"</p>
+          <p class="text-[15px] italic leading-relaxed text-[var(--dt-color-text-highlighted)]/80">"{{ quote.text }}"</p>
           <cite class="mt-2 block text-xs font-medium not-italic text-dimmed">{{ quote.cite }}</cite>
         </blockquote>
       </div>

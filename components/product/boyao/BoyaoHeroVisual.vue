@@ -84,11 +84,13 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
       <!-- 左上：企业知识资产 / 知识采集 -->
       <div class="absolute left-[8px] top-[20px] w-[200px]">
         <div
-          class="group relative overflow-hidden rounded-xl border border-blue-400/25 bg-default px-5 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          class="group relative overflow-hidden rounded-[24px] border border-blue-400/25 bg-default px-5 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
         >
           <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-blue-400/70 to-blue-400/40"></div>
           <div class="mb-4 flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg border border-default bg-muted/50">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-[16px] border border-default bg-[var(--dt-color-bg-soft)]/50"
+            >
               <Inbox class="size-5 text-blue-400" aria-hidden="true" />
             </div>
             <div>
@@ -100,7 +102,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
             <div
               v-for="item in sourceItems"
               :key="item.title"
-              class="flex items-center gap-2.5 rounded-lg border border-default bg-muted/40 px-3 py-2"
+              class="flex items-center gap-2.5 rounded-[16px] border border-default bg-[var(--dt-color-bg-soft)]/40 px-3 py-2"
             >
               <component :is="item.icon" class="size-4 shrink-0 text-default" aria-hidden="true" />
               <div class="min-w-0">
@@ -114,9 +116,9 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
 
       <!-- 中央：博曜·企业级知识管理平台 -->
       <div class="absolute left-1/2 top-1/2 w-[320px] -translate-x-1/2 -translate-y-1/2">
-        <div class="relative rounded-2xl border border-violet-500/30 bg-violet-500/8 p-5 shadow-lg shadow-violet-500/15">
+        <div class="relative rounded-[32px] border border-violet-500/30 bg-violet-500/8 p-5 shadow-lg shadow-violet-500/15">
           <div
-            class="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-br from-violet-500/20 via-violet-400/14 to-blue-400/16"
+            class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-br from-violet-500/20 via-violet-400/14 to-blue-400/16"
           ></div>
           <div class="relative mb-4 flex items-center justify-center">
             <div
@@ -130,13 +132,13 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
             <div
               v-for="(node, index) in boyaoCapabilityNodes"
               :key="node.title"
-              class="group/core relative overflow-hidden rounded-xl border bg-default p-3 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+              class="group/core relative overflow-hidden rounded-[24px] border bg-default p-3 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
               :class="capabilityStyles[index]?.border"
             >
               <div class="absolute inset-x-0 top-0 h-[2px] opacity-70" :class="capabilityStyles[index]?.bar"></div>
               <div class="flex flex-col items-center gap-2">
                 <div
-                  class="flex h-9 w-9 items-center justify-center rounded-lg"
+                  class="flex h-9 w-9 items-center justify-center rounded-[16px]"
                   :class="capabilityStyles[index]?.iconBox"
                 >
                   <component
@@ -190,11 +192,13 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
       <!-- 右下：智能应用 / 企业场景 -->
       <div class="absolute bottom-[10px] right-[-20px] w-[440px]">
         <div
-          class="group relative overflow-hidden rounded-xl border border-violet-500/25 bg-default px-5 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          class="group relative overflow-hidden rounded-[24px] border border-violet-500/25 bg-default px-5 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
         >
           <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-violet-500/70 to-violet-400/40"></div>
           <div class="mb-4 flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg border border-default bg-muted/50">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-[16px] border border-default bg-[var(--dt-color-bg-soft)]/50"
+            >
               <Cloud class="size-5 text-violet-500" aria-hidden="true" />
             </div>
             <div>
@@ -206,13 +210,13 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
             <div
               v-for="module in appModules"
               :key="module.title"
-              class="col-span-2 flex h-14 items-center justify-center rounded-md border border-default bg-muted/50"
+              class="col-span-2 flex h-14 items-center justify-center rounded-[12px] border border-default bg-[var(--dt-color-bg-soft)]/50"
               :aria-label="module.title"
             >
               <component :is="module.icon" class="size-5 text-violet-400" aria-hidden="true" />
             </div>
             <div
-              class="col-span-4 flex h-14 items-center justify-center gap-2 rounded-md border border-default bg-muted/40 px-3 text-left"
+              class="col-span-4 flex h-14 items-center justify-center gap-2 rounded-[12px] border border-default bg-[var(--dt-color-bg-soft)]/40 px-3 text-left"
             >
               <span class="text-[11px] font-semibold leading-[1.1] whitespace-nowrap text-highlighted">业务系统</span>
             </div>

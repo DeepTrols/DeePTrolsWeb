@@ -13,7 +13,7 @@ import { boyaoCapabilitiesPlaceholder } from '~/data/boyao'
     :nowrap-subtitle="false"
   >
     <div
-      class="mt-12 grid place-items-center rounded-2xl border border-dashed border-muted bg-muted/20 px-6 py-24 text-center lg:mt-16"
+      class="mt-12 grid place-items-center rounded-2xl border border-dashed border-muted bg-[var(--dt-color-bg-soft)]/20 px-6 py-24 text-center lg:mt-16"
       role="note"
     >
       <p class="text-sm text-muted">{{ boyaoCapabilitiesPlaceholder }}</p>

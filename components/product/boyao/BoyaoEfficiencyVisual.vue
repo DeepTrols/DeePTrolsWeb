@@ -33,7 +33,7 @@ const sourceItems: SourceItem[] = [
           class="relative flex w-40 animate-value-legacy items-center gap-2.5 rounded-xl border border-default bg-default px-4 py-2.5 shadow-sm motion-reduce:animate-none motion-reduce:opacity-50"
           :class="item.delay"
         >
-          <div class="flex size-8 items-center justify-center rounded-lg bg-muted/50">
+          <div class="flex size-8 items-center justify-center rounded-[16px] bg-[var(--dt-color-bg-soft)]/50">
             <component :is="item.icon" class="size-4 text-dimmed" aria-hidden="true" />
           </div>
           <span class="text-xs font-medium text-dimmed">{{ item.title }}</span>

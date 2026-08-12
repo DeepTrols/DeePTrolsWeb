@@ -14,7 +14,7 @@ defineProps<{
     <div
       v-for="item in items"
       :key="item.label"
-      class="rounded-xl border border-default bg-muted/50 px-3 py-3 text-center backdrop-blur-sm"
+      class="rounded-xl border border-default bg-[var(--dt-color-bg-soft)]/50 px-3 py-3 text-center backdrop-blur-sm"
       role="listitem"
     >
       <div class="text-xl font-semibold text-highlighted lg:text-2xl">{{ item.value }}</div>
