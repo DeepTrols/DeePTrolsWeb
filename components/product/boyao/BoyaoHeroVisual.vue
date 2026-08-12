@@ -124,7 +124,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
               class="inline-flex items-center gap-2 rounded-full border border-violet-500/50 bg-default px-4 py-1.5 shadow-sm"
             >
               <img :src="boyaoLogo" alt="博曜 logo" class="size-5" loading="lazy" />
-              <span class="text-[13px] font-semibold text-violet-500">博曜·企业级知识管理平台</span>
+              <span class="text-[13px] font-semibold text-violet-500">博曜</span>
             </div>
           </div>
           <div class="relative grid grid-cols-3 gap-2">
