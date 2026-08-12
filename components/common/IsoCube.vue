@@ -37,16 +37,6 @@ withDefaults(
   transform-style: preserve-3d;
 }
 
-.iso-cube__inner--lg {
-  width: 90px;
-  height: 90px;
-}
-
-.iso-cube__inner--sm {
-  width: 70px;
-  height: 70px;
-}
-
 .iso-cube__layer {
   position: absolute;
   inset: 0;
@@ -64,6 +54,8 @@ withDefaults(
 
 .iso-cube__layer--top {
   position: relative;
+  width: 90px;
+  height: 90px;
   transform: translateZ(10px);
 }
 
@@ -76,6 +68,8 @@ withDefaults(
 }
 
 .iso-cube__inner--sm .iso-cube__layer--top {
+  width: 70px;
+  height: 70px;
   transform: translateZ(8px);
 }
 
