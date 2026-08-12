@@ -29,6 +29,7 @@ useSeoMeta({
         title-id="boyao-challenge-title"
         subtitle="知识文档来源分散、安全合格要求严格,传统的管理模式很难对知识价值进行挖掘，进而有效支撑业务。"
         :items="boyaoChallenges"
+        nowrap-subtitle
       />
       <BoyaoCoreValueSection />
       <BoyaoArchitectureSection />
@@ -40,6 +41,7 @@ useSeoMeta({
         subtitle="六大核心功能-助力组织构建安全、合规、高效、智能的知识文档管理平台。"
         :items="boyaoFeatures"
         columns="three"
+        nowrap-subtitle
       />
       <BoyaoIntegrationSection />
       <BoyaoShowcaseSection />
