@@ -121,6 +121,8 @@
 | Branch | `main` |
 | Commit Message | `fix(TASK-006.1): prevent dgp subtitles wrapping` |
 | Commit Hash | `2da24931d98b673aafd7acabca307860da89d22c` |
+| Revision Commit Message | `feat(TASK-006.1): replace DGP hero with EMQX edge governance console animation` |
+| Revision Commit Hash | `f1cafbac41384781130825d1036a3044a519c52a` |
 
 ## 完成说明
 已按照 DGP.md 完成产品页实现，并根据复核反馈修复 Hero 视觉尺寸、核心/能力卡片、产品架构占位、企业级数据治理配图、应用场景 tabs、产品页源码级 class 结构与桌面端副标题不换行。页面内容、区块结构、Hero 本地素材、公共组件复用和 Harness Engineering 均已纳入验证。
