@@ -86,6 +86,8 @@ withDefaults(
               {{ action.label }}
             </BaseButton>
           </div>
+
+          <slot name="after-actions" />
         </div>
 
         <div

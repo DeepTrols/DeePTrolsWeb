@@ -29,6 +29,11 @@
   --animate-glow: glow 2s ease-in-out infinite;
   --animate-why-node-pulse: why-node-pulse 0.9s ease-in-out;
   --animate-why-center-pulse: why-center-pulse 3s ease-in-out infinite;
+  --animate-iso-float: iso-float 6s ease-in-out infinite;
+  --animate-value-item: value-item 3.6s ease-in-out infinite;
+  --animate-dest-node: dest-node 3.6s ease-in-out infinite;
+  --animate-pulse-bar: pulse-bar 1.4s ease-in-out infinite;
+  --animate-pulse-dot: pulse-dot 1.6s ease-in-out infinite;
 
   @keyframes glow {
     0%,
@@ -68,6 +73,67 @@
     50% {
       opacity: 0.6;
       transform: scale(1.06);
+    }
+  }
+
+  @keyframes iso-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes value-item {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: translateX(0);
+    }
+
+    50% {
+      opacity: 1;
+      transform: translateX(6px);
+    }
+  }
+
+  @keyframes dest-node {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: translateX(0);
+    }
+
+    50% {
+      opacity: 1;
+      transform: translateX(-6px);
+    }
+  }
+
+  @keyframes pulse-bar {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scaleY(0.7);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 0.25;
+    }
+
+    50% {
+      opacity: 1;
     }
   }
 }
