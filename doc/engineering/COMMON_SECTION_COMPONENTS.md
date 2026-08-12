@@ -53,6 +53,7 @@
 - `BaseCard` 只负责外壳、链接语义、variant、padding、accent 和自适应高度。
 - `IconBox` 统一 icon 外框圆角、尺寸和色调；不要在业务组件中重新定义 icon 外框圆角。
 - `IconBox` 支持动态配置：`size` / `iconSize` 控制盒体与图标尺寸，`bordered` 控制 1px 内边框（默认 true），`filled` 控制背景色（默认 true，可与 bordered 自由组合，如「带边框无背景」）；`FeatureCard` 通过 `iconBordered` / `iconFilled` 透传，`ProductFeatureGridSection` 另透传 `iconBoxSize` / `iconSize`，挑战/功能等板块引用处可直接配置。
+- `IconBox` 色调提供 `primary` / `muted` / `white` / `gradient` / `soft` 五档：`soft` 为 bg-soft 半透明底 + line 内描边，用于 hero 视觉面板等深色图标盒（如博曜 hero 卡片头部与应用模块图标）；图标本身的颜色可通过默认插槽自带 `text-*` 类保留。
 - `CardText` 统一 card 标题与描述的字号层级。
 - `CardGrid` 统一 2 / 3 / 4 列和 `auto-rows-fr items-stretch` 等高行为。
 - `FeatureCard` 用于常规 icon + title + desc + optional action；复杂 media、stats、points 或右侧动画应继续使用 slot/业务组件组合，不把 props 做成万能组件。

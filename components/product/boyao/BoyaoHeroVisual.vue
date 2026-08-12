@@ -11,6 +11,7 @@ import {
   Search,
   Sparkles,
 } from '@lucide/vue'
+import IconBox from '~/components/common/card/IconBox.vue'
 import { boyaoCapabilityNodes, boyaoLogo } from '~/data/boyao'
 import type { Component } from 'vue'
 
@@ -88,11 +89,9 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
         >
           <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-blue-400/70 to-blue-400/40"></div>
           <div class="mb-4 flex items-center gap-3">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-[16px] border border-default bg-[var(--dt-color-bg-soft)]/50"
-            >
+            <IconBox :size="40" tone="soft">
               <Inbox class="size-5 text-blue-400" aria-hidden="true" />
-            </div>
+            </IconBox>
             <div>
               <div class="text-[14px] font-semibold text-highlighted">企业知识资产</div>
               <div class="text-[11px] text-blue-400">知识采集</div>
@@ -196,25 +195,25 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
         >
           <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-violet-500/70 to-violet-400/40"></div>
           <div class="mb-4 flex items-center gap-3">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-[16px] border border-default bg-[var(--dt-color-bg-soft)]/50"
-            >
+            <IconBox :size="40" tone="soft">
               <Cloud class="size-5 text-violet-500" aria-hidden="true" />
-            </div>
+            </IconBox>
             <div>
               <div class="text-[15px] font-semibold text-highlighted">智能应用</div>
               <div class="text-[12px] text-violet-400">企业场景</div>
             </div>
           </div>
           <div class="grid grid-cols-12 gap-3">
-            <div
+            <IconBox
               v-for="module in appModules"
               :key="module.title"
-              class="col-span-2 flex h-14 items-center justify-center rounded-[12px] border border-default bg-[var(--dt-color-bg-soft)]/50"
+              :size="56"
+              tone="soft"
+              class="col-span-2"
               :aria-label="module.title"
             >
               <component :is="module.icon" class="size-5 text-violet-400" aria-hidden="true" />
-            </div>
+            </IconBox>
             <div
               class="col-span-4 flex h-14 items-center justify-center gap-2 rounded-[12px] border border-default bg-[var(--dt-color-bg-soft)]/40 px-3 text-left"
             >

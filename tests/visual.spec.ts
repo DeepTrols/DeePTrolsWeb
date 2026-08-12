@@ -1368,4 +1368,22 @@ describe('visual implementation contract', () => {
     expect(featureGrid).toContain(':icon-bordered="iconBordered"')
     expect(featureGrid).toContain(':icon-filled="iconFilled"')
   })
+
+  it('renders the boyao hero card icon boxes through the shared IconBox soft tone', () => {
+    const iconBox = readComponent('components/common/card/IconBox.vue')
+    const featureCard = readComponent('components/common/card/FeatureCard.vue')
+    const heroVisual = readComponent('components/product/boyao/BoyaoHeroVisual.vue')
+
+    expect(iconBox).toContain("tone?: 'primary' | 'muted' | 'white' | 'gradient' | 'soft'")
+    expect(iconBox).toContain('icon-box--tone-soft')
+    expect(iconBox).toContain('color-mix(in oklab, var(--dt-color-bg-soft) 50%, transparent)')
+    expect(featureCard).toContain("tone?: 'primary' | 'muted' | 'white' | 'gradient' | 'soft'")
+    expect(heroVisual).toContain('IconBox')
+    expect(heroVisual).toContain(':size="40" tone="soft"')
+    expect(heroVisual).toContain(':size="56"')
+    expect(heroVisual).toContain('class="col-span-2"')
+    expect(heroVisual).toContain('capabilityStyles[index]?.iconBox')
+    expect(heroVisual).not.toContain('flex h-10 w-10 items-center justify-center rounded-[16px]')
+    expect(heroVisual).not.toContain('flex h-14 items-center justify-center rounded-[12px]')
+  })
 })

@@ -332,6 +332,12 @@ assert(
     productFeatureGridSection.includes(':icon-filled="iconFilled"'),
   'IconBox must expose configurable border and fill options passed through FeatureCard and ProductFeatureGridSection.',
 )
+assert(
+  iconBox.includes("tone?: 'primary' | 'muted' | 'white' | 'gradient' | 'soft'") &&
+    iconBox.includes('icon-box--tone-soft') &&
+    iconBox.includes('color-mix(in oklab, var(--dt-color-bg-soft) 50%, transparent)'),
+  'IconBox must provide primary, muted, white, gradient, and soft tones, with soft reproducing the bg-soft/50 + line ring shell.',
+)
 assert(cardText.includes('card-text__title') && cardText.includes('card-text__description'), 'CardText must centralize card title and description typography.')
 assert(cardGrid.includes('auto-rows-fr items-stretch') && cardGrid.includes('md:grid-cols-2 lg:grid-cols-4'), 'CardGrid must centralize equal-height responsive card grids.')
 assert(cardGrid.includes('md:grid-cols-3') && productFeatureGridSection.includes("columns?: 'two' | 'three' | 'four'"), 'ProductFeatureGridSection must support two, three, and four column product feature grids.')

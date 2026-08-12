@@ -21,7 +21,7 @@ withDefaults(
     iconBoxSize?: 40 | 48 | 56
     iconBordered?: boolean
     iconFilled?: boolean
-    tone?: 'primary' | 'muted' | 'white' | 'gradient'
+    tone?: 'primary' | 'muted' | 'white' | 'gradient' | 'soft'
     showAccent?: boolean
     equalHeight?: boolean
     action?: {
