@@ -124,3 +124,29 @@
 
 ## 完成说明
 已按照 DGP.md 完成产品页实现，并根据复核反馈修复 Hero 视觉尺寸、核心/能力卡片、产品架构占位、企业级数据治理配图、应用场景 tabs、产品页源码级 class 结构与桌面端副标题不换行。页面内容、区块结构、Hero 本地素材、公共组件复用和 Harness Engineering 均已纳入验证。
+
+---
+## 追加实现：Hero 动画视觉（Hero.md）
+依据 `doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/Hero.md`，将 DGP Hero 右侧 `.ban-img` 本地素材动效替换为 EMQX emqx-edge 产品页 Edge Broker 控制台卡片 1:1 内容适配的动画组件，并补齐 Hero 行动按钮与宽视觉：
+
+1. `DgpHeroVisual` 重写为 EMQX edge 控制台卡片：左侧「数曜·数据治理平台 / Intelligent / Governed Data」品牌区与 Client 连接列表，右侧治理终端按 `dgpGovernanceScenes` 三个数据域（客户数据域/订单数据域/产品数据域）循环执行打字命令 + 扫描日志 + 质量分动画；全部 Tailwind utility，无 scoped CSS、无内联 style。
+2. `data/dgp.ts` 新增 `dgpGovernanceScenes`（命令、日志、数据表数量、质量分），文案与 Hero.md 一致。
+3. `DgpHero` 增加 `visual-size="large"` 与 `heroActions`（立即咨询/申请试用），对齐 DMS/DLP 的 PageHero 宽视觉约定。
+4. `DGP.md` 右侧视觉说明改为引用 `Hero.md`，废弃原 `.ban-img` 素材方案（imgs 仅作存档）。
+5. 同步更新 `tests/dgp-content.spec.ts`、`tests/visual.spec.ts`、`scripts/harness-check.mjs` 的 DGP Hero 契约（终端文案、治理场景数据、`visual-size="large"`、无 `<style>`/`style=`）。
+
+### 追加测试结果
+| 命令 | 结果 |
+|----|----|
+| `pnpm lint` / `pnpm typecheck` / `pnpm test` / `pnpm test:visual` / `pnpm harness:engineering` / `pnpm build` | 通过（`pnpm test`/`test:visual`/`harness` 仅余 DDP 在途改名的既有断言失败，与本任务无关） |
+| Headless 浏览器验证 | `/products/data-governance` 终端打字动画三场景循环、Client 列表、Hero 按钮与宽视觉正常，无 console error |
+
+### 追加修改文件
+| 文件 | 说明 |
+|----|----|
+| `components/product/dgp/DgpHeroVisual.vue` | EMQX edge 控制台卡片 1:1 动画组件 |
+| `components/product/dgp/DgpHero.vue` | `visual-size="large"` + Hero 行动按钮 |
+| `data/dgp.ts` | 新增 `dgpGovernanceScenes` |
+| `doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/Hero.md` | 新增 Hero 视觉需求文档 |
+| `doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/DGP.md` | 右侧视觉说明改为引用 Hero.md |
+| `tests/dgp-content.spec.ts` / `tests/visual.spec.ts` / `scripts/harness-check.mjs` | DGP Hero 契约更新 |

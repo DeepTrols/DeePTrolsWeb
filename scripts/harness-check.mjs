@@ -55,6 +55,7 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/robot.webm',
   'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/DGP.md',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/Hero.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape1.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape2.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape3.png',
@@ -644,19 +645,22 @@ assert(
     dgpHero.includes('title-line="可用、可管、可信"') &&
     dgpHero.includes('title-gradient="企业数据底座"') &&
     dgpHero.includes('visual-label="SHUYAODGP_HORE_WEBM"') &&
-    !dgpHero.includes('visual-size="large"') &&
+    dgpHero.includes('visual-size="large"') &&
     dgpHero.includes('DgpHeroVisual'),
   'DGP hero must follow the PageHero contract from DGP.md.',
 )
 assert(
-  dgpHeroVisual.includes('ban-shape1.png?url') &&
-    dgpHeroVisual.includes('ban-shape2.png?url') &&
-    dgpHeroVisual.includes('ban-shape3.png?url') &&
-    dgpHeroVisual.includes('ruizhi1.png?url') &&
-    dgpHeroVisual.includes('<animateMotion') &&
+  dgpHeroVisual.includes('数曜·数据治理平台') &&
+    dgpHeroVisual.includes('Intelligent') &&
+    dgpHeroVisual.includes('Governed Data') &&
+    dgpHeroVisual.includes('Client') &&
+    dgpHeroVisual.includes('dgpGovernanceScenes') &&
+    dgpHeroVisual.includes('bg-dt-bg-soft/35') &&
+    dgpHeroVisual.includes('sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]') &&
     dgpHeroVisual.includes('motion-safe:animate-pulse') &&
+    !dgpHeroVisual.includes('<style') &&
     !dgpHeroVisual.includes('esenruizhi.com'),
-  'DGP hero visual must use local assets and looped Tailwind/SVG animation.',
+  'DGP hero visual must reproduce the EMQX edge console card as a Tailwind-only component.',
 )
 assert(
   dgpArchitecture.includes('ProductSystemSection') &&
@@ -1040,6 +1044,29 @@ for (const text of [
   '物联数据汇聚与治理',
 ]) {
   assert(dgpData.includes(text), `DGP configured content is missing: ${text}`)
+}
+for (const text of [
+  '客户数据域',
+  '订单数据域',
+  '产品数据域',
+  '12 张数据表',
+  '8 张数据表',
+  '16 张数据表',
+  'CUSTOMER_PROFILE',
+  'ORDER_STANDARD',
+  'PRODUCT_QUALITY',
+  '客户主数据治理',
+  '订单字段标准化',
+  '产品数据质量检测',
+  '$ govern --domain customer_profile',
+  '$ govern --domain order_standard',
+  '$ govern --domain product_quality',
+  '> Scanning 12 data tables',
+  '> Quality score: 97.6%',
+  '> Quality score: 98.2%',
+  '> Quality score: 96.8%',
+]) {
+  assert(dgpData.includes(text), `DGP governance scene content is missing: ${text}`)
 }
 
 const filesToScan = [

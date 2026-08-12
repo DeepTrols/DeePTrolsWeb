@@ -3,7 +3,9 @@ import {
   ArrowLeftRight,
   BadgeCheck,
   Blocks,
+  Boxes,
   Database,
+  FileText,
   Gauge,
   Layers3,
   Network,
@@ -38,6 +40,16 @@ export interface DgpUseCase {
   title: string
   description: string
   href: string
+}
+
+export interface DgpGovernanceScene {
+  name: string
+  count: string
+  code: string
+  description: string
+  icon: Component
+  command: string
+  logs: string[]
 }
 
 export const dgpCoreValues: DgpFeatureItem[] = [
@@ -180,6 +192,54 @@ export const dgpUseCases: DgpUseCase[] = [
     title: '数据引擎',
     description: '汇聚设备、监测、调度及业务数据，形成统一能源数据底座，为设备运维、负荷预测及能源优化提供数据支撑。',
     href: '/solutions/energy',
+  },
+]
+
+export const dgpGovernanceScenes: DgpGovernanceScene[] = [
+  {
+    name: '客户数据域',
+    count: '12 张数据表',
+    code: 'CUSTOMER_PROFILE',
+    description: '客户主数据治理',
+    icon: Database,
+    command: '$ govern --domain customer_profile',
+    logs: [
+      '> Scanning 12 data tables',
+      '> Detecting duplicate customer records',
+      '> Standardizing phone and address fields',
+      '> Merging 1,286 duplicate records',
+      '> Quality score: 97.6%',
+    ],
+  },
+  {
+    name: '订单数据域',
+    count: '8 张数据表',
+    code: 'ORDER_STANDARD',
+    description: '订单字段标准化',
+    icon: FileText,
+    command: '$ govern --domain order_standard',
+    logs: [
+      '> Mapping order field definitions',
+      '> Standardizing date and amount formats',
+      '> Detecting missing required fields',
+      '> Fixing 328 inconsistent records',
+      '> Quality score: 98.2%',
+    ],
+  },
+  {
+    name: '产品数据域',
+    count: '16 张数据表',
+    code: 'PRODUCT_QUALITY',
+    description: '产品数据质量检测',
+    icon: Boxes,
+    command: '$ govern --domain product_quality',
+    logs: [
+      '> Validating product master data',
+      '> Checking category and attribute rules',
+      '> Detecting abnormal field values',
+      '> Flagging 76 quality issues',
+      '> Quality score: 96.8%',
+    ],
   },
 ]
 

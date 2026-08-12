@@ -16,32 +16,12 @@ title-gradient="企业数据底座"
 description="打通多源数据，建立标准化、资产化的数据体系，持续支撑AI应用落地"
 visual-label="SHUYAODGP_HORE_WEBM"
 
-右侧动画说明：
-```text
-参考页面：
-https://www.esenruizhi.com/products/ruizhi.html
-
-参考区域：
-页面中的 .ban-img 动画区域。
-需要还原以下视觉元素：
-
-1. 三层透明背景图叠加
-2. 多组分布在不同位置的发光节点
-3. 节点呼吸、闪烁、缩放动画
-4. 局部元素轻微漂浮动画
-5. SVG 路径上的流光运动
-6. 整体呈现蓝紫色科技感、数据连接感
-7. 动画连续循环，不能出现明显停顿或跳帧
-
-先检查以下参考图片能否正常下载：
-https://www.esenruizhi.com/static/2021/images/product_ruizhi/ban-shape1.png
-https://www.esenruizhi.com/static/2021/images/product_ruizhi/ban-shape2.png
-https://www.esenruizhi.com/static/2021/images/product_ruizhi/ban-shape3.png
-https://www.esenruizhi.com/static/2021/images/product_ruizhi/ruizhi1.png
-
-将图片保存到doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs
-
-不要继续引用远程地址
+右侧视觉说明：
+按同目录 `Hero.md` 执行：1:1 还原 https://www.emqx.com/zh/products/emqx-edge 的 Edge Broker 控制台卡片，
+Tailwind CSS v4 utility 实现，不新建样式。文案替换为「数曜·数据治理平台 / Intelligent / Governed Data」，
+三个数据域节点（客户数据域、订单数据域、产品数据域）循环联动右侧治理终端打字动画。
+PageHero 使用 visual-size="large"（宽视觉，max-w 820px），保证控制台卡片双栏布局有足够宽度。
+原 .ban-img 素材动效方案已废弃（本地 imgs 素材仅作存档保留，页面不再引用）。
 
 
 3、板块：

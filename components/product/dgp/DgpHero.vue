@@ -4,7 +4,10 @@ import PageHero from '~/components/common/PageHero.vue'
 import type { PageHeroAction } from '~/components/common/PageHero.vue'
 import DgpHeroVisual from '~/components/product/dgp/DgpHeroVisual.vue'
 
-const heroActions: PageHeroAction[] = []
+const heroActions: PageHeroAction[] = [
+    { label: '立即咨询', href: '/contact', variant: 'primary' as const },
+  { label: '申请试用', href: '', variant: 'secondary' as const },
+]
 </script>
 
 <template>
@@ -17,6 +20,7 @@ const heroActions: PageHeroAction[] = []
     description="打通多源数据，建立标准化、资产化的数据体系，持续支撑AI应用落地"
     :actions="heroActions"
     visual-label="SHUYAODGP_HORE_WEBM"
+    visual-size="large"
   >
     <template #visual>
       <DgpHeroVisual />
