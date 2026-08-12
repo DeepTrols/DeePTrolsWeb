@@ -196,6 +196,20 @@
 - 分类标签可使用 `rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80`。
 - 视觉侧按需求放置真实图片、动画或占位图；缺失素材时可使用 Tailwind-only 占位，不加卡片边框。
 
+## Compatibility Grid
+公共组件：`components/common/CompatibilityGridSection.vue`
+
+适用场景：
+- 国产化适配、协议/环境兼容等「兼容性目录」区块（EMQX tables 式分类 icon 网格）。
+
+使用要求：
+- 必须传入 `eyebrow`、`title`、`titleId`、`subtitle`、`categories`；`categories` 为 `{ key, title, items: { label, icon }[] }` 分类数组，`icon` 传图片资源 URL（`?url` 导入）。
+- 分类卡一行 3 个（`CardGrid(columns="three")`），同行等高；分类标题统一为 uppercase 小号标题，不得在业务组件内重写。
+- 条目的 icon 外框必须使用 `IconBox`（`tone="soft"`：`color-mix(in oklab, var(--dt-color-bg-soft) 50%, transparent)` 半透明底 + line 内描边，等价于设计稿的 `--ui-bg-muted` 50% 底），logo 图片经默认插槽以 `<img :src>` 传入并保持足够尺寸（40px 盒内不小于 32px）；不要在业务组件中重新定义 icon 外框圆角或底色。
+- 分类卡外壳使用 `border-muted` + `bg-dt-bg-soft/30` 半透明面板与 `rounded-2xl` 圆角；条目行使用 `border-muted` / `bg-default`，hover 仅允许 `border-primary/30` / `bg-primary/5`，不得另写卡片 hover。
+- 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
+- 参考实现：knowledge-base「国产化适配」区块（`boyaoCompatibilityCategories`）。
+
 ## CTA
 公共组件：`components/common/CtaSection.vue`
 
