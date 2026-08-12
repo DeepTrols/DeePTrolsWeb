@@ -2,6 +2,7 @@ import {
   Activity,
   BadgeCheck,
   Blocks,
+  Clock,
   Database,
   Layers3,
   Network,
@@ -9,6 +10,7 @@ import {
   ShieldCheck,
   Sparkles,
   Tags,
+  Wallet,
 } from '@lucide/vue'
 import type { Component } from 'vue'
 
@@ -16,6 +18,26 @@ export interface DlpFeatureItem {
   title: string
   description: string
   icon: Component
+}
+
+export interface DlpHeroFeature {
+  key: string
+  value: string
+  icon: Component
+}
+
+export interface DlpHeroTagResult {
+  object: string
+  tag: string
+  type: string
+  value: string
+}
+
+export interface DlpHeroQueryResult {
+  tag: string
+  category: string
+  value: string
+  updated: string
 }
 
 export interface DlpTimelineItem {
@@ -29,6 +51,24 @@ export interface DlpTimelineItem {
 export const dlpHeroActions = [
   { label: '申请试用', href: '/try', variant: 'primary' as const },
   { label: '了解更多', href: '#dlp-challenge', variant: 'secondary' as const },
+]
+
+export const dlpHeroFeatures: DlpHeroFeature[] = [
+  { key: 'customer/visit_count', value: '28 次', icon: Activity },
+  { key: 'customer/order_amount', value: '¥12,860', icon: Wallet },
+  { key: 'customer/last_active', value: '2 小时前', icon: Clock },
+]
+
+export const dlpHeroTagResults: DlpHeroTagResult[] = [
+  { object: '客户 A1024', tag: '活跃度', type: '行为标签', value: '高活跃' },
+  { object: '客户 A1024', tag: '客户价值', type: '价值标签', value: '高价值' },
+  { object: '客户 A1024', tag: '活跃状态', type: '状态标签', value: '近期活跃' },
+]
+
+export const dlpHeroQueryResults: DlpHeroQueryResult[] = [
+  { tag: '活跃度', category: '行为标签', value: '高活跃', updated: '刚刚' },
+  { tag: '客户价值', category: '价值标签', value: '高价值', updated: '刚刚' },
+  { tag: '活跃状态', category: '状态标签', value: '近期活跃', updated: '刚刚' },
 ]
 
 export const dlpChallengeItems: DlpFeatureItem[] = [

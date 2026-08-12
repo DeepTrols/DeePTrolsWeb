@@ -26,8 +26,20 @@
 }
 
 @theme {
+  --animate-glow: glow 2s ease-in-out infinite;
   --animate-why-node-pulse: why-node-pulse 0.9s ease-in-out;
   --animate-why-center-pulse: why-center-pulse 3s ease-in-out infinite;
+
+  @keyframes glow {
+    0%,
+    100% {
+      box-shadow: 0 0 8px #8b5cf666, 0 0 16px #8b5cf633;
+    }
+
+    50% {
+      box-shadow: 0 0 16px #8b5cf699, 0 0 32px #8b5cf666;
+    }
+  }
 
   @keyframes why-node-pulse {
     0% {

@@ -258,9 +258,32 @@ describe('visual implementation contract', () => {
     expect(hero).toContain('title-gradient="标签生产平台"')
     expect(hero).toContain('visual-label="SHUYAODGP_HORE_WEBM"')
     expect(hero).toContain('DlpHeroVisual')
-    expect(hero).not.toContain('visual-size="large"')
-    expect(heroVisual).toContain('图片占位符')
+    expect(hero).toContain('visual-size="large"')
+    const heroSql = readComponent('components/product/dlp/heroSql.ts')
+    expect(heroVisual).toContain('数曜·数据标签平台')
+    expect(heroVisual).toContain('标签生成')
+    expect(heroVisual).toContain('标签查询')
+    expect(heroVisual).toContain('实时标签生成')
+    expect(heroVisual).toContain('tag_results')
+    expect(heroVisual).toContain('h-[475px]')
+    expect(heroVisual).toContain('grid-cols-4')
+    expect(heroVisual).toContain('正在生成标签...')
+    expect(heroVisual).toContain('标签已生成，可直接查询、分析与服务调用。')
+    expect(heroVisual).toContain('标签实时查询')
+    expect(heroVisual).toContain('主体画像')
+    expect(heroVisual).toContain('查询标签')
+    expect(heroVisual).toContain('正在查询标签...')
+    expect(heroVisual).toContain('已找到 3 个标签，可用于分析、分群与服务调用。')
+    expect(heroVisual).toContain('animate-glow')
+    expect(heroVisual).toContain('dlpHeroFeatures')
+    expect(heroVisual).toContain('dlpHeroTagResults')
+    expect(heroVisual).toContain('dlpHeroQueryResults')
+    expect(heroVisual).not.toContain('BaseTabs')
+    expect(heroVisual).not.toContain('图片占位符')
     expect(heroVisual).not.toContain('<style')
+    expect(heroSql).toContain('tag_results')
+    expect(heroSql).toContain("customer_id = 'A1024'")
+    expect(heroSql).toContain('tokenizeSql')
 
     expect(architecture).toContain('ProductSystemSection')
     expect(architecture).toContain('ProductSystemFlowFrame')
@@ -302,6 +325,12 @@ describe('visual implementation contract', () => {
       '主体对象自由定义',
       '精准用户运营',
       '立即咨询',
+      'customer/visit_count',
+      'customer/order_amount',
+      'customer/last_active',
+      '高活跃',
+      '高价值',
+      '近期活跃',
     ]) {
       expect(data).toContain(text)
     }
@@ -590,7 +619,7 @@ describe('visual implementation contract', () => {
     expect(pageHero).toContain('class="page-hero relative overflow-hidden bg-dt-bg"')
     expect(pageHero).toContain('container page-hero__body relative pt-24 lg:pt-32')
     expect(pageHero).toContain("flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'")
-    expect(pageHero).toContain('w-full max-w-2xl text-center lg:text-left')
+    expect(pageHero).toContain('w-full max-w-2xl text-center lg:self-center lg:text-left')
     expect(pageHero).toContain('page-hero__actions flex flex-wrap items-center justify-center gap-4 lg:justify-start')
     expect(pageHero).not.toContain('padding: 144px')
     expect(pageHero).not.toContain('padding: 144px 0 96px')

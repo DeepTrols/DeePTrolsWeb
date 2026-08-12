@@ -61,6 +61,7 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ban-shape3.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODGP/imgs/ruizhi1.png',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODLP/DLP.md',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODLP/Hero.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODDP/DDP.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODMS/DMS.md',
   'assets/css/tailwind.css',
@@ -136,6 +137,8 @@ const requiredFiles = [
   'components/product/dgp/DgpUseCasesSection.vue',
   'components/product/dlp/DlpHero.vue',
   'components/product/dlp/DlpHeroVisual.vue',
+  'components/product/dlp/heroSql.ts',
+  'components/product/dlp/useDlpHeroAnimation.ts',
   'components/product/dlp/DlpArchitecture.vue',
   'components/product/dlp/DlpCapabilityTimelineSection.vue',
   'components/product/dlp/DlpAiModelingSection.vue',
@@ -232,6 +235,7 @@ const dlpData = read('data/dlp.ts')
 const dlpPage = read('pages/products/data-labeling.vue')
 const dlpHero = read('components/product/dlp/DlpHero.vue')
 const dlpHeroVisual = read('components/product/dlp/DlpHeroVisual.vue')
+const dlpHeroSql = read('components/product/dlp/heroSql.ts')
 const dlpArchitecture = read('components/product/dlp/DlpArchitecture.vue')
 const dlpTimeline = read('components/product/dlp/DlpCapabilityTimelineSection.vue')
 const dlpAiModeling = read('components/product/dlp/DlpAiModelingSection.vue')
@@ -741,10 +745,47 @@ assert(
     dlpHero.includes('title-gradient="标签生产平台"') &&
     dlpHero.includes('visual-label="SHUYAODGP_HORE_WEBM"') &&
     dlpHero.includes('DlpHeroVisual') &&
-    !dlpHero.includes('visual-size="large"'),
-  'DLP hero must follow the PageHero contract from DLP.md.',
+    dlpHero.includes('visual-size="large"'),
+  'DLP hero must follow the PageHero contract from DLP.md with the same large visual width as DGP.',
 )
-assert(dlpHeroVisual.includes('图片占位符') && !dlpHeroVisual.includes('<style'), 'DLP hero visual must be a Tailwind-only image placeholder.')
+assert(
+  dlpHeroVisual.includes('数曜·数据标签平台') &&
+    dlpHeroVisual.includes('标签生成') &&
+    dlpHeroVisual.includes('标签查询') &&
+    dlpHeroVisual.includes('实时标签生成') &&
+    dlpHeroVisual.includes('tag_results') &&
+    dlpHeroVisual.includes('h-[475px]') &&
+    dlpHeroVisual.includes('grid-cols-4') &&
+    dlpHeroVisual.includes('正在生成标签...') &&
+    dlpHeroVisual.includes('标签已生成，可直接查询、分析与服务调用。') &&
+    dlpHeroVisual.includes('标签实时查询') &&
+    dlpHeroVisual.includes('主体画像') &&
+    dlpHeroVisual.includes('查询标签') &&
+    dlpHeroVisual.includes('正在查询标签...') &&
+    dlpHeroVisual.includes('已找到 3 个标签，可用于分析、分群与服务调用。') &&
+    dlpHeroVisual.includes('animate-glow') &&
+    dlpHeroVisual.includes('dlpHeroFeatures') &&
+    dlpHeroVisual.includes('dlpHeroTagResults') &&
+    dlpHeroVisual.includes('dlpHeroQueryResults') &&
+    !dlpHeroVisual.includes('BaseTabs') &&
+    !dlpHeroVisual.includes('DlpTagGenerationPanel') &&
+    !dlpHeroVisual.includes('DlpTagQueryPanel') &&
+    !dlpHeroVisual.includes('图片占位符') &&
+    !dlpHeroVisual.includes('style='),
+  'DLP hero visual must be a single-component 1:1 adaptation of the EMQX Tables hero animation from Hero.md.',
+)
+assert(
+  dlpHeroSql.includes('tag_results') &&
+    dlpHeroSql.includes("customer_id = 'A1024'") &&
+    dlpHeroSql.includes('tokenizeSql') &&
+    dlpHeroSql.includes('dlpSqlTokenClasses'),
+  'DLP hero SQL helper must provide the tag query statement and syntax tokens from Hero.md.',
+)
+assert(
+  read('assets/css/tailwind.css').includes('--animate-glow') &&
+    read('assets/css/tailwind.css').includes('@keyframes glow'),
+  'Tailwind theme must define the animate-glow keyframes used by the DLP hero query button.',
+)
 assert(
   dlpArchitecture.includes('ProductSystemSection') &&
     dlpArchitecture.includes('ProductSystemFlowFrame') &&

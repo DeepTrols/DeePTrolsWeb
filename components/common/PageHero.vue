@@ -52,7 +52,7 @@ withDefaults(
               : 'lg:grid lg:justify-center lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:items-center'
         "
       >
-        <div class="page-hero__content w-full max-w-2xl text-center lg:text-left">
+        <div class="page-hero__content w-full max-w-2xl text-center lg:self-center lg:text-left">
           <div class="page-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2">
             <component
               :is="badgeIcon"
