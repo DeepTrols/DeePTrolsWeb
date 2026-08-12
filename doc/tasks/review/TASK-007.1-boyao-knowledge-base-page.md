@@ -112,7 +112,12 @@ Review 阶段根据反馈完成四项修复，全部质量门重新通过：
 5. **右下卡片应用模块改纯 ICON**（`fix(TASK-007.1)` `94ee4ab`）：移除智能检索/知识问答/智能助手/智能体文字标签，恢复参考页纯图标布局（size-5 图标居中，保留 aria-label）。
 6. **IsoCube 顶面尺寸修复**（`fix(TASK-007.1)` `1fb8b52`）：顶面层改为 `position: relative` 后丢失显式宽高导致高度塌陷、icon 覆盖层失效；按参考页 `_cubeTop` 恢复显式 90×90（sm 70×70），inner 尺寸由流内顶面层决定，与参考页结构一致。
 
-修复后复跑质量门：`pnpm lint` ✅、`pnpm typecheck` ✅、`pnpm test` ✅ 8 文件 41/41、`pnpm test:visual` ✅ 9/9、`pnpm harness:engineering` ✅、`pnpm build` ✅。
+第三轮反馈修复：
+
+7. **hero 视觉圆角与背景 1:1 复刻**（`fix(TASK-007.1)` `d19ede8`）：参考页使用 `--ui-radius: .5rem` 的半径体系（rounded-md/lg/xl/2xl = 12/16/24/32px），与 Tailwind 默认值（6/8/12/16px）不同，hero 视觉全部改用任意值半径；另查明自定义 `@utility`（bg-muted 等）不支持透明度修饰符，`bg-muted/50` 等类未生成导致面板背景失效，统一改为可编译的 `bg-[var(--dt-color-bg-soft)]/NN` color-mix 任意值（同步修复 HeroStatsStrip、ValueCard、BoyaoCapabilitySection、BoyaoEfficiencyVisual 中的同类失效类；`text-highlighted/80` 同理修复）。
+8. **IsoCube 白色边线**（`fix(TASK-007.1)` `2cad87a`）：参考页 `_cubeSideFront` 不含 border-width（`border-x-primary/25` 仅设色、实际无边框），本组件 `.iso-cube__side` 基类给两面都加了 1px 边框，前面上下边框落回 currentColor（近白文字色）形成白线；border-width 仅保留在左侧面，前面背景改为可编译的 `bg-[var(--dt-color-bg-elevated)]/50`。
+
+修复后复跑质量门：`pnpm lint` ✅、`pnpm typecheck` ✅、`pnpm test` ✅ 8 文件 41/41、`pnpm test:visual` ✅ 9/9、`pnpm harness:engineering` ✅、`pnpm build` ✅（并核对产物 CSS 已输出对应 color-mix 规则）。
 
 ---
 ## Git
@@ -122,7 +127,7 @@ Review 阶段根据反馈完成四项修复，全部质量门重新通过：
 | Commit Message | feat(TASK-007.1): implement boyao knowledge base product page |
 | Commit Hash    | `9b6d38df60e617ce7b54e7c0d3577ad179489321` |
 | 关联提交 | `e27b9df2976987914c0ff986c53dcc45a927d3ab` fix(TASK-006.3)：DDP title-gradient 断言同步 |
-| Review 修复提交 | `8430741` nowrap 约束、`eb6718f` hero 视觉与核心价值动画对齐、`68d9d45` service-showcase 迁移、`94ee4ab` hero 模块纯 ICON、`1fb8b52` IsoCube 顶面尺寸修复 |
+| Review 修复提交 | `8430741` nowrap 约束、`eb6718f` hero 视觉与核心价值动画对齐、`68d9d45` service-showcase 迁移、`94ee4ab` hero 模块纯 ICON、`1fb8b52` IsoCube 顶面尺寸修复、`d19ede8` hero 圆角与背景 1:1、`2cad87a` IsoCube 白线修复 |
 
 ## 完成说明
 已按 BOYAO.md 完成 `/products/knowledge-base` 页面：PageHero（BookOpen 徽章 + 统计条 + neuron 风格知识流转动画）、四项挑战、三张核心价值卡（业务效率/知识整合/知识应用，含 IsoCube 价值动画，卡片结构已抽离为公共组件）、架构图与系统集成占位、核心能力占位、六大功能、精准/高效/稳定展示、CtaSection。全部新增样式为 Tailwind CSS v4 utility，keyframes 经 @theme 注册；内容契约测试与质量门全部通过。
