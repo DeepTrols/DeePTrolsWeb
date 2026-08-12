@@ -78,6 +78,15 @@
 | `pnpm build` | ✅ 构建成功（产物 CSS 输出 `icon-box--tone-soft` color-mix 规则；SSR 页面渲染 6 处 IconBox 实例） |
 
 ---
+## Review 修复记录
+### 2026-08-12：Hero 视觉宽度修正（右侧留白归零）
+- 问题：`BoyaoHeroVisual` 根节点使用 `max-w-2xl`（672px）且在视觉列内左对齐；≥1536px 视口下视觉列约 798px，视觉右侧出现约 126px 留白，与 EMQX 参考（hero flex `lg:justify-between` 将视觉钉在容器右缘）不一致。
+- 修正：根节点 `hidden w-full max-w-2xl lg:block` → `hidden w-full lg:block`；内层 `pointer-events-none relative mx-auto h-[520px] w-full max-w-[680px]` 的 `mx-auto` → `ml-auto`，680px 内容右对齐贴齐视觉列右缘；视觉列 ≤680px 时渲染与原先完全一致。仅修改 BoyaoHeroVisual，不改动公共 `PageHero`（DGP/DLP/DDP/DMS 共用）。
+- 契约测试：`tests/visual.spec.ts` boyao hero 用例新增根/内层类断言与 `max-w-2xl` 负向断言。
+- 质量门：`pnpm lint` / `pnpm typecheck` / `pnpm test`（43/43）/ `pnpm test:visual`（11/11）/ `pnpm harness:engineering` / `pnpm build` 全部通过；SSR 页面渲染新类名。
+- Commit：`fix(TASK-007.3): align boyao hero visual with the right edge of the visual column`，hash 见 Git 表。
+
+---
 ## 既有在途修改处理
 `components/product/boyao/BoyaoHeroVisual.vue` 中存在任务前已有的未提交文案修改（Hero 中央胶囊「博曜·企业级知识管理平台」→「博曜」），与本任务无关：通过补丁部分暂存（仅迁移相关 hunk 进入提交），该文案修改保留在工作区。另有未跟踪文件与本任务无关，未纳入提交：`components/common/AgentComposer.vue`、`doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/icon——logo.svg`、`doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/`。
 

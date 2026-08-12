@@ -1385,5 +1385,8 @@ describe('visual implementation contract', () => {
     expect(heroVisual).toContain('capabilityStyles[index]?.iconBox')
     expect(heroVisual).not.toContain('flex h-10 w-10 items-center justify-center rounded-[16px]')
     expect(heroVisual).not.toContain('flex h-14 items-center justify-center rounded-[12px]')
+    expect(heroVisual).toContain('hidden w-full lg:block')
+    expect(heroVisual).toContain('pointer-events-none relative ml-auto h-[520px] w-full max-w-[680px]')
+    expect(heroVisual).not.toContain('max-w-2xl')
   })
 })

@@ -74,8 +74,8 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
 </script>
 
 <template>
-  <div class="hidden w-full max-w-2xl lg:block">
-    <div class="pointer-events-none relative mx-auto h-[520px] w-full max-w-[680px]">
+  <div class="hidden w-full lg:block">
+    <div class="pointer-events-none relative ml-auto h-[520px] w-full max-w-[680px]">
       <div class="pointer-events-none absolute inset-0">
         <div
           class="absolute left-1/3 top-1/3 h-[280px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-violet-500/12 via-violet-400/10 to-blue-400/10 blur-3xl"
