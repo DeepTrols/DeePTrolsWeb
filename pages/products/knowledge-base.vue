@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CompatibilityGridSection from '~/components/common/CompatibilityGridSection.vue'
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
@@ -8,7 +9,7 @@ import BoyaoCapabilitySection from '~/components/product/boyao/BoyaoCapabilitySe
 import BoyaoCoreValueSection from '~/components/product/boyao/BoyaoCoreValueSection.vue'
 import BoyaoHero from '~/components/product/boyao/BoyaoHero.vue'
 import BoyaoIntegrationSection from '~/components/product/boyao/BoyaoIntegrationSection.vue'
-import { boyaoChallenges, boyaoCtaActions, boyaoFeatures } from '~/data/boyao'
+import { boyaoChallenges, boyaoCompatibilityCategories, boyaoCtaActions, boyaoFeatures } from '~/data/boyao'
 
 useSeoMeta({
   title: '博曜·企业级知识管理平台 - DeepTrols',
@@ -43,6 +44,14 @@ useSeoMeta({
         nowrap-subtitle
       />
       <BoyaoIntegrationSection />
+      <CompatibilityGridSection
+        eyebrow="国产化适配"
+        title="适配信创生态"
+        title-id="boyao-compatibility-title"
+        subtitle="从底层CPU、服务器、中间件、数据库、浏览器到各种文档环境进行全面信创支持，打造全生态信创平台"
+        :categories="boyaoCompatibilityCategories"
+        nowrap-subtitle
+      />
       <CtaSection
         title="开启企业知识智能化之旅"
         title-id="boyao-cta-title"

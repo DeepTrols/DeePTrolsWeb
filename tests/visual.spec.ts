@@ -1418,4 +1418,23 @@ describe('visual implementation contract', () => {
     expect(page).not.toContain('ServiceShowcaseSection')
     expect(page).not.toContain('boyaoShowcases')
   })
+
+  it('renders the boyao xinchuang compatibility grid through the shared CompatibilityGridSection', () => {
+    const compatibility = readComponent('components/common/CompatibilityGridSection.vue')
+    const page = readComponent('pages/products/knowledge-base.vue')
+    const boyaoData = readComponent('data/boyao.ts')
+
+    expect(compatibility).toContain('SectionHeader')
+    expect(compatibility).toContain('CardGrid')
+    expect(compatibility).toContain('columns="three"')
+    expect(compatibility).toContain('IconBox')
+    expect(compatibility).toContain('export interface CompatibilityGridCategory')
+    expect(compatibility).toContain('uppercase tracking-wider')
+    expect(page).toContain('CompatibilityGridSection')
+    expect(page).toContain('eyebrow="国产化适配"')
+    expect(page).toContain('title="适配信创生态"')
+    expect(page).toContain('boyaoCompatibilityCategories')
+    expect(page.indexOf('<BoyaoIntegrationSection')).toBeLessThan(page.indexOf('<CompatibilityGridSection'))
+    expect(boyaoData).toContain('export const boyaoCompatibilityCategories: CompatibilityGridCategory[]')
+  })
 })

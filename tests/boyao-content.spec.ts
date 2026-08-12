@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import {
   boyaoCapabilityNodes,
   boyaoChallenges,
+  boyaoCompatibilityCategories,
   boyaoCtaActions,
   boyaoFeatures,
   boyaoHeroStats,
@@ -91,6 +92,30 @@ describe('BOYAO product page content contract', () => {
       '稳定性极高，成功率可达99.999%',
     ])
     expect(boyaoTimelineItems.map((item) => item.bullets.length)).toEqual([3, 2, 2])
+  })
+
+  it('lists the xinchuang compatibility catalog in the required category order', () => {
+    expect(boyaoCompatibilityCategories.map((category) => category.title)).toEqual([
+      'CPU',
+      '流式文件',
+      '操作系统',
+      '数据库',
+      '中间件',
+      '浏览器',
+    ])
+    expect(boyaoCompatibilityCategories.map((category) => category.items.length)).toEqual([5, 2, 3, 4, 4, 2])
+    expect(boyaoCompatibilityCategories[0]?.items.map((item) => item.label)).toEqual([
+      '龙芯',
+      '飞腾',
+      '鲲鹏',
+      '兆芯',
+      '海光',
+    ])
+    expect(
+      boyaoCompatibilityCategories.every((category) =>
+        category.items.every((item) => typeof item.icon === 'string' && item.icon.length > 0),
+      ),
+    ).toBe(true)
   })
 
   it('uses the required CTA actions', () => {

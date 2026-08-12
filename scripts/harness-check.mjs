@@ -85,6 +85,7 @@ const requiredFiles = [
   'components/common/ServiceShowcaseSection.vue',
   'components/common/EngineLinksSection.vue',
   'components/common/AlternatingTimelineSection.vue',
+  'components/common/CompatibilityGridSection.vue',
   'components/common/ProductFeatureGridSection.vue',
   'components/common/ProductSystemSection.vue',
   'components/common/ProductSystemFlowFrame.vue',
@@ -186,6 +187,7 @@ const trustTabsSection = read('components/common/TrustTabsSection.vue')
 const serviceShowcaseSection = read('components/common/ServiceShowcaseSection.vue')
 const engineLinksSection = read('components/common/EngineLinksSection.vue')
 const alternatingTimelineSection = read('components/common/AlternatingTimelineSection.vue')
+const compatibilityGridSection = read('components/common/CompatibilityGridSection.vue')
 const productFeatureGridSection = read('components/common/ProductFeatureGridSection.vue')
 const productSystemSection = read('components/common/ProductSystemSection.vue')
 const productSystemFlowFrame = read('components/common/ProductSystemFlowFrame.vue')
@@ -259,6 +261,7 @@ const dmsArchitecture = read('components/product/dms/DmsArchitecture.vue')
 const dmsIntelligentRegulation = read('components/product/dms/DmsIntelligentRegulationSection.vue')
 const dmsBusinessValue = read('components/product/dms/DmsBusinessValueSection.vue')
 const dmsRegulationProcess = read('components/product/dms/DmsRegulationProcessSection.vue')
+const knowledgeBase = read('pages/products/knowledge-base.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -358,6 +361,23 @@ assert(
     !alternatingTimelineSection.includes('IconBox') &&
     !alternatingTimelineSection.includes('<style'),
   'AlternatingTimelineSection must centralize the EMQX Edge-like Tailwind-only numbered timeline without cards or icons.',
+)
+assert(
+  compatibilityGridSection.includes('SectionHeader') &&
+    compatibilityGridSection.includes('CardGrid') &&
+    compatibilityGridSection.includes('columns="three"') &&
+    compatibilityGridSection.includes('IconBox') &&
+    compatibilityGridSection.includes('export interface CompatibilityGridCategory') &&
+    compatibilityGridSection.includes('uppercase tracking-wider') &&
+    !compatibilityGridSection.includes('<style'),
+  'CompatibilityGridSection must centralize the EMQX tables-like three-column categorized icon grid with IconBox and SectionHeader.',
+)
+assert(
+  knowledgeBase.includes('CompatibilityGridSection') &&
+    knowledgeBase.includes('boyaoCompatibilityCategories') &&
+    knowledgeBase.includes('国产化适配') &&
+    knowledgeBase.indexOf('<BoyaoIntegrationSection') < knowledgeBase.indexOf('<CompatibilityGridSection'),
+  'Knowledge base page must render the xinchuang compatibility grid below the integration section.',
 )
 assert(
   baseTabs.includes('role="tablist"') &&

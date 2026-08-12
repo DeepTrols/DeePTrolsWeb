@@ -13,9 +13,30 @@ import {
   Users,
   Workflow,
 } from '@lucide/vue'
+import logo360 from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/360logo.svg?url'
+import gaussdbLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/GaussDB.svg?url'
+import baolandeLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/宝兰德logo.svg?url'
+import dongfangtongLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/东方通logo.svg?url'
+import feitengLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/飞腾logo.svg?url'
+import haiguangLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/海光logo.svg?url'
+import honglianhuaLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/红莲花logo.svg?url'
+import jindieTianyanLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/金蝶天燕logo.svg?url'
+import kunpengLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/鲲鹏logo.svg?url'
+import longxinLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/龙芯logo.svg?url'
+import qilinLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/麒麟系列logo.svg?url'
+import rendaJincangLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/人大金仓logo.svg?url'
+import shenzhouTongyongLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/神州通用logo.svg?url'
+import damengLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/damenglogo.svg?url'
+import tongxinUosLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/统信UOSlogo.svg?url'
+import wpsLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/wpslogo.svg?url'
+import yongzhongLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/永中Officelogo.svg?url'
+import zhaoxinLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/兆芯logo.svg?url'
+import zhongchuangLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/中创logo.svg?url'
+import zhongkeFangdeLogo from '../doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/imgs/中科方德logo.svg?url'
 import boyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg?url'
 import type { Component } from 'vue'
 import type { AlternatingTimelineItem } from '~/components/common/AlternatingTimelineSection.vue'
+import type { CompatibilityGridCategory } from '~/components/common/CompatibilityGridSection.vue'
 import type { HeroStatItem } from '~/components/common/HeroStatsStrip.vue'
 import type { ValueMetric } from '~/components/common/card/ValueCard.vue'
 
@@ -160,6 +181,65 @@ export const boyaoTimelineItems: AlternatingTimelineItem[] = [
     bullets: [
       '高成功率 — 保障知识检索与智能应用可靠执行，服务成功率达 99.999%',
       '高稳定性 — 支持高并发业务持续稳定运行，保障知识服务全天候可靠可用',
+    ],
+  },
+]
+
+export const boyaoCompatibilityCategories: CompatibilityGridCategory[] = [
+  {
+    key: 'cpu',
+    title: 'CPU',
+    items: [
+      { label: '龙芯', icon: longxinLogo },
+      { label: '飞腾', icon: feitengLogo },
+      { label: '鲲鹏', icon: kunpengLogo },
+      { label: '兆芯', icon: zhaoxinLogo },
+      { label: '海光', icon: haiguangLogo },
+    ],
+  },
+  {
+    key: 'office',
+    title: '流式文件',
+    items: [
+      { label: '金山WPS', icon: wpsLogo },
+      { label: '永中office', icon: yongzhongLogo },
+    ],
+  },
+  {
+    key: 'os',
+    title: '操作系统',
+    items: [
+      { label: '麒麟系列', icon: qilinLogo },
+      { label: '统信UOS', icon: tongxinUosLogo },
+      { label: '中科方德', icon: zhongkeFangdeLogo },
+    ],
+  },
+  {
+    key: 'database',
+    title: '数据库',
+    items: [
+      { label: '达梦', icon: damengLogo },
+      { label: '人大金仓', icon: rendaJincangLogo },
+      { label: 'GaussDB', icon: gaussdbLogo },
+      { label: '神通', icon: shenzhouTongyongLogo },
+    ],
+  },
+  {
+    key: 'middleware',
+    title: '中间件',
+    items: [
+      { label: '东方通', icon: dongfangtongLogo },
+      { label: '中创', icon: zhongchuangLogo },
+      { label: '金蝶天燕', icon: jindieTianyanLogo },
+      { label: '宝兰德', icon: baolandeLogo },
+    ],
+  },
+  {
+    key: 'browser',
+    title: '浏览器',
+    items: [
+      { label: '360可信浏览器', icon: logo360 },
+      { label: '红莲花安全浏览器', icon: honglianhuaLogo },
     ],
   },
 ]
