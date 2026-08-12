@@ -19,6 +19,8 @@ withDefaults(
     descriptionSize?: 'sm' | 'md' | 'lg'
     iconSize?: 20 | 24 | 28 | 48
     iconBoxSize?: 40 | 48 | 56
+    iconBordered?: boolean
+    iconFilled?: boolean
     tone?: 'primary' | 'muted' | 'white' | 'gradient'
     showAccent?: boolean
     equalHeight?: boolean
@@ -40,6 +42,8 @@ withDefaults(
     descriptionSize: 'sm',
     iconSize: 20,
     iconBoxSize: 40,
+    iconBordered: true,
+    iconFilled: true,
     tone: 'gradient',
     showAccent: true,
     equalHeight: true,
@@ -63,7 +67,15 @@ withDefaults(
         <div v-if="iconLabel" class="relative dt-icon-box dt-icon-box--gradient text-sm font-bold">
           {{ iconLabel }}
         </div>
-        <IconBox v-else-if="icon" :icon="icon" :size="iconBoxSize" :icon-size="iconSize" :tone="tone" />
+        <IconBox
+          v-else-if="icon"
+          :icon="icon"
+          :size="iconBoxSize"
+          :icon-size="iconSize"
+          :tone="tone"
+          :bordered="iconBordered"
+          :filled="iconFilled"
+        />
       </slot>
 
       <div class="feature-card__body">

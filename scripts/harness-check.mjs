@@ -321,6 +321,17 @@ assert(sectionHeader.includes('class="section-heading dt-section-heading"'), 'Se
 assert(sectionShell.includes('pb-32 lg:pb-44') && sectionShell.includes('container') && sectionShell.includes('max-w-[96rem]'), 'SectionShell must centralize section spacing and container widths.')
 assert(baseCard.includes('NuxtLink') && baseCard.includes('dt-card--adaptive') && baseCard.includes('dt-card__accent'), 'BaseCard must centralize card shell, link semantics, accent, and adaptive height.')
 assert(iconBox.includes('dt-icon-box') && iconBox.includes('dt-icon-box--gradient'), 'IconBox must centralize icon shell classes and gradient tone.')
+assert(
+  iconBox.includes('bordered?: boolean') &&
+    iconBox.includes('filled?: boolean') &&
+    iconBox.includes('icon-box--borderless') &&
+    iconBox.includes('icon-box--unfilled') &&
+    featureCard.includes(':bordered="iconBordered"') &&
+    featureCard.includes(':filled="iconFilled"') &&
+    productFeatureGridSection.includes(':icon-bordered="iconBordered"') &&
+    productFeatureGridSection.includes(':icon-filled="iconFilled"'),
+  'IconBox must expose configurable border and fill options passed through FeatureCard and ProductFeatureGridSection.',
+)
 assert(cardText.includes('card-text__title') && cardText.includes('card-text__description'), 'CardText must centralize card title and description typography.')
 assert(cardGrid.includes('auto-rows-fr items-stretch') && cardGrid.includes('md:grid-cols-2 lg:grid-cols-4'), 'CardGrid must centralize equal-height responsive card grids.')
 assert(cardGrid.includes('md:grid-cols-3') && productFeatureGridSection.includes("columns?: 'two' | 'three' | 'four'"), 'ProductFeatureGridSection must support two, three, and four column product feature grids.')

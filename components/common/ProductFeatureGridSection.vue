@@ -22,10 +22,18 @@ const props = withDefaults(
     items: ProductFeatureGridItem[]
     columns?: 'two' | 'three' | 'four'
     nowrapSubtitle?: boolean
+    iconBoxSize?: 40 | 48 | 56
+    iconSize?: 20 | 24 | 28 | 48
+    iconBordered?: boolean
+    iconFilled?: boolean
   }>(),
   {
     columns: 'four',
     nowrapSubtitle: false,
+    iconBoxSize: 40,
+    iconSize: 20,
+    iconBordered: true,
+    iconFilled: true,
   },
 )
 
@@ -56,6 +64,10 @@ const cardColumns = computed(() => props.columns)
         :description="item.description"
         :icon="item.icon"
         :icon-label="item.iconLabel"
+        :icon-size="iconSize"
+        :icon-box-size="iconBoxSize"
+        :icon-bordered="iconBordered"
+        :icon-filled="iconFilled"
         title-size="sm"
         description-size="sm"
         tone="gradient"
