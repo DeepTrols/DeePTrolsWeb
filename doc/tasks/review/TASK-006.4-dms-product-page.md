@@ -108,6 +108,8 @@
 | Branch | `main` |
 | Commit Message | `feat(TASK-006.4): implement data element regulation product page` |
 | Commit Hash | `9977b05c817d9b442bfd08bab0c9a28381ae2e9a` |
+| Revision Commit Message | `fix(TASK-006.4): align DMS business value and hero copy with EMQX baseline` |
+| Revision Commit Hash | `0fb1bc67a76c03ada73157457dea0211476e2f0f` |
 
 ## 完成说明
 已按 DMS.md 完成数曜·数据要素监管平台页面实现，页面区块顺序、文案、按钮、占位视觉和 CTA 均按需求文档配置。新增 DMS 业务组件均为 Tailwind-only，未新增 scoped CSS。工作区中任务开始前已有的 `components/product/dgp/DgpHero.vue` 本地修改（补充 Hero 按钮），已按用户要求随本批次一并暂存。
