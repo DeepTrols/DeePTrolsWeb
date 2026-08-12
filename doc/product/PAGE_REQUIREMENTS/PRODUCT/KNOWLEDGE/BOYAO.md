@@ -172,7 +172,7 @@ section-heading__eyebrow：架构图
 section-heading__eyebrow：核心能力
 标题：让企业知识真正理解业务
 副标题：从知识加工、知识表示到知识应用，融合知识库、知识图谱与 AI 能力，让分散知识实现统一沉淀、深度关联与智能应用。
-具体内容先不提供，给个占位就可以了，具体内容后续规划
+使用 AlternatingTimelineSection 组件（参考 DLP 核心能力），内容为原板块6/7/8（精准/高效/稳定）三行左右交错叙事，右侧/左侧图片沿用组件内置图片占位符（TASK-007.4 已并入，页面不再单独渲染板块6/7/8）
 
 模块6:
 section-heading__eyebrow：功能
@@ -200,7 +200,7 @@ section-heading__eyebrow：系统集成
 副标题：博曜提供强大的集成引擎，从异构系统中自动采集知识文档，形成整个组织的统一知识文档库，同时为异构系统提供知识文档的调用服务。
 使用ProductSystemFlowFrame组件，flow暂时不传入
 
-板块6:
+板块6（TASK-007.4 起并入板块4 AlternatingTimelineSection，页面不再单独渲染）:
 左侧：
 section-heading__eyebrow：精准
 标题：多模态文档解析，表格识别更精准
@@ -218,7 +218,7 @@ section-heading__eyebrow：精准
 图片，先使用图片占位符，后续再更换
 
 
-板块7:
+板块7（TASK-007.4 起并入板块4 AlternatingTimelineSection，页面不再单独渲染）:
 右侧：
 section-heading__eyebrow：高效
 标题：解析速度极快，100页快至1.5秒
@@ -234,7 +234,7 @@ section-heading__eyebrow：高效
 图片，先使用图片占位符，后续再更换
 
 
-板块8:
+板块8（TASK-007.4 起并入板块4 AlternatingTimelineSection，页面不再单独渲染）:
 左侧：
 section-heading__eyebrow：稳定
 标题：稳定性极高，成功率可达99.999%
