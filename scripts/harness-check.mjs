@@ -938,7 +938,7 @@ assert(
   dmsHero.includes('PageHero') &&
     dmsHero.includes('import { HardDrive }') &&
     dmsHero.includes('badge="数曜·数据要素监管平台"') &&
-    dmsHero.includes('title-line="让数据流通更安全、更可信"') &&
+    dmsHero.includes('title-line="让数据流通安全、可信"') &&
     dmsHero.includes('title-gradient="全流程监管平台"') &&
     dmsHero.includes('visual-label="SHUYAODMS_HORE_WEBM"') &&
     dmsHero.includes('DmsHeroVisual') &&
@@ -966,14 +966,20 @@ assert(
   'DMS intelligent regulation section must reuse the shared alternating timeline component.',
 )
 assert(
-  dmsBusinessValue.includes('SectionHeader') &&
-    dmsBusinessValue.includes('dmsValueItems') &&
+  dmsBusinessValue.includes('ProductSystemSection') &&
+    dmsBusinessValue.includes('eyebrow="业务价值"') &&
     dmsBusinessValue.includes('title="可量化的数据要素监管效能"') &&
+    dmsBusinessValue.includes('title-id="dms-business-value-title"') &&
+    dmsBusinessValue.includes('dmsValueItems') &&
     dmsBusinessValue.includes('grid gap-5 md:grid-cols-2') &&
-    dmsBusinessValue.includes('rounded-2xl border border-default bg-default p-7') &&
+    dmsBusinessValue.includes('group relative overflow-hidden rounded-2xl border border-default bg-default p-7 shadow-sm transition-shadow duration-500 hover:shadow-md lg:p-9') &&
+    dmsBusinessValue.includes('pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent') &&
     dmsBusinessValue.includes('text-4xl font-bold tracking-tight text-primary lg:text-5xl') &&
+    dmsBusinessValue.includes('mt-4 text-sm leading-relaxed text-muted') &&
+    dmsBusinessValue.includes('mt-5 text-[13px] italic text-dimmed/60') &&
+    dmsBusinessValue.includes('item.detail') &&
     !dmsBusinessValue.includes('<style'),
-  'DMS business value section must keep the EMQX product business-value grid rhythm with Tailwind-only markup.',
+  'DMS business value section must reuse ProductSystemSection and reproduce the EMQX product business-value cards 1:1 with Tailwind-only markup.',
 )
 assert(
   dmsRegulationProcess.includes('ProductFeatureGridSection') &&
@@ -987,7 +993,7 @@ assert(
 const dmsSources = [dmsData, dmsPage, dmsHero, dmsArchitecture, dmsIntelligentRegulation, dmsBusinessValue, dmsRegulationProcess].join('\n')
 for (const text of [
   '数曜·数据要素监管平台',
-  '让数据流通更安全、更可信',
+  '让数据流通安全、可信',
   '全流程监管平台',
   '数据流通不断扩大 监管能力亟需升级',
   '构建数据要素流通全过程监管体系',

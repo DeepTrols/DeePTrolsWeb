@@ -159,7 +159,7 @@ export const dmsValueItems: DmsValueItem[] = [
     metric: '10X',
     title: '可扩展监管规则',
     description: '支持持续扩展监管规则与监管场景，满足不同业务需求。',
-    detail: '主体监管 · 产品监管 · 交易监管 · 交付监管。',
+    detail: '主体监管 · 产品监管 · 交易监管 · 交付监管',
   },
 ]
 

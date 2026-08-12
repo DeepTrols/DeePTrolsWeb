@@ -50,6 +50,9 @@
 8. 扩展 `ProductFeatureGridSection` 支持 `#before` slot，满足先展示流程/架构占位再展示卡片的产品模块。
 9. 新增 `tests/dms-content.spec.ts`，并更新 `tests/visual.spec.ts` 与 `scripts/harness-check.mjs`，将 DMS 页面纳入内容、视觉和 Harness 契约。
 10. 更新 `doc/engineering/COMMON_SECTION_COMPONENTS.md` 与 `doc/engineering/COMPONENT_REFINEMENT_AUDIT.md`，记录 DMS 复用结构与 `#before` slot 约束。
+11. 修正业务价值区域：去掉额外 `SectionHeader` 变体，改为与 EMQX 产品页一致的原生标题结构；卡片去掉额外 detail 文案，保持 `metric + h3 + p` 结构，并修复 Tailwind `bg-default` 语义映射避免白底。
+12. 业务价值区域重构：改用公共 `ProductSystemSection` 承载标题与内容；卡片按 EMQX 产品页（emqx.com/zh/products/emqx）业务价值区 1:1 还原（渐变顶线、`metric + h3` 基线行、`mt-4 text-sm text-muted` 描述、`mt-5 text-[13px] italic text-dimmed/60` 注释行）；`data/dms.ts` 恢复 `detail` 字段承载 DMS.md 第三行文案；Tailwind theme 新增 `--color-dimmed: var(--dt-color-text-muted)` 以支持 `text-dimmed/60` 透明度修饰符。
+13. Hero 文案调整：`title-line` 改为「让数据流通安全、可信」，`description` 改为「实现数据要素全流程智能监管，保障数据安全、合规、高效流通。」；同步更新 DMS.md 需求文档、harness 断言、visual 契约与页面 SEO description。
 
 ---
 ## 验收标准
@@ -96,6 +99,7 @@
 | `pnpm harness:engineering` | 通过 |
 | 浏览器桌面验证 | 通过，`/products/data-element-regulation` 可打开，无横向溢出，无 console warn/error |
 | 浏览器移动端验证 | 通过，390px 视口无横向溢出，无 console warn/error |
+| 构建产物 CSS 验证 | 通过，`.bg-default` 编译为 `var(--dt-color-bg)`，`.text-default` 编译为 `var(--dt-color-text)` |
 
 ---
 ## Git
@@ -106,4 +110,4 @@
 | Commit Hash | `9977b05c817d9b442bfd08bab0c9a28381ae2e9a` |
 
 ## 完成说明
-已按 DMS.md 完成数曜·数据要素监管平台页面实现，页面区块顺序、文案、按钮、占位视觉和 CTA 均按需求文档配置。新增 DMS 业务组件均为 Tailwind-only，未新增 scoped CSS。当前工作区存在任务开始前已有的 `components/product/dgp/DgpHero.vue` 本地修改，本任务未修改该文件。
+已按 DMS.md 完成数曜·数据要素监管平台页面实现，页面区块顺序、文案、按钮、占位视觉和 CTA 均按需求文档配置。新增 DMS 业务组件均为 Tailwind-only，未新增 scoped CSS。工作区中任务开始前已有的 `components/product/dgp/DgpHero.vue` 本地修改（补充 Hero 按钮），已按用户要求随本批次一并暂存。

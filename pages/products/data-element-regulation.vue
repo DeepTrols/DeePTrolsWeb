@@ -12,7 +12,7 @@ import { dmsCapabilities, dmsChallengeItems, dmsCtaActions, dmsUseCaseItems } fr
 
 useSeoMeta({
   title: '数曜·数据要素监管平台 - DeepTrols',
-  description: '面向数据要素流通全过程，提供规则配置、风险监测、事件预警、工单处置、监管分析一体化能力。',
+  description: '实现数据要素全流程智能监管，保障数据安全、合规、高效流通。',
 })
 </script>
 

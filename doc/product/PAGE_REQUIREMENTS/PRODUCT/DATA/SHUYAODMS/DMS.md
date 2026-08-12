@@ -10,9 +10,9 @@
 
 badge="数曜·数据要素监管平台"
 :badge-icon="HardDrive"
-title-line="让数据流通更安全、更可信"
+title-line="让数据流通安全、可信"
 title-gradient="全流程监管平台"
-description="面向数据要素流通全过程，提供规则配置、风险监测、事件预警、工单处置、监管分析一体化能力，实现事前预防、事中监控、事后追溯的闭环监管"
+description="实现数据要素全流程智能监管，保障数据安全、合规、高效流通。"
 visual-label="SHUYAODMS_HORE_WEBM"
 
 右侧动画说明：使用图片占位符（后续替换）
