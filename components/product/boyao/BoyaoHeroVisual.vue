@@ -206,10 +206,10 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
             <div
               v-for="module in appModules"
               :key="module.title"
-              class="col-span-2 flex h-14 flex-col items-center justify-center gap-1 rounded-md border border-default bg-muted/50"
+              class="col-span-2 flex h-14 items-center justify-center rounded-md border border-default bg-muted/50"
+              :aria-label="module.title"
             >
-              <component :is="module.icon" class="size-4 text-violet-400" aria-hidden="true" />
-              <span class="text-[8px] font-medium text-muted">{{ module.title }}</span>
+              <component :is="module.icon" class="size-5 text-violet-400" aria-hidden="true" />
             </div>
             <div
               class="col-span-4 flex h-14 items-center justify-center gap-2 rounded-md border border-default bg-muted/40 px-3 text-left"
