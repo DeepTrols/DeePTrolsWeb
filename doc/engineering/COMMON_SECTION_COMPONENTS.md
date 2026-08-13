@@ -29,6 +29,17 @@
 - 当 logo strip 紧跟 `PageHero` 时，Hero 应启用 `flushBottom`，由 `HeroLogoStrip` 承接底部留白。
 - Why DeepTrols 当前使用 `components/why/WhyHeroLogos.vue` 接入 `HomeCustomerLogos`。
 
+## Hero Stats Strip
+公共组件：`components/common/HeroStatsStrip.vue`
+
+适用场景：
+- Hero 描述与 CTA 下方的关键数字条（如「服务企业 / 协议支持 / 处理能力」）。
+
+使用要求：
+- 数据通过 `items: HeroStatItem[]`（`{ value, label }`）传入，文案不得写在组件内。
+- 列数通过 `columns` 控制：默认 `3`（`grid-cols-3`）；传 `4` 时使用 `grid-cols-2 sm:grid-cols-4`（探曜 hero 1×4 数字条）。
+- 组件只负责数字条排版，不承担分割线、背景或容器职责；放入 `PageHero` 的 `#after-actions` slot 使用。
+
 ## Section Shell / Header
 公共组件：
 - `components/common/section/SectionShell.vue`
@@ -195,6 +206,7 @@
 - 文字侧必须是纯文本块，例如 `py-4 lg:py-8`，不得套 `BaseCard`、`.dt-card` 或 `IconBox`。
 - 分类标签可使用 `rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80`。
 - 视觉侧按需求放置真实图片、动画或占位图；缺失素材时可使用 Tailwind-only 占位，不加卡片边框。
+- `bullets` 允许传空数组（如探曜核心能力仅含标题与描述）；组件通过 `v-if="item.bullets.length"` 在无 bullets 时隐藏列表容器，不得移除该守卫。
 
 ## Compatibility Grid
 公共组件：`components/common/CompatibilityGridSection.vue`
