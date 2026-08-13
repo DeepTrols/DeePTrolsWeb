@@ -65,6 +65,7 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODDP/DDP.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODMS/DMS.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODMS/Hero.md',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/AIIOT/TANYAOIOT/TANYAO.md',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
@@ -119,11 +120,13 @@ const requiredFiles = [
   'data/dlp.ts',
   'data/ddp.ts',
   'data/dms.ts',
+  'data/tanyao.ts',
   'pages/why-deeptrols.vue',
   'pages/products/data-governance.vue',
   'pages/products/data-labeling.vue',
   'pages/products/data-development.vue',
   'pages/products/data-element-regulation.vue',
+  'pages/products/ai-iot.vue',
   'components/why/WhyHero.vue',
   'components/why/WhyHeroLogos.vue',
   'components/why/WhyHeroVisual.vue',
@@ -159,6 +162,10 @@ const requiredFiles = [
   'components/product/dms/DmsIntelligentRegulationSection.vue',
   'components/product/dms/DmsBusinessValueSection.vue',
   'components/product/dms/DmsRegulationProcessSection.vue',
+  'components/product/tanyao/TanyaoHero.vue',
+  'components/product/tanyao/TanyaoHeroVisual.vue',
+  'components/product/tanyao/TanyaoSolutionSection.vue',
+  'components/product/tanyao/TanyaoCapabilitySection.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -262,6 +269,13 @@ const dmsIntelligentRegulation = read('components/product/dms/DmsIntelligentRegu
 const dmsBusinessValue = read('components/product/dms/DmsBusinessValueSection.vue')
 const dmsRegulationProcess = read('components/product/dms/DmsRegulationProcessSection.vue')
 const knowledgeBase = read('pages/products/knowledge-base.vue')
+const heroStatsStrip = read('components/common/HeroStatsStrip.vue')
+const tanyaoData = read('data/tanyao.ts')
+const tanyaoPage = read('pages/products/ai-iot.vue')
+const tanyaoHero = read('components/product/tanyao/TanyaoHero.vue')
+const tanyaoHeroVisual = read('components/product/tanyao/TanyaoHeroVisual.vue')
+const tanyaoSolution = read('components/product/tanyao/TanyaoSolutionSection.vue')
+const tanyaoCapability = read('components/product/tanyao/TanyaoCapabilitySection.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -378,6 +392,92 @@ assert(
     knowledgeBase.includes('国产化适配') &&
     knowledgeBase.indexOf('<BoyaoIntegrationSection') < knowledgeBase.indexOf('<CompatibilityGridSection'),
   'Knowledge base page must render the xinchuang compatibility grid below the integration section.',
+)
+assert(
+  heroStatsStrip.includes('columns?: 3 | 4') &&
+    heroStatsStrip.includes('grid-cols-2 sm:grid-cols-4') &&
+    heroStatsStrip.includes('grid-cols-3'),
+  'HeroStatsStrip must support three and four column stat strips.',
+)
+assert(
+  alternatingTimelineSection.includes('v-if="item.bullets.length"'),
+  'AlternatingTimelineSection must hide the bullet list when a timeline item has no bullets.',
+)
+assert(
+  tanyaoHeroVisual.includes('viewBox="0 0 560 560"') &&
+    tanyaoHeroVisual.includes('tanyaoFlowGradientUp') &&
+    tanyaoHeroVisual.includes('tanyaoFlowGradientDown') &&
+    tanyaoHeroVisual.includes('stroke-dashoffset') &&
+    tanyaoHeroVisual.includes('IconBox') &&
+    tanyaoHeroVisual.includes('tone="soft"') &&
+    tanyaoHeroVisual.includes('探曜AIoT') &&
+    tanyaoHeroVisual.includes('AI-Powered IoT Platform') &&
+    tanyaoHeroVisual.includes('链接生态') &&
+    tanyaoHeroVisual.includes('探曜 Edge') &&
+    tanyaoHeroVisual.includes('设备接入') &&
+    tanyaoHeroVisual.includes('边缘计算') &&
+    tanyaoHeroVisual.includes('策略执行') &&
+    tanyaoHeroVisual.includes('工业设备') &&
+    tanyaoHeroVisual.includes('传感器') &&
+    tanyaoHeroVisual.includes('能源设备') &&
+    tanyaoHeroVisual.includes('h-[600px]') &&
+    tanyaoHeroVisual.includes('top-[18px]') &&
+    tanyaoHeroVisual.includes('top-[208px]') &&
+    tanyaoHeroVisual.includes('bottom-[46px]') &&
+    !tanyaoHeroVisual.includes('<style'),
+  'TanyaoHeroVisual must replicate the EMQX Edge three-layer hero visual with IconBox logos and Tailwind-only styles.',
+)
+assert(
+  tanyaoHero.includes('PageHero') &&
+    tanyaoHero.includes('badge="探曜·AI物联感知平台"') &&
+    tanyaoHero.includes('title-line="连接、感知、智能"') &&
+    tanyaoHero.includes('title-gradient="AIoT智能物联底座"') &&
+    tanyaoHero.includes('visual-label="TANYAOIOT_HORE_WEBM"') &&
+    tanyaoHero.includes('HeroStatsStrip') &&
+    tanyaoHero.includes(':columns="4"') &&
+    tanyaoHero.includes('tanyaoHeroStats'),
+  'TanyaoHero must compose the shared PageHero with the requirement copy and a 1x4 HeroStatsStrip.',
+)
+assert(
+  tanyaoSolution.includes('ProductSystemSection') &&
+    tanyaoSolution.includes('ProductSystemFlowFrame') &&
+    tanyaoSolution.includes('SystemCards') &&
+    tanyaoSolution.includes('tanyaoSolutionCards') &&
+    tanyaoSolution.includes('eyebrow="解决方案"') &&
+    tanyaoSolution.includes('fallback-text="解决方案流程图占位符"') &&
+    !tanyaoSolution.includes('<style'),
+  'TanyaoSolutionSection must combine ProductSystemSection with SystemCards and a flow frame placeholder.',
+)
+assert(
+  tanyaoCapability.includes('AlternatingTimelineSection') &&
+    tanyaoCapability.includes('tanyaoTimelineItems') &&
+    tanyaoCapability.includes('eyebrow="核心能力"') &&
+    tanyaoCapability.includes('title-id="tanyao-capability-title"') &&
+    !tanyaoCapability.includes('<style'),
+  'TanyaoCapabilitySection must reuse the shared AlternatingTimelineSection for the six core capabilities.',
+)
+assert(
+  tanyaoPage.includes('SiteHeader') &&
+    tanyaoPage.includes('SiteFooter') &&
+    tanyaoPage.includes('eyebrow="挑战"') &&
+    tanyaoPage.includes('eyebrow="Device Agent"') &&
+    tanyaoPage.includes('columns="three"') &&
+    tanyaoPage.includes('title-id="tanyao-cta-title"') &&
+    tanyaoPage.indexOf('<TanyaoHero') < tanyaoPage.indexOf('tanyao-challenge-title') &&
+    tanyaoPage.indexOf('tanyao-challenge-title') < tanyaoPage.indexOf('<TanyaoSolutionSection') &&
+    tanyaoPage.indexOf('<TanyaoSolutionSection') < tanyaoPage.indexOf('<TanyaoCapabilitySection') &&
+    tanyaoPage.indexOf('<TanyaoCapabilitySection') < tanyaoPage.indexOf('tanyao-agent-title') &&
+    tanyaoPage.indexOf('tanyao-agent-title') < tanyaoPage.indexOf('<CtaSection'),
+  'The ai-iot page must assemble hero, challenges, solution, capabilities, Device Agent grid, and CTA in order.',
+)
+assert(
+  tanyaoData.includes('export const tanyaoHeroStats: HeroStatItem[]') &&
+    tanyaoData.includes('export const tanyaoChallenges: ProductFeatureGridItem[]') &&
+    tanyaoData.includes('export const tanyaoSolutionCards: SystemCard[]') &&
+    tanyaoData.includes('export const tanyaoTimelineItems: AlternatingTimelineItem[]') &&
+    tanyaoData.includes('export const tanyaoAgents: ProductFeatureGridItem[]') &&
+    tanyaoData.includes('tanyaoIotLogo'),
+  'data/tanyao.ts must centralize the TANYAO page content with typed exports.',
 )
 assert(
   baseTabs.includes('role="tablist"') &&

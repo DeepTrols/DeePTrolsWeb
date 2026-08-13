@@ -65,7 +65,7 @@ function visualClasses(index: number) {
                   </div>
                   <h3 class="mt-6 text-2xl font-bold leading-tight text-highlighted sm:text-3xl">{{ item.title }}</h3>
                   <p class="mt-4 text-base leading-relaxed text-muted">{{ item.description }}</p>
-                  <ul class="mt-6 space-y-3">
+                  <ul v-if="item.bullets.length" class="mt-6 space-y-3">
                     <li v-for="bullet in item.bullets" :key="bullet" class="flex items-start gap-3 text-sm leading-relaxed text-default">
                       <span class="mt-2 size-1.5 shrink-0 rounded-full bg-primary shadow-[0_0_14px_rgba(94,78,255,0.65)]" aria-hidden="true"></span>
                       <span>{{ bullet }}</span>

@@ -1,16 +1,26 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 export interface HeroStatItem {
   value: string
   label: string
 }
 
-defineProps<{
-  items: HeroStatItem[]
-}>()
+const props = withDefaults(
+  defineProps<{
+    items: HeroStatItem[]
+    columns?: 3 | 4
+  }>(),
+  {
+    columns: 3,
+  },
+)
+
+const columnsClass = computed(() => (props.columns === 4 ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'))
 </script>
 
 <template>
-  <div class="hero-stats-strip mx-auto mt-8 grid max-w-2xl grid-cols-3 gap-4 lg:mx-0" role="list">
+  <div class="hero-stats-strip mx-auto mt-8 grid max-w-2xl gap-4 lg:mx-0" :class="columnsClass" role="list">
     <div
       v-for="item in items"
       :key="item.label"
