@@ -49,6 +49,9 @@
     2. `page-hero__visual` 右侧 padding 为 0：`PageHero` 新增 `flushVisualEnd?: boolean`（默认 false），启用时 `lg:-mr-4 + lg:justify-self-end` 抵消 container `padding-inline: 1rem`；探曜 Hero 传入 `flush-visual-end`。
     3. hero 视觉三层卡片圆角对齐博曜基准：顶部卡片/中间节点卡/底部设备卡 `rounded-xl|rounded-lg` → `rounded-[24px]`，中间平台卡（含渐变遮罩层）`rounded-2xl` → `rounded-[32px]`。
     4. 保留人工修订：顶部卡片副标题「AI-Powered IoT Platform」→「智能物联底座」，harness 与 visual.spec 断言同步更新。
+12. 视觉微调（第二轮反馈）：
+    1. hero 视觉三层卡片宽度等比 ×1.2：顶部 `w-[320px]` → `w-[384px]`、中间 `w-[420px]` → `w-[504px]`、底部 `w-[360px]` → `w-[432px]`。
+    2. `HeroStatsStrip` 的 `section` placement 条目样式放大：卡片 `rounded-xl border border-default bg-dt-bg-soft/50 px-4 py-4 text-center backdrop-blur-sm`、数值 `text-2xl font-semibold text-highlighted lg:text-3xl`、标签 `mt-1 text-xs text-muted lg:text-sm`；`hero` placement（博曜）样式不变。需求中的 `bg-muted/50` 因 `bg-muted` 为 `@utility` 不生成透明度修饰符 CSS（已用构建产物验证），等价替换为 `@theme` 颜色 `bg-dt-bg-soft/50`。
 
 ---
 ## 验收标准
@@ -87,8 +90,8 @@
 | 字段             | 内容 |
 |----------------|----|
 | Branch         | main |
-| Commit Message | feat(TASK-008.1): add tanyao ai-iot product page<br>fix(TASK-008.1): move tanyao stats into standalone section and align hero visual |
-| Commit Hash    | 5dcde9f<br>8c05245 |
+| Commit Message | feat(TASK-008.1): add tanyao ai-iot product page<br>fix(TASK-008.1): move tanyao stats into standalone section and align hero visual<br>fix(TASK-008.1): widen tanyao hero cards and enlarge stats section typography |
+| Commit Hash    | 5dcde9f<br>8c05245<br>29dd692 |
 
 ## 完成说明
-按 TANYAO.md 完成探曜·AI物联感知平台产品页 `/products/ai-iot`：Hero 右侧视觉 Tailwind-only 1:1 复刻 EMQX Edge（三层卡片 + 双轨道 SVG 流动光点，仅替换文案与 icon，SVG ID 重命名避免冲突，logo 统一走 `IconBox tone="soft"`）；`HeroStatsStrip` 新增向后兼容的 `columns` prop 支持 1×4；核心能力复用 `AlternatingTimelineSection` 并增加空 bullets 守卫。反馈修正（`8c05245`）：板块1 数字条改为独立 Section（`TanyaoStatsSection` + `HeroStatsStrip placement="section"`，Hero 启用 `flushBottom`）；`PageHero` 新增 `flushVisualEnd`，探曜 hero 视觉右缘贴齐 container（右侧 padding 为 0）；hero 视觉三层卡片圆角对齐博曜基准（外层/节点/设备卡 `rounded-[24px]`，中间平台卡 `rounded-[32px]`）；保留顶部卡片副标题人工修订「智能物联底座」。两轮六项质量门（lint / typecheck / test / test:visual / harness / build）全部通过（58 tests），产物构建后 SSR 访问 `/products/ai-iot` 返回 200，`lg:-mr-4`/`lg:justify-self-end`/新圆角/独立数字条均在 SSR 输出中确认。
+按 TANYAO.md 完成探曜·AI物联感知平台产品页 `/products/ai-iot`：Hero 右侧视觉 Tailwind-only 1:1 复刻 EMQX Edge（三层卡片 + 双轨道 SVG 流动光点，仅替换文案与 icon，SVG ID 重命名避免冲突，logo 统一走 `IconBox tone="soft"`）；`HeroStatsStrip` 新增向后兼容的 `columns` prop 支持 1×4；核心能力复用 `AlternatingTimelineSection` 并增加空 bullets 守卫。反馈修正（`8c05245`）：板块1 数字条改为独立 Section（`TanyaoStatsSection` + `HeroStatsStrip placement="section"`，Hero 启用 `flushBottom`）；`PageHero` 新增 `flushVisualEnd`，探曜 hero 视觉右缘贴齐 container（右侧 padding 为 0）；hero 视觉三层卡片圆角对齐博曜基准（外层/节点/设备卡 `rounded-[24px]`，中间平台卡 `rounded-[32px]`）；保留顶部卡片副标题人工修订「智能物联底座」。视觉微调（第二轮）：hero 视觉三层卡片宽度等比放大 ×1.2（384/504/432），数字条 `section` placement 条目样式放大（text-2xl→lg:text-3xl / mt-1 lg:text-sm / px-4 py-4，背景以可编译的 `bg-dt-bg-soft/50` 等价实现 `bg-muted/50`）。三轮六项质量门（lint / typecheck / test / test:visual / harness / build）全部通过（58 tests），产物构建后 SSR 访问 `/products/ai-iot` 返回 200，新卡片宽度、数字条排版与 `lg:-mr-4`/`lg:justify-self-end`/新圆角/独立数字条均在 SSR 输出中确认。

@@ -40,6 +40,7 @@
 - 数据通过 `items: HeroStatItem[]`（`{ value, label }`）传入，文案不得写在组件内。
 - 列数通过 `columns` 控制：默认 `3`（`grid-cols-3`）；传 `4` 时使用 `grid-cols-2 sm:grid-cols-4`（探曜 1×4 数字条）。
 - 位置通过 `placement` 控制：默认 `hero`（`mx-auto mt-8 max-w-2xl lg:mx-0`，放入 `PageHero` 的 `#after-actions` slot）；传 `section` 时去掉 hero 专属边距与宽度限制，作为独立 Section 全宽渲染（如探曜板块1，`TanyaoStatsSection` 包裹于 `.container`，此时 `PageHero` 应启用 `flushBottom` 由该 Section 承接节奏）。
+- `section` placement 使用放大的条目样式：卡片 `rounded-xl border border-default bg-dt-bg-soft/50 px-4 py-4 text-center backdrop-blur-sm`，数值 `text-2xl font-semibold text-highlighted lg:text-3xl`，标签 `mt-1 text-xs text-muted lg:text-sm`；`hero` placement 保持原有紧凑样式不变。注意背景半透明必须写 `bg-dt-bg-soft/50`（`@theme` 颜色），`bg-muted` 是 `@utility`，不支持 `/50` 透明度修饰符。
 - 组件只负责数字条排版，不承担分割线、背景或容器职责。
 
 ## Section Shell / Header
