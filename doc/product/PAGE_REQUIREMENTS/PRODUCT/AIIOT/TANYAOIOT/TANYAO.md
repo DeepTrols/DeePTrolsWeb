@@ -178,3 +178,5 @@ AIoT 伴随Agent
 
 
 实现说明（TASK-008.1）：页面落地于 `pages/products/ai-iot.vue`（导航 `/products/ai-iot`），数据集中在 `data/tanyao.ts`；Hero 右侧视觉为 `components/product/tanyao/TanyaoHeroVisual.vue`（Tailwind-only，1:1 复刻 EMQX Edge hero 的卡片层级/尺寸/渐变/流动 SVG，仅替换文案与图标，SVG 渐变与滤镜 ID 重命名为 tanyaoFlowGradientUp/Down、tanyaoEdgeGlow 以保证唯一）；Hero 数字条通过 `HeroStatsStrip` 新增的 `columns` prop 支持 1×4；核心能力复用 `AlternatingTimelineSection`（新增 `v-if="item.bullets.length"` 守卫以兼容无 bullets 条目）。
+
+修订说明（TASK-008.1 反馈修正）：板块1 数字条不在 Hero 内渲染，改为独立 Section（`TanyaoStatsSection`，`HeroStatsStrip placement="section"` 1×4 全宽，Hero 启用 `flushBottom` 承接节奏）；Hero 传入 `flushVisualEnd`，`page-hero__visual` 在 lg 下以 `-mr-4 + justify-self-end` 抵消 container 右侧 1rem padding（右侧 padding 为 0）；hero 视觉三层卡片圆角对齐博曜基准：顶部/底部卡片与中间节点卡 `rounded-[24px]`，中间平台卡 `rounded-[32px]`；顶部卡片副标题按人工修订为「智能物联底座」。

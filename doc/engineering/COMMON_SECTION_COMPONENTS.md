@@ -15,6 +15,7 @@
 - 页面组件只传入 `badge`、`titleLine`、`titleGradient`、`description`、`actions`。
 - 视觉素材通过 `#visual` slot 传入。
 - 默认 `visualSize` 为 `default`，右侧视觉保持产品页正常尺寸；只有 Why DeepTrols 这类明确需要放大视觉的页面可以传入 `visualSize="large"`。
+- 需要视觉贴齐 container 右边缘（右侧 padding 为 0）时传入 `flushVisualEnd`：组件在 `lg` 下为 `.page-hero__visual` 追加 `-mr-4`（抵消 container `padding-inline: 1rem`）与 `justify-self-end`；仅按需启用，默认关闭。
 - `PageHero` 不承载客户 logo；logo 必须通过独立区块渲染。
 
 ## Hero Logo Strip
@@ -37,8 +38,9 @@
 
 使用要求：
 - 数据通过 `items: HeroStatItem[]`（`{ value, label }`）传入，文案不得写在组件内。
-- 列数通过 `columns` 控制：默认 `3`（`grid-cols-3`）；传 `4` 时使用 `grid-cols-2 sm:grid-cols-4`（探曜 hero 1×4 数字条）。
-- 组件只负责数字条排版，不承担分割线、背景或容器职责；放入 `PageHero` 的 `#after-actions` slot 使用。
+- 列数通过 `columns` 控制：默认 `3`（`grid-cols-3`）；传 `4` 时使用 `grid-cols-2 sm:grid-cols-4`（探曜 1×4 数字条）。
+- 位置通过 `placement` 控制：默认 `hero`（`mx-auto mt-8 max-w-2xl lg:mx-0`，放入 `PageHero` 的 `#after-actions` slot）；传 `section` 时去掉 hero 专属边距与宽度限制，作为独立 Section 全宽渲染（如探曜板块1，`TanyaoStatsSection` 包裹于 `.container`，此时 `PageHero` 应启用 `flushBottom` 由该 Section 承接节奏）。
+- 组件只负责数字条排版，不承担分割线、背景或容器职责。
 
 ## Section Shell / Header
 公共组件：
