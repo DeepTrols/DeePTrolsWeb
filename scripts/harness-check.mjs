@@ -400,8 +400,11 @@ assert(
     heroStatsStrip.includes('grid-cols-2 sm:grid-cols-4') &&
     heroStatsStrip.includes('grid-cols-3') &&
     heroStatsStrip.includes("placement?: 'hero' | 'section'") &&
-    heroStatsStrip.includes('mx-auto mt-8 max-w-2xl lg:mx-0'),
-  'HeroStatsStrip must support three and four column strips plus hero and standalone section placement.',
+    heroStatsStrip.includes('mx-auto mt-8 max-w-2xl lg:mx-0') &&
+    heroStatsStrip.includes('rounded-xl border border-default bg-dt-bg-soft/50 px-4 py-4 text-center backdrop-blur-sm') &&
+    heroStatsStrip.includes('text-2xl font-semibold text-highlighted lg:text-3xl') &&
+    heroStatsStrip.includes('mt-1 text-xs text-muted lg:text-sm'),
+  'HeroStatsStrip must support three and four column strips plus hero and standalone section placement with the larger section typography.',
 )
 assert(
   alternatingTimelineSection.includes('v-if="item.bullets.length"'),

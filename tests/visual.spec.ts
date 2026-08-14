@@ -1474,6 +1474,10 @@ describe('tanyao ai-iot page contract', () => {
     expect(heroStatsStrip).toContain('grid-cols-3')
     expect(heroStatsStrip).toContain("placement?: 'hero' | 'section'")
     expect(heroStatsStrip).toContain('mx-auto mt-8 max-w-2xl lg:mx-0')
+    expect(heroStatsStrip).toContain('rounded-xl border border-default bg-dt-bg-soft/50 px-4 py-4 text-center backdrop-blur-sm')
+    expect(heroStatsStrip).toContain('text-2xl font-semibold text-highlighted lg:text-3xl')
+    expect(heroStatsStrip).toContain('mt-1 text-xs text-muted lg:text-sm')
+    expect(heroStatsStrip).toContain('bg-[var(--dt-color-bg-soft)]/50 px-3 py-3 text-center backdrop-blur-sm')
   })
 
   it('replicates the EMQX Edge hero visual structure with tanyao copy and unique SVG ids', () => {
@@ -1500,7 +1504,7 @@ describe('tanyao ai-iot page contract', () => {
     expect(heroVisual).not.toContain('rounded-lg ')
 
     // top platform card
-    expect(heroVisual).toContain('absolute left-1/2 top-[18px] w-[320px] -translate-x-1/2')
+    expect(heroVisual).toContain('absolute left-1/2 top-[18px] w-[384px] -translate-x-1/2')
     expect(heroVisual).toContain('探曜AIoT')
     expect(heroVisual).toContain('智能物联底座')
     expect(heroVisual).toContain('AI Powered')
@@ -1508,7 +1512,7 @@ describe('tanyao ai-iot page contract', () => {
     expect(heroVisual).toContain('tanyaoIotLogo')
 
     // middle edge card
-    expect(heroVisual).toContain('absolute left-1/2 top-[208px] w-[420px] -translate-x-1/2')
+    expect(heroVisual).toContain('absolute left-1/2 top-[208px] w-[504px] -translate-x-1/2')
     expect(heroVisual).toContain('探曜 Edge')
     expect(heroVisual).toContain('设备接入')
     expect(heroVisual).toContain('边缘计算')
@@ -1517,7 +1521,7 @@ describe('tanyao ai-iot page contract', () => {
     expect(heroVisual).toContain('animate-pulse-dot')
 
     // bottom device card
-    expect(heroVisual).toContain('absolute bottom-[46px] left-1/2 w-[360px] -translate-x-1/2')
+    expect(heroVisual).toContain('absolute bottom-[46px] left-1/2 w-[432px] -translate-x-1/2')
     expect(heroVisual).toContain('工业设备')
     expect(heroVisual).toContain('传感器')
     expect(heroVisual).toContain('能源设备')

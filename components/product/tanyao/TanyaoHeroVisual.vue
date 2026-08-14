@@ -120,7 +120,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
       </svg>
 
       <!-- 顶部卡片｜平台层 -->
-      <div class="absolute left-1/2 top-[18px] w-[320px] -translate-x-1/2">
+      <div class="absolute left-1/2 top-[18px] w-[384px] -translate-x-1/2">
         <div
           class="group relative overflow-hidden rounded-[24px] border border-primary/25 bg-default px-5 py-3.5 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
         >
@@ -154,7 +154,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
       </div>
 
       <!-- 中间卡片｜边缘层 -->
-      <div class="absolute left-1/2 top-[208px] w-[420px] -translate-x-1/2">
+      <div class="absolute left-1/2 top-[208px] w-[504px] -translate-x-1/2">
         <div class="relative rounded-[32px] border border-primary/20 bg-primary/5 p-4 shadow-lg shadow-primary/10">
           <div class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-b from-violet-500/10 via-fuchsia-500/6 to-amber-400/8"></div>
           <div class="relative mb-4 flex items-center justify-center">
@@ -208,7 +208,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
       </div>
 
       <!-- 底部卡片｜设备层 -->
-      <div class="absolute bottom-[46px] left-1/2 w-[360px] -translate-x-1/2">
+      <div class="absolute bottom-[46px] left-1/2 w-[432px] -translate-x-1/2">
         <div class="grid grid-cols-3 gap-3">
           <div
             v-for="tile in deviceTiles"
