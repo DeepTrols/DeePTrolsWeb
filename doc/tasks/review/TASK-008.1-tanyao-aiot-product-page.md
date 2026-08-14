@@ -52,6 +52,11 @@
 12. 视觉微调（第二轮反馈）：
     1. hero 视觉三层卡片宽度等比 ×1.2：顶部 `w-[320px]` → `w-[384px]`、中间 `w-[420px]` → `w-[504px]`、底部 `w-[360px]` → `w-[432px]`。
     2. `HeroStatsStrip` 的 `section` placement 条目样式放大：卡片 `rounded-xl border border-default bg-dt-bg-soft/50 px-4 py-4 text-center backdrop-blur-sm`、数值 `text-2xl font-semibold text-highlighted lg:text-3xl`、标签 `mt-1 text-xs text-muted lg:text-sm`；`hero` placement（博曜）样式不变。需求中的 `bg-muted/50` 因 `bg-muted` 为 `@utility` 不生成透明度修饰符 CSS（已用构建产物验证），等价替换为 `@theme` 颜色 `bg-dt-bg-soft/50`。
+13. hero 视觉内容扩充（第三轮反馈）：
+    1. 顶部卡片「链接生态」在数曜 logo 前新增 DeepSeek / 千问 / 智谱 / Kimi 四个 AI 生态 logo：新建 `deepseek-logo.svg`（蓝鲸）、`qwen-logo.svg`（紫色六芒星）、`zhipu-logo.svg`（蓝色四角星）、`kimi-logo.svg`（浅色月牙），经 `data/tanyao.ts` `?url` 导入导出，统一 `IconBox :size="40" tone="soft"`；顶部卡片宽度 `w-[384px]` → `w-[460px]` 容纳 7 枚 logo。
+    2. 中间卡片边缘节点在策略执行后新增 Node-RED（`Workflow` / red 系）与 Neuron（`BrainCircuit` / emerald 系），网格 `grid-cols-3` → `grid-cols-5`；`EdgeNode` 新增 `pulse` / `pulseLine` 字段，`v-else` 脉冲对由硬编码 blue 改为按节点取色；因 lg 画布仅 520px（PageHero large 网格 `minmax(520px,1fr)` + container 64rem），中间卡片改响应式 `w-[504px] xl:w-[560px]`，节点内边距 `p-3 xl:p-4`、broker 条 `w-3 xl:w-3.5`，保证五节点在 lg 不溢出画布。
+    3. 底部设备卡新增 PLC（`CircuitBoard`）与摄像头（`Cctv`），网格 `grid-cols-3` → `grid-cols-5`，宽度 `w-[432px]` → `w-[460px]`。
+    4. harness 新增 DeepSeek/千问/智谱/Kimi/Node-RED/Neuron/PLC/摄像头/grid-cols-5 与 4 个新 logo 导出断言；visual.spec 更新三层卡片宽度断言并新增生态顺序（DeepSeek 在数曜前）、五节点网格、响应式类断言；tanyao-content.spec 补充 4 个新 logo 资源存在性检查。
 
 ---
 ## 验收标准
@@ -70,14 +75,18 @@
 |----|----|
 | `pages/products/ai-iot.vue` | 新建：探曜产品页组装 |
 | `components/product/tanyao/TanyaoHero.vue` | 新建：PageHero 包装 |
-| `components/product/tanyao/TanyaoHeroVisual.vue` | 新建：EMQX Edge 风格 hero 视觉 |
+| `components/product/tanyao/TanyaoHeroVisual.vue` | 新建：EMQX Edge 风格 hero 视觉；第三轮扩充生态 logo / Node-RED / Neuron / PLC / 摄像头 |
 | `components/product/tanyao/TanyaoSolutionSection.vue` | 新建：解决方案板块 |
 | `components/product/tanyao/TanyaoCapabilitySection.vue` | 新建：核心能力板块 |
 | `components/product/tanyao/TanyaoStatsSection.vue` | 新建：1×4 数字条独立 Section（反馈修正） |
 | `components/common/HeroStatsStrip.vue` | 新增 `columns` / `placement` prop |
 | `components/common/PageHero.vue` | 新增 `flushVisualEnd` prop（反馈修正） |
 | `components/common/AlternatingTimelineSection.vue` | bullets 空列表守卫 |
-| `data/tanyao.ts` | 新建：页面全部文案/数据 |
+| `data/tanyao.ts` | 新建：页面全部文案/数据；第三轮新增 4 个 AI 生态 logo `?url` 导入导出 |
+| `doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/deepseek-logo.svg` | 新建：DeepSeek logo（第三轮） |
+| `doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/qwen-logo.svg` | 新建：千问 logo（第三轮） |
+| `doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/zhipu-logo.svg` | 新建：智谱 logo（第三轮） |
+| `doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/kimi-logo.svg` | 新建：Kimi logo（第三轮） |
 | `scripts/harness-check.mjs` | 新增探曜页 harness 断言 |
 | `tests/tanyao-content.spec.ts` | 新建：数据内容契约测试 |
 | `tests/visual.spec.ts` | 新增探曜结构契约测试 |
@@ -90,8 +99,8 @@
 | 字段             | 内容 |
 |----------------|----|
 | Branch         | main |
-| Commit Message | feat(TASK-008.1): add tanyao ai-iot product page<br>fix(TASK-008.1): move tanyao stats into standalone section and align hero visual<br>fix(TASK-008.1): widen tanyao hero cards and enlarge stats section typography |
-| Commit Hash    | 5dcde9f<br>8c05245<br>29dd692 |
+| Commit Message | feat(TASK-008.1): add tanyao ai-iot product page<br>fix(TASK-008.1): move tanyao stats into standalone section and align hero visual<br>fix(TASK-008.1): widen tanyao hero cards and enlarge stats section typography<br>fix(TASK-008.1): expand tanyao hero visual with AI ecosystem logos and edge runtimes |
+| Commit Hash    | 5dcde9f<br>8c05245<br>29dd692<br>d37669f |
 
 ## 完成说明
-按 TANYAO.md 完成探曜·AI物联感知平台产品页 `/products/ai-iot`：Hero 右侧视觉 Tailwind-only 1:1 复刻 EMQX Edge（三层卡片 + 双轨道 SVG 流动光点，仅替换文案与 icon，SVG ID 重命名避免冲突，logo 统一走 `IconBox tone="soft"`）；`HeroStatsStrip` 新增向后兼容的 `columns` prop 支持 1×4；核心能力复用 `AlternatingTimelineSection` 并增加空 bullets 守卫。反馈修正（`8c05245`）：板块1 数字条改为独立 Section（`TanyaoStatsSection` + `HeroStatsStrip placement="section"`，Hero 启用 `flushBottom`）；`PageHero` 新增 `flushVisualEnd`，探曜 hero 视觉右缘贴齐 container（右侧 padding 为 0）；hero 视觉三层卡片圆角对齐博曜基准（外层/节点/设备卡 `rounded-[24px]`，中间平台卡 `rounded-[32px]`）；保留顶部卡片副标题人工修订「智能物联底座」。视觉微调（第二轮）：hero 视觉三层卡片宽度等比放大 ×1.2（384/504/432），数字条 `section` placement 条目样式放大（text-2xl→lg:text-3xl / mt-1 lg:text-sm / px-4 py-4，背景以可编译的 `bg-dt-bg-soft/50` 等价实现 `bg-muted/50`）。三轮六项质量门（lint / typecheck / test / test:visual / harness / build）全部通过（58 tests），产物构建后 SSR 访问 `/products/ai-iot` 返回 200，新卡片宽度、数字条排版与 `lg:-mr-4`/`lg:justify-self-end`/新圆角/独立数字条均在 SSR 输出中确认。
+按 TANYAO.md 完成探曜·AI物联感知平台产品页 `/products/ai-iot`：Hero 右侧视觉 Tailwind-only 1:1 复刻 EMQX Edge（三层卡片 + 双轨道 SVG 流动光点，仅替换文案与 icon，SVG ID 重命名避免冲突，logo 统一走 `IconBox tone="soft"`）；`HeroStatsStrip` 新增向后兼容的 `columns` prop 支持 1×4；核心能力复用 `AlternatingTimelineSection` 并增加空 bullets 守卫。反馈修正（`8c05245`）：板块1 数字条改为独立 Section（`TanyaoStatsSection` + `HeroStatsStrip placement="section"`，Hero 启用 `flushBottom`）；`PageHero` 新增 `flushVisualEnd`，探曜 hero 视觉右缘贴齐 container（右侧 padding 为 0）；hero 视觉三层卡片圆角对齐博曜基准（外层/节点/设备卡 `rounded-[24px]`，中间平台卡 `rounded-[32px]`）；保留顶部卡片副标题人工修订「智能物联底座」。视觉微调（第二轮）：hero 视觉三层卡片宽度等比放大 ×1.2（384/504/432），数字条 `section` placement 条目样式放大（text-2xl→lg:text-3xl / mt-1 lg:text-sm / px-4 py-4，背景以可编译的 `bg-dt-bg-soft/50` 等价实现 `bg-muted/50`）。内容扩充（第三轮 `d37669f`）：顶部卡片「链接生态」在数曜前新增 DeepSeek / 千问 / 智谱 / Kimi 四个 AI 生态 logo（新建 4 枚 SVG，`data/tanyao.ts` `?url` 导入导出，`IconBox :size="40" tone="soft"`），顶部卡片 384→460；中间卡片在策略执行后新增 Node-RED（Workflow/red）与 Neuron（BrainCircuit/emerald），`grid-cols-5`，`EdgeNode` 新增 `pulse`/`pulseLine` 使 `v-else` 脉冲对按节点取色，卡片改 `w-[504px] xl:w-[560px]` + 节点 `p-3 xl:p-4` + broker 条 `w-3 xl:w-3.5`（lg 画布 520px 约束）；底部设备卡新增 PLC（CircuitBoard）与摄像头（Cctv），`grid-cols-5`，432→460。四轮六项质量门（lint / typecheck / test / test:visual / harness / build）全部通过（58 tests），产物构建后 SSR 访问 `/products/ai-iot` 返回 200，8 枚生态 logo（新 4 枚以 data URI 内联）、Node-RED/Neuron/PLC/摄像头、新卡片宽度与 `xl:` 响应式类均在 SSR 输出中确认，新动态色类（bg-red-500 / bg-emerald-500 / *-500/40 等）均在构建 CSS 中验证存在。
