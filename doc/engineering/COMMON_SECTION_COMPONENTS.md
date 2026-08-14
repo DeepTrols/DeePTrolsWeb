@@ -73,6 +73,7 @@
 - `CardGrid` 统一 2 / 3 / 4 列和 `auto-rows-fr items-stretch` 等高行为。
 - `FeatureCard` 用于常规 icon + title + desc + optional action；复杂 media、stats、points 或右侧动画应继续使用 slot/业务组件组合，不把 props 做成万能组件。
 - 需要数字阶段标识时，`FeatureCard` 可传入 `iconLabel`，组件仍使用 `.dt-icon-box dt-icon-box--gradient` 统一 icon 外框。
+- `iconLabel` 数字外框同样尊重 `iconBordered` / `iconFilled`：`iconBordered=false` 通过 `feature-card__icon-label--borderless` 移除 1px 内描边（`--dt-icon-box-shadow: none`），`iconFilled=false` 通过 `feature-card__icon-label--unfilled` 移除渐变底（`--dt-icon-box-bg: transparent`）；默认渲染保持不变。参考实现：Device Agent「核心价值」区块（`deviceAgentValueItems` + `:icon-bordered="false"`）。
 
 ## Base Tabs
 公共组件：`components/common/tabs/BaseTabs.vue`
