@@ -88,6 +88,10 @@ describe('TANYAO product page content contract', () => {
       'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/数曜logo.svg',
       'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/智曜logo.svg',
       'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg',
+      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/deepseek-logo.svg',
+      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/qwen-logo.svg',
+      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/zhipu-logo.svg',
+      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/kimi-logo.svg',
     ]) {
       expect(existsSync(join(root, asset)), asset).toBe(true)
     }

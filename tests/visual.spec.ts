@@ -1504,27 +1504,47 @@ describe('tanyao ai-iot page contract', () => {
     expect(heroVisual).not.toContain('rounded-lg ')
 
     // top platform card
-    expect(heroVisual).toContain('absolute left-1/2 top-[18px] w-[384px] -translate-x-1/2')
+    expect(heroVisual).toContain('absolute left-1/2 top-[18px] w-[460px] -translate-x-1/2')
     expect(heroVisual).toContain('探曜AIoT')
     expect(heroVisual).toContain('智能物联底座')
     expect(heroVisual).toContain('AI Powered')
     expect(heroVisual).toContain('链接生态')
     expect(heroVisual).toContain('tanyaoIotLogo')
 
-    // middle edge card
-    expect(heroVisual).toContain('absolute left-1/2 top-[208px] w-[504px] -translate-x-1/2')
+    // ecosystem logos keep the AI partners ahead of the 曜 platforms
+    expect(heroVisual).toContain('deepseekLogo')
+    expect(heroVisual).toContain('qwenLogo')
+    expect(heroVisual).toContain('zhipuLogo')
+    expect(heroVisual).toContain('kimiLogo')
+    expect(heroVisual).toContain('DeepSeek')
+    expect(heroVisual).toContain('千问')
+    expect(heroVisual).toContain('智谱')
+    expect(heroVisual).toContain('Kimi')
+    expect(heroVisual.indexOf('DeepSeek')).toBeLessThan(heroVisual.indexOf('数曜'))
+
+    // middle edge card grows to five runtime nodes and stays inside the lg canvas
+    expect(heroVisual).toContain('absolute left-1/2 top-[208px] w-[504px] xl:w-[560px] -translate-x-1/2')
     expect(heroVisual).toContain('探曜 Edge')
+    expect(heroVisual).toContain('relative grid grid-cols-5 gap-2')
     expect(heroVisual).toContain('设备接入')
     expect(heroVisual).toContain('边缘计算')
     expect(heroVisual).toContain('策略执行')
+    expect(heroVisual).toContain('Node-RED')
+    expect(heroVisual).toContain('Neuron')
     expect(heroVisual).toContain('animate-pulse-bar')
     expect(heroVisual).toContain('animate-pulse-dot')
+    // node padding and broker bars relax at lg so five nodes fit the 520px lg canvas
+    expect(heroVisual).toContain('p-3 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg xl:p-4')
+    expect(heroVisual).toContain('h-1.5 w-3 animate-pulse-bar rounded-full bg-fuchsia-500/60 xl:w-3.5')
 
-    // bottom device card
-    expect(heroVisual).toContain('absolute bottom-[46px] left-1/2 w-[432px] -translate-x-1/2')
+    // bottom device card grows to five tiles
+    expect(heroVisual).toContain('absolute bottom-[46px] left-1/2 w-[460px] -translate-x-1/2')
+    expect(heroVisual).toContain('grid grid-cols-5 gap-3')
     expect(heroVisual).toContain('工业设备')
     expect(heroVisual).toContain('传感器')
     expect(heroVisual).toContain('能源设备')
+    expect(heroVisual).toContain('PLC')
+    expect(heroVisual).toContain('摄像头')
 
     // logo boxes reuse the shared IconBox soft tone
     expect(heroVisual).toContain('IconBox')

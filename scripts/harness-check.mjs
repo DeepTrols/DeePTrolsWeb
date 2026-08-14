@@ -425,13 +425,22 @@ assert(
     tanyaoHeroVisual.includes('探曜AIoT') &&
     tanyaoHeroVisual.includes('智能物联底座') &&
     tanyaoHeroVisual.includes('链接生态') &&
+    tanyaoHeroVisual.includes('DeepSeek') &&
+    tanyaoHeroVisual.includes('千问') &&
+    tanyaoHeroVisual.includes('智谱') &&
+    tanyaoHeroVisual.includes('Kimi') &&
     tanyaoHeroVisual.includes('探曜 Edge') &&
     tanyaoHeroVisual.includes('设备接入') &&
     tanyaoHeroVisual.includes('边缘计算') &&
     tanyaoHeroVisual.includes('策略执行') &&
+    tanyaoHeroVisual.includes('Node-RED') &&
+    tanyaoHeroVisual.includes('Neuron') &&
+    tanyaoHeroVisual.includes('grid-cols-5') &&
     tanyaoHeroVisual.includes('工业设备') &&
     tanyaoHeroVisual.includes('传感器') &&
     tanyaoHeroVisual.includes('能源设备') &&
+    tanyaoHeroVisual.includes('PLC') &&
+    tanyaoHeroVisual.includes('摄像头') &&
     tanyaoHeroVisual.includes('h-[600px]') &&
     tanyaoHeroVisual.includes('top-[18px]') &&
     tanyaoHeroVisual.includes('top-[208px]') &&
@@ -439,7 +448,7 @@ assert(
     tanyaoHeroVisual.includes('rounded-[24px]') &&
     tanyaoHeroVisual.includes('rounded-[32px]') &&
     !tanyaoHeroVisual.includes('<style'),
-  'TanyaoHeroVisual must replicate the EMQX Edge three-layer hero visual with IconBox logos, boyao-aligned card radii, and Tailwind-only styles.',
+  'TanyaoHeroVisual must replicate the EMQX Edge three-layer hero visual with IconBox logos, the expanded AI ecosystem / edge runtime / device tiles, boyao-aligned card radii, and Tailwind-only styles.',
 )
 assert(
   tanyaoHero.includes('PageHero') &&
@@ -500,8 +509,12 @@ assert(
     tanyaoData.includes('export const tanyaoSolutionCards: SystemCard[]') &&
     tanyaoData.includes('export const tanyaoTimelineItems: AlternatingTimelineItem[]') &&
     tanyaoData.includes('export const tanyaoAgents: ProductFeatureGridItem[]') &&
-    tanyaoData.includes('tanyaoIotLogo'),
-  'data/tanyao.ts must centralize the TANYAO page content with typed exports.',
+    tanyaoData.includes('tanyaoIotLogo') &&
+    tanyaoData.includes('deepseekLogo') &&
+    tanyaoData.includes('qwenLogo') &&
+    tanyaoData.includes('zhipuLogo') &&
+    tanyaoData.includes('kimiLogo'),
+  'data/tanyao.ts must centralize the TANYAO page content with typed exports and all ecosystem logo assets.',
 )
 assert(
   baseTabs.includes('role="tablist"') &&

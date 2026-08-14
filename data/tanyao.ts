@@ -13,6 +13,10 @@ import {
   Rocket,
   Wrench,
 } from '@lucide/vue'
+import deepseekLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/deepseek-logo.svg?url'
+import kimiLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/kimi-logo.svg?url'
+import qwenLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/qwen-logo.svg?url'
+import zhipuLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/zhipu-logo.svg?url'
 import shuyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/数曜logo.svg?url'
 import boyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg?url'
 import tanyaoIotLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/探曜IOT logo-1.svg?url'
@@ -22,7 +26,7 @@ import type { HeroStatItem } from '~/components/common/HeroStatsStrip.vue'
 import type { ProductFeatureGridItem } from '~/components/common/ProductFeatureGridSection.vue'
 import type { SystemCard } from '~/components/common/SystemCards.vue'
 
-export { boyaoLogo, shuyaoLogo, tanyaoIotLogo, zhiyaoLogo }
+export { boyaoLogo, deepseekLogo, kimiLogo, qwenLogo, shuyaoLogo, tanyaoIotLogo, zhiyaoLogo, zhipuLogo }
 
 export const tanyaoHeroStats: HeroStatItem[] = [
   { value: '100+', label: '服务企业' },
