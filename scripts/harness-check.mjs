@@ -66,6 +66,7 @@ const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODMS/DMS.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/DATA/SHUYAODMS/Hero.md',
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/AIIOT/TANYAOIOT/TANYAO.md',
+  'doc/product/PAGE_REQUIREMENTS/PRODUCT/AIIOT/DEVICEAGENT/DEVICEAGENT.md',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
   'components/common/BaseButton.vue',
@@ -121,12 +122,14 @@ const requiredFiles = [
   'data/ddp.ts',
   'data/dms.ts',
   'data/tanyao.ts',
+  'data/device-agent.ts',
   'pages/why-deeptrols.vue',
   'pages/products/data-governance.vue',
   'pages/products/data-labeling.vue',
   'pages/products/data-development.vue',
   'pages/products/data-element-regulation.vue',
   'pages/products/ai-iot.vue',
+  'pages/products/device-agent.vue',
   'components/why/WhyHero.vue',
   'components/why/WhyHeroLogos.vue',
   'components/why/WhyHeroVisual.vue',
@@ -167,6 +170,8 @@ const requiredFiles = [
   'components/product/tanyao/TanyaoSolutionSection.vue',
   'components/product/tanyao/TanyaoCapabilitySection.vue',
   'components/product/tanyao/TanyaoStatsSection.vue',
+  'components/product/device-agent/DeviceAgentHero.vue',
+  'components/product/device-agent/DeviceAgentHeroVisual.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -278,6 +283,10 @@ const tanyaoHeroVisual = read('components/product/tanyao/TanyaoHeroVisual.vue')
 const tanyaoSolution = read('components/product/tanyao/TanyaoSolutionSection.vue')
 const tanyaoCapability = read('components/product/tanyao/TanyaoCapabilitySection.vue')
 const tanyaoStats = read('components/product/tanyao/TanyaoStatsSection.vue')
+const deviceAgentData = read('data/device-agent.ts')
+const deviceAgentPage = read('pages/products/device-agent.vue')
+const deviceAgentHero = read('components/product/device-agent/DeviceAgentHero.vue')
+const deviceAgentHeroVisual = read('components/product/device-agent/DeviceAgentHeroVisual.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -416,6 +425,15 @@ assert(
   'PageHero must support flushVisualEnd to cancel the container right padding for the hero visual.',
 )
 assert(
+  pageHero.includes("align?: 'left' | 'center'") &&
+    pageHero.includes("align: 'left',") &&
+    pageHero.includes("align === 'center' ? 'max-w-4xl' : 'max-w-2xl lg:self-center lg:text-left'") &&
+    pageHero.includes("align === 'center' ? 'lg:flex lg:justify-center' : ''") &&
+    pageHero.includes("align === 'center' ? '' : 'lg:justify-start'") &&
+    pageHero.includes("v-if=\"align !== 'center'\" class=\"page-hero__visual-glow\""),
+  'PageHero must support the centered align variant (centered content, description, actions, visual and no visual glow) used by the Device Agent hero.',
+)
+assert(
   tanyaoHeroVisual.includes('viewBox="0 0 560 560"') &&
     tanyaoHeroVisual.includes('tanyaoFlowGradientUp') &&
     tanyaoHeroVisual.includes('tanyaoFlowGradientDown') &&
@@ -515,6 +533,75 @@ assert(
     tanyaoData.includes('zhipuLogo') &&
     tanyaoData.includes('kimiLogo'),
   'data/tanyao.ts must centralize the TANYAO page content with typed exports and all ecosystem logo assets.',
+)
+assert(
+  deviceAgentHeroVisual.includes('relative mt-10 w-full max-w-[860px]') &&
+    deviceAgentHeroVisual.includes(
+      'pointer-events-none absolute -inset-x-12 -bottom-4 -top-8 -z-0 rounded-[3rem] bg-primary/8 blur-3xl lg:-inset-x-24',
+    ) &&
+    deviceAgentHeroVisual.includes(
+      'relative overflow-hidden rounded-2xl border border-primary/20 bg-elevated shadow-lg transition-shadow',
+    ) &&
+    deviceAgentHeroVisual.includes('relative min-h-[140px] px-5 pt-5 pb-3') &&
+    deviceAgentHeroVisual.includes(
+      'pointer-events-none absolute inset-x-5 top-5 text-left text-base leading-relaxed text-muted sm:text-lg',
+    ) &&
+    deviceAgentHeroVisual.includes('ml-[2px] inline-block h-[1em] w-[1.5px] animate-pulse bg-primary align-baseline') &&
+    deviceAgentHeroVisual.includes('aria-label="Agent 编排器"') &&
+    deviceAgentHeroVisual.includes('rows="3"') &&
+    deviceAgentHeroVisual.includes(
+      'relative w-full resize-none bg-transparent text-base leading-relaxed text-highlighted outline-none sm:text-lg',
+    ) &&
+    deviceAgentHeroVisual.includes(
+      'flex items-center justify-between gap-3 border-t border-primary/15 bg-dt-bg-soft/30 px-3 py-2.5',
+    ) &&
+    deviceAgentHeroVisual.includes(
+      'inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-colors',
+    ) &&
+    deviceAgentHeroVisual.includes('border-primary/30 bg-primary/10 text-primary') &&
+    deviceAgentHeroVisual.includes('border-default bg-dt-bg/70 text-muted hover:bg-dt-bg-soft/50 hover:text-highlighted') &&
+    deviceAgentHeroVisual.includes('aria-label="发送"') &&
+    deviceAgentHeroVisual.includes('ArrowUp') &&
+    deviceAgentHeroVisual.includes('aria-pressed') &&
+    deviceAgentHeroVisual.includes('deviceAgentScenes') &&
+    deviceAgentHeroVisual.includes('onMounted') &&
+    deviceAgentHeroVisual.includes('onBeforeUnmount') &&
+    !deviceAgentHeroVisual.includes('<style'),
+  'DeviceAgentHeroVisual must replicate the EMQX Agents orchestrator panel (glow, panel, ghost typing overlay with pulsing cursor, scene buttons, send button) Tailwind-only with SSR-safe timers.',
+)
+assert(
+  deviceAgentHero.includes('PageHero') &&
+    deviceAgentHero.includes('align="center"') &&
+    deviceAgentHero.includes('badge="Device Agent"') &&
+    deviceAgentHero.includes('title-line="让Agent基于实时数据决策与行动"') &&
+    deviceAgentHero.includes('title-gradient="串联事件、记忆、执行和决策"') &&
+    deviceAgentHero.includes('visual-label="DEVICEAGENT_HORE_WEBM"') &&
+    deviceAgentHero.includes(':actions="[]"') &&
+    deviceAgentHero.includes('Cpu'),
+  'DeviceAgentHero must compose the shared PageHero centered variant with the requirement copy and no hero actions.',
+)
+assert(
+  deviceAgentPage.includes('SiteHeader') &&
+    deviceAgentPage.includes('SiteFooter') &&
+    deviceAgentPage.includes('<DeviceAgentHero') &&
+    deviceAgentPage.includes('eyebrow="智能体生态"') &&
+    deviceAgentPage.includes('title-id="device-agent-ecosystem-title"') &&
+    deviceAgentPage.includes(':items="tanyaoAgents"') &&
+    deviceAgentPage.includes('columns="three"') &&
+    deviceAgentPage.indexOf('<DeviceAgentHero') < deviceAgentPage.indexOf('device-agent-ecosystem-title'),
+  'The device-agent page must assemble the centered hero and the ecosystem grid (reusing the tanyao agents) in order.',
+)
+assert(
+  deviceAgentData.includes('export interface DeviceAgentScene') &&
+    deviceAgentData.includes('export const deviceAgentScenes: DeviceAgentScene[]') &&
+    deviceAgentData.includes('事件预警') &&
+    deviceAgentData.includes('事件处置') &&
+    deviceAgentData.includes('工单派发') &&
+    deviceAgentData.includes('预测维护') &&
+    deviceAgentData.includes('周报汇总') &&
+    deviceAgentData.includes('智能问数') &&
+    deviceAgentData.includes('温度超过 85℃'),
+  'data/device-agent.ts must centralize the six orchestrator scenes with typed exports.',
 )
 assert(
   baseTabs.includes('role="tablist"') &&
