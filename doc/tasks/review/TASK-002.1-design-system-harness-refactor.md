@@ -11,7 +11,7 @@
 |------|----------|
 | 编号   | TASK-002.1 |
 | Epic | EPIC-002 |
-| 状态   | Completed |
+| 状态   | Review   |
 | 优先级  | P0       |
 | 负责人  | Codex    |
 
@@ -142,3 +142,4 @@
 - 归档时间：2026-08-12
 - 归档原因：任务实际已于 2026-07-30 前后完成（验收标准全部勾选、提交 `4c34240` 已推送），但状态字段与目录未同步流转，长期滞留于 `in-progress/`。2026-08-12 全面审计确认设计系统（main.scss token / BaseButton / dt-card 系列）与 Harness Engineering（harness-check.mjs）持续作为全项目基线运行，后续任务均在其约束下交付；遗留的 300 行组件拆分已由 TASK-002.2 承接完成。
 - 归档操作：状态更新为 Completed，文件由 `in-progress/` 移入 `completed/`。
+- 状态回调：2026-08-14 按任务流程要求将状态由 Completed 回调为 Review，文件由 `completed/` 移入 `review/`（`scripts/harness-check.mjs` requiredFiles 中的路径同步更新），`completed/` 目录保持为空。
