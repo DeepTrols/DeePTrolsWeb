@@ -10,17 +10,20 @@ const props = withDefaults(
   defineProps<{
     items: HeroStatItem[]
     columns?: 3 | 4
+    placement?: 'hero' | 'section'
   }>(),
   {
     columns: 3,
+    placement: 'hero',
   },
 )
 
 const columnsClass = computed(() => (props.columns === 4 ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'))
+const placementClass = computed(() => (props.placement === 'section' ? '' : 'mx-auto mt-8 max-w-2xl lg:mx-0'))
 </script>
 
 <template>
-  <div class="hero-stats-strip mx-auto mt-8 grid max-w-2xl gap-4 lg:mx-0" :class="columnsClass" role="list">
+  <div class="hero-stats-strip grid gap-4" :class="[columnsClass, placementClass]" role="list">
     <div
       v-for="item in items"
       :key="item.label"

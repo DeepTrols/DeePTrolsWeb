@@ -122,7 +122,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
       <!-- 顶部卡片｜平台层 -->
       <div class="absolute left-1/2 top-[18px] w-[320px] -translate-x-1/2">
         <div
-          class="group relative overflow-hidden rounded-xl border border-primary/25 bg-default px-5 py-3.5 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          class="group relative overflow-hidden rounded-[24px] border border-primary/25 bg-default px-5 py-3.5 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
         >
           <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-violet-500/70 to-blue-500/70"></div>
           <div class="flex items-center justify-between gap-3">
@@ -132,7 +132,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
               </IconBox>
               <div class="min-w-0">
                 <div class="text-[16px] font-semibold text-highlighted">探曜AIoT</div>
-                <div class="text-[12px] text-muted">AI-Powered IoT Platform</div>
+                <div class="text-[12px] text-muted">智能物联底座</div>
               </div>
             </div>
             <span
@@ -155,8 +155,8 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
 
       <!-- 中间卡片｜边缘层 -->
       <div class="absolute left-1/2 top-[208px] w-[420px] -translate-x-1/2">
-        <div class="relative rounded-2xl border border-primary/20 bg-primary/5 p-4 shadow-lg shadow-primary/10">
-          <div class="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-b from-violet-500/10 via-fuchsia-500/6 to-amber-400/8"></div>
+        <div class="relative rounded-[32px] border border-primary/20 bg-primary/5 p-4 shadow-lg shadow-primary/10">
+          <div class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-b from-violet-500/10 via-fuchsia-500/6 to-amber-400/8"></div>
           <div class="relative mb-4 flex items-center justify-center">
             <div class="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-default px-4 py-1.5 shadow-sm">
               <Cpu class="size-5 text-primary" aria-hidden="true" />
@@ -167,7 +167,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
             <div
               v-for="(node, index) in edgeNodes"
               :key="node.title"
-              class="group relative overflow-hidden rounded-xl border bg-default p-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+              class="group relative overflow-hidden rounded-[24px] border bg-default p-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
               :class="node.border"
             >
               <div class="absolute inset-x-0 top-0 h-[2px] opacity-70" :class="node.bar"></div>
@@ -213,7 +213,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
           <div
             v-for="tile in deviceTiles"
             :key="tile.title"
-            class="group flex flex-col items-center gap-2 rounded-lg border border-default bg-default px-3 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+            class="group flex flex-col items-center gap-2 rounded-[24px] border border-default bg-default px-3 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
           >
             <component :is="tile.icon" class="size-9 text-muted" aria-hidden="true" />
             <span class="text-[12px] font-medium text-muted">{{ tile.title }}</span>

@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { RadioTower } from '@lucide/vue'
-import HeroStatsStrip from '~/components/common/HeroStatsStrip.vue'
 import PageHero from '~/components/common/PageHero.vue'
 import type { PageHeroAction } from '~/components/common/PageHero.vue'
 import TanyaoHeroVisual from '~/components/product/tanyao/TanyaoHeroVisual.vue'
-import { tanyaoHeroStats } from '~/data/tanyao'
 
 const heroActions: PageHeroAction[] = [
   { label: '立即咨询', href: '/contact', variant: 'primary' },
@@ -23,10 +21,9 @@ const heroActions: PageHeroAction[] = [
     :actions="heroActions"
     visual-label="TANYAOIOT_HORE_WEBM"
     visual-size="large"
+    flush-bottom
+    flush-visual-end
   >
-    <template #after-actions>
-      <HeroStatsStrip :items="tanyaoHeroStats" :columns="4" />
-    </template>
     <template #visual>
       <TanyaoHeroVisual />
     </template>

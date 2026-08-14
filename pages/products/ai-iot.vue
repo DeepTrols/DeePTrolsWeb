@@ -6,6 +6,7 @@ import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import TanyaoCapabilitySection from '~/components/product/tanyao/TanyaoCapabilitySection.vue'
 import TanyaoHero from '~/components/product/tanyao/TanyaoHero.vue'
 import TanyaoSolutionSection from '~/components/product/tanyao/TanyaoSolutionSection.vue'
+import TanyaoStatsSection from '~/components/product/tanyao/TanyaoStatsSection.vue'
 import { tanyaoAgents, tanyaoChallenges, tanyaoCtaActions } from '~/data/tanyao'
 
 useSeoMeta({
@@ -20,6 +21,7 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content">
       <TanyaoHero />
+      <TanyaoStatsSection />
       <ProductFeatureGridSection
         eyebrow="挑战"
         title="AI 时代，IoT 平台面临新挑战"

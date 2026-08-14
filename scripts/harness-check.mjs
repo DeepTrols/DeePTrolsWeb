@@ -166,6 +166,7 @@ const requiredFiles = [
   'components/product/tanyao/TanyaoHeroVisual.vue',
   'components/product/tanyao/TanyaoSolutionSection.vue',
   'components/product/tanyao/TanyaoCapabilitySection.vue',
+  'components/product/tanyao/TanyaoStatsSection.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -276,6 +277,7 @@ const tanyaoHero = read('components/product/tanyao/TanyaoHero.vue')
 const tanyaoHeroVisual = read('components/product/tanyao/TanyaoHeroVisual.vue')
 const tanyaoSolution = read('components/product/tanyao/TanyaoSolutionSection.vue')
 const tanyaoCapability = read('components/product/tanyao/TanyaoCapabilitySection.vue')
+const tanyaoStats = read('components/product/tanyao/TanyaoStatsSection.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -396,12 +398,19 @@ assert(
 assert(
   heroStatsStrip.includes('columns?: 3 | 4') &&
     heroStatsStrip.includes('grid-cols-2 sm:grid-cols-4') &&
-    heroStatsStrip.includes('grid-cols-3'),
-  'HeroStatsStrip must support three and four column stat strips.',
+    heroStatsStrip.includes('grid-cols-3') &&
+    heroStatsStrip.includes("placement?: 'hero' | 'section'") &&
+    heroStatsStrip.includes('mx-auto mt-8 max-w-2xl lg:mx-0'),
+  'HeroStatsStrip must support three and four column strips plus hero and standalone section placement.',
 )
 assert(
   alternatingTimelineSection.includes('v-if="item.bullets.length"'),
   'AlternatingTimelineSection must hide the bullet list when a timeline item has no bullets.',
+)
+assert(
+  pageHero.includes('flushVisualEnd?: boolean') &&
+    pageHero.includes("flushVisualEnd ? 'lg:-mr-4 lg:justify-self-end' : ''"),
+  'PageHero must support flushVisualEnd to cancel the container right padding for the hero visual.',
 )
 assert(
   tanyaoHeroVisual.includes('viewBox="0 0 560 560"') &&
@@ -411,7 +420,7 @@ assert(
     tanyaoHeroVisual.includes('IconBox') &&
     tanyaoHeroVisual.includes('tone="soft"') &&
     tanyaoHeroVisual.includes('探曜AIoT') &&
-    tanyaoHeroVisual.includes('AI-Powered IoT Platform') &&
+    tanyaoHeroVisual.includes('智能物联底座') &&
     tanyaoHeroVisual.includes('链接生态') &&
     tanyaoHeroVisual.includes('探曜 Edge') &&
     tanyaoHeroVisual.includes('设备接入') &&
@@ -424,8 +433,10 @@ assert(
     tanyaoHeroVisual.includes('top-[18px]') &&
     tanyaoHeroVisual.includes('top-[208px]') &&
     tanyaoHeroVisual.includes('bottom-[46px]') &&
+    tanyaoHeroVisual.includes('rounded-[24px]') &&
+    tanyaoHeroVisual.includes('rounded-[32px]') &&
     !tanyaoHeroVisual.includes('<style'),
-  'TanyaoHeroVisual must replicate the EMQX Edge three-layer hero visual with IconBox logos and Tailwind-only styles.',
+  'TanyaoHeroVisual must replicate the EMQX Edge three-layer hero visual with IconBox logos, boyao-aligned card radii, and Tailwind-only styles.',
 )
 assert(
   tanyaoHero.includes('PageHero') &&
@@ -433,10 +444,19 @@ assert(
     tanyaoHero.includes('title-line="连接、感知、智能"') &&
     tanyaoHero.includes('title-gradient="AIoT智能物联底座"') &&
     tanyaoHero.includes('visual-label="TANYAOIOT_HORE_WEBM"') &&
-    tanyaoHero.includes('HeroStatsStrip') &&
-    tanyaoHero.includes(':columns="4"') &&
-    tanyaoHero.includes('tanyaoHeroStats'),
-  'TanyaoHero must compose the shared PageHero with the requirement copy and a 1x4 HeroStatsStrip.',
+    tanyaoHero.includes('flush-bottom') &&
+    tanyaoHero.includes('flush-visual-end') &&
+    !tanyaoHero.includes('HeroStatsStrip'),
+  'TanyaoHero must compose the shared PageHero with the requirement copy, a flush-bottom rhythm, and a flush-right visual; the stats strip lives in its own section.',
+)
+assert(
+  tanyaoStats.includes('HeroStatsStrip') &&
+    tanyaoStats.includes('tanyaoHeroStats') &&
+    tanyaoStats.includes(':columns="4"') &&
+    tanyaoStats.includes('placement="section"') &&
+    tanyaoStats.includes('container') &&
+    !tanyaoStats.includes('<style'),
+  'TanyaoStatsSection must render the 1x4 HeroStatsStrip as a standalone section below the flush-bottom hero.',
 )
 assert(
   tanyaoSolution.includes('ProductSystemSection') &&
@@ -463,12 +483,13 @@ assert(
     tanyaoPage.includes('eyebrow="Device Agent"') &&
     tanyaoPage.includes('columns="three"') &&
     tanyaoPage.includes('title-id="tanyao-cta-title"') &&
-    tanyaoPage.indexOf('<TanyaoHero') < tanyaoPage.indexOf('tanyao-challenge-title') &&
+    tanyaoPage.indexOf('<TanyaoHero') < tanyaoPage.indexOf('<TanyaoStatsSection') &&
+    tanyaoPage.indexOf('<TanyaoStatsSection') < tanyaoPage.indexOf('tanyao-challenge-title') &&
     tanyaoPage.indexOf('tanyao-challenge-title') < tanyaoPage.indexOf('<TanyaoSolutionSection') &&
     tanyaoPage.indexOf('<TanyaoSolutionSection') < tanyaoPage.indexOf('<TanyaoCapabilitySection') &&
     tanyaoPage.indexOf('<TanyaoCapabilitySection') < tanyaoPage.indexOf('tanyao-agent-title') &&
     tanyaoPage.indexOf('tanyao-agent-title') < tanyaoPage.indexOf('<CtaSection'),
-  'The ai-iot page must assemble hero, challenges, solution, capabilities, Device Agent grid, and CTA in order.',
+  'The ai-iot page must assemble hero, stats section, challenges, solution, capabilities, Device Agent grid, and CTA in order.',
 )
 assert(
   tanyaoData.includes('export const tanyaoHeroStats: HeroStatItem[]') &&

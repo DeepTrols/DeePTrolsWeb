@@ -19,12 +19,14 @@ withDefaults(
     actions: PageHeroAction[]
     visualLabel?: string
     flushBottom?: boolean
+    flushVisualEnd?: boolean
     visualSize?: 'default' | 'large' | 'fluid'
   }>(),
   {
     badgeIcon: undefined,
     visualLabel: undefined,
     flushBottom: false,
+    flushVisualEnd: false,
     visualSize: 'default',
   },
 )
@@ -92,13 +94,14 @@ withDefaults(
 
         <div
           class="page-hero__visual relative isolate flex w-full justify-self-center overflow-visible"
-          :class="
+          :class="[
             visualSize === 'large'
               ? 'max-w-[820px] self-stretch'
               : visualSize === 'fluid'
                 ? 'max-w-lg xl:max-w-xl 2xl:max-w-2xl self-center'
-                : 'max-w-lg self-center'
-          "
+                : 'max-w-lg self-center',
+            flushVisualEnd ? 'lg:-mr-4 lg:justify-self-end' : '',
+          ]"
           :aria-label="visualLabel"
         >
           <div class="page-hero__visual-glow" aria-hidden="true"></div>

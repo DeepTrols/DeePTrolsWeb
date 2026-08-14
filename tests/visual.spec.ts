@@ -1440,9 +1440,9 @@ describe('visual implementation contract', () => {
 })
 
 describe('tanyao ai-iot page contract', () => {
-  it('renders the tanyao hero through PageHero with the required copy and stats strip', () => {
+  it('renders the tanyao hero through PageHero with a flush-bottom rhythm and flush-right visual', () => {
     const hero = readComponent('components/product/tanyao/TanyaoHero.vue')
-    const heroStatsStrip = readComponent('components/common/HeroStatsStrip.vue')
+    const pageHero = readComponent('components/common/PageHero.vue')
 
     expect(hero).toContain('badge="探曜·AI物联感知平台"')
     expect(hero).toContain('RadioTower')
@@ -1451,11 +1451,29 @@ describe('tanyao ai-iot page contract', () => {
     expect(hero).toContain('title-gradient="AIoT智能物联底座"')
     expect(hero).toContain('visual-label="TANYAOIOT_HORE_WEBM"')
     expect(hero).toContain('visual-size="large"')
-    expect(hero).toContain('<HeroStatsStrip :items="tanyaoHeroStats" :columns="4" />')
+    expect(hero).toContain('flush-bottom')
+    expect(hero).toContain('flush-visual-end')
     expect(hero).toContain('<TanyaoHeroVisual />')
+    expect(hero).not.toContain('HeroStatsStrip')
+    expect(pageHero).toContain('flushVisualEnd?: boolean')
+    expect(pageHero).toContain("flushVisualEnd ? 'lg:-mr-4 lg:justify-self-end' : ''")
+  })
+
+  it('renders the 1x4 stats strip as a standalone section below the hero', () => {
+    const stats = readComponent('components/product/tanyao/TanyaoStatsSection.vue')
+    const heroStatsStrip = readComponent('components/common/HeroStatsStrip.vue')
+
+    expect(stats).toContain('HeroStatsStrip')
+    expect(stats).toContain('tanyaoHeroStats')
+    expect(stats).toContain(':columns="4"')
+    expect(stats).toContain('placement="section"')
+    expect(stats).toContain('container')
+    expect(stats).not.toContain('<style')
     expect(heroStatsStrip).toContain('columns?: 3 | 4')
     expect(heroStatsStrip).toContain('grid-cols-2 sm:grid-cols-4')
     expect(heroStatsStrip).toContain('grid-cols-3')
+    expect(heroStatsStrip).toContain("placement?: 'hero' | 'section'")
+    expect(heroStatsStrip).toContain('mx-auto mt-8 max-w-2xl lg:mx-0')
   })
 
   it('replicates the EMQX Edge hero visual structure with tanyao copy and unique SVG ids', () => {
@@ -1474,10 +1492,17 @@ describe('tanyao ai-iot page contract', () => {
     expect(heroVisual).toContain('stroke-dasharray="6 10"')
     expect(heroVisual).toContain('attributeName="stroke-dashoffset"')
 
+    // card radii follow the boyao hero visual baseline (24px cards, 32px platform card)
+    expect(heroVisual).toContain('rounded-[24px]')
+    expect(heroVisual).toContain('rounded-[32px]')
+    expect(heroVisual).not.toContain('rounded-xl ')
+    expect(heroVisual).not.toContain('rounded-2xl ')
+    expect(heroVisual).not.toContain('rounded-lg ')
+
     // top platform card
     expect(heroVisual).toContain('absolute left-1/2 top-[18px] w-[320px] -translate-x-1/2')
     expect(heroVisual).toContain('探曜AIoT')
-    expect(heroVisual).toContain('AI-Powered IoT Platform')
+    expect(heroVisual).toContain('智能物联底座')
     expect(heroVisual).toContain('AI Powered')
     expect(heroVisual).toContain('链接生态')
     expect(heroVisual).toContain('tanyaoIotLogo')
@@ -1511,10 +1536,12 @@ describe('tanyao ai-iot page contract', () => {
     const tanyaoData = readComponent('data/tanyao.ts')
 
     expect(page).toContain('<TanyaoHero />')
+    expect(page).toContain('<TanyaoStatsSection />')
     expect(page).toContain('title-id="tanyao-challenge-title"')
     expect(page).toContain('title-id="tanyao-agent-title"')
     expect(page).toContain('title-id="tanyao-cta-title"')
-    expect(page.indexOf('<TanyaoHero')).toBeLessThan(page.indexOf('tanyao-challenge-title'))
+    expect(page.indexOf('<TanyaoHero')).toBeLessThan(page.indexOf('<TanyaoStatsSection'))
+    expect(page.indexOf('<TanyaoStatsSection')).toBeLessThan(page.indexOf('tanyao-challenge-title'))
     expect(page.indexOf('tanyao-challenge-title')).toBeLessThan(page.indexOf('<TanyaoSolutionSection'))
     expect(page.indexOf('<TanyaoSolutionSection')).toBeLessThan(page.indexOf('<TanyaoCapabilitySection'))
     expect(page.indexOf('<TanyaoCapabilitySection')).toBeLessThan(page.indexOf('tanyao-agent-title'))
