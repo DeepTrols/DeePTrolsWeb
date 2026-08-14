@@ -16,6 +16,7 @@
 - 视觉素材通过 `#visual` slot 传入。
 - 默认 `visualSize` 为 `default`，右侧视觉保持产品页正常尺寸；只有 Why DeepTrols 这类明确需要放大视觉的页面可以传入 `visualSize="large"`。
 - 需要视觉贴齐 container 右边缘（右侧 padding 为 0）时传入 `flushVisualEnd`：组件在 `lg` 下为 `.page-hero__visual` 追加 `-mr-4`（抵消 container `padding-inline: 1rem`）与 `justify-self-end`；仅按需启用，默认关闭。
+- 布局对齐通过 `align` 控制：默认 `left`（`lg` 双列、文案左对齐、CTA 左对齐），保持现有产品页不变；传 `center` 时为单列居中版式——文案 `max-w-4xl text-center`、描述与 CTA 居中、`#visual` 视觉居中且不受 `visualSize` 宽度上限约束、不渲染 `.page-hero__visual-glow`（由视觉自带的 glow 承接）。Device Agent 页（EMQX Agents 风格编排器面板）使用 `align="center"`。
 - `PageHero` 不承载客户 logo；logo 必须通过独立区块渲染。
 
 ## Hero Logo Strip
