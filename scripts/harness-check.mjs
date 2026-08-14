@@ -172,6 +172,17 @@ const requiredFiles = [
   'components/product/tanyao/TanyaoStatsSection.vue',
   'components/product/device-agent/DeviceAgentHero.vue',
   'components/product/device-agent/DeviceAgentHeroVisual.vue',
+  'components/product/device-agent/DeviceAgentArchitectureSection.vue',
+  'components/product/device-agent/DeviceAgentValueSection.vue',
+  'components/product/device-agent/DeviceAgentRuntimeSection.vue',
+  'components/product/device-agent/useRuntimeTimeline.ts',
+  'components/product/device-agent/runtime/RuntimePanelShell.vue',
+  'components/product/device-agent/runtime/RuntimeEventPanel.vue',
+  'components/product/device-agent/runtime/RuntimeContextPanel.vue',
+  'components/product/device-agent/runtime/RuntimeToolsPanel.vue',
+  'components/product/device-agent/runtime/RuntimeSkillsPanel.vue',
+  'components/product/device-agent/runtime/RuntimeGuardrailsPanel.vue',
+  'components/product/device-agent/runtime/RuntimeTracePanel.vue',
 ]
 
 for (const file of requiredFiles) {
@@ -287,6 +298,17 @@ const deviceAgentData = read('data/device-agent.ts')
 const deviceAgentPage = read('pages/products/device-agent.vue')
 const deviceAgentHero = read('components/product/device-agent/DeviceAgentHero.vue')
 const deviceAgentHeroVisual = read('components/product/device-agent/DeviceAgentHeroVisual.vue')
+const deviceAgentArchitectureSection = read('components/product/device-agent/DeviceAgentArchitectureSection.vue')
+const deviceAgentValueSection = read('components/product/device-agent/DeviceAgentValueSection.vue')
+const deviceAgentRuntimeSection = read('components/product/device-agent/DeviceAgentRuntimeSection.vue')
+const runtimeTimeline = read('components/product/device-agent/useRuntimeTimeline.ts')
+const runtimePanelShell = read('components/product/device-agent/runtime/RuntimePanelShell.vue')
+const runtimeEventPanel = read('components/product/device-agent/runtime/RuntimeEventPanel.vue')
+const runtimeContextPanel = read('components/product/device-agent/runtime/RuntimeContextPanel.vue')
+const runtimeToolsPanel = read('components/product/device-agent/runtime/RuntimeToolsPanel.vue')
+const runtimeSkillsPanel = read('components/product/device-agent/runtime/RuntimeSkillsPanel.vue')
+const runtimeGuardrailsPanel = read('components/product/device-agent/runtime/RuntimeGuardrailsPanel.vue')
+const runtimeTracePanel = read('components/product/device-agent/runtime/RuntimeTracePanel.vue')
 
 assert(tailwind.includes('@import "tailwindcss"'), 'Tailwind CSS v4 entry is missing.')
 assert(tailwind.includes('@theme inline'), 'Tailwind CSS v4 theme bridge is missing.')
@@ -588,8 +610,14 @@ assert(
     deviceAgentPage.includes('title-id="device-agent-ecosystem-title"') &&
     deviceAgentPage.includes(':items="tanyaoAgents"') &&
     deviceAgentPage.includes('columns="three"') &&
-    deviceAgentPage.indexOf('<DeviceAgentHero') < deviceAgentPage.indexOf('device-agent-ecosystem-title'),
-  'The device-agent page must assemble the centered hero and the ecosystem grid (reusing the tanyao agents) in order.',
+    deviceAgentPage.includes('<DeviceAgentArchitectureSection') &&
+    deviceAgentPage.includes('<DeviceAgentValueSection') &&
+    deviceAgentPage.includes('<DeviceAgentRuntimeSection') &&
+    deviceAgentPage.indexOf('<DeviceAgentHero') < deviceAgentPage.indexOf('device-agent-ecosystem-title') &&
+    deviceAgentPage.indexOf('device-agent-ecosystem-title') < deviceAgentPage.indexOf('<DeviceAgentArchitectureSection') &&
+    deviceAgentPage.indexOf('<DeviceAgentArchitectureSection') < deviceAgentPage.indexOf('<DeviceAgentValueSection') &&
+    deviceAgentPage.indexOf('<DeviceAgentValueSection') < deviceAgentPage.indexOf('<DeviceAgentRuntimeSection'),
+  'The device-agent page must assemble hero, ecosystem grid, architecture, core value, and runtime sections in order.',
 )
 assert(
   deviceAgentData.includes('export interface DeviceAgentScene') &&
@@ -602,6 +630,177 @@ assert(
     deviceAgentData.includes('智能问数') &&
     deviceAgentData.includes('温度超过 85℃'),
   'data/device-agent.ts must centralize the six orchestrator scenes with typed exports.',
+)
+assert(
+  deviceAgentArchitectureSection.includes('ProductSystemSection') &&
+    deviceAgentArchitectureSection.includes('eyebrow="智能体架构"') &&
+    deviceAgentArchitectureSection.includes('title="从设备模型，到真正会行动的 Agent"') &&
+    deviceAgentArchitectureSection.includes('title-id="device-agent-architecture-title"') &&
+    deviceAgentArchitectureSection.includes('ProductSystemFlowFrame') &&
+    deviceAgentArchitectureSection.includes('label="Device Agent 智能体架构图占位"') &&
+    !deviceAgentArchitectureSection.includes('<style'),
+  'The device-agent architecture section must reuse ProductSystemSection with a ProductSystemFlowFrame placeholder (no flow yet) and stay Tailwind-only.',
+)
+assert(
+  deviceAgentValueSection.includes('ProductFeatureGridSection') &&
+    deviceAgentValueSection.includes('eyebrow="核心价值"') &&
+    deviceAgentValueSection.includes('title="Device Agent解决的三个关键问题"') &&
+    deviceAgentValueSection.includes('title-id="device-agent-value-title"') &&
+    deviceAgentValueSection.includes(':items="deviceAgentValueItems"') &&
+    deviceAgentValueSection.includes('columns="three"') &&
+    deviceAgentValueSection.includes(':icon-bordered="false"'),
+  'The device-agent core value section must render three borderless numeric-icon cards via ProductFeatureGridSection.',
+)
+assert(
+  featureCard.includes('feature-card__icon-label--borderless') &&
+    featureCard.includes('feature-card__icon-label--unfilled') &&
+    featureCard.includes('--dt-icon-box-shadow: none') &&
+    featureCard.includes('--dt-icon-box-bg: transparent'),
+  'FeatureCard numeric icon labels must honor iconBordered/iconFilled via icon-box CSS variables.',
+)
+assert(
+  deviceAgentRuntimeSection.includes('title-id="device-agent-runtime-title"') &&
+    deviceAgentRuntimeSection.includes('eyebrow="核心能力"') &&
+    deviceAgentRuntimeSection.includes('title="为设备事件而生的 Agent Runtime"') &&
+    deviceAgentRuntimeSection.includes('grid gap-8 lg:grid-cols-[360px_1fr] lg:gap-10') &&
+    deviceAgentRuntimeSection.includes('deviceAgentRuntimeTabs') &&
+    deviceAgentRuntimeSection.includes('aria-pressed') &&
+    deviceAgentRuntimeSection.includes('border-primary/30 bg-gradient-to-r from-primary/10 to-primary/5') &&
+    deviceAgentRuntimeSection.includes('border-transparent bg-transparent hover:bg-dt-bg-soft/50') &&
+    deviceAgentRuntimeSection.includes('absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-full bg-primary transition-all duration-300') &&
+    deviceAgentRuntimeSection.includes('bg-primary/15 text-primary') &&
+    deviceAgentRuntimeSection.includes('bg-dt-bg-soft/60 text-muted group-hover:text-highlighted') &&
+    deviceAgentRuntimeSection.includes('group-hover:translate-x-0 group-hover:opacity-40') &&
+    deviceAgentRuntimeSection.includes('ChevronRight') &&
+    deviceAgentRuntimeSection.includes(':key="active?.id"') &&
+    !deviceAgentRuntimeSection.includes('<style'),
+  'DeviceAgentRuntimeSection must replicate the EMQX agents left-tab layout (active bar, gradient, hover arrow) with keyed panel switching, Tailwind-only.',
+)
+assert(
+  runtimePanelShell.includes('animate-panel-in') &&
+    runtimePanelShell.includes(
+      'relative flex h-[520px] flex-col overflow-hidden rounded-2xl border border-dt-line-strong/60 bg-dt-bg-soft/30 sm:h-[480px] lg:h-[460px]',
+    ) &&
+    runtimePanelShell.includes('flex min-h-0 flex-1 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg p-4') &&
+    runtimePanelShell.includes('rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted') &&
+    !runtimePanelShell.includes('<style'),
+  'RuntimePanelShell must keep the reference fixed-height muted container with an inner default card and status badge, Tailwind-only.',
+)
+assert(
+  tailwind.includes('--animate-panel-in: panel-in 0.32s ease-out both') &&
+    tailwind.includes('@keyframes panel-in'),
+  'tailwind.css must define the runtime panel entry animation token.',
+)
+assert(
+  runtimeTimeline.includes('export function useRuntimeTimeline') &&
+    runtimeTimeline.includes('requestAnimationFrame') &&
+    runtimeTimeline.includes('onMounted') &&
+    runtimeTimeline.includes('onBeforeUnmount') &&
+    runtimeTimeline.includes('import.meta.client') &&
+    runtimeTimeline.includes('RUNTIME_BAR_WIDTH_CLASSES') &&
+    runtimeTimeline.includes("w-[100%]"),
+  'useRuntimeTimeline must be an SSR-safe rAF timeline with literal Tailwind width classes for progress bars.',
+)
+assert(
+  runtimeEventPanel.includes('title="事件触发器"') &&
+    runtimeEventPanel.includes('badge="监听中"') &&
+    runtimeEventPanel.includes('DEVICE AGENT') &&
+    runtimeEventPanel.includes('事件已触发') &&
+    runtimeEventPanel.includes('事件校验') &&
+    runtimeEventPanel.includes('事件去重') &&
+    runtimeEventPanel.includes('上下文构建') &&
+    runtimeEventPanel.includes('61.8°C') &&
+    runtimeEventPanel.includes('让设备告警、指标异常、规则命中与定时任务直接触发 Agent，自动启动后续分析与处置。') &&
+    !runtimeEventPanel.includes('<style'),
+  'The event trigger panel must animate the four ESS-01 event sources into the Device Agent runtime with the validation pipeline.',
+)
+assert(
+  runtimeContextPanel.includes('title="设备上下文"') &&
+    runtimeContextPanel.includes('badge="正在构建"') &&
+    runtimeContextPanel.includes('上下文引擎') &&
+    runtimeContextPanel.includes('设备上下文') &&
+    runtimeContextPanel.includes('知识参考') &&
+    runtimeContextPanel.includes('上下文已就绪 · 1.2 秒') &&
+    runtimeContextPanel.includes('+45.1%') &&
+    !runtimeContextPanel.includes('<style'),
+  'The context panel must fuse realtime, history, status, and knowledge sources into the ESS-01 device context.',
+)
+assert(
+  runtimeToolsPanel.includes('title="MCP 工具"') &&
+    runtimeToolsPanel.includes('badge="6 个可用"') &&
+    runtimeToolsPanel.includes('device.execute_command') &&
+    runtimeToolsPanel.includes('timeseries.query') &&
+    runtimeToolsPanel.includes('knowledge.search') &&
+    runtimeToolsPanel.includes('workorder.create') &&
+    runtimeToolsPanel.includes('Agent 判断') &&
+    runtimeToolsPanel.includes('下一步动作') &&
+    runtimeToolsPanel.includes('创建储能运维工单') &&
+    !runtimeToolsPanel.includes('<style'),
+  'The MCP tools panel must show the ESS-01 reasoning loop across device, data, and business tools.',
+)
+assert(
+  runtimeSkillsPanel.includes('title="Skills"') &&
+    runtimeSkillsPanel.includes('badge="按需加载"') &&
+    runtimeSkillsPanel.includes('正在匹配 Skills...') &&
+    runtimeSkillsPanel.includes('getRuntimeBarWidthClass') &&
+    runtimeSkillsPanel.includes('告警分诊') &&
+    runtimeSkillsPanel.includes('热异常诊断') &&
+    runtimeSkillsPanel.includes('工单派发') &&
+    runtimeSkillsPanel.includes('热异常分析') &&
+    runtimeSkillsPanel.includes('处置决策') &&
+    runtimeSkillsPanel.includes('已挂载 3 个 Skills · 就绪') &&
+    !runtimeSkillsPanel.includes('<style'),
+  'The skills panel must animate on-demand matching progress into a mounted execution chain.',
+)
+assert(
+  runtimeGuardrailsPanel.includes('title="安全执行"') &&
+    runtimeGuardrailsPanel.includes('badge="护栏已启用"') &&
+    runtimeGuardrailsPanel.includes('device.execute_command') &&
+    runtimeGuardrailsPanel.includes('权限检查') &&
+    runtimeGuardrailsPanel.includes('设备范围检查') &&
+    runtimeGuardrailsPanel.includes('参数校验') &&
+    runtimeGuardrailsPanel.includes('安全策略检查') &&
+    runtimeGuardrailsPanel.includes('中风险') &&
+    runtimeGuardrailsPanel.includes('需要人工审批') &&
+    runtimeGuardrailsPanel.includes('批准') &&
+    runtimeGuardrailsPanel.includes('拒绝') &&
+    runtimeGuardrailsPanel.includes('执行确认') &&
+    !runtimeGuardrailsPanel.includes('<style'),
+  'The guardrails panel must show the approval-gated execution from proposal to device confirmation.',
+)
+assert(
+  runtimeTracePanel.includes('title="运行 Trace"') &&
+    runtimeTracePanel.includes('badge="采集中"') &&
+    runtimeTracePanel.includes('deviceAgentTraceSteps') &&
+    runtimeTracePanel.includes('重放本次运行') &&
+    runtimeTracePanel.includes('restart') &&
+    runtimeTracePanel.includes('耗时') &&
+    runtimeTracePanel.includes('工具调用') &&
+    runtimeTracePanel.includes('Skills') &&
+    !runtimeTracePanel.includes('<style'),
+  'The trace panel must replay the full ESS-01 runtime trace with live stats and a replay control.',
+)
+assert(
+  deviceAgentData.includes('export interface DeviceAgentValueItem') &&
+    deviceAgentData.includes('export const deviceAgentValueItems: DeviceAgentValueItem[]') &&
+    deviceAgentData.includes('设备事件无法直接驱动 AI') &&
+    deviceAgentData.includes('AI 能判断，但无法形成执行闭环') &&
+    deviceAgentData.includes('通用 Agent 难以适配工业场景') &&
+    deviceAgentData.includes('MQTT 消息原生触发') &&
+    deviceAgentData.includes('export interface DeviceAgentRuntimeTab') &&
+    deviceAgentData.includes('export const deviceAgentRuntimeTabs: DeviceAgentRuntimeTab[]') &&
+    deviceAgentData.includes('多源事件触发') &&
+    deviceAgentData.includes('设备上下文融合') &&
+    deviceAgentData.includes('MCP 工具连接') &&
+    deviceAgentData.includes('Skills 按需挂载') &&
+    deviceAgentData.includes('安全执行护栏') &&
+    deviceAgentData.includes('全链路可观测') &&
+    deviceAgentData.includes('export interface DeviceAgentTraceStep') &&
+    deviceAgentData.includes('export const deviceAgentTraceSteps: DeviceAgentTraceStep[]') &&
+    deviceAgentData.includes('WO-20260814-018') &&
+    deviceAgentData.includes('10:24:12.031') &&
+    deviceAgentData.includes('10:24:20.419'),
+  'data/device-agent.ts must centralize core value items, runtime capability tabs, and trace steps with typed exports.',
 )
 assert(
   baseTabs.includes('role="tablist"') &&

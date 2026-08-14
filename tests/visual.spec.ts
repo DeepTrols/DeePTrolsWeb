@@ -1688,4 +1688,139 @@ describe('device agent page contract', () => {
     expect(data.indexOf('预测维护')).toBeLessThan(data.indexOf('周报汇总'))
     expect(data.indexOf('周报汇总')).toBeLessThan(data.indexOf('智能问数'))
   })
+
+  it('renders Section2 through the shared ProductSystemSection with a flow frame placeholder', () => {
+    const section = readComponent('components/product/device-agent/DeviceAgentArchitectureSection.vue')
+
+    expect(section).toContain('ProductSystemSection')
+    expect(section).toContain('eyebrow="智能体架构"')
+    expect(section).toContain('title="从设备模型，到真正会行动的 Agent"')
+    expect(section).toContain('title-id="device-agent-architecture-title"')
+    expect(section).toContain('subtitle="Agent 理解设备能力，读取实时状态，执行指令并返回可验证的结果。"')
+    expect(section).toContain('ProductSystemFlowFrame')
+    expect(section).not.toContain('<style')
+  })
+
+  it('renders Section3 as three borderless numeric-icon cards and keeps FeatureCard backward compatible', () => {
+    const section = readComponent('components/product/device-agent/DeviceAgentValueSection.vue')
+    const featureCard = readComponent('components/common/card/FeatureCard.vue')
+
+    expect(section).toContain('eyebrow="核心价值"')
+    expect(section).toContain('title="Device Agent解决的三个关键问题"')
+    expect(section).toContain('title-id="device-agent-value-title"')
+    expect(section).toContain(':items="deviceAgentValueItems"')
+    expect(section).toContain('columns="three"')
+    expect(section).toContain(':icon-bordered="false"')
+
+    // numeric icon labels now honor iconBordered/iconFilled without changing the default rendering
+    expect(featureCard).toContain('feature-card__icon-label--borderless')
+    expect(featureCard).toContain('feature-card__icon-label--unfilled')
+    expect(featureCard).toContain("--dt-icon-box-shadow: none")
+    expect(featureCard).toContain("--dt-icon-box-bg: transparent")
+    expect(featureCard).toContain('class="relative dt-icon-box dt-icon-box--gradient text-sm font-bold"')
+  })
+
+  it('replicates the EMQX agents left-tab runtime layout with keyed panel switching', () => {
+    const section = readComponent('components/product/device-agent/DeviceAgentRuntimeSection.vue')
+
+    expect(section).not.toContain('<style')
+    expect(section).toContain('title-id="device-agent-runtime-title"')
+    expect(section).toContain('eyebrow="核心能力"')
+    expect(section).toContain('title="为设备事件而生的 Agent Runtime"')
+    expect(section).toContain('grid gap-8 lg:grid-cols-[360px_1fr] lg:gap-10')
+    expect(section).toContain('deviceAgentRuntimeTabs')
+    expect(section).toContain(':aria-pressed="index === activeTab"')
+    expect(section).toContain('border-primary/30 bg-gradient-to-r from-primary/10 to-primary/5')
+    expect(section).toContain('border-transparent bg-transparent hover:bg-dt-bg-soft/50')
+    expect(section).toContain('absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-full bg-primary transition-all duration-300')
+    expect(section).toContain('bg-primary/15 text-primary')
+    expect(section).toContain('bg-dt-bg-soft/60 text-muted group-hover:text-highlighted')
+    expect(section).toContain('group-hover:translate-x-0 group-hover:opacity-40')
+    expect(section).toContain('ChevronRight')
+    expect(section).toContain(':key="active?.id"')
+  })
+
+  it('keeps the runtime panel shell fixed-height with the muted container and inner default card', () => {
+    const shell = readComponent('components/product/device-agent/runtime/RuntimePanelShell.vue')
+    const tailwind = readComponent('assets/css/tailwind.css')
+
+    expect(shell).not.toContain('<style')
+    expect(shell).toContain('animate-panel-in')
+    expect(shell).toContain(
+      'relative flex h-[520px] flex-col overflow-hidden rounded-2xl border border-dt-line-strong/60 bg-dt-bg-soft/30 sm:h-[480px] lg:h-[460px]',
+    )
+    expect(shell).toContain('flex min-h-0 flex-1 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg p-4')
+    expect(shell).toContain('rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted')
+
+    expect(tailwind).toContain('--animate-panel-in: panel-in 0.32s ease-out both')
+    expect(tailwind).toContain('@keyframes panel-in')
+  })
+
+  it('uses an SSR-safe rAF timeline composable for the six runtime panels', () => {
+    const timeline = readComponent('components/product/device-agent/useRuntimeTimeline.ts')
+
+    expect(timeline).toContain('export function useRuntimeTimeline')
+    expect(timeline).toContain('requestAnimationFrame')
+    expect(timeline).toContain('onMounted')
+    expect(timeline).toContain('onBeforeUnmount')
+    expect(timeline).toContain('import.meta.client')
+    expect(timeline).toContain('RUNTIME_BAR_WIDTH_CLASSES')
+    expect(timeline).toContain("'w-[0%]'")
+    expect(timeline).toContain("'w-[100%]'")
+    expect(timeline).toContain('export function stageCount')
+  })
+
+  it('keeps the ESS-01 closed loop across the six runtime panels', () => {
+    const eventPanel = readComponent('components/product/device-agent/runtime/RuntimeEventPanel.vue')
+    const contextPanel = readComponent('components/product/device-agent/runtime/RuntimeContextPanel.vue')
+    const toolsPanel = readComponent('components/product/device-agent/runtime/RuntimeToolsPanel.vue')
+    const skillsPanel = readComponent('components/product/device-agent/runtime/RuntimeSkillsPanel.vue')
+    const guardrailsPanel = readComponent('components/product/device-agent/runtime/RuntimeGuardrailsPanel.vue')
+    const tracePanel = readComponent('components/product/device-agent/runtime/RuntimeTracePanel.vue')
+
+    expect(eventPanel).toContain('badge="监听中"')
+    expect(eventPanel).toContain('DEVICE AGENT')
+    expect(eventPanel).toContain('事件已触发')
+    expect(eventPanel).toContain('61.8°C')
+
+    expect(contextPanel).toContain('badge="正在构建"')
+    expect(contextPanel).toContain('上下文引擎')
+    expect(contextPanel).toContain('上下文已就绪 · 1.2 秒')
+
+    expect(toolsPanel).toContain('badge="6 个可用"')
+    expect(toolsPanel).toContain('timeseries.query')
+    expect(toolsPanel).toContain('knowledge.search')
+    expect(toolsPanel).toContain('创建储能运维工单')
+
+    expect(skillsPanel).toContain('badge="按需加载"')
+    expect(skillsPanel).toContain('正在匹配 Skills...')
+    expect(skillsPanel).toContain('已挂载 3 个 Skills · 就绪')
+
+    expect(guardrailsPanel).toContain('badge="护栏已启用"')
+    expect(guardrailsPanel).toContain('device.execute_command')
+    expect(guardrailsPanel).toContain('需要人工审批')
+    expect(guardrailsPanel).toContain('执行确认')
+
+    expect(tracePanel).toContain('badge="采集中"')
+    expect(tracePanel).toContain('deviceAgentTraceSteps')
+    expect(tracePanel).toContain('重放本次运行')
+    expect(tracePanel).toContain('@click="restart()"')
+
+    for (const panel of [eventPanel, contextPanel, toolsPanel, skillsPanel, guardrailsPanel, tracePanel]) {
+      expect(panel).not.toContain('<style')
+      expect(panel).toContain('RuntimePanelShell')
+      expect(panel).toContain('useRuntimeTimeline')
+    }
+  })
+
+  it('assembles the device agent page sections in the required order', () => {
+    const page = readComponent('pages/products/device-agent.vue')
+
+    expect(page).toContain('<DeviceAgentArchitectureSection />')
+    expect(page).toContain('<DeviceAgentValueSection />')
+    expect(page).toContain('<DeviceAgentRuntimeSection />')
+    expect(page.indexOf('device-agent-ecosystem-title')).toBeLessThan(page.indexOf('<DeviceAgentArchitectureSection'))
+    expect(page.indexOf('<DeviceAgentArchitectureSection')).toBeLessThan(page.indexOf('<DeviceAgentValueSection'))
+    expect(page.indexOf('<DeviceAgentValueSection')).toBeLessThan(page.indexOf('<DeviceAgentRuntimeSection'))
+  })
 })

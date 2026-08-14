@@ -2,7 +2,10 @@
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
+import DeviceAgentArchitectureSection from '~/components/product/device-agent/DeviceAgentArchitectureSection.vue'
 import DeviceAgentHero from '~/components/product/device-agent/DeviceAgentHero.vue'
+import DeviceAgentRuntimeSection from '~/components/product/device-agent/DeviceAgentRuntimeSection.vue'
+import DeviceAgentValueSection from '~/components/product/device-agent/DeviceAgentValueSection.vue'
 import { tanyaoAgents } from '~/data/tanyao'
 
 useSeoMeta({
@@ -26,6 +29,9 @@ useSeoMeta({
         columns="three"
         nowrap-subtitle
       />
+      <DeviceAgentArchitectureSection />
+      <DeviceAgentValueSection />
+      <DeviceAgentRuntimeSection />
     </main>
     <SiteFooter />
   </div>

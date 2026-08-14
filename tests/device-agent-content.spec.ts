@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { deviceAgentScenes } from '../data/device-agent'
+import {
+  deviceAgentRuntimeTabs,
+  deviceAgentScenes,
+  deviceAgentTraceSteps,
+  deviceAgentValueItems,
+} from '../data/device-agent'
 import { primaryNavigation } from '../data/navigation'
 
 describe('Device Agent product page content contract', () => {
@@ -42,6 +47,61 @@ describe('Device Agent product page content contract', () => {
   it('assigns an icon to every scene', () => {
     for (const scene of deviceAgentScenes) {
       expect(scene.icon, scene.label).toBeTruthy()
+    }
+  })
+
+  it('defines the three core value items with numeric icons', () => {
+    expect(deviceAgentValueItems.map((item) => item.iconLabel)).toEqual(['01', '02', '03'])
+    expect(deviceAgentValueItems.map((item) => item.title)).toEqual([
+      '设备事件无法直接驱动 AI',
+      'AI 能判断，但无法形成执行闭环',
+      '通用 Agent 难以适配工业场景',
+    ])
+    for (const item of deviceAgentValueItems) {
+      expect(item.description.length, item.title).toBeGreaterThan(0)
+    }
+  })
+
+  it('defines the six runtime capability tabs in the required order', () => {
+    expect(deviceAgentRuntimeTabs.map((tab) => tab.id)).toEqual([
+      'events',
+      'context',
+      'tools',
+      'skills',
+      'guardrails',
+      'trace',
+    ])
+    expect(deviceAgentRuntimeTabs.map((tab) => tab.label)).toEqual([
+      '多源事件触发',
+      '设备上下文融合',
+      'MCP 工具连接',
+      'Skills 按需挂载',
+      '安全执行护栏',
+      '全链路可观测',
+    ])
+    for (const tab of deviceAgentRuntimeTabs) {
+      expect(tab.icon, tab.label).toBeTruthy()
+      expect(tab.panelTitle, tab.label).toBeTruthy()
+      expect(tab.panelBadge, tab.label).toBeTruthy()
+    }
+  })
+
+  it('keeps the ESS-01 trace timeline ordered by timestamp', () => {
+    expect(deviceAgentTraceSteps.map((step) => step.kind)).toEqual([
+      '事件',
+      '上下文',
+      '知识检索',
+      'Skill',
+      '模型推理',
+      '工具调用',
+      '执行结果',
+    ])
+    const times = deviceAgentTraceSteps.map((step) => step.time)
+    expect(times[0]).toBe('10:24:12.031')
+    expect(times[times.length - 1]).toBe('10:24:20.419')
+    expect([...times].sort()).toEqual(times)
+    for (const step of deviceAgentTraceSteps) {
+      expect(step.lines.length, step.kind).toBeGreaterThan(0)
     }
   })
 })

@@ -64,7 +64,14 @@ withDefaults(
   >
     <div class="feature-card__inner">
       <slot name="icon">
-        <div v-if="iconLabel" class="relative dt-icon-box dt-icon-box--gradient text-sm font-bold">
+        <div
+          v-if="iconLabel"
+          class="relative dt-icon-box dt-icon-box--gradient text-sm font-bold"
+          :class="{
+            'feature-card__icon-label--borderless': !iconBordered,
+            'feature-card__icon-label--unfilled': !iconFilled,
+          }"
+        >
           {{ iconLabel }}
         </div>
         <IconBox
@@ -119,5 +126,13 @@ withDefaults(
 .feature-card__action {
   margin-top: auto;
   padding-top: 24px;
+}
+
+.feature-card__icon-label--borderless {
+  --dt-icon-box-shadow: none;
+}
+
+.feature-card__icon-label--unfilled {
+  --dt-icon-box-bg: transparent;
 }
 </style>
