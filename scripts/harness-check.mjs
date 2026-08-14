@@ -457,9 +457,9 @@ assert(
     tanyaoHero.includes('title-gradient="AIoT智能物联底座"') &&
     tanyaoHero.includes('visual-label="TANYAOIOT_HORE_WEBM"') &&
     tanyaoHero.includes('flush-bottom') &&
-    tanyaoHero.includes('flush-visual-end') &&
+    !tanyaoHero.includes('flush-visual-end') &&
     !tanyaoHero.includes('HeroStatsStrip'),
-  'TanyaoHero must compose the shared PageHero with the requirement copy, a flush-bottom rhythm, and a flush-right visual; the stats strip lives in its own section.',
+  'TanyaoHero must compose the shared PageHero with the requirement copy and a flush-bottom rhythm, and must align the visual right edge the boyao way (ml-auto canvas, no flush-visual-end); the stats strip lives in its own section.',
 )
 assert(
   tanyaoStats.includes('HeroStatsStrip') &&

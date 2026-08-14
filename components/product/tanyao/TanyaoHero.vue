@@ -22,7 +22,6 @@ const heroActions: PageHeroAction[] = [
     visual-label="TANYAOIOT_HORE_WEBM"
     visual-size="large"
     flush-bottom
-    flush-visual-end
   >
     <template #visual>
       <TanyaoHeroVisual />

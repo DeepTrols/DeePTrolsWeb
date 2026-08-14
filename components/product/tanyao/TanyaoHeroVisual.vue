@@ -114,8 +114,8 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
 </script>
 
 <template>
-  <div class="hidden w-full max-w-xl lg:block 2xl:max-w-2xl">
-    <div class="pointer-events-none relative mx-auto h-[600px] w-full max-w-[600px]">
+  <div class="hidden w-full lg:block">
+    <div class="pointer-events-none relative ml-auto h-[600px] w-full max-w-[600px]">
       <div class="pointer-events-none absolute inset-0">
         <div
           class="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-primary/8 via-fuchsia-500/6 to-amber-400/8 blur-3xl"

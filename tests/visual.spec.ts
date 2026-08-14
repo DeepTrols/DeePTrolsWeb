@@ -1440,7 +1440,7 @@ describe('visual implementation contract', () => {
 })
 
 describe('tanyao ai-iot page contract', () => {
-  it('renders the tanyao hero through PageHero with a flush-bottom rhythm and flush-right visual', () => {
+  it('renders the tanyao hero through PageHero with a flush-bottom rhythm and the boyao-aligned visual', () => {
     const hero = readComponent('components/product/tanyao/TanyaoHero.vue')
     const pageHero = readComponent('components/common/PageHero.vue')
 
@@ -1452,7 +1452,8 @@ describe('tanyao ai-iot page contract', () => {
     expect(hero).toContain('visual-label="TANYAOIOT_HORE_WEBM"')
     expect(hero).toContain('visual-size="large"')
     expect(hero).toContain('flush-bottom')
-    expect(hero).toContain('flush-visual-end')
+    // the visual right edge follows the boyao baseline (ml-auto canvas), not flush-visual-end
+    expect(hero).not.toContain('flush-visual-end')
     expect(hero).toContain('<TanyaoHeroVisual />')
     expect(hero).not.toContain('HeroStatsStrip')
     expect(pageHero).toContain('flushVisualEnd?: boolean')
@@ -1487,8 +1488,9 @@ describe('tanyao ai-iot page contract', () => {
     expect(heroVisual).not.toContain('<style')
     expect(heroVisual).not.toMatch(/\sstyle=/)
 
-    // canvas and glow baseline
-    expect(heroVisual).toContain('pointer-events-none relative mx-auto h-[600px] w-full max-w-[600px]')
+    // canvas and glow baseline; the root and canvas follow the boyao right-flush geometry
+    expect(heroVisual).toContain('class="hidden w-full lg:block"')
+    expect(heroVisual).toContain('pointer-events-none relative ml-auto h-[600px] w-full max-w-[600px]')
     expect(heroVisual).toContain('viewBox="0 0 560 560"')
     expect(heroVisual).toContain('id="tanyaoFlowGradientUp"')
     expect(heroVisual).toContain('id="tanyaoFlowGradientDown"')
