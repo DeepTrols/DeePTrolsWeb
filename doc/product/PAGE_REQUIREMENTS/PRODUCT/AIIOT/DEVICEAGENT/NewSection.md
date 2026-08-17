@@ -561,3 +561,4 @@ Section4「核心能力」落地为 `components/product/device-agent/DeviceAgent
 因站点仅暗色主题且 `bg-muted`/`bg-default`/`text-muted` 等为 `@utility` 不支持透明度修饰符，参考页的 `bg-muted/N` 统一等价为 `bg-dt-bg-soft/N`、`border-muted/60` 等价为 `border-dt-line-strong/60`、`bg-default` 等价为 `bg-dt-bg`；新增组件全部 Tailwind-only，不新增 `<style>`；面板入场动画使用 `assets/css/tailwind.css` 新增的 `--animate-panel-in` token。
 
 排版与动效优化补充：针对首版面板在固定高度内容过密、字号过小（9–10px）导致的排版错乱，6 个动画面板已整体重构——正文统一不小于 11px（`text-xs` 为主、紧凑行 `text-[11px] leading-4`、仅 Trace 时间戳保留 `text-[10px]`），并按 lg 内层约 348px 的高度预算为每个阶段预留固定布局区域：所有元素一次性渲染、仅以 opacity 渐显，杜绝动画过程中的布局跳动；Skills 任务链改为横向排列，MCP 工具调用改为左右双卡片 + 底部 3 列工具格，Trace 改为单行条目（时间戳列 + 类别/详情同行截断）并以竖线连接，审批与执行流程双栏排布。进度条宽度类按 1% 粒度生成（`useRuntimeTimeline.ts` 的 `RUNTIME_BAR_WIDTH_CLASSES`），保证条宽与百分比文案精确一致。
+循环播放补充（TASK-008.5）：`useRuntimeTimeline` 调整为循环播放——elapsed 推进至 totalMs 后保持终态 `RUNTIME_LOOP_HOLD_MS`（1200ms）再归零重播，6 个动画面板统一循环展示；Trace 面板「重放本次运行」仍可立即从第一阶段重播。
