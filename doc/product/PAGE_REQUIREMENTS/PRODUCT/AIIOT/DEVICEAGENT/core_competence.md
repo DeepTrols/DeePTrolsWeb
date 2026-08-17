@@ -36,3 +36,5 @@ ESS-01 / 电芯温度异常
 footer 分割线修正补充（TASK-008.5）：footer 由 `p-5` 内衬区域移至 `RuntimePanelShell` 面板根级，`border-t` 分割线左右贴合面板外边框，与内层卡片之间保留 `p-5` 底部 20px 间距；事件面板内容高度预算不变。
 
 流水线卡片化补充（TASK-008.5）：事件校验 / 事件去重 / 上下文构建由竖排列表改为 `grid grid-cols-3` 横向三卡片，初始状态即全部可见；每张卡片带主题 icon（ShieldCheck / Combine / Layers）与状态 SVG 演变（CircleDashed 待处理 → LoaderCircle 进行中 → CircleCheck 完成），并通过背景色 `bg-dt-bg-soft/20` → `bg-primary/10` → `bg-primary/5` 的过渡呈现阶段推进，上下文构建在循环终态保持进行中。
+
+流水线内容布局重做补充（TASK-008.6）：三张流水线卡片重做为「大 icon + 标题 + 描述 + 状态行」布局——事件校验（BadgeCheck · 验证来源与事件结构 · 处理中... → ✓ 校验通过）、事件去重（CopyCheck · 过滤短时重复事件 · 处理中... → ✓ 去重完成）、上下文构建（Database · 关联设备与历史上下文 · 构建中...，保持进行中）；卡片之间以 ArrowRight 流线连接（sm+ 显示），流转到下一张卡片时流线由 muted 转 primary，active 阶段卡片图标附加 animate-pulse 轻微脉动，形成「事件进入 → 校验 → 去重 → Context Build → 唤醒 Agent」的视觉动线；移动端卡片纵向居中并隐藏描述行，面板高度预算不变。
