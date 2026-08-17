@@ -728,10 +728,19 @@ assert(
     runtimeEventPanel.includes('h-1.5 flex-1 rounded-full transition-colors duration-200') &&
     runtimeEventPanel.includes("index < activeBars ? 'bg-primary' : 'bg-dt-bg-soft'") &&
     runtimeEventPanel.includes('rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5') &&
-    runtimeEventPanel.includes('mt-1.5 grid grid-cols-3 gap-1.5') &&
-    runtimeEventPanel.includes('flex flex-col items-center gap-1 rounded-lg border p-2 transition-colors duration-500') &&
-    runtimeEventPanel.includes('CircleDashed') &&
-    runtimeEventPanel.includes('Combine') &&
+    runtimeEventPanel.includes('mt-1.5 flex items-stretch gap-1') &&
+    runtimeEventPanel.includes('验证来源与事件结构') &&
+    runtimeEventPanel.includes('过滤短时重复事件') &&
+    runtimeEventPanel.includes('关联设备与历史上下文') &&
+    runtimeEventPanel.includes('校验通过') &&
+    runtimeEventPanel.includes('去重完成') &&
+    runtimeEventPanel.includes('构建中...') &&
+    runtimeEventPanel.includes('BadgeCheck') &&
+    runtimeEventPanel.includes('CopyCheck') &&
+    runtimeEventPanel.includes('Database') &&
+    runtimeEventPanel.includes('ArrowRight') &&
+    runtimeEventPanel.includes('animate-pulse') &&
+    runtimeEventPanel.includes('size-6 shrink-0 transition-colors duration-500') &&
     runtimeEventPanel.includes("stepState(index) === 'pending' ? 'text-muted' : 'text-highlighted'") &&
     runtimeEventPanel.includes('<template #footer>') &&
     runtimeEventPanel.includes('max-w-xl text-sm text-muted lg:line-clamp-2') &&

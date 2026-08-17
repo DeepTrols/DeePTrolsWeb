@@ -1795,6 +1795,10 @@ describe('device agent page contract', () => {
     expect(eventPanel).toContain("index < activeBars ? 'bg-primary' : 'bg-dt-bg-soft'")
     expect(eventPanel).toContain('<template #footer>')
     expect(eventPanel).toContain('max-w-xl text-sm text-muted lg:line-clamp-2')
+    expect(eventPanel).toContain('验证来源与事件结构')
+    expect(eventPanel).toContain('关联设备与历史上下文')
+    expect(eventPanel).toContain('ArrowRight')
+    expect(eventPanel).toContain('animate-pulse')
 
     expect(contextPanel).toContain('badge="正在构建"')
     expect(contextPanel).toContain('上下文引擎')
