@@ -728,11 +728,15 @@ assert(
     runtimeEventPanel.includes('h-1.5 flex-1 rounded-full transition-colors duration-200') &&
     runtimeEventPanel.includes("index < activeBars ? 'bg-primary' : 'bg-dt-bg-soft'") &&
     runtimeEventPanel.includes('rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5') &&
-    runtimeEventPanel.includes('px-2.5 py-0.5 text-sm transition-opacity duration-500') &&
+    runtimeEventPanel.includes('mt-1.5 grid grid-cols-3 gap-1.5') &&
+    runtimeEventPanel.includes('flex flex-col items-center gap-1 rounded-lg border p-2 transition-colors duration-500') &&
+    runtimeEventPanel.includes('CircleDashed') &&
+    runtimeEventPanel.includes('Combine') &&
+    runtimeEventPanel.includes("stepState(index) === 'pending' ? 'text-muted' : 'text-highlighted'") &&
     runtimeEventPanel.includes('<template #footer>') &&
     runtimeEventPanel.includes('max-w-xl text-sm text-muted lg:line-clamp-2') &&
     !runtimeEventPanel.includes('<style'),
-  'The event trigger panel must follow the EMQX reference: primary DEVICE AGENT status card, four event progress bars, text-sm pipeline, and the caption in the shell footer.',
+  'The event trigger panel must follow the EMQX reference: primary DEVICE AGENT status card, four event progress bars, three always-visible horizontal pipeline state cards, and the caption in the shell footer.',
 )
 assert(
   runtimeContextPanel.includes('title="设备上下文"') &&

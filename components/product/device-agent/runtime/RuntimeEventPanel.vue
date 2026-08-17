@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CircleCheck, LoaderCircle, Radio } from '@lucide/vue'
+import { CircleCheck, CircleDashed, Combine, Layers, LoaderCircle, Radio, ShieldCheck } from '@lucide/vue'
 import { computed } from 'vue'
 import RuntimePanelShell from '~/components/product/device-agent/runtime/RuntimePanelShell.vue'
 import { stageCount, useRuntimeTimeline } from '~/components/product/device-agent/useRuntimeTimeline'
@@ -17,13 +17,43 @@ const events = [
   { title: '定时任务', detail: '储能柜巡检', value: '10:00' },
 ]
 
-const pipelineSteps = ['事件校验', '事件去重', '上下文构建']
+const pipelineSteps = [
+  { title: '事件校验', icon: ShieldCheck },
+  { title: '事件去重', icon: Combine },
+  { title: '上下文构建', icon: Layers },
+]
 
 const { elapsed } = useRuntimeTimeline(5800)
 
 const activeBars = computed(() => stageCount(elapsed.value, BAR_START_MS, BAR_INTERVAL_MS, events.length))
 const triggered = computed(() => elapsed.value >= TRIGGERED_MS)
-const pipelineDone = computed(() => stageCount(elapsed.value, PIPELINE_START_MS, PIPELINE_INTERVAL_MS, 3))
+
+function stepState(index: number): 'pending' | 'active' | 'done' {
+  const activeAt = PIPELINE_START_MS + index * PIPELINE_INTERVAL_MS
+  const doneAt = activeAt + PIPELINE_INTERVAL_MS
+  if (elapsed.value >= doneAt && index < pipelineSteps.length - 1) {
+    return 'done'
+  }
+  if (elapsed.value >= activeAt) {
+    return 'active'
+  }
+  return 'pending'
+}
+
+function stepCardClass(index: number): string {
+  const state = stepState(index)
+  if (state === 'active') {
+    return 'border-primary/40 bg-primary/10'
+  }
+  if (state === 'done') {
+    return 'border-primary/30 bg-primary/5'
+  }
+  return 'border-dt-line-strong/60 bg-dt-bg-soft/20'
+}
+
+function stepIconClass(index: number): string {
+  return stepState(index) === 'pending' ? 'text-muted' : 'text-primary'
+}
 </script>
 
 <template>
@@ -71,16 +101,34 @@ const pipelineDone = computed(() => stageCount(elapsed.value, PIPELINE_START_MS,
       </div>
     </div>
 
-    <div class="mt-1.5 grid gap-1">
+    <div class="mt-1.5 grid grid-cols-3 gap-1.5">
       <div
         v-for="(step, index) in pipelineSteps"
-        :key="step"
-        class="flex items-center justify-between rounded-lg border border-dt-line-strong/60 bg-dt-bg-soft/20 px-2.5 py-0.5 text-sm transition-opacity duration-500"
-        :class="index < pipelineDone ? 'opacity-100' : 'opacity-0'"
+        :key="step.title"
+        class="flex flex-col items-center gap-1 rounded-lg border p-2 transition-colors duration-500"
+        :class="stepCardClass(index)"
       >
-        <span class="text-muted">{{ step }}</span>
-        <LoaderCircle v-if="index === 2" class="size-3.5 animate-spin text-primary" aria-hidden="true" />
-        <CircleCheck v-else class="size-3.5 text-primary" aria-hidden="true" />
+        <div class="flex items-center gap-1">
+          <component
+            :is="step.icon"
+            class="size-4 transition-colors duration-500"
+            :class="stepIconClass(index)"
+            aria-hidden="true"
+          />
+          <LoaderCircle
+            v-if="stepState(index) === 'active'"
+            class="size-3.5 animate-spin text-primary"
+            aria-hidden="true"
+          />
+          <CircleCheck v-else-if="stepState(index) === 'done'" class="size-3.5 text-primary" aria-hidden="true" />
+          <CircleDashed v-else class="size-3.5 text-muted" aria-hidden="true" />
+        </div>
+        <span
+          class="text-xs leading-4 transition-colors duration-500"
+          :class="stepState(index) === 'pending' ? 'text-muted' : 'text-highlighted'"
+        >
+          {{ step.title }}
+        </span>
       </div>
     </div>
 
