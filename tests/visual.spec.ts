@@ -1799,6 +1799,10 @@ describe('device agent page contract', () => {
     expect(eventPanel).toContain('关联设备与历史上下文')
     expect(eventPanel).toContain('ArrowRight')
     expect(eventPanel).toContain('animate-pulse')
+    expect(eventPanel).toContain("import IconBox from '~/components/common/card/IconBox.vue'")
+    expect(eventPanel).toContain("stepState(index) === 'pending' ? 'soft' : 'primary'")
+    expect(eventPanel).toContain('truncate text-sm font-semibold text-highlighted')
+    expect(eventPanel).toContain('mt-1 hidden truncate text-xs leading-5 text-muted xl:block')
 
     expect(contextPanel).toContain('badge="正在构建"')
     expect(contextPanel).toContain('上下文引擎')

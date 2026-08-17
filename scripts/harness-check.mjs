@@ -740,8 +740,11 @@ assert(
     runtimeEventPanel.includes('Database') &&
     runtimeEventPanel.includes('ArrowRight') &&
     runtimeEventPanel.includes('animate-pulse') &&
-    runtimeEventPanel.includes('size-6 shrink-0 transition-colors duration-500') &&
-    runtimeEventPanel.includes("stepState(index) === 'pending' ? 'text-muted' : 'text-highlighted'") &&
+    runtimeEventPanel.includes("import IconBox from '~/components/common/card/IconBox.vue'") &&
+    runtimeEventPanel.includes("stepState(index) === 'pending' ? 'soft' : 'primary'") &&
+    runtimeEventPanel.includes('truncate text-sm font-semibold text-highlighted') &&
+    runtimeEventPanel.includes('mt-1 hidden truncate text-xs leading-5 text-muted xl:block') &&
+    runtimeEventPanel.includes('flex min-w-0 flex-1 flex-col items-center gap-1 rounded-lg border p-2.5 transition-colors duration-500 xl:flex-row xl:items-center xl:gap-2.5') &&
     runtimeEventPanel.includes('<template #footer>') &&
     runtimeEventPanel.includes('max-w-xl text-sm text-muted lg:line-clamp-2') &&
     !runtimeEventPanel.includes('<style'),

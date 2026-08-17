@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ArrowRight, BadgeCheck, CircleCheck, CopyCheck, Database, LoaderCircle, Radio } from '@lucide/vue'
 import { computed } from 'vue'
+import IconBox from '~/components/common/card/IconBox.vue'
 import RuntimePanelShell from '~/components/product/device-agent/runtime/RuntimePanelShell.vue'
 import { stageCount, useRuntimeTimeline } from '~/components/product/device-agent/useRuntimeTimeline'
 
@@ -51,8 +52,8 @@ function stepCardClass(index: number): string {
   return 'border-dt-line-strong/60 bg-dt-bg-soft/20'
 }
 
-function stepIconClass(index: number): string {
-  return stepState(index) === 'pending' ? 'text-muted' : 'text-primary'
+function stepIconTone(index: number): 'primary' | 'soft' {
+  return stepState(index) === 'pending' ? 'soft' : 'primary'
 }
 
 function stepStatusText(index: number): string {
@@ -127,38 +128,41 @@ function connectorOn(index: number): boolean {
     <div class="mt-1.5 flex items-stretch gap-1">
       <template v-for="(step, index) in pipelineSteps" :key="step.title">
         <div
-          class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-lg border p-2 transition-colors duration-500 sm:flex-row sm:gap-2"
+          class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-lg border p-2.5 transition-colors duration-500 xl:flex-row xl:items-center xl:gap-2.5"
           :class="stepCardClass(index)"
         >
-          <component
-            :is="step.icon"
-            class="size-6 shrink-0 transition-colors duration-500"
-            :class="[stepIconClass(index), stepState(index) === 'active' ? 'animate-pulse' : '']"
-            aria-hidden="true"
+          <IconBox
+            :icon="step.icon"
+            :size="40"
+            :icon-size="20"
+            :tone="stepIconTone(index)"
+            class="shrink-0"
+            :class="stepState(index) === 'active' ? 'animate-pulse' : ''"
           />
-          <div class="min-w-0 text-center sm:text-left">
-            <p
-              class="truncate text-xs font-semibold leading-4 transition-colors duration-500"
-              :class="stepState(index) === 'pending' ? 'text-muted' : 'text-highlighted'"
-            >
-              {{ step.title }}
-            </p>
-            <p class="hidden truncate text-[11px] leading-4 text-muted sm:block">{{ step.description }}</p>
-            <p
-              class="flex items-center justify-center gap-1 text-[11px] leading-4 transition-colors duration-500 sm:justify-start"
-              :class="stepStatusClass(index)"
-            >
-              <LoaderCircle
-                v-if="stepState(index) === 'active'"
-                class="size-3 shrink-0 animate-spin"
-                aria-hidden="true"
-              />
-              <CircleCheck v-else-if="stepState(index) === 'done'" class="size-3 shrink-0" aria-hidden="true" />
-              {{ stepStatusText(index) }}
+          <div class="min-w-0 text-center xl:flex-1 xl:text-left">
+            <p class="truncate text-sm font-semibold text-highlighted">{{ step.title }}</p>
+            <p class="mt-1 hidden truncate text-xs leading-5 text-muted xl:block" :title="step.description">
+              {{ step.description }}
             </p>
           </div>
+          <div
+            class="flex shrink-0 items-center justify-center gap-1 text-[11px] leading-4 transition-colors duration-500 xl:justify-start"
+            :class="stepStatusClass(index)"
+          >
+            <LoaderCircle
+              v-if="stepState(index) === 'active'"
+              class="size-3 shrink-0 animate-spin"
+              aria-hidden="true"
+            />
+            <CircleCheck v-else-if="stepState(index) === 'done'" class="size-3 shrink-0" aria-hidden="true" />
+            {{ stepStatusText(index) }}
+          </div>
         </div>
-        <div v-if="index < pipelineSteps.length - 1" class="hidden w-5 shrink-0 items-center justify-center sm:flex" aria-hidden="true">
+        <div
+          v-if="index < pipelineSteps.length - 1"
+          class="hidden w-4 shrink-0 items-center justify-center xl:flex"
+          aria-hidden="true"
+        >
           <ArrowRight
             class="size-3.5 transition-all duration-500"
             :class="connectorOn(index) ? 'text-primary opacity-100' : 'text-muted opacity-40'"
