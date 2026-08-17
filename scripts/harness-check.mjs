@@ -683,8 +683,11 @@ assert(
     ) &&
     runtimePanelShell.includes('flex min-h-0 flex-1 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg p-4') &&
     runtimePanelShell.includes('rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted') &&
+    runtimePanelShell.includes('v-if="$slots.footer"') &&
+    runtimePanelShell.includes('relative border-t border-dt-line-strong/40 px-5 py-4') &&
+    runtimePanelShell.includes('<slot name="footer" />') &&
     !runtimePanelShell.includes('<style'),
-  'RuntimePanelShell must keep the reference fixed-height muted container with an inner default card and status badge, Tailwind-only.',
+  'RuntimePanelShell must keep the reference fixed-height muted container with an inner default card, status badge, and optional footer slot, Tailwind-only.',
 )
 assert(
   tailwind.includes('--animate-panel-in: panel-in 0.32s ease-out both') &&
@@ -705,6 +708,7 @@ assert(
   runtimeEventPanel.includes('title="事件触发器"') &&
     runtimeEventPanel.includes('badge="监听中"') &&
     runtimeEventPanel.includes('DEVICE AGENT') &&
+    runtimeEventPanel.includes('等待事件') &&
     runtimeEventPanel.includes('事件已触发') &&
     runtimeEventPanel.includes('事件校验') &&
     runtimeEventPanel.includes('事件去重') &&
@@ -713,6 +717,20 @@ assert(
     runtimeEventPanel.includes('让设备告警、指标异常、规则命中与定时任务直接触发 Agent，自动启动后续分析与处置。') &&
     !runtimeEventPanel.includes('<style'),
   'The event trigger panel must animate the four ESS-01 event sources into the Device Agent runtime with the validation pipeline.',
+)
+assert(
+  runtimeEventPanel.includes('rounded-xl border border-primary/20 bg-primary/5 p-3') &&
+    runtimeEventPanel.includes('animate-ping') &&
+    runtimeEventPanel.includes('truncate font-mono text-base font-semibold text-highlighted') &&
+    runtimeEventPanel.includes("triggered ? '事件已触发' : '等待事件'") &&
+    runtimeEventPanel.includes('h-1.5 flex-1 rounded-full transition-colors duration-200') &&
+    runtimeEventPanel.includes("index < activeBars ? 'bg-primary' : 'bg-dt-bg-soft'") &&
+    runtimeEventPanel.includes('rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5') &&
+    runtimeEventPanel.includes('px-2.5 py-0.5 text-sm transition-opacity duration-500') &&
+    runtimeEventPanel.includes('<template #footer>') &&
+    runtimeEventPanel.includes('max-w-xl text-sm text-muted lg:line-clamp-2') &&
+    !runtimeEventPanel.includes('<style'),
+  'The event trigger panel must follow the EMQX reference: primary DEVICE AGENT status card, four event progress bars, text-sm pipeline, and the caption in the shell footer.',
 )
 assert(
   runtimeContextPanel.includes('title="设备上下文"') &&

@@ -27,6 +27,10 @@ defineProps<{
         <div class="flex min-h-0 flex-1 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg p-4">
           <slot />
         </div>
+
+        <div v-if="$slots.footer" class="relative border-t border-dt-line-strong/40 px-5 py-4">
+          <slot name="footer" />
+        </div>
       </div>
     </div>
   </div>

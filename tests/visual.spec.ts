@@ -1751,6 +1751,9 @@ describe('device agent page contract', () => {
     )
     expect(shell).toContain('flex min-h-0 flex-1 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg p-4')
     expect(shell).toContain('rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted')
+    expect(shell).toContain('v-if="$slots.footer"')
+    expect(shell).toContain('relative border-t border-dt-line-strong/40 px-5 py-4')
+    expect(shell).toContain('<slot name="footer" />')
 
     expect(tailwind).toContain('--animate-panel-in: panel-in 0.32s ease-out both')
     expect(tailwind).toContain('@keyframes panel-in')
@@ -1780,8 +1783,16 @@ describe('device agent page contract', () => {
 
     expect(eventPanel).toContain('badge="监听中"')
     expect(eventPanel).toContain('DEVICE AGENT')
+    expect(eventPanel).toContain('等待事件')
     expect(eventPanel).toContain('事件已触发')
     expect(eventPanel).toContain('61.8°C')
+    expect(eventPanel).toContain('rounded-xl border border-primary/20 bg-primary/5 p-3')
+    expect(eventPanel).toContain('animate-ping')
+    expect(eventPanel).toContain("triggered ? '事件已触发' : '等待事件'")
+    expect(eventPanel).toContain('h-1.5 flex-1 rounded-full transition-colors duration-200')
+    expect(eventPanel).toContain("index < activeBars ? 'bg-primary' : 'bg-dt-bg-soft'")
+    expect(eventPanel).toContain('<template #footer>')
+    expect(eventPanel).toContain('max-w-xl text-sm text-muted lg:line-clamp-2')
 
     expect(contextPanel).toContain('badge="正在构建"')
     expect(contextPanel).toContain('上下文引擎')
