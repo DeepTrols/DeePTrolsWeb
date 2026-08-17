@@ -24,9 +24,14 @@ export function getRuntimeBarWidthClass(progress: number, target: number): strin
 }
 
 /**
+ * 动画播完终态后的停留时长（ms）：随后 elapsed 归零循环重播，避免戛然而止。
+ */
+export const RUNTIME_LOOP_HOLD_MS = 1200
+
+/**
  * 依时间推进的分段动画计时器（SSR 安全）：
- * elapsed 从 0 推进到 totalMs，面板按 elapsed 阈值呈现阶段状态；
- * restart 用于「重放本次运行」，组件卸载时自动清理 rAF。
+ * elapsed 从 0 推进到 totalMs，终态停留 RUNTIME_LOOP_HOLD_MS 后归零循环重播；
+ * 面板按 elapsed 阈值呈现阶段状态，restart 用于立即从第一阶段重播，组件卸载时自动清理 rAF。
  */
 export function useRuntimeTimeline(totalMs: number) {
   const elapsed = ref(0)
@@ -35,21 +40,18 @@ export function useRuntimeTimeline(totalMs: number) {
   let rafId: number | null = null
   let startedAt: number | null = null
 
+  const cycleMs = totalMs + RUNTIME_LOOP_HOLD_MS
+
   function frame(now: number) {
     if (startedAt === null) {
       startedAt = now
     }
 
-    const value = Math.min(now - startedAt, totalMs)
+    const phase = (now - startedAt) % cycleMs
+    const value = Math.min(phase, totalMs)
     elapsed.value = value
-
-    if (value < totalMs) {
-      rafId = requestAnimationFrame(frame)
-      return
-    }
-
-    finished.value = true
-    rafId = null
+    finished.value = value >= totalMs
+    rafId = requestAnimationFrame(frame)
   }
 
   function restart() {

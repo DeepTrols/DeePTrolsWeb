@@ -701,8 +701,10 @@ assert(
     runtimeTimeline.includes('onBeforeUnmount') &&
     runtimeTimeline.includes('import.meta.client') &&
     runtimeTimeline.includes('RUNTIME_BAR_WIDTH_CLASSES') &&
-    runtimeTimeline.includes("w-[100%]"),
-  'useRuntimeTimeline must be an SSR-safe rAF timeline with literal Tailwind width classes for progress bars.',
+    runtimeTimeline.includes("w-[100%]") &&
+    runtimeTimeline.includes('export const RUNTIME_LOOP_HOLD_MS') &&
+    runtimeTimeline.includes('(now - startedAt) % cycleMs'),
+  'useRuntimeTimeline must be an SSR-safe rAF timeline with literal Tailwind width classes and a looping playback cycle.',
 )
 assert(
   runtimeEventPanel.includes('title="事件触发器"') &&

@@ -1771,6 +1771,8 @@ describe('device agent page contract', () => {
     expect(timeline).toContain("'w-[0%]'")
     expect(timeline).toContain("'w-[100%]'")
     expect(timeline).toContain('export function stageCount')
+    expect(timeline).toContain('export const RUNTIME_LOOP_HOLD_MS')
+    expect(timeline).toContain('(now - startedAt) % cycleMs')
   })
 
   it('keeps the ESS-01 closed loop across the six runtime panels', () => {
