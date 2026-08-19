@@ -105,8 +105,8 @@ export const deviceAgentRuntimeTabs: DeviceAgentRuntimeTab[] = [
     id: 'context',
     label: '设备上下文融合',
     icon: Layers,
-    panelTitle: '设备上下文',
-    panelBadge: '正在构建',
+    panelTitle: '设备上下文引擎',
+    panelBadge: '实时构建',
   },
   {
     id: 'tools',

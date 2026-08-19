@@ -683,6 +683,9 @@ assert(
     ) &&
     runtimePanelShell.includes('flex min-h-0 flex-1 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg p-4') &&
     runtimePanelShell.includes('rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted') &&
+    runtimePanelShell.includes('badgeDot?: boolean') &&
+    runtimePanelShell.includes('v-if="badgeDot"') &&
+    runtimePanelShell.includes('size-1 animate-pulse rounded-full bg-primary') &&
     runtimePanelShell.includes('v-if="$slots.footer"') &&
     runtimePanelShell.includes('relative border-t border-dt-line-strong/40 px-5 py-4') &&
     runtimePanelShell.includes('<slot name="footer" />') &&
@@ -751,15 +754,37 @@ assert(
   'The event trigger panel must follow the EMQX reference: primary DEVICE AGENT status card, four event progress bars, three always-visible horizontal pipeline state cards, and the caption in the shell footer.',
 )
 assert(
-  runtimeContextPanel.includes('title="设备上下文"') &&
-    runtimeContextPanel.includes('badge="正在构建"') &&
-    runtimeContextPanel.includes('上下文引擎') &&
-    runtimeContextPanel.includes('设备上下文') &&
+  runtimeContextPanel.includes('title="设备上下文引擎"') &&
+    runtimeContextPanel.includes('badge="实时构建"') &&
+    runtimeContextPanel.includes('badge-dot') &&
+    runtimeContextPanel.includes('ESS-01 设备上下文') &&
+    runtimeContextPanel.includes('构建中') &&
+    runtimeContextPanel.includes('读取中') &&
+    runtimeContextPanel.includes('已就绪') &&
+    runtimeContextPanel.includes('正在融合实时状态、历史时序、设备信息与知识数据。') &&
     runtimeContextPanel.includes('知识参考') &&
-    runtimeContextPanel.includes('上下文已就绪 · 1.2 秒') &&
     runtimeContextPanel.includes('+45.1%') &&
+    runtimeContextPanel.includes('text-amber-500') &&
+    runtimeContextPanel.includes('grid flex-1 grid-cols-2 gap-x-6 gap-y-1') &&
+    runtimeContextPanel.includes('mt-1.5 grid grid-cols-2 gap-2 sm:grid-cols-4') &&
+    runtimeContextPanel.includes("import IconBox from '~/components/common/card/IconBox.vue'") &&
+    runtimeContextPanel.includes('Activity') &&
+    runtimeContextPanel.includes('ChartNoAxesCombined') &&
+    runtimeContextPanel.includes('Cpu') &&
+    runtimeContextPanel.includes('BookOpen') &&
+    runtimeContextPanel.includes('Terminal') &&
+    runtimeContextPanel.includes('上下文构建序列') &&
+    runtimeContextPanel.includes('context.realtime({ device: "ESS-01" })') &&
+    runtimeContextPanel.includes('context.timeseries({ device: "ESS-01", window: "7d" })') &&
+    runtimeContextPanel.includes('context.device({ device: "ESS-01" })') &&
+    runtimeContextPanel.includes('context.knowledge({ query: "电芯持续高温" })') &&
+    runtimeContextPanel.includes('context.build({ device: "ESS-01", sources: 4 })') &&
+    runtimeContextPanel.includes('Context Ready · 1.2s') &&
+    runtimeContextPanel.includes('useRuntimeTimeline(8800)') &&
+    runtimeContextPanel.includes('Agent 自动融合实时状态、历史时序、设备信息与知识数据，为每一次运行动态构建设备级上下文。') &&
+    runtimeContextPanel.includes('<template #footer>') &&
     !runtimeContextPanel.includes('<style'),
-  'The context panel must fuse realtime, history, status, and knowledge sources into the ESS-01 device context.',
+  'The context panel must fuse realtime, history, status, and knowledge sources into the ESS-01 device context with a typed build sequence, cycling Active source cards, and the EMQX-style footer caption.',
 )
 assert(
   runtimeToolsPanel.includes('title="MCP 工具"') &&

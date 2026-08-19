@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 
-defineProps<{
-  icon: Component
-  title: string
-  badge: string
-}>()
+withDefaults(
+  defineProps<{
+    icon: Component
+    title: string
+    badge: string
+    badgeDot?: boolean
+  }>(),
+  { badgeDot: false },
+)
 </script>
 
 <template>
@@ -19,7 +23,8 @@ defineProps<{
             <component :is="icon" class="size-4 shrink-0 text-primary" aria-hidden="true" />
             <span class="truncate text-sm font-semibold text-highlighted">{{ title }}</span>
           </div>
-          <span class="shrink-0 rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted">
+          <span class="flex shrink-0 items-center gap-1 rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted">
+            <span v-if="badgeDot" class="size-1 animate-pulse rounded-full bg-primary" aria-hidden="true"></span>
             {{ badge }}
           </span>
         </div>
