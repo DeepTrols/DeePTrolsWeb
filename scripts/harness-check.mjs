@@ -759,14 +759,15 @@ assert(
     runtimeContextPanel.includes('badge-dot') &&
     runtimeContextPanel.includes('ESS-01 设备上下文') &&
     runtimeContextPanel.includes('构建中') &&
-    runtimeContextPanel.includes('读取中') &&
     runtimeContextPanel.includes('已就绪') &&
     runtimeContextPanel.includes('正在融合实时状态、历史时序、设备信息与知识数据。') &&
-    runtimeContextPanel.includes('知识参考') &&
-    runtimeContextPanel.includes('+45.1%') &&
-    runtimeContextPanel.includes('text-amber-500') &&
-    runtimeContextPanel.includes('grid flex-1 grid-cols-2 gap-x-6 gap-y-1') &&
-    runtimeContextPanel.includes('mt-1.5 grid grid-cols-2 gap-2 sm:grid-cols-4') &&
+    runtimeContextPanel.includes('relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15') &&
+    runtimeContextPanel.includes('shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary') &&
+    runtimeContextPanel.includes('mt-1.5 grid grid-cols-2 gap-2 sm:max-h-36 sm:flex-1 sm:grid-cols-4 sm:grid-rows-1') &&
+    runtimeContextPanel.includes('text-sm font-semibold leading-5') &&
+    runtimeContextPanel.includes('font-mono text-xs leading-4') &&
+    runtimeContextPanel.includes('mt-auto rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5') &&
+    runtimeContextPanel.includes('truncate text-sm text-muted') &&
     runtimeContextPanel.includes("import IconBox from '~/components/common/card/IconBox.vue'") &&
     runtimeContextPanel.includes('Activity') &&
     runtimeContextPanel.includes('ChartNoAxesCombined') &&
@@ -784,7 +785,7 @@ assert(
     runtimeContextPanel.includes('Agent 自动融合实时状态、历史时序、设备信息与知识数据，为每一次运行动态构建设备级上下文。') &&
     runtimeContextPanel.includes('<template #footer>') &&
     !runtimeContextPanel.includes('<style'),
-  'The context panel must fuse realtime, history, status, and knowledge sources into the ESS-01 device context with a typed build sequence, cycling Active source cards, and the EMQX-style footer caption.',
+  'The context panel must keep the simplified ESS-01 context header card, four taller source cards, typed build sequence, and a single-line footer caption.',
 )
 assert(
   runtimeToolsPanel.includes('title="MCP 工具连接"') &&

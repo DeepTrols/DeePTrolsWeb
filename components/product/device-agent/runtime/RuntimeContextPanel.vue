@@ -18,7 +18,6 @@ const READY_MS = 7800
 const sourceCards = [
   {
     title: '实时数据',
-    description: '设备实时运行指标',
     status: '61.8°C · 500 kW',
     icon: Activity,
     startMs: REALTIME_MS,
@@ -26,7 +25,6 @@ const sourceCards = [
   },
   {
     title: '历史时序',
-    description: '历史趋势与运行基线',
     status: '7 天 · 42.6°C',
     icon: ChartNoAxesCombined,
     startMs: REALTIME_DONE_MS,
@@ -34,7 +32,6 @@ const sourceCards = [
   },
   {
     title: '设备状态',
-    description: '设备及子系统状态',
     status: 'BMS 告警',
     icon: Cpu,
     startMs: DEVICE_MS,
@@ -42,23 +39,11 @@ const sourceCards = [
   },
   {
     title: '知识库',
-    description: '运维知识与处置规范',
     status: '2 条匹配',
     icon: BookOpen,
     startMs: KNOWLEDGE_MS,
     endMs: BUILD_MS,
   },
-]
-
-const contextFields = [
-  { label: '运行状态', value: '充电中', atMs: REALTIME_MS, amber: false },
-  { label: 'SOC', value: '86%', atMs: REALTIME_MS + 150, amber: false },
-  { label: '最高温度', value: '61.8°C', atMs: REALTIME_MS + 300, amber: true },
-  { label: '充电功率', value: '500 kW', atMs: REALTIME_MS + 450, amber: false },
-  { label: '历史基线', value: '42.6°C', atMs: TIMESERIES_DONE_MS, amber: false },
-  { label: '偏离幅度', value: '+45.1%', atMs: TIMESERIES_DONE_MS + 150, amber: false },
-  { label: 'PCS', value: '正常', atMs: DEVICE_DONE_MS, amber: false },
-  { label: 'BMS', value: '告警', atMs: DEVICE_DONE_MS + 150, amber: false },
 ]
 
 const stages = [
@@ -102,7 +87,6 @@ const stages = [
 const { elapsed } = useRuntimeTimeline(8800)
 
 const ready = computed(() => elapsed.value >= READY_MS)
-const knowledgeOn = computed(() => elapsed.value >= KNOWLEDGE_DONE_MS)
 
 const activeStage = computed(() => {
   let current = -1
@@ -121,15 +105,11 @@ const stageDone = computed(() => {
 
 const stageCode = computed(() => {
   const stage = activeStage.value >= 0 ? stages[activeStage.value] : undefined
-  return stepCode(stage)
-})
-
-function stepCode(stage: (typeof stages)[number] | undefined): string {
   if (!stage) {
     return '// 初始化设备上下文引擎'
   }
   return stage.code
-}
+})
 
 const stageStatusText = computed(() => {
   const stage = activeStage.value >= 0 ? stages[activeStage.value] : undefined
@@ -139,15 +119,7 @@ const stageStatusText = computed(() => {
   return elapsed.value >= stage.doneMs ? stage.done : stage.running
 })
 
-const cardBadge = computed(() => {
-  if (ready.value) {
-    return '已就绪'
-  }
-  if (elapsed.value >= REALTIME_MS && elapsed.value < REALTIME_DONE_MS) {
-    return '读取中'
-  }
-  return '构建中'
-})
+const cardBadge = computed(() => (ready.value ? '已就绪' : '构建中'))
 
 type SourceState = 'idle' | 'active' | 'done'
 
@@ -187,76 +159,48 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
 <template>
   <RuntimePanelShell :icon="Layers" title="设备上下文引擎" badge="实时构建" badge-dot>
     <div class="rounded-xl border border-primary/20 bg-primary/5 p-3">
-      <div class="flex flex-col gap-2 sm:flex-row sm:gap-4">
-        <div class="flex min-w-0 items-center gap-2.5 sm:w-[170px] sm:shrink-0 sm:flex-col sm:items-start sm:gap-1.5">
-          <div class="relative flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/15">
-            <Box class="size-4 text-primary" aria-hidden="true" />
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex min-w-0 items-center gap-3">
+          <div class="relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15">
+            <Box class="size-5 text-primary" aria-hidden="true" />
             <span
-              class="absolute inset-0 animate-ping rounded-lg bg-primary/10 transition-opacity duration-500"
+              class="absolute inset-0 animate-ping rounded-xl bg-primary/10 transition-opacity duration-500"
               :class="ready ? 'opacity-0' : 'opacity-100'"
               aria-hidden="true"
             ></span>
           </div>
-          <div class="min-w-0 flex-1 sm:flex-none">
-            <div class="flex items-center justify-between gap-1.5 sm:justify-start sm:gap-2">
-              <p class="truncate text-sm font-semibold text-highlighted">ESS-01 设备上下文</p>
-              <span class="shrink-0 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
-                {{ cardBadge }}
-              </span>
-            </div>
-            <p class="mt-0.5 hidden text-xs leading-4 text-muted sm:block sm:line-clamp-2">
+          <div class="min-w-0">
+            <p class="truncate text-sm font-semibold text-highlighted">ESS-01 设备上下文</p>
+            <p class="mt-0.5 truncate text-xs leading-4 text-muted">
               正在融合实时状态、历史时序、设备信息与知识数据。
             </p>
           </div>
         </div>
-        <div class="grid flex-1 grid-cols-2 gap-x-6 gap-y-1">
-          <div
-            v-for="field in contextFields"
-            :key="field.label"
-            class="flex items-baseline justify-between gap-1.5 transition-opacity duration-500"
-            :class="elapsed >= field.atMs ? 'opacity-100' : 'opacity-0'"
-          >
-            <span class="truncate text-xs leading-4 text-muted">{{ field.label }}</span>
-            <span
-              class="shrink-0 font-mono text-xs font-medium leading-4"
-              :class="field.amber ? 'text-amber-500' : 'text-highlighted'"
-            >
-              {{ field.value }}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="mt-1.5 flex items-baseline gap-1.5 text-xs leading-4 transition-opacity duration-500"
-        :class="knowledgeOn ? 'opacity-100' : 'opacity-0'"
-      >
-        <span class="shrink-0 font-medium text-highlighted">知识参考</span>
-        <span class="truncate text-muted">持续高温可能与散热异常、电芯一致性下降或充电倍率过高相关。</span>
+        <span class="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
+          {{ cardBadge }}
+        </span>
       </div>
     </div>
 
-    <div class="mt-1.5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+    <div class="mt-1.5 grid grid-cols-2 gap-2 sm:max-h-36 sm:flex-1 sm:grid-cols-4 sm:grid-rows-1">
       <div
         v-for="card in sourceCards"
         :key="card.title"
-        class="flex items-center gap-2 rounded-lg border p-1 transition-all duration-300 sm:p-1.5"
+        class="flex h-full flex-col items-center justify-center gap-1.5 rounded-lg border p-2 transition-all duration-300 sm:p-3"
         :class="sourceCardClass(card)"
       >
         <IconBox :icon="card.icon" :size="40" :icon-size="20" :tone="sourceIconTone(card)" class="shrink-0" />
-        <div class="min-w-0 flex-1">
-          <p class="truncate text-xs font-semibold leading-4 text-highlighted">{{ card.title }}</p>
-          <p class="hidden truncate text-[11px] leading-4 text-muted xl:block">{{ card.description }}</p>
-          <p
-            class="truncate font-mono text-[11px] leading-4 transition-colors duration-300"
-            :class="sourceStatusClass(card)"
-          >
-            {{ card.status }}
-          </p>
-        </div>
+        <p class="text-sm font-semibold leading-5 text-highlighted">{{ card.title }}</p>
+        <p
+          class="max-w-full truncate font-mono text-xs leading-4 transition-colors duration-300"
+          :class="sourceStatusClass(card)"
+        >
+          {{ card.status }}
+        </p>
       </div>
     </div>
 
-    <div class="mt-1.5 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
+    <div class="mt-auto rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
       <div class="flex items-center gap-1.5">
         <Terminal class="size-3.5 shrink-0 text-muted" aria-hidden="true" />
         <p class="truncate text-xs font-semibold text-highlighted">上下文构建序列</p>
@@ -279,7 +223,7 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
     <template #footer>
       <div class="flex items-center justify-between gap-4">
         <p
-          class="max-w-xl text-sm text-muted line-clamp-2"
+          class="truncate text-sm text-muted"
           title="Agent 自动融合实时状态、历史时序、设备信息与知识数据，为每一次运行动态构建设备级上下文。"
         >
           Agent 自动融合实时状态、历史时序、设备信息与知识数据，为每一次运行动态构建设备级上下文。

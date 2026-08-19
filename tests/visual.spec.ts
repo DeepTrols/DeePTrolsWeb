@@ -1813,6 +1813,10 @@ describe('device agent page contract', () => {
     expect(contextPanel).toContain('context.build({ device: "ESS-01", sources: 4 })')
     expect(contextPanel).toContain('Context Ready · 1.2s')
     expect(contextPanel).toContain("import IconBox from '~/components/common/card/IconBox.vue'")
+    expect(contextPanel).toContain('shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary')
+    expect(contextPanel).toContain('mt-1.5 grid grid-cols-2 gap-2 sm:max-h-36 sm:flex-1 sm:grid-cols-4 sm:grid-rows-1')
+    expect(contextPanel).toContain('truncate text-sm text-muted')
+    expect(contextPanel).not.toContain('知识参考')
 
     expect(toolsPanel).toContain('title="MCP 工具连接"')
     expect(toolsPanel).toContain('badge="6 个可用"')
