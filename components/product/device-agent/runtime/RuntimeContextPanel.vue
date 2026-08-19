@@ -182,25 +182,27 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       </div>
     </div>
 
-    <div class="mt-1.5 grid grid-cols-2 gap-2 sm:max-h-36 sm:flex-1 sm:grid-cols-4 sm:grid-rows-1">
+    <div class="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
       <div
         v-for="card in sourceCards"
         :key="card.title"
-        class="flex h-full flex-col items-center justify-center gap-1.5 rounded-lg border p-2 transition-all duration-300 sm:p-3"
+        class="flex h-full items-center gap-2.5 rounded-lg border p-2.5 transition-all duration-300 sm:p-3"
         :class="sourceCardClass(card)"
       >
         <IconBox :icon="card.icon" :size="40" :icon-size="20" :tone="sourceIconTone(card)" class="shrink-0" />
-        <p class="text-sm font-semibold leading-5 text-highlighted">{{ card.title }}</p>
-        <p
-          class="max-w-full truncate font-mono text-xs leading-4 transition-colors duration-300"
-          :class="sourceStatusClass(card)"
-        >
-          {{ card.status }}
-        </p>
+        <div class="min-w-0 flex-1">
+          <p class="truncate text-sm font-semibold leading-5 text-highlighted">{{ card.title }}</p>
+          <p
+            class="mt-0.5 truncate font-mono text-xs leading-4 transition-colors duration-300"
+            :class="sourceStatusClass(card)"
+          >
+            {{ card.status }}
+          </p>
+        </div>
       </div>
     </div>
 
-    <div class="mt-auto rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
+    <div class="mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
       <div class="flex items-center gap-1.5">
         <Terminal class="size-3.5 shrink-0 text-muted" aria-hidden="true" />
         <p class="truncate text-xs font-semibold text-highlighted">上下文构建序列</p>
