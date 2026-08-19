@@ -182,7 +182,7 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       </div>
     </div>
 
-    <div class="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
+    <div class="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:flex-none">
       <div
         v-for="card in sourceCards"
         :key="card.title"

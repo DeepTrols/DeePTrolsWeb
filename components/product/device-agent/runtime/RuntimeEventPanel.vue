@@ -100,7 +100,7 @@ function connectorOn(index: number): boolean {
       </div>
     </div>
 
-    <div class="mt-1.5 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
+    <div class="mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
       <div class="mb-2 flex items-center gap-2">
         <div
           v-for="(event, index) in events"
@@ -113,7 +113,7 @@ function connectorOn(index: number): boolean {
         <div
           v-for="(event, index) in events"
           :key="event.title"
-          class="flex items-baseline justify-between gap-2 text-xs leading-5 transition-opacity duration-500"
+          class="flex items-baseline justify-between gap-2 text-xs leading-4 transition-opacity duration-500"
           :class="index < activeBars ? 'opacity-100' : 'opacity-0'"
         >
           <span class="min-w-0 truncate">
@@ -125,7 +125,7 @@ function connectorOn(index: number): boolean {
       </div>
     </div>
 
-    <div class="mt-1.5 flex items-stretch gap-1">
+    <div class="mt-3 flex items-stretch gap-1">
       <template v-for="(step, index) in pipelineSteps" :key="step.title">
         <div
           class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-lg border p-2.5 transition-colors duration-500 xl:flex-row xl:items-center xl:gap-2.5"
