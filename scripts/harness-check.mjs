@@ -787,17 +787,39 @@ assert(
   'The context panel must fuse realtime, history, status, and knowledge sources into the ESS-01 device context with a typed build sequence, cycling Active source cards, and the EMQX-style footer caption.',
 )
 assert(
-  runtimeToolsPanel.includes('title="MCP 工具"') &&
+  runtimeToolsPanel.includes('title="MCP 工具连接"') &&
     runtimeToolsPanel.includes('badge="6 个可用"') &&
+    runtimeToolsPanel.includes('badge-dot') &&
     runtimeToolsPanel.includes('device.execute_command') &&
     runtimeToolsPanel.includes('timeseries.query') &&
     runtimeToolsPanel.includes('knowledge.search') &&
     runtimeToolsPanel.includes('workorder.create') &&
     runtimeToolsPanel.includes('Agent 判断') &&
+    runtimeToolsPanel.includes('检测到 ESS-01 电芯温度持续异常，需要进一步确认历史趋势、SOC、充电功率与设备运行状态。') &&
+    runtimeToolsPanel.includes('查询历史时序') &&
+    runtimeToolsPanel.includes('284 ms') &&
+    runtimeToolsPanel.includes('基线 42.6°C') &&
+    runtimeToolsPanel.includes('当前 61.8°C') &&
+    runtimeToolsPanel.includes('偏离 +45.1%') &&
+    runtimeToolsPanel.includes('查询知识库') &&
+    runtimeToolsPanel.includes('176 ms') &&
+    runtimeToolsPanel.includes('电芯持续高温原因') &&
+    runtimeToolsPanel.includes('找到 3 条相关知识') &&
+    runtimeToolsPanel.includes('热管理异常') &&
+    runtimeToolsPanel.includes('电芯一致性异常') &&
+    runtimeToolsPanel.includes('充电倍率过高') &&
+    runtimeToolsPanel.includes('useRuntimeTimeline(7200)') &&
+    runtimeToolsPanel.includes('JUDGE_MS = 500') &&
+    runtimeToolsPanel.includes('CALL1_START_MS = 1800') &&
+    runtimeToolsPanel.includes('CALL2_START_MS = 4000') &&
+    runtimeToolsPanel.includes('NEXT_MS = 6200') &&
+    runtimeToolsPanel.includes('ROW_STAGGER_MS = 150') &&
     runtimeToolsPanel.includes('下一步动作') &&
     runtimeToolsPanel.includes('创建储能运维工单') &&
+    runtimeToolsPanel.includes('<template #footer>') &&
+    runtimeToolsPanel.includes('Agent 通过 MCP 协议连接设备、数据与业务工具，在消息流中完成读取、查询、检索与执行。') &&
     !runtimeToolsPanel.includes('<style'),
-  'The MCP tools panel must show the ESS-01 reasoning loop across device, data, and business tools.',
+  'The MCP tools panel must show the ESS-01 reasoning loop across device, data, and business tools with staggered call reveals and the MCP footer caption.',
 )
 assert(
   runtimeSkillsPanel.includes('title="Skills"') &&

@@ -4,16 +4,17 @@ import { computed } from 'vue'
 import RuntimePanelShell from '~/components/product/device-agent/runtime/RuntimePanelShell.vue'
 import { useRuntimeTimeline } from '~/components/product/device-agent/useRuntimeTimeline'
 
-const JUDGE_MS = 600
+const JUDGE_MS = 500
 const CALL1_START_MS = 1800
-const CALL1_PARAMS_MS = 2400
-const CALL1_DONE_MS = 3200
-const CALL1_RESULT_MS = 3600
-const CALL2_START_MS = 4800
-const CALL2_PARAMS_MS = 5400
-const CALL2_DONE_MS = 6200
-const CALL2_RESULT_MS = 6600
-const NEXT_MS = 7600
+const CALL1_PARAMS_MS = 2000
+const CALL1_DONE_MS = 2600
+const CALL1_RESULT_MS = 2800
+const CALL2_START_MS = 4000
+const CALL2_PARAMS_MS = 4200
+const CALL2_DONE_MS = 4800
+const CALL2_RESULT_MS = 5000
+const NEXT_MS = 6200
+const ROW_STAGGER_MS = 150
 
 const tools = [
   { name: 'device.get_status', group: '设备工具' },
@@ -24,18 +25,30 @@ const tools = [
   { name: 'workorder.create', group: '业务工具' },
 ]
 
-const { elapsed } = useRuntimeTimeline(8500)
+const call1Params = [
+  { label: '设备', value: 'ESS-01' },
+  { label: '指标', value: '最高电芯温度' },
+  { label: '时间范围', value: '近 7 天' },
+]
+
+const call1Results = ['基线 42.6°C', '当前 61.8°C', '偏离 +45.1%']
+const call2Results = ['热管理异常', '电芯一致性异常', '充电倍率过高']
+
+const { elapsed } = useRuntimeTimeline(7200)
 
 const judgeOn = computed(() => elapsed.value >= JUDGE_MS)
+const judgeActive = computed(() => elapsed.value >= JUDGE_MS && elapsed.value < CALL1_START_MS)
 const call1Active = computed(() => elapsed.value >= CALL1_START_MS && elapsed.value < CALL2_START_MS)
-const call1Params = computed(() => elapsed.value >= CALL1_PARAMS_MS)
+const call1On = computed(() => elapsed.value >= CALL1_START_MS)
 const call1Done = computed(() => elapsed.value >= CALL1_DONE_MS)
-const call1Result = computed(() => elapsed.value >= CALL1_RESULT_MS)
 const call2Active = computed(() => elapsed.value >= CALL2_START_MS && elapsed.value < NEXT_MS)
-const call2Params = computed(() => elapsed.value >= CALL2_PARAMS_MS)
+const call2On = computed(() => elapsed.value >= CALL2_START_MS)
 const call2Done = computed(() => elapsed.value >= CALL2_DONE_MS)
-const call2Result = computed(() => elapsed.value >= CALL2_RESULT_MS)
 const nextOn = computed(() => elapsed.value >= NEXT_MS)
+
+function revealed(atMs: number): string {
+  return elapsed.value >= atMs ? 'opacity-100' : 'opacity-0'
+}
 
 function toolHighlighted(tool: string): boolean {
   if (tool === 'timeseries.query') {
@@ -49,10 +62,13 @@ function toolHighlighted(tool: string): boolean {
 </script>
 
 <template>
-  <RuntimePanelShell :icon="Plug" title="MCP 工具" badge="6 个可用">
+  <RuntimePanelShell :icon="Plug" title="MCP 工具连接" badge="6 个可用" badge-dot>
     <div
-      class="rounded-lg border border-dt-line-strong/60 bg-dt-bg-soft/20 p-2.5 transition-opacity duration-500"
-      :class="judgeOn ? 'opacity-100' : 'opacity-0'"
+      class="rounded-lg border p-2.5 transition-all duration-300"
+      :class="[
+        judgeOn ? 'opacity-100' : 'opacity-0',
+        judgeActive ? 'border-primary/40 bg-primary/5' : 'border-dt-line-strong/60 bg-dt-bg-soft/20',
+      ]"
     >
       <p class="text-xs font-semibold text-highlighted">Agent 判断</p>
       <p class="mt-0.5 text-[11px] leading-4 text-muted">
@@ -62,9 +78,9 @@ function toolHighlighted(tool: string): boolean {
 
     <div class="mt-2 grid grid-cols-2 gap-2">
       <div
-        class="min-w-0 rounded-lg border p-2 transition-all duration-500"
+        class="min-w-0 rounded-lg border p-2 transition-all duration-300"
         :class="[
-          call1Params ? 'opacity-100' : 'opacity-0',
+          call1On ? 'opacity-100' : 'opacity-0',
           call1Active ? 'border-primary/40 bg-primary/5' : 'border-dt-line-strong/60 bg-dt-bg-soft/20',
         ]"
       >
@@ -77,33 +93,32 @@ function toolHighlighted(tool: string): boolean {
         </div>
         <p class="mt-0.5 truncate font-mono text-[11px] text-muted">timeseries.query</p>
         <div class="mt-1 grid gap-0.5 text-[11px] leading-4">
-          <div class="flex justify-between gap-1.5">
-            <span class="text-muted">设备</span>
-            <span class="shrink-0 font-mono text-highlighted">ESS-01</span>
-          </div>
-          <div class="flex justify-between gap-1.5">
-            <span class="truncate text-muted">指标</span>
-            <span class="shrink-0 font-mono text-highlighted">最高电芯温度</span>
-          </div>
-          <div class="flex justify-between gap-1.5">
-            <span class="text-muted">时间范围</span>
-            <span class="shrink-0 font-mono text-highlighted">近 7 天</span>
+          <div
+            v-for="(param, index) in call1Params"
+            :key="param.label"
+            class="flex justify-between gap-1.5 transition-opacity duration-300"
+            :class="revealed(CALL1_PARAMS_MS + index * ROW_STAGGER_MS)"
+          >
+            <span class="truncate text-muted">{{ param.label }}</span>
+            <span class="shrink-0 font-mono text-highlighted">{{ param.value }}</span>
           </div>
         </div>
-        <div
-          class="mt-1 flex flex-wrap gap-1 transition-opacity duration-500"
-          :class="call1Result ? 'opacity-100' : 'opacity-0'"
-        >
-          <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[11px] leading-4 text-primary">基线 42.6°C</span>
-          <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[11px] leading-4 text-primary">当前 61.8°C</span>
-          <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[11px] leading-4 text-primary">偏离 +45.1%</span>
+        <div class="mt-1 flex flex-wrap gap-1">
+          <span
+            v-for="(result, index) in call1Results"
+            :key="result"
+            class="rounded bg-primary/10 px-1.5 py-0.5 text-[11px] leading-4 text-primary transition-opacity duration-300"
+            :class="revealed(CALL1_RESULT_MS + index * ROW_STAGGER_MS)"
+          >
+            {{ result }}
+          </span>
         </div>
       </div>
 
       <div
-        class="min-w-0 rounded-lg border p-2 transition-all duration-500"
+        class="min-w-0 rounded-lg border p-2 transition-all duration-300"
         :class="[
-          call2Params ? 'opacity-100' : 'opacity-0',
+          call2On ? 'opacity-100' : 'opacity-0',
           call2Active ? 'border-primary/40 bg-primary/5' : 'border-dt-line-strong/60 bg-dt-bg-soft/20',
         ]"
       >
@@ -116,17 +131,27 @@ function toolHighlighted(tool: string): boolean {
         </div>
         <p class="mt-0.5 truncate font-mono text-[11px] text-muted">knowledge.search</p>
         <div class="mt-1 grid gap-0.5 text-[11px] leading-4">
-          <div class="flex justify-between gap-1.5">
+          <div class="flex justify-between gap-1.5 transition-opacity duration-300" :class="revealed(CALL2_PARAMS_MS)">
             <span class="shrink-0 text-muted">查询</span>
             <span class="truncate font-mono text-highlighted">电芯持续高温原因</span>
           </div>
         </div>
-        <div class="mt-1 transition-opacity duration-500" :class="call2Result ? 'opacity-100' : 'opacity-0'">
-          <p class="text-[11px] leading-4 text-muted">找到 3 条相关知识</p>
+        <div class="mt-1">
+          <p
+            class="text-[11px] leading-4 text-muted transition-opacity duration-300"
+            :class="revealed(CALL2_RESULT_MS)"
+          >
+            找到 3 条相关知识
+          </p>
           <div class="mt-0.5 flex flex-wrap gap-1">
-            <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[11px] leading-4 text-primary">热管理异常</span>
-            <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[11px] leading-4 text-primary">电芯一致性</span>
-            <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[11px] leading-4 text-primary">充电倍率过高</span>
+            <span
+              v-for="(result, index) in call2Results"
+              :key="result"
+              class="rounded bg-primary/10 px-1.5 py-0.5 text-[11px] leading-4 text-primary transition-opacity duration-300"
+              :class="revealed(CALL2_RESULT_MS + (index + 1) * ROW_STAGGER_MS)"
+            >
+              {{ result }}
+            </span>
           </div>
         </div>
       </div>
@@ -155,5 +180,16 @@ function toolHighlighted(tool: string): boolean {
       <span class="shrink-0 text-[11px] text-muted">下一步动作</span>
       <span class="truncate text-xs font-semibold text-primary">创建储能运维工单</span>
     </div>
+
+    <template #footer>
+      <div class="flex items-center justify-between gap-4">
+        <p
+          class="max-w-xl text-sm text-muted line-clamp-2"
+          title="Agent 通过 MCP 协议连接设备、数据与业务工具，在消息流中完成读取、查询、检索与执行。"
+        >
+          Agent 通过 MCP 协议连接设备、数据与业务工具，在消息流中完成读取、查询、检索与执行。
+        </p>
+      </div>
+    </template>
   </RuntimePanelShell>
 </template>

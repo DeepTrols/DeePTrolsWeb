@@ -1814,9 +1814,17 @@ describe('device agent page contract', () => {
     expect(contextPanel).toContain('Context Ready · 1.2s')
     expect(contextPanel).toContain("import IconBox from '~/components/common/card/IconBox.vue'")
 
+    expect(toolsPanel).toContain('title="MCP 工具连接"')
     expect(toolsPanel).toContain('badge="6 个可用"')
+    expect(toolsPanel).toContain('badge-dot')
     expect(toolsPanel).toContain('timeseries.query')
     expect(toolsPanel).toContain('knowledge.search')
+    expect(toolsPanel).toContain('查询历史时序')
+    expect(toolsPanel).toContain('查询知识库')
+    expect(toolsPanel).toContain('找到 3 条相关知识')
+    expect(toolsPanel).toContain('useRuntimeTimeline(7200)')
+    expect(toolsPanel).toContain('<template #footer>')
+    expect(toolsPanel).toContain('Agent 通过 MCP 协议连接设备、数据与业务工具，在消息流中完成读取、查询、检索与执行。')
     expect(toolsPanel).toContain('创建储能运维工单')
 
     expect(skillsPanel).toContain('badge="按需加载"')
