@@ -1747,7 +1747,7 @@ describe('device agent page contract', () => {
     expect(shell).not.toContain('<style')
     expect(shell).toContain('animate-panel-in')
     expect(shell).toContain(
-      'relative flex h-[520px] flex-col overflow-hidden rounded-2xl border border-dt-line-strong/60 bg-dt-bg-soft/30 xl:h-[480px]',
+      'relative flex h-[530px] flex-col overflow-hidden rounded-2xl border border-dt-line-strong/60 bg-dt-bg-soft/30 xl:h-[480px]',
     )
     expect(shell).toContain('flex min-h-0 flex-1 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg p-4')
     expect(shell).toContain('rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted')
@@ -1805,11 +1805,11 @@ describe('device agent page contract', () => {
     expect(eventPanel).toContain("stepState(index) === 'pending' ? 'soft' : 'primary'")
     expect(eventPanel).toContain('truncate text-sm font-semibold text-highlighted')
     expect(eventPanel).toContain('mt-1 hidden truncate text-xs leading-5 text-muted xl:block')
-    expect(eventPanel).toContain('mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5')
+    expect(eventPanel).toContain('mt-5 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5')
     expect(eventPanel).toContain('flex items-baseline justify-between gap-2 text-xs leading-4 transition-opacity duration-500')
     expect(eventPanel).toContain('mb-3 flex items-center gap-2')
     expect(eventPanel).toContain('grid gap-2')
-    expect(eventPanel).toContain('mt-3 flex items-stretch gap-1')
+    expect(eventPanel).toContain('mt-5 flex items-stretch gap-1')
 
     expect(contextPanel).toContain('title="设备上下文引擎"')
     expect(contextPanel).toContain('badge="实时构建"')
@@ -1819,8 +1819,8 @@ describe('device agent page contract', () => {
     expect(contextPanel).toContain('Context Ready · 1.2s')
     expect(contextPanel).toContain("import IconBox from '~/components/common/card/IconBox.vue'")
     expect(contextPanel).toContain('shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary')
-    expect(contextPanel).toContain('mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:flex-none')
-    expect(contextPanel).toContain('mt-3 flex items-center gap-2')
+    expect(contextPanel).toContain('mt-5 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:flex-none')
+    expect(contextPanel).toContain('mt-5 flex items-center gap-2')
     expect(contextPanel).toContain('h-1.5 flex-1 rounded-full transition-colors duration-200')
     expect(contextPanel).toContain("sourceState(card) === 'idle' ? 'bg-dt-bg-soft' : 'bg-primary'")
     expect(contextPanel).toContain('flex h-full items-center gap-2 rounded-lg border p-2.5 transition-all duration-300')
@@ -1831,7 +1831,7 @@ describe('device agent page contract', () => {
     expect(contextPanel).toContain('历史趋势与运行基线')
     expect(contextPanel).toContain('设备及子系统状态')
     expect(contextPanel).toContain('运维知识与处置规范')
-    expect(contextPanel).toContain('mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5')
+    expect(contextPanel).toContain('mt-5 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5')
     expect(contextPanel).toContain('truncate text-sm text-muted')
     expect(contextPanel).not.toContain('知识参考')
     expect(contextPanel).not.toContain('mt-auto')

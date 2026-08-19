@@ -186,7 +186,7 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       </div>
     </div>
 
-    <div class="mt-3 flex items-center gap-2">
+    <div class="mt-5 flex items-center gap-2">
       <div
         v-for="card in sourceCards"
         :key="`bar-${card.title}`"
@@ -195,7 +195,7 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       ></div>
     </div>
 
-    <div class="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:flex-none">
+    <div class="mt-5 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:flex-none">
       <div
         v-for="card in sourceCards"
         :key="card.title"
@@ -216,7 +216,7 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       </div>
     </div>
 
-    <div class="mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
+    <div class="mt-5 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
       <div class="flex items-center gap-1.5">
         <Terminal class="size-3.5 shrink-0 text-muted" aria-hidden="true" />
         <p class="truncate text-xs font-semibold text-highlighted">上下文构建序列</p>
