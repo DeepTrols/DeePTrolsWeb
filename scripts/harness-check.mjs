@@ -679,7 +679,7 @@ assert(
 assert(
   runtimePanelShell.includes('animate-panel-in') &&
     runtimePanelShell.includes(
-      'relative flex h-[520px] flex-col overflow-hidden rounded-2xl border border-dt-line-strong/60 bg-dt-bg-soft/30 sm:h-[480px]',
+      'relative flex h-[520px] flex-col overflow-hidden rounded-2xl border border-dt-line-strong/60 bg-dt-bg-soft/30 xl:h-[480px]',
     ) &&
     runtimePanelShell.includes('flex min-h-0 flex-1 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg p-4') &&
     runtimePanelShell.includes('rounded bg-dt-bg-soft/40 px-2 py-0.5 text-[10px] font-medium text-muted') &&
@@ -733,6 +733,8 @@ assert(
     runtimeEventPanel.includes('rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5') &&
     runtimeEventPanel.includes('mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5') &&
     runtimeEventPanel.includes('flex items-baseline justify-between gap-2 text-xs leading-4 transition-opacity duration-500') &&
+    runtimeEventPanel.includes('mb-3 flex items-center gap-2') &&
+    runtimeEventPanel.includes('grid gap-2') &&
     runtimeEventPanel.includes('mt-3 flex items-stretch gap-1') &&
     runtimeEventPanel.includes('验证来源与事件结构') &&
     runtimeEventPanel.includes('过滤短时重复事件') &&
@@ -765,7 +767,10 @@ assert(
     runtimeContextPanel.includes('正在融合实时状态、历史时序、设备信息与知识数据。') &&
     runtimeContextPanel.includes('relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15') &&
     runtimeContextPanel.includes('shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary') &&
-    runtimeContextPanel.includes('mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:flex-none') &&
+    runtimeContextPanel.includes('mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:content-center') &&
+    runtimeContextPanel.includes('mt-3 flex items-center gap-2') &&
+    runtimeContextPanel.includes('h-1.5 flex-1 rounded-full transition-colors duration-200') &&
+    runtimeContextPanel.includes("sourceState(card) === 'idle' ? 'bg-dt-bg-soft' : 'bg-primary'") &&
     runtimeContextPanel.includes('flex h-full items-center gap-2.5 rounded-lg border p-2.5 transition-all duration-300 sm:p-3') &&
     runtimeContextPanel.includes('min-w-0 flex-1') &&
     runtimeContextPanel.includes('truncate text-sm font-semibold leading-5 text-highlighted') &&

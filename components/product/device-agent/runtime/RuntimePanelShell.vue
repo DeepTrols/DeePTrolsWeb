@@ -14,7 +14,7 @@ withDefaults(
 
 <template>
   <div
-    class="animate-panel-in relative flex h-[520px] flex-col overflow-hidden rounded-2xl border border-dt-line-strong/60 bg-dt-bg-soft/30 sm:h-[480px]"
+    class="animate-panel-in relative flex h-[520px] flex-col overflow-hidden rounded-2xl border border-dt-line-strong/60 bg-dt-bg-soft/30 xl:h-[480px]"
   >
     <div class="relative flex-1 overflow-hidden">
       <div class="flex size-full flex-col p-5">

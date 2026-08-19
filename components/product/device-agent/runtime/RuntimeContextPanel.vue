@@ -182,7 +182,16 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       </div>
     </div>
 
-    <div class="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:flex-none">
+    <div class="mt-3 flex items-center gap-2">
+      <div
+        v-for="card in sourceCards"
+        :key="`bar-${card.title}`"
+        class="h-1.5 flex-1 rounded-full transition-colors duration-200"
+        :class="sourceState(card) === 'idle' ? 'bg-dt-bg-soft' : 'bg-primary'"
+      ></div>
+    </div>
+
+    <div class="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:content-center">
       <div
         v-for="card in sourceCards"
         :key="card.title"

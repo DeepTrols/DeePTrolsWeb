@@ -101,7 +101,7 @@ function connectorOn(index: number): boolean {
     </div>
 
     <div class="mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
-      <div class="mb-2 flex items-center gap-2">
+      <div class="mb-3 flex items-center gap-2">
         <div
           v-for="(event, index) in events"
           :key="`bar-${event.title}`"
@@ -109,7 +109,7 @@ function connectorOn(index: number): boolean {
           :class="index < activeBars ? 'bg-primary' : 'bg-dt-bg-soft'"
         ></div>
       </div>
-      <div class="grid gap-1">
+      <div class="grid gap-2">
         <div
           v-for="(event, index) in events"
           :key="event.title"
