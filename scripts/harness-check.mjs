@@ -767,14 +767,19 @@ assert(
     runtimeContextPanel.includes('正在融合实时状态、历史时序、设备信息与知识数据。') &&
     runtimeContextPanel.includes('relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15') &&
     runtimeContextPanel.includes('shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary') &&
-    runtimeContextPanel.includes('mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:content-center') &&
+    runtimeContextPanel.includes('mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:flex-none') &&
     runtimeContextPanel.includes('mt-3 flex items-center gap-2') &&
     runtimeContextPanel.includes('h-1.5 flex-1 rounded-full transition-colors duration-200') &&
     runtimeContextPanel.includes("sourceState(card) === 'idle' ? 'bg-dt-bg-soft' : 'bg-primary'") &&
-    runtimeContextPanel.includes('flex h-full items-center gap-2.5 rounded-lg border p-2.5 transition-all duration-300 sm:p-3') &&
+    runtimeContextPanel.includes('flex h-full items-center gap-2 rounded-lg border p-2.5 transition-all duration-300') &&
     runtimeContextPanel.includes('min-w-0 flex-1') &&
     runtimeContextPanel.includes('truncate text-sm font-semibold leading-5 text-highlighted') &&
-    runtimeContextPanel.includes('mt-0.5 truncate font-mono text-xs leading-4') &&
+    runtimeContextPanel.includes('mt-0.5 truncate text-xs leading-4 text-muted') &&
+    runtimeContextPanel.includes('mt-1 truncate font-mono text-xs leading-4') &&
+    runtimeContextPanel.includes('设备实时运行指标') &&
+    runtimeContextPanel.includes('历史趋势与运行基线') &&
+    runtimeContextPanel.includes('设备及子系统状态') &&
+    runtimeContextPanel.includes('运维知识与处置规范') &&
     runtimeContextPanel.includes('text-sm font-semibold leading-5') &&
     runtimeContextPanel.includes('font-mono text-xs leading-4') &&
     runtimeContextPanel.includes('mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5') &&

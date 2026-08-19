@@ -18,6 +18,7 @@ const READY_MS = 7800
 const sourceCards = [
   {
     title: '实时数据',
+    description: '设备实时运行指标',
     status: '61.8°C · 500 kW',
     icon: Activity,
     startMs: REALTIME_MS,
@@ -25,6 +26,7 @@ const sourceCards = [
   },
   {
     title: '历史时序',
+    description: '历史趋势与运行基线',
     status: '7 天 · 42.6°C',
     icon: ChartNoAxesCombined,
     startMs: REALTIME_DONE_MS,
@@ -32,6 +34,7 @@ const sourceCards = [
   },
   {
     title: '设备状态',
+    description: '设备及子系统状态',
     status: 'BMS 告警',
     icon: Cpu,
     startMs: DEVICE_MS,
@@ -39,6 +42,7 @@ const sourceCards = [
   },
   {
     title: '知识库',
+    description: '运维知识与处置规范',
     status: '2 条匹配',
     icon: BookOpen,
     startMs: KNOWLEDGE_MS,
@@ -191,18 +195,19 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       ></div>
     </div>
 
-    <div class="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:content-center">
+    <div class="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:flex-none">
       <div
         v-for="card in sourceCards"
         :key="card.title"
-        class="flex h-full items-center gap-2.5 rounded-lg border p-2.5 transition-all duration-300 sm:p-3"
+        class="flex h-full items-center gap-2 rounded-lg border p-2.5 transition-all duration-300"
         :class="sourceCardClass(card)"
       >
         <IconBox :icon="card.icon" :size="40" :icon-size="20" :tone="sourceIconTone(card)" class="shrink-0" />
         <div class="min-w-0 flex-1">
           <p class="truncate text-sm font-semibold leading-5 text-highlighted">{{ card.title }}</p>
+          <p class="mt-0.5 truncate text-xs leading-4 text-muted">{{ card.description }}</p>
           <p
-            class="mt-0.5 truncate font-mono text-xs leading-4 transition-colors duration-300"
+            class="mt-1 truncate font-mono text-xs leading-4 transition-colors duration-300"
             :class="sourceStatusClass(card)"
           >
             {{ card.status }}
