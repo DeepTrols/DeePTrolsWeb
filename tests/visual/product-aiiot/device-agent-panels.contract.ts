@@ -210,8 +210,13 @@ describe('device agent runtime panel contract', () => {
     expect(guardrailsPanel).not.toContain('opacity-0')
 
     expect(guardrailsSequence).toContain('安全校验')
+    expect(guardrailsSequence).toContain('权限·参数·策略校验')
+    expect(guardrailsSequence).toContain('人工审批确认')
+    expect(guardrailsSequence).toContain('指令下发执行')
     expect(guardrailsSequence).toContain('结果验证')
-    expect(guardrailsSequence).toContain('验证通过')
+    expect(guardrailsSequence).toContain('执行结果验证')
+    expect(guardrailsSequence).toContain("import IconBox from '~/components/common/card/IconBox.vue'")
+    expect(guardrailsSequence).toContain('<IconBox')
     expect(guardrailsSequence).not.toContain('opacity-0')
 
     expect(tracePanel).toContain('badge="采集中"')

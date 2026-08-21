@@ -73,3 +73,8 @@
 - 动画全常驻零增删：校验行 ✓/spinner/○ 切换、审批 chip 等待审批→已批准、批准按钮轻微高亮→填充、500 kW 划线→420 kW primary、两条 xl 连接线单光点、Stepper muted→primary→emerald。
 - CDP 实测 375 / 768 / 1536 三断点 × 五阶段（ready / checks / approval / exec / done）：`bodyScrollH == bodyClientH`（base 397 / xl 347）零内容溢出，`document/section scrollWidth == clientWidth` 零横向溢出；状态文本逐阶段采样正确（校验中→已通过、等待审批→已批准、执行中→已下发、验证通过）。
 - 门禁全绿：eslint、typecheck、vitest（75 例）、harness:engineering、build。
+
+## 2026-08-21 迭代记录
+- 按页面反馈将三列标题「待执行动作 / Guardrails 校验 / 人工审批」统一调整为 `text-sm`。
+- 将底部四步由轻量 Stepper 调整为 4 个 IconBox 卡片：安全校验（权限·参数·策略校验）、人工审批（人工审批确认）、指令执行（指令下发执行）、结果验证（执行结果验证）。
+- 同步更新 Harness 与视觉契约，校验 IconBox 四卡片结构与新副标题文案。

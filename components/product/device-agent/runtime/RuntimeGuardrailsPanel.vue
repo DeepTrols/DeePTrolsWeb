@@ -73,7 +73,7 @@ function checkStateClass(index: number): string {
       >
         <div class="flex items-center gap-1.5">
           <Terminal class="size-3.5 shrink-0 text-primary" aria-hidden="true" />
-          <p class="truncate text-xs font-semibold text-highlighted">待执行动作</p>
+          <p class="truncate text-sm font-semibold text-highlighted">待执行动作</p>
         </div>
         <p class="mt-3 truncate font-mono text-xs leading-4 text-primary">device.command</p>
         <p class="mt-1.5 truncate text-sm font-semibold leading-5 text-highlighted">ESS-01</p>
@@ -146,7 +146,7 @@ function checkStateClass(index: number): string {
       >
         <div class="flex items-center gap-1.5">
           <ShieldCheck class="size-3.5 shrink-0 text-primary" aria-hidden="true" />
-          <p class="truncate text-xs font-semibold text-highlighted">Guardrails 校验</p>
+          <p class="truncate text-sm font-semibold text-highlighted">Guardrails 校验</p>
         </div>
         <div class="mt-2.5 grid gap-1 xl:mt-3 xl:gap-1.5">
           <div
@@ -224,7 +224,7 @@ function checkStateClass(index: number): string {
         <div class="flex items-center justify-between gap-2">
           <span class="flex min-w-0 items-center gap-1.5">
             <UserRound class="size-3.5 shrink-0 text-primary" aria-hidden="true" />
-            <span class="truncate text-xs font-semibold text-highlighted">人工审批</span>
+            <span class="truncate text-sm font-semibold text-highlighted">人工审批</span>
           </span>
           <span
             class="flex shrink-0 items-center gap-1 text-[10px] font-medium transition-colors duration-300"

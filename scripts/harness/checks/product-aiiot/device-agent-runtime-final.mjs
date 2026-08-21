@@ -22,13 +22,17 @@ assert(
     !runtimeGuardrailsPanel.includes('opacity-0') &&
     !runtimeGuardrailsPanel.includes('<style') &&
     runtimeGuardrailsSequence.includes('安全校验') &&
+    runtimeGuardrailsSequence.includes('权限·参数·策略校验') &&
     runtimeGuardrailsSequence.includes('人工审批') &&
+    runtimeGuardrailsSequence.includes('人工审批确认') &&
     runtimeGuardrailsSequence.includes('指令执行') &&
+    runtimeGuardrailsSequence.includes('指令下发执行') &&
     runtimeGuardrailsSequence.includes('结果验证') &&
-    runtimeGuardrailsSequence.includes('验证通过') &&
+    runtimeGuardrailsSequence.includes('执行结果验证') &&
+    runtimeGuardrailsSequence.includes('IconBox') &&
     !runtimeGuardrailsSequence.includes('opacity-0') &&
     !runtimeGuardrailsSequence.includes('<style'),
-  'The guardrails panel must replay a real device action through always-resident low-density modules — action proposal (500 kW → 420 kW), four compressed Guardrails checks with a single-line risk result, human approval with approve/reject — ending in a lightweight four-step stepper (安全校验 → 人工审批 → 指令执行 → 结果验证), with only color/state/connector-dot changes.',
+  'The guardrails panel must replay a real device action through always-resident low-density modules — action proposal (500 kW → 420 kW), four compressed Guardrails checks with a single-line risk result, human approval with approve/reject — ending in four IconBox step cards (安全校验 → 人工审批 → 指令执行 → 结果验证), with only color/state/connector-dot changes.',
 )
 assert(
   runtimeTracePanel.includes('title="运行 Trace"') &&

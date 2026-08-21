@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ArrowRight, CircleCheck, CirclePlay, FileText, LoaderCircle, ShieldCheck, UserRound } from '@lucide/vue'
+import { CirclePlay, FileText, ShieldCheck, UserRound } from '@lucide/vue'
+import IconBox from '~/components/common/card/IconBox.vue'
 import {
   GR_ACTION_MS,
   GR_APPROVAL_MS,
@@ -15,10 +16,10 @@ const props = defineProps<{ elapsed: number }>()
 type StepState = 'pending' | 'active' | 'done'
 
 const steps = [
-  { name: '安全校验', icon: ShieldCheck, start: GR_ACTION_MS, done: GR_CHECK_DONE_MS, activeText: '校验中', doneText: '已通过' },
-  { name: '人工审批', icon: UserRound, start: GR_APPROVAL_MS, done: GR_APPROVED_MS, activeText: '审批中', doneText: '已批准' },
-  { name: '指令执行', icon: CirclePlay, start: GR_EXEC_MS, done: GR_EXEC_DONE_MS, activeText: '执行中', doneText: '已下发' },
-  { name: '结果验证', icon: FileText, start: GR_EXEC_DONE_MS, done: GR_DONE_MS, activeText: '验证中', doneText: '验证通过' },
+  { name: '安全校验', subtitle: '权限·参数·策略校验', icon: ShieldCheck, start: GR_ACTION_MS, done: GR_CHECK_DONE_MS },
+  { name: '人工审批', subtitle: '人工审批确认', icon: UserRound, start: GR_APPROVAL_MS, done: GR_APPROVED_MS },
+  { name: '指令执行', subtitle: '指令下发执行', icon: CirclePlay, start: GR_EXEC_MS, done: GR_EXEC_DONE_MS },
+  { name: '结果验证', subtitle: '执行结果验证', icon: FileText, start: GR_EXEC_DONE_MS, done: GR_DONE_MS },
 ]
 
 function stepState(step: (typeof steps)[number]): StepState {
@@ -33,65 +34,32 @@ function stepState(step: (typeof steps)[number]): StepState {
 
 function stepClass(state: StepState): string {
   if (state === 'done') {
-    return 'text-emerald-400'
+    return 'border-primary/30 bg-primary/5'
   }
   if (state === 'active') {
-    return 'text-primary'
+    return 'border-primary/40 bg-primary/10 shadow-sm shadow-primary/5'
   }
-  return 'text-muted'
+  return 'border-dt-line-strong/60 bg-dt-bg-soft/20'
 }
 
-function stepStatusText(step: (typeof steps)[number]): string {
-  const state = stepState(step)
-  if (state === 'done') {
-    return step.doneText
-  }
-  if (state === 'active') {
-    return step.activeText
-  }
-  return '等待中'
+function iconTone(state: StepState): 'primary' | 'soft' {
+  return state === 'pending' ? 'soft' : 'primary'
 }
 </script>
 
 <template>
-  <div class="mt-auto flex items-center gap-1.5 pt-2 xl:gap-2 xl:pt-3">
-    <template v-for="(step, index) in steps" :key="step.name">
-      <div class="flex min-w-0 flex-1 items-center gap-1.5">
-        <LoaderCircle
-          v-if="stepState(step) === 'active'"
-          class="size-3.5 shrink-0 animate-spin text-primary"
-          aria-hidden="true"
-        />
-        <CircleCheck
-          v-else-if="stepState(step) === 'done'"
-          class="size-3.5 shrink-0 text-emerald-400"
-          aria-hidden="true"
-        />
-        <component
-          :is="step.icon"
-          v-else
-          class="size-3.5 shrink-0 text-muted"
-          aria-hidden="true"
-        />
-        <span
-          class="truncate text-xs font-medium transition-colors duration-300"
-          :class="stepClass(stepState(step))"
-        >
-          {{ step.name }}
-        </span>
-        <span
-          class="ml-auto hidden shrink-0 text-[10px] leading-3 transition-colors duration-300 xl:inline"
-          :class="stepClass(stepState(step))"
-        >
-          {{ stepStatusText(step) }}
-        </span>
+  <div class="mt-auto grid grid-cols-2 gap-2 pt-3 xl:grid-cols-4">
+    <article
+      v-for="step in steps"
+      :key="step.name"
+      class="flex min-w-0 items-center gap-2.5 rounded-xl border p-2.5 transition-all duration-300"
+      :class="stepClass(stepState(step))"
+    >
+      <IconBox :icon="step.icon" :tone="iconTone(stepState(step))" class="shrink-0" />
+      <div class="min-w-0">
+        <h4 class="truncate text-sm font-semibold leading-5 text-highlighted">{{ step.name }}</h4>
+        <p class="mt-0.5 truncate text-xs leading-4 text-muted">{{ step.subtitle }}</p>
       </div>
-      <ArrowRight
-        v-if="index < steps.length - 1"
-        class="size-3.5 shrink-0 transition-colors duration-300"
-        :class="elapsed >= steps[index + 1]!.start ? 'text-primary' : 'text-muted'"
-        aria-hidden="true"
-      />
-    </template>
+    </article>
   </div>
 </template>
