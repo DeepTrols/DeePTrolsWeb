@@ -52,8 +52,23 @@ assert(
     runtimeTracePanel.includes('耗时') &&
     runtimeTracePanel.includes('工具调用') &&
     runtimeTracePanel.includes('Skills') &&
+    runtimeTracePanel.includes('IconBox') &&
+    runtimeTracePanel.includes('ArrowRight') &&
+    runtimeTracePanel.includes('当前 Span') &&
+    runtimeTracePanel.includes('trace.run.ess-01') &&
+    runtimeTracePanel.includes('Observability') &&
+    runtimeTracePanel.includes('stepCardClass') &&
+    runtimeTracePanel.includes('statusIcon') &&
+    runtimeTracePanel.includes('connectorClass') &&
+    runtimeTracePanel.includes('CircleCheck') &&
+    runtimeTracePanel.includes('LoaderCircle') &&
+    runtimeTracePanel.includes('CircleDashed') &&
+    runtimeTracePanel.includes('border-emerald-400/25 bg-emerald-400/5') &&
+    runtimeTracePanel.includes('border-primary/40 bg-primary/10 shadow-sm shadow-primary/5') &&
+    runtimeTracePanel.includes('text-muted') &&
+    !runtimeTracePanel.includes('opacity-0') &&
     !runtimeTracePanel.includes('<style'),
-  'The trace panel must replay the full ESS-01 runtime trace with live stats and a replay control.',
+  'The trace panel must replay the full ESS-01 runtime trace as always-resident observable span cards with IconBox status, connectors, live stats, current-span detail, replay control, and primary/emerald/muted state changes.',
 )
 assert(
   deviceAgentData.includes('export interface DeviceAgentValueItem') &&
