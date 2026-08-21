@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowRight, CirclePlay, FileText, ShieldCheck, UserRound } from '@lucide/vue'
+import { ArrowRight, CircleCheck, CirclePlay, FileText, ShieldCheck, UserRound } from '@lucide/vue'
 import IconBox from '~/components/common/card/IconBox.vue'
 import {
   GR_ACTION_MS,
@@ -59,6 +59,10 @@ function iconTone(state: StepState): 'primary' | 'soft' | 'success' {
   return state === 'active' ? 'primary' : 'soft'
 }
 
+function stepIcon(step: (typeof steps)[number]) {
+  return stepState(step) === 'done' ? CircleCheck : step.icon
+}
+
 function connectorClass(index: number): string {
   const nextState = stepState(steps[index + 1]!)
   if (nextState === 'done') {
@@ -78,7 +82,7 @@ function connectorClass(index: number): string {
         class="flex min-w-0 items-center gap-2.5 rounded-xl border p-2.5 transition-all duration-300 xl:flex-1"
         :class="stepClass(stepState(step))"
       >
-        <IconBox :icon="step.icon" :tone="iconTone(stepState(step))" class="shrink-0" />
+        <IconBox :icon="stepIcon(step)" :tone="iconTone(stepState(step))" class="shrink-0" />
         <div class="min-w-0">
           <h4 class="truncate text-sm font-semibold leading-5 transition-colors duration-300" :class="textClass(stepState(step))">
             {{ step.name }}

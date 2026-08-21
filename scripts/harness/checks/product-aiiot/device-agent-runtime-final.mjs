@@ -35,10 +35,13 @@ assert(
     runtimeGuardrailsSequence.includes('text-emerald-400') &&
     runtimeGuardrailsSequence.includes('text-muted') &&
     runtimeGuardrailsSequence.includes('success') &&
+    runtimeGuardrailsSequence.includes('CircleCheck') &&
+    runtimeGuardrailsSequence.includes('stepIcon') &&
+    runtimeGuardrailsSequence.includes("stepState(step) === 'done' ? CircleCheck : step.icon") &&
     runtimeGuardrailsSequence.includes('connectorClass') &&
     !runtimeGuardrailsSequence.includes('opacity-0') &&
     !runtimeGuardrailsSequence.includes('<style'),
-  'The guardrails panel must replay a real device action through always-resident low-density modules — action proposal (500 kW → 420 kW), four compressed Guardrails checks with a single-line risk result, human approval with approve/reject — ending in four IconBox stepper cards (安全校验 → 人工审批 → 指令执行 → 结果验证) whose active step is primary, completed steps are emerald, and pending steps are muted.',
+  'The guardrails panel must replay a real device action through always-resident low-density modules — action proposal (500 kW → 420 kW), four compressed Guardrails checks with a single-line risk result, human approval with approve/reject — ending in four IconBox stepper cards (安全校验 → 人工审批 → 指令执行 → 结果验证) whose active step is primary, completed steps are emerald with a check icon, and pending steps are muted.',
 )
 assert(
   runtimeTracePanel.includes('title="运行 Trace"') &&

@@ -224,6 +224,9 @@ describe('device agent runtime panel contract', () => {
     expect(guardrailsSequence).toContain('text-primary')
     expect(guardrailsSequence).toContain('text-muted')
     expect(guardrailsSequence).toContain("return 'success'")
+    expect(guardrailsSequence).toContain('CircleCheck')
+    expect(guardrailsSequence).toContain('stepIcon')
+    expect(guardrailsSequence).toContain("stepState(step) === 'done' ? CircleCheck : step.icon")
     expect(guardrailsSequence).toContain('connectorClass')
     expect(guardrailsSequence).not.toContain('opacity-0')
 
