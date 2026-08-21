@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CirclePlay, FileText, ShieldCheck, UserRound } from '@lucide/vue'
+import { ArrowRight, CirclePlay, FileText, ShieldCheck, UserRound } from '@lucide/vue'
 import IconBox from '~/components/common/card/IconBox.vue'
 import {
   GR_ACTION_MS,
@@ -34,7 +34,7 @@ function stepState(step: (typeof steps)[number]): StepState {
 
 function stepClass(state: StepState): string {
   if (state === 'done') {
-    return 'border-primary/30 bg-primary/5'
+    return 'border-emerald-400/30 bg-emerald-400/5'
   }
   if (state === 'active') {
     return 'border-primary/40 bg-primary/10 shadow-sm shadow-primary/5'
@@ -42,24 +42,53 @@ function stepClass(state: StepState): string {
   return 'border-dt-line-strong/60 bg-dt-bg-soft/20'
 }
 
-function iconTone(state: StepState): 'primary' | 'soft' {
-  return state === 'pending' ? 'soft' : 'primary'
+function textClass(state: StepState): string {
+  if (state === 'done') {
+    return 'text-emerald-400'
+  }
+  if (state === 'active') {
+    return 'text-primary'
+  }
+  return 'text-muted'
+}
+
+function iconTone(state: StepState): 'primary' | 'soft' | 'success' {
+  if (state === 'done') {
+    return 'success'
+  }
+  return state === 'active' ? 'primary' : 'soft'
+}
+
+function connectorClass(index: number): string {
+  const nextState = stepState(steps[index + 1]!)
+  if (nextState === 'done') {
+    return 'text-emerald-400'
+  }
+  if (nextState === 'active') {
+    return 'text-primary'
+  }
+  return 'text-muted'
 }
 </script>
 
 <template>
-  <div class="mt-auto grid grid-cols-2 gap-2 pt-3 xl:grid-cols-4">
-    <article
-      v-for="step in steps"
-      :key="step.name"
-      class="flex min-w-0 items-center gap-2.5 rounded-xl border p-2.5 transition-all duration-300"
-      :class="stepClass(stepState(step))"
-    >
-      <IconBox :icon="step.icon" :tone="iconTone(stepState(step))" class="shrink-0" />
-      <div class="min-w-0">
-        <h4 class="truncate text-sm font-semibold leading-5 text-highlighted">{{ step.name }}</h4>
-        <p class="mt-0.5 truncate text-xs leading-4 text-muted">{{ step.subtitle }}</p>
+  <div class="mt-auto grid grid-cols-2 gap-2 pt-3 xl:flex xl:items-stretch">
+    <template v-for="(step, index) in steps" :key="step.name">
+      <article
+        class="flex min-w-0 items-center gap-2.5 rounded-xl border p-2.5 transition-all duration-300 xl:flex-1"
+        :class="stepClass(stepState(step))"
+      >
+        <IconBox :icon="step.icon" :tone="iconTone(stepState(step))" class="shrink-0" />
+        <div class="min-w-0">
+          <h4 class="truncate text-sm font-semibold leading-5 transition-colors duration-300" :class="textClass(stepState(step))">
+            {{ step.name }}
+          </h4>
+          <p class="mt-0.5 truncate text-xs leading-4 text-muted">{{ step.subtitle }}</p>
+        </div>
+      </article>
+      <div v-if="index < steps.length - 1" class="hidden w-5 shrink-0 items-center justify-center xl:flex" aria-hidden="true">
+        <ArrowRight class="size-4 transition-colors duration-300" :class="connectorClass(index)" />
       </div>
-    </article>
+    </template>
   </div>
 </template>
