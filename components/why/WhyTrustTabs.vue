@@ -11,5 +11,3 @@ import { whyTrustTabs } from '~/data/why'
     tablist-label="DeepTrols 信赖维度"
   />
 </template>
-
-<style scoped lang="scss"></style>

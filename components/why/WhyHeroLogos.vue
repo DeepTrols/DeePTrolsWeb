@@ -8,5 +8,3 @@ import HomeCustomerLogos from '~/components/home/HomeCustomerLogos.vue'
     <HomeCustomerLogos />
   </HeroLogoStrip>
 </template>
-
-<style scoped lang="scss"></style>

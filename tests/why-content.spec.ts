@@ -61,12 +61,12 @@ describe('why deeptrols content contract', () => {
   })
 
   it('uses the required Why page source assets from the product brief', () => {
-    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png'))).toBe(true)
+    expect(existsSync(join(root, 'assets/images/why/fangangaishu.png'))).toBe(true)
     expect(existsSync(join(root, 'public/logo-while.svg'))).toBe(true)
-    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/数曜logo.svg'))).toBe(true)
-    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg'))).toBe(true)
-    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/探曜IOT logo-1.svg'))).toBe(true)
-    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/智曜logo.svg'))).toBe(true)
+    expect(existsSync(join(root, 'assets/images/brand/shuyao-logo.svg'))).toBe(true)
+    expect(existsSync(join(root, 'assets/images/brand/boyao-logo.svg'))).toBe(true)
+    expect(existsSync(join(root, 'assets/images/brand/tanyao-iot-logo.svg'))).toBe(true)
+    expect(existsSync(join(root, 'assets/images/brand/zhiyao-logo.svg'))).toBe(true)
   })
 
   it('maps the FlowMQ hero diagram nodes to the four brand logos', () => {

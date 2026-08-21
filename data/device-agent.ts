@@ -113,7 +113,7 @@ export const deviceAgentRuntimeTabs: DeviceAgentRuntimeTab[] = [
     label: 'MCP 工具连接',
     icon: Plug,
     panelTitle: 'MCP 工具连接',
-    panelBadge: '6 个可用',
+    panelBadge: '已连接',
   },
   {
     id: 'skills',

@@ -1,0 +1,61 @@
+import { expect, it } from 'vitest'
+import { loadHomeVisualSources } from './context'
+
+export function registerHomeSolutionsVisualContracts() {
+  it('keeps HOME solutions carousel contracts', () => {
+    const {
+      baseTabs,
+      homeSolutions,
+      carouselRoot,
+    } = loadHomeVisualSources()
+
+    expect(homeSolutions).toContain('eyebrow="Use Cases"')
+    expect(homeSolutions).toContain('title="驱动各行业智能提升"')
+    expect(homeSolutions).toContain('覆盖智能制造、企业运营、AI基础设施等核心领域，帮助企业快速构建可持续演进的智能化能力')
+    expect(homeSolutions).toContain('nowrap-subtitle')
+    expect(homeSolutions).toContain('.solutions :deep(.section-heading__subtitle)')
+    expect(homeSolutions).toContain('font-size: 20px')
+    expect(homeSolutions).toContain('white-space: nowrap')
+    expect(homeSolutions).toContain('BaseTabs')
+    expect(homeSolutions).toContain('solutionTabs')
+    expect(homeSolutions).toContain('label="解决方案分类"')
+    expect(homeSolutions).toContain('variant="pill"')
+    expect(baseTabs).toContain('role="tablist"')
+    expect(baseTabs).toContain('class="base-tabs"')
+    expect(baseTabs).toContain('dt-tab-list')
+    expect(baseTabs).toContain('dt-tab')
+    expect(homeSolutions).toContain('CarouselRoot')
+    expect(homeSolutions).toContain(':active-index="activeIndex"')
+    expect(homeSolutions).toContain(':item-count="solutions.length"')
+    expect(homeSolutions).toContain('labelled-by="solutions-title"')
+    expect(homeSolutions).toContain('--dt-carousel-align: flex-start')
+    expect(homeSolutions).toContain('--dt-carousel-gutter: -16px')
+    expect(homeSolutions).not.toContain('solutions__carousel-container')
+    expect(carouselRoot).toContain('role="region"')
+    expect(carouselRoot).toContain('aria-roledescription="carousel"')
+    expect(carouselRoot).toContain('data-orientation="horizontal"')
+    expect(carouselRoot).toContain('data-slot="root"')
+    expect(carouselRoot).toContain('data-slot="viewport"')
+    expect(carouselRoot).toContain('data-slot="container"')
+    expect(carouselRoot).toContain('transform: translate3d(-500%, 0, 0)')
+    expect(carouselRoot).toContain('align-items: var(--dt-carousel-align, stretch)')
+    expect(carouselRoot).toContain('margin-inline-start: var(--dt-carousel-gutter, 0px)')
+    expect(homeSolutions).toContain('role="group"')
+    expect(homeSolutions).toContain('data-slot="item"')
+    expect(homeSolutions).toContain('flex: 0 0 100%')
+    expect(homeSolutions).toContain('min-height: 420px')
+    expect(homeSolutions).toContain('min-height: 520px')
+    expect(homeSolutions).toContain('background: linear-gradient(to top, rgba(0, 0, 0, 0.95)')
+    expect(homeSolutions).toContain('padding: 96px 24px 24px')
+    expect(homeSolutions).toContain('font-size: 24px')
+    expect(homeSolutions).toContain('class="group solutions__panel"')
+    expect(homeSolutions).toContain('阅读案例')
+    expect(homeSolutions).toContain('class="iconify iconify--lucide size-4 transition group-hover:translate-x-1"')
+    expect(homeSolutions).toContain('line-height: 1.5')
+    expect(homeSolutions).not.toContain('了解更多')
+    expect(homeSolutions).toContain('查看所有应用场景')
+    expect(homeSolutions).toContain('href="/solutions#use-cases"')
+    expect(homeSolutions).toContain('BaseButton')
+    expect(homeSolutions).not.toContain('查看所有解决方案')
+  })
+}

@@ -58,5 +58,3 @@ import { bridgeLines } from '~/data/ecosystemVisual'
     </g>
   </svg>
 </template>
-
-<style scoped lang="scss"></style>

@@ -113,6 +113,7 @@ https://www.emqx.com/zh （Dark模式）
 - CSS Variables
 - Tailwind CSS v4 theme bridge
 - `assets/scss/main.scss` 中的 `dt-*` 公共样式层
+- `doc/engineering/ASSET_BOUNDARY.md` 中的运行时资产边界
 
 禁止：
 
@@ -120,6 +121,7 @@ https://www.emqx.com/zh （Dark模式）
 - Magic Number
 - 重复样式
 - 在 `assets/` 或 `components/` 中提交 `@apply`。当前 Nuxt 构建链路不会处理 Vue scoped SCSS 中的 `@apply`，会导致无效 CSS 进入产物。
+- 新增运行时代码直接引用 `doc/product/**/imgs`。产品文档图片必须先迁移到 `assets/images/**` 或 `public/images/**`。
 
 公共视觉入口：
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ServiceShowcaseSection from '~/components/common/ServiceShowcaseSection.vue'
-import serviceOverviewSrc from '../../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/fangangaishu@2x.png?url'
+import serviceOverviewSrc from '~/assets/images/why/fangangaishu.png?url'
 import { whyServiceItems } from '~/data/why'
 </script>
 
@@ -14,5 +14,3 @@ import { whyServiceItems } from '~/data/why'
     image-alt="DeepTrols 方案概述"
   />
 </template>
-
-<style scoped lang="scss"></style>

@@ -38,6 +38,7 @@
   --animate-value-shield-hub: value-speed-float 3.5s ease-in-out infinite, value-shield-glow 3.5s ease-in-out 1s infinite;
   --animate-uptime-blink: value-uptime-blink 2s ease-in-out infinite;
   --animate-panel-in: panel-in 0.32s ease-out both;
+  --animate-sync-pulse: sync-pulse 2s ease-in-out infinite;
 
   @keyframes panel-in {
     from {
@@ -48,6 +49,17 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes sync-pulse {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+
+    50% {
+      opacity: 1;
     }
   }
 
@@ -241,4 +253,20 @@
 
 @utility text-highlighted {
   color: var(--dt-color-text-highlighted);
+}
+
+@utility clip-hex {
+  clip-path: path('M 35.36 4.46 Q 42 0 48.64 4.46 L 71.48 19.79 Q 78.12 24.25 78.12 32.25 L 78.12 64.75 Q 78.12 72.75 71.48 77.21 L 48.64 92.54 Q 42 97 35.36 92.54 L 12.52 77.21 Q 5.88 72.75 5.88 64.75 L 5.88 32.25 Q 5.88 24.25 12.52 19.79 Z');
+
+  @media (width >= 80rem) {
+    clip-path: path('M 59.35 4.45 Q 66 0 72.65 4.45 L 116.11 33.55 Q 122.76 38 122.76 46 L 122.76 106 Q 122.76 114 116.11 118.45 L 72.65 147.55 Q 66 152 59.35 147.55 L 15.89 118.45 Q 9.24 114 9.24 106 L 9.24 46 Q 9.24 38 15.89 33.55 Z');
+  }
+}
+
+@utility clip-hex-inner {
+  clip-path: path('M 35.19 3.91 Q 41 0 46.81 3.91 L 70.45 19.84 Q 76.26 23.75 76.26 30.75 L 76.26 64.25 Q 76.26 71.25 70.45 75.16 L 46.81 91.09 Q 41 95 35.19 91.09 L 11.55 75.16 Q 5.74 71.25 5.74 64.25 L 5.74 30.75 Q 5.74 23.75 11.55 19.84 Z');
+
+  @media (width >= 80rem) {
+    clip-path: path('M 59.19 3.9 Q 65 0 70.81 3.9 L 115.09 33.6 Q 120.9 37.5 120.9 44.5 L 120.9 105.5 Q 120.9 112.5 115.09 116.4 L 70.81 146.1 Q 65 150 59.19 146.1 L 14.91 116.4 Q 9.1 112.5 9.1 105.5 L 9.1 44.5 Q 9.1 37.5 14.91 33.6 Z');
+  }
 }

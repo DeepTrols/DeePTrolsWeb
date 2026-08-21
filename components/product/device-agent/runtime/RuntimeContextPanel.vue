@@ -3,6 +3,7 @@ import { Activity, BookOpen, Box, ChartNoAxesCombined, CircleCheck, Cpu, Layers,
 import { computed } from 'vue'
 import IconBox from '~/components/common/card/IconBox.vue'
 import RuntimePanelShell from '~/components/product/device-agent/runtime/RuntimePanelShell.vue'
+import RuntimeContextSnapshot from '~/components/product/device-agent/runtime/RuntimeContextSnapshot.vue'
 import { useRuntimeTimeline } from '~/components/product/device-agent/useRuntimeTimeline'
 
 const REALTIME_MS = 500
@@ -158,6 +159,23 @@ function sourceIconTone(card: (typeof sourceCards)[number]): 'primary' | 'soft' 
 function sourceStatusClass(card: (typeof sourceCards)[number]): string {
   return sourceState(card) === 'idle' ? 'text-muted' : 'text-primary'
 }
+
+const activeSnapshotGroup = computed<'realtime' | 'timeseries' | 'device' | 'knowledge' | null>(() => {
+  const t = elapsed.value
+  if (t >= REALTIME_MS && t < REALTIME_DONE_MS) {
+    return 'realtime'
+  }
+  if (t >= REALTIME_DONE_MS && t < DEVICE_MS) {
+    return 'timeseries'
+  }
+  if (t >= DEVICE_MS && t < KNOWLEDGE_MS) {
+    return 'device'
+  }
+  if (t >= KNOWLEDGE_MS && t < BUILD_MS) {
+    return 'knowledge'
+  }
+  return null
+})
 </script>
 
 <template>
@@ -186,7 +204,7 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       </div>
     </div>
 
-    <div class="mt-5 flex items-center gap-2">
+    <div class="mt-3 flex items-center gap-2 xl:mt-5">
       <div
         v-for="card in sourceCards"
         :key="`bar-${card.title}`"
@@ -195,7 +213,7 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       ></div>
     </div>
 
-    <div class="mt-5 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4 xl:flex-none">
+    <div class="mt-2 grid min-h-0 flex-1 grid-cols-2 gap-2 sm:gap-3 xl:flex-none xl:grid-cols-4">
       <div
         v-for="card in sourceCards"
         :key="card.title"
@@ -205,7 +223,7 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
         <IconBox :icon="card.icon" :size="40" :icon-size="20" :tone="sourceIconTone(card)" class="shrink-0" />
         <div class="min-w-0 flex-1">
           <p class="truncate text-sm font-semibold leading-5 text-highlighted">{{ card.title }}</p>
-          <p class="mt-0.5 truncate text-xs leading-4 text-muted">{{ card.description }}</p>
+          <p class="mt-0.5 hidden truncate text-xs leading-4 text-muted xl:block">{{ card.description }}</p>
           <p
             class="mt-1 truncate font-mono text-xs leading-4 transition-colors duration-300"
             :class="sourceStatusClass(card)"
@@ -216,7 +234,9 @@ function sourceStatusClass(card: (typeof sourceCards)[number]): string {
       </div>
     </div>
 
-    <div class="mt-5 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5">
+    <RuntimeContextSnapshot :group="activeSnapshotGroup" />
+
+    <div class="mt-3 rounded-xl border border-dt-line-strong/60 bg-dt-bg p-2.5 xl:mt-5">
       <div class="flex items-center gap-1.5">
         <Terminal class="size-3.5 shrink-0 text-muted" aria-hidden="true" />
         <p class="truncate text-xs font-semibold text-highlighted">上下文构建序列</p>

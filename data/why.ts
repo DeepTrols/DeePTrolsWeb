@@ -16,10 +16,10 @@ import {
   Waypoints,
 } from '@lucide/vue'
 import type { Component } from 'vue'
-import boyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg?url'
-import shuyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/数曜logo.svg?url'
-import tanyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/探曜IOT logo-1.svg?url'
-import zhiyaoLogo from '../doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/智曜logo.svg?url'
+import boyaoLogo from '../assets/images/brand/boyao-logo.svg?url'
+import shuyaoLogo from '../assets/images/brand/shuyao-logo.svg?url'
+import tanyaoLogo from '../assets/images/brand/tanyao-iot-logo.svg?url'
+import zhiyaoLogo from '../assets/images/brand/zhiyao-logo.svg?url'
 
 export interface WhyTrustFeature {
   title: string

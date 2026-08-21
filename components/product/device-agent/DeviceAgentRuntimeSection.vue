@@ -90,7 +90,7 @@ const activePanel = computed(() => panels[active.value?.id ?? 'events'])
         </button>
       </div>
 
-      <div class="relative">
+      <div class="relative min-w-0">
         <component :is="activePanel" :key="active?.id" />
       </div>
     </div>

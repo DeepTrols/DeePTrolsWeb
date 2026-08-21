@@ -15,5 +15,3 @@ const engineDescription =
     :links="whyEngineLinks"
   />
 </template>
-
-<style scoped lang="scss"></style>

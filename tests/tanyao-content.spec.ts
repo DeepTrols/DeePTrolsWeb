@@ -84,14 +84,14 @@ describe('TANYAO product page content contract', () => {
 
   it('keeps the tanyao and ecosystem logo assets available', () => {
     for (const asset of [
-      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/探曜IOT logo-1.svg',
-      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/数曜logo.svg',
-      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/智曜logo.svg',
-      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg',
-      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/deepseek-logo.svg',
-      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/qwen-logo.svg',
-      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/zhipu-logo.svg',
-      'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/kimi-logo.svg',
+      'assets/images/brand/tanyao-iot-logo.svg',
+      'assets/images/brand/shuyao-logo.svg',
+      'assets/images/brand/zhiyao-logo.svg',
+      'assets/images/brand/boyao-logo.svg',
+      'assets/images/brand/deepseek-logo.svg',
+      'assets/images/brand/qwen-logo.svg',
+      'assets/images/brand/zhipu-logo.svg',
+      'assets/images/brand/kimi-logo.svg',
     ]) {
       expect(existsSync(join(root, asset)), asset).toBe(true)
     }

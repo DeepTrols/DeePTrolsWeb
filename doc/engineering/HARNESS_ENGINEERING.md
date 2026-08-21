@@ -27,6 +27,7 @@ Harness Engineering 是 DeepTrols 官网开发的执行约束：每次任务都�
 - `doc/engineering/HOME_PAGE_BASELINE.md`
 - `doc/engineering/HARNESS_ENGINEERING.md`
 - `doc/engineering/COMMON_SECTION_COMPONENTS.md`
+- `doc/engineering/ASSET_BOUNDARY.md`
 - 对应 `doc/product/PAGE_REQUIREMENTS/**`
 - `doc/product/NAVIGATION.md`
 - `doc/product/BRAND_GUIDE.md`
@@ -71,6 +72,7 @@ pnpm harness:engineering
 - 组件是否使用 SCSS，是否存在非法 inline style。
 - 是否存在未处理的 `@apply`。
 - Vue 组件是否超过 300 行。
+- 运行时代码是否避免直接引用 `doc/product/**/imgs`。
 - 当前任务与基准文档是否存在。
 
 该脚本不能替代浏览器视觉验收，但可以防止基础工程约束失效。

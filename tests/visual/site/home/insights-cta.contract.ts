@@ -1,0 +1,65 @@
+import { expect, it } from 'vitest'
+import { loadHomeVisualSources } from './context'
+
+export function registerHomeInsightsCtaVisualContracts() {
+  it('keeps HOME insights and CTA contracts', () => {
+    const {
+      ctaSection,
+      homeInsights,
+      homeCta,
+    } = loadHomeVisualSources()
+
+    expect(homeInsights).toContain('SectionHeading')
+    expect(homeInsights).toContain('eyebrow="Resources"')
+    expect(homeInsights).toContain('title="创新、洞察与新闻"')
+    expect(homeInsights).toContain('title-id="insights-title"')
+    expect(homeInsights).toContain('class="insights__layout"')
+    expect(homeInsights).toContain('grid-template-columns: 1fr')
+    expect(homeInsights).toContain('grid-template-columns: repeat(2, minmax(0, 1fr))')
+    expect(homeInsights).toContain('gap: 24px')
+    expect(homeInsights).toContain('margin-bottom: 48px')
+    expect(homeInsights).toContain('font-size: 16px')
+    expect(homeInsights).toContain('class="group insights__featured"')
+    expect(homeInsights).toContain('class="group insights__item"')
+    expect(homeInsights).toContain('aspect-ratio: 2 / 1')
+    expect(homeInsights).toContain('aspect-ratio: 400 / 180')
+    expect(homeInsights).toContain('aspect-ratio: auto')
+    expect(homeInsights).toContain('border-radius: var(--dt-ui-radius)')
+    expect(homeInsights).toContain('border-color: var(--dt-color-line-strong)')
+    expect(homeInsights).toContain('transform: scale(1.05)')
+    expect(homeInsights).toContain('transition: transform 500ms ease')
+    expect(homeInsights).toContain('position: absolute')
+    expect(homeInsights).toContain('inset: 0')
+    expect(homeInsights).toContain('object-fit: cover')
+    expect(homeInsights).toContain('-webkit-line-clamp: 3')
+    expect(homeInsights).toContain('-webkit-line-clamp: 2')
+    expect(homeInsights).toContain('-webkit-line-clamp: 1')
+    expect(homeInsights).toContain('class="insights__all-link insights__all-link--desktop"')
+    expect(homeInsights).toContain('class="insights__mobile-action"')
+    expect(homeInsights).toContain('BaseButton')
+    expect(homeInsights).toContain('查看全部资源')
+    expect(homeInsights).not.toContain('insights__topline')
+    expect(homeInsights).not.toContain('transform: translateY')
+
+    expect(homeCta).toContain('CtaSection')
+    expect(ctaSection).toContain('class="cta-section"')
+    expect(ctaSection).toContain('class="container"')
+    expect(ctaSection).toContain('class="cta-section__panel dt-cta-panel"')
+    expect(homeCta).toContain('构建企业自身的AI能力')
+    expect(homeCta).toContain('让数据成为资产，让知识驱动决策，让AI创造价值')
+    expect(ctaSection).toContain('padding-bottom: 128px')
+    expect(ctaSection).toContain('padding-bottom: 176px')
+    expect(ctaSection).toContain('font-size: 36px')
+    expect(ctaSection).toContain('font-size: 48px')
+    expect(ctaSection).toContain('font-size: 20px')
+    expect(ctaSection).toContain('class="cta-section__actions"')
+    expect(ctaSection).toContain('gap: 24px')
+    expect(ctaSection).toContain('BaseButton')
+    expect(homeCta).toContain("href: '/contact'")
+    expect(homeCta).toContain("href: '/try'")
+    expect(homeCta).toContain('咨询合作')
+    expect(homeCta).toContain('申请试用')
+    expect(homeCta).not.toContain('Start With DeepTrols')
+    expect(homeCta).not.toContain('构建属于企业自己的 AI 能力')
+  })
+}

@@ -123,6 +123,6 @@ describe('BOYAO product page content contract', () => {
   })
 
   it('keeps the boyao logo asset available', () => {
-    expect(existsSync(join(root, 'doc/product/PAGE_REQUIREMENTS/WhyDeepTrols/imgs/博曜logo.svg'))).toBe(true)
+    expect(existsSync(join(root, 'assets/images/brand/boyao-logo.svg'))).toBe(true)
   })
 })

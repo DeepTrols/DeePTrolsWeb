@@ -15,5 +15,3 @@ const ctaActions = [
     :actions="ctaActions"
   />
 </template>
-
-<style scoped lang="scss"></style>

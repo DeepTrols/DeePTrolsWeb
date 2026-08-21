@@ -165,6 +165,34 @@
 - 底部卡片使用 `components/common/ProductSystemCards.vue`，由 `CardGrid`、`BaseCard`、`IconBox` 组合，并保持 `.dt-product-card`、`.dt-card--adaptive`、`.dt-product-card__accent`、`.dt-icon-box`。
 - 公共 section 不得直接依赖 `EnterpriseFlow.client.vue`、VueFlow、流程图 fallback、移动端输入输出数据或卡片循环。
 
+## Product Architecture
+公共组件：`components/common/ProductArchitectureSection.vue`
+
+适用场景：
+- 产品页中“标题 + 架构图/流程图占位 + 可选阶段卡片”的区块。
+- DGP / DLP / DDP / DMS / Tanyao / Boyao / Device Agent 等产品架构、解决方案、系统集成区块。
+
+使用要求：
+- 页面业务组件只传 `eyebrow`、`title`、`titleId`、`subtitle`、`label`、`fallbackText`，不得再重复手写 `ProductSystemSection + ProductSystemFlowFrame` 外壳。
+- 有真实流程图时使用默认 slot 覆盖 `ProductSystemFlowFrame` 内容；没有流程图时使用 fallback 文案。
+- 有阶段卡片时使用 `#after` slot 放置 `SystemCards`，保持 `mt-10 lg:mt-12` 的卡片节奏。
+- 需要取消架构图上方额外间距时使用 `frameOffset=false`，需要保留 `ProductSystemSection` 默认内容间距时使用 `contentFlush=false`。
+- 公共组件只负责布局组合，不绑定任何产品数据或具体 VueFlow。
+
+## Hero Visual Primitives
+公共组件：
+- `components/common/hero-visual/HeroVisualShell.vue`
+- `components/common/hero-visual/HeroVisualPanel.vue`
+
+适用场景：
+- 产品页 Hero 中复用的深色视觉外壳、glow、面板容器。
+
+使用要求：
+- 产品专属视觉组件继续保留业务动画和文案，但外壳优先复用 `HeroVisualShell`。
+- 需要自定义面板尺寸、边框、背景、padding 时通过 `panelClass` 传入 Tailwind CSS v4 utility。
+- 需要 glow 时通过 `glow` 与 `glowClass` 控制，禁止在每个产品视觉中重复发明外层 glow。
+- 不做“万能视觉组件”：终端、表格、流程图等业务内容继续由具体产品视觉组件或更小 primitives 组合。
+
 ## Product Feature Grid
 公共组件：`components/common/ProductFeatureGridSection.vue`
 
@@ -188,7 +216,7 @@
 
 适用场景：
 - 产品架构、能力阶段、平台阶段等 3 列阶段说明卡片。
-- 可作为 `ProductSystemSection` 默认 slot 的内容；如页面有自定义流程图，应在 slot 中自行组合流程图与 `SystemCards`。
+- 可作为 `ProductArchitectureSection` 的 `#after` slot 内容；如页面有自定义流程图，应在 slot 中自行组合流程图与 `SystemCards`。
 
 使用要求：
 - 根布局通过 `CardGrid(columns="three" gap="sm")` 承载，并在调用处保留 `mt-10 lg:mt-12`。

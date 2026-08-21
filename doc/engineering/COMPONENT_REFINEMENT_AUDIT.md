@@ -26,6 +26,18 @@
 | `BaseTabs` | `components/common/tabs/BaseTabs.vue` | `HomeSolutions`、`DgpUseCasesSection`、`TrustTabsSection` |
 | `CarouselRoot` / `CarouselControls` | `components/common/carousel/*` | 已新增基础组件，页面迁移留到下一批 carousel 专项 |
 
+## 已执行：Phase 2 P1 工程审计整改
+2026-08-21 已根据 `PROJECT_AUDIT_2026-08-21.md` 完成第二批维护性抽象：
+
+| 组件/模块 | 路径 | 当前接入位置 |
+|----|----|----|
+| `ProductArchitectureSection` | `components/common/ProductArchitectureSection.vue` | DGP、DLP、DDP、DMS、Tanyao、Boyao、Device Agent 架构/解决方案区块 |
+| `HeroVisualShell` | `components/common/hero-visual/HeroVisualShell.vue` | DGP Hero Visual |
+| `HeroVisualPanel` | `components/common/hero-visual/HeroVisualPanel.vue` | `HeroVisualShell` |
+| Harness 模块 | `scripts/harness/**` | `scripts/harness-check.mjs` 聚合调用 |
+| Visual contract 模块 | `tests/visual/**` | `tests/visual.spec.ts` 聚合调用 |
+| Asset Boundary | `doc/engineering/ASSET_BOUNDARY.md` | Harness required file 与运行时资产约束 |
+
 验证已更新到公共组件层：`tests/visual.spec.ts` 与 `scripts/harness-check.mjs` 会同时检查页面组合关系和公共组件的视觉/ARIA 契约。
 
 ## 初始统计
@@ -175,7 +187,7 @@ Deliverables、Solutions、Cases 都有类似结构：
 |----|----|----|----|
 | Hero | `DgpHero.vue` + `PageHero.vue` | `PageHero` 已复用，视觉保留 slot | Keep |
 | 核心价值 | `ProductFeatureGridSection.vue` | `FeatureGridSection` + `FeatureCard` | P0/P1 |
-| 产品架构 | `DgpArchitecture.vue`、`ProductSystemSection.vue`、`SystemCards.vue` | `SectionShell`、`ProductSystemFlowFrame`、`CardGrid`、`FeatureCard` | P0/P1 |
+| 产品架构 | `DgpArchitecture.vue`、`ProductArchitectureSection.vue`、`SystemCards.vue` | `ProductArchitectureSection`、`ProductSystemFlowFrame`、`CardGrid`、`FeatureCard` | P0/P1 |
 | 产品能力 | `ProductFeatureGridSection.vue` | 同核心价值 | P0/P1 |
 | 企业级数据治理 | `DgpEvolutionSection.vue` | `SectionHeader`、`AlternatingNarrativeRows`、纯文本内容块、`BulletList` | P1 |
 | 应用场景 | `DgpUseCasesSection.vue` | `BaseTabs(underline)`、`MediaOverlayCard` / `UseCasePanel` | P1 |
@@ -186,7 +198,7 @@ Deliverables、Solutions、Cases 都有类似结构：
 |----|----|----|----|
 | Hero | `DdpHero.vue` + `PageHero.vue` | `PageHero` 已复用，视觉保留 slot | Keep |
 | 挑战 / 核心优势 / 应用场景 | `ProductFeatureGridSection.vue` | `FeatureGridSection` + `FeatureCard` | P0/P1 |
-| 解决方案 | `DdpArchitecture.vue`、`ProductSystemSection.vue` | `ProductSystemFlowFrame` | P0/P1 |
+| 解决方案 | `DdpArchitecture.vue`、`ProductArchitectureSection.vue` | `ProductArchitectureSection` | P0/P1 |
 | 核心能力 | `DdpCapabilityTimelineSection.vue`、`AlternatingTimelineSection.vue` | 公共中轴交错时间线 | P0 |
 | 统一数据开发 | `DdpUnifiedDevelopmentSection.vue` | `ProductFeatureGridSection #after` + `ProductSystemFlowFrame` | P0/P1 |
 | CTA | `CtaSection.vue` | 后续接 `SectionShell` + `SectionHeader` | P1 |
@@ -196,7 +208,7 @@ Deliverables、Solutions、Cases 都有类似结构：
 |----|----|----|----|
 | Hero | `DmsHero.vue` + `PageHero.vue` | `PageHero` 已复用，视觉保留 slot | Keep |
 | 挑战 / 核心能力 / 应用场景 | `ProductFeatureGridSection.vue` | `FeatureGridSection` + `FeatureCard` | P0/P1 |
-| 解决方案 | `DmsArchitecture.vue`、`ProductSystemSection.vue` | `ProductSystemFlowFrame` | P0/P1 |
+| 解决方案 | `DmsArchitecture.vue`、`ProductArchitectureSection.vue` | `ProductArchitectureSection` | P0/P1 |
 | 智能监管 | `DmsIntelligentRegulationSection.vue`、`AlternatingTimelineSection.vue` | 公共中轴交错时间线 | P0 |
 | 业务价值 | `DmsBusinessValueSection.vue` | `SectionHeader` + Tailwind-only business value grid | P1 |
 | 监管流程 | `DmsRegulationProcessSection.vue` | `ProductFeatureGridSection #before` + `ProductSystemFlowFrame` | P0/P1 |

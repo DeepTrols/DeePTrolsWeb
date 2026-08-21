@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Database, Sparkles } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import HeroVisualShell from '~/components/common/hero-visual/HeroVisualShell.vue'
 import { dgpGovernanceScenes } from '~/data/dgp'
 
 interface HeroVisualToken {
@@ -167,8 +168,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div
-    class="relative w-full overflow-hidden rounded-2xl border border-default bg-dt-bg-soft/35 p-6 shadow-sm backdrop-blur-xl transition-colors duration-300 hover:border-primary/30 lg:p-7"
+  <HeroVisualShell
+    panel-class="w-full overflow-hidden rounded-2xl border border-default bg-dt-bg-soft/35 p-6 shadow-sm backdrop-blur-xl transition-colors duration-300 hover:border-primary/30 lg:p-7"
   >
     <div class="relative">
       <div class="space-y-4">
@@ -279,5 +280,5 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </div>
-  </div>
+  </HeroVisualShell>
 </template>

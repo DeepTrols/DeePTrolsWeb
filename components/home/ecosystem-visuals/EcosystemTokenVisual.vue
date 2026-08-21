@@ -35,5 +35,3 @@ import { cloudDots, tokenNodes, tokenPaths } from '~/data/ecosystemVisual'
     </g>
   </svg>
 </template>
-
-<style scoped lang="scss"></style>
