@@ -38,6 +38,7 @@
 - 已移除 Trace 待执行节点的 `opacity-0` 隐藏逻辑，改为 pending / current / done 三态切换。
 - 已更新 Harness 与视觉契约，锁定 IconBox、ArrowRight、当前 Span、三态卡片、无 `opacity-0`。
 - 已更新产品需求实现补充。
+- 2026-08-22 修正 Trace 面板高度溢出：去掉独立连接行，将 ArrowRight 收进 Trace Span 卡片，压缩顶部指标、右侧详情与重放按钮间距；浏览器复测 `overflowingElements: []`，面板外框 `scrollHeight` 与 `clientHeight` 对齐。
 
 ## 修改文件
 | 文件 | 说明 |
@@ -67,6 +68,7 @@
 | `pnpm test:visual` | 通过，34 tests |
 | `pnpm harness:engineering` | 通过 |
 | `pnpm build` | 通过；存在当前项目既有 Tailwind CSS 优化警告与 Nuxt 插件耗时提示 |
+| 浏览器高度复测 | 通过，Trace 面板无内部溢出 |
 
 ## 已知问题
 - 无新增已知问题。

@@ -142,18 +142,18 @@ function connectorClass(index: number): string {
       <div
         v-for="stat in stats"
         :key="stat.label"
-        class="flex items-center gap-2 rounded-lg border border-dt-line-strong/60 bg-dt-bg-soft/20 px-2.5 py-1.5"
+        class="flex items-center gap-2 rounded-lg border border-dt-line-strong/60 bg-dt-bg-soft/20 px-2 py-1"
       >
         <component :is="stat.icon" class="hidden size-3.5 shrink-0 text-primary sm:block" aria-hidden="true" />
         <div class="min-w-0">
-          <p class="truncate text-[11px] leading-4 text-muted">{{ stat.label }}</p>
-          <p class="font-mono text-sm font-semibold text-highlighted">{{ stat.value }}</p>
+          <p class="truncate text-[11px] leading-3 text-muted">{{ stat.label }}</p>
+          <p class="font-mono text-xs font-semibold leading-4 text-highlighted">{{ stat.value }}</p>
         </div>
       </div>
     </div>
 
-    <div class="mt-3 grid min-h-0 flex-1 gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
-      <div class="flex min-h-0 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg-soft/20 p-3">
+    <div class="mt-2 grid min-h-0 flex-1 gap-2 xl:grid-cols-[minmax(0,1fr)_210px]">
+      <div class="flex min-h-0 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg-soft/20 p-2.5">
         <div class="flex items-center justify-between gap-3">
           <div class="flex min-w-0 items-center gap-2">
             <span class="size-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
@@ -164,17 +164,17 @@ function connectorClass(index: number): string {
           </span>
         </div>
 
-        <div class="mt-3 grid gap-1.5">
+        <div class="mt-2 grid gap-0.5">
           <template v-for="(step, index) in deviceAgentTraceSteps" :key="step.time">
             <article
-              class="grid grid-cols-[66px_auto_minmax(0,1fr)] items-center gap-2 rounded-lg border px-2 py-1.5 transition-all duration-300"
+              class="grid grid-cols-[64px_auto_minmax(0,1fr)_auto] items-center gap-1.5 rounded-lg border px-2 py-1 transition-all duration-300"
               :class="stepCardClass(index)"
             >
               <span class="shrink-0 text-right font-mono text-[10px] leading-4 text-muted">{{ step.time }}</span>
-              <span class="flex size-6 shrink-0 items-center justify-center rounded-md bg-dt-bg text-muted ring-1 ring-dt-line-strong/60 transition-colors duration-300">
+              <span class="flex size-5 shrink-0 items-center justify-center rounded-md bg-dt-bg text-muted ring-1 ring-dt-line-strong/60 transition-colors duration-300">
                 <component
                   :is="statusIcon(index)"
-                  class="size-3.5"
+                  class="size-3"
                   :class="[stepTextClass(index), stepState(index) === 'current' ? 'animate-spin' : '']"
                   aria-hidden="true"
                 />
@@ -187,23 +187,24 @@ function connectorClass(index: number): string {
                   <span class="truncate font-mono text-[11px] leading-4 text-muted">{{ step.lines.join(' · ') }}</span>
                 </p>
               </div>
+              <ArrowRight
+                v-if="index < deviceAgentTraceSteps.length - 1"
+                class="size-3 shrink-0 rotate-90 transition-colors duration-300"
+                :class="connectorClass(index)"
+                aria-hidden="true"
+              />
             </article>
-            <div v-if="index < deviceAgentTraceSteps.length - 1" class="grid grid-cols-[66px_auto_minmax(0,1fr)] items-center gap-2" aria-hidden="true">
-              <span></span>
-              <ArrowRight class="mx-auto size-3.5 rotate-90 transition-colors duration-300" :class="connectorClass(index)" />
-              <span class="h-px bg-dt-line-strong/40"></span>
-            </div>
           </template>
         </div>
       </div>
 
-      <aside class="hidden min-h-0 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg-soft/20 p-3 xl:flex">
+      <aside class="hidden min-h-0 flex-col rounded-xl border border-dt-line-strong/60 bg-dt-bg-soft/20 p-2 xl:flex">
         <div class="flex items-center justify-between gap-2">
           <span class="text-xs font-semibold text-highlighted">当前 Span</span>
           <span class="rounded bg-primary/10 px-2 py-0.5 font-mono text-[10px] text-primary">span-{{ activeIndex + 1 }}</span>
         </div>
 
-        <div class="mt-4 flex items-center gap-3">
+        <div class="mt-2 flex items-center gap-2.5">
           <IconBox :icon="traceIcon(currentStep.kind)" :tone="iconTone(activeIndex)" class="shrink-0" />
           <div
             class="min-w-0"
@@ -213,18 +214,18 @@ function connectorClass(index: number): string {
           </div>
         </div>
 
-        <div class="mt-4 space-y-2">
-          <div class="flex items-center justify-between gap-3 rounded-lg border border-dt-line-strong/60 bg-dt-bg px-2.5 py-2">
+        <div class="mt-2 space-y-1">
+          <div class="flex items-center justify-between gap-3 rounded-lg border border-dt-line-strong/60 bg-dt-bg px-2 py-1">
             <span class="text-xs text-muted">Trace ID</span>
             <span class="truncate font-mono text-xs text-highlighted">ess-01-runtime</span>
           </div>
-          <div class="flex items-center justify-between gap-3 rounded-lg border border-dt-line-strong/60 bg-dt-bg px-2.5 py-2">
+          <div class="flex items-center justify-between gap-3 rounded-lg border border-dt-line-strong/60 bg-dt-bg px-2 py-1">
             <span class="text-xs text-muted">采样状态</span>
             <span class="font-mono text-xs" :class="finished ? 'text-emerald-400' : 'text-primary'">
               {{ finished ? 'closed' : 'streaming' }}
             </span>
           </div>
-          <div class="rounded-lg border border-dt-line-strong/60 bg-dt-bg px-2.5 py-2">
+          <div class="rounded-lg border border-dt-line-strong/60 bg-dt-bg px-2 py-1">
             <div class="flex items-center justify-between gap-3">
               <span class="text-xs text-muted">运行进度</span>
               <span class="font-mono text-xs text-highlighted">{{ activeIndex + 1 }}/{{ deviceAgentTraceSteps.length }}</span>
@@ -235,16 +236,16 @@ function connectorClass(index: number): string {
           </div>
         </div>
 
-        <div class="mt-auto rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
+        <div class="mt-auto rounded-lg border border-primary/20 bg-primary/5 px-2 py-1">
           <p class="text-[11px] font-medium text-primary">Observability</p>
-          <p class="mt-1 text-xs leading-5 text-muted">事件、上下文、工具、Skills 与执行结果被统一记录，可回放、可追踪、可审计。</p>
+          <p class="mt-0.5 text-xs leading-4 text-muted">事件、上下文、工具、Skills 与执行结果被统一记录，可回放、可追踪、可审计。</p>
         </div>
       </aside>
     </div>
 
     <button
       type="button"
-      class="mx-auto mt-3 flex w-fit cursor-pointer items-center gap-1.5 rounded-lg border border-dt-line-strong/60 bg-dt-bg-soft/20 px-3 py-1.5 text-xs font-medium text-highlighted transition-colors duration-300 hover:border-primary/40 hover:text-primary"
+      class="mx-auto mt-2 flex w-fit cursor-pointer items-center gap-1.5 rounded-lg border border-dt-line-strong/60 bg-dt-bg-soft/20 px-2.5 py-1 text-xs font-medium text-highlighted transition-colors duration-300 hover:border-primary/40 hover:text-primary"
       @click="restart()"
     >
       <RotateCcw class="size-3.5" aria-hidden="true" />

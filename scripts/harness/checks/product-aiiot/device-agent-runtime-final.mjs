@@ -65,6 +65,9 @@ assert(
     runtimeTracePanel.includes('CircleDashed') &&
     runtimeTracePanel.includes('border-emerald-400/25 bg-emerald-400/5') &&
     runtimeTracePanel.includes('border-primary/40 bg-primary/10 shadow-sm shadow-primary/5') &&
+    runtimeTracePanel.includes('grid-cols-[64px_auto_minmax(0,1fr)_auto]') &&
+    runtimeTracePanel.includes('mt-2 grid gap-0.5') &&
+    runtimeTracePanel.includes('px-2 py-1 transition-all duration-300') &&
     runtimeTracePanel.includes('text-muted') &&
     !runtimeTracePanel.includes('opacity-0') &&
     !runtimeTracePanel.includes('<style'),

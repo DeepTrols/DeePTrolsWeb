@@ -247,6 +247,9 @@ describe('device agent runtime panel contract', () => {
     expect(tracePanel).toContain('CircleDashed')
     expect(tracePanel).toContain('border-emerald-400/25 bg-emerald-400/5')
     expect(tracePanel).toContain('border-primary/40 bg-primary/10 shadow-sm shadow-primary/5')
+    expect(tracePanel).toContain('grid-cols-[64px_auto_minmax(0,1fr)_auto]')
+    expect(tracePanel).toContain('mt-2 grid gap-0.5')
+    expect(tracePanel).toContain('px-2 py-1 transition-all duration-300')
     expect(tracePanel).toContain('text-muted')
     expect(tracePanel).not.toContain('opacity-0')
 
