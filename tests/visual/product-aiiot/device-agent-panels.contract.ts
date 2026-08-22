@@ -232,8 +232,9 @@ describe('device agent runtime panel contract', () => {
 
     expect(tracePanel).toContain('badge="采集中"')
     expect(tracePanel).toContain('deviceAgentTraceSteps')
-    expect(tracePanel).toContain('重放本次运行')
-    expect(tracePanel).toContain('@click="restart()"')
+    expect(tracePanel).not.toContain('重放本次运行')
+    expect(tracePanel).not.toContain('@click="restart()"')
+    expect(tracePanel).not.toContain('RotateCcw')
     expect(tracePanel).toContain("import IconBox from '~/components/common/card/IconBox.vue'")
     expect(tracePanel).toContain('ArrowRight')
     expect(tracePanel).toContain('当前 Span')

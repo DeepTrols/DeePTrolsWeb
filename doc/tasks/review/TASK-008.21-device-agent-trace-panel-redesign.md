@@ -29,16 +29,17 @@
 1. Trace 面板保持 `RuntimePanelShell` 外壳、固定高度与深色卡片语言。
 2. 所有 Trace 元素始终存在，不再用 `opacity-0` 隐藏待执行节点。
 3. 当前节点使用 `primary`，已完成节点使用 `emerald` 完成状态，未执行节点使用 `muted`。
-4. 视觉结构参考前序动画：小卡片、IconBox、连接箭头/线、状态 chip、实时指标与底部重放按钮。
+4. 视觉结构参考前序动画：小卡片、IconBox、连接箭头/线、状态 chip、实时指标与自动循环播放。
 5. 同步更新 Harness 与视觉契约，防止回退为静态日志列表。
 
 ## 实施记录
 - 已读取现有 Trace 面板、前序 Runtime 动画结构、NewSection 产品文档与工程约束。
-- 已重构 `RuntimeTracePanel.vue`：顶部指标 + 常驻 Trace Span 链路 + 当前 Span 详情 + 重放按钮。
+- 已重构 `RuntimeTracePanel.vue`：顶部指标 + 常驻 Trace Span 链路 + 当前 Span 详情。
 - 已移除 Trace 待执行节点的 `opacity-0` 隐藏逻辑，改为 pending / current / done 三态切换。
 - 已更新 Harness 与视觉契约，锁定 IconBox、ArrowRight、当前 Span、三态卡片、无 `opacity-0`。
 - 已更新产品需求实现补充。
-- 2026-08-22 修正 Trace 面板高度溢出：去掉独立连接行，将 ArrowRight 收进 Trace Span 卡片，压缩顶部指标、右侧详情与重放按钮间距；浏览器复测 `overflowingElements: []`，面板外框 `scrollHeight` 与 `clientHeight` 对齐。
+- 2026-08-22 修正 Trace 面板高度溢出：去掉独立连接行，将 ArrowRight 收进 Trace Span 卡片，压缩顶部指标、右侧详情与主内容间距；浏览器复测 `overflowingElements: []`，面板外框 `scrollHeight` 与 `clientHeight` 对齐。
+- 2026-08-22 按反馈移除「重放本次运行」按钮，Trace 依赖统一运行时循环自动重播，释放底部高度预算。
 
 ## 修改文件
 | 文件 | 说明 |

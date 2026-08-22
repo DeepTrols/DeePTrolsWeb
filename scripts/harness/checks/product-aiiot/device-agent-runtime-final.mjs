@@ -47,8 +47,6 @@ assert(
   runtimeTracePanel.includes('title="运行 Trace"') &&
     runtimeTracePanel.includes('badge="采集中"') &&
     runtimeTracePanel.includes('deviceAgentTraceSteps') &&
-    runtimeTracePanel.includes('重放本次运行') &&
-    runtimeTracePanel.includes('restart') &&
     runtimeTracePanel.includes('耗时') &&
     runtimeTracePanel.includes('工具调用') &&
     runtimeTracePanel.includes('Skills') &&
@@ -69,9 +67,11 @@ assert(
     runtimeTracePanel.includes('mt-2 grid gap-0.5') &&
     runtimeTracePanel.includes('px-2 py-1 transition-all duration-300') &&
     runtimeTracePanel.includes('text-muted') &&
+    !runtimeTracePanel.includes('重放本次运行') &&
+    !runtimeTracePanel.includes('restart') &&
     !runtimeTracePanel.includes('opacity-0') &&
     !runtimeTracePanel.includes('<style'),
-  'The trace panel must replay the full ESS-01 runtime trace as always-resident observable span cards with IconBox status, connectors, live stats, current-span detail, replay control, and primary/emerald/muted state changes.',
+  'The trace panel must replay the full ESS-01 runtime trace as always-resident observable span cards with IconBox status, connectors, live stats, current-span detail, automatic loop playback, and primary/emerald/muted state changes.',
 )
 assert(
   deviceAgentData.includes('export interface DeviceAgentValueItem') &&

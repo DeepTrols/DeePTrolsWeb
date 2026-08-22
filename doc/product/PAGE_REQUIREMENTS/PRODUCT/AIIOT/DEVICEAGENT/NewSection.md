@@ -510,11 +510,9 @@ WO-20260814-018
 * Tool 调用数量逐渐增加
 * Skills 数量逐渐增加
 
-底部增加：
+底部不再增加手动重放按钮：
 
-重放本次运行
-
-点击后重新播放整个 Trace 动画。
+Trace 按统一运行时循环自动重播。
 
 
 统一交互要求
@@ -556,12 +554,12 @@ ESS-01 储能柜电芯温度异常
 
 实现说明（TASK-008.3）：三个 Section 依次装配在 `pages/products/device-agent.vue` 的 Section1（智能体生态）之后。Section2「智能体架构」落地为 `components/product/device-agent/DeviceAgentArchitectureSection.vue`，复用公共 `ProductSystemSection` + `ProductSystemFlowFrame`（flow 暂不传入，仅占位，桌面端显示网格底纹占位框）。Section3「核心价值」落地为 `components/product/device-agent/DeviceAgentValueSection.vue`，复用 `ProductFeatureGridSection(columns="three")`，数据集中在 `data/device-agent.ts`（`deviceAgentValueItems`，`iconLabel` 01/02/03），并传入 `:icon-bordered="false"` 去掉数字 icon 边框；为此公共 `FeatureCard` 的 `iconLabel` 分支新增对 `iconBordered`/`iconFilled` 的支持（通过 `--dt-icon-box-shadow`/`--dt-icon-box-bg` 变量覆写，默认渲染不变）。
 
-Section4「核心能力」落地为 `components/product/device-agent/DeviceAgentRuntimeSection.vue`，整体沿用参考页 `grid gap-8 lg:grid-cols-[360px_1fr] lg:gap-10` 布局：左侧 6 个能力 Tab（Active 竖线 / primary 图标 / `from-primary/10 to-primary/5` 渐变、Hover `bg-dt-bg-soft/50` 与右侧箭头），右侧动画面板通过 `:key` 切换并重播入场动画。6 个动画面板位于 `components/product/device-agent/runtime/`（RuntimeEventPanel / RuntimeContextPanel / RuntimeToolsPanel / RuntimeSkillsPanel / RuntimeGuardrailsPanel / RuntimeTracePanel），统一经 `RuntimePanelShell` 承载固定高度容器（`h-[520px] sm:h-[480px] lg:h-[460px]`、muted 外层 + default 内层卡片、状态 Badge），并共享 `useRuntimeTimeline.ts` 的 SSR 安全 rAF 计时器驱动分阶段动画；能力 Tab 与 Trace 步骤数据集中在 `data/device-agent.ts`（`deviceAgentRuntimeTabs` / `deviceAgentTraceSteps`）。全部动画统一使用 ESS-01 储能柜电芯温度异常案例，Trace 面板底部提供「重放本次运行」按钮重放整条 Trace。
+Section4「核心能力」落地为 `components/product/device-agent/DeviceAgentRuntimeSection.vue`，整体沿用参考页 `grid gap-8 lg:grid-cols-[360px_1fr] lg:gap-10` 布局：左侧 6 个能力 Tab（Active 竖线 / primary 图标 / `from-primary/10 to-primary/5` 渐变、Hover `bg-dt-bg-soft/50` 与右侧箭头），右侧动画面板通过 `:key` 切换并重播入场动画。6 个动画面板位于 `components/product/device-agent/runtime/`（RuntimeEventPanel / RuntimeContextPanel / RuntimeToolsPanel / RuntimeSkillsPanel / RuntimeGuardrailsPanel / RuntimeTracePanel），统一经 `RuntimePanelShell` 承载固定高度容器（`h-[520px] sm:h-[480px] lg:h-[460px]`、muted 外层 + default 内层卡片、状态 Badge），并共享 `useRuntimeTimeline.ts` 的 SSR 安全 rAF 计时器驱动分阶段动画；能力 Tab 与 Trace 步骤数据集中在 `data/device-agent.ts`（`deviceAgentRuntimeTabs` / `deviceAgentTraceSteps`）。全部动画统一使用 ESS-01 储能柜电芯温度异常案例，Trace 面板不再提供手动重放按钮，统一依赖运行时循环自动重播。
 
 因站点仅暗色主题且 `bg-muted`/`bg-default`/`text-muted` 等为 `@utility` 不支持透明度修饰符，参考页的 `bg-muted/N` 统一等价为 `bg-dt-bg-soft/N`、`border-muted/60` 等价为 `border-dt-line-strong/60`、`bg-default` 等价为 `bg-dt-bg`；新增组件全部 Tailwind-only，不新增 `<style>`；面板入场动画使用 `assets/css/tailwind.css` 新增的 `--animate-panel-in` token。
 
 排版与动效优化补充：针对首版面板在固定高度内容过密、字号过小（9–10px）导致的排版错乱，6 个动画面板已整体重构——正文统一不小于 11px（`text-xs` 为主、紧凑行 `text-[11px] leading-4`、仅 Trace 时间戳保留 `text-[10px]`），并按 lg 内层约 348px 的高度预算为每个阶段预留固定布局区域：所有元素一次性渲染、仅以 opacity 渐显，杜绝动画过程中的布局跳动；Skills 任务链改为横向排列，MCP 工具调用改为左右双卡片 + 底部 3 列工具格，Trace 改为单行条目（时间戳列 + 类别/详情同行截断）并以竖线连接，审批与执行流程双栏排布。进度条宽度类按 1% 粒度生成（`useRuntimeTimeline.ts` 的 `RUNTIME_BAR_WIDTH_CLASSES`），保证条宽与百分比文案精确一致。
-循环播放补充（TASK-008.5）：`useRuntimeTimeline` 调整为循环播放——elapsed 推进至 totalMs 后保持终态 `RUNTIME_LOOP_HOLD_MS`（1200ms）再归零重播，6 个动画面板统一循环展示；Trace 面板「重放本次运行」仍可立即从第一阶段重播。
-全链路可观测重设计补充（TASK-008.21）：Trace 面板需与前序 Runtime 动画保持同一 UI 语言，不再使用待执行节点 `opacity-0` 隐藏。顶部保留耗时 / 工具调用 / Skills 指标并随时间线增长；主体改为常驻 Trace Span 卡片链路，所有节点始终存在，仅切换 pending / current / done 状态；当前节点为 primary，已完成节点为 emerald 并显示完成图标，未执行节点为 muted；右侧展示当前 Span 详情、Trace ID、采样状态、运行进度和 Observability 说明；底部保留「重放本次运行」。
+循环播放补充（TASK-008.5）：`useRuntimeTimeline` 调整为循环播放——elapsed 推进至 totalMs 后保持终态 `RUNTIME_LOOP_HOLD_MS`（1200ms）再归零重播，6 个动画面板统一循环展示；Trace 面板跟随统一循环自动从第一阶段重播，不再提供手动重放入口。
+全链路可观测重设计补充（TASK-008.21）：Trace 面板需与前序 Runtime 动画保持同一 UI 语言，不再使用待执行节点 `opacity-0` 隐藏。顶部保留耗时 / 工具调用 / Skills 指标并随时间线增长；主体改为常驻 Trace Span 卡片链路，所有节点始终存在，仅切换 pending / current / done 状态；当前节点为 primary，已完成节点为 emerald 并显示完成图标，未执行节点为 muted；右侧展示当前 Span 详情、Trace ID、采样状态、运行进度和 Observability 说明；底部不再保留手动重放按钮，释放面板高度预算。
 
 实现说明（TASK-008.9）：按需求方 inline 规范 `mcp_dev.md` 对齐「MCP 工具连接」面板（`components/product/device-agent/runtime/RuntimeToolsPanel.vue`，Tailwind-only，196 行）：shell 标题改为「MCP 工具连接」并启用 `badge-dot`（复用 TASK-008.8 的 `RuntimePanelShell.badgeDot`），`data/device-agent.ts` tools Tab `panelTitle` 同步；「Agent 判断」卡 0.5s 渐显并 Active，第一次调用开始后回落普通态；两次调用卡（timeseries.query / knowledge.search）保持左右双卡布局，参数与结果按 `ROW_STAGGER_MS = 150` 逐行 opacity 渐显，完成后右上角显示 `CircleCheck + 284 ms / 176 ms`，调用期间底部工具格对应工具高亮；结果 chips 文案按规范修正为「电芯一致性异常」；新增 shell footer 文案「Agent 通过 MCP 协议连接设备、数据与业务工具，在消息流中完成读取、查询、检索与执行。」。时间轴重排：JUDGE 500 → CALL1 1800（params 2000 / done 2600 / results 2800）→ CALL2 4000（params 4200 / done 4800 / results 5000）→ 下一步 6200 → 总时长 7200ms，`useRuntimeTimeline(7200)` + 1200ms hold ≈ 8.4s 重播；全部元素一次渲染、仅 opacity 渐显，无布局跳动。

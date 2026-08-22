@@ -10,7 +10,6 @@ import {
   FileSearch,
   Gauge,
   LoaderCircle,
-  RotateCcw,
   Wrench,
   Zap,
 } from '@lucide/vue'
@@ -29,7 +28,7 @@ const RUN_SECONDS = 8.4
 const TOOL_STEP_INDEXES = [1, 2, 4, 5]
 const SKILL_STEP_INDEX = 3
 
-const { elapsed, finished, restart } = useRuntimeTimeline(TOTAL_MS)
+const { elapsed, finished } = useRuntimeTimeline(TOTAL_MS)
 
 const activeIndex = computed(() =>
   Math.min(
@@ -242,14 +241,5 @@ function connectorClass(index: number): string {
         </div>
       </aside>
     </div>
-
-    <button
-      type="button"
-      class="mx-auto mt-2 flex w-fit cursor-pointer items-center gap-1.5 rounded-lg border border-dt-line-strong/60 bg-dt-bg-soft/20 px-2.5 py-1 text-xs font-medium text-highlighted transition-colors duration-300 hover:border-primary/40 hover:text-primary"
-      @click="restart()"
-    >
-      <RotateCcw class="size-3.5" aria-hidden="true" />
-      重放本次运行
-    </button>
   </RuntimePanelShell>
 </template>
