@@ -13,6 +13,8 @@
 
 使用要求：
 - 页面组件只传入 `badge`、`titleLine`、`titleGradient`、`description`、`actions`。
+- `badge`、`titleGradient`、`actions` 与 `visual` slot 均为可选；About 等纯品牌页可使用居中 Hero 且不渲染 badge、渐变副标题或按钮。
+- 需要在 Hero 背景层播放运行时视频时使用 `backgroundVideoSrc`，视频文件必须位于 `public/**` 或 `assets/**`，不得直接引用 `doc/product/**/imgs`。
 - 视觉素材通过 `#visual` slot 传入。
 - 默认 `visualSize` 为 `default`，右侧视觉保持产品页正常尺寸；只有 Why DeepTrols 这类明确需要放大视觉的页面可以传入 `visualSize="large"`。
 - 需要视觉贴齐 container 右边缘（右侧 padding 为 0）时传入 `flushVisualEnd`：组件在 `lg` 下为 `.page-hero__visual` 追加 `-mr-4`（抵消 container `padding-inline: 1rem`）与 `justify-self-end`；仅按需启用，默认关闭。

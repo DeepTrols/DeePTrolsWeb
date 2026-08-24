@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseButton from '~/components/common/BaseButton.vue'
+import { computed, useSlots } from 'vue'
 import type { Component } from 'vue'
 
 export interface PageHeroAction {
@@ -10,33 +11,42 @@ export interface PageHeroAction {
 
 withDefaults(
   defineProps<{
-    badge: string
+    badge?: string
     badgeIcon?: Component
     titleId: string
     titleLine: string
-    titleGradient: string
+    titleGradient?: string
     description: string
-    actions: PageHeroAction[]
+    actions?: PageHeroAction[]
     visualLabel?: string
+    backgroundVideoSrc?: string
     flushBottom?: boolean
     flushVisualEnd?: boolean
     visualSize?: 'default' | 'large' | 'fluid'
     align?: 'left' | 'center'
   }>(),
   {
+    badge: undefined,
     badgeIcon: undefined,
+    titleGradient: undefined,
+    actions: () => [],
     visualLabel: undefined,
+    backgroundVideoSrc: undefined,
     flushBottom: false,
     flushVisualEnd: false,
     visualSize: 'default',
     align: 'left',
   },
 )
+
+const slots = useSlots()
+const hasVisual = computed(() => Boolean(slots.visual))
 </script>
 
 <template>
   <section class="page-hero relative overflow-hidden bg-dt-bg" :aria-labelledby="titleId">
     <div class="page-hero__background" aria-hidden="true">
+      <video v-if="backgroundVideoSrc" class="page-hero__background-video" :src="backgroundVideoSrc" autoplay muted loop playsinline></video>
       <div class="page-hero__grid"></div>
       <div class="page-hero__glow page-hero__glow--left"></div>
       <div class="page-hero__glow page-hero__glow--right"></div>
@@ -65,7 +75,7 @@ withDefaults(
           class="page-hero__content w-full text-center"
           :class="align === 'center' ? 'max-w-4xl' : 'max-w-2xl lg:self-center lg:text-left'"
         >
-          <div class="page-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2">
+          <div v-if="badge" class="page-hero__badge mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2">
             <component
               :is="badgeIcon"
               v-if="badgeIcon"
@@ -79,7 +89,7 @@ withDefaults(
           <div class="page-hero__title-block">
             <h1 :id="titleId">
               <span class="page-hero__title-line">{{ titleLine }}</span>
-              <span class="page-hero__title-gradient">{{ titleGradient }}</span>
+              <span v-if="titleGradient" class="page-hero__title-gradient">{{ titleGradient }}</span>
             </h1>
           </div>
 
@@ -91,6 +101,7 @@ withDefaults(
           </div>
 
           <div
+            v-if="actions.length"
             class="page-hero__actions flex flex-wrap items-center justify-center gap-4"
             :class="align === 'center' ? '' : 'lg:justify-start'"
           >
@@ -109,6 +120,7 @@ withDefaults(
         </div>
 
         <div
+          v-if="hasVisual"
           class="page-hero__visual relative isolate flex w-full overflow-visible"
           :class="[
             align === 'center'
@@ -137,13 +149,22 @@ withDefaults(
 .page-hero {
   isolation: isolate;
 }
-
 .page-hero__background {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   mask-image: linear-gradient(#000 55%, transparent 92%);
+}
+
+.page-hero__background-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.28;
+  mix-blend-mode: screen;
 }
 
 .page-hero__grid {

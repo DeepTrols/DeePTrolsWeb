@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import process from 'node:process'
+import { checkAboutPageContracts } from './harness/checks/about-page.mjs'
 import { checkDesignSystemContracts } from './harness/checks/design-system.mjs'
 import { checkHomeLayoutContracts } from './harness/checks/home-layout.mjs'
 import { checkProductAiiotContracts } from './harness/checks/product-aiiot.mjs'
@@ -27,6 +28,7 @@ checkProductAiiotContracts(ctx)
 checkHomeLayoutContracts(ctx)
 checkWhyPageContracts(ctx)
 checkProductDataContracts(ctx)
+checkAboutPageContracts(ctx)
 checkStyleRules(ctx)
 
 if (failures.length) {

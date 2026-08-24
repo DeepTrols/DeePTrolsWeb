@@ -244,7 +244,7 @@ export const primaryNavigation: NavItem[] = [
   },
   {
     label: '关于我们',
-    href: '/about',
+    href: '/about_us',
   },
 ]
 

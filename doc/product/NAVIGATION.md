@@ -86,5 +86,5 @@ Header 约束：
 
 ## 关于我们
 ```text
-直接跳转 `/about`，不展示 Mega Menu。
+直接跳转 `/about_us`，不展示 Mega Menu。
 ```
