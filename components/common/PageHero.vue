@@ -44,7 +44,7 @@ const hasVisual = computed(() => Boolean(slots.visual))
 </script>
 
 <template>
-  <section class="page-hero relative overflow-hidden bg-dt-bg" :aria-labelledby="titleId">
+  <section class="page-hero relative overflow-hidden" :aria-labelledby="titleId">
     <div class="page-hero__background" aria-hidden="true">
       <video v-if="backgroundVideoSrc" class="page-hero__background-video" :src="backgroundVideoSrc" autoplay muted loop playsinline></video>
       <div class="page-hero__grid"></div>
@@ -53,7 +53,7 @@ const hasVisual = computed(() => Boolean(slots.visual))
     </div>
 
     <div
-      class="container page-hero__body relative pt-24 lg:pt-32"
+      class="container page-hero__body relative bg-dt-bg pt-24 lg:pt-32"
       :class="flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'"
     >
       <div

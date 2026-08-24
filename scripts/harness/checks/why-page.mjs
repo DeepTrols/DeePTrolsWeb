@@ -33,7 +33,8 @@ assert(
 )
 assert(pageHero.includes('font-size: 36px') && pageHero.includes('font-size: 48px') && pageHero.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
 assert(
-  pageHero.includes('relative overflow-hidden bg-dt-bg') &&
+  pageHero.includes('class="page-hero relative overflow-hidden"') &&
+    pageHero.includes('container page-hero__body relative bg-dt-bg pt-24 lg:pt-32') &&
     pageHero.includes('pt-24 lg:pt-32') &&
     pageHero.includes("flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'") &&
     heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28') &&
