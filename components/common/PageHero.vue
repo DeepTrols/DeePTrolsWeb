@@ -44,18 +44,17 @@ const hasVisual = computed(() => Boolean(slots.visual))
 
 <template>
   <section class="page-hero relative overflow-hidden" :aria-labelledby="titleId">
-    <div class="page-hero__background" aria-hidden="true">
-      <video v-if="backgroundVideoSrc" class="page-hero__background-video" :src="backgroundVideoSrc" autoplay muted loop playsinline></video>
-      <div class="page-hero__grid"></div>
-      <div class="page-hero__glow page-hero__glow--left"></div>
-      <div class="page-hero__glow page-hero__glow--right"></div>
-    </div>
-
     <div
       class="container page-hero__body relative isolate pt-24 lg:pt-32"
       :class="flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'"
     >
       <div class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg" aria-hidden="true"></div>
+      <div class="page-hero__background" aria-hidden="true">
+        <video v-if="backgroundVideoSrc" class="page-hero__background-video" :src="backgroundVideoSrc" autoplay muted loop playsinline></video>
+        <div class="page-hero__grid"></div>
+        <div class="page-hero__glow page-hero__glow--left"></div>
+        <div class="page-hero__glow page-hero__glow--right"></div>
+      </div>
       <div
         class="page-hero__inner relative z-10 flex flex-col items-center"
         :class="
@@ -152,7 +151,7 @@ const hasVisual = computed(() => Boolean(slots.visual))
 .page-hero__background {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
   mask-image: linear-gradient(#000 55%, transparent 92%);
 }

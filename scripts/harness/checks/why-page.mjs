@@ -36,7 +36,9 @@ assert(
   pageHero.includes('class="page-hero relative overflow-hidden"') &&
     pageHero.includes('container page-hero__body relative isolate pt-24 lg:pt-32') &&
     pageHero.includes('class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg"') &&
+    pageHero.includes('class="page-hero__background" aria-hidden="true"') &&
     pageHero.includes('page-hero__inner relative z-10 flex flex-col items-center') &&
+    pageHero.includes('z-index: 1') &&
     pageHero.includes('pt-24 lg:pt-32') &&
     pageHero.includes("flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'") &&
     heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28') &&

@@ -16,7 +16,7 @@
 - `badge`、`titleGradient`、`actions` 与 `visual` slot 均为可选；About 等纯品牌页可使用居中 Hero 且不渲染 badge、渐变副标题或按钮。
 - 需要在 Hero 背景层播放运行时视频时使用 `backgroundVideoSrc`，视频文件必须位于 `public/**` 或 `assets/**`，不得直接引用 `doc/product/**/imgs`。
 - 视觉素材通过 `#visual` slot 传入。
-- `PageHero` 外层 section 只保留 `page-hero relative overflow-hidden`，不得承载背景色或边框；`bg-dt-bg` 必须放在 `.page-hero__body` 内部的 `.page-hero__body-bg` 背景层上，并与 `.page-hero__inner` 平级，避免 Hero 外层背景影响上方/下方区块衔接。
+- `PageHero` 外层 section 只保留 `page-hero relative overflow-hidden`，不得承载背景色或边框；`bg-dt-bg` 必须放在 `.page-hero__body` 内部的 `.page-hero__body-bg` 背景层上，并与 `.page-hero__background`、`.page-hero__inner` 平级。层级顺序必须是 `body-bg(z-0)`、视频/网格/glow 背景层、内容层，避免实色背景遮挡视频。
 - 默认 `visualSize` 为 `default`，右侧视觉保持产品页正常尺寸；只有 Why DeepTrols 这类明确需要放大视觉的页面可以传入 `visualSize="large"`。
 - 需要视觉贴齐 container 右边缘（右侧 padding 为 0）时传入 `flushVisualEnd`：组件在 `lg` 下为 `.page-hero__visual` 追加 `-mr-4`（抵消 container `padding-inline: 1rem`）与 `justify-self-end`；仅按需启用，默认关闭。
 - 布局对齐通过 `align` 控制：默认 `left`（`lg` 双列、文案左对齐、CTA 左对齐），保持现有产品页不变；传 `center` 时为单列居中版式——文案 `max-w-4xl text-center`、描述与 CTA 居中、`#visual` 视觉居中且不受 `visualSize` 宽度上限约束、不渲染 `.page-hero__visual-glow`（由视觉自带的 glow 承接）。Device Agent 页（EMQX Agents 风格编排器面板）使用 `align="center"`。
