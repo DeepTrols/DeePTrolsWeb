@@ -69,8 +69,11 @@ export function checkAboutPageContracts(ctx) {
       aboutIntroSection.includes('公司介绍') &&
       aboutIntroSection.includes('AboutTextBlock') &&
       aboutIntroSection.includes('align="left"') &&
+      aboutIntroSection.includes('size="full"') &&
+      aboutTextBlock.includes("size?: 'default' | 'large' | 'full'") &&
+      aboutTextBlock.includes('w-full text-xl leading-relaxed md:text-2xl') &&
       aboutTextBlock.includes('max-w-5xl text-xl leading-relaxed md:text-2xl'),
-    'About intro must use a left-aligned card with the shared AboutTextBlock large text rhythm.',
+    'About intro must use a left-aligned card whose title and content share the same width.',
   )
   assert(
     aboutValuesSection.includes('我们的核心价值观') &&

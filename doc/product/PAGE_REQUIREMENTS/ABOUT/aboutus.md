@@ -100,3 +100,5 @@ hr@deeptrols.com
 实现说明（TASK-009.1）：About Us 页面落地于 `pages/about_us.vue`，Header「关于我们」导航改为 `/about_us`。Hero 复用公共 `PageHero` 的居中模式，公共组件已扩展为可选 badge、badge icon、title gradient、actions 与 visual slot，本页不渲染 badge / badge-icon / title-gradient / actions；需求中的 `custom-rad-hero-bg-video.mp4` 已从产品文档附件迁移到运行时资产 `public/images/about/custom-rad-hero-bg-video.mp4`，页面通过 `backgroundVideoSrc` 使用，不直接引用 `doc/product/**/imgs`。页面内容集中在 `data/about.ts`，业务区块拆分为 `components/about/AboutHero.vue`、`AboutStatsSection.vue`、`AboutIntroSection.vue`、`AboutValuesSection.vue`、`AboutAddressSection.vue`、`AboutContactSection.vue` 与文本组件 `AboutTextBlock.vue`；统计条复用 `HeroStatsStrip`，核心价值观为 3 张 hover/focus 动画卡。
 
 实现说明（TASK-009.2）：About Hero 使用 About 专属类提升首屏高度与 Header 下方留白；公司介绍改为左对齐 card；公司地址改为地址信息 + 地图嵌入；联系我们移除社交媒体，仅保留 4 个邮箱渠道，并按两行两列展示。
+
+实现说明（TASK-009.3）：公司介绍正文使用 `AboutTextBlock` 的 `full` 尺寸，保证正文宽度与“公司介绍”标题所在内容宽度一致。

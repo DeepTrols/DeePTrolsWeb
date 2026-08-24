@@ -61,7 +61,10 @@ export function registerAboutVisualContracts() {
     expect(intro).toContain('公司介绍')
     expect(intro).toContain('AboutTextBlock')
     expect(intro).toContain('align="left"')
+    expect(intro).toContain('size="full"')
+    expect(textBlock).toContain("size?: 'default' | 'large' | 'full'")
     expect(textBlock).toContain('max-w-5xl text-xl leading-relaxed md:text-2xl')
+    expect(textBlock).toContain('w-full text-xl leading-relaxed md:text-2xl')
     expect(textBlock).toContain('<style scoped lang="scss">')
 
     expect(values).toContain('我们的核心价值观')

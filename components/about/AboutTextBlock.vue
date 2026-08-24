@@ -3,7 +3,7 @@ withDefaults(
   defineProps<{
     paragraphs: string[]
     align?: 'left' | 'center'
-    size?: 'default' | 'large'
+    size?: 'default' | 'large' | 'full'
   }>(),
   {
     align: 'center',
@@ -17,7 +17,9 @@ withDefaults(
     class="about-text-block mx-auto"
     :class="[
       align === 'center' ? 'text-center' : 'text-left',
-      size === 'large' ? 'max-w-5xl text-xl leading-relaxed md:text-2xl' : 'max-w-3xl text-lg leading-relaxed md:text-xl',
+      size === 'large' && 'max-w-5xl text-xl leading-relaxed md:text-2xl',
+      size === 'default' && 'max-w-3xl text-lg leading-relaxed md:text-xl',
+      size === 'full' && 'w-full text-xl leading-relaxed md:text-2xl',
     ]"
   >
     <p v-for="paragraph in paragraphs" :key="paragraph" class="about-text-block__paragraph text-default">

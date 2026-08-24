@@ -13,7 +13,7 @@ import { aboutIntroParagraphs } from '~/data/about'
       >
         公司介绍
       </h2>
-      <AboutTextBlock :paragraphs="aboutIntroParagraphs" align="left" />
+      <AboutTextBlock :paragraphs="aboutIntroParagraphs" align="left" size="full" />
     </article>
   </SectionShell>
 </template>
