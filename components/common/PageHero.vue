@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import BaseButton from '~/components/common/BaseButton.vue'
-import { computed, useSlots } from 'vue'
-import type { Component } from 'vue'
+import { computed, type Component, useSlots } from 'vue'
 
 export interface PageHeroAction {
   label: string
@@ -53,11 +52,12 @@ const hasVisual = computed(() => Boolean(slots.visual))
     </div>
 
     <div
-      class="container page-hero__body relative bg-dt-bg pt-24 lg:pt-32"
+      class="container page-hero__body relative isolate pt-24 lg:pt-32"
       :class="flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'"
     >
+      <div class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg" aria-hidden="true"></div>
       <div
-        class="page-hero__inner flex flex-col items-center"
+        class="page-hero__inner relative z-10 flex flex-col items-center"
         :class="
           align === 'center'
             ? ''
