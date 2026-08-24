@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import HeroStatsStrip from '~/components/common/HeroStatsStrip.vue'
 import PageHero from '~/components/common/PageHero.vue'
-import { aboutHero } from '~/data/about'
+import { aboutHero, aboutStats } from '~/data/about'
 </script>
 
 <template>
@@ -12,7 +13,13 @@ import { aboutHero } from '~/data/about'
     :visual-label="aboutHero.visualLabel"
     :background-video-src="aboutHero.backgroundVideo"
     align="center"
-  />
+  >
+    <template #after-actions>
+      <div class="about-hero__stats mt-10">
+        <HeroStatsStrip :items="aboutStats" placement="section" />
+      </div>
+    </template>
+  </PageHero>
 </template>
 
 <style scoped lang="scss">

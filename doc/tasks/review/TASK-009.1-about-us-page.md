@@ -64,7 +64,7 @@
 | `pages/about_us.vue` | 新增 About Us 页面路由与 SEO。 |
 | `data/about.ts` | 新增 About 页面结构化内容。 |
 | `components/about/AboutHero.vue` | 新增 About Hero 业务组件。 |
-| `components/about/AboutStatsSection.vue` | 新增统计条区块。 |
+| `components/about/AboutStatsSection.vue` | 原统计条区块，已于 `TASK-009.4` 并入 `AboutHero` 并删除独立 section。 |
 | `components/about/AboutIntroSection.vue` | 新增公司介绍区块。 |
 | `components/about/AboutTextBlock.vue` | 新增 About 文本块组件。 |
 | `components/about/AboutValuesSection.vue` | 新增核心价值观交互卡片区块。 |

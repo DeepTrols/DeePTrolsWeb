@@ -8,7 +8,6 @@ export function checkAboutPageContracts(ctx) {
     aboutData,
     aboutPage,
     aboutHero,
-    aboutStatsSection,
     aboutIntroSection,
     aboutTextBlock,
     aboutValuesSection,
@@ -20,7 +19,7 @@ export function checkAboutPageContracts(ctx) {
   assert(aboutPage.includes('SiteHeader') && aboutPage.includes('SiteFooter'), 'About page must reuse global Header and Footer.')
   assert(
     aboutPage.includes('AboutHero') &&
-      aboutPage.includes('AboutStatsSection') &&
+      !aboutPage.includes('AboutStatsSection') &&
       aboutPage.includes('AboutIntroSection') &&
       aboutPage.includes('AboutValuesSection') &&
       aboutPage.includes('AboutAddressSection') &&
@@ -38,6 +37,11 @@ export function checkAboutPageContracts(ctx) {
       aboutHero.includes(':background-video-src="aboutHero.backgroundVideo"') &&
       aboutHero.includes('align="center"') &&
       aboutHero.includes('class="about-hero"') &&
+      aboutHero.includes('HeroStatsStrip') &&
+      aboutHero.includes('aboutStats') &&
+      aboutHero.includes('#after-actions') &&
+      aboutHero.includes('placement="section"') &&
+      aboutHero.includes('about-hero__stats mt-10') &&
       aboutHero.includes('min-height: 560px') &&
       aboutHero.includes('padding-top: 8.5rem') &&
       !aboutHero.includes('badge=') &&
@@ -57,12 +61,6 @@ export function checkAboutPageContracts(ctx) {
       pageHero.includes('v-if="actions.length"') &&
       pageHero.includes('v-if="hasVisual"'),
     'PageHero must support optional badge, optional gradient, optional actions, optional visual slot, and runtime background video.',
-  )
-  assert(
-    aboutStatsSection.includes('SectionShell') &&
-      aboutStatsSection.includes('HeroStatsStrip') &&
-      aboutStatsSection.includes('placement="section"'),
-    'About stats must reuse HeroStatsStrip in section placement.',
   )
   assert(
     aboutIntroSection.includes('about-intro-card') &&

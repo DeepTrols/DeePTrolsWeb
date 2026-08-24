@@ -3,7 +3,6 @@ import AboutAddressSection from '~/components/about/AboutAddressSection.vue'
 import AboutContactSection from '~/components/about/AboutContactSection.vue'
 import AboutHero from '~/components/about/AboutHero.vue'
 import AboutIntroSection from '~/components/about/AboutIntroSection.vue'
-import AboutStatsSection from '~/components/about/AboutStatsSection.vue'
 import AboutValuesSection from '~/components/about/AboutValuesSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
@@ -21,7 +20,6 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content" class="about-page">
       <AboutHero />
-      <AboutStatsSection />
       <AboutIntroSection />
       <AboutValuesSection />
       <AboutAddressSection />
