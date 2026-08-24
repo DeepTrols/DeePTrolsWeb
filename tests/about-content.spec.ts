@@ -6,6 +6,7 @@ import {
   aboutContacts,
   aboutHero,
   aboutIntroParagraphs,
+  aboutMap,
   aboutStats,
   aboutValues,
 } from '../data/about'
@@ -41,18 +42,22 @@ describe('about page content contract', () => {
     expect(aboutIntroParagraphs.join('\n')).toContain('武汉深度数智科技有限公司（DeepTrols）')
     expect(aboutIntroParagraphs.join('\n')).toContain('数曜数据能力平台、博曜知识管理平台、智曜AI平台以及探曜AI物联能力平台')
     expect(aboutAddress).toBe('湖北省武汉市江汉区泛海国际SOHO-2栋2307')
+    expect(aboutMap).toMatchObject({
+      title: '武汉深度数智科技有限公司',
+    })
+    expect(aboutMap.embedUrl).toContain('openstreetmap.org/export/embed.html')
   })
 
   it('defines three values and the required contact channels', () => {
     expect(aboutValues.map((item) => item.title)).toEqual(['极客', '执着', '学习'])
     expect(aboutValues.map((item) => item.revealTitle)).toEqual(['技术驱动', '不走捷径', '持续进化'])
-    expect(aboutContacts.map((item) => item.label)).toEqual(['综合咨询', '产品咨询', '技术支持', '人才招聘', '社交媒体'])
+    expect(aboutContacts.map((item) => item.label)).toEqual(['综合咨询', '产品咨询', '技术支持', '人才招聘'])
     expect(aboutContacts.map((item) => item.value)).toEqual([
       'contact@deeptrols.com',
       'product@deeptrols.com',
       'support@deeptrols.com',
       'hr@deeptrols.com',
-      'DeepTrols',
     ])
+    expect(aboutContacts.every((item) => item.href.startsWith('mailto:'))).toBe(true)
   })
 })

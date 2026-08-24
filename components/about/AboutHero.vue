@@ -5,6 +5,7 @@ import { aboutHero } from '~/data/about'
 
 <template>
   <PageHero
+    class="about-hero"
     title-id="about-hero-title"
     :title-line="aboutHero.title"
     :description="aboutHero.description"
@@ -13,3 +14,25 @@ import { aboutHero } from '~/data/about'
     align="center"
   />
 </template>
+
+<style scoped lang="scss">
+.about-hero {
+  min-height: 560px;
+}
+
+.about-hero :deep(.page-hero__body) {
+  padding-top: 8.5rem;
+  padding-bottom: 7rem;
+}
+
+@media (min-width: 1024px) {
+  .about-hero {
+    min-height: 640px;
+  }
+
+  .about-hero :deep(.page-hero__body) {
+    padding-top: 10.5rem;
+    padding-bottom: 8rem;
+  }
+}
+</style>

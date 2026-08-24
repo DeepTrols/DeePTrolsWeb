@@ -11,9 +11,9 @@ import { aboutContacts } from '~/data/about'
       联系我们
     </h2>
 
-    <div class="about-contact-grid grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2 lg:grid-cols-3">
+    <div class="about-contact-grid grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2">
       <a
-        v-for="item in aboutContacts.filter((contact) => contact.href)"
+        v-for="item in aboutContacts"
         :key="item.label"
         :href="item.href"
         target="_self"
@@ -22,14 +22,6 @@ import { aboutContacts } from '~/data/about'
         <div class="text-base font-normal text-muted">{{ item.label }}</div>
         <div class="text-lg font-semibold text-highlighted">{{ item.value }}</div>
       </a>
-      <div
-        v-for="item in aboutContacts.filter((contact) => !contact.href)"
-        :key="item.label"
-        class="about-contact-grid__item flex min-h-[148px] flex-col justify-center gap-2 p-8 text-center transition-colors duration-200 hover:bg-dt-bg-soft/50 md:p-10"
-      >
-        <div class="text-base font-normal text-muted">{{ item.label }}</div>
-        <div class="text-lg font-semibold text-highlighted">{{ item.value }}</div>
-      </div>
     </div>
   </section>
 </template>
@@ -54,20 +46,6 @@ import { aboutContacts } from '~/data/about'
   }
 
   .about-contact-grid__item:nth-child(2n + 1) {
-    border-left: 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .about-contact-grid__item:nth-child(-n + 3) {
-    border-top: 0;
-  }
-
-  .about-contact-grid__item:nth-child(2n + 1) {
-    border-left: 1px solid var(--dt-color-line);
-  }
-
-  .about-contact-grid__item:nth-child(3n + 1) {
     border-left: 0;
   }
 }

@@ -37,6 +37,9 @@ export function checkAboutPageContracts(ctx) {
       aboutHero.includes(':visual-label="aboutHero.visualLabel"') &&
       aboutHero.includes(':background-video-src="aboutHero.backgroundVideo"') &&
       aboutHero.includes('align="center"') &&
+      aboutHero.includes('class="about-hero"') &&
+      aboutHero.includes('min-height: 560px') &&
+      aboutHero.includes('padding-top: 8.5rem') &&
       !aboutHero.includes('badge=') &&
       !aboutHero.includes('badge-icon') &&
       !aboutHero.includes('title-gradient'),
@@ -61,7 +64,14 @@ export function checkAboutPageContracts(ctx) {
       aboutStatsSection.includes('placement="section"'),
     'About stats must reuse HeroStatsStrip in section placement.',
   )
-  assert(aboutIntroSection.includes('AboutTextBlock') && aboutTextBlock.includes('max-w-5xl text-xl leading-relaxed md:text-2xl'), 'About intro must use the shared AboutTextBlock large text rhythm.')
+  assert(
+    aboutIntroSection.includes('about-intro-card') &&
+      aboutIntroSection.includes('公司介绍') &&
+      aboutIntroSection.includes('AboutTextBlock') &&
+      aboutIntroSection.includes('align="left"') &&
+      aboutTextBlock.includes('max-w-5xl text-xl leading-relaxed md:text-2xl'),
+    'About intro must use a left-aligned card with the shared AboutTextBlock large text rhythm.',
+  )
   assert(
     aboutValuesSection.includes('我们的核心价值观') &&
       aboutValuesSection.includes('grid grid-cols-1 gap-6 md:grid-cols-3') &&
@@ -72,12 +82,19 @@ export function checkAboutPageContracts(ctx) {
       aboutValuesSection.includes('<style scoped lang="scss">'),
     'About values section must render the required 3-card animated value grid.',
   )
-  assert(aboutAddressSection.includes('title="公司地址"') && aboutAddressSection.includes('AboutTextBlock'), 'About address must render through SectionHeader and AboutTextBlock.')
+  assert(
+    aboutAddressSection.includes('title="公司地址"') &&
+      aboutAddressSection.includes('aboutMap') &&
+      aboutAddressSection.includes('<iframe') &&
+      aboutAddressSection.includes('查看地图'),
+    'About address must render a map-based address panel.',
+  )
   assert(
     aboutContactSection.includes('联系我们') &&
-      aboutContactSection.includes('grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2 lg:grid-cols-3') &&
-      aboutContactSection.includes('aboutContacts.filter'),
-    'About contact section must match the required contact grid and channels.',
+      aboutContactSection.includes('grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2') &&
+      aboutContactSection.includes('v-for="item in aboutContacts"') &&
+      !aboutContactSection.includes('aboutContacts.filter'),
+    'About contact section must render four channels as a two-by-two grid.',
   )
   assert(
     aboutData.includes("title: '关于深度数智（DEEPTROLS）'") &&
@@ -89,7 +106,8 @@ export function checkAboutPageContracts(ctx) {
       aboutData.includes("value: 'product@deeptrols.com'") &&
       aboutData.includes("value: 'support@deeptrols.com'") &&
       aboutData.includes("value: 'hr@deeptrols.com'") &&
-      aboutData.includes("label: '社交媒体'"),
+      aboutData.includes('export const aboutMap') &&
+      !aboutData.includes("label: '社交媒体'"),
     'About data must keep the product requirement copy centralized.',
   )
   assert(existsSync(join(root, 'public/images/about/custom-rad-hero-bg-video.mp4')), 'About hero background video must live under public/images/about.')

@@ -12,7 +12,13 @@ export interface AboutValueItem {
 export interface AboutContactItem {
   label: string
   value: string
-  href?: string
+  href: string
+}
+
+export interface AboutMap {
+  title: string
+  embedUrl: string
+  linkUrl: string
 }
 
 export const aboutHero = {
@@ -56,10 +62,15 @@ export const aboutValues: AboutValueItem[] = [
 
 export const aboutAddress = '湖北省武汉市江汉区泛海国际SOHO-2栋2307'
 
+export const aboutMap: AboutMap = {
+  title: '武汉深度数智科技有限公司',
+  embedUrl: 'https://www.openstreetmap.org/export/embed.html?bbox=114.2358%2C30.5895%2C114.2688%2C30.6115&layer=mapnik&marker=30.6005%2C114.2523',
+  linkUrl: 'https://www.openstreetmap.org/?mlat=30.6005&mlon=114.2523#map=15/30.6005/114.2523',
+}
+
 export const aboutContacts: AboutContactItem[] = [
   { label: '综合咨询', value: 'contact@deeptrols.com', href: 'mailto:contact@deeptrols.com' },
   { label: '产品咨询', value: 'product@deeptrols.com', href: 'mailto:product@deeptrols.com' },
   { label: '技术支持', value: 'support@deeptrols.com', href: 'mailto:support@deeptrols.com' },
   { label: '人才招聘', value: 'hr@deeptrols.com', href: 'mailto:hr@deeptrols.com' },
-  { label: '社交媒体', value: 'DeepTrols' },
 ]
