@@ -145,8 +145,8 @@ function connectorClass(index: number): string {
       >
         <component :is="stat.icon" class="hidden size-3.5 shrink-0 text-primary sm:block" aria-hidden="true" />
         <div class="min-w-0">
-          <p class="truncate text-[11px] leading-3 text-muted">{{ stat.label }}</p>
-          <p class="font-mono text-xs font-semibold leading-4 text-highlighted">{{ stat.value }}</p>
+          <p class="truncate text-xs leading-5 text-muted">{{ stat.label }}</p>
+          <p class="font-mono text-sm font-semibold leading-5 text-highlighted">{{ stat.value }}</p>
         </div>
       </div>
     </div>
@@ -163,10 +163,10 @@ function connectorClass(index: number): string {
           </span>
         </div>
 
-        <div class="mt-2 grid gap-0.5">
+        <div class="mt-2 grid gap-2">
           <template v-for="(step, index) in deviceAgentTraceSteps" :key="step.time">
             <article
-              class="grid grid-cols-[64px_auto_minmax(0,1fr)_auto] items-center gap-1.5 rounded-lg border px-2 py-1 transition-all duration-300"
+              class="grid grid-cols-[64px_auto_minmax(0,1fr)_auto] items-center gap-5 rounded-lg border px-2 py-1 transition-all duration-300"
               :class="stepCardClass(index)"
             >
               <span class="shrink-0 text-right font-mono text-[10px] leading-4 text-muted">{{ step.time }}</span>
@@ -236,8 +236,8 @@ function connectorClass(index: number): string {
         </div>
 
         <div class="mt-auto rounded-lg border border-primary/20 bg-primary/5 px-2 py-1">
-          <p class="text-[11px] font-medium text-primary">Observability</p>
-          <p class="mt-0.5 text-xs leading-4 text-muted">事件、上下文、工具、Skills 与执行结果被统一记录，可回放、可追踪、可审计。</p>
+          <p class="text-sm font-semibold text-primary">Observability</p>
+          <p class="mt-2 text-xs leading-5 text-muted">事件、上下文、工具、Skills 与执行结果被统一记录，可回放、可追踪、可审计。</p>
         </div>
       </aside>
     </div>

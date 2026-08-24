@@ -1,7 +1,7 @@
 # TASK-008.21：全链路可观测动画面板重设计
 ---
 * TaskName：重设计 Device Agent「全链路可观测」右侧动画
-* TaskDescription：参考同页「多源事件触发、设备上下文融合、MCP 工具连接、Skills 按需挂载、安全执行护栏」动画风格，重构「运行 Trace」面板为常驻元素、状态切换、卡片化链路与观测详情组合，保留耗时 / 工具调用 / Skills 指标与重放能力。
+* TaskDescription：参考同页「多源事件触发、设备上下文融合、MCP 工具连接、Skills 按需挂载、安全执行护栏」动画风格，重构「运行 Trace」面板为常驻元素、状态切换、卡片化链路与观测详情组合，保留耗时 / 工具调用 / Skills 指标与自动循环播放能力。
 * TaskCreator：Codex
 * TaskCreationTime：2026-08-21
 ---
@@ -40,6 +40,7 @@
 - 已更新产品需求实现补充。
 - 2026-08-22 修正 Trace 面板高度溢出：去掉独立连接行，将 ArrowRight 收进 Trace Span 卡片，压缩顶部指标、右侧详情与主内容间距；浏览器复测 `overflowingElements: []`，面板外框 `scrollHeight` 与 `clientHeight` 对齐。
 - 2026-08-22 按反馈移除「重放本次运行」按钮，Trace 依赖统一运行时循环自动重播，释放底部高度预算。
+- 2026-08-24 按反馈细调 Trace 面板：指标 label 改为 `text-xs leading-5`，指标值改为 `text-sm leading-5`；7 个进程外层改 `gap-2`，单个进程内部改 `gap-5`；Observability 标题改 `text-sm font-semibold`，说明文案改 `mt-2 leading-5`。
 
 ## 修改文件
 | 文件 | 说明 |
@@ -69,7 +70,7 @@
 | `pnpm test:visual` | 通过，34 tests |
 | `pnpm harness:engineering` | 通过 |
 | `pnpm build` | 通过；存在当前项目既有 Tailwind CSS 优化警告与 Nuxt 插件耗时提示 |
-| 浏览器高度复测 | 通过，Trace 面板无内部溢出 |
+| 浏览器高度复测 | 通过，Trace 面板外框 `480px`、内部 slot `402px`、Trace 列表 `258px`，`overflowing: []` |
 
 ## 已知问题
 - 无新增已知问题。
