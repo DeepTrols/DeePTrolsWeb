@@ -7,6 +7,7 @@ export function registerAboutVisualContracts() {
   it('renders the About Us page from the shared page baseline', () => {
     const page = readComponent('pages/about_us.vue')
     const pageHero = readComponent('components/common/PageHero.vue')
+    const pageHeroStyles = readComponent('assets/scss/components/_page-hero.scss')
     const hero = readComponent('components/about/AboutHero.vue')
     const heroStats = readComponent('components/about/AboutHeroStats.vue')
     const intro = readComponent('components/about/AboutIntroSection.vue')
@@ -57,7 +58,11 @@ export function registerAboutVisualContracts() {
     expect(pageHero).toContain('v-if="actions.length"')
     expect(pageHero).toContain('v-if="hasVisual"')
     expect(pageHero).toContain('<slot name="after-content" />')
-    expect(pageHero).toContain('object-fit: cover')
+    expect(pageHeroStyles).toContain('.page-hero__background::after')
+    expect(pageHeroStyles).toContain('var(--dt-color-bg) 100%')
+    expect(pageHeroStyles).toContain('-webkit-mask-image')
+    expect(pageHeroStyles).toContain('object-fit: cover')
+    expect(pageHeroStyles).toContain('mix-blend-mode: screen')
 
     expect(heroStats).toContain('class="about-hero-stats container !p-0"')
     expect(heroStats).toContain('class="flex flex-col items-center text-center"')

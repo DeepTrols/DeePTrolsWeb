@@ -1,5 +1,5 @@
 export function checkWhyPageContracts(ctx) {
-  const { assert, tailwind, sectionShell, baseCard, iconBox, cardGrid, baseTabs, pageHero, heroLogoStrip, trustTabsSection, serviceShowcaseSection, engineLinksSection, whyData, whyPage, whyHero, whyHeroLogos, whyHeroVisual, whyHeroAnimation, whyTrustTabs, whyService, whyEngine } = ctx
+  const { assert, tailwind, sectionShell, baseCard, iconBox, cardGrid, baseTabs, pageHero, pageHeroStyles, heroLogoStrip, trustTabsSection, serviceShowcaseSection, engineLinksSection, whyData, whyPage, whyHero, whyHeroLogos, whyHeroVisual, whyHeroAnimation, whyTrustTabs, whyService, whyEngine } = ctx
 assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why page must reuse global Header and Footer.')
 assert(
   whyPage.includes('WhyHero') &&
@@ -31,16 +31,16 @@ assert(
     whyHero.includes('title-gradient="企业级AI应用服务商"'),
   'Why hero content hierarchy must follow the why-emqx replacement mapping.',
 )
-assert(pageHero.includes('font-size: 36px') && pageHero.includes('font-size: 48px') && pageHero.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
+assert(pageHeroStyles.includes('font-size: 36px') && pageHeroStyles.includes('font-size: 48px') && pageHeroStyles.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
 assert(
   pageHero.includes('class="page-hero relative overflow-hidden"') &&
     pageHero.includes('container page-hero__body relative isolate pt-24 lg:pt-32') &&
     pageHero.includes('class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg"') &&
     pageHero.includes('class="page-hero__background" aria-hidden="true"') &&
     pageHero.includes('page-hero__inner relative z-10 flex flex-col items-center') &&
-    pageHero.includes('width: 100vw') &&
-    pageHero.includes('transform: translateX(-50%)') &&
-    pageHero.includes('z-index: 1') &&
+    pageHeroStyles.includes('width: 100vw') &&
+    pageHeroStyles.includes('transform: translateX(-50%)') &&
+    pageHeroStyles.includes('z-index: 1') &&
     pageHero.includes('pt-24 lg:pt-32') &&
     pageHero.includes("flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'") &&
     heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28') &&

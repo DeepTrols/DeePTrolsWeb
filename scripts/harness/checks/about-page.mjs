@@ -5,6 +5,7 @@ export function checkAboutPageContracts(ctx) {
     join,
     root,
     pageHero,
+    pageHeroStyles,
     aboutData,
     aboutPage,
     aboutHero,
@@ -63,6 +64,14 @@ export function checkAboutPageContracts(ctx) {
       pageHero.includes('v-if="hasVisual"') &&
       pageHero.includes('<slot name="after-content" />'),
     'PageHero must support optional badge, optional gradient, optional actions, optional visual slot, section-width after-content slot, and runtime background video.',
+  )
+  assert(
+    pageHeroStyles.includes('.page-hero__background::after') &&
+      pageHeroStyles.includes('var(--dt-color-bg) 100%') &&
+      pageHeroStyles.includes('-webkit-mask-image') &&
+      pageHeroStyles.includes('object-fit: cover') &&
+      pageHeroStyles.includes('mix-blend-mode: screen'),
+    'PageHero background video must use a video mask plus dt-bg bottom overlay to avoid color seams.',
   )
   assert(
     aboutHeroStats.includes('class="about-hero-stats container !p-0"') &&

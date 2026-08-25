@@ -53,6 +53,7 @@ export const requiredFiles = [
   'doc/product/PAGE_REQUIREMENTS/PRODUCT/AIIOT/DEVICEAGENT/DEVICEAGENT.md',
   'assets/css/tailwind.css',
   'assets/scss/main.scss',
+  'assets/scss/components/_page-hero.scss',
   'components/common/BaseButton.vue',
   'components/common/SectionHeading.vue',
   'components/common/section/SectionHeader.vue',

@@ -108,3 +108,5 @@ hr@deeptrols.com
 实现说明（TASK-009.5）：`500+ / 30+ / 25+` 统计条改用 About 专属 `AboutHeroStats` 组件，参考 EMQX About 统计区：`container !p-0`、居中布局、无卡片背景/边框、`grid gap-x-6 gap-y-10`、数字使用 `text-3xl font-bold tabular-nums text-highlighted lg:text-4xl`，说明文字使用 `text-sm text-muted`。
 
 实现说明（TASK-009.6）：`AboutHeroStats` 从 `PageHero` 文案容器的 `#after-actions` 改为使用 `#after-content` section 宽度 slot，避免被 `page-hero__content max-w-4xl` 限制，统计条宽度与 Hero section 宽度一致。
+
+实现说明（TASK-009.7）：`PageHero` 背景样式迁移至 `assets/scss/components/_page-hero.scss`，视频背景底部改为“视频 mask 渐隐 + `.page-hero__background::after` 使用 `var(--dt-color-bg)` 压色渐变”的组合，确保 About Hero 视频底部逐步贴近页面背景色，减少色差断层。

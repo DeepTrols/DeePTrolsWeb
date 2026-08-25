@@ -16,6 +16,7 @@ export const harnessSourcePaths = {
   carouselRoot: 'components/common/carousel/CarouselRoot.vue',
   carouselControls: 'components/common/carousel/CarouselControls.vue',
   pageHero: 'components/common/PageHero.vue',
+  pageHeroStyles: 'assets/scss/components/_page-hero.scss',
   heroLogoStrip: 'components/common/HeroLogoStrip.vue',
   trustTabsSection: 'components/common/TrustTabsSection.vue',
   serviceShowcaseSection: 'components/common/ServiceShowcaseSection.vue',
