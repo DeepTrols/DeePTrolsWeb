@@ -59,6 +59,7 @@ export const harnessSourcePaths = {
   aboutData: 'data/about.ts',
   aboutPage: 'pages/about_us.vue',
   aboutHero: 'components/about/AboutHero.vue',
+  aboutHeroStats: 'components/about/AboutHeroStats.vue',
   aboutIntroSection: 'components/about/AboutIntroSection.vue',
   aboutTextBlock: 'components/about/AboutTextBlock.vue',
   aboutValuesSection: 'components/about/AboutValuesSection.vue',

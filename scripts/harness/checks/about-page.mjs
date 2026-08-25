@@ -8,6 +8,7 @@ export function checkAboutPageContracts(ctx) {
     aboutData,
     aboutPage,
     aboutHero,
+    aboutHeroStats,
     aboutIntroSection,
     aboutTextBlock,
     aboutValuesSection,
@@ -37,11 +38,11 @@ export function checkAboutPageContracts(ctx) {
       aboutHero.includes(':background-video-src="aboutHero.backgroundVideo"') &&
       aboutHero.includes('align="center"') &&
       aboutHero.includes('class="about-hero"') &&
-      aboutHero.includes('HeroStatsStrip') &&
+      aboutHero.includes('AboutHeroStats') &&
       aboutHero.includes('aboutStats') &&
       aboutHero.includes('#after-actions') &&
-      aboutHero.includes('placement="section"') &&
       aboutHero.includes('about-hero__stats mt-10') &&
+      !aboutHero.includes('HeroStatsStrip') &&
       aboutHero.includes('min-height: 560px') &&
       aboutHero.includes('padding-top: 8.5rem') &&
       !aboutHero.includes('badge=') &&
@@ -61,6 +62,15 @@ export function checkAboutPageContracts(ctx) {
       pageHero.includes('v-if="actions.length"') &&
       pageHero.includes('v-if="hasVisual"'),
     'PageHero must support optional badge, optional gradient, optional actions, optional visual slot, and runtime background video.',
+  )
+  assert(
+    aboutHeroStats.includes('class="about-hero-stats container !p-0"') &&
+      aboutHeroStats.includes('class="flex flex-col items-center text-center"') &&
+      aboutHeroStats.includes('class="w-full border-default border-0 p-6 !p-0 sm:p-8"') &&
+      aboutHeroStats.includes('class="grid grid-cols-3 gap-x-6 gap-y-10"') &&
+      aboutHeroStats.includes('text-3xl font-bold tabular-nums text-highlighted lg:text-4xl') &&
+      aboutHeroStats.includes('class="text-sm text-muted"'),
+    'About hero stats must follow the EMQX About stats rhythm without card backgrounds.',
   )
   assert(
     aboutIntroSection.includes('about-intro-card') &&

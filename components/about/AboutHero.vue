@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HeroStatsStrip from '~/components/common/HeroStatsStrip.vue'
+import AboutHeroStats from '~/components/about/AboutHeroStats.vue'
 import PageHero from '~/components/common/PageHero.vue'
 import { aboutHero, aboutStats } from '~/data/about'
 </script>
@@ -16,7 +16,7 @@ import { aboutHero, aboutStats } from '~/data/about'
   >
     <template #after-actions>
       <div class="about-hero__stats mt-10">
-        <HeroStatsStrip :items="aboutStats" placement="section" />
+        <AboutHeroStats :items="aboutStats" />
       </div>
     </template>
   </PageHero>

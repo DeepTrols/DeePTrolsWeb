@@ -104,3 +104,5 @@ hr@deeptrols.com
 实现说明（TASK-009.3）：公司介绍正文使用 `AboutTextBlock` 的 `full` 尺寸，保证正文宽度与“公司介绍”标题所在内容宽度一致。
 
 实现说明（TASK-009.4）：`500+ / 30+ / 25+` 统计条从独立 section 移入 `AboutHero` 的 `#after-actions` slot，紧跟在“关于深度数智（DEEPTROLS）”标题和描述下方渲染；删除独立 `AboutStatsSection`。
+
+实现说明（TASK-009.5）：`500+ / 30+ / 25+` 统计条改用 About 专属 `AboutHeroStats` 组件，参考 EMQX About 统计区：`container !p-0`、居中布局、无卡片背景/边框、`grid gap-x-6 gap-y-10`、数字使用 `text-3xl font-bold tabular-nums text-highlighted lg:text-4xl`，说明文字使用 `text-sm text-muted`。

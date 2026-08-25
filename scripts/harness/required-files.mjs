@@ -122,6 +122,7 @@ export const requiredFiles = [
   'pages/products/device-agent.vue',
   'pages/about_us.vue',
   'components/about/AboutHero.vue',
+  'components/about/AboutHeroStats.vue',
   'components/about/AboutIntroSection.vue',
   'components/about/AboutTextBlock.vue',
   'components/about/AboutValuesSection.vue',
