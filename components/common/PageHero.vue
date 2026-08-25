@@ -145,12 +145,12 @@ const hasVisual = computed(() => Boolean(slots.visual))
 </template>
 
 <style scoped lang="scss">
-.page-hero {
-  isolation: isolate;
-}
+.page-hero { isolation: isolate; }
 .page-hero__background {
   position: absolute;
-  inset: 0;
+  inset: 0 auto 0 50%;
+  width: 100vw;
+  transform: translateX(-50%);
   z-index: 1;
   pointer-events: none;
   mask-image: linear-gradient(#000 55%, transparent 92%);

@@ -59,6 +59,8 @@ export function registerWhyVisualContracts() {
     expect(pageHero).toContain('class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg"')
     expect(pageHero).toContain('class="page-hero__background" aria-hidden="true"')
     expect(pageHero).toContain('page-hero__inner relative z-10 flex flex-col items-center')
+    expect(pageHero).toContain('width: 100vw')
+    expect(pageHero).toContain('transform: translateX(-50%)')
     expect(pageHero).toContain('z-index: 1')
     expect(pageHero).toContain("flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'")
     expect(pageHero).toContain('page-hero__content w-full text-center')
