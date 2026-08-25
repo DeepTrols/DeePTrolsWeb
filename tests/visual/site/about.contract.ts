@@ -37,8 +37,8 @@ export function registerAboutVisualContracts() {
     expect(hero).toContain('class="about-hero"')
     expect(hero).toContain('AboutHeroStats')
     expect(hero).toContain('aboutStats')
-    expect(hero).toContain('#after-actions')
-    expect(hero).toContain('about-hero__stats mt-10')
+    expect(hero).toContain('#after-content')
+    expect(hero).toContain('about-hero__stats mt-10 w-full')
     expect(hero).not.toContain('HeroStatsStrip')
     expect(hero).toContain('min-height: 560px')
     expect(hero).toContain('padding-top: 8.5rem')
@@ -56,6 +56,7 @@ export function registerAboutVisualContracts() {
     expect(pageHero).toContain('v-if="titleGradient"')
     expect(pageHero).toContain('v-if="actions.length"')
     expect(pageHero).toContain('v-if="hasVisual"')
+    expect(pageHero).toContain('<slot name="after-content" />')
     expect(pageHero).toContain('object-fit: cover')
 
     expect(heroStats).toContain('class="about-hero-stats container !p-0"')

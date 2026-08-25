@@ -40,8 +40,8 @@ export function checkAboutPageContracts(ctx) {
       aboutHero.includes('class="about-hero"') &&
       aboutHero.includes('AboutHeroStats') &&
       aboutHero.includes('aboutStats') &&
-      aboutHero.includes('#after-actions') &&
-      aboutHero.includes('about-hero__stats mt-10') &&
+      aboutHero.includes('#after-content') &&
+      aboutHero.includes('about-hero__stats mt-10 w-full') &&
       !aboutHero.includes('HeroStatsStrip') &&
       aboutHero.includes('min-height: 560px') &&
       aboutHero.includes('padding-top: 8.5rem') &&
@@ -60,8 +60,9 @@ export function checkAboutPageContracts(ctx) {
       pageHero.includes('v-if="badge"') &&
       pageHero.includes('v-if="titleGradient"') &&
       pageHero.includes('v-if="actions.length"') &&
-      pageHero.includes('v-if="hasVisual"'),
-    'PageHero must support optional badge, optional gradient, optional actions, optional visual slot, and runtime background video.',
+      pageHero.includes('v-if="hasVisual"') &&
+      pageHero.includes('<slot name="after-content" />'),
+    'PageHero must support optional badge, optional gradient, optional actions, optional visual slot, section-width after-content slot, and runtime background video.',
   )
   assert(
     aboutHeroStats.includes('class="about-hero-stats container !p-0"') &&

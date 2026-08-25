@@ -139,6 +139,7 @@ const hasVisual = computed(() => Boolean(slots.visual))
           <div v-if="align !== 'center'" class="page-hero__visual-glow" aria-hidden="true"></div>
           <slot name="visual" />
         </div>
+        <slot name="after-content" />
       </div>
     </div>
   </section>

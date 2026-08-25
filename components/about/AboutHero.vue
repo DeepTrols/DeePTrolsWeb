@@ -14,8 +14,8 @@ import { aboutHero, aboutStats } from '~/data/about'
     :background-video-src="aboutHero.backgroundVideo"
     align="center"
   >
-    <template #after-actions>
-      <div class="about-hero__stats mt-10">
+    <template #after-content>
+      <div class="about-hero__stats mt-10 w-full">
         <AboutHeroStats :items="aboutStats" />
       </div>
     </template>
