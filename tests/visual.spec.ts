@@ -3,6 +3,7 @@ import { registerCoreVisualContracts } from './visual/core.contract'
 import { registerProductAiiotVisualContracts } from './visual/product-aiiot.contract'
 import { registerProductDataVisualContracts } from './visual/product-data.contract'
 import { registerAboutVisualContracts } from './visual/site/about.contract'
+import { registerReportVisualContracts } from './visual/site/report.contract'
 import { registerWhyHomeCommonVisualContracts } from './visual/why-home-common.contract'
 
 describe('visual implementation contract', () => {
@@ -10,6 +11,7 @@ describe('visual implementation contract', () => {
   registerProductDataVisualContracts()
   registerWhyHomeCommonVisualContracts()
   registerAboutVisualContracts()
+  registerReportVisualContracts()
 })
 
 registerProductAiiotVisualContracts()

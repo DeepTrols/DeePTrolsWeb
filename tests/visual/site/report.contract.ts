@@ -1,0 +1,62 @@
+import { expect, it } from 'vitest'
+import { readComponent } from '../utils'
+
+export function registerReportVisualContracts() {
+  it('renders the report service page with the required resources layout', () => {
+    const page = readComponent('pages/resources/reports.vue')
+    const hero = readComponent('components/service/report/ReportHero.vue')
+    const section = readComponent('components/service/report/ReportResourcesSection.vue')
+    const card = readComponent('components/service/report/ReportResourceCard.vue')
+    const data = readComponent('data/reports.ts')
+    const navigation = readComponent('data/navigation.ts')
+    const footer = readComponent('data/footer.ts')
+    const requirement = readComponent('doc/product/PAGE_REQUIREMENTS/SERVICE/REPORT/report.md')
+
+    expect(page).toContain('SiteHeader')
+    expect(page).toContain('SiteFooter')
+    expect(page).toContain('ReportHero')
+    expect(page).toContain('ReportResourcesSection')
+    expect(page).toContain('report-page')
+    expect(page).toContain("title: '白皮书&报告 - DeepTrols'")
+    expect(page).toContain("description: '全球最新的AI相关白皮书&报告，深入了解人工智能的世界。'")
+
+    expect(hero).toContain('PageHero')
+    expect(hero).toContain('title-id="report-hero-title"')
+    expect(hero).toContain(':title-line="reportHero.title"')
+    expect(hero).toContain(':description="reportHero.description"')
+    expect(hero).toContain('align="center"')
+    expect(hero).toContain('padding-top: 8.5rem')
+    expect(hero).toContain('padding-bottom: 4rem')
+    expect(hero).toContain('padding-top: 9.5rem')
+    expect(hero).toContain('padding-bottom: 5rem')
+    expect(hero).toContain('font-size: 24px')
+    expect(hero).toContain('font-size: 48px')
+
+    expect(section).toContain('class="container pb-32"')
+    expect(section).toContain('class="mb-24"')
+    expect(section).toContain('class="grid grid-cols-1 gap-8 md:grid-cols-3"')
+    expect(section).toContain('ReportResourceCard')
+    expect(section).toContain(':eager="index === 0"')
+
+    expect(card).toContain('class="group block"')
+    expect(card).toContain('class="relative mb-4 aspect-[400/180] overflow-hidden rounded-lg"')
+    expect(card).toContain('absolute left-3 top-3 z-10 inline-flex')
+    expect(card).toContain('rounded-full bg-violet-500 px-2.5 py-0.5 text-sm text-white')
+    expect(card).toContain('width="400"')
+    expect(card).toContain('height="180"')
+    expect(card).toContain(':loading="eager ? \'eager\' : \'lazy\'"')
+    expect(card).toContain('class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"')
+    expect(card).toContain('text-xl font-semibold leading-snug text-highlighted')
+    expect(card).not.toContain('style=')
+
+    expect(data).toContain("title: '白皮书&报告'")
+    expect(data).toContain("description: '全球最新的AI相关白皮书&报告，深入了解人工智能的世界。'")
+    expect(data).toContain("type: '白皮书'")
+    expect(data).toContain("type: '报告'")
+    expect(data).toContain("image: '/images/home/solutions/data-center-ai.CDu93Miw.png'")
+    expect(data).not.toContain('doc/product/PAGE_REQUIREMENTS')
+    expect(navigation).toContain("href: '/resources/reports'")
+    expect(footer).toContain("href: '/resources/reports'")
+    expect(requirement).toContain('白皮书&报告 页面结构')
+  })
+}
