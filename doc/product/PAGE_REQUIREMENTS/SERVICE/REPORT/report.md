@@ -21,5 +21,6 @@
 - tab 文案依次为：全部、产品规格书、电子书、白皮书、视频、幻灯片、基准测试报告。
 - tab 与搜索控制条之后再进入普通资源列表 `container pb-32`。
 - 普通资源列表采用 `section mb-24`、`grid grid-cols-1 gap-8 md:grid-cols-3`。
+- 普通资源列表最后必须渲染“加载更多”按钮，外层为 `flex justify-center mt-10`，按钮为 `data-slot="base"` primary 链接，链接使用 `/zh/resources/pages/2`。
 - 资源卡片采用 400:180 图片比例、左上角类型徽标、`rounded-lg` 图片圆角与 `group-hover:scale-105` hover 节奏。
 - 运行时封面图统一使用 `public/images/**`，不得直接引用 `doc/product/**/imgs`。

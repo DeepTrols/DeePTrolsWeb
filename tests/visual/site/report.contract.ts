@@ -64,6 +64,11 @@ export function registerReportVisualContracts() {
     expect(section).toContain('ReportResourceCard')
     expect(section).toContain('items: ReportResource[]')
     expect(section).toContain(':eager="index === 0"')
+    expect(section).toContain('class="flex justify-center mt-10"')
+    expect(section).toContain('href="/zh/resources/pages/2"')
+    expect(section).toContain('data-slot="base"')
+    expect(section).toContain('px-4 py-3 text-base gap-2 min-w-32 bg-primary hover:bg-primary/75')
+    expect(section).toContain('加载更多')
 
     expect(card).toContain('class="group block"')
     expect(card).toContain('class="relative mb-4 aspect-[400/180] overflow-hidden rounded-lg"')

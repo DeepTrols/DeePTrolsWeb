@@ -75,7 +75,12 @@ export function checkServiceReportContracts(ctx) {
       reportResourcesSection.includes('class="mb-24"') &&
       reportResourcesSection.includes('class="grid grid-cols-1 gap-8 md:grid-cols-3"') &&
       reportResourcesSection.includes('ReportResourceCard') &&
-      reportResourcesSection.includes(':eager="index === 0"'),
+      reportResourcesSection.includes(':eager="index === 0"') &&
+      reportResourcesSection.includes('class="flex justify-center mt-10"') &&
+      reportResourcesSection.includes('href="/zh/resources/pages/2"') &&
+      reportResourcesSection.includes('data-slot="base"') &&
+      reportResourcesSection.includes('px-4 py-3 text-base gap-2 min-w-32 bg-primary hover:bg-primary/75') &&
+      reportResourcesSection.includes('加载更多'),
     'Report resources must follow the three-column resources grid rhythm.',
   )
   assert(
