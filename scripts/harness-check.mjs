@@ -7,6 +7,7 @@ import { checkHomeLayoutContracts } from './harness/checks/home-layout.mjs'
 import { checkProductAiiotContracts } from './harness/checks/product-aiiot.mjs'
 import { checkProductDataContracts } from './harness/checks/product-data.mjs'
 import { checkServiceReportContracts } from './harness/checks/service-report.mjs'
+import { checkSolutionUseCaseContracts } from './harness/checks/solution-use-cases.mjs'
 import { checkSolutionTemplateContracts } from './harness/checks/solution-template.mjs'
 import { checkStyleRules } from './harness/checks/style-rules.mjs'
 import { checkWhyPageContracts } from './harness/checks/why-page.mjs'
@@ -33,6 +34,7 @@ checkProductDataContracts(ctx)
 checkAboutPageContracts(ctx)
 checkServiceReportContracts(ctx)
 checkSolutionTemplateContracts(ctx)
+checkSolutionUseCaseContracts(ctx)
 checkStyleRules(ctx)
 
 if (failures.length) {

@@ -127,3 +127,8 @@ Hero 允许透传 `align`、`visualSize`、`flushBottom`、`flushVisualEnd`，�
 5. 行动引导
 
 除非页面需求明确允许偏离，CTA 默认使用“咨询合作 / 申请试用”。
+
+## Current Implementations
+| 分类 | 页面说明 | 数据源 | 路由 |
+|----|----|----|----|
+| 应用场景 | 8 个应用场景页面 | `data/solutions/use-cases.ts` | `pages/solutions/[slug].vue` |

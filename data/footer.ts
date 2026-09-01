@@ -47,7 +47,7 @@ export const footerColumns: FooterColumn[] = [
         { label: '智慧能源', href: '/solutions/energy' },
         { label: '数据治理', href: '/solutions/data-governance' },
         { label: '企业AI应用', href: '/solutions/enterprise-ai' },
-        { label: '智慧城市', href: '/solutions/smart-city' },
+        { label: '智慧城市', href: '/solutions/city' },
         { label: '智慧医疗', href: '/solutions/healthcare' },
       ],
     ],
