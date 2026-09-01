@@ -31,7 +31,7 @@ const inSection = computed(() => props.placement === 'section')
       :class="
         inSection
           ? 'rounded-xl border border-default bg-dt-bg-soft/50 px-4 py-4 text-center backdrop-blur-sm'
-          : 'rounded-xl border border-default bg-[var(--dt-color-bg-soft)]/50 px-3 py-3 text-center backdrop-blur-sm'
+          : 'rounded-xl border border-default bg-dt-bg-soft/50 px-3 py-3 text-center backdrop-blur-sm'
       "
       role="listitem"
     >

@@ -41,7 +41,7 @@ describe('tanyao ai-iot page contract', () => {
     expect(heroStatsStrip).toContain('rounded-xl border border-default bg-dt-bg-soft/50 px-4 py-4 text-center backdrop-blur-sm')
     expect(heroStatsStrip).toContain('text-2xl font-semibold text-highlighted lg:text-3xl')
     expect(heroStatsStrip).toContain('mt-1 text-xs text-muted lg:text-sm')
-    expect(heroStatsStrip).toContain('bg-[var(--dt-color-bg-soft)]/50 px-3 py-3 text-center backdrop-blur-sm')
+    expect(heroStatsStrip).toContain('bg-dt-bg-soft/50 px-3 py-3 text-center backdrop-blur-sm')
   })
 
   it('replicates the EMQX Edge hero visual structure with tanyao copy and unique SVG ids', () => {

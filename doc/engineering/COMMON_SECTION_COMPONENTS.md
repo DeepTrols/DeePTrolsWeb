@@ -185,6 +185,21 @@
 - 需要取消架构图上方额外间距时使用 `frameOffset=false`，需要保留 `ProductSystemSection` 默认内容间距时使用 `contentFlush=false`。
 - 公共组件只负责布局组合，不绑定任何产品数据或具体 VueFlow。
 
+## Solution Page Template
+公共组件：`components/solution/SolutionPageTemplate.vue`
+
+适用场景：
+- 应用场景、行业、技术方向、FDE 等解决方案类详情页。
+- 需要统一复用 Header、Footer、Hero、价值卡片、落地路径、架构占位、能力卡片、图文服务、相关资源与 CTA 的页面。
+
+使用要求：
+- 页面只传入 `SolutionPageTemplateContent` 数据，并按需使用 `hero-visual` / `architecture-visual` 等 slot 注入页面专属视觉。
+- 数据建议放在 `data/solutions/*.ts`，类型来自 `types/solution-template.ts`。
+- 默认区块顺序遵循 `doc/engineering/SOLUTION_PAGE_TEMPLATE.md`，除非具体页面需求明确要求调整。
+- 模板必须只组合现有公共组件，不新增 `<style>`、inline style、私有按钮、私有卡片、私有 Section Heading 或私有 CTA 样式。
+- Hero 视觉、架构图、动画等差异通过 slot 承载；运行时素材必须来自 `assets/**` 或 `public/**`，不得直接引用 `doc/product/**/imgs`。
+- 卡片、icon 外框、hover、高度自适应继续走 `dt-card`、`dt-product-card`、`dt-icon-box` 与公共 card primitives。
+
 ## Hero Visual Primitives
 公共组件：
 - `components/common/hero-visual/HeroVisualShell.vue`
