@@ -109,6 +109,8 @@ export const requiredFiles = [
   'data/reports.ts',
   'pages/resources/reports.vue',
   'components/service/report/ReportHero.vue',
+  'components/service/report/ReportFeaturedSection.vue',
+  'components/service/report/ReportFilterBar.vue',
   'components/service/report/ReportResourcesSection.vue',
   'components/service/report/ReportResourceCard.vue',
   'data/about.ts',

@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { primaryNavigation } from '../data/navigation'
-import { reportHero, reportResources } from '../data/reports'
+import { featuredReportResources, reportFilterTabs, reportHero, reportResources } from '../data/reports'
 
 const root = process.cwd()
 
@@ -24,15 +24,29 @@ describe('report service page content contract', () => {
 
   it('defines the report resources as a three-column resource grid source', () => {
     expect(reportResources).toHaveLength(6)
-    expect(reportResources.map((item) => item.type)).toEqual(['白皮书', '报告', '白皮书', '报告', '白皮书', '报告'])
+    expect(reportResources.map((item) => item.type)).toEqual(['白皮书', '基准测试报告', '电子书', '视频', '产品规格书', '幻灯片'])
     expect(reportResources.map((item) => item.title)).toEqual([
       '企业级 AI 应用落地白皮书',
       'AI 时代的数据治理与数据底座报告',
       '企业知识工程建设实践指南',
-      '工业现场智能体应用趋势报告',
-      '企业模型调用与 Token 成本治理白皮书',
-      'AI 算力与基础设施建设参考报告',
+      '工业现场智能体应用场景解析视频',
+      'Token Hub 模型调用治理产品规格书',
+      'AI 算力与基础设施建设方案幻灯片',
     ])
+  })
+
+  it('defines the required filter tabs and three featured resources', () => {
+    expect(reportFilterTabs.map((tab) => tab.label)).toEqual([
+      '全部',
+      '产品规格书',
+      '电子书',
+      '白皮书',
+      '视频',
+      '幻灯片',
+      '基准测试报告',
+    ])
+    expect(featuredReportResources).toHaveLength(3)
+    expect(featuredReportResources.map((item) => item.title)).toEqual(reportResources.slice(0, 3).map((item) => item.title))
   })
 
   it('uses only runtime public images for report covers', () => {

@@ -61,6 +61,8 @@ export const harnessSourcePaths = {
   reportData: 'data/reports.ts',
   reportPage: 'pages/resources/reports.vue',
   reportHero: 'components/service/report/ReportHero.vue',
+  reportFeaturedSection: 'components/service/report/ReportFeaturedSection.vue',
+  reportFilterBar: 'components/service/report/ReportFilterBar.vue',
   reportResourcesSection: 'components/service/report/ReportResourcesSection.vue',
   reportResourceCard: 'components/service/report/ReportResourceCard.vue',
   aboutData: 'data/about.ts',

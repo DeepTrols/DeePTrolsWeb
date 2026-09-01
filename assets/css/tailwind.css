@@ -16,6 +16,8 @@
   --color-dt-text-soft: var(--dt-color-text-soft);
   --color-dt-text-highlighted: var(--dt-color-text-highlighted);
   --color-primary: var(--dt-color-primary);
+  --color-accented: var(--dt-color-line-strong);
+  --color-toned: var(--dt-color-text-muted);
   --color-dimmed: var(--dt-color-text-muted);
   --radius-dt-xs: var(--dt-radius-xs);
   --radius-dt-sm: var(--dt-radius-sm);

@@ -16,6 +16,10 @@
 - 页面路由采用服务导航与站点地图中的 `/resources/reports`。
 - `创建about_us路由` 为页面模板残留描述，不作为本页面路由依据。
 - 页面复用公共 Header、Footer 与居中 `PageHero`。
-- 资源列表采用 `container pb-32`、`section mb-24`、`grid grid-cols-1 gap-8 md:grid-cols-3`。
+- `PageHero` 下方必须先渲染推荐资源 Section，展示 3 个推荐资源。
+- 推荐资源 Section 下方必须渲染 tab 与搜索控制条，控制条结构为 `flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8`。
+- tab 文案依次为：全部、产品规格书、电子书、白皮书、视频、幻灯片、基准测试报告。
+- tab 与搜索控制条之后再进入普通资源列表 `container pb-32`。
+- 普通资源列表采用 `section mb-24`、`grid grid-cols-1 gap-8 md:grid-cols-3`。
 - 资源卡片采用 400:180 图片比例、左上角类型徽标、`rounded-lg` 图片圆角与 `group-hover:scale-105` hover 节奏。
 - 运行时封面图统一使用 `public/images/**`，不得直接引用 `doc/product/**/imgs`。
