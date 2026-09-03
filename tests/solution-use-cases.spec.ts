@@ -13,6 +13,7 @@ const expectedUseCases = [
   { label: '智慧环保', href: '/solutions/environment', slug: 'environment' },
   { label: '智慧水利', href: '/solutions/water', slug: 'water' },
   { label: '智慧能源', href: '/solutions/energy', slug: 'energy' },
+  { label: '算力中心', href: '/solutions/compute', slug: 'compute' },
   { label: '数据治理', href: '/solutions/data-governance', slug: 'data-governance' },
   { label: '企业AI应用', href: '/solutions/enterprise-ai', slug: 'enterprise-ai' },
   { label: '智慧城市', href: '/solutions/city', slug: 'city' },

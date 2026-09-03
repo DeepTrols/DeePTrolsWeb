@@ -3,6 +3,7 @@ const useCaseRoutes = [
   '/solutions/environment',
   '/solutions/water',
   '/solutions/energy',
+  '/solutions/compute',
   '/solutions/data-governance',
   '/solutions/enterprise-ai',
   '/solutions/city',

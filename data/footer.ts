@@ -45,6 +45,7 @@ export const footerColumns: FooterColumn[] = [
         { label: '智能环保', href: '/solutions/environment' },
         { label: '智能水利', href: '/solutions/water' },
         { label: '智慧能源', href: '/solutions/energy' },
+        { label: '算力中心', href: '/solutions/compute' },
         { label: '数据治理', href: '/solutions/data-governance' },
         { label: '企业AI应用', href: '/solutions/enterprise-ai' },
         { label: '智慧城市', href: '/solutions/city' },

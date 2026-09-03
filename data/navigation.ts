@@ -154,6 +154,7 @@ export const primaryNavigation: NavItem[] = [
           { label: '智慧环保', href: '/solutions/environment' },
           { label: '智慧水利', href: '/solutions/water' },
           { label: '智慧能源', href: '/solutions/energy' },
+          { label: '算力中心', href: '/solutions/compute' },
           { label: '数据治理', href: '/solutions/data-governance' },
           { label: '企业AI应用', href: '/solutions/enterprise-ai' },
           { label: '智慧城市', href: '/solutions/city' },
@@ -194,13 +195,13 @@ export const primaryNavigation: NavItem[] = [
       {
         title: 'OPC公共服务平台',
         description: '工业现场连接、数据接入与公共能力封装。',
-        href: '/solutions/opc-platform',
+        href: '/services/opc-platform',
         icon: RadioTower,
       },
       {
         title: '企业AI落地服务',
         description: '面向场景的 AI 应用规划、建设与运营。',
-        href: '/solutions/enterprise-ai-delivery',
+        href: '/services/enterprise-ai-delivery',
         icon: Building2,
       },
     ],

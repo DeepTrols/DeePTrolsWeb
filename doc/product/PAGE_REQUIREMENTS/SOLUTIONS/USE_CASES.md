@@ -12,6 +12,7 @@
 | 智慧环保 | `/solutions/environment` |
 | 智慧水利 | `/solutions/water` |
 | 智慧能源 | `/solutions/energy` |
+| 算力中心 | `/solutions/compute` |
 | 数据治理 | `/solutions/data-governance` |
 | 企业AI应用 | `/solutions/enterprise-ai` |
 | 智慧城市 | `/solutions/city` |
