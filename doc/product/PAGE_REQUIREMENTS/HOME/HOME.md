@@ -36,7 +36,7 @@ Header 结构与交互必须与 `doc/product/NAVIGATION.md` 保持一致：主�
 
 其他logo先使用占位符
 
-banner与三大业务方向外层背景要求：在 `home-hero` 与区域一外层使用 `public/花瓣素材_+暖蓝光泄漏背景可循环_465316undefined (1) 2.mp4` 作为原生 video 背景，不使用 canvas；视频上方增加遮罩，基础颜色为当前页面背景色 40%，顶部渐变接近 Header 色，底部渐变接近页面背景色。
+banner与三大业务方向外层背景要求：在 `home-hero` 与区域一外层使用 `public/videos/home-hero-bg.mp4` 作为原生 video 背景（`preload="metadata"`，挂载后按需播放），不使用 canvas；视频上方增加遮罩，基础颜色为当前页面背景色 40%，顶部渐变接近 Header 色，底部渐变接近页面背景色。
 
 ### 区域一：三大业务方向
 参考https://www.emqx.com/zh 中` <section class="container pb-32 lg:pb-44"><div class="flex flex-col lg:flex-row items-stretch overflow-hidden rounded-lg _bg_yva34_2"><div class="hidden lg:block lg:w-[40%] relative overflow-hidden min-h-[300px]"><img src="https://www.emqx.com/_nuxt/customer-spotlight-geely-bg.a22UmRF0.png" alt="吉利 case study" class="absolute inset-0 w-full h-full object-cover" loading="lazy">`部分。
@@ -349,9 +349,10 @@ logo使用占位符
   - 业务威胁感知系统
 - 使用场景：
   - 智能制造
-  - 智能环保
-  - 智能水利
+  - 智慧环保
+  - 智慧水利
   - 智慧能源
+  - 算力中心
   - 数据治理
   - 企业AI应用
   - 智慧城市

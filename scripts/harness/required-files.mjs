@@ -13,6 +13,7 @@ export const requiredFiles = [
   'doc/tasks/review/TASK-006.4-dms-product-page.md',
   'doc/tasks/review/TASK-011.1-solution-page-template.md',
   'doc/tasks/review/TASK-011.2-solution-use-case-pages.md',
+  'doc/tasks/review/TASK-012.1-p0-audit-fixes.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',
