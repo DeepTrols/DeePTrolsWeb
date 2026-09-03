@@ -113,6 +113,7 @@ export const requiredFiles = [
   'components/home/ecosystem-visuals/EcosystemInfraVisual.vue',
   'components/home/ecosystem-visuals/EcosystemReportVisual.vue',
   'public/images/about/custom-rad-hero-bg-video.mp4',
+  'public/videos/home-hero-bg.mp4',
   'data/footer.ts',
   'data/navigation.ts',
   'data/reports.ts',

@@ -25,7 +25,7 @@
 6. Header container 必须与页面内容宽度一致，不允许单独猜测宽度。
 7. Header logo 使用 `/logo-while.svg`，当前宽度为 `200px`；Footer logo 当前宽度为 `240px`。
 8. Footer 使用 HOME 当前结构：订阅区、分隔线、`site-footer__main`、与 main 平级的 `site-footer__socials`、底部分隔线、备案与版权。
-9. HOME Hero 与区域一共享视频背景：`public/花瓣素材_+暖蓝光泄漏背景可循环_465316undefined (1) 2.mp4`；Hero 内不得恢复 canvas / TresJS。
+9. HOME Hero 与区域一共享视频背景：`public/videos/home-hero-bg.mp4`（`preload="metadata"` + 挂载后按需播放）；Hero 内不得恢复 canvas / TresJS。
 
 ---
 ## Typography

@@ -10,9 +10,10 @@ export function registerCoreVisualContracts() {
     expect(hero).not.toContain('HeroTresBackground')
     expect(hero).not.toContain('TresCanvas')
     expect(page).toContain('class="home-hero-deliverables__video"')
-    expect(page).toContain('花瓣素材_+暖蓝光泄漏背景可循环')
+    expect(page).toContain('home-hero-bg.mp4')
 
     for (const asset of [
+      'public/videos/home-hero-bg.mp4',
       'public/images/home/solutions/industrial.K00G2HaS.png',
       'public/images/home/solutions/smart-env.CWc2pooP.png',
       'public/images/home/solutions/smart-energy.DHKY-NE1.png',

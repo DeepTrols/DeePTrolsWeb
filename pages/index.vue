@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 
@@ -8,6 +9,12 @@ useSeoMeta({
   ogTitle: 'DeepTrols - 构建企业级 AI 能力体系',
   ogDescription: '让数据成为资产，让知识驱动决策，让 AI 创造价值。',
 })
+
+const heroVideoRef = ref<HTMLVideoElement | null>(null)
+
+onMounted(() => {
+  heroVideoRef.value?.play().catch(() => {})
+})
 </script>
 
 <template>
@@ -16,13 +23,13 @@ useSeoMeta({
     <main id="main-content">
       <div class="home-hero-deliverables">
         <video
+          ref="heroVideoRef"
           class="home-hero-deliverables__video"
-          src="/花瓣素材_+暖蓝光泄漏背景可循环_465316undefined (1) 2.mp4"
-          autoplay
+          src="/videos/home-hero-bg.mp4"
           muted
           loop
           playsinline
-          preload="auto"
+          preload="metadata"
           aria-hidden="true"
         ></video>
         <div class="home-hero-deliverables__mask" aria-hidden="true"></div>
