@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ArrowRight } from '@lucide/vue'
-import MegaPanelServices from '~/components/navigation/MegaPanelServices.vue'
+import MegaPanelNavLink from '~/components/navigation/MegaPanelNavLink.vue'
+import MegaPanelProduct from '~/components/navigation/MegaPanelProduct.vue'
+import MegaPanelSolutions from '~/components/navigation/MegaPanelSolutions.vue'
 import type { NavColumn, NavItem, NavLink } from '~/data/navigation'
 
 defineProps<{
@@ -18,80 +20,60 @@ function linksFor(column: NavColumn): NavLink[] {
 
 <template>
   <div class="container mega-panel" :class="`mega-panel--${item.layout ?? 'default'}`">
-    <MegaPanelServices v-if="item.layout === 'services'" :features="item.features" @navigate="$emit('navigate')" />
+    <MegaPanelProduct v-if="item.layout === 'product'" :item="item" @navigate="$emit('navigate')" />
+    <MegaPanelSolutions v-else-if="item.layout === 'solutions'" :item="item" @navigate="$emit('navigate')" />
 
-    <template v-else>
-      <div
-        v-if="item.columns?.length"
-        class="mega-panel__columns"
-        :class="`mega-panel__columns--${item.layout ?? 'default'}`"
-      >
-        <section v-for="column in item.columns" :key="column.title" class="mega-panel__column">
-          <h2>{{ column.title }}</h2>
-          <div class="mega-panel__link-list">
-            <NuxtLink
-              v-for="link in linksFor(column)"
-              :key="link.label"
-              :to="link.href"
-              class="mega-panel__link"
-              :class="{ 'mega-panel__link--plain': !link.icon }"
-              @click="$emit('navigate')"
-            >
-              <component v-if="link.icon" :is="link.icon" :size="18" aria-hidden="true" />
-              <span>
-                <strong>{{ link.label }}</strong>
-                <small v-if="link.description">{{ link.description }}</small>
-              </span>
-            </NuxtLink>
-          </div>
+    <div v-else-if="item.columns?.length" class="mega-panel__columns">
+      <section v-for="column in item.columns" :key="column.title" class="mega-panel__column">
+        <h2>{{ column.title }}</h2>
+        <div class="mega-panel__link-list">
+          <MegaPanelNavLink
+            v-for="link in linksFor(column)"
+            :key="link.label"
+            :link="link"
+            @navigate="$emit('navigate')"
+          />
+        </div>
 
-          <div v-for="group in column.groups" :key="group.title" class="mega-panel__group">
-            <h3>{{ group.title }}</h3>
-            <NuxtLink
-              v-for="link in group.links"
-              :key="link.label"
-              :to="link.href"
-              class="mega-panel__link"
-              @click="$emit('navigate')"
-            >
-              <component v-if="link.icon" :is="link.icon" :size="18" aria-hidden="true" />
-              <span>
-                <strong>{{ link.label }}</strong>
-                <small v-if="link.description">{{ link.description }}</small>
-              </span>
-            </NuxtLink>
-          </div>
+        <div v-for="group in column.groups" :key="group.title" class="mega-panel__group">
+          <h3>{{ group.title }}</h3>
+          <MegaPanelNavLink
+            v-for="link in group.links ?? []"
+            :key="link.label"
+            :link="link"
+            @navigate="$emit('navigate')"
+          />
+        </div>
 
-          <NuxtLink
-            v-if="column.footerHref && column.footerLabel"
-            :to="column.footerHref"
-            class="mega-panel__view-all"
-            @click="$emit('navigate')"
-          >
-            {{ column.footerLabel }}
-            <ArrowRight :size="16" aria-hidden="true" />
-          </NuxtLink>
-        </section>
-      </div>
-
-      <aside v-if="item.features?.length" class="mega-panel__features" aria-label="FDE">
-        <h2 v-if="item.featuresTitle">{{ item.featuresTitle }}</h2>
         <NuxtLink
-          v-for="feature in item.features"
-          :key="feature.title"
-          :to="feature.href"
-          class="mega-panel__feature"
+          v-if="column.footerHref && column.footerLabel"
+          :to="column.footerHref"
+          class="mega-panel__view-all"
           @click="$emit('navigate')"
         >
-          <component :is="feature.icon" :size="24" aria-hidden="true" />
-          <span>
-            <strong>{{ feature.title }}</strong>
-            <small>{{ feature.description }}</small>
-          </span>
-          <ArrowRight :size="18" aria-hidden="true" />
+          {{ column.footerLabel }}
+          <ArrowRight :size="16" aria-hidden="true" />
         </NuxtLink>
-      </aside>
-    </template>
+      </section>
+    </div>
+
+    <aside v-if="item.features?.length" class="mega-panel__features" aria-label="FDE">
+      <h2 v-if="item.featuresTitle">{{ item.featuresTitle }}</h2>
+      <NuxtLink
+        v-for="feature in item.features"
+        :key="feature.title"
+        :to="feature.href"
+        class="mega-panel__feature"
+        @click="$emit('navigate')"
+      >
+        <component :is="feature.icon" :size="24" aria-hidden="true" />
+        <span>
+          <strong>{{ feature.title }}</strong>
+          <small>{{ feature.description }}</small>
+        </span>
+        <ArrowRight :size="18" aria-hidden="true" />
+      </NuxtLink>
+    </aside>
   </div>
 </template>
 
@@ -104,7 +86,12 @@ function linksFor(column: NavColumn): NavLink[] {
 }
 
 .mega-panel--solutions {
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+}
+
+.mega-panel__columns--product,
+.mega-panel__columns--solutions {
+  min-height: 268px;
 }
 
 .mega-panel__columns {
@@ -112,26 +99,10 @@ function linksFor(column: NavColumn): NavLink[] {
   gap: 0;
 }
 
-.mega-panel__columns--product {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.mega-panel__columns--solutions {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .mega-panel__column {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  padding: 4px 30px 4px 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  margin-right: 30px;
-
-  &:last-child {
-    border-right: 0;
-    margin-right: 0;
-  }
 
   h2,
   h3 {
@@ -153,64 +124,6 @@ function linksFor(column: NavColumn): NavLink[] {
 
 .mega-panel__group {
   padding-top: 20px;
-}
-
-.mega-panel__link,
-.mega-panel__feature {
-  color: var(--dt-color-text);
-  transition:
-    background-color 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
-}
-
-.mega-panel__link {
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-  min-height: 58px;
-  border-radius: var(--dt-radius-sm);
-  padding: 10px 8px;
-
-  svg {
-    color: var(--dt-color-secondary);
-    margin-top: 2px;
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.055);
-    transform: translateX(2px);
-  }
-}
-
-.mega-panel__link--plain {
-  grid-template-columns: 1fr;
-  min-height: 30px;
-  padding: 5px 0;
-
-  &:hover {
-    background: transparent;
-    color: var(--dt-color-primary);
-  }
-}
-
-.mega-panel__link strong,
-.mega-panel__feature strong {
-  display: block;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 650;
-  line-height: 1.35;
-}
-
-.mega-panel__link small,
-.mega-panel__feature small {
-  display: block;
-  margin-top: 5px;
-  color: var(--dt-color-text-muted);
-  font-size: 12px;
-  line-height: 1.45;
 }
 
 .mega-panel__view-all {
@@ -249,9 +162,30 @@ function linksFor(column: NavColumn): NavLink[] {
   border-radius: var(--dt-radius-md);
   background: rgba(255, 255, 255, 0.035);
   padding: 18px;
+  color: var(--dt-color-text);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
 
   > svg {
     color: var(--dt-color-secondary);
+  }
+
+  strong {
+    display: block;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
+  small {
+    display: block;
+    margin-top: 5px;
+    color: var(--dt-color-text-muted);
+    font-size: 12px;
+    line-height: 1.45;
   }
 
   &:hover {

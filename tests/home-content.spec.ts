@@ -8,7 +8,8 @@ describe('home content contract', () => {
       'Why DeepTrols',
       '产品',
       '解决方案',
-      '服务',
+      'Token Hub',
+      '资源',
       '关于我们',
     ])
     expect(headerActions.map((item) => item.label)).toEqual(['GitHub', '语言切换', '登录OPS'])

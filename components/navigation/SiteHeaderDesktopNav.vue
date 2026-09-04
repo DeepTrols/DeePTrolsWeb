@@ -78,7 +78,7 @@ function hasMega(item: NavItem) {
   background: transparent;
   color: var(--dt-color-nav-text);
   outline: none;
-  padding: 8px 12px;
+  padding: 8px 14px;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
@@ -138,7 +138,7 @@ function hasMega(item: NavItem) {
 
 @media (min-width: 1280px) {
   .site-header__nav-button {
-    padding-inline: 16px;
+    padding-inline: 20px;
   }
 }
 

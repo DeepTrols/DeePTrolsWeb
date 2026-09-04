@@ -39,8 +39,16 @@ export function registerSolutionUseCaseVisualContracts() {
       '/solutions/healthcare',
     ]) {
       expect(data).toContain(route)
-      expect(navigation).toContain(route)
       expect(footer).toContain(route)
+    }
+
+    for (const route of [
+      '/solutions/manufacturing',
+      '/solutions/water',
+      '/solutions/energy',
+      '/solutions/compute',
+    ]) {
+      expect(navigation).toContain(route)
     }
 
     expect(data).toContain('solutionUseCaseSlugs')

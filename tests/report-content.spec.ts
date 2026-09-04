@@ -7,12 +7,11 @@ import { featuredReportResources, reportFilterTabs, reportHero, reportResources 
 const root = process.cwd()
 
 describe('report service page content contract', () => {
-  it('keeps the service navigation entry wired to the report route', () => {
-    const serviceFeatures = primaryNavigation.find((item) => item.label === '服务')?.features ?? []
-    const reportLink = serviceFeatures.find((feature) => feature.title === '白皮书 & 报告')
+  it('keeps the top-level resources navigation entry wired to the report route', () => {
+    const resourcesLink = primaryNavigation.find((item) => item.label === '资源')
 
-    expect(reportLink?.href).toBe('/resources/reports')
-    expect(reportLink?.description).toBe('AI 行业研究与工程实践参考。')
+    expect(resourcesLink?.href).toBe('/resources/reports')
+    expect(resourcesLink?.layout).toBeUndefined()
   })
 
   it('uses the required hero copy from report.md', () => {

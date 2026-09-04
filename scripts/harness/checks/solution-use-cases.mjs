@@ -10,6 +10,13 @@ const useCaseRoutes = [
   '/solutions/healthcare',
 ]
 
+const navigationRoutes = [
+  '/solutions/manufacturing',
+  '/solutions/water',
+  '/solutions/energy',
+  '/solutions/compute',
+]
+
 export function checkSolutionUseCaseContracts(ctx) {
   const {
     assert,
@@ -76,7 +83,10 @@ export function checkSolutionUseCaseContracts(ctx) {
   for (const route of useCaseRoutes) {
     assert(solutionUseCaseData.includes(route), `Solution use case data missing route ${route}.`)
     assert(solutionUseCasesDoc.includes(route), `Solution use case requirement document missing route ${route}.`)
-    assert(navigationData.includes(route), `Solution navigation missing route ${route}.`)
     assert(footerData.includes(route), `Footer use case links missing route ${route}.`)
+  }
+
+  for (const route of navigationRoutes) {
+    assert(navigationData.includes(route), `Solution navigation missing route ${route}.`)
   }
 }

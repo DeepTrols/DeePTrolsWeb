@@ -33,13 +33,26 @@ describe('solution use case pages content contract', () => {
     }
   })
 
-  it('keeps solution navigation links aligned with generated routes', () => {
+  it('keeps solution navigation cards aligned with generated routes', () => {
     const solutionColumns = primaryNavigation.find((item) => item.label === '解决方案')?.columns ?? []
     const useCaseLinks = solutionColumns.find((column) => column.title === '应用场景')?.links ?? []
 
-    expect(useCaseLinks.map((link) => ({ label: link.label, href: link.href }))).toEqual(
-      expectedUseCases.map((item) => ({ label: item.label, href: item.href })),
-    )
+    expect(useCaseLinks.map((link) => ({ label: link.label, href: link.href }))).toEqual([
+      { label: '智能制造解决方案', href: '/solutions/manufacturing' },
+      { label: '智慧储能解决方案', href: '/solutions/energy' },
+      { label: '智慧水利/水务解决方案', href: '/solutions/water' },
+      { label: '智慧教育解决方案', href: '/services/smart-education' },
+      { label: 'FDE解决方案', href: '/services/enterprise-ai-delivery' },
+      { label: '算电协同运营方案', href: '/solutions/compute' },
+      { label: '零碳园区智能化解决方案', href: '/services/zero-carbon-park' },
+      { label: 'AI+供应链解决方案', href: '/services/ai-supply-chain' },
+    ])
+
+    for (const link of useCaseLinks) {
+      if (link.href.startsWith('/solutions/')) {
+        expect(solutionUseCaseRouteHrefs).toContain(link.href)
+      }
+    }
   })
 
   it('keeps footer use case links pointing to generated pages', () => {
