@@ -15,6 +15,7 @@ export const requiredFiles = [
   'doc/tasks/review/TASK-011.2-solution-use-case-pages.md',
   'doc/tasks/review/TASK-012.1-p0-audit-fixes.md',
   'doc/tasks/review/TASK-013.1-global-navigation-amend.md',
+  'doc/tasks/review/TASK-013.2-global-width-header-layout.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',

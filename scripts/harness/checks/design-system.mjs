@@ -8,7 +8,7 @@ assert(!packageJson.includes('@types/three'), 'Package still contains @types/thr
 
 for (const token of [
   '--dt-color-bg: #151515',
-  '--dt-container: 80rem',
+  '--dt-container: 90rem',
   '.dt-button',
   '.dt-tab-list',
   '.dt-tab',
@@ -56,7 +56,7 @@ assert(sectionHeader.includes('slots.actions'), 'SectionHeader must support an a
 assert(sectionHeader.includes('section-heading--nowrap-subtitle'), 'SectionHeader nowrap mode must expose a desktop-wide wrapper class.')
 assert(sectionHeader.includes('max-width: none'), 'SectionHeader nowrap mode must remove the desktop max-width limit.')
 assert(sectionHeader.includes('class="section-heading dt-section-heading"'), 'SectionHeader must own the canonical section heading classes.')
-assert(sectionShell.includes('pb-32 lg:pb-44') && sectionShell.includes('container') && sectionShell.includes('max-w-[96rem]'), 'SectionShell must centralize section spacing and container widths.')
+assert(sectionShell.includes('pb-32 lg:pb-44') && sectionShell.includes('container') && sectionShell.includes('max-w-[90rem]'), 'SectionShell must centralize section spacing and container widths.')
 assert(baseCard.includes('NuxtLink') && baseCard.includes('dt-card--adaptive') && baseCard.includes('dt-card__accent'), 'BaseCard must centralize card shell, link semantics, accent, and adaptive height.')
 assert(iconBox.includes('dt-icon-box') && iconBox.includes('dt-icon-box--gradient'), 'IconBox must centralize icon shell classes and gradient tone.')
 assert(

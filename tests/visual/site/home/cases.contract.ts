@@ -19,7 +19,7 @@ export function registerHomeCasesVisualContracts() {
     expect(homeCases).toContain('CarouselControls')
     expect(homeCases).toContain('title-id="cases-title"')
     expect(homeCases).toContain('nowrap-subtitle')
-    expect(homeCases).toContain('max-width: 96rem')
+    expect(homeCases).toContain('max-width: 90rem')
     expect(homeCases).toContain('padding: 0 16px 128px')
     expect(homeCases).toContain('padding-bottom: 176px')
     expect(homeCases).toContain('font-size: 20px')

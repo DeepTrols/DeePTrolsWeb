@@ -30,7 +30,7 @@ const shellClasses = computed(() => [
 
 const containerClasses = computed(() => [
   props.container === 'default' && 'container',
-  props.container === 'wide' && 'mx-auto w-full max-w-[96rem] px-4',
+  props.container === 'wide' && 'mx-auto w-full max-w-[90rem] px-4',
 ])
 </script>
 

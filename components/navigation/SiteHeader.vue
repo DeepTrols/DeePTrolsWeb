@@ -133,7 +133,7 @@ onBeforeUnmount(() => {
   <header ref="headerRef" data-slot="root" class="site-header">
     <a class="skip-link" href="#main-content">跳到主要内容</a>
     <div class="site-header__main" @mouseenter="cancelClose" @mouseleave="scheduleCloseMega">
-      <div data-slot="container" class="container site-header__inner">
+      <div data-slot="container" class="site-header__inner">
         <div data-slot="left" class="site-header__left">
           <NuxtLink class="site-header__brand" to="/" aria-label="DeepTrols 首页" @focus="closeMega">
             <img src="/logo-while.svg" alt="" />
@@ -216,21 +216,34 @@ onBeforeUnmount(() => {
   height: 100%;
 }
 
-.site-header__inner.container {
+.site-header__inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
   height: 100%;
   gap: 12px;
-  padding-inline: 1rem;
+  padding-inline: 16px;
+
+  @media (min-width: 768px) {
+    padding-inline: 24px;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 32px;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 40px;
+  }
+  @media (min-width: 1536px) {
+    padding-inline: 48px;
+  }
 }
 
 .site-header__left {
   display: flex;
   align-items: center;
-  flex: 1 1 0;
-  gap: 16px;
+  flex: 0 1 auto;
   min-width: 0;
 }
 
@@ -263,9 +276,7 @@ onBeforeUnmount(() => {
 
 .mega-enter-active,
 .mega-leave-active {
-  transition:
-    opacity 150ms ease,
-    transform 150ms ease;
+  transition: opacity 150ms ease, transform 150ms ease;
 }
 
 .mega-enter-from,
@@ -274,25 +285,9 @@ onBeforeUnmount(() => {
   transform: translateY(-6px);
 }
 
-@media (min-width: 1280px) {
-  .site-header__left {
-    gap: 40px;
-  }
-}
-
 @media (max-width: 980px) {
   .site-header__inner {
-    display: flex;
     justify-content: space-between;
   }
-
-  .site-header__left {
-    flex: 0 1 auto;
-  }
-
-  .site-header__center {
-    display: none;
-  }
-
 }
 </style>

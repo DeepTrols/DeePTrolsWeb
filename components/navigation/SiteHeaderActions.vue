@@ -40,10 +40,8 @@ defineEmits<{
 .site-header__actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex: 1 1 0;
+  margin-left: auto;
   gap: 6px;
-  min-width: 0;
 }
 
 .site-header__icon-button {

@@ -47,8 +47,7 @@ function hasMega(item: NavItem) {
 .site-header__nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex: 0 1 auto;
+  margin-left: 48px;
   min-width: 0;
 }
 
@@ -78,7 +77,7 @@ function hasMega(item: NavItem) {
   background: transparent;
   color: var(--dt-color-nav-text);
   outline: none;
-  padding: 8px 14px;
+  padding: 8px 16px;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
@@ -130,15 +129,15 @@ function hasMega(item: NavItem) {
   }
 }
 
-@media (max-width: 1120px) {
+@media (min-width: 1280px) {
   .site-header__nav-button {
-    padding-inline: 12px;
+    padding-inline: 18px;
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1536px) {
   .site-header__nav-button {
-    padding-inline: 20px;
+    padding-inline: 22px;
   }
 }
 

@@ -82,7 +82,8 @@ function linksFor(column: NavColumn): NavLink[] {
   display: grid;
   gap: 32px;
   max-width: var(--dt-container);
-  padding: 30px 0 34px;
+  margin-inline: auto;
+  padding-block: 30px 34px;
 }
 
 .mega-panel--solutions {

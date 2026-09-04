@@ -100,10 +100,28 @@ function selectStory(index: number) {
 <style scoped lang="scss">
 .cases {
   width: 100%;
-  max-width: 96rem;
+  max-width: 90rem;
   margin: 0 auto;
   background: var(--dt-color-bg);
   padding: 0 16px 128px;
+}
+
+@media (min-width: 768px) {
+  .cases {
+    padding-inline: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .cases {
+    padding-inline: 40px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .cases {
+    padding-inline: 48px;
+  }
 }
 
 .cases__shell {
@@ -246,6 +264,7 @@ function selectStory(index: number) {
 @media (min-width: 1024px) {
   .cases {
     padding-bottom: 176px;
+    padding-inline: 32px;
   }
 
   .cases__inner {
