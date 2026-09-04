@@ -100,7 +100,7 @@ function selectStory(index: number) {
 <style scoped lang="scss">
 .cases {
   width: 100%;
-  max-width: 90rem;
+  max-width: 107.5rem;
   margin: 0 auto;
   background: var(--dt-color-bg);
   padding: 0 16px 128px;

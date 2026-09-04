@@ -220,8 +220,6 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 1600px;
-  margin-inline: auto;
   height: 100%;
   gap: 12px;
   padding-inline: 16px;

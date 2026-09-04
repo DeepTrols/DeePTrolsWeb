@@ -21,7 +21,7 @@ export function registerHomeDesignVisualContracts() {
     expect(tailwind).toContain('@utility bg-default')
     expect(tailwind).toContain('background-color: var(--dt-color-bg)')
     expect(tailwind).toContain('@utility border-default')
-    expect(tokens).toContain('--dt-container: 90rem')
+    expect(tokens).toContain('--dt-container: 107.5rem')
     expect(tokens).not.toContain('--dt-container-2xl')
     expect(tokens).toContain('--dt-color-bg: #151515')
     expect(tokens).toContain('--dt-color-text-highlighted: #ffffff')
