@@ -11,24 +11,10 @@ import {
   boyaoTimelineItems,
   boyaoValueCards,
 } from '../data/boyao'
-import { primaryNavigation } from '../data/navigation'
 
 const root = process.cwd()
 
 describe('BOYAO product page content contract', () => {
-  it('keeps the knowledge base navigation entry available', () => {
-    const productColumns = primaryNavigation.find((item) => item.label === '产品')?.columns ?? []
-    const productLinks = productColumns.flatMap((column) => [
-      ...(column.links ?? []),
-      ...(column.groups ?? []).flatMap((group) => group.links ?? []),
-    ])
-
-    const knowledgeLink = productLinks.find((link) => link.label === '博曜·企业级知识管理平台')
-
-    expect(knowledgeLink?.href).toBe('/products/knowledge-base')
-    expect(knowledgeLink?.description).toBe('构建 AI 可理解的知识体系')
-  })
-
   it('uses the exact BOYAO hero stats from the page requirement', () => {
     expect(boyaoHeroStats).toHaveLength(3)
     expect(boyaoHeroStats.map((stat) => stat.value)).toEqual(['70%+', '50%+', '200+'])

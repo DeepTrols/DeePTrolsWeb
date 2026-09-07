@@ -104,9 +104,11 @@
 
   img {
     width: auto;
-    height: 48px;
-    max-height: 48px;
+    height: 35px;
+    max-height: 35px;
     object-fit: contain;
+    position: relative;
+    top: 2.5px;
     opacity: 1;
   }
 }

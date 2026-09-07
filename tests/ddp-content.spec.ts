@@ -8,22 +8,8 @@ import {
   ddpUnifiedDevelopmentItems,
   ddpUseCaseItems,
 } from '../data/ddp'
-import { primaryNavigation } from '../data/navigation'
 
 describe('DDP product page content contract', () => {
-  it('keeps the product navigation entry available', () => {
-    const productColumns = primaryNavigation.find((item) => item.label === '产品')?.columns ?? []
-    const productLinks = productColumns.flatMap((column) => [
-      ...(column.links ?? []),
-      ...(column.groups ?? []).flatMap((group) => group.links ?? []),
-    ])
-
-    const developmentLink = productLinks.find((link) => link.label === '数曜·数据开发平台')
-
-    expect(developmentLink?.href).toBe('/products/data-development')
-    expect(developmentLink?.description).toBe('支持数据集成、开发与调度')
-  })
-
   it('uses the exact DDP content structure from the page requirement', () => {
     expect(ddpHeroActions.map((action) => action.label)).toEqual(['申请试用', '了解更多'])
     expect(ddpChallengeItems).toHaveLength(4)

@@ -35,9 +35,10 @@ describe('solution use case pages content contract', () => {
 
   it('keeps solution navigation cards aligned with generated routes', () => {
     const solutionColumns = primaryNavigation.find((item) => item.label === '解决方案')?.columns ?? []
-    const useCaseLinks = solutionColumns.find((column) => column.title === '应用场景')?.links ?? []
+    const solutionLinks = solutionColumns.flatMap((column) => column.links ?? [])
 
-    expect(useCaseLinks.map((link) => ({ label: link.label, href: link.href }))).toEqual([
+    expect(solutionColumns.map((column) => column.title)).toEqual(['应用场景', '行业方案'])
+    expect(solutionLinks.map((link) => ({ label: link.label, href: link.href }))).toEqual([
       { label: '智能制造解决方案', href: '/solutions/manufacturing' },
       { label: '智慧储能解决方案', href: '/solutions/energy' },
       { label: '智慧水利/水务解决方案', href: '/solutions/water' },
@@ -48,7 +49,7 @@ describe('solution use case pages content contract', () => {
       { label: 'AI+供应链解决方案', href: '/services/ai-supply-chain' },
     ])
 
-    for (const link of useCaseLinks) {
+    for (const link of solutionLinks) {
       if (link.href.startsWith('/solutions/')) {
         expect(solutionUseCaseRouteHrefs).toContain(link.href)
       }

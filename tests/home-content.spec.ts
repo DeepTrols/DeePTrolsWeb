@@ -1,32 +1,43 @@
 import { describe, expect, it } from 'vitest'
-import { headerActions, primaryNavigation } from '../data/navigation'
+import { primaryNavigation } from '../data/navigation'
 import { customerLogos, customerStories, deliverables, ecosystemCards, productCards, solutions } from '../data/home'
 
 describe('home content contract', () => {
   it('defines the primary navigation required by product documents', () => {
     expect(primaryNavigation.map((item) => item.label)).toEqual([
       'Why DeepTrols',
-      '产品',
+      '核心产品',
       '解决方案',
       'Token Hub',
       '资源',
       '关于我们',
     ])
-    expect(headerActions.map((item) => item.label)).toEqual(['GitHub', '语言切换', '登录OPS'])
   })
 
-  it('keeps the product menu aligned with the data product taxonomy', () => {
-    const productColumns = primaryNavigation.find((item) => item.label === '产品')?.columns ?? []
+  it('keeps the product menu aligned with the DeepCtrls-style core mega copy', () => {
+    const productColumns = primaryNavigation.find((item) => item.label === '核心产品')?.columns ?? []
     const productLinks = productColumns.flatMap((column) => [
       ...(column.links ?? []),
       ...(column.groups ?? []).flatMap((group) => group.links ?? []),
     ])
 
     expect(productLinks.some((link) => link.label === '数曜·数据资产管理平台')).toBe(false)
-    expect(productLinks.find((link) => link.label === '数曜·数据要素监管平台')).toMatchObject({
-      description: '支撑数据要素合规监管',
-      href: '/products/data-element-regulation',
+    expect(primaryNavigation.find((item) => item.label === '核心产品')).toMatchObject({
+      href: '/products',
+      layout: 'product',
+      megaTitle: '核心技术',
     })
+    expect(productColumns.map((column) => column.title)).toEqual(['数曜 ｜ 数智基建', '数曜·数据治理平台'])
+    expect(productColumns.map((column) => column.description)).toEqual([
+      '构建面向 AI 的企业数据基础设施',
+      '构建高质量企业数据体系',
+    ])
+    expect(productColumns[0]?.links?.find((link) => link.label === '博曜 ｜ 知识中枢')?.description).toBe(
+      '让企业知识可沉淀、可理解、可调用',
+    )
+    expect(productLinks.find((link) => link.label === '核心产品')?.href).toBe('/products')
+    expect(productLinks.find((link) => link.label === '智曜 ｜ 智能引擎')?.description).toBe('汇聚算力与模型能力，驱动企业智能应用')
+    expect(productLinks.find((link) => link.label === '探曜 ｜ 智联万物')?.description).toBe('连接设备与场景，让 AI 感知真实世界')
   })
 
   it('keeps required homepage sections populated', () => {

@@ -19,10 +19,10 @@
 ### 导航示例
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│            logo    Why DeepTrols  产品  解决方案  Token Hub  资源  关于我们                            [免费获取专属方案] [CN ｜ EN]                                │
+│            logo    Why DeepTrols  核心产品  解决方案  Token Hub  资源  关于我们                          [免费获取专属方案] [CN ｜ EN]                                │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
-Header logo 地址：默认暗色 Hero 顶部使用 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页使用 `/images/brand/deeptrols-logo-black.png`。Footer logo 当前宽度为 `240px`。
+Header logo 地址：默认暗色 Hero 顶部使用 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页使用 `/images/brand/deeptrols-logo-black.png`，Header logo 高度为 `35px`。Footer logo 当前宽度为 `240px`。
 
 Header 结构与交互必须与 `doc/product/NAVIGATION.md` 保持一致：主导航 DOM 为 `div style="position:relative;" > ul > li > button`，button 内不渲染 SVG；右侧为「免费获取专属方案」与「CN ｜ EN」。
 ### banner示例

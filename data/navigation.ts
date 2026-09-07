@@ -2,16 +2,10 @@ import {
   BatteryCharging,
   BookOpen,
   Bot,
-  Boxes,
-  Cpu,
-  Database,
   Droplets,
   Factory,
-  Globe2,
   GraduationCap,
-  HardDrive,
   Leaf,
-  Network,
   PlugZap,
   RadioTower,
   Rocket,
@@ -30,6 +24,7 @@ export interface NavLink {
 export interface NavColumn {
   title: string
   subtitle?: string
+  description?: string
   href?: string
   links?: NavLink[]
   groups?: NavColumn[]
@@ -48,6 +43,7 @@ export interface NavItem {
   label: string
   href: string
   layout?: 'product' | 'solutions'
+  megaTitle?: string
   columns?: NavColumn[]
   features?: NavFeature[]
   featuresTitle?: string
@@ -59,84 +55,27 @@ export const primaryNavigation: NavItem[] = [
     href: '/why-deeptrols',
   },
   {
-    label: '产品',
+    label: '核心产品',
     href: '/products',
     layout: 'product',
+    megaTitle: '核心技术',
     columns: [
       {
-        title: '数曜',
-        subtitle: '数智基建',
-        href: '/products',
+        title: '数曜 ｜ 数智基建',
+        description: '构建面向 AI 的企业数据基础设施',
+        href: '/products/data-governance',
         links: [
-          {
-            label: '数曜·数据治理平台',
-            description: '构建高质量企业数据体系',
-            href: '/products/data-governance',
-            icon: Database,
-          },
-          {
-            label: '数曜·数据标签平台',
-            description: '为 AI 提供高质量训练数据',
-            href: '/products/data-labeling',
-            icon: Boxes,
-          },
-          {
-            label: '数曜·数据开发平台',
-            description: '支持数据集成、开发与调度',
-            href: '/products/data-development',
-            icon: Network,
-          },
-          {
-            label: '数曜·数据要素监管平台',
-            description: '支撑数据要素合规监管',
-            href: '/products/data-element-regulation',
-            icon: HardDrive,
-          },
+          { label: '博曜 ｜ 知识中枢', description: '让企业知识可沉淀、可理解、可调用', href: '/products/knowledge-base', icon: BookOpen },
         ],
       },
       {
-        title: '博曜',
-        subtitle: '知识中枢',
-        href: '/products/knowledge-base',
+        title: '数曜·数据治理平台',
+        description: '构建高质量企业数据体系',
+        href: '/products/data-governance',
         links: [
-          {
-            label: '博曜·企业级知识管理平台',
-            description: '构建 AI 可理解的知识体系',
-            href: '/products/knowledge-base',
-            icon: BookOpen,
-          },
-        ],
-      },
-      {
-        title: '智曜',
-        subtitle: '智能引擎',
-        href: '/products/agentos',
-        links: [
-          {
-            label: '智曜·AgentOS',
-            description: 'Agent基础设施平台',
-            href: '/products/agentos',
-            icon: Bot,
-          },
-        ],
-      },
-      {
-        title: '探曜',
-        subtitle: '智联万物',
-        href: '/products/ai-iot',
-        links: [
-          {
-            label: '探曜·AI物联感知平台',
-            description: '实现设备、数据与智能应用互联',
-            href: '/products/ai-iot',
-            icon: RadioTower,
-          },
-          {
-            label: 'Device Agent',
-            description: '具备自主执行能力的设备智能体',
-            href: '/products/device-agent',
-            icon: Cpu,
-          },
+          { label: '核心产品', href: '/products' },
+          { label: '智曜 ｜ 智能引擎', description: '汇聚算力与模型能力，驱动企业智能应用', href: '/products/agentos', icon: Bot },
+          { label: '探曜 ｜ 智联万物', description: '连接设备与场景，让 AI 感知真实世界', href: '/products/ai-iot', icon: RadioTower },
         ],
       },
     ],
@@ -145,6 +84,7 @@ export const primaryNavigation: NavItem[] = [
     label: '解决方案',
     href: '/solutions',
     layout: 'solutions',
+    megaTitle: '解决方案',
     columns: [
       {
         title: '应用场景',
@@ -173,6 +113,11 @@ export const primaryNavigation: NavItem[] = [
             href: '/services/smart-education',
             icon: GraduationCap,
           },
+        ],
+      },
+      {
+        title: '行业方案',
+        links: [
           {
             label: 'FDE解决方案',
             description: '深入业务现场，让AI真正落地',
@@ -214,21 +159,5 @@ export const primaryNavigation: NavItem[] = [
   {
     label: '关于我们',
     href: '/about_us',
-  },
-]
-
-export const headerActions = [
-  {
-    label: 'GitHub',
-    href: 'https://github.com',
-  },
-  {
-    label: '语言切换',
-    href: '/en',
-    icon: Globe2,
-  },
-  {
-    label: '登录OPS',
-    href: '/console',
   },
 ]

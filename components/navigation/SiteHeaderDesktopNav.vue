@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRoute } from '#app'
 import type { NavItem } from '~/data/navigation'
 
 defineProps<{
@@ -16,6 +17,16 @@ defineEmits<{
 function hasMega(item: NavItem) {
   return Boolean(item.columns?.length || item.features?.length)
 }
+
+const route = useRoute()
+
+function isActiveItem(item: NavItem) {
+  if (item.href === '/') {
+    return route.path === item.href
+  }
+
+  return route.path === item.href || route.path.startsWith(`${item.href}/`)
+}
 </script>
 
 <template>
@@ -25,7 +36,7 @@ function hasMega(item: NavItem) {
         <li v-for="(item, index) in items" :key="item.label" class="site-header__nav-item">
           <button
             class="site-header__nav-button"
-            :class="{ 'direct-link': !hasMega(item) }"
+            :class="{ 'direct-link': !hasMega(item), active: isActiveItem(item) }"
             type="button"
             :data-state="activeIndex === index ? 'open' : 'closed'"
             :aria-expanded="hasMega(item) ? activeIndex === index : undefined"
@@ -37,6 +48,7 @@ function hasMega(item: NavItem) {
           >
             <span>{{ item.label }}</span>
           </button>
+          <span v-if="activeIndex === index || isActiveItem(item)" class="site-header__nav-underline" aria-hidden="true"></span>
         </li>
       </ul>
     </div>
@@ -47,6 +59,7 @@ function hasMega(item: NavItem) {
 .site-header__nav {
   display: flex;
   align-items: center;
+  flex: 0 1 auto;
   margin-left: 0;
   min-width: 0;
 }
@@ -54,6 +67,8 @@ function hasMega(item: NavItem) {
 .site-header__nav-list {
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
+  gap: 0;
   min-width: 0;
   margin: 0;
   padding: 0;
@@ -62,6 +77,11 @@ function hasMega(item: NavItem) {
 }
 
 .site-header__nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--dt-header-height);
+  flex: 0 0 auto;
   min-width: 0;
   padding: 0;
 }
@@ -70,6 +90,8 @@ function hasMega(item: NavItem) {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
   isolation: isolate;
   width: 121px;
   height: 37px;
@@ -96,13 +118,12 @@ function hasMega(item: NavItem) {
   }
 
   span {
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   &:hover,
   &:focus-visible,
+  &.active,
   &[data-state="open"] {
     color: var(--dt-color-primary);
   }
@@ -122,6 +143,17 @@ function hasMega(item: NavItem) {
   &[data-state="open"]::before {
     background: transparent;
   }
+}
+
+.site-header__nav-underline {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 64px;
+  height: 1px;
+  background: #1e44e0;
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 @media (min-width: 1280px) {

@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, existsSync, join, root, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeCases, homeCaseSlide, homeInsights, homeSolutions, productSystem, homeProductSystemFlow, homeProductSystemMobileFlow, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData } = ctx
+  const { assert, existsSync, join, root, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeCases, homeCaseSlide, homeInsights, homeSolutions, productSystem, homeProductSystemFlow, homeProductSystemMobileFlow, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -127,6 +127,7 @@ assert(
     header.includes('/images/brand/deeptrols-logo-white.png') &&
     header.includes('/images/brand/deeptrols-logo-black.png') &&
     header.includes('has-mega') &&
+    headerDesktopNav.includes('site-header__nav-underline') &&
     headerActions.includes('免费获取专属方案') &&
     headerActions.includes('site-header__lang-switch') &&
     !headerActions.includes('GitHub') &&
@@ -135,10 +136,19 @@ assert(
   'Header must remain split into desktop nav, actions, menu button, and mobile nav subcomponents with the DeepCtrls CTA/language action set.',
 )
 assert(
+  navigationData.includes("label: '核心产品'") &&
+    navigationData.includes("megaTitle: '核心技术'") &&
+    navigationData.includes('构建面向 AI 的企业数据基础设施') &&
+    navigationData.includes('汇聚算力与模型能力，驱动企业智能应用') &&
+    navigationData.includes('连接设备与场景，让 AI 感知真实世界') &&
+    !navigationData.includes("label: '产品'"),
+  'Navigation data must use the DeepCtrls-aligned 核心产品 label and requested product mega copy.',
+)
+assert(
   siteHeaderStyles.includes('z-index: 1000') &&
     siteHeaderStyles.includes('padding-right: 61px') &&
     siteHeaderStyles.includes('padding-left: 43px') &&
-    siteHeaderStyles.includes('height: 48px') &&
+    siteHeaderStyles.includes('height: 35px') &&
     siteHeaderStyles.includes('background: transparent') &&
     siteHeaderStyles.includes('background: rgba(0, 0, 0, 0.4)') &&
     siteHeaderStyles.includes('background: rgba(255, 255, 255, 0.98)'),
@@ -147,10 +157,18 @@ assert(
 assert(
   megaMenu.includes('MegaPanelProduct') &&
     megaMenu.includes("item.layout === 'product' || item.layout === 'solutions'") &&
-    megaPanelProduct.includes('mega-panel__category') &&
+    megaPanelProduct.includes('mega-shell') &&
+    megaPanelProduct.includes('mega-title') &&
+    megaPanelProduct.includes('mega-cols') &&
+    megaPanelProduct.includes('mega-col') &&
+    megaPanelProduct.includes('mega-entry') &&
+    megaPanelProduct.includes('font-size: 24px') &&
+    megaPanelProduct.includes('line-height: 35px') &&
+    megaPanelProduct.includes('font-size: 14px') &&
+    megaPanelProduct.includes('line-height: 16px') &&
     !megaMenu.includes('MegaPanelSolutions') &&
     !megaMenu.includes('MegaPanelServices'),
-  'MegaMenu product/solutions layouts must share the product panel subcomponent and the legacy solutions/services panels must stay removed.',
+  'MegaMenu product/solutions layouts must share the DeepCtrls text-menu panel and keep legacy solutions/services panels removed.',
 )
 assert(footerSubscribe.includes('dt-button dt-button--primary dt-button--lg'), 'Footer subscribe button must reuse dt-button classes.')
 assert(

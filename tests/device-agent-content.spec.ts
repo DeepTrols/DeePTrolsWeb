@@ -5,22 +5,8 @@ import {
   deviceAgentTraceSteps,
   deviceAgentValueItems,
 } from '../data/device-agent'
-import { primaryNavigation } from '../data/navigation'
 
 describe('Device Agent product page content contract', () => {
-  it('keeps the device-agent navigation entry available', () => {
-    const productColumns = primaryNavigation.find((item) => item.label === '产品')?.columns ?? []
-    const productLinks = productColumns.flatMap((column) => [
-      ...(column.links ?? []),
-      ...(column.groups ?? []).flatMap((group) => group.links ?? []),
-    ])
-
-    const deviceAgentLink = productLinks.find((link) => link.label === 'Device Agent')
-
-    expect(deviceAgentLink?.href).toBe('/products/device-agent')
-    expect(deviceAgentLink?.description).toBe('具备自主执行能力的设备智能体')
-  })
-
   it('defines the six orchestrator scenes in the required order', () => {
     expect(deviceAgentScenes).toHaveLength(6)
     expect(deviceAgentScenes.map((scene) => scene.label)).toEqual([

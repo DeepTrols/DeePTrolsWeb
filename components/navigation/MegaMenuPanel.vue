@@ -18,7 +18,7 @@ function linksFor(column: NavColumn): NavLink[] {
 </script>
 
 <template>
-  <div class="container mega-panel" :class="`mega-panel--${item.layout ?? 'default'}`">
+  <div class="mega-panel" :class="`mega-panel--${item.layout ?? 'default'}`">
     <MegaPanelProduct v-if="item.layout === 'product' || item.layout === 'solutions'" :item="item" @navigate="$emit('navigate')" />
 
     <div v-else-if="item.columns?.length" class="mega-panel__columns">
@@ -76,11 +76,11 @@ function linksFor(column: NavColumn): NavLink[] {
 </template>
 
 <style scoped lang="scss">
-.mega-panel.container {
+.mega-panel {
+  --nav-x: 220px;
+
   display: grid;
   gap: 32px;
-  max-width: var(--dt-container);
-  margin-inline: auto;
   padding-block: 45px 75px;
 }
 
@@ -192,6 +192,12 @@ function linksFor(column: NavColumn): NavLink[] {
 @media (max-width: 980px) {
   .mega-panel {
     display: none;
+  }
+}
+
+@media (max-width: 1439px) {
+  .mega-panel {
+    --nav-x: 146px;
   }
 }
 </style>

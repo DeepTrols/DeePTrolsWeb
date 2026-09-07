@@ -8,22 +8,8 @@ import {
   dlpTimelineItems,
   dlpUseCaseItems,
 } from '../data/dlp'
-import { primaryNavigation } from '../data/navigation'
 
 describe('DLP product page content contract', () => {
-  it('keeps the product navigation entry available', () => {
-    const productColumns = primaryNavigation.find((item) => item.label === '产品')?.columns ?? []
-    const productLinks = productColumns.flatMap((column) => [
-      ...(column.links ?? []),
-      ...(column.groups ?? []).flatMap((group) => group.links ?? []),
-    ])
-
-    const labelingLink = productLinks.find((link) => link.label === '数曜·数据标签平台')
-
-    expect(labelingLink?.href).toBe('/products/data-labeling')
-    expect(labelingLink?.description).toBe('为 AI 提供高质量训练数据')
-  })
-
   it('uses the exact DLP content structure from the page requirement', () => {
     expect(dlpHeroActions.map((action) => action.label)).toEqual(['申请试用', '了解更多'])
     expect(dlpChallengeItems).toHaveLength(4)

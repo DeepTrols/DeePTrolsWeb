@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ArrowRight } from '@lucide/vue'
-import MegaPanelNavLink from '~/components/navigation/MegaPanelNavLink.vue'
+import { computed } from 'vue'
+import { useRoute } from '#app'
 import type { NavColumn, NavItem, NavLink } from '~/data/navigation'
 
-defineProps<{
+const props = defineProps<{
   item: NavItem
 }>()
 
@@ -11,126 +11,178 @@ defineEmits<{
   navigate: []
 }>()
 
+const route = useRoute()
+const megaTitle = computed(() => props.item.megaTitle ?? props.item.label)
+const columns = computed(() => props.item.columns ?? [])
+
 function linksFor(column: NavColumn): NavLink[] {
   return column.links ?? []
 }
 
-function columnSpanClass(column: NavColumn): string {
-  const span = Math.min(Math.max(linksFor(column).length, 1), 4)
-  return `mega-panel__column--span-${span}`
+function titleFor(column: NavColumn): string {
+  return column.subtitle ? `${column.title} ｜ ${column.subtitle}` : column.title
+}
+
+function entriesFor(column: NavColumn): NavLink[] {
+  const entries: NavLink[] = []
+
+  if (column.href || column.description) {
+    entries.push({
+      label: titleFor(column),
+      description: column.description,
+      href: column.href ?? props.item.href,
+    })
+  }
+
+  return [...entries, ...linksFor(column)]
+}
+
+function isActiveHref(href: string): boolean {
+  if (href === props.item.href) {
+    return route.path === href
+  }
+
+  return route.path === href || route.path.startsWith(`${href}/`)
 }
 </script>
 
 <template>
-  <div class="mega-panel__columns mega-panel__columns--product">
-    <section
-      v-for="column in item.columns"
-      :key="column.title"
-      class="mega-panel__column"
-      :class="columnSpanClass(column)"
-    >
-      <NuxtLink
-        v-if="column.subtitle"
-        :to="column.href ?? item.href"
-        class="mega-panel__category"
-        @click="$emit('navigate')"
-      >
-        <h2>{{ column.title }} ｜ {{ column.subtitle }}</h2>
-        <ArrowRight :size="14" aria-hidden="true" />
-      </NuxtLink>
-      <h2 v-else>{{ column.title }}</h2>
+  <div class="mega-shell">
+    <NuxtLink :to="item.href" class="mega-title" @click="$emit('navigate')">
+      <span>{{ megaTitle }}</span>
+      <span class="mega-chevron" aria-hidden="true">&gt;</span>
+    </NuxtLink>
 
-      <div class="mega-panel__link-list">
-        <MegaPanelNavLink
-          v-for="link in linksFor(column)"
-          :key="link.label"
-          :link="link"
-          @navigate="$emit('navigate')"
-        />
-      </div>
-    </section>
+    <div class="mega-cols">
+      <section v-for="column in columns" :key="column.title" class="mega-col">
+        <NuxtLink
+          v-for="entry in entriesFor(column)"
+          :key="entry.label"
+          :to="entry.href"
+          class="mega-entry"
+          :class="{ 'is-active': isActiveHref(entry.href) }"
+          @click="$emit('navigate')"
+        >
+          <span class="mega-entry-title">
+            <span>{{ entry.label }}</span>
+            <span class="mega-chevron" aria-hidden="true">&gt;</span>
+          </span>
+          <span v-if="entry.description" class="mega-entry-desc">{{ entry.description }}</span>
+        </NuxtLink>
+      </section>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.mega-panel__columns--product {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  column-gap: 16px;
-  row-gap: 26px;
-}
-
-.mega-panel__column {
+.mega-shell {
   display: flex;
-  flex-direction: column;
-  min-height: 100%;
-
-  > h2 {
-    margin: 0;
-    color: var(--dt-color-text-highlighted);
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 0;
-    line-height: 1.4;
-  }
+  align-items: flex-start;
+  padding-left: var(--nav-x);
 }
 
-.mega-panel__column--span-1 {
-  grid-column: span 1;
-}
-
-.mega-panel__column--span-2 {
-  grid-column: span 2;
-}
-
-.mega-panel__column--span-3 {
-  grid-column: span 3;
-}
-
-.mega-panel__column--span-4 {
-  grid-column: span 4;
-}
-
-.mega-panel__category {
+.mega-title {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  color: var(--dt-color-text-highlighted);
-  transition: color 180ms ease;
+  flex: 0 0 auto;
+  width: 204px;
+  gap: 24px;
+  color: #000000;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 35px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 200ms ease;
 
-  h2 {
-    margin: 0;
-    color: inherit;
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 0;
-    line-height: 1.4;
-  }
-
-  svg {
-    transition: transform 180ms ease;
-  }
-
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: var(--dt-color-primary);
+  }
+}
 
-    svg {
-      transform: translateX(2px);
+.mega-chevron {
+  flex: 0 0 auto;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.mega-cols {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mega-col {
+  position: relative;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 428px;
+  padding-left: 72px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(180deg, #ffffff, #d8dee5 50%, #ffffff);
+  }
+}
+
+.mega-entry {
+  display: block;
+  height: 61px;
+  margin-bottom: 30px;
+  color: #000000;
+  text-decoration: none;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover,
+  &:focus-visible,
+  &.is-active {
+    .mega-entry-title {
+      color: #1e44e0;
     }
   }
 }
 
-.mega-panel__link-list {
-  display: grid;
-  gap: 16px;
-  margin-top: 16px;
+.mega-entry-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  color: #000000;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 35px;
+  white-space: nowrap;
+  transition: color 200ms ease;
 }
 
-.mega-panel__column--span-2 .mega-panel__link-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.mega-entry-desc {
+  display: block;
+  margin-top: 10px;
+  color: #555555;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  white-space: nowrap;
 }
 
-.mega-panel__column--span-4 .mega-panel__link-list {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+@media (max-width: 1439px) {
+  .mega-col {
+    width: 360px;
+    padding-left: 52px;
+  }
+}
+
+@media (max-width: 1260px) {
+  .mega-shell {
+    display: none;
+  }
 }
 </style>
