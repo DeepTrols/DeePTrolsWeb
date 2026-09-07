@@ -127,6 +127,7 @@ assert(
     header.includes('/images/brand/deeptrols-logo-white.png') &&
     header.includes('/images/brand/deeptrols-logo-black.png') &&
     header.includes('has-mega') &&
+    header.includes('is-in-hero') &&
     headerDesktopNav.includes('site-header__nav-underline') &&
     headerActions.includes('免费获取专属方案') &&
     headerActions.includes('site-header__lang-switch') &&
@@ -151,7 +152,8 @@ assert(
     siteHeaderStyles.includes('height: 35px') &&
     siteHeaderStyles.includes('background: transparent') &&
     siteHeaderStyles.includes('background: rgba(0, 0, 0, 0.4)') &&
-    siteHeaderStyles.includes('background: rgba(255, 255, 255, 0.98)'),
+    siteHeaderStyles.includes('background: rgba(255, 255, 255, 0.98)') &&
+    siteHeaderStyles.includes('is-in-hero'),
   'Header global SCSS must preserve the DeepCtrls fixed transparent/dark-hover/white-mega visual states.',
 )
 assert(
@@ -162,6 +164,9 @@ assert(
     megaPanelProduct.includes('mega-cols') &&
     megaPanelProduct.includes('mega-col') &&
     megaPanelProduct.includes('mega-entry') &&
+    megaPanelProduct.includes('mega-col--categories') &&
+    megaPanelProduct.includes('mega-col--links') &&
+    megaPanelProduct.includes('activeColumn') &&
     megaPanelProduct.includes('mega-solutions') &&
     megaPanelProduct.includes('grid-template-columns: repeat(4, minmax(0, 1fr))') &&
     megaPanelProduct.includes('mega-hot-tag') &&

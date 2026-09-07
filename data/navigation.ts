@@ -65,17 +65,39 @@ export const primaryNavigation: NavItem[] = [
         description: '构建面向 AI 的企业数据基础设施',
         href: '/products/data-governance',
         links: [
-          { label: '博曜 ｜ 知识中枢', description: '让企业知识可沉淀、可理解、可调用', href: '/products/knowledge-base', icon: BookOpen },
+          { label: '数曜·数据治理平台', description: '构建高质量企业数据体系', href: '/products/data-governance' },
+          { label: '数曜·数据标签平台', description: '为AI提供高质量训练数据', href: '/products/data-labeling' },
+          { label: '数曜·数据开发平台', description: '支持数据集成、开发与调度', href: '/products/data-development' },
+          { label: '数曜·数据要素监管平台', description: '支撑数据要素合规监管', href: '/products/data-element-regulation' },
         ],
       },
       {
-        title: '数曜·数据治理平台',
-        description: '构建高质量企业数据体系',
-        href: '/products/data-governance',
+        title: '博曜 ｜ 知识中枢',
+        description: '让企业知识可沉淀、可理解、可调用',
+        href: '/products/knowledge-base',
         links: [
-          { label: '核心产品', href: '/products' },
-          { label: '智曜 ｜ 智能引擎', description: '汇聚算力与模型能力，驱动企业智能应用', href: '/products/agentos', icon: Bot },
-          { label: '探曜 ｜ 智联万物', description: '连接设备与场景，让 AI 感知真实世界', href: '/products/ai-iot', icon: RadioTower },
+          { label: '博曜·企业级知识管理平台', description: '构建AI可理解的知识体系', href: '/products/knowledge-base', icon: BookOpen },
+        ],
+      },
+      {
+        title: '核心产品',
+        href: '/products',
+      },
+      {
+        title: '智曜 ｜ 智能引擎',
+        description: '汇聚算力与模型能力，驱动企业智能应用',
+        href: '/products/agentos',
+        links: [
+          { label: '智曜·AgentOS', description: 'Agent基础设施平台', href: '/products/agentos', icon: Bot },
+        ],
+      },
+      {
+        title: '探曜 ｜ 智联万物',
+        description: '连接设备与场景，让 AI 感知真实世界',
+        href: '/products/ai-iot',
+        links: [
+          { label: '探曜·AI物联感知平台', description: '实现设备、数据与智能应用互联', href: '/products/ai-iot', icon: RadioTower },
+          { label: 'Device Agent', description: '具备自主执行能力的设备智能体', href: '/products/device-agent' },
         ],
       },
     ],

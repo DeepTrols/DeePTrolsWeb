@@ -16,15 +16,15 @@ const root = process.cwd()
 describe('TANYAO product page content contract', () => {
   it('keeps the ai-iot navigation entry available', () => {
     const productColumns = primaryNavigation.find((item) => item.label === '核心产品')?.columns ?? []
-    const productLinks = productColumns.flatMap((column) => [
-      ...(column.links ?? []),
-      ...(column.groups ?? []).flatMap((group) => group.links ?? []),
-    ])
+    const productLinks = productColumns.flatMap((column) => column.links ?? [])
 
-    const tanyaoLink = productLinks.find((link) => link.label === '探曜 ｜ 智联万物')
+    const tanyaoColumn = productColumns.find((column) => column.title === '探曜 ｜ 智联万物')
+    const tanyaoLink = productLinks.find((link) => link.label === '探曜·AI物联感知平台')
 
+    expect(tanyaoColumn?.href).toBe('/products/ai-iot')
+    expect(tanyaoColumn?.description).toBe('连接设备与场景，让 AI 感知真实世界')
     expect(tanyaoLink?.href).toBe('/products/ai-iot')
-    expect(tanyaoLink?.description).toBe('连接设备与场景，让 AI 感知真实世界')
+    expect(tanyaoLink?.description).toBe('实现设备、数据与智能应用互联')
   })
 
   it('uses the exact TANYAO hero stats from the page requirement', () => {

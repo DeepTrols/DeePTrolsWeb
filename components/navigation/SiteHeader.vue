@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { navigateTo, useRoute } from '#app'
 import MegaMenuPanel from '~/components/navigation/MegaMenuPanel.vue'
 import SiteHeaderActions from '~/components/navigation/SiteHeaderActions.vue'
@@ -12,13 +12,16 @@ import type { NavItem } from '~/data/navigation'
 const activeIndex = ref<number | null>(null)
 const isMobileOpen = ref(false)
 const isAtTop = ref(true)
+const isInHero = ref(false)
 const isHeaderHovering = ref(false)
 const headerRef = ref<HTMLElement | null>(null)
 const closeTimer = ref<ReturnType<typeof setTimeout> | null>(null)
 const route = useRoute()
 const activeItem = computed(() => (activeIndex.value === null ? undefined : primaryNavigation[activeIndex.value]))
 const isHomeRoute = computed(() => route.path === '/')
-const shouldUseDarkLogo = computed(() => Boolean(activeItem.value) || isMobileOpen.value || !isHomeRoute.value || !isAtTop.value)
+const shouldUseDarkLogo = computed(
+  () => Boolean(activeItem.value) || isMobileOpen.value || !isHomeRoute.value || (!isAtTop.value && !isInHero.value),
+)
 const headerLogoSrc = computed(() =>
   shouldUseDarkLogo.value ? '/images/brand/deeptrols-logo-black.png' : '/images/brand/deeptrols-logo-white.png',
 )
@@ -26,6 +29,7 @@ const headerClasses = computed(() => ({
   'is-home': isHomeRoute.value,
   'is-dark-hero': isHomeRoute.value,
   'is-at-top': isAtTop.value,
+  'is-in-hero': isInHero.value,
   'is-scrolled': !isAtTop.value,
   'is-hovering': isHeaderHovering.value,
   'has-mega': Boolean(activeItem.value),
@@ -86,8 +90,19 @@ function handleHeaderMouseLeave() {
   scheduleCloseMega()
 }
 
+function isWithinHeroRegion() {
+  const hero = document.querySelector<HTMLElement>('.home-hero')
+  if (!hero) {
+    return false
+  }
+
+  const headerHeight = headerRef.value?.offsetHeight ?? 0
+  return window.scrollY + headerHeight < hero.offsetHeight
+}
+
 function updateScrollState() {
   isAtTop.value = window.scrollY <= 4
+  isInHero.value = isHomeRoute.value && isWithinHeroRegion()
 }
 
 async function handleNavClick(item: NavItem, index: number) {
@@ -144,17 +159,26 @@ watch(isMobileOpen, (value) => {
   }
 })
 
+watch(
+  () => route.path,
+  () => {
+    nextTick(updateScrollState)
+  },
+)
+
 onMounted(() => {
   updateScrollState()
   window.addEventListener('keydown', handleKeydown)
   window.addEventListener('pointerdown', handlePointerDown)
   window.addEventListener('scroll', updateScrollState, { passive: true })
+  window.addEventListener('resize', updateScrollState)
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleKeydown)
   window.removeEventListener('pointerdown', handlePointerDown)
   window.removeEventListener('scroll', updateScrollState)
+  window.removeEventListener('resize', updateScrollState)
   cancelClose()
   if (import.meta.client) {
     document.body.classList.remove('menu-open')

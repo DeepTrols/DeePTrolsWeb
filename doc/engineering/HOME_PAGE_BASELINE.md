@@ -22,7 +22,7 @@
 2. 全站内容区默认参考 DeepCtrls 的横向 gutter 节奏：`--dt-page-gutter: clamp(48px, 13.23vw, 254px)`，`--dt-container: calc(100% - (var(--dt-page-gutter) * 2))`，容器不再使用固定 `1200px` 上限；Hero 文案区使用 `--dt-hero-gutter: clamp(48px, 10.42vw, 200px)`。
 3. 常规页面 Hero 外层 section 不写局部 padding，内部 `.container` 使用 Tailwind v4 utility `pt-[112px] pb-20 lg:pt-[132px] lg:pb-24`。
 4. 常规页面 Hero 后续模块统一使用 `dt-section relative pb-20 lg:pb-[132px]`，不要在页面 scoped CSS 中重复声明 section `padding-bottom`。
-5. Header 高度固定为 `62px`，使用 `fixed` 全视口顶部，层级为 `z-index: 1000`；HOME 首屏顶部默认透明并使用白色 Logo，Header hover 使用深色半透明背景，滚动、Mega 展开或普通内页使用白色半透明背景与黑色 Logo。
+5. Header 高度固定为 `62px`，使用 `fixed` 全视口顶部，层级为 `z-index: 1000`；HOME 首屏顶部默认透明并使用白色 Logo，Header hover 使用深色半透明背景，滚动、Mega 展开或普通内页使用白色半透明背景与黑色 Logo。HOME 下滚时 Header 需按背景自适应（`is-in-hero`）：仍处于 Hero 区域内保持白色文字/Logo 与 `rgba(0, 0, 0, 0.4)` 深色半透明背景，滚出 Hero 区域（按 `.home-hero` 实际高度测量）后切换为白色半透明背景与黑色 Logo。
 6. Header 是全视口宽度，内部 padding 按 DeepCtrls Header 节奏：桌面 `padding-left: 43px`、`padding-right: 61px`；普通页面内容仍使用 `.container`。
 7. Header logo 使用运行时品牌图：默认暗色 Hero 顶部为 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页为 `/images/brand/deeptrols-logo-black.png`；Header logo 高度按参考站为 `35px`。Footer logo 当前宽度为 `240px`。
 8. Footer 使用 HOME 当前结构：订阅区、分隔线、`site-footer__main`、与 main 平级的 `site-footer__socials`、底部分隔线、备案与版权；Footer 背景为 `#191a1e`。
@@ -60,7 +60,7 @@
 ---
 ## Interaction Baseline
 1. Header 主导航 DOM 保持 `div style="position:relative;" > ul > li > button`，主导航按钮内不渲染 SVG。
-2. Mega Menu 只在 hover 对应按钮及面板时保持显示，离开按钮和面板后必须收回。Mega 参考 DeepCtrls：左侧 `.mega-title`，右侧文字入口；核心产品使用 `.mega-cols` 分栏，解决方案使用 `.mega-solutions` 横向 `4 × 2` 网格。条目标题 `24px / 35px`，描述 `14px / 16px`，hover/focus/active 仅将标题切换为蓝色，不使用图标卡片。
+2. Mega Menu 只在 hover 对应按钮及面板时保持显示，离开按钮和面板后必须收回。Mega 参考 DeepCtrls：左侧 `.mega-title`，右侧文字入口；核心产品使用 `.mega-cols` 双栏联动（`.mega-col--categories` 品类栏 hover/focus 切换 `.mega-col--links` 产品栏，面板打开默认激活第一个品类），解决方案使用 `.mega-solutions` 横向 `4 × 2` 网格。条目标题 `24px / 35px`，描述 `14px / 16px`，hover/focus/active 仅将标题切换为蓝色，不使用图标卡片。
 3. Tab 使用 `role="tablist"` / `role="tab"` / `aria-selected`。
 4. Carousel 使用 `role="region"`、`aria-roledescription="carousel"`、`data-slot="root/viewport/container/item"`。
 5. Hover 动画保持 `150ms-300ms`，只服务阅读和状态反馈，不做无意义装饰。

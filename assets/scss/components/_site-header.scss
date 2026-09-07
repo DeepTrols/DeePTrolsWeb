@@ -55,6 +55,14 @@
   background: rgba(255, 255, 255, 0.72);
 }
 
+.site-header.is-home.is-dark-hero.is-in-hero:not(.has-mega):not(.has-mobile) {
+  --dt-header-fg: #ffffff;
+  --dt-header-muted: rgba(255, 255, 255, 0.58);
+
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+}
+
 .skip-link {
   position: absolute;
   left: 12px;

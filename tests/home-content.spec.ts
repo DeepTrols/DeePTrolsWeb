@@ -16,10 +16,7 @@ describe('home content contract', () => {
 
   it('keeps the product menu aligned with the DeepCtrls-style core mega copy', () => {
     const productColumns = primaryNavigation.find((item) => item.label === '核心产品')?.columns ?? []
-    const productLinks = productColumns.flatMap((column) => [
-      ...(column.links ?? []),
-      ...(column.groups ?? []).flatMap((group) => group.links ?? []),
-    ])
+    const productLinks = productColumns.flatMap((column) => column.links ?? [])
 
     expect(productLinks.some((link) => link.label === '数曜·数据资产管理平台')).toBe(false)
     expect(primaryNavigation.find((item) => item.label === '核心产品')).toMatchObject({
@@ -27,17 +24,34 @@ describe('home content contract', () => {
       layout: 'product',
       megaTitle: '核心技术',
     })
-    expect(productColumns.map((column) => column.title)).toEqual(['数曜 ｜ 数智基建', '数曜·数据治理平台'])
+    expect(productColumns.map((column) => column.title)).toEqual([
+      '数曜 ｜ 数智基建',
+      '博曜 ｜ 知识中枢',
+      '核心产品',
+      '智曜 ｜ 智能引擎',
+      '探曜 ｜ 智联万物',
+    ])
     expect(productColumns.map((column) => column.description)).toEqual([
       '构建面向 AI 的企业数据基础设施',
-      '构建高质量企业数据体系',
-    ])
-    expect(productColumns[0]?.links?.find((link) => link.label === '博曜 ｜ 知识中枢')?.description).toBe(
       '让企业知识可沉淀、可理解、可调用',
+      undefined,
+      '汇聚算力与模型能力，驱动企业智能应用',
+      '连接设备与场景，让 AI 感知真实世界',
+    ])
+    expect(productColumns.find((column) => column.title === '核心产品')?.href).toBe('/products')
+    expect(productColumns[0]?.links?.map((link) => link.label)).toEqual([
+      '数曜·数据治理平台',
+      '数曜·数据标签平台',
+      '数曜·数据开发平台',
+      '数曜·数据要素监管平台',
+    ])
+    expect(productLinks.find((link) => link.label === '数曜·数据治理平台')?.description).toBe('构建高质量企业数据体系')
+    expect(productLinks.find((link) => link.label === '博曜·企业级知识管理平台')?.description).toBe('构建AI可理解的知识体系')
+    expect(productLinks.find((link) => link.label === '智曜·AgentOS')?.description).toBe('Agent基础设施平台')
+    expect(productLinks.find((link) => link.label === '探曜·AI物联感知平台')?.description).toBe(
+      '实现设备、数据与智能应用互联',
     )
-    expect(productLinks.find((link) => link.label === '核心产品')?.href).toBe('/products')
-    expect(productLinks.find((link) => link.label === '智曜 ｜ 智能引擎')?.description).toBe('汇聚算力与模型能力，驱动企业智能应用')
-    expect(productLinks.find((link) => link.label === '探曜 ｜ 智联万物')?.description).toBe('连接设备与场景，让 AI 感知真实世界')
+    expect(productLinks.find((link) => link.label === 'Device Agent')?.href).toBe('/products/device-agent')
   })
 
   it('keeps required homepage sections populated', () => {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from '#app'
-import type { NavColumn, NavItem, NavLink } from '~/data/navigation'
+import type { NavItem, NavLink } from '~/data/navigation'
 
 const props = defineProps<{
   item: NavItem
@@ -12,30 +12,14 @@ defineEmits<{
 }>()
 
 const route = useRoute()
+const activeColumn = ref(0)
 const megaTitle = computed(() => props.item.megaTitle ?? props.item.label)
 const columns = computed(() => props.item.columns ?? [])
 const solutionLinks = computed(() => columns.value.flatMap((column) => column.links ?? []))
+const activeLinks = computed<NavLink[]>(() => columns.value[activeColumn.value]?.links ?? [])
 
-function linksFor(column: NavColumn): NavLink[] {
-  return column.links ?? []
-}
-
-function titleFor(column: NavColumn): string {
-  return column.subtitle ? `${column.title} ｜ ${column.subtitle}` : column.title
-}
-
-function entriesFor(column: NavColumn): NavLink[] {
-  const entries: NavLink[] = []
-
-  if (column.href || column.description) {
-    entries.push({
-      label: titleFor(column),
-      description: column.description,
-      href: column.href ?? props.item.href,
-    })
-  }
-
-  return [...entries, ...linksFor(column)]
+function hrefFor(index: number): string {
+  return columns.value[index]?.href ?? props.item.href
 }
 
 function isActiveHref(href: string): boolean {
@@ -72,20 +56,38 @@ function isActiveHref(href: string): boolean {
     </div>
 
     <div v-else class="mega-cols">
-      <section v-for="column in columns" :key="column.title" class="mega-col">
+      <section class="mega-col mega-col--categories">
         <NuxtLink
-          v-for="entry in entriesFor(column)"
-          :key="entry.label"
-          :to="entry.href"
+          v-for="(column, index) in columns"
+          :key="column.title"
+          :to="hrefFor(index)"
           class="mega-entry"
-          :class="{ 'is-active': isActiveHref(entry.href) }"
+          :class="{ 'is-active': index === activeColumn }"
+          @mouseenter="activeColumn = index"
+          @focus="activeColumn = index"
           @click="$emit('navigate')"
         >
           <span class="mega-entry-title">
-            <span>{{ entry.label }}</span>
+            <span>{{ column.title }}</span>
             <span class="mega-chevron" aria-hidden="true">&gt;</span>
           </span>
-          <span v-if="entry.description" class="mega-entry-desc">{{ entry.description }}</span>
+          <span v-if="column.description" class="mega-entry-desc">{{ column.description }}</span>
+        </NuxtLink>
+      </section>
+      <section class="mega-col mega-col--links">
+        <NuxtLink
+          v-for="link in activeLinks"
+          :key="link.label"
+          :to="link.href"
+          class="mega-entry"
+          :class="{ 'is-active': isActiveHref(link.href) }"
+          @click="$emit('navigate')"
+        >
+          <span class="mega-entry-title">
+            <span>{{ link.label }}</span>
+            <span class="mega-chevron" aria-hidden="true">&gt;</span>
+          </span>
+          <span v-if="link.description" class="mega-entry-desc">{{ link.description }}</span>
         </NuxtLink>
       </section>
     </div>

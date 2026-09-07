@@ -13,7 +13,8 @@ import { primaryNavigation } from '../data/navigation'
 describe('DGP product page content contract', () => {
   it('keeps the product navigation entry available', () => {
     const productColumns = primaryNavigation.find((item) => item.label === '核心产品')?.columns ?? []
-    const governanceLink = productColumns.find((column) => column.title === '数曜·数据治理平台')
+    const productLinks = productColumns.flatMap((column) => column.links ?? [])
+    const governanceLink = productLinks.find((link) => link.label === '数曜·数据治理平台')
 
     expect(governanceLink?.href).toBe('/products/data-governance')
     expect(governanceLink?.description).toBe('构建高质量企业数据体系')
