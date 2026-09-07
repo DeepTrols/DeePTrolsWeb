@@ -25,15 +25,15 @@ import FooterSubscribe from '~/components/layout/FooterSubscribe.vue'
 <style scoped lang="scss">
 .site-footer {
   padding-top: 48px;
-  background: var(--dt-color-bg-soft);
-  color: var(--dt-color-text);
+  background: var(--dt-color-footer);
+  color: #ffffff;
 }
 
 .site-footer__rule {
   height: 1px;
   margin: 24px 0 32px;
   border: 0;
-  background: var(--dt-color-line);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .site-footer__rule--bottom {

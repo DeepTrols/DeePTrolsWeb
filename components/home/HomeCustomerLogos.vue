@@ -27,7 +27,7 @@ const logoRows = computed(() => [...customerLogos, ...customerLogos])
 
 h2 {
   margin: 0;
-  color: #ffffff;
+  color: var(--dt-color-text-muted);
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
@@ -57,7 +57,7 @@ h2 {
   align-items: center;
   justify-content: center;
   height: 56px;
-  color: rgba(245, 250, 255, 0.72);
+  color: var(--dt-color-text-muted);
   padding: 0;
   font-size: 13px;
   font-weight: 650;
@@ -68,8 +68,8 @@ h2 {
     max-width: 100%;
     max-height: 48px;
     object-fit: contain;
-    filter: grayscale(1) brightness(0) invert(1);
-    opacity: 0.8;
+    filter: grayscale(1);
+    opacity: 0.72;
   }
 }
 

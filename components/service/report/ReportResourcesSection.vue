@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="container pb-32">
+  <div class="container pb-20 lg:pb-[132px]">
     <section id="report-resources-panel" class="mb-24" aria-labelledby="report-resources-title">
       <h2 id="report-resources-title" class="sr-only">白皮书&报告列表</h2>
       <div class="grid grid-cols-1 gap-8 md:grid-cols-3">

@@ -3,7 +3,7 @@ import SectionHeader from '~/components/common/section/SectionHeader.vue'
 </script>
 
 <template>
-  <section class="pb-32 lg:pb-44" aria-labelledby="dlp-ai-modeling-title">
+  <section class="pb-20 lg:pb-[132px]" aria-labelledby="dlp-ai-modeling-title">
     <div class="container grid items-center gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
       <SectionHeader
         eyebrow="AI 辅助建标"

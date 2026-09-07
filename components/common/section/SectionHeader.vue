@@ -104,15 +104,15 @@ const headingTag = computed(() => `h${props.level}`)
 .section-heading__eyebrow {
   margin: 0 0 8px;
   color: var(--dt-color-accent-muted);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
   letter-spacing: 0;
   text-transform: uppercase;
 }
 
 .section-heading--eyebrow-sm .section-heading__eyebrow {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
 }
 
@@ -123,34 +123,34 @@ const headingTag = computed(() => `h${props.level}`)
 .section-heading__title {
   margin: 0;
   color: var(--dt-color-text-highlighted);
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 500;
+  line-height: 1.28;
   letter-spacing: 0;
 }
 
 .section-heading--title-compact .section-heading__title {
-  font-size: 30px;
+  font-size: 28px;
 }
 
 .section-heading--title-section .section-heading__title {
-  font-size: 36px;
+  font-size: 35px;
 }
 
 .section-heading--title-hero .section-heading__title {
-  font-size: 36px;
+  font-size: 38px;
   line-height: 1.1;
 }
 
 .section-heading__subtitle {
   margin: 16px 0 0;
   color: var(--dt-color-text-muted);
-  font-size: 18px;
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 27px;
 }
 
 .section-heading--subtitle-large .section-heading__subtitle {
-  font-size: 20px;
-  line-height: 1.4;
+  font-size: 18px;
+  line-height: 30px;
 }
 
 .section-heading__subtitle--nowrap {
@@ -192,10 +192,13 @@ const headingTag = computed(() => `h${props.level}`)
 
 @media (min-width: 640px) {
   .section-heading--title-compact .section-heading__title {
-    font-size: 36px;
+    font-size: 30px;
   }
 
-  .section-heading--title-section .section-heading__title,
+  .section-heading--title-section .section-heading__title {
+    font-size: 35px;
+  }
+
   .section-heading--title-hero .section-heading__title {
     font-size: 48px;
   }
@@ -203,7 +206,7 @@ const headingTag = computed(() => `h${props.level}`)
 
 @media (min-width: 768px) {
   .section-heading--subtitle-default .section-heading__subtitle {
-    font-size: 20px;
+    font-size: 15px;
   }
 }
 
@@ -215,7 +218,7 @@ const headingTag = computed(() => `h${props.level}`)
   }
 
   .section-heading--title-hero .section-heading__title {
-    font-size: 60px;
+    font-size: 56px;
   }
 }
 </style>

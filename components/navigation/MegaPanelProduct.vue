@@ -67,11 +67,11 @@ function columnSpanClass(column: NavColumn): string {
 
   > h2 {
     margin: 0;
-    color: rgba(238, 245, 251, 0.5);
-    font-size: 12px;
-    font-weight: 760;
+    color: var(--dt-color-text-highlighted);
+    font-size: 18px;
+    font-weight: 500;
     letter-spacing: 0;
-    line-height: 1;
+    line-height: 1.4;
   }
 }
 
@@ -95,16 +95,16 @@ function columnSpanClass(column: NavColumn): string {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: rgba(238, 245, 251, 0.5);
+  color: var(--dt-color-text-highlighted);
   transition: color 180ms ease;
 
   h2 {
     margin: 0;
     color: inherit;
-    font-size: 12px;
-    font-weight: 760;
+    font-size: 18px;
+    font-weight: 500;
     letter-spacing: 0;
-    line-height: 1;
+    line-height: 1.4;
   }
 
   svg {

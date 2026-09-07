@@ -8,6 +8,7 @@
   --color-dt-bg: var(--dt-color-bg);
   --color-dt-bg-soft: var(--dt-color-bg-soft);
   --color-dt-bg-elevated: var(--dt-color-bg-elevated);
+  --color-dt-footer: var(--dt-color-footer);
   --color-dt-primary-soft: var(--dt-color-primary-soft);
   --color-dt-line: var(--dt-color-line);
   --color-dt-line-strong: var(--dt-color-line-strong);
@@ -24,7 +25,7 @@
   --radius-dt-md: var(--dt-radius-md);
   --radius-dt-lg: var(--dt-radius-lg);
   --radius-dt-ui: var(--dt-ui-radius);
-  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Noto Sans SC", "Source Han Sans CN", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 @theme {

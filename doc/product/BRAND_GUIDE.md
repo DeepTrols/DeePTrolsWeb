@@ -124,9 +124,9 @@ DeepTrols 应呈现以下品牌气质：
 
 除非页面需求明确说明允许偏离，所有页面默认遵循 HOME 当前实现：
 
-- 深色背景以 `#151515` 为页面基准。
+- 页面背景以 `#ffffff` 为基准，浅色分区使用 `#f0f5ff`，主色使用 `#1a57eb`。
 - Header、Mega Menu、Footer、按钮、Tab、卡片、CTA、标题层级必须参考 `doc/engineering/HOME_PAGE_BASELINE.md`。
-- 视觉节奏参考 EMQX 中文站 Dark 模式的布局、间距、字体层级、hover 与响应式行为，但不得复制其品牌、文案、源代码或专有资产。
+- 视觉节奏参考 DeepCtrls 中文站浅色官网的布局、间距、字体层级、hover 与响应式行为，但不得复制其品牌、文案、源代码或专有资产。
 - 公共按钮使用 `BaseButton` 或 `.dt-button` 系列；Section 标题使用 `SectionHeading`；Tab 使用 `.dt-tab-list` + `.dt-tab`；平台能力卡使用 `.dt-product-card`；生态卡使用 `.dt-ecosystem-card`。
 - 新页面不得重新发明主色、圆角、按钮 hover、tab hover、卡片 hover、Footer 结构。
 

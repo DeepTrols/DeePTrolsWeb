@@ -79,9 +79,9 @@ defineProps<{
   place-items: center;
   border: 1px solid var(--dt-color-line-strong);
   border-radius: var(--dt-radius-sm);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--dt-color-secondary);
-  font-weight: 760;
+  background: var(--dt-color-bg-soft);
+  color: var(--dt-color-primary);
+  font-weight: 600;
 }
 
 h3 {
@@ -114,7 +114,7 @@ h3 {
   min-height: 112px;
   border: 1px solid var(--dt-color-line);
   border-radius: var(--dt-radius-sm);
-  background: rgba(255, 255, 255, 0.035);
+  background: #ffffff;
   padding: 18px;
 
   svg {
@@ -163,12 +163,12 @@ dd {
 .cases__visual-overlay {
   position: absolute;
   inset: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(26, 87, 235, 0.12);
   border-radius: var(--dt-radius-sm);
   background:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    rgba(21, 21, 21, 0.28);
+    linear-gradient(rgba(26, 87, 235, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 87, 235, 0.06) 1px, transparent 1px),
+    rgba(255, 255, 255, 0.48);
   background-size: 32px 32px;
 }
 

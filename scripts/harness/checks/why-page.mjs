@@ -31,22 +31,22 @@ assert(
     whyHero.includes('title-gradient="企业级AI应用服务商"'),
   'Why hero content hierarchy must follow the why-emqx replacement mapping.',
 )
-assert(pageHeroStyles.includes('font-size: 36px') && pageHeroStyles.includes('font-size: 48px') && pageHeroStyles.includes('font-size: 60px'), 'Why hero title sizes must follow the why-emqx 4xl/5xl/6xl rhythm.')
+assert(pageHeroStyles.includes('font-size: 36px') && pageHeroStyles.includes('font-size: 44px') && pageHeroStyles.includes('font-size: 56px'), 'Why hero title sizes must follow the DeepCtrls hero rhythm.')
 assert(
   pageHero.includes('class="page-hero relative overflow-hidden"') &&
-    pageHero.includes('container page-hero__body relative isolate pt-24 lg:pt-32') &&
+    pageHero.includes('container page-hero__body relative isolate pt-[112px] lg:pt-[132px]') &&
     pageHero.includes('class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg"') &&
     pageHero.includes('class="page-hero__background" aria-hidden="true"') &&
     pageHero.includes('page-hero__inner relative z-10 flex flex-col items-center') &&
     pageHeroStyles.includes('width: 100vw') &&
     pageHeroStyles.includes('transform: translateX(-50%)') &&
     pageHeroStyles.includes('z-index: 1') &&
-    pageHero.includes('pt-24 lg:pt-32') &&
-    pageHero.includes("flushBottom ? 'pb-0 lg:pb-0' : 'pb-24 lg:pb-32'") &&
+    pageHero.includes('pt-[112px] lg:pt-[132px]') &&
+    pageHero.includes("flushBottom ? 'pb-0 lg:pb-0' : 'pb-20 lg:pb-24'") &&
     heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28') &&
     !pageHero.includes('padding: 144px') &&
     !pageHero.includes('padding-bottom: 112px'),
-  'Why hero spacing must follow the why-emqx Tailwind section rhythm.',
+  'Why hero spacing must follow the DeepCtrls Tailwind section rhythm.',
 )
 assert(
   whyHero.includes('WhyHeroVisual') &&
@@ -107,7 +107,7 @@ assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero visual must not u
 assert(whyTrustTabs.includes('TrustTabsSection') && trustTabsSection.includes('SectionHeader'), 'Why trust tabs must reuse TrustTabsSection and SectionHeader.')
 assert(trustTabsSection.includes('BaseTabs') && baseTabs.includes('dt-segmented-tabs') && baseTabs.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
 assert(trustTabsSection.includes('BaseCard') && trustTabsSection.includes('IconBox') && baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
-assert(trustTabsSection.includes('SectionShell') && sectionShell.includes('pb-32 lg:pb-44'), 'Why trust section must use Tailwind pb-32/lg:pb-44 rhythm.')
+assert(trustTabsSection.includes('SectionShell') && sectionShell.includes('pb-20 lg:pb-[132px]'), 'Why trust section must use the DeepCtrls Tailwind section rhythm.')
 assert(trustTabsSection.includes('mb-12 text-center lg:mb-16'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
 assert(trustTabsSection.includes('CardGrid') && cardGrid.includes('gap-5 lg:gap-6') && cardGrid.includes('md:grid-cols-2') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
 assert(
@@ -122,7 +122,7 @@ assert(
     trustTabsSection.includes(':icon-size="20"'),
   'Why trust cards must use DGP card radius/icon size and avoid fixed card height.',
 )
-assert(serviceShowcaseSection.includes('dt-section relative pb-32 lg:pb-44') && engineLinksSection.includes('dt-section relative pb-32 lg:pb-44'), 'Why service and engine sections must share the EMQX section rhythm.')
+assert(serviceShowcaseSection.includes('dt-section relative pb-20 lg:pb-[132px]') && engineLinksSection.includes('dt-section relative pb-20 lg:pb-[132px]'), 'Why service and engine sections must share the DeepCtrls section rhythm.')
 assert(
   serviceShowcaseSection.includes('FeatureCard') &&
     serviceShowcaseSection.includes('variant="soft"') &&

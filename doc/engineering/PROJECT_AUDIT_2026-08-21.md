@@ -404,7 +404,7 @@ components/product/dgp/DgpHeroVisual.vue
 建议：
 
 - Harness 中保留对 `bg-default` / `text-default` 编译语义的检查。
-- 新页面优先使用 `dt-*` token，避免直接写任意 `bg-[var(...)]`。
+- 新页面优先使用 `dt-*` token，避免直接写任意 CSS 变量背景类。
 
 ---
 

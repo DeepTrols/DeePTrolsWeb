@@ -60,12 +60,12 @@ import { footerSocials } from '~/data/footer'
   justify-content: center;
   border: 0;
   background: transparent;
-  color: var(--dt-color-text-muted);
+  color: #8a8a8a;
   padding: 0;
   transition: color 180ms ease;
 
   &:hover {
-    color: var(--dt-color-text-highlighted);
+    color: #ffffff;
   }
 
   &:focus-visible {

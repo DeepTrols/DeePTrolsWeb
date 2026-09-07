@@ -74,7 +74,7 @@ function showNextDeliverable() {
 
 <style scoped lang="scss">
 .deliverables {
-  padding: clamp(3.5rem, 7vw, 6rem) 0 8rem;
+  padding: clamp(3.5rem, 7vw, 6rem) 0 var(--dt-space-section);
 }
 
 .deliverables__viewport {
@@ -111,7 +111,8 @@ function showNextDeliverable() {
   min-height: 280px;
   overflow: hidden;
   border-radius: var(--dt-radius-lg);
-  background: var(--dt-gradient-spotlight);
+  background: var(--dt-color-bg);
+  box-shadow: var(--dt-shadow-card);
 }
 
 .deliverables__media {
@@ -119,7 +120,7 @@ function showNextDeliverable() {
   display: none;
   min-height: 300px;
   overflow: hidden;
-  background: var(--dt-color-bg);
+  background: var(--dt-color-bg-soft);
 
   img {
     position: absolute;
@@ -142,27 +143,27 @@ function showNextDeliverable() {
   min-height: 280px;
   padding: 24px;
   padding-right: 80px;
-  background: linear-gradient(to right, #181524, #271e35);
+  background: linear-gradient(100deg, #ffffff 0%, #f0f5ff 100%);
 }
 
 .deliverables__icon {
   width: 48px;
   height: 48px;
-  color: #ffffff;
+  color: var(--dt-color-primary);
 }
 
 h3 {
   margin: 0;
-  color: #ffffff;
+  color: var(--dt-color-text-highlighted);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.25;
   letter-spacing: 0;
 }
 
 p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--dt-color-text-muted);
   font-size: 14px;
   line-height: 1.625;
 }
@@ -180,10 +181,10 @@ p {
   justify-content: center;
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid var(--dt-color-line);
   border-radius: 999px;
-  background: rgba(21, 21, 21, 0.72);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--dt-color-text-highlighted);
   transform: translateY(-50%);
   transition:
     border-color 150ms ease,
@@ -192,7 +193,7 @@ p {
 
   &:hover,
   &:focus-visible {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: var(--dt-color-primary);
     background: var(--dt-color-primary);
     color: #ffffff;
   }
@@ -219,7 +220,7 @@ p {
 @media (min-width: 1024px) {
   .deliverables {
     padding-top: clamp(4.5rem, 7vw, 7rem);
-    padding-bottom: 11rem;
+    padding-bottom: var(--dt-space-section-lg);
   }
 
   .deliverables__slide {

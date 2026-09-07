@@ -44,8 +44,8 @@ const inputEdges: Edge[] = inputNodes.map((node) => ({
   source: node.id,
   target: 'deeptrols-os',
   animated: true,
-  style: { stroke: '#5e4eff', strokeWidth: 1.4 },
-  markerEnd: { type: MarkerType.ArrowClosed, color: '#5e4eff' },
+  style: { stroke: '#1a57eb', strokeWidth: 1.4 },
+  markerEnd: { type: MarkerType.ArrowClosed, color: '#1a57eb' },
 }))
 
 const outputEdges: Edge[] = outputNodes.map((node) => ({
@@ -53,8 +53,8 @@ const outputEdges: Edge[] = outputNodes.map((node) => ({
   source: 'deeptrols-os',
   target: node.id,
   animated: true,
-  style: { stroke: '#569aff', strokeWidth: 1.4 },
-  markerEnd: { type: MarkerType.ArrowClosed, color: '#569aff' },
+  style: { stroke: '#6583ff', strokeWidth: 1.4 },
+  markerEnd: { type: MarkerType.ArrowClosed, color: '#6583ff' },
 }))
 
 const edges = [...inputEdges, ...outputEdges]
@@ -123,7 +123,7 @@ const proOptions = { hideAttribution: true }
 :deep(.vue-flow__handle) {
   width: 8px;
   height: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid #ffffff;
   background: var(--dt-color-primary);
 }
 
@@ -133,10 +133,10 @@ const proOptions = { hideAttribution: true }
 
 .flow-node {
   position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  border: 1px solid var(--dt-color-line);
   border-radius: var(--dt-radius-sm);
-  background: rgba(10, 18, 28, 0.9);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--dt-shadow-card);
   color: var(--dt-color-text);
 }
 
@@ -163,10 +163,10 @@ const proOptions = { hideAttribution: true }
   place-items: center;
   width: 270px;
   min-height: 120px;
-  border-color: rgba(166, 133, 255, 0.42);
+  border-color: rgba(26, 87, 235, 0.3);
   background:
-    radial-gradient(circle at 50% 10%, rgba(94, 78, 255, 0.22), transparent 9rem),
-    rgba(16, 17, 37, 0.94);
+    radial-gradient(circle at 50% 10%, rgba(26, 87, 235, 0.16), transparent 9rem),
+    rgba(240, 245, 255, 0.96);
   padding: 22px;
   text-align: center;
 
@@ -215,7 +215,7 @@ const proOptions = { hideAttribution: true }
     }
 
     span {
-      color: #ffffff;
+      color: var(--dt-color-text-highlighted);
       font-weight: 650;
     }
 

@@ -15,7 +15,7 @@ const destNodes: DestNode[] = [
   {
     title: '知识库',
     icon: Database,
-    iconClass: 'text-violet-500',
+    iconClass: 'text-primary',
     delay: '[animation-delay:0.3s]',
   },
   {
@@ -37,7 +37,7 @@ const destNodes: DestNode[] = [
   <div class="relative flex h-[280px] w-full select-none items-center justify-center">
     <div class="pointer-events-none absolute inset-0">
       <div
-        class="absolute left-1/2 top-1/2 size-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-r from-primary/6 via-violet-500/5 to-blue-500/6 blur-3xl"
+        class="absolute left-1/2 top-1/2 size-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-r from-primary/6 via-primary/5 to-blue-500/6 blur-3xl"
       ></div>
     </div>
 

@@ -48,7 +48,7 @@ defineEmits<{
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.055);
+    background: var(--dt-color-bg-soft);
     transform: translateX(2px);
   }
 }
@@ -68,10 +68,10 @@ defineEmits<{
   position: absolute;
   top: 6px;
   right: 6px;
-  border: 1px solid rgba(255, 122, 89, 0.4);
+  border: 1px solid rgba(26, 87, 235, 0.22);
   border-radius: 999px;
-  background: rgba(255, 122, 89, 0.14);
-  color: #ff9a6e;
+  background: rgba(26, 87, 235, 0.08);
+  color: var(--dt-color-primary);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.4px;
@@ -82,7 +82,7 @@ defineEmits<{
 
 .mega-panel__link strong {
   display: block;
-  color: #ffffff;
+  color: var(--dt-color-text-highlighted);
   font-size: 14px;
   font-weight: 650;
   line-height: 1.35;

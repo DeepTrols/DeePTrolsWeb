@@ -81,7 +81,7 @@ function linksFor(column: NavColumn): NavLink[] {
   gap: 32px;
   max-width: var(--dt-container);
   margin-inline: auto;
-  padding-block: 30px 34px;
+  padding-block: 45px 75px;
 }
 
 .mega-panel__columns--product {
@@ -101,11 +101,11 @@ function linksFor(column: NavColumn): NavLink[] {
   h2,
   h3 {
     margin: 0;
-    color: rgba(238, 245, 251, 0.5);
-    font-size: 12px;
-    font-weight: 760;
+    color: var(--dt-color-text-highlighted);
+    font-size: 18px;
+    font-weight: 500;
     letter-spacing: 0;
-    line-height: 1;
+    line-height: 1.4;
   }
 }
 
@@ -139,9 +139,9 @@ function linksFor(column: NavColumn): NavLink[] {
 
   h2 {
     margin: 4px 0 2px;
-    color: rgba(238, 245, 251, 0.5);
-    font-size: 12px;
-    font-weight: 760;
+    color: var(--dt-color-text-highlighted);
+    font-size: 18px;
+    font-weight: 500;
     letter-spacing: 0;
   }
 }
@@ -152,9 +152,9 @@ function linksFor(column: NavColumn): NavLink[] {
   align-items: center;
   gap: 14px;
   min-height: 106px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--dt-color-line);
   border-radius: var(--dt-radius-md);
-  background: rgba(255, 255, 255, 0.035);
+  background: var(--dt-color-bg-soft);
   padding: 18px;
   color: var(--dt-color-text);
   transition:
@@ -168,7 +168,7 @@ function linksFor(column: NavColumn): NavLink[] {
 
   strong {
     display: block;
-    color: #ffffff;
+    color: var(--dt-color-text-highlighted);
     font-size: 14px;
     font-weight: 650;
     line-height: 1.35;
@@ -183,8 +183,8 @@ function linksFor(column: NavColumn): NavLink[] {
   }
 
   &:hover {
-    border-color: rgba(166, 133, 255, 0.38);
-    background: rgba(94, 78, 255, 0.09);
+    border-color: var(--dt-card-hover-border);
+    background: var(--dt-color-primary-soft);
     transform: translateY(-2px);
   }
 }

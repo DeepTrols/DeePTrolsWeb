@@ -21,7 +21,7 @@ const sourceItems: SourceItem[] = [
   <div class="relative flex h-[320px] w-full select-none items-center justify-center">
     <div class="pointer-events-none absolute inset-0">
       <div
-        class="absolute left-1/2 top-1/2 size-[240px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-primary/8 via-violet-500/5 to-blue-500/8 blur-3xl"
+        class="absolute left-1/2 top-1/2 size-[240px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-primary/8 via-primary/5 to-blue-500/8 blur-3xl"
       ></div>
     </div>
 
@@ -33,7 +33,7 @@ const sourceItems: SourceItem[] = [
           class="relative flex w-40 animate-value-legacy items-center gap-2.5 rounded-xl border border-default bg-default px-4 py-2.5 shadow-sm motion-reduce:animate-none motion-reduce:opacity-50"
           :class="item.delay"
         >
-          <div class="flex size-8 items-center justify-center rounded-[16px] bg-[var(--dt-color-bg-soft)]/50">
+          <div class="flex size-8 items-center justify-center rounded-[16px] bg-dt-bg-soft/50">
             <component :is="item.icon" class="size-4 text-dimmed" aria-hidden="true" />
           </div>
           <span class="text-xs font-medium text-dimmed">{{ item.title }}</span>

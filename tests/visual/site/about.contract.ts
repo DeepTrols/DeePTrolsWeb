@@ -62,7 +62,7 @@ export function registerAboutVisualContracts() {
     expect(pageHeroStyles).toContain('var(--dt-color-bg) 100%')
     expect(pageHeroStyles).toContain('-webkit-mask-image')
     expect(pageHeroStyles).toContain('object-fit: cover')
-    expect(pageHeroStyles).toContain('mix-blend-mode: screen')
+    expect(pageHeroStyles).toContain('mix-blend-mode: multiply')
 
     expect(heroStats).toContain('class="about-hero-stats container !p-0"')
     expect(heroStats).toContain('class="flex flex-col items-center text-center"')

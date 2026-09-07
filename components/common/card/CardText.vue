@@ -49,14 +49,14 @@ withDefaults(
 }
 
 .card-text--title-md .card-text__title {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   line-height: 1.35;
 }
 
 .card-text--title-lg .card-text__title {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.25;
 }
 
@@ -71,12 +71,12 @@ withDefaults(
 }
 
 .card-text--description-md .card-text__description {
-  font-size: 16px;
-  line-height: 1.625;
+  font-size: 15px;
+  line-height: 27px;
 }
 
 .card-text--description-lg .card-text__description {
-  font-size: 18px;
-  line-height: 1.625;
+  font-size: 16px;
+  line-height: 28px;
 }
 </style>

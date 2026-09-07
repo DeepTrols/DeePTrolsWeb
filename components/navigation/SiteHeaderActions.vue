@@ -41,7 +41,7 @@ defineEmits<{
   display: flex;
   align-items: center;
   margin-left: auto;
-  gap: 6px;
+  gap: 12px;
 }
 
 .site-header__icon-button {
@@ -52,7 +52,7 @@ defineEmits<{
   border-radius: var(--dt-radius-md);
   background: transparent;
   color: var(--dt-color-nav-text);
-  padding: 12px 10px;
+  padding: 10px;
   font-size: 14px;
   transition:
     background-color 180ms ease,
@@ -73,12 +73,12 @@ defineEmits<{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
+  min-height: 37px;
   border-radius: var(--dt-ui-radius);
   color: var(--dt-color-nav-text);
   padding: 8px 12px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.5;
   transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;

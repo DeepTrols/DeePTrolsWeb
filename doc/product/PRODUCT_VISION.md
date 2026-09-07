@@ -129,7 +129,7 @@ DeepTrols 是一家专注于企业级 AI 能力建设与落地的技术服务公
 
 官网整体设计可参考以下网站：
 
-- https://www.emqx.com/zh Dark 模式
+- https://www.deepctrls.com/deepctrls_com/ 浅色官网基线
 
 参考范围包括：
 - 页面布局

@@ -100,35 +100,35 @@ function selectStory(index: number) {
 <style scoped lang="scss">
 .cases {
   width: 100%;
-  max-width: 107.5rem;
+  max-width: var(--dt-container-wide);
   margin: 0 auto;
   background: var(--dt-color-bg);
-  padding: 0 16px 128px;
+  padding: 0 20px var(--dt-space-section);
 }
 
 @media (min-width: 768px) {
   .cases {
-    padding-inline: 24px;
+    padding-inline: 20px;
   }
 }
 
 @media (min-width: 1280px) {
   .cases {
-    padding-inline: 40px;
+    padding-inline: 20px;
   }
 }
 
 @media (min-width: 1536px) {
   .cases {
-    padding-inline: 48px;
+    padding-inline: 20px;
   }
 }
 
 .cases__shell {
   overflow: hidden;
   border: 1px solid var(--dt-color-line);
-  border-radius: 24px;
-  background: rgba(38, 38, 38, 0.4);
+  border-radius: 13px;
+  background: var(--dt-color-bg-soft);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -202,7 +202,7 @@ function selectStory(index: number) {
     place-items: center;
     border: 1px solid var(--dt-color-line);
     border-radius: var(--dt-radius-sm);
-    background: rgba(255, 255, 255, 0.05);
+    background: #ffffff;
     color: var(--dt-color-text-highlighted);
     font-size: 18px;
     font-weight: 700;
@@ -263,8 +263,8 @@ function selectStory(index: number) {
 
 @media (min-width: 1024px) {
   .cases {
-    padding-bottom: 176px;
-    padding-inline: 32px;
+    padding-bottom: var(--dt-space-section-lg);
+    padding-inline: 20px;
   }
 
   .cases__inner {
@@ -279,7 +279,7 @@ function selectStory(index: number) {
   }
 
   .cases__heading :deep(.section-heading__subtitle) {
-    font-size: 20px;
+    font-size: 15px;
     white-space: nowrap;
   }
 

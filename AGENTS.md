@@ -19,11 +19,11 @@
 - 高可维护性
 
 所有实现必须符合企业级生产环境标准。
-视觉基准是 EMQX 中文网站：
-https://www.emqx.com/zh （Dark模式）
+视觉基准是 DeepCtrls 中文网站：
+https://www.deepctrls.com/deepctrls_com/（浅色官网基线）
 重点提醒：不要发散！！！！
 
-仅将 EMQX 作为以下内容的参考：
+仅将 DeepCtrls 作为以下内容的参考：
 - 布局节奏  
 - 导航交互  
 - 字体层级  
@@ -32,7 +32,7 @@ https://www.emqx.com/zh （Dark模式）
 - 背景处理  
 - 过渡时长  
 - 响应式行为
-请勿复制 EMQX 的商标、文字、源代码或专有资产。
+请勿复制 DeepCtrls 的商标、文字、源代码或专有资产。
 ---
 # Responsibilities
 在开始任何任务前：
@@ -146,7 +146,7 @@ https://www.emqx.com/zh （Dark模式）
 - Minimal
 
 参考：
-https://www.emqx.com/zh （Dark模式）
+https://www.deepctrls.com/deepctrls_com/（浅色官网基线）
 
 参考内容包括：
 

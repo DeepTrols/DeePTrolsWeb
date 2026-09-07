@@ -19,7 +19,7 @@ export function registerHomeFooterVisualContracts() {
 
     expect(siteFooter).toContain('class="site-footer"')
     expect(siteFooter).toContain('padding-top: 48px')
-    expect(siteFooter).toContain('background: var(--dt-color-bg-soft)')
+    expect(siteFooter).toContain('background: var(--dt-color-footer)')
     expect(siteFooter).toContain('FooterSubscribe')
     expect(siteFooter).toContain('FooterMain')
     expect(siteFooter).toContain('FooterSocials')
@@ -49,7 +49,7 @@ export function registerHomeFooterVisualContracts() {
     expect(footerMain).toContain('grid-template-columns: repeat(5, minmax(0, 1fr))')
     expect(footerMain).toContain('gap: 32px')
     expect(footerMain).toContain('font-size: 14px')
-    expect(footerMain).toContain('line-height: 20px')
+    expect(footerMain).toContain('line-height: 34px')
     expect(footerMain).toContain('gap: 10px')
     expect(footerMain).toContain('margin: 16px 0')
     expect(footerMain).toContain('class="site-footer__group-rule"')
@@ -122,6 +122,6 @@ export function registerHomeFooterVisualContracts() {
     expect(footerSources).not.toContain('Phone')
     expect(enterpriseFlow).toContain('height: 100%')
     expect(enterpriseFlow).toContain('background: transparent')
-    expect(enterpriseFlow).not.toContain('border: 1px solid var(--dt-color-line)')
+    expect(enterpriseFlow).toContain('border: 1px solid var(--dt-color-line)')
   })
 }

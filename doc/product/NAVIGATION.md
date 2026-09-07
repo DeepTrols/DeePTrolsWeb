@@ -1,5 +1,5 @@
 # Navigation
-> Version: 1.2
+> Version: 1.3
 ---
 
 ## Primary Navigation
@@ -17,7 +17,8 @@ Header 约束：
 - Header logo 使用 `/logo-while.svg`，宽度 `200px`。
 - 主导航 DOM 必须保持 `div style="position:relative;" > ul > li > button`。
 - 主导航 button 内不渲染 SVG。
-- Header container 必须与页面 `.container` 内容宽度一致。
+- Header 按 DeepCtrls 参考站使用 `fixed` 全视口宽度，桌面内边距为左 `43px`、右 `61px`；正文内容区仍使用 `1200px` `.container`。
+- Header 高度为 `62px`，背景为白色半透明，导航文字 `16px / 400`，hover 切换为主色 `#1a57eb`。
 - Header 右侧固定为 GitHub SVG、语言切换 SVG、`登录OPS`；不展示 Header 级 `免费咨询`。
 - GitHub SVG 与语言切换 SVG 使用 `size-5`，`登录OPS` 使用 `text-sm` 等效字号，三者 hover 均切换主色。
 - Mega Menu 仅 `产品 / 解决方案` 展示；鼠标离开按钮和面板后必须收回。

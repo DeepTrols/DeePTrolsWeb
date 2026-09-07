@@ -65,8 +65,8 @@ import { ecosystemCards } from '~/data/home'
 }
 
 .ecosystem :deep(.section-heading__subtitle) {
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 15px;
+  line-height: 27px;
 }
 
 .ecosystem__grid {
@@ -85,7 +85,7 @@ import { ecosystemCards } from '~/data/home'
     }
 
     :deep(.ecosystem-visual__cloud-grid) {
-      fill: rgba(94, 78, 255, 0.2);
+      fill: rgba(26, 87, 235, 0.16);
     }
 
     :deep(.ecosystem-visual__base-line),
@@ -108,7 +108,7 @@ import { ecosystemCards } from '~/data/home'
     :deep(.ecosystem-visual__server-shell),
     :deep(.ecosystem-visual__device-shell),
     :deep(.ecosystem-visual__cloud-icon) {
-      stroke: rgba(94, 78, 255, 0.6);
+      stroke: rgba(26, 87, 235, 0.6);
     }
 
     :deep(.ecosystem-visual__inner-node) {

@@ -32,7 +32,7 @@ withDefaults(
 </script>
 
 <template>
-  <section class="service-showcase dt-section relative pb-32 lg:pb-44" :aria-labelledby="titleId">
+  <section class="service-showcase dt-section relative pb-20 lg:pb-[132px]" :aria-labelledby="titleId">
     <div class="container service-showcase__grid" :class="reverse && 'service-showcase__grid--reverse'">
       <div class="service-showcase__content">
         <SectionHeader :eyebrow="eyebrow" :title="title" :title-id="titleId" :subtitle="subtitle" />
@@ -91,7 +91,7 @@ withDefaults(
   border: 1px solid var(--dt-color-line);
   border-radius: var(--dt-radius-lg);
   background:
-    radial-gradient(80% 80% at 50% 0%, rgba(94, 78, 255, 0.18), transparent 65%),
+    radial-gradient(80% 80% at 50% 0%, rgba(26, 87, 235, 0.12), transparent 65%),
     var(--dt-color-bg-soft);
   box-shadow: var(--dt-shadow-card);
 }

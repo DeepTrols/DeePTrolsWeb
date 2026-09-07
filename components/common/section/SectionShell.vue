@@ -20,8 +20,8 @@ const props = withDefaults(
 
 const shellClasses = computed(() => [
   'section-shell relative',
-  props.spacing === 'default' && 'pb-32 lg:pb-44',
-  props.spacing === 'compact' && 'pb-24 lg:pb-32',
+  props.spacing === 'default' && 'pb-20 lg:pb-[132px]',
+  props.spacing === 'compact' && 'pb-16 lg:pb-20',
   props.spacing === 'flush' && 'pb-0',
   props.background === 'default' && 'bg-dt-bg',
   props.background === 'muted' && 'bg-dt-bg-soft',
@@ -30,7 +30,7 @@ const shellClasses = computed(() => [
 
 const containerClasses = computed(() => [
   props.container === 'default' && 'container',
-  props.container === 'wide' && 'mx-auto w-full max-w-[107.5rem] px-4',
+  props.container === 'wide' && 'mx-auto w-full max-w-[1400px] px-5',
 ])
 </script>
 

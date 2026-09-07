@@ -20,7 +20,7 @@ withDefaults(
         </div>
       </div>
       <div class="iso-cube__side iso-cube__side--left border-primary/25 bg-muted"></div>
-      <div class="iso-cube__side iso-cube__side--front bg-[var(--dt-color-bg-elevated)]/50"></div>
+      <div class="iso-cube__side iso-cube__side--front bg-dt-bg-elevated/50"></div>
     </div>
   </div>
 </template>

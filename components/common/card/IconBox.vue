@@ -70,7 +70,7 @@ withDefaults(
 
 .icon-box--tone-white {
   --dt-icon-box-bg: #ffffff;
-  --dt-icon-box-color: #151515;
+  --dt-icon-box-color: var(--dt-color-text-highlighted);
   --dt-icon-box-shadow: inset 0 0 0 1px var(--dt-color-line);
 }
 

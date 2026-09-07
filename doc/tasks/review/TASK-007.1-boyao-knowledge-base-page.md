@@ -114,8 +114,8 @@ Review 阶段根据反馈完成四项修复，全部质量门重新通过：
 
 第三轮反馈修复：
 
-7. **hero 视觉圆角与背景 1:1 复刻**（`fix(TASK-007.1)` `d19ede8`）：参考页使用 `--ui-radius: .5rem` 的半径体系（rounded-md/lg/xl/2xl = 12/16/24/32px），与 Tailwind 默认值（6/8/12/16px）不同，hero 视觉全部改用任意值半径；另查明自定义 `@utility`（bg-muted 等）不支持透明度修饰符，`bg-muted/50` 等类未生成导致面板背景失效，统一改为可编译的 `bg-[var(--dt-color-bg-soft)]/NN` color-mix 任意值（同步修复 HeroStatsStrip、ValueCard、BoyaoCapabilitySection、BoyaoEfficiencyVisual 中的同类失效类；`text-highlighted/80` 同理修复）。
-8. **IsoCube 白色边线**（`fix(TASK-007.1)` `2cad87a`）：参考页 `_cubeSideFront` 不含 border-width（`border-x-primary/25` 仅设色、实际无边框），本组件 `.iso-cube__side` 基类给两面都加了 1px 边框，前面上下边框落回 currentColor（近白文字色）形成白线；border-width 仅保留在左侧面，前面背景改为可编译的 `bg-[var(--dt-color-bg-elevated)]/50`。
+7. **hero 视觉圆角与背景 1:1 复刻**（`fix(TASK-007.1)` `d19ede8`）：参考页使用 `--ui-radius: .5rem` 的半径体系（rounded-md/lg/xl/2xl = 12/16/24/32px），与 Tailwind 默认值（6/8/12/16px）不同，hero 视觉全部改用任意值半径；另查明自定义 `@utility`（bg-muted 等）不支持透明度修饰符，`bg-muted/50` 等类未生成导致面板背景失效，统一改为可编译的背景 token 透明度写法（同步修复 HeroStatsStrip、ValueCard、BoyaoCapabilitySection、BoyaoEfficiencyVisual 中的同类失效类；`text-highlighted/80` 同理修复）。
+8. **IsoCube 白色边线**（`fix(TASK-007.1)` `2cad87a`）：参考页 `_cubeSideFront` 不含 border-width（`border-x-primary/25` 仅设色、实际无边框），本组件 `.iso-cube__side` 基类给两面都加了 1px 边框，前面上下边框落回 currentColor（近白文字色）形成白线；border-width 仅保留在左侧面，前面背景改为可编译的 `bg-dt-bg-elevated/50`。
 
 修复后复跑质量门：`pnpm lint` ✅、`pnpm typecheck` ✅、`pnpm test` ✅ 8 文件 41/41、`pnpm test:visual` ✅ 9/9、`pnpm harness:engineering` ✅、`pnpm build` ✅（并核对产物 CSS 已输出对应 color-mix 规则）。
 

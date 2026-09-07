@@ -16,7 +16,7 @@ withDefaults(
   <NuxtLink :to="item.href" class="group block">
     <article>
       <div class="relative mb-4 aspect-[400/180] overflow-hidden rounded-lg">
-        <span class="absolute left-3 top-3 z-10 inline-flex select-none items-center justify-center rounded-full bg-violet-500 px-2.5 py-0.5 text-sm text-white">
+        <span class="absolute left-3 top-3 z-10 inline-flex select-none items-center justify-center rounded-full bg-primary px-2.5 py-0.5 text-sm text-white">
           {{ item.type }}
         </span>
         <img

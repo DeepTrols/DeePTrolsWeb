@@ -47,7 +47,7 @@ function hasMega(item: NavItem) {
 .site-header__nav {
   display: flex;
   align-items: center;
-  margin-left: 48px;
+  margin-left: 56px;
   min-width: 0;
 }
 
@@ -63,7 +63,7 @@ function hasMega(item: NavItem) {
 
 .site-header__nav-item {
   min-width: 0;
-  padding: 8px 0;
+  padding: 0;
 }
 
 .site-header__nav-button {
@@ -71,15 +71,16 @@ function hasMega(item: NavItem) {
   display: flex;
   align-items: center;
   isolation: isolate;
-  width: auto;
+  width: 121px;
+  height: 37px;
   gap: 6px;
   border: 0;
   background: transparent;
   color: var(--dt-color-nav-text);
   outline: none;
-  padding: 8px 16px;
+  padding: 0;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.5;
   cursor: pointer;
   transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -103,7 +104,7 @@ function hasMega(item: NavItem) {
   &:hover,
   &:focus-visible,
   &[data-state="open"] {
-    color: var(--dt-color-text-highlighted);
+    color: var(--dt-color-primary);
   }
 
   &.direct-link:hover {
@@ -119,25 +120,25 @@ function hasMega(item: NavItem) {
   }
 
   &[data-state="open"]::before {
-    background: rgba(39, 30, 53, 0.5);
+    background: transparent;
   }
 }
 
-@supports (background-color: color-mix(in oklab, #271e35 50%, transparent)) {
+@supports (background-color: color-mix(in oklab, #ffffff 50%, transparent)) {
   .site-header__nav-button[data-state="open"]::before {
-    background: color-mix(in oklab, var(--dt-color-bg-elevated) 50%, transparent);
+    background: transparent;
   }
 }
 
 @media (min-width: 1280px) {
   .site-header__nav-button {
-    padding-inline: 18px;
+    width: 121px;
   }
 }
 
 @media (min-width: 1536px) {
   .site-header__nav-button {
-    padding-inline: 22px;
+    width: 121px;
   }
 }
 

@@ -4,7 +4,7 @@ import { aboutAddress, aboutMap } from '~/data/about'
 </script>
 
 <template>
-  <section class="container pb-32 lg:pb-44" aria-labelledby="about-address-title">
+  <section class="container pb-20 lg:pb-[132px]" aria-labelledby="about-address-title">
     <div class="mb-12 lg:mb-16">
       <SectionHeader title="公司地址" title-id="about-address-title" align="center" />
     </div>
@@ -30,11 +30,11 @@ import { aboutAddress, aboutMap } from '~/data/about'
         <iframe
           :src="aboutMap.embedUrl"
           :title="aboutMap.title"
-          class="absolute inset-0 size-full opacity-80 grayscale invert"
+          class="absolute inset-0 size-full opacity-90 grayscale"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,transparent_0%,rgba(21,21,21,0.18)_62%,rgba(21,21,21,0.82)_100%)]"></div>
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,transparent_0%,rgba(255,255,255,0.12)_62%,rgba(240,245,255,0.72)_100%)]"></div>
         <div class="pointer-events-none absolute left-5 top-5 rounded-full border border-primary/20 bg-dt-bg/80 px-4 py-2 text-sm font-medium text-highlighted backdrop-blur">
           {{ aboutMap.title }}
         </div>

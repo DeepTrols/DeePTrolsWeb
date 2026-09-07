@@ -66,7 +66,7 @@ const visualComponents = {
 }
 
 .ecosystem-visual :deep(.ecosystem-visual__cloud-grid) {
-  fill: rgba(94, 78, 255, 0.1);
+  fill: rgba(26, 87, 235, 0.08);
   transition: fill 300ms ease;
 }
 
@@ -150,8 +150,8 @@ const visualComponents = {
 .ecosystem-visual :deep(.ecosystem-visual__hub-disc),
 .ecosystem-visual :deep(.ecosystem-visual__server-shell),
 .ecosystem-visual :deep(.ecosystem-visual__device-shell) {
-  fill: #151515;
-  stroke: rgba(94, 78, 255, 0.2);
+  fill: #ffffff;
+  stroke: rgba(26, 87, 235, 0.2);
   transition:
     fill 300ms ease,
     stroke 300ms ease;
@@ -162,7 +162,7 @@ const visualComponents = {
 }
 
 .ecosystem-visual :deep(.ecosystem-visual__inner-node) {
-  fill: rgba(94, 78, 255, 0.2);
+  fill: rgba(26, 87, 235, 0.16);
   transition: fill 300ms ease;
 }
 
@@ -171,8 +171,8 @@ const visualComponents = {
 }
 
 .ecosystem-visual :deep(.ecosystem-visual__cloud-icon) {
-  fill: #151515;
-  stroke: rgba(94, 78, 255, 0.2);
+  fill: #ffffff;
+  stroke: rgba(26, 87, 235, 0.2);
   stroke-width: 0.8;
   transition:
     fill 300ms ease,
@@ -188,8 +188,8 @@ const visualComponents = {
 }
 
 .ecosystem-visual :deep(.ecosystem-visual__server-row) {
-  fill: rgba(94, 78, 255, 0.03);
-  stroke: rgba(94, 78, 255, 0.15);
+  fill: rgba(26, 87, 235, 0.04);
+  stroke: rgba(26, 87, 235, 0.15);
   stroke-width: 0.1;
 }
 
@@ -240,13 +240,13 @@ const visualComponents = {
 }
 
 .ecosystem-visual :deep(.ecosystem-visual__device-line) {
-  stroke: rgba(94, 78, 255, 0.2);
+  stroke: rgba(26, 87, 235, 0.2);
   stroke-width: 0.8;
   transition: stroke 300ms ease;
 }
 
 .ecosystem-visual :deep(.ecosystem-visual__device-line--muted) {
-  stroke: rgba(94, 78, 255, 0.15);
+  stroke: rgba(26, 87, 235, 0.15);
 }
 
 @keyframes ecosystemVisualFlow {

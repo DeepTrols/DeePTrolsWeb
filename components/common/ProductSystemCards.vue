@@ -37,8 +37,8 @@ defineProps<{
 .product-system__card h3 {
   margin: 0;
   color: var(--dt-color-text-highlighted);
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   line-height: 1.4;
 }
 

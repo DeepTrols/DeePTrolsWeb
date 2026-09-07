@@ -1,6 +1,6 @@
 # 公共页面区块组件
 
-> Version: 2026-08-03
+> Version: 2026-09-07
 
 本文件约束官网后续页面复用区块的方式。除非页面需求明确提出特殊结构，否则应优先复用本文件中的公共组件，避免各页面在标题层级、间距、按钮、卡片和 hover 行为上出现偏差。
 
@@ -9,7 +9,7 @@
 
 适用场景：
 - Why、About、Product、Solution 等页面首屏。
-- 需要 EMQX 风格背景网格、左右 glow、胶囊 eyebrow、双行标题、描述与两个 CTA 的页面。
+- 需要 DeepCtrls 浅色背景网格、左右低透明蓝色 glow、胶囊 eyebrow、双行标题、描述与两个 CTA 的页面。
 
 使用要求：
 - 页面组件只传入 `badge`、`titleLine`、`titleGradient`、`description`、`actions`。
@@ -58,7 +58,7 @@
 
 使用要求：
 - 新区块优先直接使用 `SectionShell` + `SectionHeader`。
-- `SectionShell` 负责 section 标签、container 宽度、背景和 `pb-32 lg:pb-44` 等节奏。
+- `SectionShell` 负责 section 标签、container 宽度、背景和 `pb-20 lg:pb-[132px]` 等节奏。
 - `SectionHeader` 负责 eyebrow、title、subtitle、nowrap、宽度、对齐、语义标题层级和 actions slot。
 - `SectionHeading` 只用于兼容既有 HOME 组件；后续新增页面不要继续扩展它。
 
@@ -229,7 +229,7 @@
 - 需要在卡片网格后追加流程图、说明图等内容时，使用 `#after` slot，避免重复手写 section/header/card-grid 结构。
 - 需要在卡片网格前放置流程图、架构图等内容时，使用 `#before` slot；例如 DMS “监管流程”先展示流程占位，再展示阶段卡片。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive` 共同决定同一网格内的卡片高度。
-- 产品页特性区块默认不使用 `pt-24`，区块之间只保留 `pb-32 lg:pb-44` 节奏。
+- 产品页特性区块默认不使用 `pt-24`，区块之间只保留 `pb-20 lg:pb-[132px]` 节奏。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
 
 ## System Cards

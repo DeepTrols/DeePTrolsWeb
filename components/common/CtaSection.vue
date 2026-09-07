@@ -39,7 +39,7 @@ defineProps<{
 
 <style scoped lang="scss">
 .cta-section {
-  padding-bottom: 128px;
+  padding-bottom: var(--dt-space-section);
   background: var(--dt-color-bg);
   color: var(--dt-color-text);
   text-align: center;
@@ -51,18 +51,18 @@ defineProps<{
 
 h2 {
   margin: 0 0 16px;
-  color: var(--dt-color-text-highlighted);
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1.2;
+  color: #ffffff;
+  font-size: 35px;
+  font-weight: 500;
+  line-height: 1.28;
   letter-spacing: 0;
 }
 
 p {
   margin: 0 0 24px;
-  color: var(--dt-color-text);
-  font-size: 16px;
-  line-height: 24px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 15px;
+  line-height: 27px;
 }
 
 .cta-section__actions {
@@ -76,23 +76,23 @@ p {
 @media (min-width: 640px) {
   h2 {
     margin-bottom: 24px;
-    font-size: 48px;
+    font-size: 35px;
   }
 
   p {
-    font-size: 18px;
+    font-size: 15px;
   }
 }
 
 @media (min-width: 768px) {
   p {
-    font-size: 20px;
+    font-size: 15px;
   }
 }
 
 @media (min-width: 1024px) {
   .cta-section {
-    padding-bottom: 176px;
+    padding-bottom: var(--dt-space-section-lg);
   }
 }
 </style>

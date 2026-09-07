@@ -32,7 +32,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  color: var(--dt-color-text-muted);
+  color: #8a8a8a;
   font-size: 12px;
   font-weight: 500;
   line-height: 17px;
@@ -43,7 +43,7 @@
     transition: color 180ms ease;
 
     &:hover {
-      color: var(--dt-color-primary);
+      color: #ffffff;
     }
 
     &:focus-visible {

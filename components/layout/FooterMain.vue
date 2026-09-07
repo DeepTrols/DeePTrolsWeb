@@ -83,10 +83,10 @@ import { footerColumns } from '~/data/footer'
 .site-footer__column {
   h4 {
     margin: 0 0 16px;
-    color: var(--dt-color-text-highlighted);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 39px;
   }
 }
 
@@ -101,13 +101,14 @@ import { footerColumns } from '~/data/footer'
 .site-footer__link {
   display: inline-flex;
   align-items: center;
-  color: var(--dt-color-text);
+  color: #8a8a8a;
   font-size: 14px;
-  line-height: 20px;
+  font-weight: 400;
+  line-height: 34px;
   transition: color 180ms ease;
 
   &:hover {
-    color: var(--dt-color-primary);
+    color: #ffffff;
   }
 
   &:focus-visible {
@@ -126,7 +127,7 @@ import { footerColumns } from '~/data/footer'
   height: 1px;
   margin: 16px 0;
   border: 0;
-  background: var(--dt-color-line);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 @media (min-width: 768px) {

@@ -22,7 +22,7 @@ defineProps<{
 </script>
 
 <template>
-  <section class="engine-links-section dt-section relative pb-32 lg:pb-44" :aria-labelledby="titleId">
+  <section class="engine-links-section dt-section relative pb-20 lg:pb-[132px]" :aria-labelledby="titleId">
     <div class="container engine-links-section__grid">
       <div class="engine-links-section__links">
         <BaseCard v-for="link in links" :key="link.title" class="group engine-links-section__link" :href="link.href" variant="soft" padding="md">
@@ -66,14 +66,14 @@ defineProps<{
   width: 176px;
   height: 176px;
   border-radius: 9999px;
-  background: rgba(94, 78, 255, 0.08);
+  background: rgba(26, 87, 235, 0.08);
   filter: blur(48px);
   transition: background-color 500ms ease;
   pointer-events: none;
 }
 
 .engine-links-section__link:hover .engine-links-section__link-glow {
-  background: rgba(94, 78, 255, 0.16);
+  background: rgba(26, 87, 235, 0.16);
 }
 
 .engine-links-section__link-icon {

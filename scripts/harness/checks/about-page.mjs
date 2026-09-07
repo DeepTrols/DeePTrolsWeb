@@ -70,7 +70,7 @@ export function checkAboutPageContracts(ctx) {
       pageHeroStyles.includes('var(--dt-color-bg) 100%') &&
       pageHeroStyles.includes('-webkit-mask-image') &&
       pageHeroStyles.includes('object-fit: cover') &&
-      pageHeroStyles.includes('mix-blend-mode: screen'),
+      pageHeroStyles.includes('mix-blend-mode: multiply'),
     'PageHero background video must use a video mask plus dt-bg bottom overlay to avoid color seams.',
   )
   assert(

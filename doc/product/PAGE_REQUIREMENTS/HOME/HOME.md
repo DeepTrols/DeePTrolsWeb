@@ -1,6 +1,19 @@
 # HOME
 > 首页页面结构
 
+## 当前视觉基线
+
+自 `TASK-014.1` 起，HOME 与后续页面默认遵循 `https://www.deepctrls.com/deepctrls_com/` 的浅色官网基线：
+- 页面背景：`#ffffff`
+- 浅色区块：`#f0f5ff`
+- 主色：`#1a57eb`
+- 字体：`Noto Sans SC` / `Source Han Sans CN`
+- 内容容器：`1200px`，特殊宽区块 `1400px`
+- Header：`62px` 高，白色半透明背景，导航 `16px / 400`
+- 常规区块：`pb-20 lg:pb-[132px]`
+
+文档中保留的 EMQX 历史片段仅用于理解既有内容结构与交互来源；除非单独验收明确要求，否则不得继续按 EMQX Dark 的背景、字号、容器宽度和间距实现新页面。
+
 ## 页面示例
 
 ### 导航示例

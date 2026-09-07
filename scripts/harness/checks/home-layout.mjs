@@ -78,11 +78,11 @@ assert(baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 
 assert(baseCard.includes('dt-card--adaptive'), 'Product system cards must use shared adaptive card height.')
 assert(!productSystemCards.includes('min-height'), 'Product system cards must not define a fixed card height.')
 assert(
-  productFeatureGridSection.includes('SectionShell') &&
+    productFeatureGridSection.includes('SectionShell') &&
     productFeatureGridSection.includes('SectionHeader') &&
     productFeatureGridSection.includes('CardGrid') &&
     productFeatureGridSection.includes('FeatureCard') &&
-    sectionShell.includes('pb-32 lg:pb-44') &&
+    sectionShell.includes('pb-20 lg:pb-[132px]') &&
     sectionShell.includes('bg-dt-bg') &&
     !productFeatureGridSection.includes('pt-24') &&
     cardGrid.includes('md:grid-cols-2 lg:grid-cols-4') &&

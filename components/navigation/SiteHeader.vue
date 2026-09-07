@@ -175,24 +175,26 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  right: 0;
+  left: 0;
   z-index: 50;
   height: var(--dt-header-height);
-  margin-bottom: calc(var(--dt-header-height) * -1);
-  border-bottom: 1px solid #262626;
-  background: rgba(21, 21, 21, 0.95);
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid rgba(216, 222, 229, 0.72);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 20px rgba(16, 15, 20, 0.06);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
 }
 
-@supports (background-color: color-mix(in oklab, #151515 95%, transparent)) {
+@supports (background-color: color-mix(in oklab, #ffffff 88%, transparent)) {
   .site-header {
-    background: color-mix(in oklab, var(--dt-color-bg) 95%, transparent);
+    background: color-mix(in oklab, var(--dt-color-bg) 88%, transparent);
   }
 }
 
@@ -222,19 +224,11 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
   gap: 12px;
-  padding-inline: 16px;
+  padding-inline: 20px;
 
-  @media (min-width: 768px) {
-    padding-inline: 24px;
-  }
   @media (min-width: 1024px) {
-    padding-inline: 32px;
-  }
-  @media (min-width: 1280px) {
-    padding-inline: 40px;
-  }
-  @media (min-width: 1536px) {
-    padding-inline: 48px;
+    padding-right: 61px;
+    padding-left: 43px;
   }
 }
 
@@ -259,6 +253,7 @@ onBeforeUnmount(() => {
     width: 100%;
     height: auto;
     opacity: 1;
+    filter: invert(1);
   }
 }
 
@@ -267,9 +262,9 @@ onBeforeUnmount(() => {
   left: 0;
   right: 0;
   top: var(--dt-header-height);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(21, 21, 21, 0.98);
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
+  border-bottom: 1px solid rgba(216, 222, 229, 0.72);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 32px 80px rgba(16, 15, 20, 0.12);
 }
 
 .mega-enter-active,

@@ -63,13 +63,13 @@ defineProps<{
   border: 1px solid var(--dt-color-line);
   min-height: auto;
   border-radius: var(--dt-card-radius);
-  background: #181524;
+  background: #ffffff;
   padding: 22px;
 }
 
 .product-system__mobile-core {
-  border-color: rgba(166, 133, 255, 0.42);
-  background: #271e35;
+  border-color: rgba(26, 87, 235, 0.3);
+  background: var(--dt-color-bg-soft);
   text-align: center;
 
   p {

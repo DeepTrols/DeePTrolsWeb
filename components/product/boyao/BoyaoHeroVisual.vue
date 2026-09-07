@@ -41,18 +41,18 @@ const appModules: HeroAppModule[] = [
 
 const capabilityStyles = [
   {
-    border: 'border-violet-500/30',
-    bar: 'bg-violet-500',
-    iconBox: 'bg-violet-500/10',
-    icon: 'text-violet-500',
-    label: 'text-violet-500',
+    border: 'border-primary/30',
+    bar: 'bg-primary',
+    iconBox: 'bg-primary/10',
+    icon: 'text-primary',
+    label: 'text-primary',
   },
   {
-    border: 'border-violet-400/30',
-    bar: 'bg-violet-400',
-    iconBox: 'bg-violet-400/10',
-    icon: 'text-violet-400',
-    label: 'text-violet-400',
+    border: 'border-primary/25',
+    bar: 'bg-primary/80',
+    iconBox: 'bg-primary/10',
+    icon: 'text-primary',
+    label: 'text-primary',
   },
   {
     border: 'border-blue-400/30',
@@ -78,7 +78,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
     <div class="pointer-events-none relative ml-auto h-[520px] w-full max-w-[680px]">
       <div class="pointer-events-none absolute inset-0">
         <div
-          class="absolute left-1/3 top-1/3 h-[280px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-violet-500/12 via-violet-400/10 to-blue-400/10 blur-3xl"
+          class="absolute left-1/3 top-1/3 h-[280px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-primary/12 via-primary/10 to-blue-400/10 blur-3xl"
         ></div>
       </div>
 
@@ -101,7 +101,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
             <div
               v-for="item in sourceItems"
               :key="item.title"
-              class="flex items-center gap-2.5 rounded-[16px] border border-default bg-[var(--dt-color-bg-soft)]/40 px-3 py-2"
+              class="flex items-center gap-2.5 rounded-[16px] border border-default bg-dt-bg-soft/40 px-3 py-2"
             >
               <component :is="item.icon" class="size-4 shrink-0 text-default" aria-hidden="true" />
               <div class="min-w-0">
@@ -115,16 +115,16 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
 
       <!-- 中央：博曜·企业级知识管理平台 -->
       <div class="absolute left-1/2 top-1/2 w-[320px] -translate-x-1/2 -translate-y-1/2">
-        <div class="relative rounded-[32px] border border-violet-500/30 bg-violet-500/8 p-5 shadow-lg shadow-violet-500/15">
+        <div class="relative rounded-[32px] border border-primary/30 bg-primary/8 p-5 shadow-lg shadow-primary/15">
           <div
-            class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-br from-violet-500/20 via-violet-400/14 to-blue-400/16"
+            class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-br from-primary/20 via-primary/14 to-blue-400/16"
           ></div>
           <div class="relative mb-4 flex items-center justify-center">
             <div
-              class="inline-flex items-center gap-2 rounded-full border border-violet-500/50 bg-default px-4 py-1.5 shadow-sm"
+              class="inline-flex items-center gap-2 rounded-full border border-primary/50 bg-default px-4 py-1.5 shadow-sm"
             >
               <img :src="boyaoLogo" alt="博曜 logo" class="size-5" loading="lazy" />
-              <span class="text-[13px] font-semibold text-violet-500">博曜</span>
+              <span class="text-[13px] font-semibold text-primary">博曜</span>
             </div>
           </div>
           <div class="relative grid grid-cols-3 gap-2">
@@ -159,7 +159,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
                     <div
                       v-for="(dot, dotIndex) in nodeOneDots"
                       :key="dotIndex"
-                      class="size-1 animate-pulse rounded-full bg-violet-500"
+                      class="size-1 animate-pulse rounded-full bg-primary"
                       :class="[dot.opacity, dot.delay]"
                     ></div>
                   </template>
@@ -167,7 +167,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
                     <div
                       v-for="(delay, barIndex) in nodeTwoBars"
                       :key="barIndex"
-                      class="h-1 w-3 animate-pulse-bar rounded-full bg-violet-400/70"
+                      class="h-1 w-3 animate-pulse-bar rounded-full bg-primary/70"
                       :class="delay"
                     ></div>
                   </template>
@@ -181,8 +181,8 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
             </div>
           </div>
           <div class="relative mt-3 flex items-center justify-center gap-1">
-            <div class="h-px w-8 bg-linear-to-r from-transparent via-violet-500/55 to-transparent"></div>
-            <Radio class="size-3 text-violet-400/70" aria-hidden="true" />
+            <div class="h-px w-8 bg-linear-to-r from-transparent via-primary/55 to-transparent"></div>
+            <Radio class="size-3 text-primary/70" aria-hidden="true" />
             <div class="h-px w-8 bg-linear-to-r from-transparent via-blue-400/55 to-transparent"></div>
           </div>
         </div>
@@ -191,16 +191,16 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
       <!-- 右下：智能应用 / 企业场景 -->
       <div class="absolute bottom-[10px] right-[-20px] w-[440px]">
         <div
-          class="group relative overflow-hidden rounded-[24px] border border-violet-500/25 bg-default px-5 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          class="group relative overflow-hidden rounded-[24px] border border-primary/25 bg-default px-5 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
         >
-          <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-violet-500/70 to-violet-400/40"></div>
+          <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-primary/70 to-primary/40"></div>
           <div class="mb-4 flex items-center gap-3">
             <IconBox :size="40" tone="soft">
-              <Cloud class="size-5 text-violet-500" aria-hidden="true" />
+              <Cloud class="size-5 text-primary" aria-hidden="true" />
             </IconBox>
             <div>
               <div class="text-[15px] font-semibold text-highlighted">智能应用</div>
-              <div class="text-[12px] text-violet-400">企业场景</div>
+              <div class="text-[12px] text-primary">企业场景</div>
             </div>
           </div>
           <div class="grid grid-cols-12 gap-3">
@@ -212,10 +212,10 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
               class="col-span-2"
               :aria-label="module.title"
             >
-              <component :is="module.icon" class="size-5 text-violet-400" aria-hidden="true" />
+              <component :is="module.icon" class="size-5 text-primary" aria-hidden="true" />
             </IconBox>
             <div
-              class="col-span-4 flex h-14 items-center justify-center gap-2 rounded-[12px] border border-default bg-[var(--dt-color-bg-soft)]/40 px-3 text-left"
+              class="col-span-4 flex h-14 items-center justify-center gap-2 rounded-[12px] border border-default bg-dt-bg-soft/40 px-3 text-left"
             >
               <span class="text-[11px] font-semibold leading-[1.1] whitespace-nowrap text-highlighted">业务系统</span>
             </div>

@@ -4,7 +4,7 @@ import { dgpEvolutionItems } from '~/data/dgp'
 </script>
 
 <template>
-  <section class="container pb-32 lg:pb-44" aria-labelledby="dgp-evolution-title">
+  <section class="container pb-20 lg:pb-[132px]" aria-labelledby="dgp-evolution-title">
     <div class="mb-12 flex flex-col items-center gap-2 text-center lg:mb-16">
       <SectionHeader
         eyebrow="企业级数据治理"
@@ -38,7 +38,7 @@ import { dgpEvolutionItems } from '~/data/dgp'
               <p class="mt-4 text-base leading-relaxed text-muted">{{ item.description }}</p>
               <ul class="mt-6 space-y-3">
                 <li v-for="bullet in item.bullets" :key="bullet" class="flex items-start gap-3 text-sm leading-relaxed text-default">
-                  <span class="mt-2 size-1.5 shrink-0 rounded-full bg-primary shadow-[0_0_14px_rgba(94,78,255,0.65)]" aria-hidden="true"></span>
+                  <span class="mt-2 size-1.5 shrink-0 rounded-full bg-primary shadow-[0_0_14px_rgba(26,87,235,0.45)]" aria-hidden="true"></span>
                   <span>{{ bullet }}</span>
                 </li>
               </ul>

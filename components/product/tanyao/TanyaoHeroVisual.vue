@@ -35,12 +35,12 @@ const edgeNodes: EdgeNode[] = [
   {
     title: '设备接入',
     icon: Wifi,
-    border: 'border-violet-500/30',
-    bar: 'bg-violet-500',
-    iconColor: 'text-violet-500',
-    label: 'text-violet-500',
-    pulse: 'bg-violet-500',
-    pulseLine: 'bg-violet-500/40',
+    border: 'border-primary/30',
+    bar: 'bg-primary',
+    iconColor: 'text-primary',
+    label: 'text-primary',
+    pulse: 'bg-primary',
+    pulseLine: 'bg-primary/40',
   },
   {
     title: '边缘计算',
@@ -118,7 +118,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
     <div class="pointer-events-none relative ml-auto h-[600px] w-full max-w-[600px]">
       <div class="pointer-events-none absolute inset-0">
         <div
-          class="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-primary/8 via-fuchsia-500/6 to-amber-400/8 blur-3xl"
+          class="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-primary/8 via-blue-500/6 to-cyan-400/8 blur-3xl"
         ></div>
       </div>
 
@@ -126,7 +126,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
       <svg class="absolute inset-0 h-full w-full" viewBox="0 0 560 560" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
         <defs>
           <linearGradient id="tanyaoFlowGradientUp" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.6" />
+            <stop offset="0%" stop-color="#1a57eb" stop-opacity="0.6" />
             <stop offset="35%" stop-color="#d946ef" stop-opacity="0.6" />
             <stop offset="70%" stop-color="#60a5fa" stop-opacity="0.65" />
             <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.65" />
@@ -135,7 +135,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
             <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6" />
             <stop offset="35%" stop-color="#60a5fa" stop-opacity="0.6" />
             <stop offset="70%" stop-color="#d946ef" stop-opacity="0.65" />
-            <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.65" />
+            <stop offset="100%" stop-color="#1a57eb" stop-opacity="0.65" />
           </linearGradient>
           <filter id="tanyaoEdgeGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3.5" result="blur" />
@@ -151,10 +151,10 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
         <path d="M 308 68 L 308 492" stroke="url(#tanyaoFlowGradientDown)" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="6 10" fill="none">
           <animate attributeName="stroke-dashoffset" values="0;32" dur="2.8s" repeatCount="indefinite" />
         </path>
-        <circle cx="280" cy="452" r="5" fill="#8b5cf6" fill-opacity="0.7" />
+        <circle cx="280" cy="452" r="5" fill="#1a57eb" fill-opacity="0.7" />
         <circle cx="280" cy="280" r="7" fill="#d946ef" fill-opacity="0.9" />
         <circle cx="280" cy="96" r="5" fill="#60a5fa" fill-opacity="0.7" />
-        <circle cx="252" r="5" fill="#8b5cf6" filter="url(#tanyaoEdgeGlow)">
+        <circle cx="252" r="5" fill="#1a57eb" filter="url(#tanyaoEdgeGlow)">
           <animate attributeName="cy" values="492;68" dur="2.4s" repeatCount="indefinite" />
           <animate attributeName="opacity" values="0;1;1;1;0" dur="2.4s" repeatCount="indefinite" />
         </circle>
@@ -169,7 +169,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
         <div
           class="group relative overflow-hidden rounded-[24px] border border-primary/25 bg-default px-5 py-3.5 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
         >
-          <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-violet-500/70 to-blue-500/70"></div>
+          <div class="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-primary/70 to-blue-500/70"></div>
           <div class="flex items-center justify-between gap-3">
             <div class="flex items-center gap-3">
               <IconBox :size="48" tone="soft">
@@ -201,7 +201,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
       <!-- 中间卡片｜边缘层 -->
       <div class="absolute left-1/2 top-[208px] w-[504px] xl:w-[560px] -translate-x-1/2">
         <div class="relative rounded-[32px] border border-primary/20 bg-primary/5 p-4 shadow-lg shadow-primary/10">
-          <div class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-b from-violet-500/10 via-fuchsia-500/6 to-amber-400/8"></div>
+          <div class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-b from-primary/10 via-blue-500/6 to-cyan-400/8"></div>
           <div class="relative mb-4 flex items-center justify-center">
             <div class="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-default px-4 py-1.5 shadow-sm">
               <Cpu class="size-5 text-primary" aria-hidden="true" />
@@ -229,7 +229,7 @@ const brokerBars = ['[animation-delay:0.1s]', '[animation-delay:0.2s]', '[animat
                   <div
                     v-for="(dot, dotIndex) in protocolDots"
                     :key="dotIndex"
-                    class="size-1.5 animate-pulse rounded-full bg-violet-500 [animation-duration:1.1s]"
+                    class="size-1.5 animate-pulse rounded-full bg-primary [animation-duration:1.1s]"
                     :class="[dot.opacity, dot.delay]"
                   ></div>
                 </div>

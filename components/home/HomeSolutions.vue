@@ -98,8 +98,8 @@ const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution
 }
 
 .solutions :deep(.section-heading__subtitle) {
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 15px;
+  line-height: 27px;
 }
 
 .solutions__tabs {
@@ -127,7 +127,7 @@ const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution
   justify-content: flex-end;
   overflow: hidden;
   border-radius: var(--dt-ui-radius);
-  background: #181524;
+  background: var(--dt-color-bg-soft);
 }
 
 .solutions__panel img {

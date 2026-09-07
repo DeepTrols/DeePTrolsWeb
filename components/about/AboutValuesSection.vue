@@ -3,7 +3,7 @@ import { aboutValues } from '~/data/about'
 </script>
 
 <template>
-  <section class="container pb-32 lg:pb-48" aria-labelledby="about-values-title">
+  <section class="container pb-20 lg:pb-[132px]" aria-labelledby="about-values-title">
     <h2
       id="about-values-title"
       class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted md:mb-6 sm:text-5xl"
@@ -45,8 +45,8 @@ import { aboutValues } from '~/data/about'
 <style scoped lang="scss">
 .about-value-card {
   background:
-    radial-gradient(120% 120% at 100% 0%, rgba(94, 78, 255, 0.22), transparent 58%),
-    linear-gradient(142deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+    radial-gradient(120% 120% at 100% 0%, rgba(26, 87, 235, 0.14), transparent 58%),
+    linear-gradient(142deg, rgba(255, 255, 255, 0.9), rgba(240, 245, 255, 0.62)),
     var(--dt-color-bg-soft);
   box-shadow: inset 0 0 0 1px var(--dt-color-line);
 }
@@ -59,8 +59,8 @@ import { aboutValues } from '~/data/about'
 
 .about-value-card__reveal {
   background:
-    radial-gradient(90% 80% at 80% 0%, rgba(86, 154, 255, 0.18), transparent 60%),
-    linear-gradient(180deg, rgba(39, 30, 53, 0.98), rgba(24, 21, 36, 0.98));
+    radial-gradient(90% 80% at 80% 0%, rgba(26, 87, 235, 0.14), transparent 60%),
+    linear-gradient(180deg, rgba(240, 245, 255, 0.98), rgba(255, 255, 255, 0.98));
 }
 
 .about-value-card:hover .about-value-card__face,

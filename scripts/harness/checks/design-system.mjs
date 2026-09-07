@@ -7,8 +7,10 @@ assert(!packageJson.includes('"three"'), 'Package still contains three after Her
 assert(!packageJson.includes('@types/three'), 'Package still contains @types/three after Hero canvas removal.')
 
 for (const token of [
-  '--dt-color-bg: #151515',
-  '--dt-container: 107.5rem',
+  '--dt-color-bg: #ffffff',
+  '--dt-color-footer: #191a1e',
+  '--dt-container: 1200px',
+  '--dt-container-wide: 1400px',
   '.dt-button',
   '.dt-tab-list',
   '.dt-tab',
@@ -25,6 +27,7 @@ for (const token of [
 for (const token of [
   '--color-primary: var(--dt-color-primary)',
   '--color-dimmed: var(--dt-color-text-muted)',
+  '--font-sans: "Noto Sans SC", "Source Han Sans CN"',
 ]) {
   assert(tailwind.includes(token), `Missing Tailwind v4 color alias: ${token}`)
 }
@@ -56,7 +59,7 @@ assert(sectionHeader.includes('slots.actions'), 'SectionHeader must support an a
 assert(sectionHeader.includes('section-heading--nowrap-subtitle'), 'SectionHeader nowrap mode must expose a desktop-wide wrapper class.')
 assert(sectionHeader.includes('max-width: none'), 'SectionHeader nowrap mode must remove the desktop max-width limit.')
 assert(sectionHeader.includes('class="section-heading dt-section-heading"'), 'SectionHeader must own the canonical section heading classes.')
-assert(sectionShell.includes('pb-32 lg:pb-44') && sectionShell.includes('container') && sectionShell.includes('max-w-[107.5rem]'), 'SectionShell must centralize section spacing and container widths.')
+assert(sectionShell.includes('pb-20 lg:pb-[132px]') && sectionShell.includes('container') && sectionShell.includes('max-w-[1400px]'), 'SectionShell must centralize DeepCtrls section spacing and container widths.')
 assert(baseCard.includes('NuxtLink') && baseCard.includes('dt-card--adaptive') && baseCard.includes('dt-card__accent'), 'BaseCard must centralize card shell, link semantics, accent, and adaptive height.')
 assert(iconBox.includes('dt-icon-box') && iconBox.includes('dt-icon-box--gradient'), 'IconBox must centralize icon shell classes and gradient tone.')
 assert(
@@ -117,7 +120,7 @@ assert(
     !alternatingTimelineSection.includes('BaseCard') &&
     !alternatingTimelineSection.includes('IconBox') &&
     !alternatingTimelineSection.includes('<style'),
-  'AlternatingTimelineSection must centralize the EMQX Edge-like Tailwind-only numbered timeline without cards or icons.',
+  'AlternatingTimelineSection must centralize the numbered timeline without cards or icons.',
 )
 assert(
   compatibilityGridSection.includes('SectionHeader') &&

@@ -107,7 +107,7 @@ Hero 允许透传 `align`、`visualSize`、`flushBottom`、`flushVisualEnd`，�
 
 ## Style Rules
 - 不在具体解决方案页面重新定义 Header、Footer、按钮、卡片、Tab、Section Heading、CTA 样式。
-- 常规区块间距遵循 `pb-32 lg:pb-44`。
+- 常规区块间距遵循 `pb-20 lg:pb-[132px]`。
 - Section 标题由 `SectionHeader` 或上表公共组件内部承载。
 - 卡片圆角、hover、icon 外框必须走 `dt-card`、`dt-product-card`、`dt-icon-box` 等公共层。
 - 页面专属视觉可以使用 slot，但运行时资产只能来自 `assets/**` 或 `public/**`。

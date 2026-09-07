@@ -51,7 +51,7 @@
 
   h3 {
     margin: 0;
-    color: var(--dt-color-text-highlighted);
+    color: #ffffff;
     font-size: 24px;
     font-weight: 600;
     line-height: 32px;
@@ -85,9 +85,9 @@
     appearance: none;
     border: 0;
     border-radius: 6px;
-    background: var(--dt-color-bg);
-    box-shadow: inset 0 0 0 1px var(--dt-color-line-strong);
-    color: var(--dt-color-text-highlighted);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    color: #ffffff;
     font-size: 16px;
     line-height: 24px;
     outline: none;

@@ -58,7 +58,7 @@ export function registerReportVisualContracts() {
     expect(filter).toContain('data-slot="leadingIcon"')
     expect(filter).toContain("emit('update:searchQuery'")
 
-    expect(section).toContain('class="container pb-32"')
+    expect(section).toContain('class="container pb-20 lg:pb-[132px]"')
     expect(section).toContain('class="mb-24"')
     expect(section).toContain('class="grid grid-cols-1 gap-8 md:grid-cols-3"')
     expect(section).toContain('ReportResourceCard')
@@ -73,7 +73,7 @@ export function registerReportVisualContracts() {
     expect(card).toContain('class="group block"')
     expect(card).toContain('class="relative mb-4 aspect-[400/180] overflow-hidden rounded-lg"')
     expect(card).toContain('absolute left-3 top-3 z-10 inline-flex')
-    expect(card).toContain('rounded-full bg-violet-500 px-2.5 py-0.5 text-sm text-white')
+    expect(card).toContain('rounded-full bg-primary px-2.5 py-0.5 text-sm text-white')
     expect(card).toContain('width="400"')
     expect(card).toContain('height="180"')
     expect(card).toContain(':loading="eager ? \'eager\' : \'lazy\'"')

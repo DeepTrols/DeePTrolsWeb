@@ -71,7 +71,7 @@ export function checkServiceReportContracts(ctx) {
     'Report filter bar must match the requested tab/search DOM and classes.',
   )
   assert(
-    reportResourcesSection.includes('class="container pb-32"') &&
+    reportResourcesSection.includes('class="container pb-20 lg:pb-[132px]"') &&
       reportResourcesSection.includes('class="mb-24"') &&
       reportResourcesSection.includes('class="grid grid-cols-1 gap-8 md:grid-cols-3"') &&
       reportResourcesSection.includes('ReportResourceCard') &&
@@ -86,7 +86,7 @@ export function checkServiceReportContracts(ctx) {
   assert(
     reportResourceCard.includes('class="group block"') &&
       reportResourceCard.includes('class="relative mb-4 aspect-[400/180] overflow-hidden rounded-lg"') &&
-      reportResourceCard.includes('rounded-full bg-violet-500 px-2.5 py-0.5 text-sm text-white') &&
+      reportResourceCard.includes('rounded-full bg-primary px-2.5 py-0.5 text-sm text-white') &&
       reportResourceCard.includes('width="400"') &&
       reportResourceCard.includes('height="180"') &&
       reportResourceCard.includes('object-cover transition-transform duration-300 group-hover:scale-105') &&
