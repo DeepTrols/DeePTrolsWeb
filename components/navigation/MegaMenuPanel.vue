@@ -2,7 +2,6 @@
 import { ArrowRight } from '@lucide/vue'
 import MegaPanelNavLink from '~/components/navigation/MegaPanelNavLink.vue'
 import MegaPanelProduct from '~/components/navigation/MegaPanelProduct.vue'
-import MegaPanelSolutions from '~/components/navigation/MegaPanelSolutions.vue'
 import type { NavColumn, NavItem, NavLink } from '~/data/navigation'
 
 defineProps<{
@@ -20,8 +19,7 @@ function linksFor(column: NavColumn): NavLink[] {
 
 <template>
   <div class="container mega-panel" :class="`mega-panel--${item.layout ?? 'default'}`">
-    <MegaPanelProduct v-if="item.layout === 'product'" :item="item" @navigate="$emit('navigate')" />
-    <MegaPanelSolutions v-else-if="item.layout === 'solutions'" :item="item" @navigate="$emit('navigate')" />
+    <MegaPanelProduct v-if="item.layout === 'product' || item.layout === 'solutions'" :item="item" @navigate="$emit('navigate')" />
 
     <div v-else-if="item.columns?.length" class="mega-panel__columns">
       <section v-for="column in item.columns" :key="column.title" class="mega-panel__column">
@@ -86,12 +84,7 @@ function linksFor(column: NavColumn): NavLink[] {
   padding-block: 30px 34px;
 }
 
-.mega-panel--solutions {
-  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
-}
-
-.mega-panel__columns--product,
-.mega-panel__columns--solutions {
+.mega-panel__columns--product {
   min-height: 268px;
 }
 

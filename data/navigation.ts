@@ -44,16 +44,10 @@ export interface NavFeature {
   icon: Component
 }
 
-export interface NavSummary {
-  title: string
-  description: string[]
-}
-
 export interface NavItem {
   label: string
   href: string
   layout?: 'product' | 'solutions'
-  summary?: NavSummary
   columns?: NavColumn[]
   features?: NavFeature[]
   featuresTitle?: string
@@ -151,13 +145,6 @@ export const primaryNavigation: NavItem[] = [
     label: '解决方案',
     href: '/solutions',
     layout: 'solutions',
-    summary: {
-      title: '解决方案',
-      description: [
-        '多行业场景解决方案赋能企业AI落地',
-        '涵盖30+的应用场景，以数据与知识底座桥接企业业务与人工智能',
-      ],
-    },
     columns: [
       {
         title: '应用场景',

@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, existsSync, join, root, tokens, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, megaPanelSolutions, homeCta, homeCases, homeCaseSlide, homeInsights, homeSolutions, productSystem, homeProductSystemFlow, homeProductSystemMobileFlow, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData } = ctx
+  const { assert, existsSync, join, root, tokens, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeCases, homeCaseSlide, homeInsights, homeSolutions, productSystem, homeProductSystemFlow, homeProductSystemMobileFlow, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -130,11 +130,11 @@ assert(
 )
 assert(
   megaMenu.includes('MegaPanelProduct') &&
-    megaMenu.includes('MegaPanelSolutions') &&
+    megaMenu.includes("item.layout === 'product' || item.layout === 'solutions'") &&
     megaPanelProduct.includes('mega-panel__category') &&
-    megaPanelSolutions.includes('mega-panel__summary') &&
+    !megaMenu.includes('MegaPanelSolutions') &&
     !megaMenu.includes('MegaPanelServices'),
-  'MegaMenu product/solutions layouts must stay in dedicated subcomponents and the services panel must stay removed.',
+  'MegaMenu product/solutions layouts must share the product panel subcomponent and the legacy solutions/services panels must stay removed.',
 )
 assert(footerSubscribe.includes('dt-button dt-button--primary dt-button--lg'), 'Footer subscribe button must reuse dt-button classes.')
 assert(
