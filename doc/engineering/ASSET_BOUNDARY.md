@@ -26,6 +26,8 @@
 | `assets/images/brand/` | DeepTrols 子品牌与模型生态 Logo |
 | `assets/images/compatibility/` | 博曜国产化适配 Logo |
 | `assets/images/why/` | Why DeepTrols 页面服务示意图 |
+| `public/images/brand/` | Header / Footer 等需要稳定 URL 的品牌 Logo |
+| `public/images/home/` | HOME 首屏 Banner 等需要稳定 URL 的公开图片 |
 | `public/images/about/` | About Us 页面 Hero 背景视频 |
 | `public/images/home/solutions/` | HOME 解决方案卡片图片 |
 

@@ -9,11 +9,15 @@ export function registerCoreVisualContracts() {
     const hero = readComponent('components/home/HomeHero.vue')
     expect(hero).not.toContain('HeroTresBackground')
     expect(hero).not.toContain('TresCanvas')
-    expect(page).toContain('class="home-hero-deliverables__video"')
-    expect(page).toContain('home-hero-bg.mp4')
+    expect(page).not.toContain('class="home-hero-deliverables__video"')
+    expect(page).not.toContain('home-hero-bg.mp4')
+    expect(hero).toContain('aspect-ratio: 1920 / 655')
+    expect(hero).toContain('url("/images/home/deepctrls-hero-ai.png")')
 
     for (const asset of [
-      'public/videos/home-hero-bg.mp4',
+      'public/images/home/deepctrls-hero-ai.png',
+      'public/images/brand/deeptrols-logo-black.png',
+      'public/images/brand/deeptrols-logo-white.png',
       'public/images/home/solutions/industrial.K00G2HaS.png',
       'public/images/home/solutions/smart-env.CWc2pooP.png',
       'public/images/home/solutions/smart-energy.DHKY-NE1.png',

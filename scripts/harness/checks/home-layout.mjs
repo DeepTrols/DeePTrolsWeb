@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, existsSync, join, root, tokens, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeCases, homeCaseSlide, homeInsights, homeSolutions, productSystem, homeProductSystemFlow, homeProductSystemMobileFlow, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData } = ctx
+  const { assert, existsSync, join, root, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeCases, homeCaseSlide, homeInsights, homeSolutions, productSystem, homeProductSystemFlow, homeProductSystemMobileFlow, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -124,9 +124,25 @@ assert(
     header.includes('SiteHeaderMobileNav') &&
     header.includes('SiteHeaderMenuButton') &&
     headerDesktopNav.includes('<div style="position:relative;">') &&
-    headerActions.includes('登录OPS') &&
+    header.includes('/images/brand/deeptrols-logo-white.png') &&
+    header.includes('/images/brand/deeptrols-logo-black.png') &&
+    header.includes('has-mega') &&
+    headerActions.includes('免费获取专属方案') &&
+    headerActions.includes('site-header__lang-switch') &&
+    !headerActions.includes('GitHub') &&
+    !headerActions.includes('登录OPS') &&
     headerMobileNav.includes('mobile-navigation'),
-  'Header must remain split into desktop nav, actions, menu button, and mobile nav subcomponents.',
+  'Header must remain split into desktop nav, actions, menu button, and mobile nav subcomponents with the DeepCtrls CTA/language action set.',
+)
+assert(
+  siteHeaderStyles.includes('z-index: 1000') &&
+    siteHeaderStyles.includes('padding-right: 61px') &&
+    siteHeaderStyles.includes('padding-left: 43px') &&
+    siteHeaderStyles.includes('height: 48px') &&
+    siteHeaderStyles.includes('background: transparent') &&
+    siteHeaderStyles.includes('background: rgba(0, 0, 0, 0.4)') &&
+    siteHeaderStyles.includes('background: rgba(255, 255, 255, 0.98)'),
+  'Header global SCSS must preserve the DeepCtrls fixed transparent/dark-hover/white-mega visual states.',
 )
 assert(
   megaMenu.includes('MegaPanelProduct') &&

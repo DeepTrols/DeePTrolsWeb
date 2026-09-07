@@ -162,7 +162,7 @@ AI 工具生成页面时，应遵循以下原则：
 ## References
 
 设计参考：
-- https://www.emqx.com/zh Dark 模式
+- https://www.deepctrls.com/deepctrls_com/
 
 仅参考布局节奏、导航交互、字体层级、间距、卡片比例、背景处理、过渡时长和响应式行为。禁止复制具体内容、源代码、品牌元素或专有资产。
 

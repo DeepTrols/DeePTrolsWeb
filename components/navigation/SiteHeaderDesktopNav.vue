@@ -47,7 +47,7 @@ function hasMega(item: NavItem) {
 .site-header__nav {
   display: flex;
   align-items: center;
-  margin-left: 56px;
+  margin-left: 0;
   min-width: 0;
 }
 
@@ -76,7 +76,7 @@ function hasMega(item: NavItem) {
   gap: 6px;
   border: 0;
   background: transparent;
-  color: var(--dt-color-nav-text);
+  color: inherit;
   outline: none;
   padding: 0;
   font-size: 16px;
@@ -124,25 +124,25 @@ function hasMega(item: NavItem) {
   }
 }
 
-@supports (background-color: color-mix(in oklab, #ffffff 50%, transparent)) {
-  .site-header__nav-button[data-state="open"]::before {
-    background: transparent;
-  }
-}
-
 @media (min-width: 1280px) {
   .site-header__nav-button {
     width: 121px;
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 1440px) {
   .site-header__nav-button {
     width: 121px;
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1439px) {
+  .site-header__nav-button {
+    width: 104px;
+  }
+}
+
+@media (max-width: 1260px) {
   .site-header__nav {
     display: none;
   }

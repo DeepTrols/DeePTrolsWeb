@@ -14,13 +14,12 @@ Token Hub
 ```
 
 Header 约束：
-- Header logo 使用 `/logo-while.svg`，宽度 `200px`。
+- Header logo 使用运行时品牌图片：HOME 暗色 Hero 顶部默认 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页切换为 `/images/brand/deeptrols-logo-black.png`。
 - 主导航 DOM 必须保持 `div style="position:relative;" > ul > li > button`。
 - 主导航 button 内不渲染 SVG。
-- Header 按 DeepCtrls 参考站使用 `fixed` 全视口宽度，桌面内边距为左 `43px`、右 `61px`；正文内容区仍使用 `1200px` `.container`。
-- Header 高度为 `62px`，背景为白色半透明，导航文字 `16px / 400`，hover 切换为主色 `#1a57eb`。
-- Header 右侧固定为 GitHub SVG、语言切换 SVG、`登录OPS`；不展示 Header 级 `免费咨询`。
-- GitHub SVG 与语言切换 SVG 使用 `size-5`，`登录OPS` 使用 `text-sm` 等效字号，三者 hover 均切换主色。
+- Header 按 DeepCtrls 参考站使用 `fixed` 全视口宽度，桌面内边距为左 `43px`、右 `61px`；正文内容区使用 `--dt-page-gutter` 推导出的 `.container` 宽度。
+- Header 高度为 `62px`，HOME 首屏顶部默认透明，hover 时为深色半透明；滚动、Mega 展开或普通内页为白色半透明，导航文字 `16px / 400`，hover 切换为主色 `#1a57eb`。
+- Header 右侧固定为「免费获取专属方案」与「CN ｜ EN」，不展示 GitHub SVG、语言切换 SVG、`登录OPS` 或 Header 级 `免费咨询`。
 - Mega Menu 仅 `产品 / 解决方案` 展示；鼠标离开按钮和面板后必须收回。
 - `Token Hub`（`/services/token-hub`）与 `资源`（`/resources/reports`）为顶级直链，不展示 Mega Menu。
 ---

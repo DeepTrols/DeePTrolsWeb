@@ -3,13 +3,13 @@
 
 ## 当前视觉基线
 
-自 `TASK-014.1` 起，HOME 与后续页面默认遵循 `https://www.deepctrls.com/deepctrls_com/` 的浅色官网基线：
+自 `TASK-014.2` 起，HOME 与后续页面默认遵循 `https://www.deepctrls.com/deepctrls_com/` 的浅色官网基线：
 - 页面背景：`#ffffff`
 - 浅色区块：`#f0f5ff`
 - 主色：`#1a57eb`
-- 字体：`Noto Sans SC` / `Source Han Sans CN`
-- 内容容器：`1200px`，特殊宽区块 `1400px`
-- Header：`62px` 高，白色半透明背景，导航 `16px / 400`
+- 字体：`Source Han Sans CN` / `Noto Sans SC`
+- 内容容器：参考 DeepCtrls 横向 gutter，默认 `calc(100% - (clamp(48px, 13.23vw, 254px) * 2))`，Hero 文案区为 `calc(100% - (clamp(48px, 10.42vw, 200px) * 2))`
+- Header：`62px` 高，HOME 顶部透明白 Logo，hover 深色半透明；Mega、滚动与普通内页为白底黑 Logo，导航 `16px / 400`
 - 常规区块：`pb-20 lg:pb-[132px]`
 
 文档中保留的 EMQX 历史片段仅用于理解既有内容结构与交互来源；除非单独验收明确要求，否则不得继续按 EMQX Dark 的背景、字号、容器宽度和间距实现新页面。
@@ -19,12 +19,12 @@
 ### 导航示例
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│            logo    Why DeepTrols  产品  解决方案  Token Hub  资源  关于我们                            [github svg] [中英文切换svg] [登录OPS]                      │
+│            logo    Why DeepTrols  产品  解决方案  Token Hub  资源  关于我们                            [免费获取专属方案] [CN ｜ EN]                                │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
-Header logo 地址：`DeepTrolsWeb/public/logo-while.svg`，当前 Header 宽度为 `200px`。Footer logo 同样使用 `logo-while.svg`，宽度为 `240px`。
+Header logo 地址：默认暗色 Hero 顶部使用 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页使用 `/images/brand/deeptrols-logo-black.png`。Footer logo 当前宽度为 `240px`。
 
-Header 结构与交互必须与 `doc/product/NAVIGATION.md` 保持一致：主导航 DOM 为 `div style="position:relative;" > ul > li > button`，button 内不渲染 SVG；右侧为 GitHub SVG、语言切换 SVG、`登录OPS`，不展示 Header 级 `免费咨询`。
+Header 结构与交互必须与 `doc/product/NAVIGATION.md` 保持一致：主导航 DOM 为 `div style="position:relative;" > ul > li > button`，button 内不渲染 SVG；右侧为「免费获取专属方案」与「CN ｜ EN」。
 ### banner示例
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -32,24 +32,20 @@ Header 结构与交互必须与 `doc/product/NAVIGATION.md` 保持一致：主�
 │                                                                                                                                                                 │ 
 │                                                                                                                                                                 │ 
 │                                                                                                                                                                 │ 
-│                                                              构建企业级AI能力体系  让智能成为业务增长的新引擎                                                          │ 
+│                                                              构建企业级AI能力体系                                                                                     │ 
+│                                                              让智能成为业务增长的新引擎                                                                                │ 
 │                                                             在AI时代，企业不再需要更多工具，而是需要可落地的结果                                                        │ 
 │                                                                                                                                                                 │ 
-│                                                                          [button 免费咨询]                                                                       │ 
+│                                                                        [button 免费获取专属方案]                                                                    │ 
 │                                                                                                                                                                 │  
 │─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────│ 
 │                                                                 深受数据和人工智能基础设施领域领导者的信赖                                                             │ 
 │    [武汉大数据logo]   [一汽丰田logo]   [同仁堂健康logo]    [广药白云山logo]   [岚图汽车logo]    [赛睿logo]    [伟创力logo]     [北京航空航天大学logo]     [中国地质大学logo]  │ 
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
-- 武汉大数据logo:`doc/product/PAGE_REQUIREMENTS/HOME/imgs/logos/logo-大数据 1.png`
-- 一汽丰田logo：`doc/product/PAGE_REQUIREMENTS/HOME/imgs/logos/logo-yiqi 1.png`
-- 同仁堂健康logo:`doc/product/PAGE_REQUIREMENTS/HOME/imgs/logos/tongrentanglogo 1.png`
-- 北京航空航天大学logo:`doc/product/PAGE_REQUIREMENTS/HOME/imgs/logos/logo-北航 1.png`
+客户 logo strip 为独立模块，不属于 Hero 背景层；首页首屏 Hero 只负责背景图、标题、描述与 CTA。
 
-其他logo先使用占位符
-
-banner与三大业务方向外层背景要求：在 `home-hero` 与区域一外层使用 `public/videos/home-hero-bg.mp4` 作为原生 video 背景（`preload="metadata"`，挂载后按需播放），不使用 canvas；视频上方增加遮罩，基础颜色为当前页面背景色 40%，顶部渐变接近 Header 色，底部渐变接近页面背景色。
+banner 背景要求：参考 DeepCtrls 首页 `<section class="home-hero">` 的首屏比例、文字位置和 CTA 节奏，使用 `/images/home/deepctrls-hero-ai.png` 作为背景图，叠加左侧黑色线性遮罩；Hero 与区域一不再共用视频背景，不使用 canvas / TresJS。
 
 ### 区域一：三大业务方向
 参考https://www.emqx.com/zh 中` <section class="container pb-32 lg:pb-44"><div class="flex flex-col lg:flex-row items-stretch overflow-hidden rounded-lg _bg_yva34_2"><div class="hidden lg:block lg:w-[40%] relative overflow-hidden min-h-[300px]"><img src="https://www.emqx.com/_nuxt/customer-spotlight-geely-bg.a22UmRF0.png" alt="吉利 case study" class="absolute inset-0 w-full h-full object-cover" loading="lazy">`部分。

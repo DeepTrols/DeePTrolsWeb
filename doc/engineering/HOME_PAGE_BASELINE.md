@@ -19,18 +19,18 @@
 ---
 ## Visual Baseline
 1. 页面背景使用 `#ffffff`，浅色区块使用 `#f0f5ff`，表单/轻面使用 `#edf2fa`。
-2. 全站内容区默认使用 `--dt-container: 1200px` + `20px` 横向 padding；特殊宽区块使用 `--dt-container-wide: 1400px`。
+2. 全站内容区默认参考 DeepCtrls 的横向 gutter 节奏：`--dt-page-gutter: clamp(48px, 13.23vw, 254px)`，`--dt-container: calc(100% - (var(--dt-page-gutter) * 2))`，容器不再使用固定 `1200px` 上限；Hero 文案区使用 `--dt-hero-gutter: clamp(48px, 10.42vw, 200px)`。
 3. 常规页面 Hero 外层 section 不写局部 padding，内部 `.container` 使用 Tailwind v4 utility `pt-[112px] pb-20 lg:pt-[132px] lg:pb-24`。
 4. 常规页面 Hero 后续模块统一使用 `dt-section relative pb-20 lg:pb-[132px]`，不要在页面 scoped CSS 中重复声明 section `padding-bottom`。
-5. Header 高度固定为 `62px`，使用 `fixed` 全视口顶部、白色半透明背景、`15px` backdrop blur、弱边框和轻阴影。
+5. Header 高度固定为 `62px`，使用 `fixed` 全视口顶部，层级为 `z-index: 1000`；HOME 首屏顶部默认透明并使用白色 Logo，Header hover 使用深色半透明背景，滚动、Mega 展开或普通内页使用白色半透明背景与黑色 Logo。
 6. Header 是全视口宽度，内部 padding 按 DeepCtrls Header 节奏：桌面 `padding-left: 43px`、`padding-right: 61px`；普通页面内容仍使用 `.container`。
-7. Header logo 使用 `/logo-while.svg`，当前宽度为 `200px`；浅色 Header 下通过样式滤镜保证可读。Footer logo 当前宽度为 `240px`。
+7. Header logo 使用运行时品牌图：默认暗色 Hero 顶部为 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页为 `/images/brand/deeptrols-logo-black.png`。Footer logo 当前宽度为 `240px`。
 8. Footer 使用 HOME 当前结构：订阅区、分隔线、`site-footer__main`、与 main 平级的 `site-footer__socials`、底部分隔线、备案与版权；Footer 背景为 `#191a1e`。
-9. HOME Hero 与区域一共享视频背景：`public/videos/home-hero-bg.mp4`（`preload="metadata"` + 挂载后按需播放）；Hero 内不得恢复 canvas / TresJS。
+9. HOME Hero 参考 DeepCtrls 首页首屏：`aspect-ratio: 1920 / 655`，使用 `/images/home/deepctrls-hero-ai.png` 作为背景图并叠加左侧黑色线性遮罩；Hero 与区域一不再共用视频背景，Hero 内不得恢复 canvas / TresJS。
 
 ---
 ## Typography
-1. 全局字体使用 `"Noto Sans SC", "Source Han Sans CN", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`，与 `assets/scss/main.scss` 中 `:root` 保持一致。
+1. 全局字体使用 `"Source Han Sans CN", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`，与 `assets/scss/main.scss` 中 `:root` 保持一致。
 2. Section 标题默认使用 `SectionHeading`：
    - eyebrow：`14px / 500 / uppercase`
    - title：`35px / 500 / 1.28`

@@ -32,7 +32,7 @@ defineEmits<{
   border: 0;
   border-radius: var(--dt-radius-md);
   background: transparent;
-  color: #ffffff;
+  color: inherit;
   padding: 6px;
   transition:
     background-color 150ms ease,
@@ -43,7 +43,7 @@ defineEmits<{
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1260px) {
   .site-header__menu-button {
     display: inline-flex;
   }

@@ -3,6 +3,7 @@ import { readComponent } from '../../utils'
 export function loadHomeVisualSources() {
     const tailwind = readComponent('assets/css/tailwind.css')
     const tokens = readComponent('assets/scss/main.scss')
+    const siteHeaderStyles = readComponent('assets/scss/components/_site-header.scss')
     const page = readComponent('pages/index.vue')
     const header = readComponent('components/navigation/SiteHeader.vue')
     const headerDesktopNav = readComponent('components/navigation/SiteHeaderDesktopNav.vue')
@@ -55,6 +56,7 @@ export function loadHomeVisualSources() {
   return {
     tailwind,
     tokens,
+    siteHeaderStyles,
     page,
     header,
     headerDesktopNav,

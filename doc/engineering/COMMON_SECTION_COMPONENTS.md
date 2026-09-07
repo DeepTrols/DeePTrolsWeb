@@ -59,6 +59,7 @@
 使用要求：
 - 新区块优先直接使用 `SectionShell` + `SectionHeader`。
 - `SectionShell` 负责 section 标签、container 宽度、背景和 `pb-20 lg:pb-[132px]` 等节奏。
+- `SectionShell` 内部容器使用 `w-[var(--dt-container-wide)] max-w-none px-0`；普通页面 `.container` 使用 `--dt-container`，两者都遵循 DeepCtrls 横向 gutter 基线，不再写固定 `1200px / 1400px` 宽度。
 - `SectionHeader` 负责 eyebrow、title、subtitle、nowrap、宽度、对齐、语义标题层级和 actions slot。
 - `SectionHeading` 只用于兼容既有 HOME 组件；后续新增页面不要继续扩展它。
 
@@ -149,8 +150,8 @@
 - 不包含 Solutions、Cases、Insights、Deliverables 等媒体卡、走马灯卡或视觉展示面板。
 
 使用要求：
-- Card 外框圆角统一走全局变量：`--dt-card-radius: var(--dt-radius-lg)`，实际为 16px。
-- Icon 外框圆角统一走全局变量：`--dt-icon-box-radius: var(--dt-radius-md)`，实际为 12px。
+- Card 外框圆角统一走全局变量：`--dt-card-radius: var(--dt-radius-lg)`，当前实际为 13px。
+- Icon 外框圆角统一走全局变量：`--dt-icon-box-radius: var(--dt-radius-md)`，当前实际为 8px。
 - 普通信息卡不得写固定高度或固定 `min-height`；需要同一行等高时使用 grid 的 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive`。
 - 普通信息卡 hover 统一走 `.dt-card` / `.dt-product-card` / `.dt-ecosystem-card`，不要在组件内重复写 `transform`、`border-color`、`box-shadow`。
 - 功能卡默认使用 `.dt-card dt-card--adaptive dt-card--feature`；轻量链接/服务卡使用 `.dt-card dt-card--soft`。

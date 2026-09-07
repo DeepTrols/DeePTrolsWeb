@@ -25,7 +25,7 @@
   --radius-dt-md: var(--dt-radius-md);
   --radius-dt-lg: var(--dt-radius-lg);
   --radius-dt-ui: var(--dt-ui-radius);
-  --font-sans: "Noto Sans SC", "Source Han Sans CN", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Source Han Sans CN", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 @theme {
