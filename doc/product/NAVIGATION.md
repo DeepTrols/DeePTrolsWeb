@@ -1,5 +1,5 @@
 # Navigation
-> Version: 1.4
+> Version: 1.5
 ---
 
 ## Primary Navigation
@@ -40,14 +40,14 @@ Header 约束：
 │   构建面向 AI 的企业数据基础设施          │   构建高质量企业数据体系
 │   博曜 ｜ 知识中枢 >                      │   数曜·数据标签平台 >
 │   让企业知识可沉淀、可理解、可调用        │   为AI提供高质量训练数据
-│   核心产品 >                              │   数曜·数据开发平台 >
-│   智曜 ｜ 智能引擎 >                      │   支持数据集成、开发与调度
-│   汇聚算力与模型能力，驱动企业智能应用    │   数曜·数据要素监管平台 >
-│   探曜 ｜ 智联万物 >                      │   支撑数据要素合规监管
-│   连接设备与场景，让 AI 感知真实世界
+│   智曜 ｜ 智能引擎 >                      │   数曜·数据开发平台 >
+│   汇聚算力与模型能力，驱动企业智能应用    │   支持数据集成、开发与调度
+│   探曜 ｜ 智联万物 >                      │   数曜·数据要素监管平台 >
+│   连接设备与场景，让 AI 感知真实世界      │   支撑数据要素合规监管
 ```
-- 桌面 Mega 采用 DeepCtrls 式双栏联动：左栏为 5 个品类入口（`数曜 ｜ 数智基建`、`博曜 ｜ 知识中枢`、`核心产品`、`智曜 ｜ 智能引擎`、`探曜 ｜ 智联万物`），鼠标悬停或键盘聚焦某个品类时，右栏切换为该品类下的产品列表；面板每次打开默认激活第一个品类 `数曜 ｜ 数智基建`（右栏展示数曜 4 个产品）。
-- 右栏产品清单：数曜→`数曜·数据治理平台`(/products/data-governance)、`数曜·数据标签平台`(/products/data-labeling)、`数曜·数据开发平台`(/products/data-development)、`数曜·数据要素监管平台`(/products/data-element-regulation)；博曜→`博曜·企业级知识管理平台`(/products/knowledge-base)；智曜→`智曜·AgentOS`(/products/agentos)；探曜→`探曜·AI物联感知平台`(/products/ai-iot)、`Device Agent`(/products/device-agent)；`核心产品` 品类无子产品（右栏为空），点击直达 `/products`。
+- 桌面 Mega 采用 DeepCtrls 式双栏联动：左栏为 4 个品类入口（`数曜 ｜ 数智基建`、`博曜 ｜ 知识中枢`、`智曜 ｜ 智能引擎`、`探曜 ｜ 智联万物`），不展示 `核心产品` 品类入口（顶部导航 `核心产品` 按钮与 `.mega-title` `核心技术` 直达 `/products`）；鼠标悬停或键盘聚焦某个品类时，右栏切换为该品类下的产品列表。
+- 面板打开时按当前路由激活对应品类：位于某个产品页（如 `/products/ai-iot`、`/products/device-agent`）时，左栏高亮该品类且右栏展示该品类产品；无匹配路由时默认激活第一个品类 `数曜 ｜ 数智基建`（右栏展示数曜 4 个产品）。
+- 右栏产品清单：数曜→`数曜·数据治理平台`(/products/data-governance)、`数曜·数据标签平台`(/products/data-labeling)、`数曜·数据开发平台`(/products/data-development)、`数曜·数据要素监管平台`(/products/data-element-regulation)；博曜→`博曜·企业级知识管理平台`(/products/knowledge-base)；智曜→`智曜·AgentOS`(/products/agentos)；探曜→`探曜·AI物联感知平台`(/products/ai-iot)、`Device Agent`(/products/device-agent)。
 - Mega 结构参考 DeepCtrls：外层白底，`padding: 45px 0 75px`；内部 `.mega-shell` 使用 `padding-left: var(--nav-x)`；左侧 `.mega-title` 宽 `204px`，字号 `24px`、行高 `35px`；右侧 `.mega-cols` 为横向分栏（`.mega-col--categories` 与 `.mega-col--links`），每列宽 `428px`、左侧 `72px` padding，并使用纵向渐变分隔线。
 - Mega 条目使用 `.mega-entry`：高度 `61px`、下间距 `30px`；标题 `24px / 35px / 400`，描述 `14px / 16px / 400`；hover、focus 与 active 只将标题切换为 `#1e44e0`；左栏当前激活品类保持 `is-active` 高亮。
 - Mega 条目内不渲染 icon，不使用卡片底色、边框、阴影或圆角卡片结构。
@@ -79,7 +79,7 @@ Header 约束：
 ```
 - 解决方案 Mega 保持与核心产品一致的左侧 `.mega-title`、标题字号 `24px / 35px / 400`、描述字号 `14px / 16px / 400`、hover/focus/active 标题变蓝。
 - 右侧内容使用横向 `4 × 2` 网格；不渲染「应用场景 / 行业方案」作为面板内标题，不使用 icon、卡片底色、边框、阴影或圆角卡片结构。
-- `FDE解决方案` 与 `算电协同运营方案` 右上角展示 `hot` 标签。
+- `FDE解决方案` 与 `算电协同运营方案` 展示 `hot` 标签：标签随标题文字排版（inline-flex），紧贴对应标题文字右上角，轻微上浮（`top: -4px`），不锚定到网格单元右侧。
 - 入口落链：智能制造→`/solutions/manufacturing`、智慧储能→`/solutions/energy`、智慧水利/水务→`/solutions/water`、算电协同→`/solutions/compute`；智慧教育→`/services/smart-education`、FDE→`/services/enterprise-ai-delivery`、零碳园区→`/services/zero-carbon-park`、AI+供应链→`/services/ai-supply-chain`（后四者为 noindex 占位页，待后续任务补充完整内容）。
 
 ## Token Hub

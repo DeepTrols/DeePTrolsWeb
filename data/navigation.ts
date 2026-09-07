@@ -80,10 +80,6 @@ export const primaryNavigation: NavItem[] = [
         ],
       },
       {
-        title: '核心产品',
-        href: '/products',
-      },
-      {
         title: '智曜 ｜ 智能引擎',
         description: '汇聚算力与模型能力，驱动企业智能应用',
         href: '/products/agentos',

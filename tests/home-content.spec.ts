@@ -27,18 +27,16 @@ describe('home content contract', () => {
     expect(productColumns.map((column) => column.title)).toEqual([
       '数曜 ｜ 数智基建',
       '博曜 ｜ 知识中枢',
-      '核心产品',
       '智曜 ｜ 智能引擎',
       '探曜 ｜ 智联万物',
     ])
     expect(productColumns.map((column) => column.description)).toEqual([
       '构建面向 AI 的企业数据基础设施',
       '让企业知识可沉淀、可理解、可调用',
-      undefined,
       '汇聚算力与模型能力，驱动企业智能应用',
       '连接设备与场景，让 AI 感知真实世界',
     ])
-    expect(productColumns.find((column) => column.title === '核心产品')?.href).toBe('/products')
+    expect(productColumns.some((column) => column.title === '核心产品')).toBe(false)
     expect(productColumns[0]?.links?.map((link) => link.label)).toEqual([
       '数曜·数据治理平台',
       '数曜·数据标签平台',

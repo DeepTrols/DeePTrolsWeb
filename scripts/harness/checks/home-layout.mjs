@@ -142,7 +142,8 @@ assert(
     navigationData.includes('构建面向 AI 的企业数据基础设施') &&
     navigationData.includes('汇聚算力与模型能力，驱动企业智能应用') &&
     navigationData.includes('连接设备与场景，让 AI 感知真实世界') &&
-    !navigationData.includes("label: '产品'"),
+    !navigationData.includes("label: '产品'") &&
+    !navigationData.includes("title: '核心产品'"),
   'Navigation data must use the DeepCtrls-aligned 核心产品 label and requested product mega copy.',
 )
 assert(

@@ -19,6 +19,7 @@ export const requiredFiles = [
   'doc/tasks/review/TASK-013.3-widescreen-layout.md',
   'doc/tasks/review/TASK-013.4-solutions-mega-consistency.md',
   'doc/tasks/review/TASK-014.5-deepctrls-product-mega-interaction.md',
+  'doc/tasks/review/TASK-014.6-mega-category-cleanup-hot-tag.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',

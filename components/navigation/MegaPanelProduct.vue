@@ -12,15 +12,11 @@ defineEmits<{
 }>()
 
 const route = useRoute()
-const activeColumn = ref(0)
 const megaTitle = computed(() => props.item.megaTitle ?? props.item.label)
 const columns = computed(() => props.item.columns ?? [])
 const solutionLinks = computed(() => columns.value.flatMap((column) => column.links ?? []))
+const activeColumn = ref(initialActiveColumn())
 const activeLinks = computed<NavLink[]>(() => columns.value[activeColumn.value]?.links ?? [])
-
-function hrefFor(index: number): string {
-  return columns.value[index]?.href ?? props.item.href
-}
 
 function isActiveHref(href: string): boolean {
   if (href === props.item.href) {
@@ -28,6 +24,16 @@ function isActiveHref(href: string): boolean {
   }
 
   return route.path === href || route.path.startsWith(`${href}/`)
+}
+
+function initialActiveColumn(): number {
+  const index = columns.value.findIndex(
+    (column) =>
+      (column.href !== undefined && isActiveHref(column.href)) ||
+      (column.links ?? []).some((link) => isActiveHref(link.href)),
+  )
+
+  return index >= 0 ? index : 0
 }
 </script>
 
@@ -60,7 +66,7 @@ function isActiveHref(href: string): boolean {
         <NuxtLink
           v-for="(column, index) in columns"
           :key="column.title"
-          :to="hrefFor(index)"
+          :to="column.href ?? item.href"
           class="mega-entry"
           :class="{ 'is-active': index === activeColumn }"
           @mouseenter="activeColumn = index"
@@ -219,7 +225,6 @@ function isActiveHref(href: string): boolean {
   position: relative;
   display: block;
   min-height: 61px;
-  padding-right: 44px;
   color: #000000;
   text-decoration: none;
 
@@ -233,7 +238,9 @@ function isActiveHref(href: string): boolean {
 }
 
 .mega-solution-title {
-  display: block;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
   color: #000000;
   font-size: 24px;
   font-weight: 400;
@@ -251,10 +258,10 @@ function isActiveHref(href: string): boolean {
 }
 
 .mega-hot-tag {
-  position: absolute;
-  top: 3px;
-  right: 0;
+  position: relative;
+  top: -4px;
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   min-width: 30px;
