@@ -162,6 +162,10 @@ assert(
     megaPanelProduct.includes('mega-cols') &&
     megaPanelProduct.includes('mega-col') &&
     megaPanelProduct.includes('mega-entry') &&
+    megaPanelProduct.includes('mega-solutions') &&
+    megaPanelProduct.includes('grid-template-columns: repeat(4, minmax(0, 1fr))') &&
+    megaPanelProduct.includes('mega-hot-tag') &&
+    megaPanelProduct.includes('link.hot') &&
     megaPanelProduct.includes('font-size: 24px') &&
     megaPanelProduct.includes('line-height: 35px') &&
     megaPanelProduct.includes('font-size: 14px') &&

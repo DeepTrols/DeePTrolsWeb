@@ -48,6 +48,7 @@ describe('solution use case pages content contract', () => {
       { label: '零碳园区智能化解决方案', href: '/services/zero-carbon-park' },
       { label: 'AI+供应链解决方案', href: '/services/ai-supply-chain' },
     ])
+    expect(solutionLinks.filter((link) => link.hot).map((link) => link.label)).toEqual(['FDE解决方案', '算电协同运营方案'])
 
     for (const link of solutionLinks) {
       if (link.href.startsWith('/solutions/')) {

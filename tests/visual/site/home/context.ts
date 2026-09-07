@@ -10,6 +10,7 @@ export function loadHomeVisualSources() {
     const headerActions = readComponent('components/navigation/SiteHeaderActions.vue')
     const headerMobileNav = readComponent('components/navigation/SiteHeaderMobileNav.vue')
     const headerMenuButton = readComponent('components/navigation/SiteHeaderMenuButton.vue')
+    const megaPanelProduct = readComponent('components/navigation/MegaPanelProduct.vue')
     const baseButton = readComponent('components/common/BaseButton.vue')
     const sectionHeading = readComponent('components/common/SectionHeading.vue')
     const sectionHeader = readComponent('components/common/section/SectionHeader.vue')
@@ -63,6 +64,7 @@ export function loadHomeVisualSources() {
     headerActions,
     headerMobileNav,
     headerMenuButton,
+    megaPanelProduct,
     baseButton,
     sectionHeading,
     sectionHeader,

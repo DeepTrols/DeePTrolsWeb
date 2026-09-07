@@ -14,6 +14,7 @@ defineEmits<{
 const route = useRoute()
 const megaTitle = computed(() => props.item.megaTitle ?? props.item.label)
 const columns = computed(() => props.item.columns ?? [])
+const solutionLinks = computed(() => columns.value.flatMap((column) => column.links ?? []))
 
 function linksFor(column: NavColumn): NavLink[] {
   return column.links ?? []
@@ -53,7 +54,24 @@ function isActiveHref(href: string): boolean {
       <span class="mega-chevron" aria-hidden="true">&gt;</span>
     </NuxtLink>
 
-    <div class="mega-cols">
+    <div v-if="item.layout === 'solutions'" class="mega-solutions" aria-label="解决方案">
+      <NuxtLink
+        v-for="link in solutionLinks"
+        :key="link.label"
+        :to="link.href"
+        class="mega-solution-entry"
+        :class="{ 'is-active': isActiveHref(link.href) }"
+        @click="$emit('navigate')"
+      >
+        <span class="mega-solution-title">
+          <span>{{ link.label }}</span>
+          <span v-if="link.hot" class="mega-hot-tag" aria-label="热门">hot</span>
+        </span>
+        <span v-if="link.description" class="mega-solution-desc">{{ link.description }}</span>
+      </NuxtLink>
+    </div>
+
+    <div v-else class="mega-cols">
       <section v-for="column in columns" :key="column.title" class="mega-col">
         <NuxtLink
           v-for="entry in entriesFor(column)"
@@ -111,6 +129,28 @@ function isActiveHref(href: string): boolean {
   display: flex;
   flex: 1 1 auto;
   min-width: 0;
+}
+
+.mega-solutions {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  flex: 1 1 auto;
+  min-width: 0;
+  column-gap: 56px;
+  row-gap: 30px;
+  padding-right: 61px;
+  padding-left: 72px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(180deg, #ffffff, #d8dee5 50%, #ffffff);
+  }
 }
 
 .mega-col {
@@ -173,9 +213,69 @@ function isActiveHref(href: string): boolean {
   white-space: nowrap;
 }
 
+.mega-solution-entry {
+  position: relative;
+  display: block;
+  min-height: 61px;
+  padding-right: 44px;
+  color: #000000;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible,
+  &.is-active {
+    .mega-solution-title {
+      color: #1e44e0;
+    }
+  }
+}
+
+.mega-solution-title {
+  display: block;
+  color: #000000;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 35px;
+  transition: color 200ms ease;
+}
+
+.mega-solution-desc {
+  display: block;
+  margin-top: 10px;
+  color: #555555;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.mega-hot-tag {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ff4d2e;
+  color: #ffffff;
+  padding-inline: 7px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 18px;
+  text-transform: uppercase;
+}
+
 @media (max-width: 1439px) {
   .mega-col {
     width: 360px;
+    padding-left: 52px;
+  }
+
+  .mega-solutions {
+    column-gap: 34px;
+    padding-right: 24px;
     padding-left: 52px;
   }
 }
