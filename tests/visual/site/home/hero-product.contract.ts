@@ -10,6 +10,7 @@ export function registerHomeHeroProductVisualContracts() {
       iconBox,
       cardGrid,
       productSystemSection,
+      productSystemFlowFrame,
       productSystemCards,
       hero,
       logos,
@@ -68,9 +69,12 @@ export function registerHomeHeroProductVisualContracts() {
     expect(productSystem).toContain('title="连接真实业务与人工智能"')
     expect(productSystem).toContain('以数据与知识底座桥接企业业务与人工智能。赋能 AI Agent，实现对真实业务的支撑。')
     expect(productSystem).toContain('ProductSystemSection')
+    expect(productSystem).toContain('ProductSystemFlowFrame')
     expect(productSystem).not.toContain('HomeProductSystemFlow')
     expect(productSystem).not.toContain('HomeProductSystemMobileFlow')
     expect(productSystem).toContain('ProductSystemCards')
+    expect(productSystem).toContain('label="DeepTrols OPS 产品架构图占位"')
+    expect(productSystem).toContain('fallback-text="产品架构图占位符"')
     expect(productSystemSection).toContain('SectionShell')
     expect(productSystemSection).toContain('SectionHeader')
     expect(productSystemSection).toContain('nowrap-subtitle')
@@ -85,6 +89,10 @@ export function registerHomeHeroProductVisualContracts() {
     expect(productSystemSection).not.toContain('v-for="card in cards"')
     expect(productSystemSection).not.toContain('flowFallbackText')
     expect(productSystemSection).not.toContain('EnterpriseFlow')
+    expect(productSystemFlowFrame).toContain('role="img"')
+    expect(productSystemFlowFrame).toContain('height: 560px')
+    expect(productSystemFlowFrame).toContain('rgba(148, 163, 184, 0.12) 1px')
+    expect(productSystemFlowFrame).toContain('background-size: 48px 48px')
     expect(productSystemCards).toContain('CardGrid')
     expect(productSystemCards).toContain('BaseCard')
     expect(productSystemCards).toContain('IconBox')

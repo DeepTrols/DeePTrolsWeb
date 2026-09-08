@@ -46,10 +46,11 @@ export function registerCoreVisualContracts() {
     }
   })
 
-  it('includes responsive navigation and keeps the home product flow unmounted', () => {
+  it('includes responsive navigation and keeps the home product architecture as a placeholder', () => {
     const productSystem = readComponent('components/home/HomeProductSystem.vue')
 
     expect(readComponent('components/navigation/SiteHeaderMobileNav.vue')).toContain('mobile-navigation')
+    expect(productSystem).toContain('ProductSystemFlowFrame')
     expect(productSystem).not.toContain('HomeProductSystemFlow')
     expect(productSystem).not.toContain('HomeProductSystemMobileFlow')
   })

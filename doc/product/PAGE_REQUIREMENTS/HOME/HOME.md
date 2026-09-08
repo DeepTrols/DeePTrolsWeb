@@ -78,8 +78,8 @@ banner 背景要求：参考 DeepCtrls 首页 `<section class="home-hero">` 的�
 - 副标题：以数据与知识底座桥接企业业务与人工智能。赋能 AI Agent，实现对真实业务的支撑。
 - 副标题样式：`text-xl`，桌面端不换行。
 参考https://www.emqx.com/zh 中`<section id="platform" class="container pb-32 lg:pb-44"><div class="mb-12 flex flex-col items-center gap-2 text-center"><span class="text-base font-semibold uppercase text-primary/75">EMQX Platform</span>……`部分。
-#### 流程图（暂不渲染，后续重新设计）
-当前首页 `product-system__content` 不渲染桌面 Vue Flow 或移动端流程图，仅保留 `ProductSystemSection` 与 `ProductSystemCards`。以下节点与布局只作为历史设计参考，后续流程图重新设计前不得恢复旧挂载。
+#### 产品架构占位（保留展示区域，后续重新设计流程图）
+当前首页 `product-system__content` 渲染公共 `ProductSystemFlowFrame` 占位框，文案为“产品架构图占位符”，并在下方保留 `ProductSystemCards`。不得恢复旧 `HomeProductSystemFlow`、`HomeProductSystemMobileFlow` 或 `EnterpriseFlow` 挂载；以下节点与布局只作为历史设计参考，后续流程图重新设计前不得恢复旧图。
 
 - 节点及布局
 ```text

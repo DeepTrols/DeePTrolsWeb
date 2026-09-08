@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
+  const { assert, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -35,12 +35,15 @@ assert(homeSolutions.includes('CarouselRoot') && !homeSolutions.includes('soluti
 assert(baseTabs.includes('dt-tab-list') && baseTabs.includes('dt-tab'), 'BaseTabs must own shared dt-tab classes.')
 assert(
   productSystem.includes('ProductSystemSection') &&
+    productSystem.includes('ProductSystemFlowFrame') &&
     productSystem.includes('ProductSystemCards') &&
+    productSystem.includes('label="DeepTrols OPS 产品架构图占位"') &&
+    productSystem.includes('fallback-text="产品架构图占位符"') &&
     !productSystem.includes('HomeProductSystemFlow') &&
     !productSystem.includes('HomeProductSystemMobileFlow') &&
     !productSystem.includes('platformInputs') &&
     !productSystem.includes('platformOutputs'),
-  'HomeProductSystem must compose the shared section and product cards while keeping the old flow diagrams unmounted.',
+  'HomeProductSystem must compose the shared section, architecture placeholder, and product cards while keeping the old flow diagrams unmounted.',
 )
 assert(
   productSystemSection.includes('SectionShell') &&
@@ -55,8 +58,13 @@ assert(
   'ProductSystemSection must only own the shared section background, layout, and typography.',
 )
 assert(
-  productSystem.indexOf('<ProductSystemCards') > productSystem.indexOf('<ProductSystemSection'),
-  'Product system cards must remain inside the shared ProductSystemSection content slot.',
+  productSystemFlowFrame.includes('role="img"') &&
+    productSystemFlowFrame.includes('height: 560px') &&
+    productSystemFlowFrame.includes('rgba(148, 163, 184, 0.12) 1px') &&
+    productSystemFlowFrame.includes('background-size: 48px 48px') &&
+    productSystem.indexOf('<ProductSystemFlowFrame') > productSystem.indexOf('<ProductSystemSection') &&
+    productSystem.indexOf('<ProductSystemCards') > productSystem.indexOf('<ProductSystemFlowFrame'),
+  'Product system placeholder must reuse ProductSystemFlowFrame before the cards inside the shared content slot.',
 )
 assert(productSystemCards.includes('BaseCard') && productSystemCards.includes('CardGrid') && productSystemCards.includes('IconBox'), 'Product system cards must compose shared card primitives.')
 assert(baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')
