@@ -78,7 +78,9 @@ banner 背景要求：参考 DeepCtrls 首页 `<section class="home-hero">` 的�
 - 副标题：以数据与知识底座桥接企业业务与人工智能。赋能 AI Agent，实现对真实业务的支撑。
 - 副标题样式：`text-xl`，桌面端不换行。
 参考https://www.emqx.com/zh 中`<section id="platform" class="container pb-32 lg:pb-44"><div class="mb-12 flex flex-col items-center gap-2 text-center"><span class="text-base font-semibold uppercase text-primary/75">EMQX Platform</span>……`部分。
-#### Vue Flow
+#### 流程图（暂不渲染，后续重新设计）
+当前首页 `product-system__content` 不渲染桌面 Vue Flow 或移动端流程图，仅保留 `ProductSystemSection` 与 `ProductSystemCards`。以下节点与布局只作为历史设计参考，后续流程图重新设计前不得恢复旧挂载。
+
 - 节点及布局
 ```text
 中间使用：
@@ -285,44 +287,7 @@ aria-roledescription="滑动"
 右侧动画： 参考https://www.emqx.com/zh 中`<a href="/zh/products/emqx-neuron"  ……` 中的动画（1:1还原）
 ```
 
-### 区域五：客户故事
-- Eyebrow：CUSTOMER STORIES
-- 标题：携手 DeepTrols 加速创新
-- 描述：助力客户加速创新、实现业务突破，同时显著降低成本。
-- 描述样式：`text-xl`，桌面端不换行。
-
-内容排版示例：
-- 参考 https://www.emqx.com/zh 中的
-`
-<section class="mx-auto max-w-[96rem] px-4 pb-32 lg:pb-44"><div class="overflow-hidden rounded-3xl border border-default bg-muted/40 shadow-sm"><div class="flex flex-col gap-4 px-6 pb-6 pt-10 lg:px-10"><div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6"><div class="flex flex-col gap-2"><span class="text-base font-semibold uppercase text-primary/75">客户故事</span><h2 class="mb-4 md:mb-6 text-highlighted text-4xl sm:text-5xl font-bold tracking-tight leading-[1.2] !mb-0">携手 EMQX 加速创新</h2><p class="mb-6 md:mb-8 lg:mb-12 text-base sm:text-lg md:text-xl text-default !mb-0">助力客户加速创新、实现业务突破，同时显著降低成本。</p></div><div class="hidden items-center gap-2 sm:flex sm:gap-3"><button type="button" aria-label="Previous story" ... class="... size-12 rounded-full">...</button><button type="button" aria-label="Next story" ... class="... size-12 rounded-full">...</button></div></div><div role="tablist" class="scrollbar-hide mt-6 flex flex-nowrap items-center gap-10 overflow-x-auto whitespace-nowrap pb-4 lg:gap-14">...</div>
-`
-部分（1:1还原）。缺少的客户 logo 或图片可使用占位符，但整体容器、标题区、圆形上一条/下一条按钮、Logo tablist 与 story carousel 的排版、字体大小、交互、尺寸、圆角需按参考实现。
-
-- 内容示例：
-```
-logo使用占位符
-标题：构建国家级数据基础设施，释放公共数据价值
-内容：“围绕公共数据交易流通平台建设，提供数据汇聚、数据治理、可信流通及共享交换能力，支撑武汉国家级数据基础设施试点建设。”
-数据指标（3个）：
-国家级
-数据基础设施试点
-
-公共数据
-交易流通平台
-
-数据要素
-可信流通
-
-按钮
-阅读案例 →
-
-底部按钮
-查看所有案例 →
-
-右侧的图使用占位符，后续再更换
-```
-
-### 区域六：创新、洞察与新闻
+### 区域五：创新、洞察与新闻
 - 标题：创新、洞察与新闻
 - 副标题：无
 
@@ -336,7 +301,7 @@ logo使用占位符
 参考 https://www.emqx.com/zh 中的
 `<section class="container pb-32 lg:pb-44"><div class="mb-12 flex flex-col gap-2 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left"><div class="flex flex-col gap-2"><span class="text-base font-semibold uppercase text-primary/75">资源</span>……`
 
-### 区域七：CTA
+### 区域六：CTA
 - 主标题：构建企业自身的AI能力
 - 副标题：让数据成为资产，让知识驱动决策，让AI创造价值
 - 按钮：咨询合作、申请试用

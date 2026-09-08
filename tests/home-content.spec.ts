@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { primaryNavigation } from '../data/navigation'
-import { customerLogos, customerStories, deliverables, ecosystemCards, productCards, solutions } from '../data/home'
+import { customerLogos, deliverables, ecosystemCards, productCards, solutions } from '../data/home'
 
 describe('home content contract', () => {
   it('defines the primary navigation required by product documents', () => {
@@ -58,7 +58,6 @@ describe('home content contract', () => {
     expect(productCards).toHaveLength(4)
     expect(solutions).toHaveLength(6)
     expect(ecosystemCards).toHaveLength(4)
-    expect(customerStories).toHaveLength(3)
   })
 
   it('uses available public solution assets', () => {

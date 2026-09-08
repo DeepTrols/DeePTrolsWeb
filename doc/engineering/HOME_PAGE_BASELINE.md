@@ -1,7 +1,7 @@
 # HOME Page Baseline
 > Version: 2.0
 > Source Page: `pages/index.vue`
-> Last Updated: 2026-09-07
+> Last Updated: 2026-09-08
 > Visual Reference: `https://www.deepctrls.com/deepctrls_com/`
 
 ## Purpose
@@ -27,6 +27,7 @@
 7. Header logo 使用运行时品牌图：默认暗色 Hero 顶部为 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页为 `/images/brand/deeptrols-logo-black.png`；Header logo 高度按参考站为 `35px`。Footer logo 当前宽度为 `240px`。
 8. Footer 使用 HOME 当前结构：订阅区、分隔线、`site-footer__main`、与 main 平级的 `site-footer__socials`、底部分隔线、备案与版权；Footer 背景为 `#191a1e`。
 9. HOME Hero 参考 DeepCtrls 首页首屏：`aspect-ratio: 1920 / 655`，使用 `/images/home/deepctrls-hero-ai.png` 作为背景图并叠加左侧黑色线性遮罩；Hero 与区域一不再共用视频背景，Hero 内不得恢复 canvas / TresJS。
+10. HOME 当前不展示 `CUSTOMER STORIES` section；`HomeProductSystem` 当前只挂载 `ProductSystemSection` 与 `ProductSystemCards`，不得在 `product-system__content` 中恢复旧桌面或移动端流程图，待流程图重新设计后再单独接入。
 
 ---
 ## Typography

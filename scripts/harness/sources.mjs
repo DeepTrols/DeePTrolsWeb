@@ -2,6 +2,7 @@ export const harnessSourcePaths = {
   tailwind: 'assets/css/tailwind.css',
   tokens: 'assets/scss/main.scss',
   siteHeaderStyles: 'assets/scss/components/_site-header.scss',
+  page: 'pages/index.vue',
   componentAudit: 'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',
   commonComponentsDoc: 'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   packageJson: 'package.json',

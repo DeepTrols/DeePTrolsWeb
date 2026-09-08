@@ -19,7 +19,6 @@ useSeoMeta({
       <HomeProductSystem />
       <HomeSolutions />
       <HomeEcosystem />
-      <HomeCases />
       <HomeInsights />
       <HomeCta />
     </main>

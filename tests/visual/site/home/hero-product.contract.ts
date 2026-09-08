@@ -10,14 +10,11 @@ export function registerHomeHeroProductVisualContracts() {
       iconBox,
       cardGrid,
       productSystemSection,
-      productSystemFlowFrame,
       productSystemCards,
       hero,
       logos,
       deliverables,
       productSystem,
-      homeProductSystemFlow,
-      homeProductSystemMobileFlow,
     } = loadHomeVisualSources()
 
     expect(page).not.toContain('class="home-hero-deliverables"')
@@ -25,6 +22,7 @@ export function registerHomeHeroProductVisualContracts() {
     expect(page).toContain('<HomeHero />')
     expect(page).toContain('<HomeDeliverables />')
     expect(page).toContain('      <HomeDeliverables />\n      <HomeProductSystem />')
+    expect(page).not.toContain('<HomeCases />')
     expect(hero).toContain('class="home-shell home-hero__content"')
     expect(hero).toContain('aspect-ratio: 1920 / 655')
     expect(hero).toContain('url("/images/home/deepctrls-hero-ai.png")')
@@ -70,12 +68,9 @@ export function registerHomeHeroProductVisualContracts() {
     expect(productSystem).toContain('title="连接真实业务与人工智能"')
     expect(productSystem).toContain('以数据与知识底座桥接企业业务与人工智能。赋能 AI Agent，实现对真实业务的支撑。')
     expect(productSystem).toContain('ProductSystemSection')
-    expect(productSystem).toContain('HomeProductSystemFlow')
-    expect(productSystem).toContain('HomeProductSystemMobileFlow')
+    expect(productSystem).not.toContain('HomeProductSystemFlow')
+    expect(productSystem).not.toContain('HomeProductSystemMobileFlow')
     expect(productSystem).toContain('ProductSystemCards')
-    expect(homeProductSystemFlow).toContain('ProductSystemFlowFrame')
-    expect(homeProductSystemFlow).toContain('shouldRenderFlow')
-    expect(homeProductSystemFlow).toContain('<EnterpriseFlow v-if="shouldRenderFlow" />')
     expect(productSystemSection).toContain('SectionShell')
     expect(productSystemSection).toContain('SectionHeader')
     expect(productSystemSection).toContain('nowrap-subtitle')
@@ -90,14 +85,6 @@ export function registerHomeHeroProductVisualContracts() {
     expect(productSystemSection).not.toContain('v-for="card in cards"')
     expect(productSystemSection).not.toContain('flowFallbackText')
     expect(productSystemSection).not.toContain('EnterpriseFlow')
-    expect(productSystem).toContain('label="DeepTrols OPS platform architecture"')
-    expect(productSystemFlowFrame).toContain('role="img"')
-    expect(productSystemFlowFrame).toContain('height: 560px')
-    expect(productSystemFlowFrame).toContain('rgba(148, 163, 184, 0.12) 1px')
-    expect(productSystemFlowFrame).toContain('background-size: 48px 48px')
-    expect(homeProductSystemMobileFlow).toContain('product-system__mobile-flow')
-    expect(homeProductSystemMobileFlow).toContain('inputs')
-    expect(homeProductSystemMobileFlow).toContain('outputs')
     expect(productSystemCards).toContain('CardGrid')
     expect(productSystemCards).toContain('BaseCard')
     expect(productSystemCards).toContain('IconBox')

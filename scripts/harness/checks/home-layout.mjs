@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, existsSync, join, root, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeCases, homeCaseSlide, homeInsights, homeSolutions, productSystem, homeProductSystemFlow, homeProductSystemMobileFlow, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData } = ctx
+  const { assert, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -19,31 +19,28 @@ assert(!tokens.includes('min-height: 280px'), 'Shared ecosystem cards must not d
 
 for (const [name, source] of [
   ['CtaSection', ctaSection],
-  ['HomeCases', homeCases],
   ['HomeInsights', homeInsights],
   ['HomeSolutions', homeSolutions],
 ]) {
   assert(source.includes('BaseButton'), `${name} must reuse BaseButton for CTA/action buttons.`)
 }
 
-assert(homeCases.includes('SectionHeading'), 'HomeCases must reuse SectionHeading.')
 assert(
-  homeCases.includes('HomeCaseSlide') && homeCases.includes('CarouselRoot') && homeCases.includes('CarouselControls'),
-  'HomeCases must compose slides and controls through the shared CarouselRoot/CarouselControls components.',
+  !page.includes('<HomeCases />') && !page.includes('CUSTOMER STORIES'),
+  'HOME page must keep the Customer Stories section unmounted until it is requested again.',
 )
-assert(!homeCases.includes('cases__track') && !homeCases.includes('HomeCasesControls'), 'HomeCases must not hand-roll carousel tracks or private control components.')
-assert(!existsSync(join(root, 'components/home/HomeCasesControls.vue')), 'HomeCasesControls must stay replaced by the shared CarouselControls component.')
-assert(homeCaseSlide.includes('BaseButton') && homeCaseSlide.includes('阅读案例'), 'HomeCaseSlide must reuse BaseButton for story CTAs.')
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
 assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTabs') && homeSolutions.includes('variant="pill"'), 'HomeSolutions must compose the shared BaseTabs pill variant.')
 assert(homeSolutions.includes('CarouselRoot') && !homeSolutions.includes('solutions__carousel-container'), 'HomeSolutions must render slides through the shared CarouselRoot component without hand-rolled tracks.')
 assert(baseTabs.includes('dt-tab-list') && baseTabs.includes('dt-tab'), 'BaseTabs must own shared dt-tab classes.')
 assert(
   productSystem.includes('ProductSystemSection') &&
-    productSystem.includes('HomeProductSystemFlow') &&
-    productSystem.includes('HomeProductSystemMobileFlow') &&
-    productSystem.includes('ProductSystemCards'),
-  'HomeProductSystem must compose the shared section, flow, mobile flow, and card components.',
+    productSystem.includes('ProductSystemCards') &&
+    !productSystem.includes('HomeProductSystemFlow') &&
+    !productSystem.includes('HomeProductSystemMobileFlow') &&
+    !productSystem.includes('platformInputs') &&
+    !productSystem.includes('platformOutputs'),
+  'HomeProductSystem must compose the shared section and product cards while keeping the old flow diagrams unmounted.',
 )
 assert(
   productSystemSection.includes('SectionShell') &&
@@ -58,20 +55,8 @@ assert(
   'ProductSystemSection must only own the shared section background, layout, and typography.',
 )
 assert(
-  homeProductSystemFlow.includes('ProductSystemFlowFrame') &&
-    homeProductSystemFlow.includes('shouldRenderFlow') &&
-    homeProductSystemFlow.includes('<EnterpriseFlow v-if="shouldRenderFlow" />') &&
-    productSystemFlowFrame.includes('role="img"') &&
-    productSystemFlowFrame.includes('height: 560px') &&
-    productSystemFlowFrame.includes('rgba(148, 163, 184, 0.12) 1px') &&
-    productSystemFlowFrame.includes('background-size: 48px 48px'),
-  'Product system VueFlow must be isolated behind a dedicated flow frame component.',
-)
-assert(
-  homeProductSystemMobileFlow.includes('product-system__mobile-flow') &&
-    homeProductSystemMobileFlow.includes('inputs') &&
-    homeProductSystemMobileFlow.includes('outputs'),
-  'Home product mobile flow must be isolated from ProductSystemSection.',
+  productSystem.indexOf('<ProductSystemCards') > productSystem.indexOf('<ProductSystemSection'),
+  'Product system cards must remain inside the shared ProductSystemSection content slot.',
 )
 assert(productSystemCards.includes('BaseCard') && productSystemCards.includes('CardGrid') && productSystemCards.includes('IconBox'), 'Product system cards must compose shared card primitives.')
 assert(baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 'Product system cards must use shared product card classes.')

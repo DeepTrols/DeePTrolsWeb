@@ -46,8 +46,11 @@ export function registerCoreVisualContracts() {
     }
   })
 
-  it('includes responsive navigation and mobile product fallback', () => {
+  it('includes responsive navigation and keeps the home product flow unmounted', () => {
+    const productSystem = readComponent('components/home/HomeProductSystem.vue')
+
     expect(readComponent('components/navigation/SiteHeaderMobileNav.vue')).toContain('mobile-navigation')
-    expect(readComponent('components/home/HomeProductSystemMobileFlow.vue')).toContain('product-system__mobile-flow')
+    expect(productSystem).not.toContain('HomeProductSystemFlow')
+    expect(productSystem).not.toContain('HomeProductSystemMobileFlow')
   })
 }

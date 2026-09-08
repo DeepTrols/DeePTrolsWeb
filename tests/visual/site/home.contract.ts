@@ -1,4 +1,3 @@
-import { registerHomeCasesVisualContracts } from './home/cases.contract'
 import { registerHomeDesignVisualContracts } from './home/design.contract'
 import { registerHomeEcosystemVisualContracts } from './home/ecosystem.contract'
 import { registerHomeFooterVisualContracts } from './home/footer.contract'
@@ -13,7 +12,6 @@ export function registerHomeVisualContracts() {
   registerHomeHeroProductVisualContracts()
   registerHomeSolutionsVisualContracts()
   registerHomeEcosystemVisualContracts()
-  registerHomeCasesVisualContracts()
   registerHomeInsightsCtaVisualContracts()
   registerHomeFooterVisualContracts()
 }
