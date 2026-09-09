@@ -35,6 +35,8 @@ export function registerHomeDesignVisualContracts() {
     expect(tokens).toContain('@media (max-width: 720px)')
     expect(tokens).toContain('.home-shell')
     expect(tokens).toContain('--dt-gradient-spotlight')
+    expect(tokens).toContain('.dt-section-title')
+    expect(tokens).toContain('white-space: nowrap')
     expect(tokens).toContain('--dt-card-radius: var(--dt-radius-lg)')
     expect(tokens).toContain('--dt-icon-box-radius: var(--dt-radius-md)')
     expect(tokens).toContain('.dt-button')
@@ -66,6 +68,8 @@ export function registerHomeDesignVisualContracts() {
     expect(sectionHeader).toContain('align?: \'left\' | \'center\' | \'right\'')
     expect(sectionHeader).toContain('level?: 1 | 2 | 3')
     expect(sectionHeader).toContain('slots.actions')
+    expect(sectionHeader).toContain('.section-heading__title')
+    expect(sectionHeader).toContain('white-space: nowrap')
     expect(sectionHeader).toContain('class="section-heading dt-section-heading"')
   })
 }

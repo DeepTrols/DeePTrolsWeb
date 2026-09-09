@@ -14,7 +14,7 @@ const useCaseTabs = computed(() => dgpUseCases.map((item) => ({ key: item.key, l
     <div class="container">
       <h2
         id="dgp-use-cases-title"
-        class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted md:mb-6 sm:text-5xl"
+        class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
       >
         推动企业数据基础设施建设
       </h2>

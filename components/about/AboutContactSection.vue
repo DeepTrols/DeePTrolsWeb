@@ -6,7 +6,7 @@ import { aboutContacts } from '~/data/about'
   <section class="container pb-32 text-center lg:pb-48" aria-labelledby="about-contact-title">
     <h2
       id="about-contact-title"
-      class="!mb-12 mb-4 text-4xl font-bold leading-[1.2] tracking-tight text-highlighted md:mb-6 sm:text-5xl"
+      class="!mb-12 mb-4 text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
     >
       联系我们
     </h2>

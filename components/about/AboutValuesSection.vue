@@ -6,7 +6,7 @@ import { aboutValues } from '~/data/about'
   <section class="container pb-20 lg:pb-[132px]" aria-labelledby="about-values-title">
     <h2
       id="about-values-title"
-      class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted md:mb-6 sm:text-5xl"
+      class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
     >
       我们的核心价值观
     </h2>

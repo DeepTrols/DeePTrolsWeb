@@ -122,7 +122,7 @@ export function registerDgpVisualContracts() {
     expect(evolution).not.toContain('<style')
 
     expect(useCases).toContain('class="pb-20 lg:pb-[132px]"')
-    expect(useCases).toContain('text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted')
+    expect(useCases).toContain('text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted')
     expect(useCases).toContain('text-center text-base text-default')
     expect(useCases).toContain('lg:whitespace-nowrap')
     expect(useCases).toContain('BaseTabs')

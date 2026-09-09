@@ -79,6 +79,7 @@
 - `SectionShell` 负责 section 标签、container 宽度、背景和 `pb-20 lg:pb-[132px]` 等节奏。
 - `SectionShell` 内部容器使用 `w-[var(--dt-container-wide)] max-w-none px-0`；普通页面 `.container` 使用 `--dt-container`，两者都遵循 DeepCtrls 横向 gutter 基线，不再写固定 `1200px / 1400px` 宽度。
 - `SectionHeader` 负责 eyebrow、title、subtitle、nowrap、宽度、对齐、语义标题层级和 actions slot。
+- `SectionHeader` 的 section title 在桌面端默认不主动换行；少数未使用 `SectionHeader` 的 section 标题必须使用公共 `.dt-section-title` 或 Tailwind v4 `whitespace-nowrap` 明确保持不换行。
 - `SectionHeading` 只用于兼容既有 HOME 组件；后续新增页面不要继续扩展它。
 
 ## Card Primitives

@@ -38,7 +38,8 @@
    - eyebrow：`14px / 500 / uppercase`
    - title：`35px / 500 / 1.28`
    - subtitle：`15px / 27px / 400`
-3. 需要桌面不换行的 subtitle 必须使用 `nowrap-subtitle` prop，不允许在页面内重复写局部规则。
+3. 所有 section 标题默认不得主动换行：公共 `SectionHeader` 与 `.dt-section-title` 在桌面端必须保持 `white-space: nowrap`；少数未使用公共标题组件的 section 标题必须显式补充 Tailwind v4 `whitespace-nowrap`。
+4. 需要桌面不换行的 subtitle 必须使用 `nowrap-subtitle` prop，不允许在页面内重复写局部规则。
 
 ---
 ## Reusable Components

@@ -57,6 +57,7 @@ assert(sectionHeading.includes('SectionHeader'), 'SectionHeading must stay as a 
 assert(sectionHeader.includes("align?: 'left' | 'center' | 'right'"), 'SectionHeader must support left, center, and right alignment.')
 assert(sectionHeader.includes('level?: 1 | 2 | 3'), 'SectionHeader must support semantic heading levels.')
 assert(sectionHeader.includes('slots.actions'), 'SectionHeader must support an actions slot.')
+assert(sectionHeader.includes('.section-heading__title') && sectionHeader.includes('white-space: nowrap'), 'SectionHeader section titles must not actively wrap on desktop.')
 assert(sectionHeader.includes('section-heading--nowrap-subtitle'), 'SectionHeader nowrap mode must expose a desktop-wide wrapper class.')
 assert(sectionHeader.includes('max-width: none'), 'SectionHeader nowrap mode must remove the desktop max-width limit.')
 assert(sectionHeader.includes('class="section-heading dt-section-heading"'), 'SectionHeader must own the canonical section heading classes.')

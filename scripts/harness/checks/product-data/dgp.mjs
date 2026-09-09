@@ -70,7 +70,7 @@ assert(
 )
 assert(
   dgpUseCases.includes('class="pb-20 lg:pb-[132px]"') &&
-    dgpUseCases.includes('text-center text-4xl font-bold leading-[1.2] tracking-tight text-highlighted') &&
+    dgpUseCases.includes('text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted') &&
     dgpUseCases.includes('text-center text-base text-default') &&
     dgpUseCases.includes('lg:whitespace-nowrap') &&
     dgpUseCases.includes('BaseTabs') &&

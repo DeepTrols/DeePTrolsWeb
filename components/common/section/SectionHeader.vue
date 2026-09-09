@@ -126,6 +126,10 @@ const headingTag = computed(() => `h${props.level}`)
   font-weight: 500;
   line-height: 1.28;
   letter-spacing: 0;
+
+  @media (min-width: 1024px) {
+    white-space: nowrap;
+  }
 }
 
 .section-heading--title-compact .section-heading__title {

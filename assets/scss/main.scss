@@ -201,6 +201,10 @@ video {
     font-weight: 500;
     line-height: 1.28;
     letter-spacing: 0;
+
+    @media (min-width: 1024px) {
+      white-space: nowrap;
+    }
   }
 
   .dt-section-subtitle {

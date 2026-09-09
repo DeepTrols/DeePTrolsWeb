@@ -414,6 +414,7 @@ HOME 是后续页面的默认实现基准。除非其他页面需求明确说明
 公共复用要求：
 - 按钮使用 `BaseButton` 或 `.dt-button` 系列。
 - Section 标题使用 `SectionHeading`。
+- 所有 section 标题不要主动换行；公共标题组件默认遵循该规则，直写 section 标题需显式使用 Tailwind v4 `whitespace-nowrap`。
 - Tab 使用 `.dt-tab-list` + `.dt-tab`。
 - 产品体系卡片使用 `.dt-product-card` + `.dt-product-card__accent` + `.dt-icon-box`。
 - 生态卡片使用 `.dt-ecosystem-card` + `.dt-card-tag`。

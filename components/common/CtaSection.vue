@@ -52,7 +52,7 @@ const resolvedMetrics = computed(() => (props.metrics?.length ? props.metrics : 
     <div class="home-contact-cta__inner relative z-[1] mx-auto h-full w-[var(--dt-container)] max-w-none">
       <h2
         :id="props.titleId"
-        class="absolute left-0 top-[78px] m-0 w-full max-w-[759px] bg-[linear-gradient(90deg,#ffffff,#8ffbff_171.36%)] bg-clip-text text-[clamp(24px,4.1vw,42px)] font-medium leading-[1.15] tracking-[0] text-transparent max-[720px]:top-[72px] max-[720px]:whitespace-nowrap max-[720px]:text-[22px] max-[720px]:leading-[1.2]"
+        class="absolute left-0 top-[78px] m-0 w-full max-w-[759px] bg-[linear-gradient(90deg,#ffffff,#8ffbff_171.36%)] bg-clip-text text-[clamp(24px,4.1vw,42px)] font-medium leading-[1.15] tracking-[0] whitespace-nowrap text-transparent max-[720px]:top-[72px] max-[720px]:text-[22px] max-[720px]:leading-[1.2]"
       >
         {{ props.title }}
       </h2>
