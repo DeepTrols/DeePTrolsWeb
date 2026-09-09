@@ -291,10 +291,10 @@ aria-roledescription="滑动"
 ### 区域五：关于我们
 - Eyebrow：关于我们
 - 标题：深度数智，企业AI基础设施赛道的构建者与引领者
-- 标题必须显式换行为两行展示：`深度数智，企业AI基础设施赛道的` / `构建者与引领者`。
+- 标题不要主动插入换行，保持完整标题一行排版；窄屏仅允许浏览器按容器宽度自然换行。
 - 位置：位于 `Ecosystem` 与 `Resources` section 之间。
 - 整体参考 `https://www.deepctrls.com/deepctrls_com/` 首页公司与合作客户区域：白色到浅蓝渐变背景，顶部标题居中，后接宽幅 banner、客户标签与三行 logo 走马灯。
-- 间距：该 section 内部按 DeepCtrls 参考收紧底部留白，`partner-rows` 后不再额外保留全局 section 大底边距；下方 `Resources` section 通过自身顶部留白承接统一页面节奏，避免两个 section 视觉贴边。
+- 间距：该 section 内部按 DeepCtrls 参考收紧底部留白，`home-about` 使用 `pb-5`；下方 `Resources` section 通过自身顶部留白承接统一页面节奏，避免两个 section 视觉贴边。
 
 #### 板块 1：公司能力 Banner
 - 图片：`public/O1CN0.png`（运行时 URL：`/O1CN0.png`）。

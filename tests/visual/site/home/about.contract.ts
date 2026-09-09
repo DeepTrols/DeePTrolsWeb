@@ -13,13 +13,12 @@ export function registerHomeAboutVisualContracts() {
     expect(page).toContain('<HomeEcosystem />\n      <HomeAbout />\n      <HomeInsights />')
     expect(homeAbout).toContain('SectionHeading')
     expect(homeAbout).toContain(':eyebrow="homeAbout.eyebrow"')
-    expect(homeAbout).toContain("homeAbout.title.replace('构建者与引领者', '\\n构建者与引领者')")
-    expect(homeAbout).toContain(':title="homeAboutTitle"')
+    expect(homeAbout).toContain(':title="homeAbout.title"')
     expect(homeAbout).toContain('title-id="home-about-title"')
     expect(homeAbout).toContain(
-      'class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-0 pt-[78px]"',
+      'class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-5 pt-[78px]"',
     )
-    expect(homeAbout).toContain('[&_.section-heading__title]:whitespace-pre-line')
+    expect(homeAbout).not.toContain('whitespace-pre-line')
     expect(homeAbout).toContain('company-stats__banner block aspect-[1402/357] w-full rounded-dt-md object-cover')
     expect(homeAbout).toContain(
       'clients-label mx-auto mb-[42px] mt-[62px] block h-auto max-h-[26px] w-auto max-w-full object-contain',

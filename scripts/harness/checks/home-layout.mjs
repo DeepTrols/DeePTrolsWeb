@@ -35,11 +35,10 @@ assert(
 assert(
   homeAbout.includes('SectionHeading') &&
     homeAbout.includes(':eyebrow="homeAbout.eyebrow"') &&
-    homeAbout.includes("homeAbout.title.replace('构建者与引领者', '\\n构建者与引领者')") &&
-    homeAbout.includes(':title="homeAboutTitle"') &&
+    homeAbout.includes(':title="homeAbout.title"') &&
     homeAbout.includes('title-id="home-about-title"') &&
-    homeAbout.includes('class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-0 pt-[78px]"') &&
-    homeAbout.includes('[&_.section-heading__title]:whitespace-pre-line') &&
+    homeAbout.includes('class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-5 pt-[78px]"') &&
+    !homeAbout.includes('whitespace-pre-line') &&
     homeAbout.includes('company-stats__banner block aspect-[1402/357] w-full rounded-dt-md object-cover') &&
     homeAbout.includes('clients-label mx-auto mb-[42px] mt-[62px] block h-auto max-h-[26px] w-auto max-w-full object-contain') &&
     homeAbout.includes('partner-rows flex w-screen flex-col gap-[18px] overflow-hidden') &&
