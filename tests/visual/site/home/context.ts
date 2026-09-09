@@ -5,6 +5,7 @@ export function loadHomeVisualSources() {
     const tokens = readComponent('assets/scss/main.scss')
     const siteHeaderStyles = readComponent('assets/scss/components/_site-header.scss')
     const page = readComponent('pages/index.vue')
+    const homeData = readComponent('data/home.ts')
     const header = readComponent('components/navigation/SiteHeader.vue')
     const headerDesktopNav = readComponent('components/navigation/SiteHeaderDesktopNav.vue')
     const headerActions = readComponent('components/navigation/SiteHeaderActions.vue')
@@ -30,6 +31,7 @@ export function loadHomeVisualSources() {
     const homeProductSystemMobileFlow = readComponent('components/home/HomeProductSystemMobileFlow.vue')
     const homeSolutions = readComponent('components/home/HomeSolutions.vue')
     const homeEcosystem = readComponent('components/home/HomeEcosystem.vue')
+    const homeAbout = readComponent('components/home/HomeAbout.vue')
     const ecosystemVisual = readComponent('components/home/HomeEcosystemVisual.vue')
     const ecosystemTokenVisual = readComponent('components/home/ecosystem-visuals/EcosystemTokenVisual.vue')
     const ecosystemAgentVisual = readComponent('components/home/ecosystem-visuals/EcosystemAgentVisual.vue')
@@ -59,6 +61,7 @@ export function loadHomeVisualSources() {
     tokens,
     siteHeaderStyles,
     page,
+    homeData,
     header,
     headerDesktopNav,
     headerActions,
@@ -84,6 +87,7 @@ export function loadHomeVisualSources() {
     homeProductSystemMobileFlow,
     homeSolutions,
     homeEcosystem,
+    homeAbout,
     ecosystemVisual,
     ecosystemTokenVisual,
     ecosystemAgentVisual,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { primaryNavigation } from '../data/navigation'
-import { customerLogos, deliverables, ecosystemCards, productCards, solutions } from '../data/home'
+import { customerLogos, deliverables, ecosystemCards, homeAbout, productCards, solutions } from '../data/home'
 
 describe('home content contract', () => {
   it('defines the primary navigation required by product documents', () => {
@@ -58,6 +58,19 @@ describe('home content contract', () => {
     expect(productCards).toHaveLength(4)
     expect(solutions).toHaveLength(6)
     expect(ecosystemCards).toHaveLength(4)
+    expect(homeAbout.partnerRows).toHaveLength(3)
+    expect(homeAbout.partnerRows.map((row) => row.length)).toEqual([15, 14, 12])
+  })
+
+  it('keeps the HOME about section aligned with the DeepCtrls reference assets', () => {
+    expect(homeAbout).toMatchObject({
+      eyebrow: '关于我们',
+      title: '深度数智，企业AI基础设施赛道的构建者与引领者',
+      bannerImage: '/O1CN0.png',
+      bannerAlt: '深度数智企业 AI 基础设施能力',
+      clientsLabelImage: '/clients-label.webp',
+      clientsLabelAlt: '世界级客户的选择',
+    })
   })
 
   it('uses available public solution assets', () => {

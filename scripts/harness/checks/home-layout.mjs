@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
+  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, homeAbout, homeData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -27,6 +27,38 @@ for (const [name, source] of [
 assert(
   !page.includes('<HomeCases />') && !page.includes('CUSTOMER STORIES'),
   'HOME page must keep the Customer Stories section unmounted until it is requested again.',
+)
+assert(
+  page.includes('<HomeEcosystem />\n      <HomeAbout />\n      <HomeInsights />'),
+  'HOME page must mount HomeAbout between ecosystem and Resources.',
+)
+assert(
+  homeAbout.includes('SectionHeading') &&
+    homeAbout.includes(':eyebrow="homeAbout.eyebrow"') &&
+    homeAbout.includes(':title="homeAbout.title"') &&
+    homeAbout.includes('title-id="home-about-title"') &&
+    homeAbout.includes('class="section home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-10 pt-[78px]"') &&
+    homeAbout.includes('company-stats__banner block aspect-[1402/357] w-full rounded-dt-md object-cover') &&
+    homeAbout.includes('clients-label mx-auto mb-[42px] mt-[62px] block h-auto max-h-[26px] w-auto max-w-full object-contain') &&
+    homeAbout.includes('partner-rows flex w-screen flex-col gap-[18px] overflow-hidden') &&
+    homeAbout.includes('partner-row__track flex w-max items-center gap-[22px] motion-reduce:animate-none') &&
+    homeAbout.includes('animate-home-about-marquee-right') &&
+    homeAbout.includes('animate-home-about-marquee-left') &&
+    homeAbout.includes('partner-logo flex h-[55px] w-36 shrink-0') &&
+    !homeAbout.includes('<style'),
+  'HomeAbout must reproduce the DeepCtrls company banner, clients label, and partner marquee with Tailwind-only structure.',
+)
+assert(
+  homeData.includes("export const homeAbout: HomeAboutContent") &&
+    homeData.includes("eyebrow: '关于我们'") &&
+    homeData.includes("title: '深度数智，企业AI基础设施赛道的构建者与引领者'") &&
+    homeData.includes("bannerImage: '/O1CN0.png'") &&
+    homeData.includes("clientsLabelImage: '/clients-label.webp'") &&
+    tailwind.includes('--animate-home-about-marquee-left') &&
+    tailwind.includes('--animate-home-about-marquee-right') &&
+    tailwind.includes('@keyframes home-about-marquee-left') &&
+    tailwind.includes('@keyframes home-about-marquee-right'),
+  'HomeAbout content and marquee animation tokens must be centralized in data/home.ts and Tailwind v4 theme.',
 )
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
 assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTabs') && homeSolutions.includes('variant="pill"'), 'HomeSolutions must compose the shared BaseTabs pill variant.')

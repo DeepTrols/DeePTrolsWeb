@@ -42,6 +42,28 @@
   --animate-uptime-blink: value-uptime-blink 2s ease-in-out infinite;
   --animate-panel-in: panel-in 0.32s ease-out both;
   --animate-sync-pulse: sync-pulse 2s ease-in-out infinite;
+  --animate-home-about-marquee-left: home-about-marquee-left 42s linear infinite;
+  --animate-home-about-marquee-right: home-about-marquee-right 42s linear infinite;
+
+  @keyframes home-about-marquee-left {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-25%);
+    }
+  }
+
+  @keyframes home-about-marquee-right {
+    from {
+      transform: translateX(-25%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
 
   @keyframes panel-in {
     from {

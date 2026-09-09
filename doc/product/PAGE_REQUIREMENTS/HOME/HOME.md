@@ -288,7 +288,37 @@ aria-roledescription="滑动"
 右侧动画： 参考https://www.emqx.com/zh 中`<a href="/zh/products/emqx-neuron"  ……` 中的动画（1:1还原）
 ```
 
-### 区域五：创新、洞察与新闻
+### 区域五：关于我们
+- Eyebrow：关于我们
+- 标题：深度数智，企业AI基础设施赛道的构建者与引领者
+- 位置：位于 `Ecosystem` 与 `Resources` section 之间。
+- 整体参考 `https://www.deepctrls.com/deepctrls_com/` 首页公司与合作客户区域：白色到浅蓝渐变背景，顶部标题居中，后接宽幅 banner、客户标签与三行 logo 走马灯。
+
+#### 板块 1：公司能力 Banner
+- 图片：`public/O1CN0.png`（运行时 URL：`/O1CN0.png`）。
+- 结构参考 DeepCtrls `company-stats__banner`。
+- 比例：`aspect-[1402/357]`。
+- 圆角：`rounded-dt-md`。
+- 宽度：放在 `.container` 内，宽度为 `calc(100% - 10px)`。
+- 不允许新增组件私有 `<style>`，尺寸、间距和对象填充必须使用 Tailwind CSS v4 工具类表达。
+
+#### 板块 2：客户标签
+- 图片：`public/clients-label.webp`（运行时 URL：`/clients-label.webp`）。
+- 结构参考 DeepCtrls `clients-label`。
+- 间距：上方 `62px`，下方 `42px`。
+- 高度：`max-height: 26px`，按原图比例展示。
+
+#### 板块 3：合作客户 Logo 走马灯
+- 结构参考附件中的 `partner-rows`：三行 `.partner-row`，每行 `.partner-row__track` 横向排列。
+- 行方向：第 1 行向右，第 2 行向左，第 3 行向右。
+- 行间距：`18px`。
+- Logo 单项尺寸：`144px × 55px`。
+- Logo 间距：`22px`。
+- 动画时长：`42s linear infinite`。
+- 动画 token 必须定义在 `assets/css/tailwind.css` 的 Tailwind v4 `@theme` 中，并通过 `animate-home-about-marquee-left/right` 使用；组件不写局部 keyframes 或 scoped CSS。
+- 合作方数据统一维护在 `data/home.ts` 的 `homeAbout.partnerRows`，模板不得硬编码具体 logo 列表。
+
+### 区域六：创新、洞察与新闻
 - 标题：创新、洞察与新闻
 - 副标题：无
 
@@ -302,7 +332,7 @@ aria-roledescription="滑动"
 参考 https://www.emqx.com/zh 中的
 `<section class="container pb-32 lg:pb-44"><div class="mb-12 flex flex-col gap-2 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left"><div class="flex flex-col gap-2"><span class="text-base font-semibold uppercase text-primary/75">资源</span>……`
 
-### 区域六：CTA
+### 区域七：CTA
 - 参考 `https://www.deepctrls.com/deepctrls_com/` 首页 `home-contact-cta` 横幅的布局、尺寸、字号、定位与 hover 发光边框节奏。
 - 背景图片：`public/contact-cta-banner.webp`（运行时 URL：`/contact-cta-banner.webp`）。
 - `.home-contact-cta__inner` 必须使用 `var(--dt-container)`，确保 CTA 内容左边缘与页面内容左边缘对齐。

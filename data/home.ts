@@ -19,6 +19,34 @@ import {
   Waypoints,
 } from '@lucide/vue'
 import type { Component } from 'vue'
+import boyaoLogo from '../assets/images/brand/boyao-logo.svg?url'
+import deepseekLogo from '../assets/images/brand/deepseek-logo.svg?url'
+import kimiLogo from '../assets/images/brand/kimi-logo.svg?url'
+import qwenLogo from '../assets/images/brand/qwen-logo.svg?url'
+import shuyaoLogo from '../assets/images/brand/shuyao-logo.svg?url'
+import tanyaoIotLogo from '../assets/images/brand/tanyao-iot-logo.svg?url'
+import zhipuLogo from '../assets/images/brand/zhipu-logo.svg?url'
+import zhiyaoLogo from '../assets/images/brand/zhiyao-logo.svg?url'
+import logo360 from '../assets/images/compatibility/360-logo.svg?url'
+import baolandeLogo from '../assets/images/compatibility/baolande-logo.svg?url'
+import damengLogo from '../assets/images/compatibility/dameng-logo.svg?url'
+import dongfangtongLogo from '../assets/images/compatibility/dongfangtong-logo.svg?url'
+import feitengLogo from '../assets/images/compatibility/feiteng-logo.svg?url'
+import gaussdbLogo from '../assets/images/compatibility/gaussdb.svg?url'
+import haiguangLogo from '../assets/images/compatibility/haiguang-logo.svg?url'
+import honglianhuaLogo from '../assets/images/compatibility/honglianhua-logo.svg?url'
+import jindieTianyanLogo from '../assets/images/compatibility/jindie-tianyan-logo.svg?url'
+import kunpengLogo from '../assets/images/compatibility/kunpeng-logo.svg?url'
+import longxinLogo from '../assets/images/compatibility/longxin-logo.svg?url'
+import qilinLogo from '../assets/images/compatibility/qilin-series-logo.svg?url'
+import rendaJincangLogo from '../assets/images/compatibility/renda-jincang-logo.svg?url'
+import shenzhouTongyongLogo from '../assets/images/compatibility/shenzhou-tongyong-logo.svg?url'
+import tongxinUosLogo from '../assets/images/compatibility/tongxin-uos-logo.svg?url'
+import wpsLogo from '../assets/images/compatibility/wps-logo.svg?url'
+import yongzhongLogo from '../assets/images/compatibility/yongzhong-office-logo.svg?url'
+import zhaoxinLogo from '../assets/images/compatibility/zhaoxin-logo.svg?url'
+import zhongchuangLogo from '../assets/images/compatibility/zhongchuang-logo.svg?url'
+import zhongkeFangdeLogo from '../assets/images/compatibility/zhongke-fangde-logo.svg?url'
 
 export interface Deliverable {
   title: string
@@ -79,6 +107,22 @@ export interface InsightItem {
   href: string
 }
 
+export interface HomeAboutPartner {
+  name: string
+  image?: string
+  text?: string
+}
+
+export interface HomeAboutContent {
+  eyebrow: string
+  title: string
+  bannerImage: string
+  bannerAlt: string
+  clientsLabelImage: string
+  clientsLabelAlt: string
+  partnerRows: HomeAboutPartner[][]
+}
+
 export const customerLogos = [
   { name: '武汉大数据', image: '/images/logos/wh-bigdata.png' },
   { name: '一汽丰田', image: '/images/logos/faw-toyota.png' },
@@ -90,6 +134,56 @@ export const customerLogos = [
   { name: '北京航空航天大学', image: '/images/logos/beihang.png' },
   { name: '中国地质大学', text: 'CUG' },
 ]
+
+export const homeAbout: HomeAboutContent = {
+  eyebrow: '关于我们',
+  title: '深度数智，企业AI基础设施赛道的构建者与引领者',
+  bannerImage: '/O1CN0.png',
+  bannerAlt: '深度数智企业 AI 基础设施能力',
+  clientsLabelImage: '/clients-label.webp',
+  clientsLabelAlt: '世界级客户的选择',
+  partnerRows: [
+    [
+      ...customerLogos,
+      { name: '数曜', image: shuyaoLogo },
+      { name: '博曜', image: boyaoLogo },
+      { name: '探曜', image: tanyaoIotLogo },
+      { name: '智曜', image: zhiyaoLogo },
+      { name: 'DeepSeek', image: deepseekLogo },
+      { name: 'Qwen', image: qwenLogo },
+    ],
+    [
+      { name: '360', image: logo360 },
+      { name: '鲲鹏', image: kunpengLogo },
+      { name: 'GaussDB', image: gaussdbLogo },
+      { name: '麒麟软件', image: qilinLogo },
+      { name: '达梦数据库', image: damengLogo },
+      { name: 'WPS', image: wpsLogo },
+      { name: '统信 UOS', image: tongxinUosLogo },
+      { name: '宝兰德', image: baolandeLogo },
+      { name: '海光', image: haiguangLogo },
+      { name: '龙芯', image: longxinLogo },
+      { name: '兆芯', image: zhaoxinLogo },
+      { name: '飞腾', image: feitengLogo },
+      { name: '人大金仓', image: rendaJincangLogo },
+      { name: '东方通', image: dongfangtongLogo },
+    ],
+    [
+      { name: '智谱 AI', image: zhipuLogo },
+      { name: 'Kimi', image: kimiLogo },
+      { name: '金蝶天燕', image: jindieTianyanLogo },
+      { name: '永中 Office', image: yongzhongLogo },
+      { name: '中创中间件', image: zhongchuangLogo },
+      { name: '中科方德', image: zhongkeFangdeLogo },
+      { name: '神州通用', image: shenzhouTongyongLogo },
+      { name: '红莲花', image: honglianhuaLogo },
+      { name: '武汉大数据', image: '/images/logos/wh-bigdata.png' },
+      { name: '一汽丰田', image: '/images/logos/faw-toyota.png' },
+      { name: '同仁堂健康', image: '/images/logos/tongrentang.png' },
+      { name: '北京航空航天大学', image: '/images/logos/beihang.png' },
+    ],
+  ],
+}
 
 export const deliverables: Deliverable[] = [
   {

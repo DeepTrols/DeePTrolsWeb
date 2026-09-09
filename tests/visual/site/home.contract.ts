@@ -1,3 +1,4 @@
+import { registerHomeAboutVisualContracts } from './home/about.contract'
 import { registerHomeDesignVisualContracts } from './home/design.contract'
 import { registerHomeEcosystemVisualContracts } from './home/ecosystem.contract'
 import { registerHomeFooterVisualContracts } from './home/footer.contract'
@@ -12,6 +13,7 @@ export function registerHomeVisualContracts() {
   registerHomeHeroProductVisualContracts()
   registerHomeSolutionsVisualContracts()
   registerHomeEcosystemVisualContracts()
+  registerHomeAboutVisualContracts()
   registerHomeInsightsCtaVisualContracts()
   registerHomeFooterVisualContracts()
 }
