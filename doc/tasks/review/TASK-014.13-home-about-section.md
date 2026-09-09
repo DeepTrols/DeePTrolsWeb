@@ -43,6 +43,7 @@
 4. 在 `assets/css/tailwind.css` 新增 Tailwind v4 animation token：`animate-home-about-marquee-left/right`。
 5. 更新 HOME 产品需求、HOME 基线、公共组件文档和资产边界文档。
 6. 更新单元测试、视觉契约与 Harness Engineering，锁定挂载顺序、文案、资产路径、动画 token 和组件 Tailwind-only 约束。
+7. 按 Review 反馈将标题显式展示为两行，收紧 About 底部留白，并由 Resources section 自身顶部间距承接统一页面节奏。
 
 ---
 ## 验收标准
@@ -60,6 +61,7 @@
 | 文件 | 说明 |
 |----|----|
 | `components/home/HomeAbout.vue` | 新增首页 About 区块 |
+| `components/home/HomeInsights.vue` | 为 Resources section 增加顶部间距，承接 About 下方视觉节奏 |
 | `data/home.ts` | 新增 `homeAbout` 内容与合作方数据 |
 | `pages/index.vue` | 新增 `HomeAbout` 挂载 |
 | `assets/css/tailwind.css` | 新增全局走马灯 animation token |
@@ -83,12 +85,12 @@
 ## Git
 | 字段             | 内容 |
 |----------------|----|
-| Branch         |    |
-| Commit Message | 待提交 |
-| Commit Hash    | 待提交 |
+| Branch         | main |
+| Commit Message | fix(TASK-014.13): tune home about spacing |
+| Commit Hash    | 待提交后回填 |
 
 ## 完成说明
-已完成首页 About section 新增与 HOME 基线同步。
+已完成首页 About section 新增与 HOME 基线同步；Review 反馈中标题换行、About/Resources 间距和 partner-rows 底部留白已优化。
 
 验证结果：
 - `pnpm lint`

@@ -291,8 +291,10 @@ aria-roledescription="滑动"
 ### 区域五：关于我们
 - Eyebrow：关于我们
 - 标题：深度数智，企业AI基础设施赛道的构建者与引领者
+- 标题必须显式换行为两行展示：`深度数智，企业AI基础设施赛道的` / `构建者与引领者`。
 - 位置：位于 `Ecosystem` 与 `Resources` section 之间。
 - 整体参考 `https://www.deepctrls.com/deepctrls_com/` 首页公司与合作客户区域：白色到浅蓝渐变背景，顶部标题居中，后接宽幅 banner、客户标签与三行 logo 走马灯。
+- 间距：该 section 内部按 DeepCtrls 参考收紧底部留白，`partner-rows` 后不再额外保留全局 section 大底边距；下方 `Resources` section 通过自身顶部留白承接统一页面节奏，避免两个 section 视觉贴边。
 
 #### 板块 1：公司能力 Banner
 - 图片：`public/O1CN0.png`（运行时 URL：`/O1CN0.png`）。
@@ -321,6 +323,7 @@ aria-roledescription="滑动"
 ### 区域六：创新、洞察与新闻
 - 标题：创新、洞察与新闻
 - 副标题：无
+- 与上方 About section 的间距：使用 Tailwind CSS v4 顶部间距 `pt-16 lg:pt-24`，不得通过 About section 底部大 padding 撑开。
 
 * 采用 “1+3” 双栏资讯布局，左侧展示一篇重点内容，右侧纵向展示三篇精选内容，形成主次分明的信息层级。
 * 整体使用 左右双栏布局，左侧约占 50% 宽度，右侧约占 50% 宽度，栏间保持统一间距。

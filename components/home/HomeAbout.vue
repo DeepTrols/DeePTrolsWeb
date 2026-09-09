@@ -3,6 +3,8 @@ import { computed } from 'vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
 import { homeAbout } from '~/data/home'
 
+const homeAboutTitle = computed(() => homeAbout.title.replace('构建者与引领者', '\n构建者与引领者'))
+
 const rowAnimationClasses = [
   'animate-home-about-marquee-right',
   'animate-home-about-marquee-left',
@@ -14,14 +16,14 @@ const partnerRows = computed(() => homeAbout.partnerRows.map((row) => [...row, .
 
 <template>
   <section
-    class="section home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-10 pt-[78px]"
+    class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-0 pt-[78px]"
     aria-labelledby="home-about-title"
   >
     <div class="container">
       <SectionHeading
-        class="company-stats__header"
+        class="company-stats__header [&_.section-heading__title]:whitespace-pre-line"
         :eyebrow="homeAbout.eyebrow"
-        :title="homeAbout.title"
+        :title="homeAboutTitle"
         title-id="home-about-title"
         align="center"
       />

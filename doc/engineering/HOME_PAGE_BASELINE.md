@@ -29,6 +29,7 @@
 9. HOME Hero 参考 DeepCtrls 首页首屏：`aspect-ratio: 1920 / 655`，使用 `/images/home/deepctrls-hero-ai.png` 作为背景图并叠加左侧黑色线性遮罩；Hero 与区域一不再共用视频背景，Hero 内不得恢复 canvas / TresJS。
 10. HOME 当前不展示 `CUSTOMER STORIES` section；`HomeProductSystem` 当前挂载 `ProductSystemSection`、`ProductSystemFlowFrame` 架构占位框与 `ProductSystemCards`，不得在 `product-system__content` 中恢复旧桌面或移动端流程图，待流程图重新设计后再单独接入。
 11. HOME 在 `Ecosystem` 与 `Resources` 之间挂载 `components/home/HomeAbout.vue`。该区块参考 DeepCtrls 首页公司与合作客户区域：白色到浅蓝渐变背景、居中 SectionHeading、`/O1CN0.png` 宽幅 banner、`/clients-label.webp` 客户标签，以及三行 `partner-rows` 走马灯。组件必须保持 Tailwind-only，不写 `<style>`；走马灯动画 token 维护在 `assets/css/tailwind.css`。
+12. HOME About 标题必须显式分两行展示：`深度数智，企业AI基础设施赛道的` / `构建者与引领者`。About section 不套用全局 `.section` 的大底部 padding，`partner-rows` 后不再留大块空白；下方 `Resources` section 使用 Tailwind v4 `pt-16 lg:pt-24` 承接 section 间距。
 
 ---
 ## Typography
@@ -60,7 +61,7 @@
 
 禁止在新页面重复复制 `HomeCta`、`HomeCases`、`HomeInsights` 中曾经存在的局部按钮 CSS。页面底部 CTA 默认使用 DeepCtrls 风格 `home-contact-cta` 横幅，背景图固定为 `/contact-cta-banner.webp`，`.home-contact-cta__inner` 使用 `var(--dt-container)` 与页面内容左边缘对齐，标题为“以 AI 重塑数字世界与物理世界”，三项指标为“新一代智能基础设施 / 四大智能技术底座 / 覆盖关键产业场景”，按钮为“免费获取专属方案”。该 CTA 只能在组件模板内使用 Tailwind CSS v4 工具类表达尺寸、背景、定位、hover 与响应式，不允许新增独立 CTA SCSS 文件或组件私有 style。HOME 的 Use Cases section 使用默认页面背景 `var(--dt-color-bg)`。
 
-HOME 关于我们区块的数据必须集中在 `data/home.ts`：eyebrow 为“关于我们”，标题为“深度数智，企业AI基础设施赛道的构建者与引领者”，banner 使用 `/O1CN0.png`，客户标签使用 `/clients-label.webp`。三行合作方 logo 走马灯使用 Tailwind v4 animation token `animate-home-about-marquee-left/right`，不得在组件 scoped CSS 内重复定义 keyframes。
+HOME 关于我们区块的数据必须集中在 `data/home.ts`：eyebrow 为“关于我们”，标题为“深度数智，企业AI基础设施赛道的构建者与引领者”，banner 使用 `/O1CN0.png`，客户标签使用 `/clients-label.webp`。三行合作方 logo 走马灯使用 Tailwind v4 animation token `animate-home-about-marquee-left/right`，不得在组件 scoped CSS 内重复定义 keyframes。标题换行由 `HomeAbout.vue` 的展示层处理，数据仍保留完整标题原文。
 
 ---
 ## Interaction Baseline

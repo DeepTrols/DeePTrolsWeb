@@ -48,9 +48,11 @@
 使用要求：
 - 内容数据统一来自 `data/home.ts` 的 `homeAbout`，组件不得硬编码具体 logo 列表。
 - 标题使用 `SectionHeading`，eyebrow 固定为“关于我们”，标题固定为“深度数智，企业AI基础设施赛道的构建者与引领者”。
+- 标题展示必须显式分为两行：`深度数智，企业AI基础设施赛道的` / `构建者与引领者`，但数据层保留完整标题原文。
 - 宽幅 banner 使用 `/O1CN0.png`，客户标签使用 `/clients-label.webp`，均为 `public/` 公开运行时资产。
 - 三行合作客户走马灯采用 `partner-rows` / `partner-row__track` 结构，方向为右、左、右；单个 logo 尺寸为 `144px × 55px`，间距为 `22px`，行间距为 `18px`。
 - 组件只能使用 Tailwind CSS v4 utilities，不新增 `<style>`；走马灯 keyframes 与动画变量必须放在 `assets/css/tailwind.css` 的 `@theme` 中，通过 `animate-home-about-marquee-left/right` 调用。
+- About section 不套用全局 `.section` 底部 padding；`partner-rows` 后不保留大块内边距，下方 `Resources` 由自身 `pt-16 lg:pt-24` 承接统一 section 间距。
 - 该区块是 HOME 专属业务区块，不作为通用 Page Section 模板扩展，避免后续页面误用客户 logo 走马灯。
 
 ## Hero Stats Strip
