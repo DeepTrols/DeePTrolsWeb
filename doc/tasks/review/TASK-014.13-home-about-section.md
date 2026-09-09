@@ -87,7 +87,7 @@
 |----------------|----|
 | Branch         | main |
 | Commit Message | fix(TASK-014.13): tune home about spacing |
-| Commit Hash    | 待提交后回填 |
+| Commit Hash    | 4d36507（实现提交） |
 
 ## 完成说明
 已完成首页 About section 新增与 HOME 基线同步；Review 反馈中标题换行、About/Resources 间距和 partner-rows 底部留白已优化。
