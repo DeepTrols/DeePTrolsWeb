@@ -113,11 +113,6 @@ export interface DmsValueItem {
   detail: string
 }
 
-export const dmsHeroActions = [
-  { label: '申请试用', href: '/try', variant: 'primary' as const },
-  { label: '了解更多', href: '#dms-challenge', variant: 'secondary' as const },
-]
-
 export const dmsChallengeItems: DmsFeatureItem[] = [
   {
     title: '风险发现滞后',

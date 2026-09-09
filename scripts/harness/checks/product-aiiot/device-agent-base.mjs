@@ -2,14 +2,15 @@ export function checkDeviceAgentBaseContracts(ctx) {
   const { assert, featureCard, deviceAgentData, deviceAgentPage, deviceAgentHero, deviceAgentArchitectureSection, deviceAgentValueSection, deviceAgentRuntimeSection } = ctx
 assert(
   deviceAgentHero.includes('PageHero') &&
+    deviceAgentHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
     deviceAgentHero.includes('align="center"') &&
     deviceAgentHero.includes('badge="Device Agent"') &&
     deviceAgentHero.includes('title-line="让Agent基于实时数据决策与行动"') &&
     deviceAgentHero.includes('title-gradient="串联事件、记忆、执行和决策"') &&
     deviceAgentHero.includes('visual-label="DEVICEAGENT_HORE_WEBM"') &&
-    deviceAgentHero.includes(':actions="[]"') &&
+    !deviceAgentHero.includes(':actions') &&
     deviceAgentHero.includes('Cpu'),
-  'DeviceAgentHero must compose the shared PageHero centered variant with the requirement copy and no hero actions.',
+  'DeviceAgentHero must compose the shared PageHero centered variant with the requirement copy; the CTA is rendered by PageHero itself.',
 )
 assert(
   deviceAgentPage.includes('SiteHeader') &&

@@ -71,7 +71,6 @@ describe('solution use case pages content contract', () => {
       expect(page.content.seo.title).toBe(`${page.label}解决方案 - DeepTrols`)
       expect(page.content.hero.badge).toBe('应用场景')
       expect(page.content.hero.titleLine).toBe(`${page.label}解决方案`)
-      expect(page.content.hero.actions?.map((action) => action.label)).toEqual(['咨询合作', '申请试用'])
       expect(page.content.heroStats).toHaveLength(3)
       expect(page.content.value?.items).toHaveLength(4)
       expect(page.content.approach?.items).toHaveLength(3)

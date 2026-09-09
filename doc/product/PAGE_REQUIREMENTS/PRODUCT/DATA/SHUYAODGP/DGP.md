@@ -172,10 +172,8 @@ button“了解更多<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http:/
 
 
 8、板块：
-引入CtaSection.vue
-  <CtaSection
-    title="开启企业数据治理新征程"
-    title-id="dgp-cta-title"
-    description="统一接入、智能治理、资产运营，让数据成为企业数字化转型与 AI 发展的核心生产力。"
-    :actions="ctaActions"
-  />
+引入CtaSection.vue，统一使用 DeepCtrls 风格页面底部 CTA：
+  <CtaSection title-id="dgp-cta-title" />
+默认标题：以 AI 重塑数字世界与物理世界
+默认指标：新一代智能基础设施、四大智能技术底座、覆盖关键产业场景
+默认按钮：免费获取专属方案

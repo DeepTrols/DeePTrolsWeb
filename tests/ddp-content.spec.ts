@@ -3,7 +3,6 @@ import {
   ddpAdvantages,
   ddpChallengeItems,
   ddpCtaActions,
-  ddpHeroActions,
   ddpTimelineItems,
   ddpUnifiedDevelopmentItems,
   ddpUseCaseItems,
@@ -11,7 +10,6 @@ import {
 
 describe('DDP product page content contract', () => {
   it('uses the exact DDP content structure from the page requirement', () => {
-    expect(ddpHeroActions.map((action) => action.label)).toEqual(['申请试用', '了解更多'])
     expect(ddpChallengeItems).toHaveLength(4)
     expect(ddpAdvantages).toHaveLength(4)
     expect(ddpTimelineItems).toHaveLength(4)

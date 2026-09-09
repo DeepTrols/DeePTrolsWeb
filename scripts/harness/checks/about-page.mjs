@@ -54,24 +54,33 @@ export function checkAboutPageContracts(ctx) {
   assert(
     pageHero.includes('badge?: string') &&
       pageHero.includes('titleGradient?: string') &&
-      pageHero.includes('actions?: PageHeroAction[]') &&
       pageHero.includes('backgroundVideoSrc?: string') &&
       pageHero.includes('v-if="backgroundVideoSrc"') &&
       pageHero.includes('class="page-hero__background-video"') &&
+      pageHero.includes('backgroundImageSrc?: string') &&
+      pageHero.includes('v-if="backgroundImageSrc"') &&
+      pageHero.includes('class="page-hero__background-image"') &&
       pageHero.includes('v-if="badge"') &&
       pageHero.includes('v-if="titleGradient"') &&
-      pageHero.includes('v-if="actions.length"') &&
+      pageHero.includes('class="page-hero__cta"') &&
+      pageHero.includes('to="/contact"') &&
+      pageHero.includes('免费获取专属方案') &&
+      !pageHero.includes('BaseButton') &&
       pageHero.includes('v-if="hasVisual"') &&
+      pageHero.includes('class="page-hero__cta"') &&
+      pageHero.includes('page-hero__cta-arrow') &&
       pageHero.includes('<slot name="after-content" />'),
-    'PageHero must support optional badge, optional gradient, optional actions, optional visual slot, section-width after-content slot, and runtime background video.',
+    'PageHero must support optional badge, optional gradient, optional visual slot, section-width after-content slot, runtime background video, runtime background image, and the unified HOME-style CTA.',
   )
   assert(
     pageHeroStyles.includes('.page-hero__background::after') &&
       pageHeroStyles.includes('var(--dt-color-bg) 100%') &&
       pageHeroStyles.includes('-webkit-mask-image') &&
       pageHeroStyles.includes('object-fit: cover') &&
-      pageHeroStyles.includes('mix-blend-mode: multiply'),
-    'PageHero background video must use a video mask plus dt-bg bottom overlay to avoid color seams.',
+      pageHeroStyles.includes('mix-blend-mode: multiply') &&
+      pageHeroStyles.includes('.page-hero__cta') &&
+      pageHeroStyles.includes('linear-gradient(90deg, #1e44e0, #6583ff)'),
+    'PageHero background video must use a video mask plus dt-bg bottom overlay to avoid color seams, and the primary CTA must match the HOME hero CTA gradient.',
   )
   assert(
     aboutHeroStats.includes('class="about-hero-stats container !p-0"') &&

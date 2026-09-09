@@ -51,5 +51,11 @@ section-heading__eyebrow：智能体生态
 
 实现说明（TASK-008.2）：页面落地于 `pages/products/device-agent.vue`（导航 `/products/device-agent`），6 个 Agent 场景文案集中在 `data/device-agent.ts`（`DeviceAgentScene { label, icon, prompt }`）。Hero 采用公共 `PageHero` 新增的 `align="center"` 单列居中版式（文案 `max-w-4xl text-center`、描述/CTA 居中、视觉居中且不渲染 `page-hero__visual-glow`），badge/title/description/visual-label 按需求传入，`actions` 传空数组（本页 Hero 无 CTA）。中部视觉 `components/product/device-agent/DeviceAgentHeroVisual.vue` Tailwind-only 1:1 复刻 EMQX Agents 编排器面板：外层 glow、`rounded-2xl` 面板、ghost 打字层（含 `animate-pulse` 光标）+ `Agent 编排器` textarea、底部场景按钮条与发送按钮，全部沿用原 DOM 结构/尺寸/圆角/边框/阴影/字体/间距/响应式；打字机自动轮播与场景切换计时器在 `onMounted` 启动、`onBeforeUnmount` 清理（SSR 安全）。因站点仅暗色且 `bg-muted`/`bg-default` 为 `@utility` 不支持透明度修饰符，面板背景取暗色值 `bg-elevated`、发送区背景以 `bg-dt-bg-soft/30` 等价实现 `dark:bg-muted/30`、未激活按钮背景以 `bg-dt-bg/70`/`hover:bg-dt-bg-soft/50` 等价实现 `bg-default/70`/`hover:bg-muted/50`。Section1 复用探曜页板块5 的 `tanyaoAgents` 数据，经公共 `ProductFeatureGridSection`（`columns="three"`、`nowrap-subtitle`）渲染，仅替换 eyebrow/标题/副标题。
 
+底部 CTA：
+引入CtaSection.vue，统一使用 DeepCtrls 风格页面底部 CTA：
+  <CtaSection title-id="device-agent-cta-title" />
+默认标题：以 AI 重塑数字世界与物理世界
+默认指标：新一代智能基础设施、四大智能技术底座、覆盖关键产业场景
+默认按钮：免费获取专属方案
 
 

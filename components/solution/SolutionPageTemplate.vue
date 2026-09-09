@@ -49,7 +49,6 @@ useSeoMeta({
         :title-line="content.hero.titleLine"
         :title-gradient="content.hero.titleGradient"
         :description="content.hero.description"
-        :actions="content.hero.actions"
         :visual-label="content.hero.visualLabel"
         :background-video-src="content.hero.backgroundVideoSrc"
         :align="content.hero.align ?? 'left'"
@@ -172,10 +171,7 @@ useSeoMeta({
 
       <CtaSection
         v-if="content.cta"
-        :title="content.cta.title"
         :title-id="content.cta.titleId"
-        :description="content.cta.description"
-        :actions="content.cta.actions"
       />
     </main>
     <SiteFooter />

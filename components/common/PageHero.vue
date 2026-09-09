@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import BaseButton from '~/components/common/BaseButton.vue'
 import { computed, type Component, useSlots } from 'vue'
-
-export interface PageHeroAction {
-  label: string
-  href: string
-  variant?: 'primary' | 'secondary' | 'ghost'
-}
 
 withDefaults(
   defineProps<{
@@ -16,9 +9,9 @@ withDefaults(
     titleLine: string
     titleGradient?: string
     description: string
-    actions?: PageHeroAction[]
     visualLabel?: string
     backgroundVideoSrc?: string
+    backgroundImageSrc?: string
     flushBottom?: boolean
     flushVisualEnd?: boolean
     visualSize?: 'default' | 'large' | 'fluid'
@@ -28,9 +21,9 @@ withDefaults(
     badge: undefined,
     badgeIcon: undefined,
     titleGradient: undefined,
-    actions: () => [],
     visualLabel: undefined,
     backgroundVideoSrc: undefined,
+    backgroundImageSrc: undefined,
     flushBottom: false,
     flushVisualEnd: false,
     visualSize: 'default',
@@ -50,10 +43,13 @@ const hasVisual = computed(() => Boolean(slots.visual))
     >
       <div class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg" aria-hidden="true"></div>
       <div class="page-hero__background" aria-hidden="true">
+        <img v-if="backgroundImageSrc" class="page-hero__background-image" :src="backgroundImageSrc" alt="" />
         <video v-if="backgroundVideoSrc" class="page-hero__background-video" :src="backgroundVideoSrc" autoplay muted loop playsinline></video>
-        <div class="page-hero__grid"></div>
-        <div class="page-hero__glow page-hero__glow--left"></div>
-        <div class="page-hero__glow page-hero__glow--right"></div>
+        <template v-if="!backgroundImageSrc">
+          <div class="page-hero__grid"></div>
+          <div class="page-hero__glow page-hero__glow--left"></div>
+          <div class="page-hero__glow page-hero__glow--right"></div>
+        </template>
       </div>
       <div
         class="page-hero__inner relative z-10 flex flex-col items-center"
@@ -100,19 +96,13 @@ const hasVisual = computed(() => Boolean(slots.visual))
           </div>
 
           <div
-            v-if="actions.length"
             class="page-hero__actions flex flex-wrap items-center justify-center gap-4"
             :class="align === 'center' ? '' : 'lg:justify-start'"
           >
-            <BaseButton
-              v-for="action in actions"
-              :key="action.label"
-              :href="action.href"
-              :variant="action.variant ?? 'primary'"
-              size="lg"
-            >
-              {{ action.label }}
-            </BaseButton>
+            <NuxtLink class="page-hero__cta" to="/contact">
+              <span>免费获取专属方案</span>
+              <span class="page-hero__cta-arrow" aria-hidden="true"></span>
+            </NuxtLink>
           </div>
 
           <slot name="after-actions" />

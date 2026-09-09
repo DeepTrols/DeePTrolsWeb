@@ -19,6 +19,7 @@ assert(
 )
 assert(
   dmsHero.includes('PageHero') &&
+    dmsHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
     dmsHero.includes('import { HardDrive }') &&
     dmsHero.includes('badge="数曜·数据要素监管平台"') &&
     dmsHero.includes('title-line="让数据流通安全、可信"') &&
@@ -124,7 +125,6 @@ for (const text of [
   '可量化的数据要素监管效能',
   '事前预防 → 事中监控 → 事后处置 → 监管分析',
   '赋能多场景数据要素监管',
-  '开启智能化数据要素监管',
 ]) {
   assert(dmsSources.includes(text), `DMS requirement text is missing: ${text}`)
 }

@@ -15,6 +15,7 @@ assert(
 )
 assert(
   dgpHero.includes('PageHero') &&
+    dgpHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
     dgpHero.includes('import { Database }') &&
     dgpHero.includes('badge="数曜·数据治理平台"') &&
     dgpHero.includes('title-line="可用、可管、可信"') &&
@@ -100,7 +101,6 @@ for (const text of [
   '专为企业数据治理打造',
   '企业数据治理体系的演进',
   '推动企业数据基础设施建设',
-  '开启企业数据治理新征程',
 ]) {
   assert(dgpSources.includes(text), `DGP requirement text is missing: ${text}`)
 }

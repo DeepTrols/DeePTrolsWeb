@@ -8,7 +8,7 @@ import DmsBusinessValueSection from '~/components/product/dms/DmsBusinessValueSe
 import DmsHero from '~/components/product/dms/DmsHero.vue'
 import DmsIntelligentRegulationSection from '~/components/product/dms/DmsIntelligentRegulationSection.vue'
 import DmsRegulationProcessSection from '~/components/product/dms/DmsRegulationProcessSection.vue'
-import { dmsCapabilities, dmsChallengeItems, dmsCtaActions, dmsUseCaseItems } from '~/data/dms'
+import { dmsCapabilities, dmsChallengeItems, dmsUseCaseItems } from '~/data/dms'
 
 useSeoMeta({
   title: '数曜·数据要素监管平台 - DeepTrols',
@@ -52,12 +52,7 @@ useSeoMeta({
         columns="two"
         nowrap-subtitle
       />
-      <CtaSection
-        title="开启智能化数据要素监管"
-        title-id="dms-cta-title"
-        description="构建智能化数据要素监管体系，护航数据安全、高效、可信流通。"
-        :actions="dmsCtaActions"
-      />
+      <CtaSection title-id="dms-cta-title" />
     </main>
     <SiteFooter />
   </div>

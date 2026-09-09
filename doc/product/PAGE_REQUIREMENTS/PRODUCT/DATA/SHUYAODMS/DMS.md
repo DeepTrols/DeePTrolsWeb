@@ -261,11 +261,8 @@ ProductFeatureGridSection组件BaseCard
 对数据主体管理、产品运营、数据交付及应用服务开展持续监管，自动识别异常风险，形成从预警、处置到追溯的闭环管理，提升运营效率与合规水平。
 
 模块7:
-引入CtaSection.vue
-  <CtaSection
-    title="开启智能化数据要素监管"
-    title-id="dms-cta-title"
-    description="构建智能化数据要素监管体系，护航数据安全、高效、可信流通。"
-    :actions="ctaActions"
-  />
-   按钮：立即咨询、申请试用
+引入CtaSection.vue，统一使用 DeepCtrls 风格页面底部 CTA：
+  <CtaSection title-id="dms-cta-title" />
+默认标题：以 AI 重塑数字世界与物理世界
+默认指标：新一代智能基础设施、四大智能技术底座、覆盖关键产业场景
+默认按钮：免费获取专属方案

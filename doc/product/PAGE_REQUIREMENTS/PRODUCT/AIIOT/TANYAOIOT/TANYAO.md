@@ -167,14 +167,11 @@ AIoT 伴随Agent
 
 
 模块7:
-引入CtaSection.vue
-  <CtaSection
-    title="让每一次连接都产生智能价值"
-    title-id="tanyao-cta-title"
-    description="连接设备与现场数据，以边缘计算与 AI 能力驱动实时感知、智能分析与高效决策。"
-    :actions="ctaActions"
-  />
-   按钮：立即咨询、申请试用
+引入CtaSection.vue，统一使用 DeepCtrls 风格页面底部 CTA：
+  <CtaSection title-id="tanyao-cta-title" />
+默认标题：以 AI 重塑数字世界与物理世界
+默认指标：新一代智能基础设施、四大智能技术底座、覆盖关键产业场景
+默认按钮：免费获取专属方案
 
 
 实现说明（TASK-008.1）：页面落地于 `pages/products/ai-iot.vue`（导航 `/products/ai-iot`），数据集中在 `data/tanyao.ts`；Hero 右侧视觉为 `components/product/tanyao/TanyaoHeroVisual.vue`（Tailwind-only，1:1 复刻 EMQX Edge hero 的卡片层级/尺寸/渐变/流动 SVG，仅替换文案与图标，SVG 渐变与滤镜 ID 重命名为 tanyaoFlowGradientUp/Down、tanyaoEdgeGlow 以保证唯一）；Hero 数字条通过 `HeroStatsStrip` 新增的 `columns` prop 支持 1×4；核心能力复用 `AlternatingTimelineSection`（新增 `v-if="item.bullets.length"` 守卫以兼容无 bullets 条目）。

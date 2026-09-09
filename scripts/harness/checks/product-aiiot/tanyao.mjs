@@ -46,6 +46,7 @@ assert(
 )
 assert(
   tanyaoHero.includes('PageHero') &&
+    tanyaoHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
     tanyaoHero.includes('badge="探曜·AI物联感知平台"') &&
     tanyaoHero.includes('title-line="连接、感知、智能"') &&
     tanyaoHero.includes('title-gradient="AIoT智能物联底座"') &&

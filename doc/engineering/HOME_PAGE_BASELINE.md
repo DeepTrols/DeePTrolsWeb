@@ -54,9 +54,9 @@
 | 平台能力卡片 | `.dt-product-card dt-card--adaptive` + `.dt-product-card__accent` + `.dt-icon-box` |
 | 轻量链接 / 服务卡片 | `.dt-card dt-card--soft` + `.dt-icon-box` |
 | Ecosystem 卡片 | `.dt-ecosystem-card` + `.dt-card-tag` + `.dt-icon-box` |
-| CTA 面板 | `.dt-cta-panel` |
+| 页面底部 CTA | `components/common/CtaSection.vue` + `.home-contact-cta` |
 
-禁止在新页面重复复制 `HomeCta`、`HomeCases`、`HomeInsights` 中曾经存在的局部按钮 CSS。
+禁止在新页面重复复制 `HomeCta`、`HomeCases`、`HomeInsights` 中曾经存在的局部按钮 CSS。页面底部 CTA 默认使用 DeepCtrls 风格 `home-contact-cta` 横幅，背景图固定为 `/contact-cta-banner.webp`，`.home-contact-cta__inner` 使用 `var(--dt-container)` 与页面内容左边缘对齐，标题为“以 AI 重塑数字世界与物理世界”，三项指标为“新一代智能基础设施 / 四大智能技术底座 / 覆盖关键产业场景”，按钮为“免费获取专属方案”。该 CTA 只能在组件模板内使用 Tailwind CSS v4 工具类表达尺寸、背景、定位、hover 与响应式，不允许新增独立 CTA SCSS 文件或组件私有 style。HOME 的 Use Cases section 使用默认页面背景 `var(--dt-color-bg)`。
 
 ---
 ## Interaction Baseline

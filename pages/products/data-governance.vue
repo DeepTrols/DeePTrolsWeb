@@ -7,7 +7,7 @@ import DgpArchitecture from '~/components/product/dgp/DgpArchitecture.vue'
 import DgpEvolutionSection from '~/components/product/dgp/DgpEvolutionSection.vue'
 import DgpHero from '~/components/product/dgp/DgpHero.vue'
 import DgpUseCasesSection from '~/components/product/dgp/DgpUseCasesSection.vue'
-import { dgpCapabilities, dgpCoreValues, dgpCtaActions } from '~/data/dgp'
+import { dgpCapabilities, dgpCoreValues } from '~/data/dgp'
 
 useSeoMeta({
   title: '数曜·数据治理平台 - DeepTrols',
@@ -39,12 +39,7 @@ useSeoMeta({
       />
       <DgpEvolutionSection />
       <DgpUseCasesSection />
-      <CtaSection
-        title="开启企业数据治理新征程"
-        title-id="dgp-cta-title"
-        description="统一接入、智能治理、资产运营，让数据成为企业数字化转型与 AI 发展的核心生产力。"
-        :actions="dgpCtaActions"
-      />
+      <CtaSection title-id="dgp-cta-title" />
     </main>
     <SiteFooter />
   </div>

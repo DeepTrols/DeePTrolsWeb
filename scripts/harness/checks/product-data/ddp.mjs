@@ -18,6 +18,7 @@ assert(
 )
 assert(
   ddpHero.includes('PageHero') &&
+    ddpHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
     ddpHero.includes('import { Network }') &&
     ddpHero.includes('badge="数曜·数据开发平台"') &&
     ddpHero.includes('title-line="标准、智能、高效"') &&
@@ -118,7 +119,6 @@ for (const text of [
   '覆盖数据开发全生命周期',
   '统一数据开发：从接入到交付',
   '赋能企业数据工程实践',
-  '开启企业数据治理新征程',
 ]) {
   assert(ddpSources.includes(text), `DDP requirement text is missing: ${text}`)
 }

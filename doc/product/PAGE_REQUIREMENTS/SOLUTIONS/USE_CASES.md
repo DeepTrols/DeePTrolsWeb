@@ -50,4 +50,4 @@
 4. 价值体现
 5. 行动引导
 
-CTA 默认使用“咨询合作 / 申请试用”。
+页面底部 CTA 默认复用 `components/common/CtaSection.vue` 的 Tailwind-only `home-contact-cta` 横幅：背景图 `/contact-cta-banner.webp`，标题“以 AI 重塑数字世界与物理世界”，按钮“免费获取专属方案”；Hero CTA 使用 PageHero 统一的“免费获取专属方案”（与首页 home-hero__cta 一致）。不得在页面内自建 CTA 样式或复制页面级私有 CSS。

@@ -190,10 +190,8 @@ AI 智能应用
 为大模型、智能体和推荐系统提供高质量标签数据，提升 AI 对业务的理解能力和决策效果。
 
 板块7:
-<CtaSection
-    title="构建企业自身的AI能力"
-    description="让数据成为资产，让知识驱动决策，让AI创造价值"
-    :actions="ctaActions"
-  />
-
-  按钮：立即咨询、申请试用
+引入CtaSection.vue，统一使用 DeepCtrls 风格页面底部 CTA：
+  <CtaSection title-id="dlp-cta-title" />
+默认标题：以 AI 重塑数字世界与物理世界
+默认指标：新一代智能基础设施、四大智能技术底座、覆盖关键产业场景
+默认按钮：免费获取专属方案

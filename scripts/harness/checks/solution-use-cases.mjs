@@ -76,7 +76,8 @@ export function checkSolutionUseCaseContracts(ctx) {
       solutionUseCasesDoc.includes('data/solutions/use-cases.ts') &&
       solutionUseCasesDoc.includes('SolutionPageTemplate') &&
       solutionUseCasesDoc.includes('SolutionScenarioVisual') &&
-      solutionUseCasesDoc.includes('咨询合作 / 申请试用'),
+      solutionUseCasesDoc.includes('home-contact-cta') &&
+      solutionUseCasesDoc.includes('免费获取专属方案'),
     'Solution use case requirement document must record generated routes, template usage, data source, and CTA baseline.',
   )
 

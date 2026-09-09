@@ -18,7 +18,6 @@ assert(tokens.includes('.dt-product-card') && tokens.includes('border-radius: va
 assert(!tokens.includes('min-height: 280px'), 'Shared ecosystem cards must not define a fixed minimum height.')
 
 for (const [name, source] of [
-  ['CtaSection', ctaSection],
   ['HomeInsights', homeInsights],
   ['HomeSolutions', homeSolutions],
 ]) {
@@ -32,6 +31,10 @@ assert(
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
 assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTabs') && homeSolutions.includes('variant="pill"'), 'HomeSolutions must compose the shared BaseTabs pill variant.')
 assert(homeSolutions.includes('CarouselRoot') && !homeSolutions.includes('solutions__carousel-container'), 'HomeSolutions must render slides through the shared CarouselRoot component without hand-rolled tracks.')
+assert(
+  homeSolutions.includes('background: var(--dt-color-bg)') && !homeSolutions.includes('background: #f0f5ff'),
+  'HomeSolutions Use Cases section must use the default page background.',
+)
 assert(baseTabs.includes('dt-tab-list') && baseTabs.includes('dt-tab'), 'BaseTabs must own shared dt-tab classes.')
 assert(
   productSystem.includes('ProductSystemSection') &&
@@ -107,7 +110,31 @@ assert(
     !systemCards.includes('<style'),
   'SystemCards must provide the FlowMQ-like Tailwind system card grid.',
 )
-assert(homeCta.includes('CtaSection') && ctaSection.includes('dt-cta-panel'), 'HomeCta must reuse the shared CtaSection.')
+assert(
+  homeCta.includes('CtaSection') &&
+    ctaSection.includes('home-contact-cta') &&
+    ctaSection.includes("bg-[url('/contact-cta-banner.webp')]") &&
+    ctaSection.includes('h-[314px]') &&
+    ctaSection.includes('w-[var(--dt-container)]') &&
+    ctaSection.includes('max-w-none') &&
+    ctaSection.includes('left-0') &&
+    ctaSection.includes('top-[78px]') &&
+    ctaSection.includes('top-[138px]') &&
+    ctaSection.includes('top-[190px]') &&
+    ctaSection.includes('text-[clamp(24px,4.1vw,42px)]') &&
+    ctaSection.includes('flex flex-wrap items-center gap-x-5 gap-y-2') &&
+    ctaSection.includes('home-contact-cta__metrics') &&
+    ctaSection.includes('以 AI 重塑数字世界与物理世界') &&
+    ctaSection.includes('新一代智能基础设施') &&
+    ctaSection.includes('四大智能技术底座') &&
+    ctaSection.includes('覆盖关键产业场景') &&
+    ctaSection.includes('免费获取专属方案') &&
+    ctaSection.includes('/images/icons/check-circle-white.svg') &&
+    !ctaSection.includes('<style') &&
+    !ctaSection.includes('dt-cta-panel') &&
+    !ctaSection.includes('BaseButton'),
+  'HomeCta must reuse the shared DeepCtrls-style contact CtaSection with Tailwind v4 utilities only.',
+)
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
 assert(ecosystem.includes('ecosystem-card__icon-box dt-icon-box'), 'Ecosystem icon boxes must use the shared global icon box class.')
 assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')

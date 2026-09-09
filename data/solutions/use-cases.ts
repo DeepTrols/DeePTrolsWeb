@@ -119,11 +119,6 @@ interface UseCaseSeed {
   visualSubtitle: string
 }
 
-const heroActions: SolutionTemplateAction[] = [
-  { label: '咨询合作', href: '/contact', variant: 'primary' },
-  { label: '申请试用', href: '/try', variant: 'secondary' },
-]
-
 const ctaActions: SolutionTemplateAction[] = [
   { label: '咨询合作', href: '/contact', variant: 'primary' },
   { label: '申请试用', href: '/try', variant: 'secondary' },
@@ -717,7 +712,6 @@ function createUseCasePage(seed: UseCaseSeed): SolutionUseCasePage {
         titleLine: `${seed.label}解决方案`,
         titleGradient: seed.gradient,
         description: seed.description,
-        actions: heroActions,
         visualLabel: `${seed.label}场景智能化示意`,
       },
       heroStats: seed.stats,

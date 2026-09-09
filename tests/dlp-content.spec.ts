@@ -4,14 +4,12 @@ import {
   dlpAssetItems,
   dlpChallengeItems,
   dlpCtaActions,
-  dlpHeroActions,
   dlpTimelineItems,
   dlpUseCaseItems,
 } from '../data/dlp'
 
 describe('DLP product page content contract', () => {
   it('uses the exact DLP content structure from the page requirement', () => {
-    expect(dlpHeroActions.map((action) => action.label)).toEqual(['申请试用', '了解更多'])
     expect(dlpChallengeItems).toHaveLength(4)
     expect(dlpAdvantages).toHaveLength(6)
     expect(dlpTimelineItems).toHaveLength(5)

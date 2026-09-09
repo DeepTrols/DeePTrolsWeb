@@ -2,11 +2,11 @@
 import { HardDrive } from '@lucide/vue'
 import PageHero from '~/components/common/PageHero.vue'
 import DmsHeroVisual from '~/components/product/dms/DmsHeroVisual.vue'
-import { dmsHeroActions } from '~/data/dms'
 </script>
 
 <template>
   <PageHero
+    background-image-src="/images/products/product-hero-bg.png"
     badge="数曜·数据要素监管平台"
     :badge-icon="HardDrive"
     title-id="dms-hero-title"
@@ -15,7 +15,6 @@ import { dmsHeroActions } from '~/data/dms'
     description="保障数据安全、合规、高效流通。"
     visual-label="SHUYAODMS_HORE_WEBM"
     visual-size="large"
-    :actions="dmsHeroActions"
   >
     <template #visual>
       <DmsHeroVisual />

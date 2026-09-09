@@ -7,7 +7,7 @@ import DdpArchitecture from '~/components/product/ddp/DdpArchitecture.vue'
 import DdpCapabilityTimelineSection from '~/components/product/ddp/DdpCapabilityTimelineSection.vue'
 import DdpHero from '~/components/product/ddp/DdpHero.vue'
 import DdpUnifiedDevelopmentSection from '~/components/product/ddp/DdpUnifiedDevelopmentSection.vue'
-import { ddpAdvantages, ddpChallengeItems, ddpCtaActions, ddpUseCaseItems } from '~/data/ddp'
+import { ddpAdvantages, ddpChallengeItems, ddpUseCaseItems } from '~/data/ddp'
 
 useSeoMeta({
   title: '数曜·数据开发平台 - DeepTrols',
@@ -50,12 +50,7 @@ useSeoMeta({
         columns="three"
         nowrap-subtitle
       />
-      <CtaSection
-        title="开启企业数据治理新征程"
-        title-id="ddp-cta-title"
-        description="统一接入、智能治理、资产运营，让数据成为企业数字化转型与 AI 发展的核心生产力。"
-        :actions="ddpCtaActions"
-      />
+      <CtaSection title-id="ddp-cta-title" />
     </main>
     <SiteFooter />
   </div>

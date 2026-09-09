@@ -1,6 +1,6 @@
 # Asset Boundary
-> Version: 1.0  
-> Last Updated: 2026-08-21
+> Version: 1.1
+> Last Updated: 2026-09-07
 
 ## Purpose
 本文件定义 DeepTrols 官网运行时资产与产品需求附件的边界，避免页面构建直接依赖 `doc/product/**/imgs`，也避免同一素材在多个目录中无规则复制。
@@ -30,6 +30,8 @@
 | `public/images/home/` | HOME 首屏 Banner 等需要稳定 URL 的公开图片 |
 | `public/images/about/` | About Us 页面 Hero 背景视频 |
 | `public/images/home/solutions/` | HOME 解决方案卡片图片 |
+| `public/images/products/` | 产品页 Hero 背景图（product-hero-bg.png） |
+| `public/contact-cta-banner.webp` | 页面底部 CTA 横幅背景图 |
 
 ## Migration Rule
 当产品文档新增图片后：

@@ -30,12 +30,12 @@ export function registerDgpVisualContracts() {
     expect(page).toContain('DgpUseCasesSection')
     expect(page).toContain('CtaSection')
     expect(page).toContain('为什么选择数曜·治理数据平台')
-    expect(page).toContain('开启企业数据治理新征程')
     expect(page).toContain('title-id="dgp-cta-title"')
     expect(page).toContain('nowrap-subtitle')
     expect(page).not.toContain('top-padding')
 
     expect(hero).toContain('PageHero')
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
     expect(hero).toContain('import { Database }')
     expect(hero).toContain('badge="数曜·数据治理平台"')
     expect(hero).toContain('title-line="可用、可管、可信"')

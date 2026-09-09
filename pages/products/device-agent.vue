@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
@@ -32,6 +33,7 @@ useSeoMeta({
       <DeviceAgentArchitectureSection />
       <DeviceAgentValueSection />
       <DeviceAgentRuntimeSection />
+      <CtaSection title-id="device-agent-cta-title" />
     </main>
     <SiteFooter />
   </div>

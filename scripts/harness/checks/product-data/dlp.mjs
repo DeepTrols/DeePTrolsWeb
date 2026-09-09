@@ -17,6 +17,7 @@ assert(
 )
 assert(
   dlpHero.includes('PageHero') &&
+    dlpHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
     dlpHero.includes('import { Boxes }') &&
     dlpHero.includes('badge="数曜·数据标签平台"') &&
     dlpHero.includes('title-line="协同、智能、高效"') &&

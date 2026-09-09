@@ -13,6 +13,8 @@ export function registerHomeSolutionsVisualContracts() {
     expect(homeSolutions).toContain('title="驱动各行业智能提升"')
     expect(homeSolutions).toContain('覆盖智能制造、企业运营、AI基础设施等核心领域，帮助企业快速构建可持续演进的智能化能力')
     expect(homeSolutions).toContain('nowrap-subtitle')
+    expect(homeSolutions).toContain('background: var(--dt-color-bg)')
+    expect(homeSolutions).not.toContain('background: #f0f5ff')
     expect(homeSolutions).toContain('.solutions :deep(.section-heading__subtitle)')
     expect(homeSolutions).toContain('font-size: 20px')
     expect(homeSolutions).toContain('white-space: nowrap')

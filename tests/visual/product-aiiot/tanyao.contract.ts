@@ -7,6 +7,7 @@ describe('tanyao ai-iot page contract', () => {
     const hero = readComponent('components/product/tanyao/TanyaoHero.vue')
     const pageHero = readComponent('components/common/PageHero.vue')
 
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
     expect(hero).toContain('badge="探曜·AI物联感知平台"')
     expect(hero).toContain('RadioTower')
     expect(hero).toContain('title-id="tanyao-hero-title"')

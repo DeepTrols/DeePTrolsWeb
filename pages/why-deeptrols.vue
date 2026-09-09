@@ -14,11 +14,6 @@ useSeoMeta({
   ogTitle: 'Why DeepTrols - 为什么选择 DeepTrols',
   ogDescription: '数据、知识、智能统一，构建企业级 AI 能力体系。',
 })
-
-const whyCtaActions = [
-  { label: '咨询合作', href: '/contact', variant: 'primary' as const },
-  { label: '申请试用', href: '/try', variant: 'secondary' as const },
-]
 </script>
 
 <template>
@@ -30,12 +25,7 @@ const whyCtaActions = [
       <WhyTrustTabs />
       <WhyServiceReset />
       <WhyEngine />
-      <CtaSection
-        title="构建企业自身的AI能力"
-        title-id="why-cta-title"
-        description="让数据成为资产，让知识驱动决策，让AI创造价值"
-        :actions="whyCtaActions"
-      />
+      <CtaSection title-id="why-cta-title" />
     </main>
     <SiteFooter />
   </div>

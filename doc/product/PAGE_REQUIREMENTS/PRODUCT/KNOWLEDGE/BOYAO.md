@@ -248,11 +248,8 @@ section-heading__eyebrow：稳定
 
 
 板块9:
-<CtaSection
-    title="开启企业知识智能化之旅"
-    description="让分散知识统一沉淀，让企业知识真正服务每一个业务场景。"
-    :actions="ctaActions"
-  />
-
-  按钮：立即咨询、申请试用
-
+引入CtaSection.vue，统一使用 DeepCtrls 风格页面底部 CTA：
+  <CtaSection title-id="boyao-cta-title" />
+默认标题：以 AI 重塑数字世界与物理世界
+默认指标：新一代智能基础设施、四大智能技术底座、覆盖关键产业场景
+默认按钮：免费获取专属方案

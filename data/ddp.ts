@@ -26,11 +26,6 @@ export interface DdpTimelineItem {
   bullets: string[]
 }
 
-export const ddpHeroActions = [
-  { label: '申请试用', href: '/try', variant: 'primary' as const },
-  { label: '了解更多', href: '#ddp-challenge', variant: 'secondary' as const },
-]
-
 export const ddpChallengeItems: DdpFeatureItem[] = [
   {
     title: '数据孤岛难破除',

@@ -38,6 +38,7 @@ export function registerDdpVisualContracts() {
     expect(page).not.toContain('<style')
 
     expect(hero).toContain('PageHero')
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
     expect(hero).toContain('import { Network }')
     expect(hero).toContain('badge="数曜·数据开发平台"')
     expect(hero).toContain('title-line="标准、智能、高效"')
@@ -132,7 +133,6 @@ export function registerDdpVisualContracts() {
       '覆盖数据开发全生命周期',
       '统一数据开发：从接入到交付',
       '赋能企业数据工程实践',
-      '开启企业数据治理新征程',
     ]) {
       expect([page, hero, architecture, timeline, unified, data].join('\n')).toContain(text)
     }

@@ -8,10 +8,17 @@ assert(
     whyPage.includes('WhyServiceReset') &&
     whyPage.includes('WhyEngine') &&
     whyPage.includes('CtaSection') &&
-    whyPage.includes('whyCtaActions'),
+    whyPage.includes('why-cta-title') &&
+    !whyPage.includes('whyCtaActions'),
   'Why page sections are incomplete.',
 )
-assert(whyHero.includes('PageHero') && pageHero.includes('BaseButton'), 'Why hero must reuse the shared PageHero and BaseButton.')
+assert(
+  whyHero.includes('PageHero') &&
+    pageHero.includes('class="page-hero__cta"') &&
+    pageHero.includes('免费获取专属方案') &&
+    !pageHero.includes('BaseButton'),
+  'Why hero must reuse the shared PageHero with the unified HOME-style CTA.',
+)
 assert(!whyHero.includes('HomeCustomerLogos') && !whyHero.includes('why-hero__logos'), 'WhyHero must not own the hero logo strip.')
 assert(whyHeroLogos.includes('HeroLogoStrip') && whyHeroLogos.includes('HomeCustomerLogos'), 'Why hero logos must be extracted into a dedicated component.')
 assert(
@@ -31,7 +38,13 @@ assert(
     whyHero.includes('title-gradient="企业级AI应用服务商"'),
   'Why hero content hierarchy must follow the why-emqx replacement mapping.',
 )
-assert(pageHeroStyles.includes('font-size: 36px') && pageHeroStyles.includes('font-size: 44px') && pageHeroStyles.includes('font-size: 56px'), 'Why hero title sizes must follow the DeepCtrls hero rhythm.')
+assert(
+  pageHeroStyles.includes('font-family: "Source Han Sans CN", "Noto Sans SC", sans-serif') &&
+    pageHeroStyles.includes('font-size: clamp(28px, 2.5vw, 48px)') &&
+    pageHeroStyles.includes('line-height: clamp(38px, 3.75vw, 72px)') &&
+    pageHeroStyles.includes('font-weight: 500'),
+  'PageHero title typography must match the HOME hero title rhythm.',
+)
 assert(
   pageHero.includes('class="page-hero relative overflow-hidden"') &&
     pageHero.includes('container page-hero__body relative isolate pt-[112px] lg:pt-[132px]') &&

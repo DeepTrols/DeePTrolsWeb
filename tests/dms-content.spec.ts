@@ -3,7 +3,6 @@ import {
   dmsCapabilities,
   dmsChallengeItems,
   dmsCtaActions,
-  dmsHeroActions,
   dmsHeroDisposalDone,
   dmsHeroDisposalEvent,
   dmsHeroDisposalFields,
@@ -25,7 +24,6 @@ import {
 
 describe('DMS product page content contract', () => {
   it('uses the exact DMS content structure from the page requirement', () => {
-    expect(dmsHeroActions.map((action) => action.label)).toEqual(['申请试用', '了解更多'])
     expect(dmsChallengeItems).toHaveLength(4)
     expect(dmsCapabilities).toHaveLength(6)
     expect(dmsTimelineItems).toHaveLength(5)

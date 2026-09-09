@@ -7,7 +7,7 @@ import DlpAiModelingSection from '~/components/product/dlp/DlpAiModelingSection.
 import DlpArchitecture from '~/components/product/dlp/DlpArchitecture.vue'
 import DlpCapabilityTimelineSection from '~/components/product/dlp/DlpCapabilityTimelineSection.vue'
 import DlpHero from '~/components/product/dlp/DlpHero.vue'
-import { dlpAdvantages, dlpAssetItems, dlpChallengeItems, dlpCtaActions, dlpUseCaseItems } from '~/data/dlp'
+import { dlpAdvantages, dlpAssetItems, dlpChallengeItems, dlpUseCaseItems } from '~/data/dlp'
 
 useSeoMeta({
   title: '数曜·数据标签平台 - DeepTrols',
@@ -59,12 +59,7 @@ useSeoMeta({
         columns="three"
         nowrap-subtitle
       />
-      <CtaSection
-        title="构建企业自身的AI能力"
-        title-id="dlp-cta-title"
-        description="让数据成为资产，让知识驱动决策，让AI创造价值"
-        :actions="dlpCtaActions"
-      />
+      <CtaSection title-id="dlp-cta-title" />
     </main>
     <SiteFooter />
   </div>

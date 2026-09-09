@@ -48,11 +48,6 @@ export interface DlpTimelineItem {
   bullets: string[]
 }
 
-export const dlpHeroActions = [
-  { label: '申请试用', href: '/try', variant: 'primary' as const },
-  { label: '了解更多', href: '#dlp-challenge', variant: 'secondary' as const },
-]
-
 export const dlpHeroFeatures: DlpHeroFeature[] = [
   { key: 'customer/visit_count', value: '28 次', icon: Activity },
   { key: 'customer/order_amount', value: '¥12,860', icon: Wallet },

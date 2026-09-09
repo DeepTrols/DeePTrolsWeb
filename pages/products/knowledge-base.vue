@@ -9,7 +9,7 @@ import BoyaoCapabilitySection from '~/components/product/boyao/BoyaoCapabilitySe
 import BoyaoCoreValueSection from '~/components/product/boyao/BoyaoCoreValueSection.vue'
 import BoyaoHero from '~/components/product/boyao/BoyaoHero.vue'
 import BoyaoIntegrationSection from '~/components/product/boyao/BoyaoIntegrationSection.vue'
-import { boyaoChallenges, boyaoCompatibilityCategories, boyaoCtaActions, boyaoFeatures } from '~/data/boyao'
+import { boyaoChallenges, boyaoCompatibilityCategories, boyaoFeatures } from '~/data/boyao'
 
 useSeoMeta({
   title: '博曜·企业级知识管理平台 - DeepTrols',
@@ -52,12 +52,7 @@ useSeoMeta({
         :categories="boyaoCompatibilityCategories"
         nowrap-subtitle
       />
-      <CtaSection
-        title="开启企业知识智能化之旅"
-        title-id="boyao-cta-title"
-        description="让分散知识统一沉淀，让企业知识真正服务每一个业务场景。"
-        :actions="boyaoCtaActions"
-      />
+      <CtaSection title-id="boyao-cta-title" />
     </main>
     <SiteFooter />
   </div>

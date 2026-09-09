@@ -7,7 +7,7 @@ import TanyaoCapabilitySection from '~/components/product/tanyao/TanyaoCapabilit
 import TanyaoHero from '~/components/product/tanyao/TanyaoHero.vue'
 import TanyaoSolutionSection from '~/components/product/tanyao/TanyaoSolutionSection.vue'
 import TanyaoStatsSection from '~/components/product/tanyao/TanyaoStatsSection.vue'
-import { tanyaoAgents, tanyaoChallenges, tanyaoCtaActions } from '~/data/tanyao'
+import { tanyaoAgents, tanyaoChallenges } from '~/data/tanyao'
 
 useSeoMeta({
   title: '探曜·AI物联感知平台 - DeepTrols',
@@ -41,12 +41,7 @@ useSeoMeta({
         columns="three"
         nowrap-subtitle
       />
-      <CtaSection
-        title="让每一次连接都产生智能价值"
-        title-id="tanyao-cta-title"
-        description="连接设备与现场数据，以边缘计算与 AI 能力驱动实时感知、智能分析与高效决策。"
-        :actions="tanyaoCtaActions"
-      />
+      <CtaSection title-id="tanyao-cta-title" />
     </main>
     <SiteFooter />
   </div>

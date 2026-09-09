@@ -7,6 +7,7 @@ describe('device agent page contract', () => {
     const hero = readComponent('components/product/device-agent/DeviceAgentHero.vue')
     const pageHero = readComponent('components/common/PageHero.vue')
 
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
     expect(hero).toContain('badge="Device Agent"')
     expect(hero).toContain('Cpu')
     expect(hero).toContain('title-id="device-agent-hero-title"')
@@ -14,7 +15,7 @@ describe('device agent page contract', () => {
     expect(hero).toContain('title-gradient="串联事件、记忆、执行和决策"')
     expect(hero).toContain('visual-label="DEVICEAGENT_HORE_WEBM"')
     expect(hero).toContain('align="center"')
-    expect(hero).toContain(':actions="[]"')
+    expect(hero).not.toContain(':actions')
     expect(hero).toContain('<DeviceAgentHeroVisual />')
 
     // shared PageHero exposes the centered variant without breaking the left baseline

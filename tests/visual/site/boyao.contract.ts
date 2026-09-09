@@ -5,8 +5,10 @@ export function registerBoyaoVisualContracts() {
   it('renders the boyao hero card icon boxes through the shared IconBox soft tone', () => {
     const iconBox = readComponent('components/common/card/IconBox.vue')
     const featureCard = readComponent('components/common/card/FeatureCard.vue')
+    const hero = readComponent('components/product/boyao/BoyaoHero.vue')
     const heroVisual = readComponent('components/product/boyao/BoyaoHeroVisual.vue')
 
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
     expect(iconBox).toContain("tone?: 'primary' | 'muted' | 'white' | 'gradient' | 'soft'")
     expect(iconBox).toContain('icon-box--tone-soft')
     expect(iconBox).toContain('color-mix(in oklab, var(--dt-color-bg-soft) 50%, transparent)')

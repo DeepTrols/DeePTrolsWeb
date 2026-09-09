@@ -158,6 +158,7 @@ Web 使用完整 Vue Flow。
 
 ### 区域三：解决方案
 - Eyebrow：Use Cases
+- Section 背景：默认页面背景 `var(--dt-color-bg)`，不得单独使用 `#f0f5ff`。
 - 标题：驱动各行业智能提升
 - 描述：覆盖智能制造、企业运营、AI基础设施等核心领域，帮助企业快速构建可持续演进的智能化能力
 - 描述样式：`text-xl`，桌面端不换行。
@@ -302,9 +303,17 @@ aria-roledescription="滑动"
 `<section class="container pb-32 lg:pb-44"><div class="mb-12 flex flex-col gap-2 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left"><div class="flex flex-col gap-2"><span class="text-base font-semibold uppercase text-primary/75">资源</span>……`
 
 ### 区域六：CTA
-- 主标题：构建企业自身的AI能力
-- 副标题：让数据成为资产，让知识驱动决策，让AI创造价值
-- 按钮：咨询合作、申请试用
+- 参考 `https://www.deepctrls.com/deepctrls_com/` 首页 `home-contact-cta` 横幅的布局、尺寸、字号、定位与 hover 发光边框节奏。
+- 背景图片：`public/contact-cta-banner.webp`（运行时 URL：`/contact-cta-banner.webp`）。
+- `.home-contact-cta__inner` 必须使用 `var(--dt-container)`，确保 CTA 内容左边缘与页面内容左边缘对齐。
+- `CtaSection` 必须使用 Tailwind CSS v4 工具类实现，不允许新增独立 CTA SCSS、组件私有 `<style>` 或页面级复制样式；三项指标使用紧凑横向 flex 间距，不使用绝对定位拉开间隔。
+- 主标题：以 AI 重塑数字世界与物理世界
+- 指标：
+  - 新一代智能基础设施
+  - 四大智能技术底座
+  - 覆盖关键产业场景
+- 按钮：免费获取专属方案
+- 该区块必须由 `components/common/CtaSection.vue` 承载，首页、Why DeepTrols 与产品页默认复用同一组件；页面层只传 `title-id`，不得复制旧 CTA panel 或双按钮实现。
 ### Footer
 参考 EMQX 官网 Footer 的布局与交互风格，整体保持 `pt-12 bg-muted` 的深色背景、弱分隔线、Logo + 社交媒体入口、五列导航与底部版权结构，要求 1:1 还原布局节奏、字号、行高、间距与 hover。Footer 左侧 logo 宽度为 240px，不展示语言切换入口。`site-footer__socials` 与 `site-footer__main` 平级，位于 `site-footer__main` 和底部分隔线之间。
 
@@ -375,5 +384,5 @@ HOME 是后续页面的默认实现基准。除非其他页面需求明确说明
 - Tab 使用 `.dt-tab-list` + `.dt-tab`。
 - 产品体系卡片使用 `.dt-product-card` + `.dt-product-card__accent` + `.dt-icon-box`。
 - 生态卡片使用 `.dt-ecosystem-card` + `.dt-card-tag`。
-- CTA 面板使用 `.dt-cta-panel`。
+- 页面底部 CTA 使用 `components/common/CtaSection.vue` 的 `home-contact-cta` 横幅结构。
 - 禁止在新组件中重复复制 HOME 内已公共化的按钮、tab、卡片、标题和 CTA 样式。

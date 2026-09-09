@@ -9,12 +9,14 @@
 
 适用场景：
 - Why、About、Product、Solution 等页面首屏。
-- 需要 DeepCtrls 浅色背景网格、左右低透明蓝色 glow、胶囊 eyebrow、双行标题、描述与两个 CTA 的页面。
+- 需要 DeepCtrls 浅色背景网格、左右低透明蓝色 glow、胶囊 eyebrow、双行标题、描述与统一 CTA 的页面。
 
 使用要求：
-- 页面组件只传入 `badge`、`titleLine`、`titleGradient`、`description`、`actions`。
-- `badge`、`titleGradient`、`actions` 与 `visual` slot 均为可选；About 等纯品牌页可使用居中 Hero 且不渲染 badge、渐变副标题或按钮。
-- 需要在 Hero 背景层播放运行时视频时使用 `backgroundVideoSrc`，视频文件必须位于 `public/**` 或 `assets/**`，不得直接引用 `doc/product/**/imgs`。
+- 页面组件只传入 `badge`、`titleLine`、`titleGradient`、`description`。
+- `badge`、`titleGradient` 与 `visual` slot 均为可选；About 等纯品牌页可使用居中 Hero 且不渲染 badge、渐变副标题。
+- CTA 不再由页面传入：`PageHero` 统一渲染单个「免费获取专属方案」按钮（`page-hero__cta`，链接 `/contact`），视觉与首页 `home-hero__cta` 一致（277×47、`linear-gradient(90deg, #1e44e0, #6583ff)`、箭头装饰、hover 上浮）。
+- 标题排版与首页 `home-hero-title` 一致：`Source Han Sans CN` 字族、`font-size: clamp(28px, 2.5vw, 48px)`、`font-weight: 500`、`line-height: clamp(38px, 3.75vw, 72px)`。
+- 需要在 Hero 背景层播放运行时视频时使用 `backgroundVideoSrc`，需要使用图片背景时传入 `backgroundImageSrc`（传入后不再渲染网格与 glow 装饰，保留底部 `::after` 渐变压色）；素材必须位于 `public/**` 或 `assets/**`，不得直接引用 `doc/product/**/imgs`。产品页 Hero 统一使用 `/images/products/product-hero-bg.png`。
 - 视觉素材通过 `#visual` slot 传入。
 - `PageHero` 外层 section 只保留 `page-hero relative overflow-hidden`，不得承载背景色或边框；`bg-dt-bg` 必须放在 `.page-hero__body` 内部的 `.page-hero__body-bg` 背景层上，并与 `.page-hero__background`、`.page-hero__inner` 平级。层级顺序必须是 `body-bg(z-0)`、视频/网格/glow 背景层、内容层，避免实色背景遮挡视频。
 - `.page-hero__background` 虽位于 `.container.page-hero__body` 内部，但宽度必须使用 `100vw` 并通过 `left: 50%` + `translateX(-50%)` 居中，保证视频背景铺满屏幕宽度，不被 container 限制。
@@ -284,8 +286,10 @@
 - 页面底部行动号召。
 
 使用要求：
-- 使用 `dt-cta-panel` 与 `BaseButton`。
-- 页面只传入标题、描述和按钮数组。
+- 使用 DeepCtrls 风格 `home-contact-cta` 横幅结构，背景图固定为 `/contact-cta-banner.webp`，`.home-contact-cta__inner` 使用 `var(--dt-container)` 与页面内容左边缘对齐，包含标题、三项指标、勾选图标与 Tailwind hover 边框/阴影按钮。
+- 该组件必须 Tailwind-only：尺寸、背景、定位、hover、响应式与指标间距均写在组件模板工具类中，不新增 `_contact-cta.scss`、组件私有 `<style>` 或页面级复制样式。
+- 默认标题为“以 AI 重塑数字世界与物理世界”，默认指标为“新一代智能基础设施 / 四大智能技术底座 / 覆盖关键产业场景”，默认按钮为“免费获取专属方案”。
+- 首页、Why DeepTrols 与产品页只传入 `title-id`，不得继续传旧的标题、描述与双按钮数组。
 - 不在页面内复制 CTA panel 样式。
 
 ## 质量约束

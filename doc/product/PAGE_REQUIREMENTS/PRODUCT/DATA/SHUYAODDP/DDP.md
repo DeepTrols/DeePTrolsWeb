@@ -167,11 +167,8 @@ AI 数据底座
 统一数据开发、清洗、转换与交付流程，为大模型、智能体及 AI 应用持续提供高质量、可信赖的数据资产。
 
 模块7:
-引入CtaSection.vue
-  <CtaSection
-    title="开启企业数据治理新征程"
-    title-id="ddp-cta-title"
-    description="统一接入、智能治理、资产运营，让数据成为企业数字化转型与 AI 发展的核心生产力。"
-    :actions="ctaActions"
-  />
-   按钮：立即咨询、申请试用
+引入CtaSection.vue，统一使用 DeepCtrls 风格页面底部 CTA：
+  <CtaSection title-id="ddp-cta-title" />
+默认标题：以 AI 重塑数字世界与物理世界
+默认指标：新一代智能基础设施、四大智能技术底座、覆盖关键产业场景
+默认按钮：免费获取专属方案

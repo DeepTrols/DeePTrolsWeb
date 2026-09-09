@@ -20,7 +20,6 @@ export interface SolutionTemplateHero {
   titleLine: string
   titleGradient?: string
   description: string
-  actions?: SolutionTemplateAction[]
   visualLabel?: string
   backgroundVideoSrc?: string
   align?: 'left' | 'center'

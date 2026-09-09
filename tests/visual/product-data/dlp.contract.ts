@@ -35,6 +35,7 @@ export function registerDlpVisualContracts() {
     expect(page).not.toContain('<style')
 
     expect(hero).toContain('PageHero')
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
     expect(hero).toContain('import { Boxes }')
     expect(hero).toContain('badge="数曜·数据标签平台"')
     expect(hero).toContain('title-line="协同、智能、高效"')
