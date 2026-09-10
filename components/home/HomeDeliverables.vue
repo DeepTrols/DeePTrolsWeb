@@ -15,8 +15,8 @@ function showNextDeliverable() {
 </script>
 
 <template>
-  <section class="section deliverables" aria-labelledby="deliverables-title">
-    <div class="container">
+  <section class="section deliverables flow-root" aria-labelledby="deliverables-title">
+    <div class="container mt-10 mb-10">
       <h2 id="deliverables-title" class="sr-only">三大业务方向</h2>
       <div class="deliverables__viewport" aria-label="三大业务方向" aria-roledescription="轮播">
         <button
@@ -73,10 +73,6 @@ function showNextDeliverable() {
 </template>
 
 <style scoped lang="scss">
-.deliverables {
-  padding: clamp(3.5rem, 7vw, 6rem) 0 var(--dt-space-section);
-}
-
 .deliverables__viewport {
   position: relative;
   overflow: hidden;
@@ -218,11 +214,6 @@ p {
 }
 
 @media (min-width: 1024px) {
-  .deliverables {
-    padding-top: clamp(4.5rem, 7vw, 7rem);
-    padding-bottom: var(--dt-space-section-lg);
-  }
-
   .deliverables__slide {
     flex-direction: row;
     min-height: 300px;

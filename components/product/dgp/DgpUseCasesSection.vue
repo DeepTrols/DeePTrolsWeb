@@ -10,8 +10,8 @@ const useCaseTabs = computed(() => dgpUseCases.map((item) => ({ key: item.key, l
 </script>
 
 <template>
-  <section class="pb-20 lg:pb-[132px]" aria-labelledby="dgp-use-cases-title">
-    <div class="container">
+  <section class="flow-root" aria-labelledby="dgp-use-cases-title">
+    <div class="container mt-10 mb-10">
       <h2
         id="dgp-use-cases-title"
         class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"

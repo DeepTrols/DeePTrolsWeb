@@ -10,7 +10,8 @@ export function registerHomeInsightsCtaVisualContracts() {
     } = loadHomeVisualSources()
 
     expect(homeInsights).toContain('SectionHeading')
-    expect(homeInsights).toContain('class="section insights !pt-16 lg:!pt-24"')
+    expect(homeInsights).toContain('class="section insights flow-root"')
+    expect(homeInsights).toContain('class="container mt-10 mb-10"')
     expect(homeInsights).toContain('eyebrow="Resources"')
     expect(homeInsights).toContain('title="创新、洞察与新闻"')
     expect(homeInsights).toContain('title-id="insights-title"')

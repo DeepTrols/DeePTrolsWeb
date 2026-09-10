@@ -120,7 +120,7 @@ assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero visual must not u
 assert(whyTrustTabs.includes('TrustTabsSection') && trustTabsSection.includes('SectionHeader'), 'Why trust tabs must reuse TrustTabsSection and SectionHeader.')
 assert(trustTabsSection.includes('BaseTabs') && baseTabs.includes('dt-segmented-tabs') && baseTabs.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
 assert(trustTabsSection.includes('BaseCard') && trustTabsSection.includes('IconBox') && baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
-assert(trustTabsSection.includes('SectionShell') && sectionShell.includes('pb-20 lg:pb-[132px]'), 'Why trust section must use the DeepCtrls Tailwind section rhythm.')
+assert(trustTabsSection.includes('SectionShell') && sectionShell.includes('flow-root') && sectionShell.includes('container mt-10 mb-10'), 'Why trust section must use the unified Tailwind section rhythm (flow-root shell + container mt-10 mb-10).')
 assert(trustTabsSection.includes('mb-12 text-center lg:mb-16'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
 assert(trustTabsSection.includes('CardGrid') && cardGrid.includes('gap-5 lg:gap-6') && cardGrid.includes('md:grid-cols-2') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
 assert(
@@ -135,7 +135,7 @@ assert(
     trustTabsSection.includes(':icon-size="20"'),
   'Why trust cards must use DGP card radius/icon size and avoid fixed card height.',
 )
-assert(serviceShowcaseSection.includes('dt-section relative pb-20 lg:pb-[132px]') && engineLinksSection.includes('dt-section relative pb-20 lg:pb-[132px]'), 'Why service and engine sections must share the DeepCtrls section rhythm.')
+assert(serviceShowcaseSection.includes('service-showcase relative flow-root') && serviceShowcaseSection.includes('container mt-10 mb-10') && engineLinksSection.includes('engine-links-section relative flow-root') && engineLinksSection.includes('container mt-10 mb-10'), 'Why service and engine sections must share the unified section rhythm (flow-root shell + container mt-10 mb-10).')
 assert(
   serviceShowcaseSection.includes('FeatureCard') &&
     serviceShowcaseSection.includes('variant="soft"') &&

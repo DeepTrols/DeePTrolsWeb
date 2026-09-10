@@ -62,7 +62,8 @@ export function registerDgpVisualContracts() {
     expect(featureGrid).toContain('SectionHeader')
     expect(featureGrid).toContain('CardGrid')
     expect(featureGrid).toContain('FeatureCard')
-    expect(sectionShell).toContain('pb-20 lg:pb-[132px]')
+    expect(sectionShell).toContain('flow-root')
+    expect(sectionShell).toContain('container mt-10 mb-10')
     expect(sectionShell).toContain('bg-dt-bg')
     expect(featureGrid).not.toContain('pt-24')
     expect(cardGrid).toContain('md:grid-cols-2 lg:grid-cols-4')
@@ -104,7 +105,7 @@ export function registerDgpVisualContracts() {
     expect(systemCards).not.toContain('<style')
 
     expect(evolution).toContain('企业数据治理体系的演进')
-    expect(evolution).toContain('class="container pb-20 lg:pb-[132px]"')
+    expect(evolution).toContain('class="container mt-10 mb-10"')
     expect(evolution).toContain('SectionHeader')
     expect(evolution).not.toContain('eyebrow-size="sm"')
     expect(evolution).not.toContain('eyebrow-tone="primary"')
@@ -121,7 +122,8 @@ export function registerDgpVisualContracts() {
     expect(evolution).not.toContain('SectionHeading')
     expect(evolution).not.toContain('<style')
 
-    expect(useCases).toContain('class="pb-20 lg:pb-[132px]"')
+    expect(useCases).toContain('class="flow-root"')
+    expect(useCases).toContain('class="container mt-10 mb-10"')
     expect(useCases).toContain('text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted')
     expect(useCases).toContain('text-center text-base text-default')
     expect(useCases).toContain('lg:whitespace-nowrap')

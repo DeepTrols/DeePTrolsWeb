@@ -32,8 +32,8 @@ withDefaults(
 </script>
 
 <template>
-  <section class="service-showcase dt-section relative pb-20 lg:pb-[132px]" :aria-labelledby="titleId">
-    <div class="container service-showcase__grid" :class="reverse && 'service-showcase__grid--reverse'">
+  <section class="service-showcase relative flow-root" :aria-labelledby="titleId">
+    <div class="container mt-10 mb-10 service-showcase__grid" :class="reverse && 'service-showcase__grid--reverse'">
       <div class="service-showcase__content">
         <SectionHeader :eyebrow="eyebrow" :title="title" :title-id="titleId" :subtitle="subtitle" />
 

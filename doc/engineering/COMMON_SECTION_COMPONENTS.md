@@ -1,6 +1,6 @@
 # 公共页面区块组件
 
-> Version: 2026-09-07
+> Version: 2026-09-10
 
 本文件约束官网后续页面复用区块的方式。除非页面需求明确提出特殊结构，否则应优先复用本文件中的公共组件，避免各页面在标题层级、间距、按钮、卡片和 hover 行为上出现偏差。
 
@@ -52,7 +52,7 @@
 - 宽幅 banner 使用 `/O1CN0.png`，客户标签使用 `/clients-label.webp`，均为 `public/` 公开运行时资产。
 - 三行合作客户走马灯采用 `partner-rows` / `partner-row__track` 结构，方向为右、左、右；单个 logo 尺寸为 `144px × 55px`，间距为 `22px`，行间距为 `18px`。
 - 组件只能使用 Tailwind CSS v4 utilities，不新增 `<style>`；走马灯 keyframes 与动画变量必须放在 `assets/css/tailwind.css` 的 `@theme` 中，通过 `animate-home-about-marquee-left/right` 调用。
-- About section 不套用全局 `.section` 底部 padding；外层使用 Tailwind v4 `pb-5`，下方 `Resources` 由自身 `pt-16 lg:pt-24` 承接统一 section 间距。
+- About section 遵循全站「Section 间距统一规则」：根节点 `flow-root` 且不携带任何 pt/pb，内部 `.container` 使用 `mt-10 mb-10` 承接间距；渐变背景经 `flow-root` 完整覆盖上下间距区域。
 - 该区块是 HOME 专属业务区块，不作为通用 Page Section 模板扩展，避免后续页面误用客户 logo 走马灯。
 
 ## Hero Stats Strip
@@ -76,11 +76,26 @@
 
 使用要求：
 - 新区块优先直接使用 `SectionShell` + `SectionHeader`。
-- `SectionShell` 负责 section 标签、container 宽度、背景和 `pb-20 lg:pb-[132px]` 等节奏。
+- `SectionShell` 负责 section 标签、container 宽度、背景与统一间距节奏（根节点 `flow-root`，内部 container `mt-10 mb-10`，见「Section 间距统一规则」）。
 - `SectionShell` 内部容器使用 `w-[var(--dt-container-wide)] max-w-none px-0`；普通页面 `.container` 使用 `--dt-container`，两者都遵循 DeepCtrls 横向 gutter 基线，不再写固定 `1200px / 1400px` 宽度。
 - `SectionHeader` 负责 eyebrow、title、subtitle、nowrap、宽度、对齐、语义标题层级和 actions slot。
 - `SectionHeader` 的 section title 在桌面端默认不主动换行；少数未使用 `SectionHeader` 的 section 标题必须使用公共 `.dt-section-title` 或 Tailwind v4 `whitespace-nowrap` 明确保持不换行。
 - `SectionHeading` 只用于兼容既有 HOME 组件；后续新增页面不要继续扩展它。
+
+## Section 间距统一规则（TASK-014.14）
+
+适用范围：全站所有内容型 section（新建 section 必须延续此约定）。
+
+规则：
+- **section 根元素不携带任何 pt/pb**：不写 Tailwind `pb-20 lg:pb-[132px]` 之类的上下 padding，也不在 scoped SCSS / `main.scss` 中为 section 根声明上下 padding。
+- **section 内部 container 统一使用 `mt-10 mb-10`**（上下各 40px）。
+- **section 根统一加 `flow-root`**：section 无 padding/border 时，container 的 mt/mb 会发生外边距塌陷并逃逸出 section；`flow-root` 将 margin 收在 section 内部。视觉效果 = 容器上方 40px + 下方 40px，相邻 section 间距 80px，带背景色/渐变的 section 背景可完整覆盖间距区域。
+- 全站旧的 `--dt-space-section` / `--dt-space-section-lg` token 与 `.section` / `.dt-section` padding 规则已删除，不得再引用。
+
+豁免清单（与 hero 节奏绑定或结构特殊，不套用本规则）：
+- `components/common/PageHero.vue` 与 HomeHero（hero 节奏独立）。
+- `components/common/CtaSection.vue`（`home-contact-cta` 固定 `h-[314px]` 横幅 + 绝对定位内容）。
+- `components/common/HeroLogoStrip.vue`、`components/home/HomeCustomerLogos.vue`（hero 附属条带，`padding-top: 5.5rem` 由 hero-product 契约锁定）。
 
 ## Card Primitives
 公共组件：
@@ -249,7 +264,7 @@
 - 需要在卡片网格后追加流程图、说明图等内容时，使用 `#after` slot，避免重复手写 section/header/card-grid 结构。
 - 需要在卡片网格前放置流程图、架构图等内容时，使用 `#before` slot；例如 DMS “监管流程”先展示流程占位，再展示阶段卡片。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive` 共同决定同一网格内的卡片高度。
-- 产品页特性区块默认不使用 `pt-24`，区块之间只保留 `pb-20 lg:pb-[132px]` 节奏。
+- 产品页特性区块默认不使用 `pt-24`，区块间距由 `SectionShell` 的统一节奏（container `mt-10 mb-10`）承接。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
 
 ## System Cards

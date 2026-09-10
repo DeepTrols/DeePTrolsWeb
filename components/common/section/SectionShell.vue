@@ -6,31 +6,26 @@ const props = withDefaults(
     as?: 'section' | 'div'
     titleId?: string
     container?: 'default' | 'wide' | 'none'
-    spacing?: 'default' | 'compact' | 'flush'
     background?: 'default' | 'transparent' | 'muted'
   }>(),
   {
     as: 'section',
     titleId: undefined,
     container: 'default',
-    spacing: 'default',
     background: 'default',
   },
 )
 
 const shellClasses = computed(() => [
-  'section-shell relative',
-  props.spacing === 'default' && 'pb-20 lg:pb-[132px]',
-  props.spacing === 'compact' && 'pb-16 lg:pb-20',
-  props.spacing === 'flush' && 'pb-0',
+  'section-shell relative flow-root',
   props.background === 'default' && 'bg-dt-bg',
   props.background === 'muted' && 'bg-dt-bg-soft',
   props.background === 'transparent' && 'bg-transparent',
 ])
 
 const containerClasses = computed(() => [
-  props.container === 'default' && 'container',
-  props.container === 'wide' && 'mx-auto w-[var(--dt-container-wide)] max-w-none px-0',
+  props.container === 'default' && 'container mt-10 mb-10',
+  props.container === 'wide' && 'mx-auto mt-10 mb-10 w-[var(--dt-container-wide)] max-w-none px-0',
 ])
 </script>
 

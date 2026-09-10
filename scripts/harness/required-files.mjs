@@ -25,6 +25,7 @@ export const requiredFiles = [
   'doc/tasks/review/TASK-014.9-pagehero-unified-cta.md',
   'doc/tasks/review/TASK-014.12-deepctrls-contact-cta.md',
   'doc/tasks/review/TASK-014.13-home-about-section.md',
+  'doc/tasks/review/TASK-014.14-section-spacing-unification.md',
   'doc/engineering/CODE_AUDIT_2026-07-30.md',
   'doc/engineering/COMMON_SECTION_COMPONENTS.md',
   'doc/engineering/COMPONENT_REFINEMENT_AUDIT.md',

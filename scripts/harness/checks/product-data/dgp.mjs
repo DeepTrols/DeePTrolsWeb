@@ -50,7 +50,7 @@ assert(
 )
 assert(
   dgpEvolution.includes('企业数据治理体系的演进') &&
-    dgpEvolution.includes('class="container pb-20 lg:pb-[132px]"') &&
+    dgpEvolution.includes('class="container mt-10 mb-10"') &&
     dgpEvolution.includes('SectionHeader') &&
     !dgpEvolution.includes('eyebrow-size="sm"') &&
     !dgpEvolution.includes('eyebrow-tone="primary"') &&
@@ -69,7 +69,8 @@ assert(
   'DGP evolution section must keep the required alternating Tailwind layout.',
 )
 assert(
-  dgpUseCases.includes('class="pb-20 lg:pb-[132px]"') &&
+  dgpUseCases.includes('class="flow-root"') &&
+    dgpUseCases.includes('class="container mt-10 mb-10"') &&
     dgpUseCases.includes('text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted') &&
     dgpUseCases.includes('text-center text-base text-default') &&
     dgpUseCases.includes('lg:whitespace-nowrap') &&

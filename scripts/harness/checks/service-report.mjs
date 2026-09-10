@@ -53,7 +53,7 @@ export function checkServiceReportContracts(ctx) {
     'Report hero spacing and typography must follow the resources page reference.',
   )
   assert(
-    reportFeaturedSection.includes('class="container pb-16 md:pb-20"') &&
+    reportFeaturedSection.includes('class="container mt-10 mb-10"') &&
       reportFeaturedSection.includes('aria-labelledby="report-featured-title"') &&
       reportFeaturedSection.includes('featuredReportResources') &&
       reportFeaturedSection.includes('class="grid grid-cols-1 gap-8 md:grid-cols-3"') &&
@@ -71,8 +71,8 @@ export function checkServiceReportContracts(ctx) {
     'Report filter bar must match the requested tab/search DOM and classes.',
   )
   assert(
-    reportResourcesSection.includes('class="container pb-20 lg:pb-[132px]"') &&
-      reportResourcesSection.includes('class="mb-24"') &&
+    reportResourcesSection.includes('class="container mt-10 mb-10"') &&
+      reportResourcesSection.includes('class="flow-root"') &&
       reportResourcesSection.includes('class="grid grid-cols-1 gap-8 md:grid-cols-3"') &&
       reportResourcesSection.includes('ReportResourceCard') &&
       reportResourcesSection.includes(':eager="index === 0"') &&

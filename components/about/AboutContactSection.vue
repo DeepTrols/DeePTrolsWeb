@@ -3,25 +3,27 @@ import { aboutContacts } from '~/data/about'
 </script>
 
 <template>
-  <section class="container pb-32 text-center lg:pb-48" aria-labelledby="about-contact-title">
-    <h2
-      id="about-contact-title"
-      class="!mb-12 mb-4 text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
-    >
-      联系我们
-    </h2>
-
-    <div class="about-contact-grid grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2">
-      <a
-        v-for="item in aboutContacts"
-        :key="item.label"
-        :href="item.href"
-        target="_self"
-        class="about-contact-grid__item flex min-h-[148px] flex-col justify-center gap-2 p-8 text-center transition-colors duration-200 hover:bg-dt-bg-soft/50 md:p-10"
+  <section class="flow-root" aria-labelledby="about-contact-title">
+    <div class="container mt-10 mb-10 text-center">
+      <h2
+        id="about-contact-title"
+        class="!mb-12 mb-4 text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
       >
-        <div class="text-base font-normal text-muted">{{ item.label }}</div>
-        <div class="text-lg font-semibold text-highlighted">{{ item.value }}</div>
-      </a>
+        联系我们
+      </h2>
+
+      <div class="about-contact-grid grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2">
+        <a
+          v-for="item in aboutContacts"
+          :key="item.label"
+          :href="item.href"
+          target="_self"
+          class="about-contact-grid__item flex min-h-[148px] flex-col justify-center gap-2 p-8 text-center transition-colors duration-200 hover:bg-dt-bg-soft/50 md:p-10"
+        >
+          <div class="text-base font-normal text-muted">{{ item.label }}</div>
+          <div class="text-lg font-semibold text-highlighted">{{ item.value }}</div>
+        </a>
+      </div>
     </div>
   </section>
 </template>

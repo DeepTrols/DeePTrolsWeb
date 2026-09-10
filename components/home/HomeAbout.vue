@@ -14,10 +14,10 @@ const partnerRows = computed(() => homeAbout.partnerRows.map((row) => [...row, .
 
 <template>
   <section
-    class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-5 pt-[78px]"
+    class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] flow-root"
     aria-labelledby="home-about-title"
   >
-    <div class="container">
+    <div class="container mt-10 mb-10">
       <SectionHeading
         class="company-stats__header"
         :eyebrow="homeAbout.eyebrow"

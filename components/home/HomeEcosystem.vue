@@ -6,8 +6,8 @@ import { ecosystemCards } from '~/data/home'
 </script>
 
 <template>
-  <section class="section ecosystem" aria-labelledby="ecosystem-title">
-    <div class="container">
+  <section class="section ecosystem flow-root" aria-labelledby="ecosystem-title">
+    <div class="container mt-10 mb-10">
       <SectionHeading
         id="ecosystem-title"
         eyebrow="ecosystem"

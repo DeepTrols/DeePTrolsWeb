@@ -42,7 +42,7 @@ export function registerReportVisualContracts() {
     expect(hero).toContain('font-size: 24px')
     expect(hero).toContain('font-size: 48px')
 
-    expect(featured).toContain('class="container pb-16 md:pb-20"')
+    expect(featured).toContain('class="container mt-10 mb-10"')
     expect(featured).toContain('aria-labelledby="report-featured-title"')
     expect(featured).toContain('featuredReportResources')
     expect(featured).toContain('class="grid grid-cols-1 gap-8 md:grid-cols-3"')
@@ -58,8 +58,8 @@ export function registerReportVisualContracts() {
     expect(filter).toContain('data-slot="leadingIcon"')
     expect(filter).toContain("emit('update:searchQuery'")
 
-    expect(section).toContain('class="container pb-20 lg:pb-[132px]"')
-    expect(section).toContain('class="mb-24"')
+    expect(section).toContain('class="container mt-10 mb-10"')
+    expect(section).toContain('class="flow-root"')
     expect(section).toContain('class="grid grid-cols-1 gap-8 md:grid-cols-3"')
     expect(section).toContain('ReportResourceCard')
     expect(section).toContain('items: ReportResource[]')

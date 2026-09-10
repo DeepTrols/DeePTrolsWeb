@@ -37,7 +37,8 @@ assert(
     homeAbout.includes(':eyebrow="homeAbout.eyebrow"') &&
     homeAbout.includes(':title="homeAbout.title"') &&
     homeAbout.includes('title-id="home-about-title"') &&
-    homeAbout.includes('class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] pb-5 pt-[78px]"') &&
+    homeAbout.includes('class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] flow-root"') &&
+    homeAbout.includes('class="container mt-10 mb-10"') &&
     !homeAbout.includes('whitespace-pre-line') &&
     homeAbout.includes('company-stats__banner block aspect-[1402/357] w-full rounded-dt-md object-cover') &&
     homeAbout.includes('clients-label mx-auto mb-[42px] mt-[62px] block h-auto max-h-[26px] w-auto max-w-full object-contain') &&
@@ -62,7 +63,7 @@ assert(
   'HomeAbout content and marquee animation tokens must be centralized in data/home.ts and Tailwind v4 theme.',
 )
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
-assert(homeInsights.includes('class="section insights !pt-16 lg:!pt-24"'), 'HomeInsights must provide the HOME About-to-Resources section rhythm with Tailwind utilities.')
+assert(homeInsights.includes('class="section insights flow-root"') && homeInsights.includes('class="container mt-10 mb-10"'), 'HomeInsights must follow the unified section spacing rule (flow-root shell + container mt-10 mb-10).')
 assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTabs') && homeSolutions.includes('variant="pill"'), 'HomeSolutions must compose the shared BaseTabs pill variant.')
 assert(homeSolutions.includes('CarouselRoot') && !homeSolutions.includes('solutions__carousel-container'), 'HomeSolutions must render slides through the shared CarouselRoot component without hand-rolled tracks.')
 assert(
@@ -112,7 +113,8 @@ assert(
     productFeatureGridSection.includes('SectionHeader') &&
     productFeatureGridSection.includes('CardGrid') &&
     productFeatureGridSection.includes('FeatureCard') &&
-    sectionShell.includes('pb-20 lg:pb-[132px]') &&
+    sectionShell.includes('flow-root') &&
+    sectionShell.includes('container mt-10 mb-10') &&
     sectionShell.includes('bg-dt-bg') &&
     !productFeatureGridSection.includes('pt-24') &&
     cardGrid.includes('md:grid-cols-2 lg:grid-cols-4') &&

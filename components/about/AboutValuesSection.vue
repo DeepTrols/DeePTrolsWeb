@@ -3,39 +3,41 @@ import { aboutValues } from '~/data/about'
 </script>
 
 <template>
-  <section class="container pb-20 lg:pb-[132px]" aria-labelledby="about-values-title">
-    <h2
-      id="about-values-title"
-      class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
-    >
-      我们的核心价值观
-    </h2>
-    <p class="mb-12 text-center text-base text-default md:mb-8 md:text-xl lg:mb-12 sm:text-lg">
-      这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。
-    </p>
-
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-      <div
-        v-for="item in aboutValues"
-        :key="item.title"
-        tabindex="0"
-        class="about-value-card group relative min-h-[220px] cursor-pointer overflow-hidden rounded-lg outline-none"
+  <section class="flow-root" aria-labelledby="about-values-title">
+    <div class="container mt-10 mb-10">
+      <h2
+        id="about-values-title"
+        class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
       >
-        <div class="invisible px-6 py-12">
-          <div class="mb-4 text-xl font-semibold">{{ item.revealTitle }}</div>
-          <div class="text-base font-normal leading-normal">{{ item.description }}</div>
-        </div>
+        我们的核心价值观
+      </h2>
+      <p class="mb-12 text-center text-base text-default md:mb-8 md:text-xl lg:mb-12 sm:text-lg">
+        这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。
+      </p>
 
-        <div class="about-value-card__face absolute inset-0 z-[1] flex items-end p-6">
-          <div>
-            <p class="text-sm font-semibold uppercase tracking-wide text-primary">Value</p>
-            <h3 class="mt-3 text-3xl font-bold leading-tight text-highlighted">{{ item.title }}</h3>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div
+          v-for="item in aboutValues"
+          :key="item.title"
+          tabindex="0"
+          class="about-value-card group relative min-h-[220px] cursor-pointer overflow-hidden rounded-lg outline-none"
+        >
+          <div class="invisible px-6 py-12">
+            <div class="mb-4 text-xl font-semibold">{{ item.revealTitle }}</div>
+            <div class="text-base font-normal leading-normal">{{ item.description }}</div>
           </div>
-        </div>
 
-        <div class="about-value-card__reveal absolute inset-0 z-[2] flex translate-y-full flex-col justify-end p-6 transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
-          <h3 class="text-xl font-semibold text-highlighted">{{ item.revealTitle }}</h3>
-          <p class="mt-4 text-base font-normal leading-normal text-default">{{ item.description }}</p>
+          <div class="about-value-card__face absolute inset-0 z-[1] flex items-end p-6">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-wide text-primary">Value</p>
+              <h3 class="mt-3 text-3xl font-bold leading-tight text-highlighted">{{ item.title }}</h3>
+            </div>
+          </div>
+
+          <div class="about-value-card__reveal absolute inset-0 z-[2] flex translate-y-full flex-col justify-end p-6 transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
+            <h3 class="text-xl font-semibold text-highlighted">{{ item.revealTitle }}</h3>
+            <p class="mt-4 text-base font-normal leading-normal text-default">{{ item.description }}</p>
+          </div>
         </div>
       </div>
     </div>

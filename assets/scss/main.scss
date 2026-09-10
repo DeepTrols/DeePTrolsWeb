@@ -59,8 +59,6 @@
   --dt-container-wide: calc(100% - 80px);
   --dt-header-main-height: 62px;
   --dt-header-height: var(--dt-header-main-height);
-  --dt-space-section: 80px;
-  --dt-space-section-lg: 132px;
   color-scheme: light;
   font-family:
     "Source Han Sans CN", "Noto Sans SC", -apple-system, BlinkMacSystemFont,
@@ -126,10 +124,6 @@ video {
   background: var(--dt-color-bg);
 }
 
-.section {
-  padding: 0 0 var(--dt-space-section);
-}
-
 .section--light {
   background: var(--dt-color-bg-soft);
   color: var(--dt-color-text);
@@ -162,12 +156,6 @@ video {
 }
 
 @layer components {
-  .dt-section {
-    padding-bottom: var(--dt-space-section);
-    background: var(--dt-color-bg);
-    color: var(--dt-color-text);
-  }
-
   .dt-section-heading {
     display: flex;
     max-width: 760px;
@@ -603,14 +591,6 @@ video {
 }
 
 @media (min-width: 1024px) {
-  .section {
-    padding-bottom: var(--dt-space-section-lg);
-  }
-
-  .dt-section {
-    padding-bottom: var(--dt-space-section-lg);
-  }
-
   .dt-cta-panel {
     padding-right: 48px;
     padding-left: 48px;

@@ -4,8 +4,8 @@ import { tanyaoHeroStats } from '~/data/tanyao'
 </script>
 
 <template>
-  <section class="bg-dt-bg">
-    <div class="container pb-24 pt-16 lg:pb-32 lg:pt-20">
+  <section class="bg-dt-bg flow-root">
+    <div class="container mt-10 mb-10">
       <HeroStatsStrip :items="tanyaoHeroStats" :columns="4" placement="section" />
     </div>
   </section>
