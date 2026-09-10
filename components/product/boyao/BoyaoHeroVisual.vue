@@ -189,7 +189,7 @@ const nodeTwoBars = ['[animation-delay:0.12s]', '[animation-delay:0.24s]', '[ani
       </div>
 
       <!-- 右下：智能应用 / 企业场景 -->
-      <div class="absolute bottom-[10px] right-[-20px] w-[440px]">
+      <div class="absolute bottom-[10px] right-0 w-[440px]">
         <div
           class="group relative overflow-hidden rounded-[24px] border border-primary/25 bg-default px-5 py-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
         >

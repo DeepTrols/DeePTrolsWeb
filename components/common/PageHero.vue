@@ -115,7 +115,7 @@ const hasVisual = computed(() => Boolean(slots.visual))
             align === 'center'
               ? 'justify-center'
               : [
-                'justify-self-center',
+                visualSize === 'large' ? 'justify-self-end' : 'justify-self-center',
                 visualSize === 'large'
                   ? 'max-w-[820px] self-stretch'
                   : visualSize === 'fluid'
