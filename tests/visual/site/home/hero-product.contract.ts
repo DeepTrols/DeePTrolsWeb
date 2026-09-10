@@ -28,7 +28,7 @@ export function registerHomeHeroProductVisualContracts() {
     expect(hero).toContain('aspect-ratio: 1920 / 655')
     expect(hero).toContain('url("/images/home/deepctrls-hero-ai.png")')
     expect(hero).toContain('linear-gradient(90deg, rgba(0, 0, 0, 0.55)')
-    expect(hero).toContain('width: calc(100% - (var(--dt-hero-gutter) * 2))')
+    expect(hero).toContain('width: var(--dt-container)')
     expect(hero).toContain('top: clamp(78px, 10.729vw, 206px)')
     expect(hero).toContain('font-size: clamp(28px, 2.5vw, 48px)')
     expect(hero).toContain('line-height: clamp(38px, 3.75vw, 72px)')

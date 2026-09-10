@@ -30,7 +30,7 @@
 
 .home-hero__content {
   position: relative;
-  width: calc(100% - (var(--dt-hero-gutter) * 2));
+  width: var(--dt-container);
   height: 100%;
   max-width: none;
 }
@@ -150,7 +150,6 @@ h1 {
 
   .home-hero__content {
     z-index: 1;
-    width: calc(100% - 48px);
   }
 
   h1 {
