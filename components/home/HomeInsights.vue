@@ -8,8 +8,8 @@ const sideInsights = insights.slice(1)
 </script>
 
 <template>
-  <section class="section insights flow-root" aria-labelledby="insights-title">
-    <div class="container mt-10 mb-10">
+  <section class="section insights flow-root pt-32 pb-32 lg:pb-44" aria-labelledby="insights-title">
+    <div class="container">
       <div class="insights__header">
         <SectionHeading
           class="insights__heading"

@@ -20,8 +20,8 @@
 ## Visual Baseline
 1. 页面背景使用 `#ffffff`，浅色区块使用 `#f0f5ff`，表单/轻面使用 `#edf2fa`。
 2. 全站内容区默认参考 DeepCtrls 的横向 gutter 节奏：`--dt-page-gutter: clamp(48px, 13.23vw, 254px)`，`--dt-container: calc(100% - (var(--dt-page-gutter) * 2))`，容器不再使用固定 `1200px` 上限；Hero 文案区使用 `--dt-hero-gutter: clamp(48px, 10.42vw, 200px)`。
-3. 常规页面 Hero 外层 section 不写局部 padding，内部 `.container` 使用 Tailwind v4 utility `pt-[112px] pb-20 lg:pt-[132px] lg:pb-24`。
-4. 常规页面 Hero 后续模块遵循「Section 间距统一规则」（TASK-014.14，见 `COMMON_SECTION_COMPONENTS.md`）：section 根不携带任何 pt/pb 并统一加 `flow-root`，内部 `.container` 统一加 `mt-10 mb-10`（相邻 section 视觉间距 80px）；不要在页面 scoped CSS 中重复声明 section `padding-bottom`，旧的 `dt-section` / `--dt-space-section(-lg)` 节奏已删除。
+3. 常规页面 Hero 外层 section 不写局部 padding，内部 `.container`（`.page-hero__body`）使用 Tailwind v4 utility `pt-40 pb-32 lg:pb-44`（`flushBottom` 时底部为 `pb-0 lg:pb-0`）。
+4. 常规页面 Hero 后续模块遵循「Section 间距统一规则」（TASK-014.14，见 `COMMON_SECTION_COMPONENTS.md`）：section 根统一加 `flow-root pb-32 lg:pb-44`（底部 128px，lg 以上 176px，不写 pt），内部 `.container` 不携带垂直 margin；不要在页面 scoped CSS 中重复声明 section 垂直 padding，旧的 `dt-section` / `--dt-space-section(-lg)` 节奏已删除。HOME 专属例外：hero 下首个 section（`HomeDeliverables`）与 `HomeInsights` 根节点额外携带 `pt-32`，`HomeAbout` 底部收窄为 `pb-10`。
 5. Header 高度固定为 `62px`，使用 `fixed` 全视口顶部，层级为 `z-index: 1000`；HOME 首屏顶部默认透明并使用白色 Logo，Header hover 使用深色半透明背景，滚动、Mega 展开或普通内页使用白色半透明背景与黑色 Logo。HOME 下滚时 Header 需按背景自适应（`is-in-hero`）：仍处于 Hero 区域内保持白色文字/Logo 与 `rgba(0, 0, 0, 0.4)` 深色半透明背景，滚出 Hero 区域（按 `.home-hero` 实际高度测量）后切换为白色半透明背景与黑色 Logo。
 6. Header 是全视口宽度，内部 padding 按 DeepCtrls Header 节奏：桌面 `padding-left: 43px`、`padding-right: 61px`；普通页面内容仍使用 `.container`。
 7. Header logo 使用运行时品牌图：默认暗色 Hero 顶部为 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页为 `/images/brand/deeptrols-logo-black.png`；Header logo 高度按参考站为 `35px`。Footer logo 当前宽度为 `240px`。
@@ -29,7 +29,7 @@
 9. HOME Hero 参考 DeepCtrls 首页首屏：`aspect-ratio: 1920 / 655`，使用 `/images/home/deepctrls-hero-ai.png` 作为背景图并叠加左侧黑色线性遮罩；Hero 与区域一不再共用视频背景，Hero 内不得恢复 canvas / TresJS。
 10. HOME 当前不展示 `CUSTOMER STORIES` section；`HomeProductSystem` 当前挂载 `ProductSystemSection`、`ProductSystemFlowFrame` 架构占位框与 `ProductSystemCards`，不得在 `product-system__content` 中恢复旧桌面或移动端流程图，待流程图重新设计后再单独接入。
 11. HOME 在 `Ecosystem` 与 `Resources` 之间挂载 `components/home/HomeAbout.vue`。该区块参考 DeepCtrls 首页公司与合作客户区域：白色到浅蓝渐变背景、居中 SectionHeading、`/O1CN0.png` 宽幅 banner、`/clients-label.webp` 客户标签，以及三行 `partner-rows` 走马灯。组件必须保持 Tailwind-only，不写 `<style>`；走马灯动画 token 维护在 `assets/css/tailwind.css`。
-12. HOME About 标题不要主动插入换行，保持完整标题一行排版；窄屏仅允许浏览器按容器宽度自然换行。About section 遵循「Section 间距统一规则」：根节点 `flow-root` 且不携带 pt/pb，内部 `.container` 使用 `mt-10 mb-10` 承接间距，渐变背景完整覆盖上下间距区域；下方 `Resources` section 同样按统一规则渲染。
+12. HOME About 标题不要主动插入换行，保持完整标题一行排版；窄屏仅允许浏览器按容器宽度自然换行。About section 遵循「Section 间距统一规则」，但底部间距按 HOME 专属节奏收窄为 `pb-10`：根节点 `flow-root pb-10`，内部 `.container` 仅保留 `mb-10` 与底部走马灯分隔，渐变背景完整覆盖底部间距区域；下方 `Resources` section 同样按统一规则渲染。
 
 ---
 ## Typography
@@ -78,7 +78,7 @@ HOME 关于我们区块的数据必须集中在 `data/home.ts`：eyebrow 为“�
 2. 项目语义 token 与公共组件层在 `assets/scss/main.scss` 中维护。
 3. 由于当前 Nuxt 构建链路不会处理 Vue scoped SCSS 中的 `@apply`，禁止在 `assets/` 与 `components/` 中提交 `@apply`，避免产物残留无效 CSS。
 4. 新页面的组件样式必须使用 `<style scoped lang="scss">`，并优先引用 `dt-*` 公共类。
-5. 页面级间距优先直接在模板中使用 Tailwind v4 utilities，例如 Hero 容器 `pt-[112px] pb-20 lg:pt-[132px] lg:pb-24`、常规 section 根 `flow-root` + 内部 container `mt-10 mb-10`、`mb-12 lg:mb-16`、`grid gap-5 md:grid-cols-2 lg:gap-6`。
+5. 页面级间距优先直接在模板中使用 Tailwind v4 utilities，例如 Hero 容器 `pt-40 pb-32 lg:pb-44`、常规 section 根 `flow-root pb-32 lg:pb-44`、`mb-12 lg:mb-16`、`grid gap-5 md:grid-cols-2 lg:gap-6`。
 6. 色彩、hover、按钮、tab、卡片、标题不得在页面内重新发明。
 7. 普通信息卡的外框圆角统一走 `--dt-card-radius`，icon 外层背景/边框圆角统一走 `--dt-icon-box-radius`；组件内不得再写私有 card/icon 圆角覆盖。
 8. 普通信息卡不得写固定高度或固定 `min-height`；需要同一行等高时使用 grid 的 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive`。

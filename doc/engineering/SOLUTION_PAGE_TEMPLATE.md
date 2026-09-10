@@ -107,7 +107,7 @@ Hero 允许透传 `align`、`visualSize`、`flushBottom`、`flushVisualEnd`，�
 
 ## Style Rules
 - 不在具体解决方案页面重新定义 Header、Footer、按钮、卡片、Tab、Section Heading、CTA 样式。
-- 常规区块间距遵循「Section 间距统一规则」：section 根 `flow-root` 且不携带 pt/pb，内部 container 统一 `mt-10 mb-10`（见 `COMMON_SECTION_COMPONENTS.md`）。
+- 常规区块间距遵循「Section 间距统一规则」：section 根统一 `flow-root pb-32 lg:pb-44`，内部 container 不携带垂直 margin（见 `COMMON_SECTION_COMPONENTS.md`）。
 - Section 标题由 `SectionHeader` 或上表公共组件内部承载。
 - 卡片圆角、hover、icon 外框必须走 `dt-card`、`dt-product-card`、`dt-icon-box` 等公共层。
 - 页面专属视觉可以使用 slot，但运行时资产只能来自 `assets/**` 或 `public/**`。

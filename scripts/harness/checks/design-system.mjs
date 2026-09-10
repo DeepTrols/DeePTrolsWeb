@@ -61,7 +61,7 @@ assert(sectionHeader.includes('.section-heading__title') && sectionHeader.includ
 assert(sectionHeader.includes('section-heading--nowrap-subtitle'), 'SectionHeader nowrap mode must expose a desktop-wide wrapper class.')
 assert(sectionHeader.includes('max-width: none'), 'SectionHeader nowrap mode must remove the desktop max-width limit.')
 assert(sectionHeader.includes('class="section-heading dt-section-heading"'), 'SectionHeader must own the canonical section heading classes.')
-assert(sectionShell.includes('flow-root') && sectionShell.includes('container mt-10 mb-10') && sectionShell.includes('w-[var(--dt-container-wide)]'), 'SectionShell must centralize DeepCtrls section spacing (flow-root shell + container mt-10 mb-10) and container widths.')
+assert(sectionShell.includes('flow-root pb-32 lg:pb-44') && sectionShell.includes("props.container === 'default' && 'container',") && sectionShell.includes('w-[var(--dt-container-wide)]'), 'SectionShell must centralize DeepCtrls section spacing (flow-root pb-32 lg:pb-44 shell + plain container) and container widths.')
 assert(baseCard.includes('NuxtLink') && baseCard.includes('dt-card--adaptive') && baseCard.includes('dt-card__accent'), 'BaseCard must centralize card shell, link semantics, accent, and adaptive height.')
 assert(iconBox.includes('dt-icon-box') && iconBox.includes('dt-icon-box--gradient'), 'IconBox must centralize icon shell classes and gradient tone.')
 assert(

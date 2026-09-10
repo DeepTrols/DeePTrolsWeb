@@ -4,8 +4,8 @@ import { dgpEvolutionItems } from '~/data/dgp'
 </script>
 
 <template>
-  <section class="flow-root" aria-labelledby="dgp-evolution-title">
-    <div class="container mt-10 mb-10">
+  <section class="flow-root pb-32 lg:pb-44" aria-labelledby="dgp-evolution-title">
+    <div class="container">
       <div class="mb-12 flex flex-col items-center gap-2 text-center lg:mb-16">
         <SectionHeader
           eyebrow="企业级数据治理"

@@ -25,7 +25,7 @@ function selectStory(index: number) {
 </script>
 
 <template>
-  <section class="cases flow-root" aria-labelledby="cases-title">
+  <section class="cases flow-root pb-32 lg:pb-44" aria-labelledby="cases-title">
     <div class="cases__shell">
       <div class="cases__inner">
         <div class="cases__top">
@@ -101,27 +101,8 @@ function selectStory(index: number) {
 .cases {
   width: 100%;
   max-width: var(--dt-container-wide);
-  margin: 40px auto;
+  margin: 0 auto;
   background: var(--dt-color-bg);
-  padding: 0 20px;
-}
-
-@media (min-width: 768px) {
-  .cases {
-    padding-inline: 20px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .cases {
-    padding-inline: 20px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .cases {
-    padding-inline: 20px;
-  }
 }
 
 .cases__shell {
@@ -262,10 +243,6 @@ function selectStory(index: number) {
 }
 
 @media (min-width: 1024px) {
-  .cases {
-    padding-inline: 20px;
-  }
-
   .cases__inner {
     padding-right: 0;
     padding-left: 0;

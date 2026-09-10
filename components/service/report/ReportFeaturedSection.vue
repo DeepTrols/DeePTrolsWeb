@@ -4,8 +4,8 @@ import { featuredReportResources } from '~/data/reports'
 </script>
 
 <template>
-  <section class="flow-root" aria-labelledby="report-featured-title">
-    <div class="container mt-10 mb-10">
+  <section class="flow-root pb-32 lg:pb-44" aria-labelledby="report-featured-title">
+    <div class="container">
       <h2 id="report-featured-title" class="sr-only">推荐资源</h2>
       <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
         <ReportResourceCard

@@ -52,7 +52,7 @@
 - 宽幅 banner 使用 `/O1CN0.png`，客户标签使用 `/clients-label.webp`，均为 `public/` 公开运行时资产。
 - 三行合作客户走马灯采用 `partner-rows` / `partner-row__track` 结构，方向为右、左、右；单个 logo 尺寸为 `144px × 55px`，间距为 `22px`，行间距为 `18px`。
 - 组件只能使用 Tailwind CSS v4 utilities，不新增 `<style>`；走马灯 keyframes 与动画变量必须放在 `assets/css/tailwind.css` 的 `@theme` 中，通过 `animate-home-about-marquee-left/right` 调用。
-- About section 遵循全站「Section 间距统一规则」：根节点 `flow-root` 且不携带任何 pt/pb，内部 `.container` 使用 `mt-10 mb-10` 承接间距；渐变背景经 `flow-root` 完整覆盖上下间距区域。
+- About section 遵循全站「Section 间距统一规则」，但底部间距按 HOME 专属节奏收窄为 `pb-10`：根节点 `flow-root pb-10`，内部 `.container` 仅保留 `mb-10` 与底部走马灯分隔；渐变背景完整覆盖底部间距区域。
 - 该区块是 HOME 专属业务区块，不作为通用 Page Section 模板扩展，避免后续页面误用客户 logo 走马灯。
 
 ## Hero Stats Strip
@@ -76,7 +76,7 @@
 
 使用要求：
 - 新区块优先直接使用 `SectionShell` + `SectionHeader`。
-- `SectionShell` 负责 section 标签、container 宽度、背景与统一间距节奏（根节点 `flow-root`，内部 container `mt-10 mb-10`，见「Section 间距统一规则」）。
+- `SectionShell` 负责 section 标签、container 宽度、背景与统一间距节奏（根节点 `flow-root pb-32 lg:pb-44`，内部 container 无垂直 margin，见「Section 间距统一规则」）。
 - `SectionShell` 内部容器使用 `w-[var(--dt-container-wide)] max-w-none px-0`；普通页面 `.container` 使用 `--dt-container`，两者都遵循 DeepCtrls 横向 gutter 基线，不再写固定 `1200px / 1400px` 宽度。
 - `SectionHeader` 负责 eyebrow、title、subtitle、nowrap、宽度、对齐、语义标题层级和 actions slot。
 - `SectionHeader` 的 section title 在桌面端默认不主动换行；少数未使用 `SectionHeader` 的 section 标题必须使用公共 `.dt-section-title` 或 Tailwind v4 `whitespace-nowrap` 明确保持不换行。
@@ -87,15 +87,19 @@
 适用范围：全站所有内容型 section（新建 section 必须延续此约定）。
 
 规则：
-- **section 根元素不携带任何 pt/pb**：不写 Tailwind `pb-20 lg:pb-[132px]` 之类的上下 padding，也不在 scoped SCSS / `main.scss` 中为 section 根声明上下 padding。
-- **section 内部 container 统一使用 `mt-10 mb-10`**（上下各 40px）。
-- **section 根统一加 `flow-root`**：section 无 padding/border 时，container 的 mt/mb 会发生外边距塌陷并逃逸出 section；`flow-root` 将 margin 收在 section 内部。视觉效果 = 容器上方 40px + 下方 40px，相邻 section 间距 80px，带背景色/渐变的 section 背景可完整覆盖间距区域。
-- 全站旧的 `--dt-space-section` / `--dt-space-section-lg` token 与 `.section` / `.dt-section` padding 规则已删除，不得再引用。
+- **section 根元素统一加 `pb-32 lg:pb-44`**（底部 128px，lg 以上 176px；不写 pt），这是 section 垂直间距的唯一来源；除此之外不得再写其他 pt/pb，也不得在 scoped SCSS / `main.scss` 中为 section 根声明垂直 padding（scoped 非 layered 样式会覆盖 Tailwind utilities，导致间距失效）。
+- **section 内部 container 不携带任何垂直 margin**：间距全部由根的 `pb-32 lg:pb-44` 承担。每个区块自带底部间距，与上方 hero（`pt-40 pb-32 lg:pb-44`）共同形成「每个块负责自己底部留白」的统一节奏；带背景色/渐变的 section 背景天然完整覆盖底部间距区域（padding 属于背景盒）。
+- **section 根保留 `flow-root`**（与 pb 连用，如 `class="flow-root pb-32 lg:pb-44"`）：padding 本身已能阻止外边距塌陷逃逸，`flow-root` 作为防御性保障保留，防止内部元素 margin 意外穿透。
+- **Hero 内部容器节奏**：`PageHero` 的 `.page-hero__body` 使用 `pt-40`，默认底部 `pb-32 lg:pb-44`（`flushBottom` 时为 `pb-0 lg:pb-0`，由后续 section 承接节奏）；`HomeHero` 的 `.home-hero__content` 名义上同样携带 `pt-40 pb-32 lg:pb-44`（其内部为绝对定位布局，padding 实际不产生视觉位移，仅保持类名约定一致）。
+- 个别 section 因内部结构需要的额外间距写在 container 上（如 HomeAbout 的 `container mb-10` 用于与底部合作客户走马灯分隔），属于组件内部节奏，不违反本规则。
+- 全站旧的 `--dt-space-section` / `--dt-space-section-lg` token 与 `.section` / `.dt-section` padding 规则已删除，不得再引用；旧的「container `mt-10 mb-10`」与「根 `py-10`」机制已被根 `pb-32 lg:pb-44` 取代，不得再新增。
+- 导航 / 页脚 / mega menu 内部的 `<section>` 元素（FooterMain 栏列、SiteHeaderMobileNav、MegaMenuPanel、MegaPanelProduct）不是页面 section，不套用本规则。
 
 豁免清单（与 hero 节奏绑定或结构特殊，不套用本规则）：
 - `components/common/PageHero.vue` 与 HomeHero（hero 节奏独立）。
 - `components/common/CtaSection.vue`（`home-contact-cta` 固定 `h-[314px]` 横幅 + 绝对定位内容）。
 - `components/common/HeroLogoStrip.vue`、`components/home/HomeCustomerLogos.vue`（hero 附属条带，`padding-top: 5.5rem` 由 hero-product 契约锁定）。
+- `components/about/AboutHeroStats.vue`（hero 附属数字条，`container !p-0` 由 about 契约锁定）。
 
 ## Card Primitives
 公共组件：
@@ -264,7 +268,7 @@
 - 需要在卡片网格后追加流程图、说明图等内容时，使用 `#after` slot，避免重复手写 section/header/card-grid 结构。
 - 需要在卡片网格前放置流程图、架构图等内容时，使用 `#before` slot；例如 DMS “监管流程”先展示流程占位，再展示阶段卡片。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive` 共同决定同一网格内的卡片高度。
-- 产品页特性区块默认不使用 `pt-24`，区块间距由 `SectionShell` 的统一节奏（container `mt-10 mb-10`）承接。
+- 产品页特性区块默认不使用 `pt-24`，区块间距由 `SectionShell` 的统一节奏（根 `pb-32 lg:pb-44`）承接。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
 
 ## System Cards

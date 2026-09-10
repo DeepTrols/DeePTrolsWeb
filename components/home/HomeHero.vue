@@ -1,6 +1,6 @@
 <template>
   <section class="home-hero" aria-labelledby="home-hero-title">
-    <div class="home-shell home-hero__content">
+    <div class="home-shell home-hero__content pt-40 pb-32 lg:pb-44">
       <h1 id="home-hero-title">
         <span>构建企业级AI能力体系</span>
         <span>让智能成为业务增长的新引擎</span>

@@ -27,8 +27,8 @@ function visualClasses(index: number) {
 </script>
 
 <template>
-  <section class="flow-root" :aria-labelledby="titleId">
-    <div class="container mt-10 mb-10">
+  <section class="flow-root pb-32 lg:pb-44" :aria-labelledby="titleId">
+    <div class="container">
       <div class="text-center">
         <SectionHeader
           :eyebrow="eyebrow"

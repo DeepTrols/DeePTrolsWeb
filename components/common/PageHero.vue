@@ -38,8 +38,8 @@ const hasVisual = computed(() => Boolean(slots.visual))
 <template>
   <section class="page-hero relative overflow-hidden" :aria-labelledby="titleId">
     <div
-      class="container page-hero__body relative isolate pt-[112px] lg:pt-[132px]"
-      :class="flushBottom ? 'pb-0 lg:pb-0' : 'pb-20 lg:pb-24'"
+      class="container page-hero__body relative isolate pt-40"
+      :class="flushBottom ? 'pb-0 lg:pb-0' : 'pb-32 lg:pb-44'"
     >
       <div class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg" aria-hidden="true"></div>
       <div class="page-hero__background" aria-hidden="true">

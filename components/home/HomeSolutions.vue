@@ -14,8 +14,8 @@ const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution
 </script>
 
 <template>
-  <section class="section solutions flow-root" aria-labelledby="solutions-title">
-    <div class="container mt-10 mb-10">
+  <section class="section solutions flow-root pb-32 lg:pb-44" aria-labelledby="solutions-title">
+    <div class="container">
       <div class="solutions__heading">
         <SectionHeading
           id="solutions-title"

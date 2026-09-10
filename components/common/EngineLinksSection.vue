@@ -22,8 +22,8 @@ defineProps<{
 </script>
 
 <template>
-  <section class="engine-links-section relative flow-root" :aria-labelledby="titleId">
-    <div class="container mt-10 mb-10 engine-links-section__grid">
+  <section class="engine-links-section relative flow-root pb-32 lg:pb-44" :aria-labelledby="titleId">
+    <div class="container engine-links-section__grid">
       <div class="engine-links-section__links">
         <BaseCard v-for="link in links" :key="link.title" class="group engine-links-section__link" :href="link.href" variant="soft" padding="md">
           <div class="engine-links-section__link-glow" aria-hidden="true"></div>

@@ -4,8 +4,8 @@ import { aboutAddress, aboutMap } from '~/data/about'
 </script>
 
 <template>
-  <section class="flow-root" aria-labelledby="about-address-title">
-    <div class="container mt-10 mb-10">
+  <section class="flow-root pb-32 lg:pb-44" aria-labelledby="about-address-title">
+    <div class="container">
       <div class="mb-12 lg:mb-16">
         <SectionHeader title="公司地址" title-id="about-address-title" align="center" />
       </div>

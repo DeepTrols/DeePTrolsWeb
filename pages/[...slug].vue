@@ -22,11 +22,13 @@ useSeoMeta({
   <div class="site-shell">
     <SiteHeader />
     <main id="main-content" class="placeholder-page">
-      <section class="container placeholder-page__inner" aria-labelledby="placeholder-title">
-        <p>DeepTrols</p>
-        <h1 id="placeholder-title">页面内容建设中</h1>
-        <span>该栏目已纳入官网信息架构，后续任务会补充完整内容。</span>
-        <BaseButton href="/">返回首页</BaseButton>
+      <section class="flow-root pb-32 lg:pb-44" aria-labelledby="placeholder-title">
+        <div class="container placeholder-page__inner">
+          <p>DeepTrols</p>
+          <h1 id="placeholder-title">页面内容建设中</h1>
+          <span>该栏目已纳入官网信息架构，后续任务会补充完整内容。</span>
+          <BaseButton href="/">返回首页</BaseButton>
+        </div>
       </section>
     </main>
     <SiteFooter />

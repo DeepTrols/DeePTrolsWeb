@@ -3,8 +3,8 @@ import { aboutContacts } from '~/data/about'
 </script>
 
 <template>
-  <section class="flow-root" aria-labelledby="about-contact-title">
-    <div class="container mt-10 mb-10 text-center">
+  <section class="flow-root pb-32 lg:pb-44" aria-labelledby="about-contact-title">
+    <div class="container text-center">
       <h2
         id="about-contact-title"
         class="!mb-12 mb-4 text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"

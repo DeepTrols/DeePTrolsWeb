@@ -16,9 +16,9 @@ export function registerHomeAboutVisualContracts() {
     expect(homeAbout).toContain(':title="homeAbout.title"')
     expect(homeAbout).toContain('title-id="home-about-title"')
     expect(homeAbout).toContain(
-      'class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] flow-root"',
+      'class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] flow-root pb-10"',
     )
-    expect(homeAbout).toContain('class="container mt-10 mb-10"')
+    expect(homeAbout).toContain('class="container mb-10"')
     expect(homeAbout).not.toContain('whitespace-pre-line')
     expect(homeAbout).toContain('company-stats__banner block aspect-[1402/357] w-full rounded-dt-md object-cover')
     expect(homeAbout).toContain(

@@ -3,8 +3,8 @@ import { aboutValues } from '~/data/about'
 </script>
 
 <template>
-  <section class="flow-root" aria-labelledby="about-values-title">
-    <div class="container mt-10 mb-10">
+  <section class="flow-root pb-32 lg:pb-44" aria-labelledby="about-values-title">
+    <div class="container">
       <h2
         id="about-values-title"
         class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"

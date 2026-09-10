@@ -47,15 +47,15 @@ assert(
 )
 assert(
   pageHero.includes('class="page-hero relative overflow-hidden"') &&
-    pageHero.includes('container page-hero__body relative isolate pt-[112px] lg:pt-[132px]') &&
+    pageHero.includes('container page-hero__body relative isolate pt-40') &&
     pageHero.includes('class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg"') &&
     pageHero.includes('class="page-hero__background" aria-hidden="true"') &&
     pageHero.includes('page-hero__inner relative z-10 flex flex-col items-center') &&
     pageHeroStyles.includes('width: 100vw') &&
     pageHeroStyles.includes('transform: translateX(-50%)') &&
     pageHeroStyles.includes('z-index: 1') &&
-    pageHero.includes('pt-[112px] lg:pt-[132px]') &&
-    pageHero.includes("flushBottom ? 'pb-0 lg:pb-0' : 'pb-20 lg:pb-24'") &&
+    pageHero.includes('pt-40') &&
+    pageHero.includes("flushBottom ? 'pb-0 lg:pb-0' : 'pb-32 lg:pb-44'") &&
     heroLogoStrip.includes('mt-24 border-t border-dt-line pt-12 lg:mt-28') &&
     !pageHero.includes('padding: 144px') &&
     !pageHero.includes('padding-bottom: 112px'),
@@ -120,7 +120,7 @@ assert(!whyHero.includes('box-shadow: 0 24px 60px'), 'Why hero visual must not u
 assert(whyTrustTabs.includes('TrustTabsSection') && trustTabsSection.includes('SectionHeader'), 'Why trust tabs must reuse TrustTabsSection and SectionHeader.')
 assert(trustTabsSection.includes('BaseTabs') && baseTabs.includes('dt-segmented-tabs') && baseTabs.includes('dt-segmented-tab'), 'Why trust tabs must use shared segmented tab classes.')
 assert(trustTabsSection.includes('BaseCard') && trustTabsSection.includes('IconBox') && baseCard.includes('dt-product-card') && iconBox.includes('dt-icon-box'), 'Why trust cards must use shared product card classes.')
-assert(trustTabsSection.includes('SectionShell') && sectionShell.includes('flow-root') && sectionShell.includes('container mt-10 mb-10'), 'Why trust section must use the unified Tailwind section rhythm (flow-root shell + container mt-10 mb-10).')
+assert(trustTabsSection.includes('SectionShell') && sectionShell.includes('flow-root pb-32 lg:pb-44') && sectionShell.includes("props.container === 'default' && 'container',"), 'Why trust section must use the unified Tailwind section rhythm (flow-root pb-32 lg:pb-44 shell + plain container).')
 assert(trustTabsSection.includes('mb-12 text-center lg:mb-16'), 'Why trust heading must use Tailwind mb-12/lg:mb-16 rhythm.')
 assert(trustTabsSection.includes('CardGrid') && cardGrid.includes('gap-5 lg:gap-6') && cardGrid.includes('md:grid-cols-2') && !trustTabsSection.includes('grid-template-columns: repeat(4, minmax(0, 1fr))'), 'Why trust cards must use the 2x2 EMQX Tailwind grid.')
 assert(
@@ -135,7 +135,7 @@ assert(
     trustTabsSection.includes(':icon-size="20"'),
   'Why trust cards must use DGP card radius/icon size and avoid fixed card height.',
 )
-assert(serviceShowcaseSection.includes('service-showcase relative flow-root') && serviceShowcaseSection.includes('container mt-10 mb-10') && engineLinksSection.includes('engine-links-section relative flow-root') && engineLinksSection.includes('container mt-10 mb-10'), 'Why service and engine sections must share the unified section rhythm (flow-root shell + container mt-10 mb-10).')
+assert(serviceShowcaseSection.includes('service-showcase relative flow-root pb-32 lg:pb-44') && serviceShowcaseSection.includes('class="container service-showcase__grid"') && engineLinksSection.includes('engine-links-section relative flow-root pb-32 lg:pb-44') && engineLinksSection.includes('class="container engine-links-section__grid"'), 'Why service and engine sections must share the unified section rhythm (flow-root pb-32 lg:pb-44 shell + plain container).')
 assert(
   serviceShowcaseSection.includes('FeatureCard') &&
     serviceShowcaseSection.includes('variant="soft"') &&

@@ -8,8 +8,8 @@ defineProps<{
 </script>
 
 <template>
-  <section id="report-resources-panel" class="flow-root" aria-labelledby="report-resources-title">
-    <div class="container mt-10 mb-10">
+  <section id="report-resources-panel" class="flow-root pb-32 lg:pb-44" aria-labelledby="report-resources-title">
+    <div class="container">
       <h2 id="report-resources-title" class="sr-only">白皮书&报告列表</h2>
       <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
         <ReportResourceCard

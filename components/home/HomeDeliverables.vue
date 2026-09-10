@@ -15,8 +15,8 @@ function showNextDeliverable() {
 </script>
 
 <template>
-  <section class="section deliverables flow-root" aria-labelledby="deliverables-title">
-    <div class="container mt-10 mb-10">
+  <section class="section deliverables flow-root pt-32 pb-32 lg:pb-44" aria-labelledby="deliverables-title">
+    <div class="container">
       <h2 id="deliverables-title" class="sr-only">三大业务方向</h2>
       <div class="deliverables__viewport" aria-label="三大业务方向" aria-roledescription="轮播">
         <button

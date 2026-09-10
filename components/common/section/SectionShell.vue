@@ -17,15 +17,15 @@ const props = withDefaults(
 )
 
 const shellClasses = computed(() => [
-  'section-shell relative flow-root',
+  'section-shell relative flow-root pb-32 lg:pb-44',
   props.background === 'default' && 'bg-dt-bg',
   props.background === 'muted' && 'bg-dt-bg-soft',
   props.background === 'transparent' && 'bg-transparent',
 ])
 
 const containerClasses = computed(() => [
-  props.container === 'default' && 'container mt-10 mb-10',
-  props.container === 'wide' && 'mx-auto mt-10 mb-10 w-[var(--dt-container-wide)] max-w-none px-0',
+  props.container === 'default' && 'container',
+  props.container === 'wide' && 'mx-auto w-[var(--dt-container-wide)] max-w-none px-0',
 ])
 </script>
 
