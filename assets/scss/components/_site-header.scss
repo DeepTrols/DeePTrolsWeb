@@ -33,6 +33,19 @@
   backdrop-filter: blur(15px);
 }
 
+.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile) {
+  --dt-header-fg: #000000;
+  --dt-header-muted: #95979d;
+}
+
+.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile) .site-header__nav-button.active:not(:hover):not(:focus-visible):not([data-state="open"]) {
+  color: inherit;
+}
+
+.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile) .site-header__nav-underline {
+  background: currentColor;
+}
+
 .skip-link {
   position: absolute;
   left: 12px;

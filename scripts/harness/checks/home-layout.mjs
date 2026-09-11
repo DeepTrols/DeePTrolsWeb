@@ -183,6 +183,8 @@ assert(
     header.includes('/images/brand/deeptrols-logo-white.png') &&
     header.includes('/images/brand/deeptrols-logo-black.png') &&
     header.includes('has-mega') &&
+    header.includes('isProductRoute') &&
+    header.includes('is-product-page') &&
     header.includes('is-in-hero') &&
     headerDesktopNav.includes('site-header__nav-underline') &&
     headerActions.includes('免费获取专属方案') &&
@@ -209,6 +211,9 @@ assert(
     siteHeaderStyles.includes('height: 35px') &&
     siteHeaderStyles.includes('background: transparent') &&
     siteHeaderStyles.includes('background: rgba(255, 255, 255, 0.98)') &&
+    siteHeaderStyles.includes('.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile)') &&
+    siteHeaderStyles.includes('.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile) .site-header__nav-button.active:not(:hover):not(:focus-visible):not([data-state="open"])') &&
+    siteHeaderStyles.includes('.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile) .site-header__nav-underline') &&
     !siteHeaderStyles.includes('background: rgba(0, 0, 0, 0.4)') &&
     !siteHeaderStyles.includes('.site-header:not(.is-home)') &&
     siteHeaderStyles.includes('has-mega'),

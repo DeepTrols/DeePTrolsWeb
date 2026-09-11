@@ -19,14 +19,16 @@ const closeTimer = ref<ReturnType<typeof setTimeout> | null>(null)
 const route = useRoute()
 const activeItem = computed(() => (activeIndex.value === null ? undefined : primaryNavigation[activeIndex.value]))
 const isHomeRoute = computed(() => route.path === '/')
+const isProductRoute = computed(() => route.path === '/products' || route.path.startsWith('/products/'))
 const shouldUseDarkLogo = computed(
-  () => Boolean(activeItem.value) || isMobileOpen.value || !isAtTop.value,
+  () => Boolean(activeItem.value) || isMobileOpen.value || !isAtTop.value || isProductRoute.value,
 )
 const headerLogoSrc = computed(() =>
   shouldUseDarkLogo.value ? '/images/brand/deeptrols-logo-black.png' : '/images/brand/deeptrols-logo-white.png',
 )
 const headerClasses = computed(() => ({
   'is-home': isHomeRoute.value,
+  'is-product-page': isProductRoute.value,
   'is-dark-hero': isHomeRoute.value,
   'is-at-top': isAtTop.value,
   'is-in-hero': isInHero.value,
