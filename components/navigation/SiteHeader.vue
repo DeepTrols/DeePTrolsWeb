@@ -20,7 +20,7 @@ const route = useRoute()
 const activeItem = computed(() => (activeIndex.value === null ? undefined : primaryNavigation[activeIndex.value]))
 const isHomeRoute = computed(() => route.path === '/')
 const shouldUseDarkLogo = computed(
-  () => Boolean(activeItem.value) || isMobileOpen.value || !isHomeRoute.value || (!isAtTop.value && !isInHero.value),
+  () => Boolean(activeItem.value) || isMobileOpen.value || !isAtTop.value,
 )
 const headerLogoSrc = computed(() =>
   shouldUseDarkLogo.value ? '/images/brand/deeptrols-logo-black.png' : '/images/brand/deeptrols-logo-white.png',

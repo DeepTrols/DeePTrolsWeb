@@ -22,9 +22,9 @@
 2. 全站内容区默认参考 DeepCtrls 的横向 gutter 节奏：`--dt-page-gutter: clamp(48px, 13.23vw, 254px)`，`--dt-container: calc(100% - (var(--dt-page-gutter) * 2))`，容器不再使用固定 `1200px` 上限；HOME Hero 文案区（`.home-hero__content`）与其他 section 左右对齐，宽度同样使用 `--dt-container`（`--dt-hero-gutter: clamp(48px, 10.42vw, 200px)` token 保留但不再用于 Hero 文案区）。
 3. 常规页面 Hero 外层 section 不写局部 padding，内部 `.container`（`.page-hero__body`）使用 Tailwind v4 utility `pt-40 pb-32 lg:pb-44`（`flushBottom` 时底部为 `pb-0 lg:pb-0`）。
 4. 常规页面 Hero 后续模块遵循「Section 间距统一规则」（TASK-014.14，见 `COMMON_SECTION_COMPONENTS.md`）：section 根统一加 `flow-root pb-32 lg:pb-44`（底部 128px，lg 以上 176px，不写 pt），内部 `.container` 不携带垂直 margin；不要在页面 scoped CSS 中重复声明 section 垂直 padding，旧的 `dt-section` / `--dt-space-section(-lg)` 节奏已删除。HOME 专属例外：hero 下首个 section（`HomeDeliverables`）与 `HomeInsights` 根节点额外携带 `pt-32`，`HomeAbout` 底部收窄为 `pb-10`。
-5. Header 高度固定为 `62px`，使用 `fixed` 全视口顶部，层级为 `z-index: 1000`；HOME 首屏顶部默认透明并使用白色 Logo，Header hover 使用深色半透明背景，滚动、Mega 展开或普通内页使用白色半透明背景与黑色 Logo。HOME 下滚时 Header 需按背景自适应（`is-in-hero`）：仍处于 Hero 区域内保持白色文字/Logo 与 `rgba(0, 0, 0, 0.4)` 深色半透明背景，滚出 Hero 区域（按 `.home-hero` 实际高度测量）后切换为白色半透明背景与黑色 Logo。
+5. Header 高度固定为 `62px`，使用 `fixed` 全视口顶部，层级为 `z-index: 1000`；所有页面顶部默认透明并使用白色 Logo，滚动、Mega 展开或移动菜单展开时切换为白色半透明背景与黑色 Logo。`is-in-hero` 只用于识别 HOME Hero 区域，不再触发深色半透明 Header 背景。
 6. Header 是全视口宽度，内部 padding 按 DeepCtrls Header 节奏：桌面 `padding-left: 43px`、`padding-right: 61px`；普通页面内容仍使用 `.container`。
-7. Header logo 使用运行时品牌图：默认暗色 Hero 顶部为 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页为 `/images/brand/deeptrols-logo-black.png`；Header logo 高度按参考站为 `35px`。Footer logo 当前宽度为 `240px`。
+7. Header logo 使用运行时品牌图：所有页面顶部透明状态为 `/images/brand/deeptrols-logo-white.png`，滚动、Mega 展开或移动菜单展开时为 `/images/brand/deeptrols-logo-black.png`；Header logo 高度按参考站为 `35px`。Footer logo 当前宽度为 `240px`。
 8. Footer 使用 HOME 当前结构：订阅区、分隔线、`site-footer__main`、与 main 平级的 `site-footer__socials`、底部分隔线、备案与版权；Footer 背景为 `#191a1e`。
 9. HOME Hero 参考 DeepCtrls 首页首屏：`aspect-ratio: 1920 / 655`，使用 `/images/home/deepctrls-hero-ai.png` 作为背景图并叠加左侧黑色线性遮罩；Hero 与区域一不再共用视频背景，Hero 内不得恢复 canvas / TresJS。
 10. HOME 当前不展示 `CUSTOMER STORIES` section；`HomeProductSystem` 当前挂载 `ProductSystemSection`、`ProductSystemFlowFrame` 架构占位框与 `ProductSystemCards`，不得在 `product-system__content` 中恢复旧桌面或移动端流程图，待流程图重新设计后再单独接入。

@@ -45,6 +45,7 @@
 5. 新增 `data/solutions/manufacturing.ts` 集中全部文案与 lucide 图标；新增 `public/images/solutions/manufacturing-hero.png` 与 `public/images/solutions/manufacturing/image-placeholder.svg` 占位图。
 6. 通用 `[slug].vue` 模板与 `data/solutions/use-cases.ts` 保持不动，其余解决方案路由不受影响。
 7. 按 Review 反馈修复 Hero 首屏排版：标题恢复 DeepCtrls 首页式渐变文字，描述宽度放宽到 `760px` 并独立定位，`page-hero__actions` 独立定位为透明背景、白色字体、白色外边框与白色 SVG 箭头。
+8. 按二次 Review 修复 Header 与制造页细节：Header 改为顶部透明、滚动/Mega/移动菜单白底；行业痛点标题使用 `header-width="wide"` 保持居中；Hero CTA 使用白色文字与白色 SVG；核心功能卡片恢复公共卡片圆角、边框与 hover，同时保留抽屉动画并让占位图 100% 铺满。
 
 ---
 ## 验收结果
@@ -57,4 +58,4 @@
 
 ---
 ## 结论
-智能制造解决方案页面已按需求文档完成专用布局重构；Hero 标题、描述与透明描边 CTA 已完成 Review 修复，sc-card 抽屉动画与 EMQX 案例排版均以纯 Tailwind CSS v4 还原，未新增任何样式文件；契约与 Harness 检查已同步登记。
+智能制造解决方案页面已按需求文档完成专用布局重构；Hero 标题、描述与透明描边 CTA 已完成 Review 修复，Header 顶部透明状态、行业痛点标题居中与核心功能卡片公共样式已同步修正，sc-card 抽屉动画与 EMQX 案例排版均以纯 Tailwind CSS v4 还原，未新增任何样式文件；契约与 Harness 检查已同步登记。

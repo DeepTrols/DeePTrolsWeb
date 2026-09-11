@@ -37,12 +37,12 @@ import { manufacturingHero } from '~/data/solutions/manufacturing'
         class="page-hero__actions absolute left-0 top-[clamp(246px,24.375vw,468px)] flex w-[277px] max-w-full flex-wrap items-center gap-4 max-md:top-[470px]"
       >
         <NuxtLink
-          class="inline-flex h-[47px] w-full items-center justify-between gap-2 border border-white bg-transparent px-6 text-[16px] font-normal leading-none text-white no-underline transition-[background-color,border-color,transform] duration-200 hover:border-white hover:bg-white/10 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          class="inline-flex h-[47px] w-full items-center justify-between gap-2 border border-white bg-transparent px-6 text-[16px] font-normal leading-none !text-white no-underline transition-[background-color,border-color,transform] duration-200 hover:border-white hover:bg-white/10 hover:!text-white hover:-translate-y-0.5 focus-visible:!text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           to="/contact"
         >
-          <span>免费获取专属方案</span>
+          <span class="text-white">免费获取专属方案</span>
           <svg
-            class="size-6 shrink-0 text-white"
+            class="size-6 shrink-0 !text-white"
             viewBox="0 0 24 8"
             fill="none"
             aria-hidden="true"

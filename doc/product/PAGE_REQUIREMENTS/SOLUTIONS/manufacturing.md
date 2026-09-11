@@ -7,6 +7,7 @@
 描述：融合数曜数据智能、博曜知识中枢、探曜物联感知与智曜 AI 引擎，贯通制造企业设备、数据、知识与业务流程，构建从实时感知、数据治理、智能分析到自主决策与执行的制造智能体系，推动生产优化、质量提升、设备运维与能源管理持续智能化。
 3、Hero背景使用doc/product/PAGE_REQUIREMENTS/SOLUTIONS/manufacturing.png
 4、Hero 标题使用 DeepCtrls 首页式渐变文字；描述使用白色文字并放宽到 760px；`page-hero__actions` 独立定位，CTA 必须为透明背景、白色字体、白色外边框与白色 SVG 箭头。
+5、页面顶部 Header 默认透明，滚动、Mega 展开或移动菜单展开时才切换为白色背景；Hero CTA 文字与箭头必须保持白色。
 
 section1:
 
@@ -210,4 +211,3 @@ section5:
 问题处理时间缩短
 
 查看案例详情 →
-

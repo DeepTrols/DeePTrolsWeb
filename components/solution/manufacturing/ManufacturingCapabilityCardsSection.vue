@@ -30,11 +30,11 @@ const pointTopClasses = ['top-[255.22px]', 'top-[281.22px]', 'top-[307.22px]']
           as="article"
           padding="none"
           tabindex="0"
-          class="group relative h-[367px] cursor-default overflow-hidden rounded-none border-[0.78px] border-[#d8dee5] bg-white outline-none hover:translate-y-0 hover:border-[#d8dee5] hover:shadow-none"
+          class="group relative h-[367px] cursor-default bg-white outline-none"
         >
-          <div class="absolute left-0 top-0 h-[181px] w-full overflow-hidden bg-black">
+          <div class="absolute inset-x-0 top-0 h-[181px] w-full overflow-hidden bg-black">
             <img
-              class="h-full w-full object-fill"
+              class="h-full w-full min-w-full object-cover"
               src="/images/solutions/manufacturing/image-placeholder.svg"
               :alt="card.title"
             />

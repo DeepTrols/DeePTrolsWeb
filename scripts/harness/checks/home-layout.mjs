@@ -208,10 +208,11 @@ assert(
     siteHeaderStyles.includes('padding-left: 43px') &&
     siteHeaderStyles.includes('height: 35px') &&
     siteHeaderStyles.includes('background: transparent') &&
-    siteHeaderStyles.includes('background: rgba(0, 0, 0, 0.4)') &&
     siteHeaderStyles.includes('background: rgba(255, 255, 255, 0.98)') &&
-    siteHeaderStyles.includes('is-in-hero'),
-  'Header global SCSS must preserve the DeepCtrls fixed transparent/dark-hover/white-mega visual states.',
+    !siteHeaderStyles.includes('background: rgba(0, 0, 0, 0.4)') &&
+    !siteHeaderStyles.includes('.site-header:not(.is-home)') &&
+    siteHeaderStyles.includes('has-mega'),
+  'Header global SCSS must preserve the DeepCtrls fixed transparent-at-top and white scrolled/mega/mobile visual states.',
 )
 assert(
   megaMenu.includes('MegaPanelProduct') &&

@@ -33,6 +33,7 @@ useSeoMeta({
         subtitle="设备连接复杂、数据标准不一、系统相互割裂，制造知识难以沉淀复用，AI 与生产现场和业务流程缺乏有效连接，难以形成从感知、分析、决策到执行的智能闭环。"
         :items="manufacturingPains"
         columns="two"
+        header-width="wide"
       />
       <ProductFeatureGridSection
         eyebrow="解决方案"

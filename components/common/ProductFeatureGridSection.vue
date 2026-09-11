@@ -26,6 +26,9 @@ const props = withDefaults(
     iconSize?: 20 | 24 | 28 | 48
     iconBordered?: boolean
     iconFilled?: boolean
+    headerWidth?: 'default' | 'wide' | 'full'
+    spacing?: 'default' | 'compact' | 'tight'
+    containerSpacing?: 'none' | 'top'
   }>(),
   {
     columns: 'four',
@@ -34,14 +37,18 @@ const props = withDefaults(
     iconSize: 20,
     iconBordered: true,
     iconFilled: true,
+    headerWidth: undefined,
+    spacing: 'default',
+    containerSpacing: 'none',
   },
 )
 
 const cardColumns = computed(() => props.columns)
+const sectionHeaderWidth = computed(() => props.headerWidth ?? (props.nowrapSubtitle ? 'wide' : 'default'))
 </script>
 
 <template>
-  <SectionShell :title-id="titleId">
+  <SectionShell :title-id="titleId" :spacing="spacing" :container-spacing="containerSpacing">
     <div class="mb-12 text-center lg:mb-16">
       <SectionHeader
         :title-id="titleId"
@@ -50,7 +57,7 @@ const cardColumns = computed(() => props.columns)
         :subtitle="subtitle"
         align="center"
         :nowrap-subtitle="nowrapSubtitle"
-        :width="nowrapSubtitle ? 'wide' : 'default'"
+        :width="sectionHeaderWidth"
       />
     </div>
 

@@ -17,6 +17,7 @@ export function checkSolutionsManufacturingContracts(ctx) {
       manufacturingPage.includes('ManufacturingHero') &&
       manufacturingPage.includes('eyebrow="行业痛点"') &&
       manufacturingPage.includes('columns="two"') &&
+      manufacturingPage.includes('header-width="wide"') &&
       !manufacturingPage.includes(':icon-box-size="56"') &&
       !manufacturingPage.includes(':icon-size="48"') &&
       manufacturingPage.includes('<ProductSystemFlowFrame label="制造智能闭环能力图" class="mb-10" />') &&
@@ -42,7 +43,8 @@ export function checkSolutionsManufacturingContracts(ctx) {
       manufacturingHeroComponent.includes('top-[clamp(246px,24.375vw,468px)]') &&
       manufacturingHeroComponent.includes('bg-[linear-gradient(104.09deg,#1e44e0_-15.53%,#ffffff_36.62%)] bg-clip-text') &&
       manufacturingHeroComponent.includes('border border-white bg-transparent') &&
-      manufacturingHeroComponent.includes('class="size-6 shrink-0 text-white"') &&
+      manufacturingHeroComponent.includes('!text-white') &&
+      manufacturingHeroComponent.includes('class="size-6 shrink-0 !text-white"') &&
       manufacturingHeroComponent.includes('stroke="currentColor"') &&
       !manufacturingHeroComponent.includes('<style'),
     'Manufacturing hero must keep the 586px HOME-style layout with gradient title, wide white description, and transparent white-outline CTA with SVG arrow.',
@@ -53,9 +55,15 @@ export function checkSolutionsManufacturingContracts(ctx) {
       manufacturingCapabilityCards.includes('核心功能体系') &&
       manufacturingCapabilityCards.includes('xl:grid-cols-4') &&
       manufacturingCapabilityCards.includes('<BaseCard') &&
+      manufacturingCapabilityCards.includes('class="group relative h-[367px] cursor-default bg-white outline-none"') &&
       manufacturingCapabilityCards.includes('left-4 right-4 top-[279.22px]') &&
       !manufacturingCapabilityCards.includes('w-[263px]') &&
+      !manufacturingCapabilityCards.includes('rounded-none') &&
+      !manufacturingCapabilityCards.includes('hover:translate-y-0') &&
+      !manufacturingCapabilityCards.includes('hover:shadow-none') &&
       manufacturingCapabilityCards.includes('h-[367px]') &&
+      manufacturingCapabilityCards.includes('inset-x-0 top-0 h-[181px] w-full') &&
+      manufacturingCapabilityCards.includes('h-full w-full min-w-full object-cover') &&
       manufacturingCapabilityCards.includes('group-hover:top-[93px]') &&
       manufacturingCapabilityCards.includes('group-hover:-translate-y-[74px]') &&
       manufacturingCapabilityCards.includes('group-hover:opacity-100') &&
