@@ -1,5 +1,5 @@
 export function checkTanyaoProductContracts(ctx) {
-  const { assert, pageHero, tanyaoData, tanyaoPage, tanyaoHero, tanyaoHeroVisual, tanyaoSolution, tanyaoCapability, tanyaoStats, deviceAgentHeroVisual } = ctx
+  const { assert, pageHero, tanyaoData, tanyaoPage, tanyaoHero, tanyaoHeroVisual, tanyaoSolution, tanyaoCapability, productMetrics, deviceAgentHeroVisual } = ctx
 assert(
   pageHero.includes("align?: 'left' | 'center'") &&
     pageHero.includes("align: 'left',") &&
@@ -57,13 +57,16 @@ assert(
   'TanyaoHero must compose the shared PageHero with the requirement copy and a flush-bottom rhythm, and must align the visual right edge the boyao way (ml-auto canvas, no flush-visual-end); the stats strip lives in its own section.',
 )
 assert(
-  tanyaoStats.includes('HeroStatsStrip') &&
-    tanyaoStats.includes('tanyaoHeroStats') &&
-    tanyaoStats.includes(':columns="4"') &&
-    tanyaoStats.includes('placement="section"') &&
-    tanyaoStats.includes('container') &&
-    !tanyaoStats.includes('<style'),
-  'TanyaoStatsSection must render the 1x4 HeroStatsStrip as a standalone section below the flush-bottom hero.',
+  productMetrics.includes('aria-label="产品核心指标"') &&
+    productMetrics.includes('min-h-[154px]') &&
+    productMetrics.includes('w-[min(1424px,calc(100%-48px))]') &&
+    productMetrics.includes('grid-cols-2 max-sm:w-[calc(100%-32px)] sm:grid-cols-4') &&
+    productMetrics.includes('grid place-content-center border-[#edf0f6] px-[18px] py-6 text-center') &&
+    productMetrics.includes('text-[29px] leading-[27px] font-medium text-black') &&
+    productMetrics.includes('mt-[14px] text-[15px] leading-[18px] text-[#455c78]') &&
+    productMetrics.includes('flow-root bg-white pb-32 lg:pb-44') &&
+    !productMetrics.includes('<style'),
+  'ProductMetricsSection must replicate the DeepCtrls product-metrics strip (1x4 desktop, 2x2 mobile, divider borders, centered grid) Tailwind-only with the shared section rhythm.',
 )
 assert(
   tanyaoSolution.includes('ProductArchitectureSection') &&
@@ -89,13 +92,13 @@ assert(
     tanyaoPage.includes('eyebrow="Device Agent"') &&
     tanyaoPage.includes('columns="three"') &&
     tanyaoPage.includes('title-id="tanyao-cta-title"') &&
-    tanyaoPage.indexOf('<TanyaoHero') < tanyaoPage.indexOf('<TanyaoStatsSection') &&
-    tanyaoPage.indexOf('<TanyaoStatsSection') < tanyaoPage.indexOf('tanyao-challenge-title') &&
+    tanyaoPage.indexOf('<TanyaoHero') < tanyaoPage.indexOf('<ProductMetricsSection') &&
+    tanyaoPage.indexOf('<ProductMetricsSection') < tanyaoPage.indexOf('tanyao-challenge-title') &&
     tanyaoPage.indexOf('tanyao-challenge-title') < tanyaoPage.indexOf('<TanyaoSolutionSection') &&
     tanyaoPage.indexOf('<TanyaoSolutionSection') < tanyaoPage.indexOf('<TanyaoCapabilitySection') &&
     tanyaoPage.indexOf('<TanyaoCapabilitySection') < tanyaoPage.indexOf('tanyao-agent-title') &&
     tanyaoPage.indexOf('tanyao-agent-title') < tanyaoPage.indexOf('<CtaSection'),
-  'The ai-iot page must assemble hero, stats section, challenges, solution, capabilities, Device Agent grid, and CTA in order.',
+  'The ai-iot page must assemble hero, product metrics section, challenges, solution, capabilities, Device Agent grid, and CTA in order.',
 )
 assert(
   tanyaoData.includes('export const tanyaoHeroStats: HeroStatItem[]') &&

@@ -8,7 +8,10 @@ import type { Component } from 'vue'
 
 export interface ProductFeatureGridItem {
   title: string
+  subtitle?: string
   description: string
+  points?: string[]
+  tags?: string[]
   icon?: Component
   iconLabel?: string
 }
@@ -68,7 +71,10 @@ const sectionHeaderWidth = computed(() => props.headerWidth ?? (props.nowrapSubt
         v-for="item in items"
         :key="item.title"
         :title="item.title"
+        :subtitle="item.subtitle"
         :description="item.description"
+        :points="item.points"
+        :tags="item.tags"
         :icon="item.icon"
         :icon-label="item.iconLabel"
         :icon-size="iconSize"

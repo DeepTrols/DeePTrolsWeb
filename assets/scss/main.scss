@@ -94,6 +94,13 @@ a {
   text-decoration: none;
 }
 
+/* The unlayered `a { color: inherit }` rule above outranks the layered
+   `.dt-button--*` color declarations in @layer components, so link buttons
+   need an equally unlayered override to keep their intended label color. */
+a.dt-button--primary {
+  color: #ffffff;
+}
+
 @layer base {
   button,
   input,

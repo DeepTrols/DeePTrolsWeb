@@ -29,7 +29,16 @@ export function registerHomeHeaderVisualContracts() {
     expect(header).toContain('is-in-hero')
     expect(header).toContain('isWithinHeroRegion')
     expect(header).toContain('.home-hero')
-    expect(header).toContain('Boolean(activeItem.value) || isMobileOpen.value || !isAtTop.value || isProductRoute.value')
+    expect(header).toContain('isDarkHeaderRoute')
+    expect(header).toContain('is-dark-header')
+    expect(header).toContain('isProductRoute.value || isCasesRoute.value || isAboutRoute.value')
+    expect(header).toContain(
+      'Boolean(activeItem.value) ||\n    isMobileOpen.value ||\n    !isAtTop.value ||\n    isDarkHeaderRoute.value ||\n    isHeaderHovering.value,',
+    )
+    expect(siteHeaderStyles).toContain('.site-header.is-hovering')
+    expect(siteHeaderStyles).toContain('.site-header.is-dark-header.is-at-top:not(.has-mega):not(.has-mobile)')
+    expect(headerDesktopNav).toContain('.site-header__nav-item:hover .site-header__nav-underline')
+    expect(headerDesktopNav).toContain("activeIndex === index || isActiveItem(item)")
     expect(siteHeaderStyles).toContain('background: transparent')
     expect(siteHeaderStyles).toContain('background: rgba(255, 255, 255, 0.98)')
     expect(siteHeaderStyles).toContain('.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile)')

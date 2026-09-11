@@ -15,6 +15,7 @@ import {
   Tags,
 } from '@lucide/vue'
 import type { Component } from 'vue'
+import type { ProductMetricItem } from '~/components/common/ProductMetricsSection.vue'
 
 export interface DgpFeatureItem {
   title: string
@@ -246,4 +247,11 @@ export const dgpGovernanceScenes: DgpGovernanceScene[] = [
 export const dgpCtaActions = [
   { label: '咨询合作', href: '/contact', variant: 'primary' as const },
   { label: '申请试用', href: '/try', variant: 'secondary' as const },
+]
+
+export const dgpMetrics: ProductMetricItem[] = [
+  { value: '100+', label: '异构数据源连接' },
+  { value: '10亿级', label: '元数据资产规模' },
+  { value: '＜5s', label: '血缘关系查询' },
+  { value: '10万+', label: '质量规则管理' },
 ]

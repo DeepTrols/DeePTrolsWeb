@@ -4,13 +4,13 @@ assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why pa
 assert(
   whyPage.includes('WhyHero') &&
     whyPage.includes('WhyHeroLogos') &&
-    whyPage.includes('WhyTrustTabs') &&
-    whyPage.includes('WhyServiceReset') &&
-    whyPage.includes('WhyEngine') &&
     whyPage.includes('CtaSection') &&
     whyPage.includes('why-cta-title') &&
-    !whyPage.includes('whyCtaActions'),
-  'Why page sections are incomplete.',
+    !whyPage.includes('whyCtaActions') &&
+    !whyPage.includes('WhyTrustTabs') &&
+    !whyPage.includes('WhyServiceReset') &&
+    !whyPage.includes('WhyEngine'),
+  'Why page must keep hero, logos, and CTA while trust tabs, service model, and engine live on HOME/About.',
 )
 assert(
   whyHero.includes('PageHero') &&

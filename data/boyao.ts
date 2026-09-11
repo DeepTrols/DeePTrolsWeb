@@ -37,7 +37,7 @@ import zhongkeFangdeLogo from '../assets/images/compatibility/zhongke-fangde-log
 import type { Component } from 'vue'
 import type { AlternatingTimelineItem } from '~/components/common/AlternatingTimelineSection.vue'
 import type { CompatibilityGridCategory } from '~/components/common/CompatibilityGridSection.vue'
-import type { HeroStatItem } from '~/components/common/HeroStatsStrip.vue'
+import type { ProductMetricItem } from '~/components/common/ProductMetricsSection.vue'
 import type { ValueMetric } from '~/components/common/card/ValueCard.vue'
 
 export interface BoyaoFeatureItem {
@@ -55,12 +55,6 @@ export interface BoyaoValueCard {
 }
 
 export { boyaoLogo }
-
-export const boyaoHeroStats: HeroStatItem[] = [
-  { value: '70%+', label: '运营效率提升' },
-  { value: '50%+', label: '检索效率提升' },
-  { value: '200+', label: '服务客户' },
-]
 
 export const boyaoChallenges: BoyaoFeatureItem[] = [
   {
@@ -253,4 +247,11 @@ export const boyaoCapabilityNodes = [
 export const boyaoCtaActions = [
   { label: '立即咨询', href: '/contact', variant: 'primary' as const },
   { label: '申请试用', href: '/try', variant: 'secondary' as const },
+]
+
+export const boyaoMetrics: ProductMetricItem[] = [
+  { value: '100+', label: '知识源连接器' },
+  { value: '10亿级', label: '向量索引规模' },
+  { value: '＜1s', label: 'RAG 检索响应' },
+  { value: '20+', label: '大模型适配' },
 ]

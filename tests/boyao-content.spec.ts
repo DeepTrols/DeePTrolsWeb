@@ -7,7 +7,6 @@ import {
   boyaoCompatibilityCategories,
   boyaoCtaActions,
   boyaoFeatures,
-  boyaoHeroStats,
   boyaoTimelineItems,
   boyaoValueCards,
 } from '../data/boyao'
@@ -15,12 +14,6 @@ import {
 const root = process.cwd()
 
 describe('BOYAO product page content contract', () => {
-  it('uses the exact BOYAO hero stats from the page requirement', () => {
-    expect(boyaoHeroStats).toHaveLength(3)
-    expect(boyaoHeroStats.map((stat) => stat.value)).toEqual(['70%+', '50%+', '200+'])
-    expect(boyaoHeroStats.map((stat) => stat.label)).toEqual(['运营效率提升', '检索效率提升', '服务客户'])
-  })
-
   it('lists the four knowledge management challenges', () => {
     expect(boyaoChallenges).toHaveLength(4)
     expect(boyaoChallenges.map((item) => item.title)).toEqual([

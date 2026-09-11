@@ -91,7 +91,6 @@ function initialActiveColumn(): number {
         >
           <span class="mega-entry-title">
             <span>{{ link.label }}</span>
-            <span class="mega-chevron" aria-hidden="true">&gt;</span>
           </span>
           <span v-if="link.description" class="mega-entry-desc">{{ link.description }}</span>
         </NuxtLink>
@@ -127,11 +126,11 @@ function initialActiveColumn(): number {
   }
 }
 
-.mega-chevron {
-  flex: 0 0 auto;
-  font-size: 18px;
-  line-height: 1;
-}
+.mega-chevron { flex: 0 0 auto; font-size: 18px; line-height: 1; }
+
+.mega-entry .mega-chevron { opacity: 0; transition: opacity 200ms ease; }
+
+.mega-entry:is(:hover, :focus-visible) .mega-chevron { opacity: 1; }
 
 .mega-cols {
   display: flex;
@@ -178,6 +177,8 @@ function initialActiveColumn(): number {
     background: linear-gradient(180deg, #ffffff, #d8dee5 50%, #ffffff);
   }
 }
+
+.mega-cols:not(:hover, :focus-within) .mega-col--links { display: none; }
 
 .mega-entry {
   display: block;

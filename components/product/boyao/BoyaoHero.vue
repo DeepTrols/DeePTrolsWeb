@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { BookOpen } from '@lucide/vue'
-import HeroStatsStrip from '~/components/common/HeroStatsStrip.vue'
 import PageHero from '~/components/common/PageHero.vue'
 import BoyaoHeroVisual from '~/components/product/boyao/BoyaoHeroVisual.vue'
-import { boyaoHeroStats } from '~/data/boyao'
 </script>
 
 <template>
@@ -18,9 +16,6 @@ import { boyaoHeroStats } from '~/data/boyao'
     visual-label="BOYAOKNOWLEDGE_HORE_WEBM"
     visual-size="large"
   >
-    <template #after-actions>
-      <HeroStatsStrip :items="boyaoHeroStats" />
-    </template>
     <template #visual>
       <BoyaoHeroVisual />
     </template>

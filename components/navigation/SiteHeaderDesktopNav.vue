@@ -48,7 +48,11 @@ function isActiveItem(item: NavItem) {
           >
             <span>{{ item.label }}</span>
           </button>
-          <span v-if="activeIndex === index || isActiveItem(item)" class="site-header__nav-underline" aria-hidden="true"></span>
+          <span
+            class="site-header__nav-underline"
+            :class="{ 'is-visible': activeIndex === index || isActiveItem(item) }"
+            aria-hidden="true"
+          ></span>
         </li>
       </ul>
     </div>
@@ -154,6 +158,16 @@ function isActiveItem(item: NavItem) {
   background: #1e44e0;
   transform: translateX(-50%);
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.is-visible {
+    opacity: 1;
+  }
+}
+
+.site-header__nav-item:hover .site-header__nav-underline {
+  opacity: 1;
 }
 
 @media (min-width: 1280px) {

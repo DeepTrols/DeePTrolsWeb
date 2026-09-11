@@ -51,10 +51,6 @@ export interface NavItem {
 
 export const primaryNavigation: NavItem[] = [
   {
-    label: 'Why DeepTrols',
-    href: '/why-deeptrols',
-  },
-  {
     label: '核心产品',
     href: '/products',
     layout: 'product',
@@ -167,12 +163,12 @@ export const primaryNavigation: NavItem[] = [
     ],
   },
   {
-    label: 'Token Hub',
-    href: '/services/token-hub',
+    label: '行业案例',
+    href: '/resources/reports',
   },
   {
-    label: '资源',
-    href: '/resources/reports',
+    label: 'TokenHub',
+    href: '/services/token-hub',
   },
   {
     label: '关于我们',

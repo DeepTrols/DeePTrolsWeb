@@ -42,7 +42,10 @@ const hasVisual = computed(() => Boolean(slots.visual))
       :class="flushBottom ? 'pb-0 lg:pb-0' : 'pb-32 lg:pb-44'"
     >
       <div class="page-hero__body-bg absolute inset-0 z-0 bg-dt-bg" aria-hidden="true"></div>
-      <div class="page-hero__background" aria-hidden="true">
+      <div
+        :class="{ 'page-hero__background--video': !backgroundImageSrc }"
+        class="page-hero__background" aria-hidden="true"
+      >
         <img v-if="backgroundImageSrc" class="page-hero__background-image" :src="backgroundImageSrc" alt="" />
         <video v-if="backgroundVideoSrc" class="page-hero__background-video" :src="backgroundVideoSrc" autoplay muted loop playsinline></video>
         <template v-if="!backgroundImageSrc">

@@ -8,7 +8,10 @@ import type { Component } from 'vue'
 withDefaults(
   defineProps<{
     title: string
+    subtitle?: string
     description?: string
+    points?: string[]
+    tags?: string[]
     icon?: Component
     iconLabel?: string
     href?: string
@@ -31,7 +34,10 @@ withDefaults(
     }
   }>(),
   {
+    subtitle: undefined,
     description: undefined,
+    points: undefined,
+    tags: undefined,
     icon: undefined,
     iconLabel: undefined,
     href: undefined,
@@ -86,9 +92,25 @@ withDefaults(
       </slot>
 
       <div class="feature-card__body">
-        <CardText :title="title" :description="description" :title-size="titleSize" :description-size="descriptionSize">
+        <CardText
+          :title="title"
+          :subtitle="subtitle"
+          :description="description"
+          :points="points"
+          :title-size="titleSize"
+          :description-size="descriptionSize"
+        >
           <slot name="text" />
         </CardText>
+        <div v-if="tags?.length" class="mt-3 flex flex-wrap gap-1.5">
+          <span
+            v-for="tag in tags"
+            :key="tag"
+            class="rounded-md border border-default bg-default px-2.5 py-1 text-[10px] font-semibold text-muted shadow-sm"
+          >
+            {{ tag }}
+          </span>
+        </div>
         <slot name="meta" />
         <slot />
         <div v-if="action" class="feature-card__action">

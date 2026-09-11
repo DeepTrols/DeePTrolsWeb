@@ -20,7 +20,7 @@
 - 视觉素材通过 `#visual` slot 传入。
 - `PageHero` 外层 section 只保留 `page-hero relative overflow-hidden`，不得承载背景色或边框；`bg-dt-bg` 必须放在 `.page-hero__body` 内部的 `.page-hero__body-bg` 背景层上，并与 `.page-hero__background`、`.page-hero__inner` 平级。层级顺序必须是 `body-bg(z-0)`、视频/网格/glow 背景层、内容层，避免实色背景遮挡视频。
 - `.page-hero__background` 虽位于 `.container.page-hero__body` 内部，但宽度必须使用 `100vw` 并通过 `left: 50%` + `translateX(-50%)` 居中，保证视频背景铺满屏幕宽度，不被 container 限制。
-- `PageHero` 的公共视觉样式集中在 `assets/scss/components/_page-hero.scss` 并由 `assets/scss/main.scss` 引入；组件本体只保留结构和 props，避免超过 300 行。视频背景底部必须同时使用视频 `mask-image` 和 `.page-hero__background::after` 的 `var(--dt-color-bg)` 渐变压色，避免与页面背景出现色差断层。
+- `PageHero` 的公共视觉样式集中在 `assets/scss/components/_page-hero.scss` 并由 `assets/scss/main.scss` 引入；组件本体只保留结构和 props，避免超过 300 行。视频背景底部必须同时使用视频 `mask-image` 和 `.page-hero__background--video::after` 的 `var(--dt-color-bg)` 渐变压色，避免与页面背景出现色差断层；该压色层只作用于视频背景 Hero（`PageHero` 在无 `backgroundImageSrc` 时给背景层加 `page-hero__background--video`），图片背景 Hero 不加任何遮罩，保证源图原色清晰（参考 DeepCtrls product-hero）。
 - 默认 `visualSize` 为 `default`，右侧视觉保持产品页正常尺寸；只有 Why DeepTrols 这类明确需要放大视觉的页面可以传入 `visualSize="large"`。
 - `visualSize="large"` 的视觉 wrapper 使用 `justify-self-end`（其余尺寸为 `justify-self-center`）：wrapper 未达 `max-w-[820px]` 封顶时 `w-full` 填满视觉列、行为一致；超宽视口（视觉列 > 820px）时贴列右缘渲染，保证动画右缘与其他 section 的 container 右缘对齐，多出的空间并入文案与视觉之间的 gap。
 - 需要视觉贴齐 container 右边缘（右侧 padding 为 0）时传入 `flushVisualEnd`：组件在 `lg` 下为 `.page-hero__visual` 追加 `-mr-4`（抵消 container `padding-inline: 1rem`）与 `justify-self-end`；仅按需启用，默认关闭。
@@ -65,9 +65,22 @@
 使用要求：
 - 数据通过 `items: HeroStatItem[]`（`{ value, label }`）传入，文案不得写在组件内。
 - 列数通过 `columns` 控制：默认 `3`（`grid-cols-3`）；传 `4` 时使用 `grid-cols-2 sm:grid-cols-4`（探曜 1×4 数字条）。
-- 位置通过 `placement` 控制：默认 `hero`（`mx-auto mt-8 max-w-2xl lg:mx-0`，放入 `PageHero` 的 `#after-actions` slot）；传 `section` 时去掉 hero 专属边距与宽度限制，作为独立 Section 全宽渲染（如探曜板块1，`TanyaoStatsSection` 包裹于 `.container`，此时 `PageHero` 应启用 `flushBottom` 由该 Section 承接节奏）。
+- 位置通过 `placement` 控制：默认 `hero`（`mx-auto mt-8 max-w-2xl lg:mx-0`，放入 `PageHero` 的 `#after-actions` slot）；传 `section` 时去掉 hero 专属边距与宽度限制，作为独立 Section 全宽渲染（兼容保留；产品页 Hero 下方的独立数字条已统一改用 `ProductMetricsSection`，探曜 `TanyaoStatsSection` 已随之删除）。
 - `section` placement 使用放大的条目样式：卡片 `rounded-xl border border-default bg-dt-bg-soft/50 px-4 py-4 text-center backdrop-blur-sm`，数值 `text-2xl font-semibold text-highlighted lg:text-3xl`，标签 `mt-1 text-xs text-muted lg:text-sm`；`hero` placement 保持原有紧凑样式不变。注意背景半透明必须写 `bg-dt-bg-soft/50`（`@theme` 颜色），`bg-muted` 是 `@utility`，不支持 `/50` 透明度修饰符。
 - 组件只负责数字条排版，不承担分割线、背景或容器职责。
+
+## Product Metrics Section
+公共组件：`components/common/ProductMetricsSection.vue`
+
+适用场景：
+- 产品页 Hero 下方的「产品核心指标」数字条（参考 DeepCtrls `product-metrics`），除 Device Agent 外的产品页统一使用。
+
+使用要求：
+- 数据通过 `items: ProductMetricItem[]`（`{ value, label }`，固定 4 项）传入，文案集中在各产品 `data/*.ts`（如 `dgpMetrics` / `dlpMetrics` / `ddpMetrics` / `dmsMetrics` / `boyaoMetrics`，探曜复用 `tanyaoHeroStats`），不得写在组件内。
+- 严格复刻参考样式且只允许 Tailwind CSS v4 utilities，不新增 `<style>` 或 SCSS：section 根 `product-metrics flow-root bg-white pb-32 lg:pb-44` + `aria-label="产品核心指标"`；条带整体 `border-b border-[#edf0f6]`；网格 `mx-auto grid min-h-[154px] w-[min(1424px,calc(100%-48px))] grid-cols-2 max-sm:w-[calc(100%-32px)] sm:grid-cols-4`。
+- 单元格 `grid place-content-center border-[#edf0f6] px-[18px] py-6 text-center`，分隔线按参考实现：桌面 1×4 仅竖分隔线；移动 2×2 首行带底分隔线、第 2 格无竖线（由 `cellBorderClasses` 常量按索引控制）。
+- 数值 `text-[29px] leading-[27px] font-medium text-black`，标签 `mt-[14px] text-[15px] leading-[18px] text-[#455c78]`。
+- section 间距遵循全站「Section 间距统一规则」（根 `flow-root pb-32 lg:pb-44`，不写 pt）。
 
 ## Section Shell / Header
 公共组件：

@@ -29,8 +29,8 @@ assert(
   'HOME page must keep the Customer Stories section unmounted until it is requested again.',
 )
 assert(
-  page.includes('<HomeEcosystem />\n      <HomeAbout />\n      <HomeInsights />'),
-  'HOME page must mount HomeAbout between ecosystem and Resources.',
+  page.includes('<HomeEcosystem />\n      <WhyTrustTabs />\n      <HomeAbout />\n      <HomeInsights />'),
+  'HOME page must mount WhyTrustTabs after ecosystem and HomeAbout before Resources.',
 )
 assert(
   homeAbout.includes('SectionHeading') &&
@@ -185,8 +185,11 @@ assert(
     header.includes('has-mega') &&
     header.includes('isProductRoute') &&
     header.includes('is-product-page') &&
+    header.includes('isDarkHeaderRoute') &&
+    header.includes('is-dark-header') &&
     header.includes('is-in-hero') &&
     headerDesktopNav.includes('site-header__nav-underline') &&
+    headerDesktopNav.includes('.site-header__nav-item:hover .site-header__nav-underline') &&
     headerActions.includes('免费获取专属方案') &&
     headerActions.includes('site-header__lang-switch') &&
     !headerActions.includes('GitHub') &&
@@ -211,6 +214,8 @@ assert(
     siteHeaderStyles.includes('height: 35px') &&
     siteHeaderStyles.includes('background: transparent') &&
     siteHeaderStyles.includes('background: rgba(255, 255, 255, 0.98)') &&
+    siteHeaderStyles.includes('.site-header.is-hovering') &&
+    siteHeaderStyles.includes('.site-header.is-dark-header.is-at-top:not(.has-mega):not(.has-mobile)') &&
     siteHeaderStyles.includes('.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile)') &&
     siteHeaderStyles.includes('.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile) .site-header__nav-button.active:not(:hover):not(:focus-visible):not([data-state="open"])') &&
     siteHeaderStyles.includes('.site-header.is-product-page.is-at-top:not(.has-mega):not(.has-mobile) .site-header__nav-underline') &&

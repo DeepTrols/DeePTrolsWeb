@@ -20,8 +20,17 @@ const route = useRoute()
 const activeItem = computed(() => (activeIndex.value === null ? undefined : primaryNavigation[activeIndex.value]))
 const isHomeRoute = computed(() => route.path === '/')
 const isProductRoute = computed(() => route.path === '/products' || route.path.startsWith('/products/'))
+const isCasesRoute = computed(() => route.path === '/resources' || route.path.startsWith('/resources/'))
+const isAboutRoute = computed(() => route.path === '/about_us' || route.path.startsWith('/about_us/'))
+// Routes whose heroes are light: black logo + black nav text at top and on hover.
+const isDarkHeaderRoute = computed(() => isProductRoute.value || isCasesRoute.value || isAboutRoute.value)
 const shouldUseDarkLogo = computed(
-  () => Boolean(activeItem.value) || isMobileOpen.value || !isAtTop.value || isProductRoute.value,
+  () =>
+    Boolean(activeItem.value) ||
+    isMobileOpen.value ||
+    !isAtTop.value ||
+    isDarkHeaderRoute.value ||
+    isHeaderHovering.value,
 )
 const headerLogoSrc = computed(() =>
   shouldUseDarkLogo.value ? '/images/brand/deeptrols-logo-black.png' : '/images/brand/deeptrols-logo-white.png',
@@ -29,6 +38,7 @@ const headerLogoSrc = computed(() =>
 const headerClasses = computed(() => ({
   'is-home': isHomeRoute.value,
   'is-product-page': isProductRoute.value,
+  'is-dark-header': isDarkHeaderRoute.value,
   'is-dark-hero': isHomeRoute.value,
   'is-at-top': isAtTop.value,
   'is-in-hero': isInHero.value,

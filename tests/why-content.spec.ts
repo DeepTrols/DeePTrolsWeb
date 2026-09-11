@@ -1,7 +1,6 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { primaryNavigation } from '../data/navigation'
 import {
   whyEngineLinks,
   whyHeroCenterLogo,
@@ -13,13 +12,6 @@ import {
 const root = process.cwd()
 
 describe('why deeptrols content contract', () => {
-  it('keeps the primary navigation wired to the Why DeepTrols route', () => {
-    expect(primaryNavigation[0]).toMatchObject({
-      label: 'Why DeepTrols',
-      href: '/why-deeptrols',
-    })
-  })
-
   it('defines four trust tabs with four enterprise features each', () => {
     expect(whyTrustTabs.map((tab) => tab.label)).toEqual([
       '面向技术层',

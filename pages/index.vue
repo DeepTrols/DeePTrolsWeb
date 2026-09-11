@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
+import WhyTrustTabs from '~/components/why/WhyTrustTabs.vue'
 
 useSeoMeta({
   title: 'DeepTrols - 构建企业级 AI 能力体系',
@@ -19,6 +20,7 @@ useSeoMeta({
       <HomeProductSystem />
       <HomeSolutions />
       <HomeEcosystem />
+      <WhyTrustTabs />
       <HomeAbout />
       <HomeInsights />
       <HomeCta />

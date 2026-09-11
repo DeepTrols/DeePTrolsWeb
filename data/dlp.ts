@@ -13,6 +13,7 @@ import {
   Wallet,
 } from '@lucide/vue'
 import type { Component } from 'vue'
+import type { ProductMetricItem } from '~/components/common/ProductMetricsSection.vue'
 
 export interface DlpFeatureItem {
   title: string
@@ -213,4 +214,11 @@ export const dlpUseCaseItems: DlpFeatureItem[] = [
 export const dlpCtaActions = [
   { label: '立即咨询', href: '/contact', variant: 'primary' as const },
   { label: '申请试用', href: '/try', variant: 'secondary' as const },
+]
+
+export const dlpMetrics: ProductMetricItem[] = [
+  { value: '10亿级', label: '标签实体规模' },
+  { value: '10万+', label: '标签定义管理' },
+  { value: '＜100ms', label: '在线标签查询' },
+  { value: '千万级/h', label: '标签批量计算' },
 ]

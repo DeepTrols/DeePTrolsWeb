@@ -5,11 +5,10 @@ import { customerLogos, deliverables, ecosystemCards, homeAbout, productCards, s
 describe('home content contract', () => {
   it('defines the primary navigation required by product documents', () => {
     expect(primaryNavigation.map((item) => item.label)).toEqual([
-      'Why DeepTrols',
       '核心产品',
       '解决方案',
-      'Token Hub',
-      '资源',
+      '行业案例',
+      'TokenHub',
       '关于我们',
     ])
   })

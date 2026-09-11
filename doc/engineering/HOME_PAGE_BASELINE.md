@@ -67,7 +67,7 @@ HOME 关于我们区块的数据必须集中在 `data/home.ts`：eyebrow 为“�
 ---
 ## Interaction Baseline
 1. Header 主导航 DOM 保持 `div style="position:relative;" > ul > li > button`，主导航按钮内不渲染 SVG。
-2. Mega Menu 只在 hover 对应按钮及面板时保持显示，离开按钮和面板后必须收回。Mega 参考 DeepCtrls：左侧 `.mega-title`，右侧文字入口；核心产品使用 `.mega-cols` 双栏联动（`.mega-col--categories` 品类栏 hover/focus 切换 `.mega-col--links` 产品栏；面板打开按当前路由激活对应品类，无匹配时激活第一个品类；品类栏不含 `核心产品` 入口），解决方案使用 `.mega-solutions` 横向 `4 × 2` 网格，`hot` 标签随标题 inline-flex 排版、紧贴标题文字右上角。条目标题 `24px / 35px`，描述 `14px / 16px`，hover/focus/active 仅将标题切换为蓝色，不使用图标卡片。
+2. Mega Menu 只在 hover 对应按钮及面板时保持显示，离开按钮和面板后必须收回。Mega 参考 DeepCtrls：左侧 `.mega-title`，右侧文字入口；核心产品使用 `.mega-cols` 双栏联动（默认 `display: none` 隐藏三级 `.mega-col--links` 产品栏、只显示二级 `.mega-col--categories` 品类栏，`.mega-cols` hover 或 focus-within 时产品栏展开，品类栏 hover/focus 切换产品栏内容；二级条目的 `>` 箭头默认 `opacity: 0`，仅该条目 hover/focus-visible 时显示；三级条目不带 `>` 箭头；面板打开按当前路由激活对应品类，无匹配时激活第一个品类；品类栏不含 `核心产品` 入口），解决方案使用 `.mega-solutions` 横向 `4 × 2` 网格，`hot` 标签随标题 inline-flex 排版、紧贴标题文字右上角。条目标题 `24px / 35px`，描述 `14px / 16px`，hover/focus/active 仅将标题切换为蓝色，不使用图标卡片。
 3. Tab 使用 `role="tablist"` / `role="tab"` / `aria-selected`。
 4. Carousel 使用 `role="region"`、`aria-roledescription="carousel"`、`data-slot="root/viewport/container/item"`。
 5. Hover 动画保持 `150ms-300ms`，只服务阅读和状态反馈，不做无意义装饰。

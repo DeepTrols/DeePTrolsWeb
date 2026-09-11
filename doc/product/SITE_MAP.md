@@ -3,10 +3,10 @@
 ---
 ## Navigation
 - 首页
-- Why DeepTrols
 - 核心产品
 - 解决方案
-- 服务
+- 行业案例
+- TokenHub
 - 关于我们
 
 ---
@@ -15,7 +15,7 @@
 DeepTrols 官网
 │
 ├── [页面]首页
-├── [页面&导航]Why DeepTrols
+├── [页面]Why DeepTrols
 ├── [导航]核心产品
 │   │
 │   ├── [分类]DATA
@@ -79,7 +79,7 @@ DeepTrols 官网
 
 ## 结构说明
 - 首页与所有一级菜单页面处于同一层级，用户点击logo或者通过首页链接进入，不展示在导航栏中。
-- `Why DeepTrols` 是一级页面，不属于首页，导航中不展示 Mega Menu。
+- `Why DeepTrols` 是一级页面（路由 `/why-deeptrols` 保留），不再出现在主导航中；其「值得信赖」区块已移至首页，「Service Model」与「Reinvention Engine」区块已移至关于我们页。
 - “核心产品”“解决方案”“服务”“关于我们”均为一级页面；“关于我们”主路由为 `/about_us`。
 - 产品名称、解决方案名称和服务内容位于对应一级栏目下。
 - DATA、KNOWLEDGE BASE、AI IOT、AI SECURITY是信息分类。

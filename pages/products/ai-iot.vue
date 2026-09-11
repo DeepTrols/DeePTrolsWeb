@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
+import ProductMetricsSection from '~/components/common/ProductMetricsSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import TanyaoCapabilitySection from '~/components/product/tanyao/TanyaoCapabilitySection.vue'
 import TanyaoHero from '~/components/product/tanyao/TanyaoHero.vue'
 import TanyaoSolutionSection from '~/components/product/tanyao/TanyaoSolutionSection.vue'
-import TanyaoStatsSection from '~/components/product/tanyao/TanyaoStatsSection.vue'
-import { tanyaoAgents, tanyaoChallenges } from '~/data/tanyao'
+import { tanyaoAgents, tanyaoChallenges, tanyaoHeroStats } from '~/data/tanyao'
 
 useSeoMeta({
   title: '探曜·AI物联感知平台 - DeepTrols',
@@ -21,7 +21,7 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content">
       <TanyaoHero />
-      <TanyaoStatsSection />
+      <ProductMetricsSection :items="tanyaoHeroStats" />
       <ProductFeatureGridSection
         eyebrow="挑战"
         title="AI 时代，IoT 平台面临新挑战"

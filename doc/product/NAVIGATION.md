@@ -1,15 +1,14 @@
 # Navigation
-> Version: 1.5
+> Version: 1.6
 ---
 
 ## Primary Navigation
 ```text
 Logo 点击显示首页（doc/product/PAGE_REQUIREMENTS/HOME.md）
-Why DeepTrols
 核心产品
 解决方案
-Token Hub
-资源
+行业案例
+TokenHub
 关于我们
 ```
 
@@ -22,14 +21,10 @@ Header 约束：
 - Header 滚动自适应（参考 DeepCtrls `is-in-hero`）：HOME 下滚后只要 Header 仍完整处于 Hero 区域内，保持白色文字/白色 logo 与 `rgba(0, 0, 0, 0.4)` 深色半透明背景；滚出 Hero 区域后切换为白色半透明背景与黑色 logo。Hero 区域按 `.home-hero` 实际渲染高度在 scroll/resize/路由切换时测量。
 - Header 右侧固定为「免费获取专属方案」与「CN ｜ EN」，不展示 GitHub SVG、语言切换 SVG、`登录OPS` 或 Header 级 `免费咨询`。
 - Mega Menu 仅 `核心产品 / 解决方案` 展示；鼠标离开按钮和面板后必须收回。
-- `Token Hub`（`/services/token-hub`）与 `资源`（`/resources/reports`）为顶级直链，不展示 Mega Menu。
+- `行业案例`（`/resources/reports`）与 `TokenHub`（`/services/token-hub`）为顶级直链，不展示 Mega Menu。
+- `Why DeepTrols`（`/why-deeptrols`）不再出现在主导航中；页面路由保留，其「值得信赖」Tab 区块已移至首页（HomeEcosystem 下方），「Service Model」与「Reinvention Engine」区块已移至关于我们页（公司介绍下方）。
 ---
 # Mega Menu
-
-## Why DeepTrols
-```text
-直接跳转 `/why-deeptrols`，不展示 Mega Menu。
-```
 
 ## 核心产品（Mega Menu）
 ```text
@@ -80,16 +75,16 @@ Header 约束：
 - 解决方案 Mega 保持与核心产品一致的左侧 `.mega-title`、标题字号 `24px / 35px / 400`、描述字号 `14px / 16px / 400`、hover/focus/active 标题变蓝。
 - 右侧内容使用横向 `4 × 2` 网格；不渲染「应用场景 / 行业方案」作为面板内标题，不使用 icon、卡片底色、边框、阴影或圆角卡片结构。
 - `FDE解决方案` 与 `算电协同运营方案` 展示 `hot` 标签：标签随标题文字排版（inline-flex），紧贴对应标题文字右上角，轻微上浮（`top: -4px`），不锚定到网格单元右侧。
-- 入口落链：智能制造→`/solutions/manufacturing`、智慧储能→`/solutions/energy`、智慧水利/水务→`/solutions/water`、算电协同→`/solutions/compute`；智慧教育→`/services/smart-education`、FDE→`/services/enterprise-ai-delivery`、零碳园区→`/services/zero-carbon-park`、AI+供应链→`/services/ai-supply-chain`（后四者为 noindex 占位页，待后续任务补充完整内容）。
+- 入口落链：智能制造→`/solutions/manufacturing`、智慧储能→`/solutions/energy`、智慧水利/水务→`/solutions/water`、算电协同→`/solutions/compute`、智慧教育→`/services/smart-education`；FDE→`/services/enterprise-ai-delivery`、零碳园区→`/services/zero-carbon-park`、AI+供应链→`/services/ai-supply-chain`（后三者为 noindex 占位页，待后续任务补充完整内容）。
 
-## Token Hub
+## 行业案例
 ```text
-直接跳转 `/services/token-hub`，不展示 Mega Menu。
+直接跳转 `/resources/reports`（白皮书 & 报告路由），不展示 Mega Menu。
 ```
 
-## 资源
+## TokenHub
 ```text
-直接跳转 `/resources/reports`（原「白皮书 & 报告」），不展示 Mega Menu。
+直接跳转 `/services/token-hub`，不展示 Mega Menu。
 ```
 
 ## 关于我们

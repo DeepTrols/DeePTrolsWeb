@@ -7,6 +7,9 @@ import { checkHomeLayoutContracts } from './harness/checks/home-layout.mjs'
 import { checkProductAiiotContracts } from './harness/checks/product-aiiot.mjs'
 import { checkProductDataContracts } from './harness/checks/product-data.mjs'
 import { checkServiceReportContracts } from './harness/checks/service-report.mjs'
+import { checkSolutionsEducationContracts } from './harness/checks/solutions-education.mjs'
+import { checkSolutionsEnergySavingContracts } from './harness/checks/solutions-energy-saving.mjs'
+import { checkSolutionsHydraulicContracts } from './harness/checks/solutions-hydraulic.mjs'
 import { checkSolutionsManufacturingContracts } from './harness/checks/solutions-manufacturing.mjs'
 import { checkSolutionUseCaseContracts } from './harness/checks/solution-use-cases.mjs'
 import { checkSolutionTemplateContracts } from './harness/checks/solution-template.mjs'
@@ -37,6 +40,9 @@ checkServiceReportContracts(ctx)
 checkSolutionTemplateContracts(ctx)
 checkSolutionUseCaseContracts(ctx)
 checkSolutionsManufacturingContracts(ctx)
+checkSolutionsEnergySavingContracts(ctx)
+checkSolutionsHydraulicContracts(ctx)
+checkSolutionsEducationContracts(ctx)
 checkStyleRules(ctx)
 
 if (failures.length) {

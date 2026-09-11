@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
+import ProductMetricsSection from '~/components/common/ProductMetricsSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import DgpArchitecture from '~/components/product/dgp/DgpArchitecture.vue'
 import DgpEvolutionSection from '~/components/product/dgp/DgpEvolutionSection.vue'
 import DgpHero from '~/components/product/dgp/DgpHero.vue'
 import DgpUseCasesSection from '~/components/product/dgp/DgpUseCasesSection.vue'
-import { dgpCapabilities, dgpCoreValues } from '~/data/dgp'
+import { dgpCapabilities, dgpCoreValues, dgpMetrics } from '~/data/dgp'
 
 useSeoMeta({
   title: '数曜·数据治理平台 - DeepTrols',
@@ -20,6 +21,7 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content">
       <DgpHero />
+      <ProductMetricsSection :items="dgpMetrics" />
       <ProductFeatureGridSection
         eyebrow="核心价值"
         title="为什么选择数曜·治理数据平台"

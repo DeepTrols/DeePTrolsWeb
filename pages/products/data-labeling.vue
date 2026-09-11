@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
+import ProductMetricsSection from '~/components/common/ProductMetricsSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import DlpAiModelingSection from '~/components/product/dlp/DlpAiModelingSection.vue'
 import DlpArchitecture from '~/components/product/dlp/DlpArchitecture.vue'
 import DlpCapabilityTimelineSection from '~/components/product/dlp/DlpCapabilityTimelineSection.vue'
 import DlpHero from '~/components/product/dlp/DlpHero.vue'
-import { dlpAdvantages, dlpAssetItems, dlpChallengeItems, dlpUseCaseItems } from '~/data/dlp'
+import { dlpAdvantages, dlpAssetItems, dlpChallengeItems, dlpMetrics, dlpUseCaseItems } from '~/data/dlp'
 
 useSeoMeta({
   title: '数曜·数据标签平台 - DeepTrols',
@@ -20,6 +21,7 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content">
       <DlpHero />
+      <ProductMetricsSection :items="dlpMetrics" />
       <ProductFeatureGridSection
         id="dlp-challenge"
         eyebrow="挑战"

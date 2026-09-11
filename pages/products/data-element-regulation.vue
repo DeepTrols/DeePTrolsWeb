@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
+import ProductMetricsSection from '~/components/common/ProductMetricsSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import DmsArchitecture from '~/components/product/dms/DmsArchitecture.vue'
@@ -8,7 +9,7 @@ import DmsBusinessValueSection from '~/components/product/dms/DmsBusinessValueSe
 import DmsHero from '~/components/product/dms/DmsHero.vue'
 import DmsIntelligentRegulationSection from '~/components/product/dms/DmsIntelligentRegulationSection.vue'
 import DmsRegulationProcessSection from '~/components/product/dms/DmsRegulationProcessSection.vue'
-import { dmsCapabilities, dmsChallengeItems, dmsUseCaseItems } from '~/data/dms'
+import { dmsCapabilities, dmsChallengeItems, dmsMetrics, dmsUseCaseItems } from '~/data/dms'
 
 useSeoMeta({
   title: '数曜·数据要素监管平台 - DeepTrols',
@@ -21,6 +22,7 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content">
       <DmsHero />
+      <ProductMetricsSection :items="dmsMetrics" />
       <ProductFeatureGridSection
         id="dms-challenge"
         eyebrow="挑战"

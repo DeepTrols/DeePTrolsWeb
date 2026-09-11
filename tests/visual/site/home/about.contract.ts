@@ -10,7 +10,7 @@ export function registerHomeAboutVisualContracts() {
       tailwind,
     } = loadHomeVisualSources()
 
-    expect(page).toContain('<HomeEcosystem />\n      <HomeAbout />\n      <HomeInsights />')
+    expect(page).toContain('<HomeEcosystem />\n      <WhyTrustTabs />\n      <HomeAbout />\n      <HomeInsights />')
     expect(homeAbout).toContain('SectionHeading')
     expect(homeAbout).toContain(':eyebrow="homeAbout.eyebrow"')
     expect(homeAbout).toContain(':title="homeAbout.title"')

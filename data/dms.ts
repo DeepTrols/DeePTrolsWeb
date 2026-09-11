@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from '@lucide/vue'
 import type { Component } from 'vue'
+import type { ProductMetricItem } from '~/components/common/ProductMetricsSection.vue'
 
 export type DmsHeroStage = 'intake' | 'risk' | 'disposal'
 
@@ -305,4 +306,11 @@ export const dmsUseCaseItems: DmsFeatureItem[] = [
 export const dmsCtaActions = [
   { label: '立即咨询', href: '/contact', variant: 'primary' as const },
   { label: '申请试用', href: '/try', variant: 'secondary' as const },
+]
+
+export const dmsMetrics: ProductMetricItem[] = [
+  { value: '亿级', label: '流通记录追踪' },
+  { value: '＜1s', label: '风险规则匹配' },
+  { value: '10万+', label: '监管规则管理' },
+  { value: '100%', label: '操作审计留痕' },
 ]

@@ -6,6 +6,8 @@ import AboutIntroSection from '~/components/about/AboutIntroSection.vue'
 import AboutValuesSection from '~/components/about/AboutValuesSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
+import WhyEngine from '~/components/why/WhyEngine.vue'
+import WhyServiceReset from '~/components/why/WhyServiceReset.vue'
 
 useSeoMeta({
   title: '关于深度数智（DEEPTROLS） - DeepTrols',
@@ -21,6 +23,8 @@ useSeoMeta({
     <main id="main-content" class="about-page">
       <AboutHero />
       <AboutIntroSection />
+      <WhyServiceReset />
+      <WhyEngine />
       <AboutValuesSection />
       <AboutAddressSection />
       <AboutContactSection />

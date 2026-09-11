@@ -7,11 +7,13 @@ import { featuredReportResources, reportFilterTabs, reportHero, reportResources 
 const root = process.cwd()
 
 describe('report service page content contract', () => {
-  it('keeps the top-level resources navigation entry wired to the report route', () => {
-    const resourcesLink = primaryNavigation.find((item) => item.label === '资源')
+  it('keeps the top-level 行业案例 navigation entry wired to the report route', () => {
+    const casesLink = primaryNavigation.find((item) => item.label === '行业案例')
 
-    expect(resourcesLink?.href).toBe('/resources/reports')
-    expect(resourcesLink?.layout).toBeUndefined()
+    expect(casesLink?.href).toBe('/resources/reports')
+    expect(casesLink?.layout).toBeUndefined()
+    expect(casesLink?.columns).toBeUndefined()
+    expect(primaryNavigation.find((item) => item.label === 'TokenHub')?.href).toBe('/services/token-hub')
   })
 
   it('uses the required hero copy from report.md', () => {

@@ -60,7 +60,7 @@ export function registerAboutVisualContracts() {
     expect(pageHero).not.toContain('BaseButton')
     expect(pageHero).toContain('v-if="hasVisual"')
     expect(pageHero).toContain('<slot name="after-content" />')
-    expect(pageHeroStyles).toContain('.page-hero__background::after')
+    expect(pageHeroStyles).toContain('.page-hero__background--video::after')
     expect(pageHeroStyles).toContain('var(--dt-color-bg) 100%')
     expect(pageHeroStyles).toContain('-webkit-mask-image')
     expect(pageHeroStyles).toContain('object-fit: cover')

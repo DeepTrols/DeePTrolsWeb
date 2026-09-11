@@ -73,7 +73,7 @@ export function checkAboutPageContracts(ctx) {
     'PageHero must support optional badge, optional gradient, optional visual slot, section-width after-content slot, runtime background video, runtime background image, and the unified HOME-style CTA.',
   )
   assert(
-    pageHeroStyles.includes('.page-hero__background::after') &&
+    pageHeroStyles.includes('.page-hero__background--video::after') &&
       pageHeroStyles.includes('var(--dt-color-bg) 100%') &&
       pageHeroStyles.includes('-webkit-mask-image') &&
       pageHeroStyles.includes('object-fit: cover') &&

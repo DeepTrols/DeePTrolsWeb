@@ -2,6 +2,7 @@
 import CompatibilityGridSection from '~/components/common/CompatibilityGridSection.vue'
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
+import ProductMetricsSection from '~/components/common/ProductMetricsSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import BoyaoArchitectureSection from '~/components/product/boyao/BoyaoArchitectureSection.vue'
@@ -9,7 +10,7 @@ import BoyaoCapabilitySection from '~/components/product/boyao/BoyaoCapabilitySe
 import BoyaoCoreValueSection from '~/components/product/boyao/BoyaoCoreValueSection.vue'
 import BoyaoHero from '~/components/product/boyao/BoyaoHero.vue'
 import BoyaoIntegrationSection from '~/components/product/boyao/BoyaoIntegrationSection.vue'
-import { boyaoChallenges, boyaoCompatibilityCategories, boyaoFeatures } from '~/data/boyao'
+import { boyaoChallenges, boyaoCompatibilityCategories, boyaoFeatures, boyaoMetrics } from '~/data/boyao'
 
 useSeoMeta({
   title: '博曜·企业级知识管理平台 - DeepTrols',
@@ -23,6 +24,7 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content">
       <BoyaoHero />
+      <ProductMetricsSection :items="boyaoMetrics" />
       <ProductFeatureGridSection
         eyebrow="挑战"
         title="传统管理模式很难对知识进行挖掘"

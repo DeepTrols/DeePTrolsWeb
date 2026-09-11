@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from '@lucide/vue'
 import type { Component } from 'vue'
+import type { ProductMetricItem } from '~/components/common/ProductMetricsSection.vue'
 
 export interface DdpFeatureItem {
   title: string
@@ -161,4 +162,11 @@ export const ddpUseCaseItems: DdpFeatureItem[] = [
 export const ddpCtaActions = [
   { label: '立即咨询', href: '/contact', variant: 'primary' as const },
   { label: '申请试用', href: '/try', variant: 'secondary' as const },
+]
+
+export const ddpMetrics: ProductMetricItem[] = [
+  { value: '100+', label: '数据源连接器' },
+  { value: '10TB+/日', label: '数据处理规模' },
+  { value: '10万+', label: '调度任务管理' },
+  { value: '秒级', label: '任务调度触发' },
 ]
