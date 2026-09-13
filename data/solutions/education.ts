@@ -220,7 +220,6 @@ export interface EducationDiagramEntry {
 
 export interface EducationDiagramBlock {
   title: string
-  label: string
   icon: Component
 }
 
@@ -236,10 +235,10 @@ export const educationDiagram = {
     { name: 'Student', label: '学生学习空间', icon: GraduationCap },
     { name: 'Campus Apps', label: '校园应用', icon: LayoutGrid },
   ] as EducationDiagramEntry[],
-  leftTop: { title: '多模型统一接入', label: '大模型 / 多模态 / 私有模型', icon: Boxes },
-  leftBottom: { title: '知识与上下文', label: '知识库 / 记忆 / 业务上下文', icon: BookOpen },
-  rightTop: { title: '校园系统连接', label: '教务 / 教学 / 学工 / 科研', icon: Network },
-  rightBottom: { title: '智能工具调用', label: '查询 / 分析 / 生成 / 执行', icon: Wrench },
+  leftTop: { title: '多模型统一接入', icon: Boxes },
+  leftBottom: { title: '知识与上下文', icon: BookOpen },
+  rightTop: { title: '校园系统连接', icon: Network },
+  rightBottom: { title: '智能工具调用', icon: Wrench },
   center: {
     name: '智曜·AgentOS',
     caption: '理解 · 规划 · 执行',
