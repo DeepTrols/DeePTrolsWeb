@@ -141,7 +141,7 @@ function initialActiveColumn(): number {
 .mega-solutions {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   flex: 1 1 auto;
   min-width: 0;
   column-gap: 56px;

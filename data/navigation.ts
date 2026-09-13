@@ -5,11 +5,9 @@ import {
   Droplets,
   Factory,
   GraduationCap,
-  Leaf,
   PlugZap,
   RadioTower,
   Rocket,
-  Truck,
 } from '@lucide/vue'
 import type { Component } from 'vue'
 
@@ -116,7 +114,7 @@ export const primaryNavigation: NavItem[] = [
             icon: BatteryCharging,
           },
           {
-            label: '智慧水利/水务解决方案',
+            label: '智慧水利解决方案',
             description: '感知水务全域，智能调度运营',
             href: '/solutions/water',
             icon: Droplets,
@@ -145,18 +143,6 @@ export const primaryNavigation: NavItem[] = [
             href: '/solutions/compute',
             icon: PlugZap,
             hot: true,
-          },
-          {
-            label: '零碳园区智能化解决方案',
-            description: '协同能源、设备与园区运营',
-            href: '/services/zero-carbon-park',
-            icon: Leaf,
-          },
-          {
-            label: 'AI+供应链解决方案',
-            description: 'AI驱动供应链预测与协同决策',
-            href: '/services/ai-supply-chain',
-            icon: Truck,
           },
         ],
       },

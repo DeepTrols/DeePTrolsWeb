@@ -93,7 +93,7 @@ export function registerHomeHeaderVisualContracts() {
     expect(headerDesktopNav).toContain('border-radius: var(--dt-ui-radius)')
     expect(headerDesktopNav).toContain('@media (max-width: 1260px)')
     expect(megaPanelProduct).toContain('mega-solutions')
-    expect(megaPanelProduct).toContain('grid-template-columns: repeat(4, minmax(0, 1fr))')
+    expect(megaPanelProduct).toContain('grid-template-columns: repeat(3, minmax(0, 1fr))')
     expect(megaPanelProduct).toContain('mega-hot-tag')
     expect(megaPanelProduct).toContain('link.hot')
     expect(megaPanelProduct).toContain('activeColumn')

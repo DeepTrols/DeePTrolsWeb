@@ -41,12 +41,10 @@ describe('solution use case pages content contract', () => {
     expect(solutionLinks.map((link) => ({ label: link.label, href: link.href }))).toEqual([
       { label: '智能制造解决方案', href: '/solutions/manufacturing' },
       { label: '智慧储能解决方案', href: '/solutions/energy' },
-      { label: '智慧水利/水务解决方案', href: '/solutions/water' },
+      { label: '智慧水利解决方案', href: '/solutions/water' },
       { label: '智慧教育解决方案', href: '/services/smart-education' },
       { label: 'FDE解决方案', href: '/services/enterprise-ai-delivery' },
       { label: '算电协同运营方案', href: '/solutions/compute' },
-      { label: '零碳园区智能化解决方案', href: '/services/zero-carbon-park' },
-      { label: 'AI+供应链解决方案', href: '/services/ai-supply-chain' },
     ])
     expect(solutionLinks.filter((link) => link.hot).map((link) => link.label)).toEqual(['FDE解决方案', '算电协同运营方案'])
 
