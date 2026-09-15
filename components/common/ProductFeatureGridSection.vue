@@ -32,6 +32,7 @@ const props = withDefaults(
     headerWidth?: 'default' | 'wide' | 'full'
     spacing?: 'default' | 'compact' | 'tight'
     containerSpacing?: 'none' | 'top'
+    paddedTop?: boolean
   }>(),
   {
     columns: 'four',
@@ -43,6 +44,7 @@ const props = withDefaults(
     headerWidth: undefined,
     spacing: 'default',
     containerSpacing: 'none',
+    paddedTop: false,
   },
 )
 
@@ -51,7 +53,7 @@ const sectionHeaderWidth = computed(() => props.headerWidth ?? (props.nowrapSubt
 </script>
 
 <template>
-  <SectionShell :title-id="titleId" :spacing="spacing" :container-spacing="containerSpacing">
+  <SectionShell :title-id="titleId" :spacing="spacing" :container-spacing="containerSpacing" :padded-top="paddedTop">
     <div class="mb-12 text-center lg:mb-16">
       <SectionHeader
         :title-id="titleId"

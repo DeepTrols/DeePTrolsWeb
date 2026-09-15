@@ -7,10 +7,10 @@ import { featuredReportResources, reportFilterTabs, reportHero, reportResources 
 const root = process.cwd()
 
 describe('report service page content contract', () => {
-  it('keeps the top-level 行业案例 navigation entry wired to the report route', () => {
+  it('keeps the top-level 行业案例 navigation entry wired to the cases route', () => {
     const casesLink = primaryNavigation.find((item) => item.label === '行业案例')
 
-    expect(casesLink?.href).toBe('/resources/reports')
+    expect(casesLink?.href).toBe('/cases')
     expect(casesLink?.layout).toBeUndefined()
     expect(casesLink?.columns).toBeUndefined()
     expect(primaryNavigation.find((item) => item.label === 'TokenHub')?.href).toBe('/services/token-hub')
@@ -39,12 +39,13 @@ describe('report service page content contract', () => {
   it('defines the required filter tabs and three featured resources', () => {
     expect(reportFilterTabs.map((tab) => tab.label)).toEqual([
       '全部',
-      '产品规格书',
-      '电子书',
-      '白皮书',
-      '视频',
-      '幻灯片',
-      '基准测试报告',
+      '数据设施',
+      '知识工程',
+      '智能制造',
+      '智慧水利',
+      '智慧教育',
+      'FDE',
+      '算电协同',
     ])
     expect(featuredReportResources).toHaveLength(3)
     expect(featuredReportResources.map((item) => item.title)).toEqual(reportResources.slice(0, 3).map((item) => item.title))

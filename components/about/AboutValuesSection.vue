@@ -1,19 +1,20 @@
 <script setup lang="ts">
+import SectionHeader from '~/components/common/section/SectionHeader.vue'
 import { aboutValues } from '~/data/about'
 </script>
 
 <template>
   <section class="flow-root pb-32 lg:pb-44" aria-labelledby="about-values-title">
     <div class="container">
-      <h2
-        id="about-values-title"
-        class="mb-4 text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
-      >
-        我们的核心价值观
-      </h2>
-      <p class="mb-12 text-center text-base text-default md:mb-8 md:text-xl lg:mb-12 sm:text-lg">
-        这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。
-      </p>
+      <div class="mb-12 text-center lg:mb-16">
+        <SectionHeader
+          title="我们的核心价值观"
+          title-id="about-values-title"
+          subtitle="这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。"
+          align="center"
+          :nowrap-subtitle="true"
+        />
+      </div>
 
       <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div

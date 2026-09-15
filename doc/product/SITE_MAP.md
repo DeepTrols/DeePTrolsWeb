@@ -74,6 +74,8 @@ DeepTrols 官网
 │   ├── [页面]产品文档
 │   ├── [页面]算力与基础设施
 │   └── [外部页面]智能体社区
+├── [页面]新闻动态（/news，Footer 入口）
+│   └── [页面]新闻详情（/news/<id>）
 └── [页面&导航]关于我们（/about_us）
 ```
 
@@ -84,6 +86,7 @@ DeepTrols 官网
 - 产品名称、解决方案名称和服务内容位于对应一级栏目下。
 - DATA、KNOWLEDGE BASE、AI IOT、AI SECURITY是信息分类。
 - 应用场景、行业、技术方向和 FDE 是解决方案分类。
+- `新闻动态`（`/news`）由 Footer「公司」栏进入，支持 `?category=company|media|insight` 分类过滤；详情页路由为 `/news/<id>`。
 - 页面具体内容及区块结构在 `PAGE_REQUIREMENTS/` 中定义。
 - Mega Menu 的布局、栏目和交互在 `NAVIGATION.md` 中定义。
 - 页面视觉、宽度、按钮、Tab、卡片、Footer 和 Header 默认遵循 `doc/engineering/HOME_PAGE_BASELINE.md`。

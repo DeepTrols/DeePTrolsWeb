@@ -84,6 +84,7 @@ describe('device agent page contract', () => {
     expect(page).toContain('title-id="device-agent-ecosystem-title"')
     expect(page).toContain(':items="tanyaoAgents"')
     expect(page).toContain('columns="three"')
+    expect(page).toContain('padded-top')
     expect(page.indexOf('<DeviceAgentHero')).toBeLessThan(page.indexOf('device-agent-ecosystem-title'))
 
     expect(data).toContain('export interface DeviceAgentScene')

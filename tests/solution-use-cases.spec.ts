@@ -46,6 +46,14 @@ describe('solution use case pages content contract', () => {
       { label: 'FDE解决方案', href: '/services/enterprise-ai-delivery' },
       { label: '算电协同运营方案', href: '/solutions/compute' },
     ])
+    expect(primaryNavigation.find((item) => item.label === '解决方案')?.activePaths).toEqual([
+      '/services/smart-education',
+      '/services/enterprise-ai-delivery',
+    ])
+    expect(solutionLinks.find((link) => link.label === '智慧教育解决方案')?.activePaths).toEqual([
+      '/solutions/smart-education',
+    ])
+    expect(solutionLinks.find((link) => link.label === 'FDE解决方案')?.activePaths).toEqual(['/solutions/fde'])
     expect(solutionLinks.filter((link) => link.hot).map((link) => link.label)).toEqual(['FDE解决方案', '算电协同运营方案'])
 
     for (const link of solutionLinks) {

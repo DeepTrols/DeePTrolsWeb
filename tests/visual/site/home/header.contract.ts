@@ -31,7 +31,13 @@ export function registerHomeHeaderVisualContracts() {
     expect(header).toContain('.home-hero')
     expect(header).toContain('isDarkHeaderRoute')
     expect(header).toContain('is-dark-header')
-    expect(header).toContain('isProductRoute.value || isCasesRoute.value || isAboutRoute.value')
+    expect(header).toContain(
+      'isProductRoute.value ||\n    isCasesRoute.value ||\n    isAboutRoute.value ||\n    isCaseDetailRoute.value ||\n    isNewsDetailRoute.value,',
+    )
+    expect(header).toContain('isCaseDetailRoute')
+    expect(header).toContain("route.path.startsWith('/cases/')")
+    expect(header).toContain('isNewsDetailRoute')
+    expect(header).toContain("route.path.startsWith('/news/')")
     expect(header).toContain(
       'Boolean(activeItem.value) ||\n    isMobileOpen.value ||\n    !isAtTop.value ||\n    isDarkHeaderRoute.value ||\n    isHeaderHovering.value,',
     )
@@ -79,6 +85,7 @@ export function registerHomeHeaderVisualContracts() {
     expect(headerDesktopNav).toContain('flex: 0 0 auto')
     expect(headerDesktopNav).toContain('site-header__nav-underline')
     expect(headerDesktopNav).toContain('function isActiveItem')
+    expect(headerDesktopNav).toContain('...(item.activePaths ?? [])')
     expect(headerDesktopNav).toContain('margin-left: 0')
     expect(headerDesktopNav).toContain('width: 121px')
     expect(headerDesktopNav).toContain('width: 104px')
@@ -96,6 +103,8 @@ export function registerHomeHeaderVisualContracts() {
     expect(megaPanelProduct).toContain('grid-template-columns: repeat(3, minmax(0, 1fr))')
     expect(megaPanelProduct).toContain('mega-hot-tag')
     expect(megaPanelProduct).toContain('link.hot')
+    expect(megaPanelProduct).toContain('activePaths: string[] = []')
+    expect(megaPanelProduct).toContain('link.activePaths')
     expect(megaPanelProduct).toContain('activeColumn')
     expect(megaPanelProduct).toContain('initialActiveColumn')
     expect(megaPanelProduct).toContain('mega-col--categories')

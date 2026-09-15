@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" fill="none">
+  <rect width="640" height="360" fill="#f0f5ff"/>
+  <rect x="40" y="40" width="560" height="280" rx="20" fill="#ffffff" stroke="#d8dee5"/>
+  <path d="M120 230C165 165 214 138 267 149C318 160 331 214 380 214C422 214 445 169 520 132" stroke="#1a57eb" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="120" cy="230" r="16" fill="#6583ff"/>
+  <circle cx="267" cy="149" r="16" fill="#1a57eb"/>
+  <circle cx="380" cy="214" r="16" fill="#6583ff"/>
+  <circle cx="520" cy="132" r="16" fill="#1a57eb"/>
+  <text x="320" y="92" text-anchor="middle" fill="#100f14" font-family="Arial, sans-serif" font-size="28" font-weight="700">FDE</text>
+  <text x="320" y="284" text-anchor="middle" fill="#455c78" font-family="Arial, sans-serif" font-size="18">AI Delivery Scenario</text>
+</svg>

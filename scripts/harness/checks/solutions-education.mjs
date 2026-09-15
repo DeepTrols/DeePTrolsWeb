@@ -9,6 +9,7 @@ export function checkSolutionsEducationContracts(ctx) {
     educationCapabilityCards,
     educationValueSection,
     educationAgentFlowSection,
+    educationAgentDiagram,
     educationCases,
     educationData,
     productFeatureGridSection,
@@ -75,8 +76,11 @@ export function checkSolutionsEducationContracts(ctx) {
   assert(
     educationAgentFlowSection.includes('eyebrow="AI 原生教育"') &&
       educationAgentFlowSection.includes('从 Copilot 到 Agent，让 AI 真正完成教育任务') &&
-      educationAgentFlowSection.includes('mt-14 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]') &&
+      educationAgentFlowSection.includes('mt-14 grid gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]') &&
       educationAgentFlowSection.includes('rounded-3xl border border-default bg-dt-bg-soft/30 p-8 shadow-sm backdrop-blur-xl lg:p-10') &&
+      educationAgentFlowSection.includes('class="space-y-10"') &&
+      educationAgentFlowSection.includes('relative flex flex-col items-start gap-6 text-left lg:flex-row lg:items-start') &&
+      educationAgentFlowSection.includes('class="relative h-[120px] w-[120px]"') &&
       educationAgentFlowSection.includes('[perspective:800px]') &&
       educationAgentFlowSection.includes('[transform:rotateX(55deg)_rotateZ(-45deg)] [transform-style:preserve-3d]') &&
       educationAgentFlowSection.includes('h-[104px] w-[104px] border bg-default [transform:translateZ(-12px)]') &&
@@ -84,19 +88,43 @@ export function checkSolutionsEducationContracts(ctx) {
       educationAgentFlowSection.includes('h-[104px] w-[24px] origin-left border bg-muted [transform:rotateY(-90deg)_translateX(-12px)]') &&
       educationAgentFlowSection.includes('h-[24px] w-[104px] origin-bottom border-x bg-default [transform:rotateX(90deg)_translateY(12px)]') &&
       !educationAgentFlowSection.includes(' style=') &&
-      educationAgentFlowSection.includes('@container aspect-[760/500] w-full') &&
-      educationAgentFlowSection.includes('relative h-[500px] w-[760px] origin-top-left [transform:scale(calc(100cqw/760px))]') &&
-      educationAgentFlowSection.includes('viewBox="0 0 760 500"') &&
-      educationAgentFlowSection.includes('<animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite" />') &&
-      educationAgentFlowSection.includes('from-primary/8 via-fuchsia-500/6 to-blue-500/8 blur-3xl') &&
-      educationAgentFlowSection.includes('absolute left-1/2 top-[170px] -translate-x-1/2') &&
-      educationAgentFlowSection.includes('animate-value-flow') &&
-      educationAgentFlowSection.includes('[perspective:900px]') &&
-      educationAgentFlowSection.includes('h-[150px] w-[150px] overflow-hidden border border-primary/50 bg-muted [transform:translateZ(14px)]') &&
-      educationAgentFlowSection.includes('absolute left-1/2 top-[242px] w-[460px] -translate-x-1/2') &&
-      educationAgentFlowSection.includes('zhiyao-logo.svg?url') &&
+      educationAgentFlowSection.includes('absolute -right-2 -top-2 rounded-full border border-default bg-default px-2.5 py-1 text-[10px] font-semibold text-muted shadow-sm') &&
+      educationAgentFlowSection.includes('class="size-9"') &&
+      educationAgentFlowSection.includes('mt-3 max-w-xl text-sm leading-relaxed text-muted') &&
+      educationAgentFlowSection.includes('class="flex min-w-0 flex-col"') &&
+      educationAgentFlowSection.includes('<EducationArchitectureDiagram />') &&
       !educationAgentFlowSection.includes('<style'),
-    'Education agent flow section must reproduce the EMQX Edge isometric cube step layout 1:1 and place the zhiyao logo IsoCube at the diagram core.',
+    'Education agent flow section must reproduce the EMQX Edge isometric cube step layout and delegate the diagram to EducationArchitectureDiagram.',
+  )
+  assert(
+    educationAgentDiagram.includes('relative mt-4 aspect-[760/624] w-full flex-none overflow-hidden @container xl:aspect-auto xl:min-h-0 xl:flex-1') &&
+      educationAgentDiagram.includes('absolute w-[760px] origin-top-left" :style="diagramCanvasStyle"') &&
+      educationAgentDiagram.includes(':viewBox="`0 0 760 ${diagramHeight}`"') &&
+      educationAgentDiagram.includes('new ResizeObserver(syncDiagramMetrics)') &&
+      educationAgentDiagram.includes('const DIAGRAM_MIN_HEIGHT = 624') &&
+      educationAgentDiagram.includes('const DIAGRAM_MAX_HEIGHT = 880') &&
+      educationAgentDiagram.includes('v-for="line in diagramLines"') &&
+      educationAgentDiagram.includes('<animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite" />') &&
+      educationAgentDiagram.includes('from-primary/8 via-fuchsia-500/6 to-blue-500/8 blur-3xl') &&
+      educationAgentDiagram.includes('absolute left-1/2 flex -translate-x-1/2 items-center gap-4" :style="{ top: `${diagramLayout.entriesTop}px` }"') &&
+      educationAgentDiagram.includes('h-[64px] w-[236px]') &&
+      educationAgentDiagram.includes('h-[64px] w-[268px]') &&
+      educationAgentDiagram.includes('absolute left-0" :style="{ top: `${diagramLayout.topRowTop}px` }"') &&
+      educationAgentDiagram.includes('absolute left-0" :style="{ top: `${diagramLayout.bottomRowTop}px` }"') &&
+      educationAgentDiagram.includes('absolute right-0" :style="{ top: `${diagramLayout.topRowTop}px` }"') &&
+      educationAgentDiagram.includes('absolute right-0" :style="{ top: `${diagramLayout.bottomRowTop}px` }"') &&
+      educationAgentDiagram.includes('absolute left-1/2 -translate-x-1/2" :style="{ top: `${diagramLayout.cubeTop}px` }"') &&
+      educationAgentDiagram.includes('animate-platform-float') &&
+      educationAgentDiagram.includes('[perspective:900px]') &&
+      educationAgentDiagram.includes('h-[150px] w-[150px] overflow-hidden border border-primary/50 bg-muted [transform:translateZ(14px)]') &&
+      educationAgentDiagram.includes('[background-size:26px_26px]') &&
+      educationAgentDiagram.includes('absolute bottom-0 left-1/2 w-[620px] -translate-x-1/2') &&
+      educationAgentDiagram.includes('bg-white/95 px-[0.3rem] py-5 shadow-sm backdrop-blur-xl') &&
+      educationAgentDiagram.includes('<component :is="foundation.icon" class="size-10" />') &&
+      educationAgentDiagram.includes('zhiyao-logo.svg?url') &&
+      !educationAgentDiagram.includes('leftTop.label') &&
+      !educationAgentDiagram.includes('<style'),
+    'Education architecture diagram must keep the split EMQX Edge 760-wide canvas contract.',
   )
   assert(
     educationCases.includes('class="container pb-32 lg:pb-44"') &&

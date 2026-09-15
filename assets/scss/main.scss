@@ -101,6 +101,13 @@ a.dt-button--primary {
   color: #ffffff;
 }
 
+/* Same conflict as above: the unlayered `a { color: inherit }` rule outranks the
+   layered `.text-white` utility on the reports/cases load-more links, so they
+   need an equally unlayered override to keep their white label. */
+a.load-more-link {
+  color: #ffffff;
+}
+
 @layer base {
   button,
   input,
@@ -343,9 +350,16 @@ video {
       color var(--dt-duration-base) ease,
       box-shadow var(--dt-duration-base) ease;
 
-    &:hover,
-    &:active {
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
       background: var(--dt-color-bg-elevated);
+    }
+
+    &:disabled,
+    &[aria-disabled="true"] {
+      cursor: not-allowed;
+      color: var(--dt-color-text-soft);
+      box-shadow: inset 0 0 0 1px var(--dt-color-line);
     }
 
     &:focus-visible {

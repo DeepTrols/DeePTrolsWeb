@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AboutIntroImageCarousel from '~/components/about/AboutIntroImageCarousel.vue'
 import AboutTextBlock from '~/components/about/AboutTextBlock.vue'
 import SectionShell from '~/components/common/section/SectionShell.vue'
 import { aboutIntroParagraphs } from '~/data/about'
@@ -14,6 +15,7 @@ import { aboutIntroParagraphs } from '~/data/about'
         公司介绍
       </h2>
       <AboutTextBlock :paragraphs="aboutIntroParagraphs" align="left" size="full" />
+      <AboutIntroImageCarousel class="mt-10" />
     </article>
   </SectionShell>
 </template>

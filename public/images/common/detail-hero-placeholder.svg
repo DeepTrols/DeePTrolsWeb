@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="363" viewBox="0 0 1920 363" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="363" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#101a3d"/>
+      <stop offset="0.55" stop-color="#16245c"/>
+      <stop offset="1" stop-color="#1e44e0"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1920" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6583ff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#8ffbff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#6583ff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="363" fill="url(#bg)"/>
+  <g stroke="#ffffff" stroke-opacity="0.06">
+    <path d="M0 60h1920M0 121h1920M0 182h1920M0 243h1920M0 304h1920"/>
+    <path d="M240 0v363M480 0v363M720 0v363M960 0v363M1200 0v363M1440 0v363M1680 0v363"/>
+  </g>
+  <path d="M0 250C280 210 520 150 760 168C1000 186 1180 258 1420 236C1600 220 1760 170 1920 132" stroke="url(#line)" stroke-width="3" fill="none"/>
+  <circle cx="760" cy="168" r="7" fill="#8ffbff" fill-opacity="0.8"/>
+  <circle cx="1420" cy="236" r="7" fill="#8ffbff" fill-opacity="0.8"/>
+  <text x="960" y="196" text-anchor="middle" font-family="'Source Han Sans CN','Noto Sans SC',sans-serif" font-size="34" letter-spacing="10" fill="#ffffff" fill-opacity="0.85">案例封面占位图</text>
+</svg>

@@ -14,7 +14,7 @@ const filteredReportResources = computed(() => {
   const keyword = reportSearchQuery.value.trim().toLocaleLowerCase()
 
   return reportResources.filter((item) => {
-    const matchesFilter = activeReportFilter.value === 'all' || item.type === activeReportFilter.value
+    const matchesFilter = activeReportFilter.value === 'all' || item.solutionKey === activeReportFilter.value
     const searchableText = `${item.type} ${item.category} ${item.title} ${item.summary}`.toLocaleLowerCase()
     const matchesSearch = !keyword || searchableText.includes(keyword)
 

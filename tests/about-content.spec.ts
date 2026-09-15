@@ -5,6 +5,7 @@ import {
   aboutAddress,
   aboutContacts,
   aboutHero,
+  aboutIntroGallery,
   aboutIntroParagraphs,
   aboutMap,
   aboutStats,
@@ -41,6 +42,8 @@ describe('about page content contract', () => {
     expect(aboutIntroParagraphs).toHaveLength(2)
     expect(aboutIntroParagraphs.join('\n')).toContain('武汉深度数智科技有限公司（DeepTrols）')
     expect(aboutIntroParagraphs.join('\n')).toContain('数曜数据能力平台、博曜知识管理平台、智曜AI平台以及探曜AI物联能力平台')
+    expect(aboutIntroGallery).toHaveLength(10)
+    expect(aboutIntroGallery.every((item) => item.image === '/images/common/content-placeholder.svg')).toBe(true)
     expect(aboutAddress).toBe('湖北省武汉市江汉区泛海国际SOHO-2栋2307')
     expect(aboutMap).toMatchObject({
       title: '武汉深度数智科技有限公司',

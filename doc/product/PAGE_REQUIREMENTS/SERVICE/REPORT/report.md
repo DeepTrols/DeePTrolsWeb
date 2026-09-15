@@ -15,10 +15,11 @@
 
 - 页面路由采用服务导航与站点地图中的 `/resources/reports`。
 - `创建about_us路由` 为页面模板残留描述，不作为本页面路由依据。
-- 页面复用公共 Header、Footer 与居中 `PageHero`。
+- 页面复用公共 Header、Footer 与居中 `PageHero`（`hide-cta`，Hero 不渲染 CTA 按钮）。
 - `PageHero` 下方必须先渲染推荐资源 Section，展示 3 个推荐资源。
 - 推荐资源 Section 下方必须渲染 tab 与搜索控制条，控制条结构为 `flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8`。
-- tab 文案依次为：全部、产品规格书、电子书、白皮书、视频、幻灯片、基准测试报告。
+- tab 文案依次为：全部、数据设施、知识工程、智能制造、智慧水利、智慧教育、FDE、算电协同。
+- 分类 tab 按资源 `solutionKey` 过滤；资源与分类的归属关系待内容确认后补充，未归属资源仅出现在「全部」下。
 - tab 与搜索控制条之后再进入普通资源列表 `container pb-32`。
 - 普通资源列表采用 `section mb-24`、`grid grid-cols-1 gap-8 md:grid-cols-3`。
 - 普通资源列表最后必须渲染“加载更多”按钮，外层为 `flex justify-center mt-10`，按钮为 `data-slot="base"` primary 链接，链接使用 `/zh/resources/pages/2`。

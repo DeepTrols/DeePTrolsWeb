@@ -14,6 +14,7 @@ withDefaults(
     backgroundImageSrc?: string
     flushBottom?: boolean
     flushVisualEnd?: boolean
+    hideCta?: boolean
     visualSize?: 'default' | 'large' | 'fluid'
     align?: 'left' | 'center'
   }>(),
@@ -26,6 +27,7 @@ withDefaults(
     backgroundImageSrc: undefined,
     flushBottom: false,
     flushVisualEnd: false,
+    hideCta: false,
     visualSize: 'default',
     align: 'left',
   },
@@ -99,6 +101,7 @@ const hasVisual = computed(() => Boolean(slots.visual))
           </div>
 
           <div
+            v-if="!hideCta"
             class="page-hero__actions flex flex-wrap items-center justify-center gap-4"
             :class="align === 'center' ? '' : 'lg:justify-start'"
           >

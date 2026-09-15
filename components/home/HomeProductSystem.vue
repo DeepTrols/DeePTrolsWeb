@@ -11,6 +11,7 @@ import { productCards } from '~/data/home'
     title="连接真实业务与人工智能"
     title-id="product-system-title"
     subtitle="以数据与知识底座桥接企业业务与人工智能。赋能 AI Agent，实现对真实业务的支撑。"
+    padded-top
   >
     <ProductSystemFlowFrame
       label="DeepTrols OPS 产品架构图占位"

@@ -95,3 +95,8 @@
 
 ## 完成说明
 已完成实现与验证，等待 Review。
+
+Review 修改记录：
+- 推荐资源 section：根类间距由 `pb-32 lg:pb-44` 调整为 `pb-16 lg:pb-32`（收紧 Hero 去掉 CTA 后推荐资源与上方的节奏）。
+- 筛选 tab：文案由资源类型（产品规格书/电子书/白皮书/视频/幻灯片/基准测试报告）改为方案分类（全部、数据设施、知识工程、智能制造、智慧水利、智慧教育、FDE、算电协同）；过滤字段由 `type` 改为可选 `solutionKey`，资源归属待内容确认后补充，分类 tab 暂显示为空；`report.md`、report-content.spec、report 视觉契约与 service-report Harness 锁同步更新。
+- 「加载更多」按钮：修复文字非白色（`main.scss` 未分层 `a { color: inherit }` 覆盖分层 `.text-white`）——锚点类名前缀加 `load-more-link`，并新增未分层规则 `a.load-more-link { color: #ffffff; }`（与行业案例页同款按钮一并修复，详见 TASK-014.21 Review 记录）。

@@ -25,8 +25,8 @@ for (const [name, source] of [
 }
 
 assert(
-  !page.includes('<HomeCases />') && !page.includes('CUSTOMER STORIES'),
-  'HOME page must keep the Customer Stories section unmounted until it is requested again.',
+  !page.includes('<HomeCases />') && !page.includes('CUSTOMER STORIES') && !page.includes('<HomeDeliverables />'),
+  'HOME page must keep the Customer Stories and Deliverables sections unmounted until they are requested again.',
 )
 assert(
   page.includes('<HomeEcosystem />\n      <WhyTrustTabs />\n      <HomeAbout />\n      <HomeInsights />'),
@@ -73,6 +73,7 @@ assert(
 assert(baseTabs.includes('dt-tab-list') && baseTabs.includes('dt-tab'), 'BaseTabs must own shared dt-tab classes.')
 assert(
   productSystem.includes('ProductSystemSection') &&
+    productSystem.includes('padded-top') &&
     productSystem.includes('ProductSystemFlowFrame') &&
     productSystem.includes('ProductSystemCards') &&
     productSystem.includes('label="DeepTrols OPS 产品架构图占位"') &&
@@ -114,6 +115,7 @@ assert(
     productFeatureGridSection.includes('CardGrid') &&
     productFeatureGridSection.includes('FeatureCard') &&
     sectionShell.includes('flow-root pb-32 lg:pb-44') &&
+    productFeatureGridSection.includes('paddedTop') &&
     sectionShell.includes("props.container === 'default' && 'container',") &&
     sectionShell.includes('bg-dt-bg') &&
     !productFeatureGridSection.includes('pt-24') &&
@@ -187,6 +189,8 @@ assert(
     header.includes('is-product-page') &&
     header.includes('isDarkHeaderRoute') &&
     header.includes('is-dark-header') &&
+    header.includes('isCaseDetailRoute') &&
+    header.includes('isNewsDetailRoute') &&
     header.includes('is-in-hero') &&
     headerDesktopNav.includes('site-header__nav-underline') &&
     headerDesktopNav.includes('.site-header__nav-item:hover .site-header__nav-underline') &&
@@ -236,9 +240,11 @@ assert(
     megaPanelProduct.includes('mega-col--links') &&
     megaPanelProduct.includes('activeColumn') &&
     megaPanelProduct.includes('mega-solutions') &&
-    megaPanelProduct.includes('grid-template-columns: repeat(4, minmax(0, 1fr))') &&
+    megaPanelProduct.includes('grid-template-columns: repeat(3, minmax(0, 1fr))') &&
     megaPanelProduct.includes('mega-hot-tag') &&
     megaPanelProduct.includes('link.hot') &&
+    megaPanelProduct.includes('activePaths: string[] = []') &&
+    megaPanelProduct.includes('link.activePaths') &&
     megaPanelProduct.includes('font-size: 24px') &&
     megaPanelProduct.includes('line-height: 35px') &&
     megaPanelProduct.includes('font-size: 14px') &&
@@ -246,6 +252,12 @@ assert(
     !megaMenu.includes('MegaPanelSolutions') &&
     !megaMenu.includes('MegaPanelServices'),
   'MegaMenu product/solutions layouts must share the DeepCtrls text-menu panel and keep legacy solutions/services panels removed.',
+)
+assert(
+  navigationData.includes("activePaths: ['/services/smart-education', '/services/enterprise-ai-delivery']") &&
+    navigationData.includes("activePaths: ['/solutions/smart-education']") &&
+    navigationData.includes("activePaths: ['/solutions/fde']"),
+  'Solution navigation must keep active-path aliases so smart education and FDE service routes highlight the solutions nav state.',
 )
 assert(footerSubscribe.includes('dt-button dt-button--primary dt-button--lg'), 'Footer subscribe button must reuse dt-button classes.')
 assert(

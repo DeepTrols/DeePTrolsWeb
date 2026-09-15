@@ -11,6 +11,7 @@ export function checkAboutPageContracts(ctx) {
     aboutHero,
     aboutHeroStats,
     aboutIntroSection,
+    aboutIntroImageCarousel,
     aboutTextBlock,
     aboutValuesSection,
     aboutAddressSection,
@@ -95,15 +96,37 @@ export function checkAboutPageContracts(ctx) {
     aboutIntroSection.includes('about-intro-card') &&
       aboutIntroSection.includes('公司介绍') &&
       aboutIntroSection.includes('AboutTextBlock') &&
+      aboutIntroSection.includes('AboutIntroImageCarousel') &&
       aboutIntroSection.includes('align="left"') &&
       aboutIntroSection.includes('size="full"') &&
+      aboutIntroImageCarousel.includes('CarouselControls') &&
+      aboutIntroImageCarousel.includes('aboutIntroGallery') &&
+      aboutIntroImageCarousel.includes('updateControls') &&
+      aboutIntroImageCarousel.includes('getPhotoStep') &&
+      aboutIntroImageCarousel.includes('scrollBy') &&
+      aboutIntroImageCarousel.includes('snap-x snap-mandatory gap-6') &&
+      aboutIntroImageCarousel.includes('aspect-[10/16] w-40 shrink-0 snap-start') &&
+      aboutIntroImageCarousel.includes('bg-muted p-2 transition-all') &&
+      aboutIntroImageCarousel.includes('h-full w-full rounded-md object-cover') &&
+      aboutIntroImageCarousel.includes('layout="split"') &&
+      aboutIntroImageCarousel.includes(':previous-disabled="!canGoPrevious"') &&
+      aboutIntroImageCarousel.includes(':next-disabled="!canGoNext"') &&
+      aboutIntroImageCarousel.includes('previous-label="上一张公司介绍图片"') &&
+      aboutIntroImageCarousel.includes('next-label="下一张公司介绍图片"') &&
+      aboutIntroImageCarousel.includes('before:bg-[image:var(--dt-gradient-hero)]') &&
+      !aboutIntroImageCarousel.includes('<style') &&
+      !aboutIntroImageCarousel.includes('style=') &&
       aboutTextBlock.includes("size?: 'default' | 'large' | 'full'") &&
       aboutTextBlock.includes('w-full text-xl leading-relaxed md:text-2xl') &&
       aboutTextBlock.includes('max-w-5xl text-xl leading-relaxed md:text-2xl'),
-    'About intro must use a left-aligned card whose title and content share the same width.',
+    'About intro must use a left-aligned card and include the shared carousel image card strip.',
   )
   assert(
-    aboutValuesSection.includes('我们的核心价值观') &&
+    aboutValuesSection.includes('SectionHeader') &&
+      aboutValuesSection.includes('title="我们的核心价值观"') &&
+      aboutValuesSection.includes('title-id="about-values-title"') &&
+      aboutValuesSection.includes('subtitle="这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。"') &&
+      aboutValuesSection.includes(':nowrap-subtitle="true"') &&
       aboutValuesSection.includes('grid grid-cols-1 gap-6 md:grid-cols-3') &&
       aboutValuesSection.includes('tabindex="0"') &&
       aboutValuesSection.includes('translate-y-full') &&
@@ -120,14 +143,19 @@ export function checkAboutPageContracts(ctx) {
     'About address must render a map-based address panel.',
   )
   assert(
-    aboutContactSection.includes('联系我们') &&
+    aboutContactSection.includes('SectionHeader') &&
+      aboutContactSection.includes('title="联系我们"') &&
+      aboutContactSection.includes('title-id="about-contact-title"') &&
       aboutContactSection.includes('grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2') &&
       aboutContactSection.includes('v-for="item in aboutContacts"') &&
       !aboutContactSection.includes('aboutContacts.filter'),
     'About contact section must render four channels as a two-by-two grid.',
   )
   assert(
-    aboutData.includes("title: '关于深度数智（DEEPTROLS）'") &&
+      aboutData.includes("title: '关于深度数智（DEEPTROLS）'") &&
+      aboutData.includes('export const aboutIntroGallery') &&
+      aboutData.includes("image: '/images/common/content-placeholder.svg'") &&
+      aboutData.includes("alt: '深度数智公司介绍图片占位 10'") &&
       aboutData.includes("visualLabel: 'ABOUTUS_HORE_WEBM'") &&
       aboutData.includes("backgroundVideo: '/images/about/custom-rad-hero-bg-video.mp4'") &&
       aboutData.includes("title: '极客'") &&

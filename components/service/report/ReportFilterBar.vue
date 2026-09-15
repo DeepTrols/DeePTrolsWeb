@@ -30,7 +30,7 @@ function updateSearch(event: Event) {
 
 <template>
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-    <div role="tablist" class="flex gap-4 flex-wrap" aria-label="资源类型筛选">
+    <div role="tablist" class="flex gap-4 flex-wrap" aria-label="方案分类筛选">
       <button
         v-for="tab in reportFilterTabs"
         :id="`report-filter-tab-${tab.key}`"

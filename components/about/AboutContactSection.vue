@@ -1,16 +1,14 @@
 <script setup lang="ts">
+import SectionHeader from '~/components/common/section/SectionHeader.vue'
 import { aboutContacts } from '~/data/about'
 </script>
 
 <template>
   <section class="flow-root pb-32 lg:pb-44" aria-labelledby="about-contact-title">
-    <div class="container text-center">
-      <h2
-        id="about-contact-title"
-        class="!mb-12 mb-4 text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted md:mb-6 sm:text-5xl"
-      >
-        联系我们
-      </h2>
+    <div class="container">
+      <div class="mb-12 text-center lg:mb-16">
+        <SectionHeader title="联系我们" title-id="about-contact-title" align="center" />
+      </div>
 
       <div class="about-contact-grid grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2">
         <a

@@ -15,6 +15,7 @@ export interface NavLink {
   label: string
   description?: string
   href: string
+  activePaths?: string[]
   icon?: Component
   hot?: boolean
 }
@@ -24,6 +25,7 @@ export interface NavColumn {
   subtitle?: string
   description?: string
   href?: string
+  activePaths?: string[]
   links?: NavLink[]
   groups?: NavColumn[]
   footerLabel?: string
@@ -40,6 +42,7 @@ export interface NavFeature {
 export interface NavItem {
   label: string
   href: string
+  activePaths?: string[]
   layout?: 'product' | 'solutions'
   megaTitle?: string
   columns?: NavColumn[]
@@ -95,6 +98,7 @@ export const primaryNavigation: NavItem[] = [
   {
     label: '解决方案',
     href: '/solutions',
+    activePaths: ['/services/smart-education', '/services/enterprise-ai-delivery'],
     layout: 'solutions',
     megaTitle: '解决方案',
     columns: [
@@ -123,6 +127,7 @@ export const primaryNavigation: NavItem[] = [
             label: '智慧教育解决方案',
             description: 'AI赋能教学、管理与学习',
             href: '/services/smart-education',
+            activePaths: ['/solutions/smart-education'],
             icon: GraduationCap,
           },
         ],
@@ -134,6 +139,7 @@ export const primaryNavigation: NavItem[] = [
             label: 'FDE解决方案',
             description: '深入业务现场，让AI真正落地',
             href: '/services/enterprise-ai-delivery',
+            activePaths: ['/solutions/fde'],
             icon: Rocket,
             hot: true,
           },
@@ -150,7 +156,7 @@ export const primaryNavigation: NavItem[] = [
   },
   {
     label: '行业案例',
-    href: '/resources/reports',
+    href: '/cases',
   },
   {
     label: 'TokenHub',

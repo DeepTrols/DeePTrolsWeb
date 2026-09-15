@@ -22,8 +22,20 @@ const isHomeRoute = computed(() => route.path === '/')
 const isProductRoute = computed(() => route.path === '/products' || route.path.startsWith('/products/'))
 const isCasesRoute = computed(() => route.path === '/resources' || route.path.startsWith('/resources/'))
 const isAboutRoute = computed(() => route.path === '/about_us' || route.path.startsWith('/about_us/'))
+// Case detail pages start with the light-grey article breadcrumb: black logo + black nav text at top.
+const isCaseDetailRoute = computed(() => route.path.startsWith('/cases/'))
+// News detail pages start with the light gradient + grey breadcrumb: black logo + black nav text at top.
+// The /news list page keeps the dark mc-hero underneath, so it stays on the white foreground.
+const isNewsDetailRoute = computed(() => route.path.startsWith('/news/'))
 // Routes whose heroes are light: black logo + black nav text at top and on hover.
-const isDarkHeaderRoute = computed(() => isProductRoute.value || isCasesRoute.value || isAboutRoute.value)
+const isDarkHeaderRoute = computed(
+  () =>
+    isProductRoute.value ||
+    isCasesRoute.value ||
+    isAboutRoute.value ||
+    isCaseDetailRoute.value ||
+    isNewsDetailRoute.value,
+)
 const shouldUseDarkLogo = computed(
   () =>
     Boolean(activeItem.value) ||

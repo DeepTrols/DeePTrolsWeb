@@ -28,7 +28,9 @@ describe('tanyao ai-iot page contract', () => {
     const metrics = readComponent('components/common/ProductMetricsSection.vue')
 
     expect(metrics).toContain('aria-label="产品核心指标"')
-    expect(metrics).toContain('flow-root bg-white pb-32 lg:pb-44')
+    expect(metrics).toContain('product-metrics flow-root bg-white')
+    expect(metrics).toContain("props.spacing === 'default' && 'pb-32 lg:pb-44'")
+    expect(metrics).toContain("props.spacing === 'compact' && 'pb-16 lg:pb-32'")
     expect(metrics).toContain('border-b border-[#edf0f6]')
     expect(metrics).toContain('min-h-[154px]')
     expect(metrics).toContain('w-[min(1424px,calc(100%-48px))]')

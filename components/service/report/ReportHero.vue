@@ -10,6 +10,7 @@ import { reportHero } from '~/data/reports'
     :title-line="reportHero.title"
     :description="reportHero.description"
     align="center"
+    hide-cta
   />
 </template>
 

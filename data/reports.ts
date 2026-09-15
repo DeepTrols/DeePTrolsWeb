@@ -1,5 +1,13 @@
 export type ReportResourceType = '产品规格书' | '电子书' | '白皮书' | '视频' | '幻灯片' | '基准测试报告'
-export type ReportFilterKey = 'all' | ReportResourceType
+export type ReportSolutionFilterKey =
+  | 'data-infrastructure'
+  | 'knowledge-engineering'
+  | 'smart-manufacturing'
+  | 'smart-water'
+  | 'smart-education'
+  | 'fde'
+  | 'compute-power'
+export type ReportFilterKey = 'all' | ReportSolutionFilterKey
 
 export interface ReportFilterTab {
   key: ReportFilterKey
@@ -9,6 +17,8 @@ export interface ReportFilterTab {
 export interface ReportResource {
   type: ReportResourceType
   category: string
+  /** 所属筛选分类；分类与资源的归属关系待内容确认后补充，未归属资源不出现在分类 tab 下 */
+  solutionKey?: ReportSolutionFilterKey
   title: string
   summary: string
   image: string
@@ -22,12 +32,13 @@ export const reportHero = {
 
 export const reportFilterTabs: ReportFilterTab[] = [
   { key: 'all', label: '全部' },
-  { key: '产品规格书', label: '产品规格书' },
-  { key: '电子书', label: '电子书' },
-  { key: '白皮书', label: '白皮书' },
-  { key: '视频', label: '视频' },
-  { key: '幻灯片', label: '幻灯片' },
-  { key: '基准测试报告', label: '基准测试报告' },
+  { key: 'data-infrastructure', label: '数据设施' },
+  { key: 'knowledge-engineering', label: '知识工程' },
+  { key: 'smart-manufacturing', label: '智能制造' },
+  { key: 'smart-water', label: '智慧水利' },
+  { key: 'smart-education', label: '智慧教育' },
+  { key: 'fde', label: 'FDE' },
+  { key: 'compute-power', label: '算电协同' },
 ]
 
 export const reportResources: ReportResource[] = [

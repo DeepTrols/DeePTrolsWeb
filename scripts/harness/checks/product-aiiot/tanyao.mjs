@@ -64,7 +64,9 @@ assert(
     productMetrics.includes('grid place-content-center border-[#edf0f6] px-[18px] py-6 text-center') &&
     productMetrics.includes('text-[29px] leading-[27px] font-medium text-black') &&
     productMetrics.includes('mt-[14px] text-[15px] leading-[18px] text-[#455c78]') &&
-    productMetrics.includes('flow-root bg-white pb-32 lg:pb-44') &&
+    productMetrics.includes('product-metrics flow-root bg-white') &&
+    productMetrics.includes("props.spacing === 'default' && 'pb-32 lg:pb-44'") &&
+    productMetrics.includes("props.spacing === 'compact' && 'pb-16 lg:pb-32'") &&
     !productMetrics.includes('<style'),
   'ProductMetricsSection must replicate the DeepCtrls product-metrics strip (1x4 desktop, 2x2 mobile, divider borders, centered grid) Tailwind-only with the shared section rhythm.',
 )

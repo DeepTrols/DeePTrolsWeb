@@ -2,13 +2,19 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import process from 'node:process'
 import { checkAboutPageContracts } from './harness/checks/about-page.mjs'
+import { checkCaseDetailContracts } from './harness/checks/case-detail.mjs'
+import { checkCasePageContracts } from './harness/checks/case-page.mjs'
 import { checkDesignSystemContracts } from './harness/checks/design-system.mjs'
 import { checkHomeLayoutContracts } from './harness/checks/home-layout.mjs'
+import { checkNewsContracts } from './harness/checks/news.mjs'
+import { checkNewsDetailContracts } from './harness/checks/news-detail.mjs'
 import { checkProductAiiotContracts } from './harness/checks/product-aiiot.mjs'
 import { checkProductDataContracts } from './harness/checks/product-data.mjs'
 import { checkServiceReportContracts } from './harness/checks/service-report.mjs'
+import { checkSolutionsDatacenterContracts } from './harness/checks/solutions-datacenter.mjs'
 import { checkSolutionsEducationContracts } from './harness/checks/solutions-education.mjs'
 import { checkSolutionsEnergySavingContracts } from './harness/checks/solutions-energy-saving.mjs'
+import { checkSolutionsFdeContracts } from './harness/checks/solutions-fde.mjs'
 import { checkSolutionsHydraulicContracts } from './harness/checks/solutions-hydraulic.mjs'
 import { checkSolutionsManufacturingContracts } from './harness/checks/solutions-manufacturing.mjs'
 import { checkSolutionUseCaseContracts } from './harness/checks/solution-use-cases.mjs'
@@ -37,12 +43,18 @@ checkWhyPageContracts(ctx)
 checkProductDataContracts(ctx)
 checkAboutPageContracts(ctx)
 checkServiceReportContracts(ctx)
+checkCasePageContracts(ctx)
+checkCaseDetailContracts(ctx)
+checkNewsContracts(ctx)
+checkNewsDetailContracts(ctx)
 checkSolutionTemplateContracts(ctx)
 checkSolutionUseCaseContracts(ctx)
 checkSolutionsManufacturingContracts(ctx)
 checkSolutionsEnergySavingContracts(ctx)
 checkSolutionsHydraulicContracts(ctx)
 checkSolutionsEducationContracts(ctx)
+checkSolutionsFdeContracts(ctx)
+checkSolutionsDatacenterContracts(ctx)
 checkStyleRules(ctx)
 
 if (failures.length) {

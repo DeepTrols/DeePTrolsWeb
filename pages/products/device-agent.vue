@@ -29,6 +29,7 @@ useSeoMeta({
         :items="tanyaoAgents"
         columns="three"
         nowrap-subtitle
+        padded-top
       />
       <DeviceAgentArchitectureSection />
       <DeviceAgentValueSection />

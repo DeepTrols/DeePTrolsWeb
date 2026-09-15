@@ -33,6 +33,7 @@
 | `public/images/about/` | About Us 页面 Hero 背景视频 |
 | `public/images/home/solutions/` | HOME 解决方案卡片图片 |
 | `public/images/products/` | 产品页 Hero 背景图（product-hero-bg.png） |
+| `public/images/news/` | 新闻动态页 Hero 背景（news-hero-bg.svg，自制深色渐变网格占位素材） |
 | `public/contact-cta-banner.webp` | 页面底部 CTA 横幅背景图 |
 
 ## Migration Rule

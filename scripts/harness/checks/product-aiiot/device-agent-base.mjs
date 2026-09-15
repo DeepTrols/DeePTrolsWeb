@@ -20,6 +20,7 @@ assert(
     deviceAgentPage.includes('title-id="device-agent-ecosystem-title"') &&
     deviceAgentPage.includes(':items="tanyaoAgents"') &&
     deviceAgentPage.includes('columns="three"') &&
+    deviceAgentPage.includes('padded-top') &&
     deviceAgentPage.includes('<DeviceAgentArchitectureSection') &&
     deviceAgentPage.includes('<DeviceAgentValueSection') &&
     deviceAgentPage.includes('<DeviceAgentRuntimeSection') &&

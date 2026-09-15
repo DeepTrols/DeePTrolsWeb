@@ -16,7 +16,6 @@ useSeoMeta({
     <SiteHeader />
     <main id="main-content">
       <HomeHero />
-      <HomeDeliverables />
       <HomeProductSystem />
       <HomeSolutions />
       <HomeEcosystem />

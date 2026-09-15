@@ -18,19 +18,20 @@ const solutionLinks = computed(() => columns.value.flatMap((column) => column.li
 const activeColumn = ref(initialActiveColumn())
 const activeLinks = computed<NavLink[]>(() => columns.value[activeColumn.value]?.links ?? [])
 
-function isActiveHref(href: string): boolean {
-  if (href === props.item.href) {
-    return route.path === href
-  }
-
-  return route.path === href || route.path.startsWith(`${href}/`)
+function isActiveHref(href: string, activePaths: string[] = []): boolean {
+  return [href, ...activePaths].some((activePath) => {
+    if (activePath === props.item.href) {
+      return route.path === activePath
+    }
+    return route.path === activePath || route.path.startsWith(`${activePath}/`)
+  })
 }
 
 function initialActiveColumn(): number {
   const index = columns.value.findIndex(
     (column) =>
-      (column.href !== undefined && isActiveHref(column.href)) ||
-      (column.links ?? []).some((link) => isActiveHref(link.href)),
+      (column.href !== undefined && isActiveHref(column.href, column.activePaths)) ||
+      (column.links ?? []).some((link) => isActiveHref(link.href, link.activePaths)),
   )
 
   return index >= 0 ? index : 0
@@ -50,7 +51,7 @@ function initialActiveColumn(): number {
         :key="link.label"
         :to="link.href"
         class="mega-solution-entry"
-        :class="{ 'is-active': isActiveHref(link.href) }"
+        :class="{ 'is-active': isActiveHref(link.href, link.activePaths) }"
         @click="$emit('navigate')"
       >
         <span class="mega-solution-title">
@@ -86,7 +87,7 @@ function initialActiveColumn(): number {
           :key="link.label"
           :to="link.href"
           class="mega-entry"
-          :class="{ 'is-active': isActiveHref(link.href) }"
+          :class="{ 'is-active': isActiveHref(link.href, link.activePaths) }"
           @click="$emit('navigate')"
         >
           <span class="mega-entry-title">

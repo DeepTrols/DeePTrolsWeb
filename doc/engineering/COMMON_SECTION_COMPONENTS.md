@@ -77,10 +77,10 @@
 
 使用要求：
 - 数据通过 `items: ProductMetricItem[]`（`{ value, label }`，固定 4 项）传入，文案集中在各产品 `data/*.ts`（如 `dgpMetrics` / `dlpMetrics` / `ddpMetrics` / `dmsMetrics` / `boyaoMetrics`，探曜复用 `tanyaoHeroStats`），不得写在组件内。
-- 严格复刻参考样式且只允许 Tailwind CSS v4 utilities，不新增 `<style>` 或 SCSS：section 根 `product-metrics flow-root bg-white pb-32 lg:pb-44` + `aria-label="产品核心指标"`；条带整体 `border-b border-[#edf0f6]`；网格 `mx-auto grid min-h-[154px] w-[min(1424px,calc(100%-48px))] grid-cols-2 max-sm:w-[calc(100%-32px)] sm:grid-cols-4`。
+- 严格复刻参考样式且只允许 Tailwind CSS v4 utilities，不新增 `<style>` 或 SCSS：section 根 `product-metrics flow-root bg-white` + 间距变体（`spacing` prop，见下）+ `aria-label="产品核心指标"`；条带整体 `border-b border-[#edf0f6]`；网格 `mx-auto grid min-h-[154px] w-[min(1424px,calc(100%-48px))] grid-cols-2 max-sm:w-[calc(100%-32px)] sm:grid-cols-4`。
 - 单元格 `grid place-content-center border-[#edf0f6] px-[18px] py-6 text-center`，分隔线按参考实现：桌面 1×4 仅竖分隔线；移动 2×2 首行带底分隔线、第 2 格无竖线（由 `cellBorderClasses` 常量按索引控制）。
 - 数值 `text-[29px] leading-[27px] font-medium text-black`，标签 `mt-[14px] text-[15px] leading-[18px] text-[#455c78]`。
-- section 间距遵循全站「Section 间距统一规则」（根 `flow-root pb-32 lg:pb-44`，不写 pt）。
+- section 间距遵循全站「Section 间距统一规则」（不写 pt）：`spacing` prop 与 `SectionShell` 同名变体对齐——`default`（默认）为根 `pb-32 lg:pb-44`，`compact` 为根 `pb-16 lg:pb-32`（行业案例页 `/cases` 使用 `spacing="compact"`，收紧 Hero 与指标条之后推荐区的节奏）；产品页保持默认值不传参。指标条紧贴 Hero，不启用 `SectionShell` 的 `paddedTop` opt-in。
 
 ## Section Shell / Header
 公共组件：
@@ -90,7 +90,7 @@
 
 使用要求：
 - 新区块优先直接使用 `SectionShell` + `SectionHeader`。
-- `SectionShell` 负责 section 标签、container 宽度、背景与统一间距节奏（根节点 `flow-root pb-32 lg:pb-44`，内部 container 无垂直 margin，见「Section 间距统一规则」）。
+- `SectionShell` 负责 section 标签、container 宽度、背景与统一间距节奏（根节点 `flow-root pb-32 lg:pb-44`，内部 container 无垂直 margin，见「Section 间距统一规则」）；需要顶部间距的场景通过 `paddedTop` opt-in（根追加 `pt-32`），包装组件（`ProductSystemSection` / `ProductFeatureGridSection`）以同名 prop 透传。
 - `SectionShell` 内部容器使用 `w-[var(--dt-container-wide)] max-w-none px-0`；普通页面 `.container` 使用 `--dt-container`，两者都遵循 DeepCtrls 横向 gutter 基线，不再写固定 `1200px / 1400px` 宽度。
 - `SectionHeader` 负责 eyebrow、title、subtitle、nowrap、宽度、对齐、语义标题层级和 actions slot。
 - `SectionHeader` 的 section title 在桌面端默认不主动换行；少数未使用 `SectionHeader` 的 section 标题必须使用公共 `.dt-section-title` 或 Tailwind v4 `whitespace-nowrap` 明确保持不换行。
@@ -101,7 +101,7 @@
 适用范围：全站所有内容型 section（新建 section 必须延续此约定）。
 
 规则：
-- **section 根元素统一加 `pb-32 lg:pb-44`**（底部 128px，lg 以上 176px；不写 pt），这是 section 垂直间距的唯一来源；除此之外不得再写其他 pt/pb，也不得在 scoped SCSS / `main.scss` 中为 section 根声明垂直 padding（scoped 非 layered 样式会覆盖 Tailwind utilities，导致间距失效）。
+- **section 根元素统一加 `pb-32 lg:pb-44`**（底部 128px，lg 以上 176px；默认不写 pt），这是 section 垂直间距的唯一来源；唯一 opt-in 例外为 `SectionShell` 的 `paddedTop`（根追加 `pt-32`），当前仅限两处使用：HOME hero 下首个 section（`HomeProductSystem`，HomeHero 的 pb 为名义值不产生视觉位移）与 Device Agent「智能体生态」区块，其他场景不得启用。除此之外不得再写其他 pt/pb，也不得在 scoped SCSS / `main.scss` 中为 section 根声明垂直 padding（scoped 非 layered 样式会覆盖 Tailwind utilities，导致间距失效）。
 - **section 内部 container 不携带任何垂直 margin**：间距全部由根的 `pb-32 lg:pb-44` 承担。每个区块自带底部间距，与上方 hero（`pt-40 pb-32 lg:pb-44`）共同形成「每个块负责自己底部留白」的统一节奏；带背景色/渐变的 section 背景天然完整覆盖底部间距区域（padding 属于背景盒）。
 - **section 根保留 `flow-root`**（与 pb 连用，如 `class="flow-root pb-32 lg:pb-44"`）：padding 本身已能阻止外边距塌陷逃逸，`flow-root` 作为防御性保障保留，防止内部元素 margin 意外穿透。
 - **Hero 内部容器节奏**：`PageHero` 的 `.page-hero__body` 使用 `pt-40`，默认底部 `pb-32 lg:pb-44`（`flushBottom` 时为 `pb-0 lg:pb-0`，由后续 section 承接节奏）；`HomeHero` 的 `.home-hero__content` 名义上同样携带 `pt-40 pb-32 lg:pb-44`（其内部为绝对定位布局，padding 实际不产生视觉位移，仅保持类名约定一致）。
@@ -282,7 +282,7 @@
 - 需要在卡片网格后追加流程图、说明图等内容时，使用 `#after` slot，避免重复手写 section/header/card-grid 结构。
 - 需要在卡片网格前放置流程图、架构图等内容时，使用 `#before` slot；例如 DMS “监管流程”先展示流程占位，再展示阶段卡片。
 - 卡片不得使用固定高度；通过 `auto-rows-fr`、`items-stretch` 与 `.dt-card--adaptive` 共同决定同一网格内的卡片高度。
-- 产品页特性区块默认不使用 `pt-24`，区块间距由 `SectionShell` 的统一节奏（根 `pb-32 lg:pb-44`）承接。
+- 产品页特性区块默认不使用 `pt-24`，区块间距由 `SectionShell` 的统一节奏（根 `pb-32 lg:pb-44`）承接；仅 Device Agent「智能体生态」实例启用 `paddedTop`（`pt-32`）。
 - 组件只使用 Tailwind CSS v4 utility class，不新增 `<style>`。
 
 ## System Cards
@@ -341,6 +341,40 @@
 - 默认标题为“以 AI 重塑数字世界与物理世界”，默认指标为“新一代智能基础设施 / 四大智能技术底座 / 覆盖关键产业场景”，默认按钮为“免费获取专属方案”。
 - 首页、Why DeepTrols 与产品页只传入 `title-id`，不得继续传旧的标题、描述与双按钮数组。
 - 不在页面内复制 CTA panel 样式。
+
+## 文章内容模版（Article Template）
+公共组件：
+- `components/common/article/ArticleBreadcrumb.vue`（面包屑）
+- `components/common/article/ArticleContent.vue`（正文排版）
+- `components/common/article/ArticleLinkRows.vue`（相关链接行列表）
+共享类型：`types/article.ts`
+
+适用场景：
+- 行业案例详情页（`pages/cases/[slug].vue`，`variant="case"` 默认）。
+- 新闻详情页（`pages/news/[id].vue`，`variant="news"`）；后续其他文章类详情页复用同一模版。
+
+使用要求：
+- 内容一律以 `ArticleBlock[]` 结构化描述（heading[level 2|3|4] / paragraph / list[ordered] / quote / image[caption] / divider），排版固定在 `ArticleContent` 内，后台按同一 schema 填充内容；禁止在页面或数据中夹带 HTML 字符串。
+- `ArticleContent` 提供 `variant?: 'case' | 'news'` prop（默认 `'case'`）：case 分支为下方 `cd-content` 规范原样字面量（既有契约锁保护，不得改动）；news 分支复刻参考站 `ma-content`，差异仅 4 处——正文色 `text-[#555]`、段落/列表下间距 `mb-[30px]`、分隔线 `bg-[#d9dde4]`、移动端 `max-md:text-left max-md:leading-7`。类串映射固定在 script 内，禁止调用方传入自定义类覆盖。
+- 正文排版 1:1 复刻 DeepCtrls 案例详情 `cd-content` 规范：容器 `text-base leading-[30px] text-justify text-[#1d2234]`；h2 `text-[26px] leading-[38px] mt-14 mb-5`、h3 `text-xl leading-8 mt-10 mb-3.5`、h4 `text-[17px] leading-7 mt-8 mb-2.5`（均 `font-medium text-left` + `first:mt-0`——首个 heading 去除顶部外边距，保证正文首行与双栏 aside「相关产品」标题顶对齐）；段落 `mb-12`；列表 `pl-[26px] marker:text-primary`、`li mb-2`；引用 `my-9 border-l-[3px] border-l-primary py-0.5 pl-6 text-[#3f4d64]`；分隔线 `my-12 h-px bg-[#e2e2e2]`；图片 `figure my-10` + `img mx-auto block h-auto max-w-full` + figcaption `mt-3 text-center text-sm text-[#7e7e7e]`。
+- 面包屑复刻 `cd-crumb`：灰底 `bg-[#eff0f3]`（根节点 `pt-[var(--dt-header-height)]` 补偿固定 Header，复刻参考页 120px = 62px 头部 + 58px 内容行；对应路由需并入 `isDarkHeaderRoute` 保证头部黑色前景）+ `container` 内 `h-[58px]` 行、`text-sm leading-[21px]`；首项链接 `text-primary`，中间项 `text-[#7e7e7e]`（可带 href），末项为当前页文本；分隔符为 `size-3 scale-[0.62] rotate-45 border-r-[1.4px] border-t-[1.4px] border-[#a6a6a6]` 的旋转方块。
+- 相关链接行列表复刻 `cd-rows`：标题 `text-[22px] leading-[30px] font-medium text-black`（移动端 `max-md:text-xl`）；行 `h-[55px]` + `border-b border-[#e2e2e2]`，4px 主色圆点 + `truncate text-[#555]` 文本（hover 主色）+ 18px ArrowRight；根节点遵循全站 section 间距规则 `flow-root pb-32 lg:pb-44`。
+- 案例详情页骨架：面包屑 → `aspect-[1920/363]` 通栏封面 → container 双栏 `grid grid-cols-1 gap-14 xl:grid-cols-[minmax(0,1025fr)_309fr] xl:gap-[66px]`（article + 相关产品 aside）→ 相关链接行列表 → `CtaSection`；未知 slug 按 `pages/solutions/[slug].vue` 先例 `createError` 404。
+- 新闻详情页骨架（复刻 ma-*）：页面根节点白底 + `bg-[linear-gradient(180deg,#eff5fe,transparent)] bg-[length:100%_1134px]` → 面包屑（媒体中心 `/news` > 分类 `/news?category=<key>` > 文章正文）→ container 双栏 `grid grid-cols-1 gap-18 pt-12 pb-24 xl:grid-cols-[minmax(0,1fr)_376px] xl:gap-[124px]`（article：pill 104×30 `bg-primary/8` + h1 48/57 w400 + 不补零发布时间 + `#d9dde4` 分隔线 + `ArticleContent variant="news"`；aside：「相关动态」38/42，`xl:pt-[261px]`，3 张/组 `NewsRelatedCard` + PagerArrows 组翻页，同分类排除当前文章）→ `CtaSection`；未知 id `createError` 404；`/news/[id]` 已并入 `isDarkHeaderRoute`（列表页 `/news` 顶部为深色 hero，保持白色前景）。
+- 占位图统一放 `public/images/common/`（`detail-hero-placeholder.svg` 封面、`content-placeholder.svg` 正文配图），正式内容由后台提供后替换；三个组件均 Tailwind-only，不新增 `<style>`。
+
+## Pager Arrows
+公共组件：`components/common/PagerArrows.vue`
+
+适用场景：
+- 新闻列表分页（`components/news/NewsListSection.vue`，mc-pager）。
+- 新闻详情页「相关动态」组翻页（`components/news/NewsRelatedAside.vue`，ma-relpager）。
+- 行业案例列表分页（`components/case/CaseResourcesSection.vue`，6 条/页，替代旧「加载更多」按钮）。
+
+使用要求：
+- 复刻参考站 49×49 双箭头翻页按钮组：lucide `ArrowRight`（prev 按钮 `rotate-180`），按钮间距 `gap-[17px]`，disabled 态 `opacity-45` + `cursor-default`；参考站 hover 换图（pager-arrow-hover.webp）以 hover 变主色（边框+图标）替代，不引入外部图标素材。
+- Props：`prevDisabled` / `nextDisabled` / `prevLabel` / `nextLabel`（默认「上一页/下一页」）；emits：`prev` / `next`。对齐方式（列表右对齐、详情 aside 桌面右对齐/移动左对齐）由调用方容器控制，组件本身不带外边距。
+- Tailwind-only，不新增 `<style>`；新增翻页场景必须复用本组件，不得复制按钮样式。
 
 ## 质量约束
 - 所有公共区块组件必须小于等于 300 行。

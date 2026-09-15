@@ -9,6 +9,7 @@ const props = withDefaults(
     background?: 'default' | 'transparent' | 'muted'
     spacing?: 'default' | 'compact' | 'tight'
     containerSpacing?: 'none' | 'top'
+    paddedTop?: boolean
   }>(),
   {
     as: 'section',
@@ -17,12 +18,14 @@ const props = withDefaults(
     background: 'default',
     spacing: 'default',
     containerSpacing: 'none',
+    paddedTop: false,
   },
 )
 
 const shellClasses = computed(() => [
   'section-shell relative',
   props.spacing === 'default' && 'flow-root pb-32 lg:pb-44',
+  props.paddedTop && 'pt-32',
   props.spacing === 'compact' && 'flow-root pb-16 lg:pb-32',
   props.spacing === 'tight' && 'flow-root pb-8 lg:pb-16',
   props.background === 'default' && 'bg-dt-bg',

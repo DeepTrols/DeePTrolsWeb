@@ -11,11 +11,13 @@ withDefaults(
     contentFlush?: boolean
     headingWide?: boolean
     nowrapSubtitle?: boolean
+    paddedTop?: boolean
   }>(),
   {
     contentFlush: false,
     headingWide: true,
     nowrapSubtitle: true,
+    paddedTop: false,
   },
 )
 </script>
@@ -26,6 +28,7 @@ withDefaults(
     :class="{ 'product-system--heading-wide': headingWide }"
     :title-id="titleId"
     background="transparent"
+    :padded-top="paddedTop"
   >
     <SectionHeader
       :title-id="titleId"

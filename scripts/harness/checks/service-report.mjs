@@ -40,8 +40,9 @@ export function checkServiceReportContracts(ctx) {
       reportHero.includes('title-id="report-hero-title"') &&
       reportHero.includes(':title-line="reportHero.title"') &&
       reportHero.includes(':description="reportHero.description"') &&
-      reportHero.includes('align="center"'),
-    'Report hero must compose centered PageHero with the required copy.',
+      reportHero.includes('align="center"') &&
+      reportHero.includes('hide-cta'),
+    'Report hero must compose centered PageHero with the required copy and no hero CTA.',
   )
   assert(
     reportHero.includes('padding-top: 8.5rem') &&
@@ -80,6 +81,7 @@ export function checkServiceReportContracts(ctx) {
       reportResourcesSection.includes('href="/zh/resources/pages/2"') &&
       reportResourcesSection.includes('data-slot="base"') &&
       reportResourcesSection.includes('px-4 py-3 text-base gap-2 min-w-32 bg-primary hover:bg-primary/75') &&
+      reportResourcesSection.includes('load-more-link') &&
       reportResourcesSection.includes('加载更多'),
     'Report resources must follow the three-column resources grid rhythm.',
   )
@@ -99,8 +101,9 @@ export function checkServiceReportContracts(ctx) {
       reportData.includes('reportFilterTabs') &&
       reportData.includes('featuredReportResources') &&
       reportData.includes("{ key: 'all', label: '全部' }") &&
-      reportData.includes("{ key: '产品规格书', label: '产品规格书' }") &&
-      reportData.includes("{ key: '电子书', label: '电子书' }") &&
+      reportData.includes("{ key: 'data-infrastructure', label: '数据设施' }") &&
+      reportData.includes("{ key: 'fde', label: 'FDE' }") &&
+      reportData.includes("{ key: 'compute-power', label: '算电协同' }") &&
       reportData.includes("type: '产品规格书'") &&
       reportData.includes("type: '白皮书'") &&
       reportData.includes("type: '视频'") &&
@@ -109,7 +112,7 @@ export function checkServiceReportContracts(ctx) {
       !reportData.includes('doc/product/PAGE_REQUIREMENTS'),
     'Report data must keep required copy, filter tabs, featured resources, and avoid doc/product runtime assets.',
   )
-  assert(navigationData.includes("href: '/resources/reports'"), 'Service navigation must link to /resources/reports.')
+  assert(navigationData.includes("href: '/cases'"), 'Top-level 行业案例 navigation must link to /cases.')
   assert(footerData.includes("href: '/resources/reports'"), 'Footer service link must link to /resources/reports.')
 
   for (const image of [

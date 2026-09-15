@@ -40,6 +40,7 @@
 3. AboutAddressSection 改为地址信息卡 + 地图 iframe。
 4. AboutContactSection 改为四项两列网格。
 5. 更新 About 数据、测试、Harness 和产品文档。
+6. 2026-09-15：AboutValuesSection 与 AboutContactSection 标题统一接入 SectionHeader，避免手写标题样式偏离全站板块基线。
 
 ---
 ## 验收标准
@@ -60,6 +61,7 @@
 | `components/about/AboutIntroSection.vue` | 公司介绍改为左对齐 card。 |
 | `components/about/AboutAddressSection.vue` | 公司地址改为地址信息卡 + 地图 iframe。 |
 | `components/about/AboutContactSection.vue` | 联系我们改为 4 项两列网格，移除社交媒体。 |
+| `components/about/AboutValuesSection.vue` | 核心价值观标题改为公共 SectionHeader。 |
 | `data/about.ts` | 移除社交媒体联系人，新增地图数据。 |
 | `tests/about-content.spec.ts` | 更新 About 内容契约。 |
 | `tests/visual/site/about.contract.ts` | 更新 About 视觉契约。 |

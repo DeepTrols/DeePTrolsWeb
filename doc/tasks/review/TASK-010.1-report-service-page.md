@@ -99,3 +99,6 @@
 
 ## 完成说明
 已完成实现与验证，等待 Review。
+
+Review 修改记录：
+- Hero：去掉 PageHero 默认的「免费获取专属方案」CTA —— PageHero 新增 `hideCta` prop（默认 false，其余页面不受影响），ReportHero 传入 `hide-cta`；report 视觉契约、service-report Harness 锁、design-system/why 契约同步登记。

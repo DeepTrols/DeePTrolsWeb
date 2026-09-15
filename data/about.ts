@@ -15,6 +15,11 @@ export interface AboutContactItem {
   href: string
 }
 
+export interface AboutIntroGalleryItem {
+  image: string
+  alt: string
+}
+
 export interface AboutMap {
   title: string
   embedUrl: string
@@ -37,6 +42,19 @@ export const aboutStats: AboutStatItem[] = [
 export const aboutIntroParagraphs = [
   '武汉深度数智科技有限公司（DeepTrols）是一家专注于企业级AI落地与能力构建的技术服务公司，致力于帮助企业将人工智能从“工具能力”转化为“业务生产力”。围绕数据、知识与Agent执行能力，深度数智构建了一体化的AI产品与服务体系，为企业提供从底层数据基础到上层业务应用的全链路支撑。',
   '公司自主研发了数曜数据能力平台、博曜知识管理平台、智曜AI平台以及探曜AI物联能力平台，形成覆盖数据治理、知识工程、智能决策与业务执行的完整产品矩阵。同时，通过“企业FDE”服务体系，深度数智为企业提供从部署接入、场景落地到持续优化的全生命周期支持，确保AI能力能够真正融入业务流程并持续产生价值。',
+]
+
+export const aboutIntroGallery: AboutIntroGalleryItem[] = [
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 1' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 2' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 3' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 4' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 5' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 6' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 7' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 8' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 9' },
+  { image: '/images/common/content-placeholder.svg', alt: '深度数智公司介绍图片占位 10' },
 ]
 
 export const aboutValues: AboutValueItem[] = [

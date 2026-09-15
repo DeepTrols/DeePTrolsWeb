@@ -63,3 +63,6 @@
 ---
 ## 结论
 智慧教育解决方案页面已按需求文档完成，Header 与 section 间距完全延续智能制造解决方案页节奏；section5「AI 原生教育」严格 1:1 复刻 EMQX Edge 立体方块步骤排版（Tailwind 任意属性 3D transform + violet/fuchsia/blue 色板 + 序号徽章 + tags），右侧严格按用户提供的 EMQX 760×500 绝对定位画布复刻（容器查询等比缩放、流动虚线、光晕、150px 中央立体方块内嵌智曜 logo、底部基础能力卡），并与左侧面板等高；教育智能体 3x3 网格通过共享组件可选 `subtitle`/`tags` 扩展实现（向后兼容）；未新增任何样式文件；契约与 Harness 检查已同步登记。
+
+Review 修改记录：
+- 2026-09-15：导航数据新增 `activePaths`，使 `/services/smart-education` 停留时主导航「解决方案」保持与其他解决方案页面一致的 active 状态。

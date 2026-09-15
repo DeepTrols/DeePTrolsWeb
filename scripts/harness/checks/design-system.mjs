@@ -21,6 +21,7 @@ for (const token of [
   '.dt-ecosystem-card',
   '.dt-card-tag',
   '.dt-cta-panel',
+  'a.load-more-link',
 ]) {
   assert(tokens.includes(token), `Missing shared design token or class: ${token}`)
 }
@@ -61,7 +62,7 @@ assert(sectionHeader.includes('.section-heading__title') && sectionHeader.includ
 assert(sectionHeader.includes('section-heading--nowrap-subtitle'), 'SectionHeader nowrap mode must expose a desktop-wide wrapper class.')
 assert(sectionHeader.includes('max-width: none'), 'SectionHeader nowrap mode must remove the desktop max-width limit.')
 assert(sectionHeader.includes('class="section-heading dt-section-heading"'), 'SectionHeader must own the canonical section heading classes.')
-assert(sectionShell.includes('flow-root pb-32 lg:pb-44') && sectionShell.includes("props.container === 'default' && 'container',") && sectionShell.includes('w-[var(--dt-container-wide)]'), 'SectionShell must centralize DeepCtrls section spacing (flow-root pb-32 lg:pb-44 shell + plain container) and container widths.')
+assert(sectionShell.includes('flow-root pb-32 lg:pb-44') && sectionShell.includes("props.paddedTop && 'pt-32'") && sectionShell.includes("props.container === 'default' && 'container',") && sectionShell.includes('w-[var(--dt-container-wide)]'), 'SectionShell must centralize DeepCtrls section spacing (flow-root pb-32 lg:pb-44 shell + opt-in paddedTop pt-32 + plain container) and container widths.')
 assert(baseCard.includes('NuxtLink') && baseCard.includes('dt-card--adaptive') && baseCard.includes('dt-card__accent'), 'BaseCard must centralize card shell, link semantics, accent, and adaptive height.')
 assert(iconBox.includes('dt-icon-box') && iconBox.includes('dt-icon-box--gradient'), 'IconBox must centralize icon shell classes and gradient tone.')
 assert(
@@ -160,5 +161,10 @@ assert(
   pageHero.includes('flushVisualEnd?: boolean') &&
     pageHero.includes("flushVisualEnd ? 'lg:-mr-4 lg:justify-self-end' : ''"),
   'PageHero must support flushVisualEnd to cancel the container right padding for the hero visual.',
+)
+assert(
+  pageHero.includes('hideCta?: boolean') &&
+    pageHero.includes('v-if="!hideCta"'),
+  'PageHero must support hideCta so pages like the report hero can omit the default CTA.',
 )
 }

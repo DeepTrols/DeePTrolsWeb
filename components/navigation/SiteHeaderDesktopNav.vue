@@ -21,11 +21,13 @@ function hasMega(item: NavItem) {
 const route = useRoute()
 
 function isActiveItem(item: NavItem) {
-  if (item.href === '/') {
-    return route.path === item.href
-  }
+  return [item.href, ...(item.activePaths ?? [])].some((href) => {
+    if (href === '/') {
+      return route.path === href
+    }
 
-  return route.path === item.href || route.path.startsWith(`${item.href}/`)
+    return route.path === href || route.path.startsWith(`${href}/`)
+  })
 }
 </script>
 
