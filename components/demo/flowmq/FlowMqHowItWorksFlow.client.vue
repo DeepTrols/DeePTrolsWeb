@@ -23,9 +23,9 @@ const nodes: Node[] = [
   { id: 'stage-adapt', type: 'flowmq', position: { x: 340, y: 145 }, data: { kind: 'stage', label: '数据接入', subtitle: '统一连接多源数据', icon: Cable, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
   { id: 'stage-route', type: 'flowmq', position: { x: 600, y: 145 }, data: { kind: 'stage', label: '智能治理', subtitle: '构建标准化治理体系', icon: Workflow, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
   { id: 'stage-deliver', type: 'flowmq', position: { x: 860, y: 145 }, data: { kind: 'stage', label: '数据赋能', subtitle: '输出高质量数据资产', icon: Network, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
-  { id: 'target-sub', type: 'flowmq', position: { x: 1100, y: 57 }, data: { kind: 'target', label: 'AI 智能化', subtitle: '知识问答 / 业务大模型', icon: Sparkles, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
-  { id: 'target-stream', type: 'flowmq', position: { x: 1100, y: 145 }, data: { kind: 'target', label: '业务分析', subtitle: '经营分析 / 决策支持', icon: BarChart3, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
-  { id: 'target-queue', type: 'flowmq', position: { x: 1100, y: 233 }, data: { kind: 'target', label: '业务应用', subtitle: '场景服务 / API 接口', icon: LayoutGrid, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
+  { id: 'target-sub', type: 'flowmq', position: { x: 1100, y: 57 }, data: { kind: 'target', label: 'AI 智能化', subtitle: '知识问答 / 业务大模型', icon: Sparkles, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
+  { id: 'target-stream', type: 'flowmq', position: { x: 1100, y: 145 }, data: { kind: 'target', label: '业务分析', subtitle: '经营分析 / 决策支持', icon: BarChart3, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
+  { id: 'target-queue', type: 'flowmq', position: { x: 1100, y: 233 }, data: { kind: 'target', label: '业务应用', subtitle: '场景服务 / API 接口', icon: LayoutGrid, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
 ]
 
 const featureCards = [
@@ -65,7 +65,7 @@ const edges: Edge[] = [
   { id: 'edge-deliver-queue', source: 'stage-deliver', target: 'target-queue', data: { path: 'M956,177 C1026,177 1026,265 1096,265' }, ...edgeDefaults },
 ]
 
-const defaultViewport = { x: 211, y: 13, zoom: 1 }
+const defaultViewport = { x: 192, y: 13, zoom: 1 }
 const proOptions = { hideAttribution: true }
 </script>
 
@@ -95,7 +95,7 @@ const proOptions = { hideAttribution: true }
       </template>
     </VueFlow>
 
-    <div class="pointer-events-none absolute left-[511px] top-[292px] grid grid-cols-3 gap-[60px]">
+    <div class="pointer-events-none absolute left-[492px] top-[292px] grid grid-cols-3 gap-[60px]">
       <div
         v-for="card in featureCards"
         :key="card.items[0]"
