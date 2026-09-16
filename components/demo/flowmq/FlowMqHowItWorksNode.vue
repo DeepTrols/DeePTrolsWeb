@@ -28,10 +28,8 @@ const cardClass = 'rounded-lg border border-dt-line bg-white shadow-[0_10px_28px
       <span class="whitespace-nowrap text-base font-semibold text-dt-text-highlighted">{{ data.label }}</span>
     </div>
 
-    <div v-else-if="data.kind === 'stage'" class="flex h-full w-full flex-col items-center gap-2">
-      <div :class="['flex size-16 items-center justify-center', cardClass]">
-        <component :is="data.icon" class="size-7 text-dt-text-muted" aria-hidden="true" />
-      </div>
+    <div v-else-if="data.kind === 'stage'" :class="['flex h-full w-full flex-col items-center justify-center gap-2 px-3 py-4', cardClass]">
+      <component :is="data.icon" class="size-7 text-dt-text-muted" aria-hidden="true" />
       <div class="text-center">
         <div class="whitespace-nowrap text-base font-semibold text-dt-text-highlighted">{{ data.label }}</div>
         <div class="mt-0.5 whitespace-nowrap text-sm text-dt-text-muted">{{ data.subtitle }}</div>
