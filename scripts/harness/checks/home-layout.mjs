@@ -76,13 +76,14 @@ assert(
     productSystem.includes('padded-top') &&
     productSystem.includes('ProductSystemFlowFrame') &&
     productSystem.includes('ProductSystemCards') &&
-    productSystem.includes('label="DeepTrols OPS 产品架构图占位"') &&
-    productSystem.includes('fallback-text="产品架构图占位符"') &&
+    productSystem.includes('DeepTrolsArchitectureFlow') &&
+    productSystem.includes('label="DeepTrols OPS 产品架构图"') &&
+    !productSystem.includes(':grid="false"') &&
     !productSystem.includes('HomeProductSystemFlow') &&
     !productSystem.includes('HomeProductSystemMobileFlow') &&
     !productSystem.includes('platformInputs') &&
     !productSystem.includes('platformOutputs'),
-  'HomeProductSystem must compose the shared section, architecture placeholder, and product cards while keeping the old flow diagrams unmounted.',
+  'HomeProductSystem must compose the shared section, architecture flow, and product cards while keeping the old flow diagrams unmounted.',
 )
 assert(
   productSystemSection.includes('SectionShell') &&

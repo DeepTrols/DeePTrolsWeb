@@ -3,15 +3,17 @@ withDefaults(
   defineProps<{
     label: string
     fallbackText?: string
+    grid?: boolean
   }>(),
   {
     fallbackText: '能力图加载中',
+    grid: true,
   },
 )
 </script>
 
 <template>
-  <div class="product-system-flow-frame" role="img" :aria-label="label">
+  <div class="product-system-flow-frame" :class="{ 'product-system-flow-frame--grid': grid }" role="img" :aria-label="label">
     <slot>
       <div class="product-system-flow-frame__fallback">{{ fallbackText }}</div>
     </slot>
@@ -26,7 +28,7 @@ withDefaults(
   height: 560px;
   overflow: hidden;
 
-  &::before {
+  &--grid::before {
     content: "";
     position: absolute;
     inset: -1px;

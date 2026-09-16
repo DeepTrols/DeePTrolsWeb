@@ -46,11 +46,13 @@ export function registerCoreVisualContracts() {
     }
   })
 
-  it('includes responsive navigation and keeps the home product architecture as a placeholder', () => {
+  it('includes responsive navigation and mounts the home product architecture flow', () => {
     const productSystem = readComponent('components/home/HomeProductSystem.vue')
 
     expect(readComponent('components/navigation/SiteHeaderMobileNav.vue')).toContain('mobile-navigation')
     expect(productSystem).toContain('ProductSystemFlowFrame')
+    expect(productSystem).toContain('DeepTrolsArchitectureFlow')
+    expect(productSystem).not.toContain(':grid="false"')
     expect(productSystem).not.toContain('HomeProductSystemFlow')
     expect(productSystem).not.toContain('HomeProductSystemMobileFlow')
   })

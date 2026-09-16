@@ -2,6 +2,7 @@
 import ProductSystemCards from '~/components/common/ProductSystemCards.vue'
 import ProductSystemFlowFrame from '~/components/common/ProductSystemFlowFrame.vue'
 import ProductSystemSection from '~/components/common/ProductSystemSection.vue'
+import DeepTrolsArchitectureFlow from '~/components/flow/DeepTrolsArchitectureFlow.client.vue'
 import { productCards } from '~/data/home'
 </script>
 
@@ -14,9 +15,12 @@ import { productCards } from '~/data/home'
     padded-top
   >
     <ProductSystemFlowFrame
-      label="DeepTrols OPS 产品架构图占位"
-      fallback-text="产品架构图占位符"
-    />
+      label="DeepTrols OPS 产品架构图"
+    >
+      <div class="relative z-[1] mx-auto h-full w-[min(1600px,100%)]">
+        <DeepTrolsArchitectureFlow />
+      </div>
+    </ProductSystemFlowFrame>
     <ProductSystemCards :cards="productCards" />
   </ProductSystemSection>
 </template>
