@@ -8,6 +8,7 @@ Done
 - Keep the original FlowMQ node positions, labels, edge paths, and visual hierarchy from the supplied DOM.
 - Apply the current platform architecture card radius, border, and shadow treatment to all cards.
 - Do not mount the demo into production pages.
+- Update the demo semantics to data source, governance, and data empowerment flow while preserving dynamic Vue Flow edges.
 
 ## Files
 - `pages/demo/flowmq-how-it-works.vue`

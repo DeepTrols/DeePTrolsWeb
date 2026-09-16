@@ -5,7 +5,7 @@ import FlowMqHowItWorksFlow from '~/components/demo/flowmq/FlowMqHowItWorksFlow.
 <template>
   <section class="overflow-x-auto bg-dt-bg px-4 py-16" aria-label="FlowMQ how it works demo">
     <div class="mx-auto min-w-[1504px] max-w-[1504px]">
-      <div class="h-[360px] w-full">
+      <div class="h-[460px] w-full">
         <div class="relative size-full overflow-hidden" role="img" aria-label="FlowMQ how it works">
           <FlowMqHowItWorksFlow />
         </div>

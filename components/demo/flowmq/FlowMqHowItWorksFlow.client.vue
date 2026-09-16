@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import {
-  Archive,
+  BarChart3,
   Cable,
-  GitFork,
-  Inbox,
-  List,
-  Mail,
-  Radio,
-  Route,
-  Send,
+  Database,
+  Factory,
+  Files,
+  LayoutGrid,
+  Network,
+  Sparkles,
+  Workflow,
 } from '@lucide/vue'
 import { VueFlow } from '@vue-flow/core'
 import type { Edge, Node } from '@vue-flow/core'
@@ -17,15 +17,30 @@ import FlowMqHowItWorksEdge from '~/components/demo/flowmq/FlowMqHowItWorksEdge.
 import FlowMqHowItWorksNode from '~/components/demo/flowmq/FlowMqHowItWorksNode.vue'
 
 const nodes: Node[] = [
-  { id: 'client-mqtt', type: 'flowmq', position: { x: 0, y: 57 }, data: { kind: 'client', label: 'MQTT Client', icon: Radio, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
-  { id: 'client-kafka', type: 'flowmq', position: { x: 0, y: 145 }, data: { kind: 'client', label: 'Kafka Producer', icon: Archive, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
-  { id: 'client-amqp', type: 'flowmq', position: { x: 0, y: 233 }, data: { kind: 'client', label: 'AMQP Publisher', icon: Mail, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
-  { id: 'stage-adapt', type: 'flowmq', position: { x: 260, y: 145 }, data: { kind: 'stage', label: '协议接入', subtitle: 'Protocol Adapter', icon: Cable, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
-  { id: 'stage-route', type: 'flowmq', position: { x: 480, y: 145 }, data: { kind: 'stage', label: '统一路由', subtitle: 'Unified Router', icon: Route, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
-  { id: 'stage-deliver', type: 'flowmq', position: { x: 700, y: 145 }, data: { kind: 'stage', label: '多模投递', subtitle: 'Multi-mode Delivery', icon: GitFork, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
-  { id: 'target-sub', type: 'flowmq', position: { x: 900, y: 57 }, data: { kind: 'target', label: 'Subscription', subtitle: '实时推送', icon: Send, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
-  { id: 'target-stream', type: 'flowmq', position: { x: 900, y: 145 }, data: { kind: 'target', label: 'Stream', subtitle: '日志持久化', icon: List, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
-  { id: 'target-queue', type: 'flowmq', position: { x: 900, y: 233 }, data: { kind: 'target', label: 'Queue', subtitle: '消息队列', icon: Inbox, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
+  { id: 'client-mqtt', type: 'flowmq', position: { x: 0, y: 57 }, data: { kind: 'client', label: '企业业务数据', subtitle: 'ERP / CRM / 财务数据', icon: Database, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
+  { id: 'client-kafka', type: 'flowmq', position: { x: 0, y: 145 }, data: { kind: 'client', label: '非结构化数据', subtitle: '文件 / 图像 / 视频', icon: Files, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
+  { id: 'client-amqp', type: 'flowmq', position: { x: 0, y: 233 }, data: { kind: 'client', label: '生产设备数据', subtitle: 'IoT / 传感器 / 工业协议', icon: Factory, sizeClass: 'h-16 w-[220px]' }, selectable: false, draggable: false },
+  { id: 'stage-adapt', type: 'flowmq', position: { x: 260, y: 145 }, data: { kind: 'stage', label: '数据接入', subtitle: '统一连接多源数据', icon: Cable, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
+  { id: 'stage-route', type: 'flowmq', position: { x: 480, y: 145 }, data: { kind: 'stage', label: '智能治理', subtitle: '构建标准化治理体系', icon: Workflow, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
+  { id: 'stage-deliver', type: 'flowmq', position: { x: 700, y: 145 }, data: { kind: 'stage', label: '数据赋能', subtitle: '输出高质量数据资产', icon: Network, sizeClass: 'h-[90px] w-[120px]' }, selectable: false, draggable: false },
+  { id: 'target-sub', type: 'flowmq', position: { x: 900, y: 57 }, data: { kind: 'target', label: 'AI 智能化', subtitle: '知识问答 / 业务大模型', icon: Sparkles, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
+  { id: 'target-stream', type: 'flowmq', position: { x: 900, y: 145 }, data: { kind: 'target', label: '业务分析', subtitle: '经营分析 / 决策支持', icon: BarChart3, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
+  { id: 'target-queue', type: 'flowmq', position: { x: 900, y: 233 }, data: { kind: 'target', label: '业务应用', subtitle: '场景服务 / API 接口', icon: LayoutGrid, sizeClass: 'h-16 w-[180px]' }, selectable: false, draggable: false },
+]
+
+const featureCards = [
+  {
+    toneClass: 'bg-blue-500',
+    items: ['多源接入', '协议适配', '实时 / 离线同步', '统一数据接入'],
+  },
+  {
+    toneClass: 'bg-violet-500',
+    items: ['数据标准化', '数据质量管理', '数据血缘与溯源', '数据安全与合规'],
+  },
+  {
+    toneClass: 'bg-emerald-500',
+    items: ['数据服务发布', '数据分析与挖掘', '数据资产管理', '支持 AI 与业务创新'],
+  },
 ]
 
 const edgeDefaults = {
@@ -52,27 +67,44 @@ const proOptions = { hideAttribution: true }
 </script>
 
 <template>
-  <VueFlow
-    class="relative size-full"
-    :nodes="nodes"
-    :edges="edges"
-    :default-viewport="defaultViewport"
-    :nodes-draggable="false"
-    :nodes-connectable="false"
-    :elements-selectable="false"
-    :zoom-on-scroll="false"
-    :zoom-on-pinch="false"
-    :pan-on-drag="false"
-    :pan-on-scroll="false"
-    :zoom-on-double-click="false"
-    :prevent-scrolling="true"
-    :pro-options="proOptions"
-  >
-    <template #node-flowmq="{ data }">
-      <FlowMqHowItWorksNode :data="data" />
-    </template>
-    <template #edge-flowmqDynamic="edgeProps">
-      <FlowMqHowItWorksEdge v-bind="edgeProps" />
-    </template>
-  </VueFlow>
+  <div class="relative size-full">
+    <VueFlow
+      class="relative size-full"
+      :nodes="nodes"
+      :edges="edges"
+      :default-viewport="defaultViewport"
+      :nodes-draggable="false"
+      :nodes-connectable="false"
+      :elements-selectable="false"
+      :zoom-on-scroll="false"
+      :zoom-on-pinch="false"
+      :pan-on-drag="false"
+      :pan-on-scroll="false"
+      :zoom-on-double-click="false"
+      :prevent-scrolling="true"
+      :pro-options="proOptions"
+    >
+      <template #node-flowmq="{ data }">
+        <FlowMqHowItWorksNode :data="data" />
+      </template>
+      <template #edge-flowmqDynamic="edgeProps">
+        <FlowMqHowItWorksEdge v-bind="edgeProps" />
+      </template>
+    </VueFlow>
+
+    <div class="pointer-events-none absolute left-[431px] top-[292px] grid grid-cols-3 gap-10">
+      <div
+        v-for="card in featureCards"
+        :key="card.items[0]"
+        class="w-[200px] rounded-lg border border-dt-line bg-white px-5 py-4 shadow-[0_8px_20px_rgba(26,87,235,0.05)]"
+      >
+        <ul class="space-y-2.5">
+          <li v-for="item in card.items" :key="item" class="flex items-center gap-2.5 text-sm leading-5 text-dt-text-muted">
+            <span :class="['size-1.5 shrink-0 rounded-full', card.toneClass]" aria-hidden="true"></span>
+            <span class="whitespace-nowrap">{{ item }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </template>
