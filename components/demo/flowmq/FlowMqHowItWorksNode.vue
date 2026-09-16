@@ -24,7 +24,7 @@ const cardClass = 'rounded-lg border border-dt-line bg-white shadow-[0_10px_28px
     <Handle id="right-source" type="source" :position="Position.Right" :class="handleClass" />
 
     <div v-if="data.kind === 'client'" :class="['flex h-full w-full items-center gap-3 px-4 py-2.5', cardClass]">
-      <component :is="data.icon" class="size-6 text-dt-text-muted" aria-hidden="true" />
+      <component :is="data.icon" class="size-6 shrink-0 text-dt-text-muted" aria-hidden="true" />
       <div class="flex flex-col">
         <span class="whitespace-nowrap text-base font-semibold text-dt-text-highlighted">{{ data.label }}</span>
         <span class="whitespace-nowrap text-sm text-dt-text-muted">{{ data.subtitle }}</span>
@@ -42,7 +42,7 @@ const cardClass = 'rounded-lg border border-dt-line bg-white shadow-[0_10px_28px
     </div>
 
     <div v-else :class="['flex h-full w-full items-center gap-3 px-4 py-2.5', cardClass]">
-      <component :is="data.icon" class="size-6 text-dt-text-muted" aria-hidden="true" />
+      <component :is="data.icon" class="size-6 shrink-0 text-dt-text-muted" aria-hidden="true" />
       <div class="flex flex-col">
         <span class="whitespace-nowrap text-base font-semibold text-dt-text-highlighted">{{ data.label }}</span>
         <span class="whitespace-nowrap text-sm text-dt-text-muted">{{ data.subtitle }}</span>
