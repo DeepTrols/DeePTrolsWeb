@@ -14,8 +14,8 @@ import { dgpSystemCards } from '~/data/dgp'
     label="数曜·数据治理平台产品架构图占位"
     fallback-text="产品架构图占位符"
   >
-    <div class="relative z-[1] h-full w-full overflow-hidden">
-      <div class="absolute left-1/2 top-1/2 h-[460px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[0.58] xl:scale-[0.72] 2xl:scale-[0.88]">
+    <div class="relative z-[1] mx-auto h-full w-[min(1600px,100%)] overflow-hidden">
+      <div class="absolute left-1/2 top-1/2 h-[460px] w-full -translate-x-1/2 -translate-y-1/2">
         <FlowMqHowItWorksFlow />
       </div>
     </div>
