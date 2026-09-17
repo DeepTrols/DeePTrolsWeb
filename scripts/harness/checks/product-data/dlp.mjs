@@ -67,10 +67,13 @@ assert(
 )
 assert(
   dlpArchitecture.includes('ProductArchitectureSection') &&
-    dlpArchitecture.includes('fallback-text="标签体系架构图占位符"') &&
+    dlpArchitecture.includes('TagPlatformArchitectureFlow') &&
+    dlpArchitecture.includes('w-[min(1600px,100%)]') &&
+    dlpArchitecture.includes('-translate-x-1/2') &&
+    dlpArchitecture.includes('-translate-y-1/2') &&
     !dlpArchitecture.includes('EnterpriseFlow') &&
     !dlpArchitecture.includes('<style'),
-  'DLP architecture must reuse ProductArchitectureSection without a flow chart.',
+  'DLP architecture must reuse ProductArchitectureSection and center the tag platform Vue Flow inside the shared grid frame.',
 )
 assert(
   dlpTimeline.includes('AlternatingTimelineSection') &&
