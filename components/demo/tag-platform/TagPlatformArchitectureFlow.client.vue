@@ -89,7 +89,7 @@ const edges: Edge[] = [
   { id: 'governance-assets', source: 'governance', target: 'asset-center', ...edgeDefaults },
 ]
 
-const defaultViewport = { x: 109.5, y: 3, zoom: 1 }
+const defaultViewport = { x: 172.5, y: 3, zoom: 1 }
 const proOptions = { hideAttribution: true }
 </script>
 

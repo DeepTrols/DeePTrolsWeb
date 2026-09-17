@@ -5,9 +5,8 @@ import TagPlatformArchitectureFlow from '~/components/demo/tag-platform/TagPlatf
 
 <template>
   <section class="overflow-x-auto bg-dt-bg px-4 py-16" aria-label="数据标签平台架构 Demo">
-    <div class="mx-auto min-w-[1474px] max-w-[1474px]">
+    <div class="mx-auto min-w-[1600px] max-w-[1600px]">
       <div class="relative h-[640px] overflow-hidden" role="img" aria-label="数据标签平台架构">
-        <div class="absolute -inset-px bg-[linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:48px_48px] bg-[position:center_center]"></div>
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,var(--ui-primary)_0%,transparent_70%)] opacity-[0.08]"></div>
 
         <div class="pointer-events-none absolute left-1/2 top-5 z-20 w-[96%] max-w-6xl -translate-x-1/2">
