@@ -86,6 +86,7 @@ assert(
   ddpArchitecture.includes('ProductArchitectureSection') &&
     ddpArchitecture.includes('title="构建智能数据开发体系"') &&
     ddpArchitecture.includes('SmartDataHubFlow') &&
+    ddpArchitecture.includes('<ClientOnly>') &&
     ddpArchitecture.includes('h-[560px] w-[1704px]') &&
     ddpArchitecture.includes('-translate-x-1/2 -translate-y-1/2') &&
     ddpArchitecture.includes('fallback-text="数据开发体系架构图加载中"') &&

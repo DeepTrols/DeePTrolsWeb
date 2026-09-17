@@ -97,6 +97,7 @@ export function registerDdpVisualContracts() {
     expect(architecture).toContain('ProductArchitectureSection')
     expect(architecture).toContain('title="构建智能数据开发体系"')
     expect(architecture).toContain('SmartDataHubFlow')
+    expect(architecture).toContain('<ClientOnly>')
     expect(architecture).toContain('h-[560px] w-[1704px]')
     expect(architecture).toContain('-translate-x-1/2 -translate-y-1/2')
     expect(architecture).toContain('fallback-text="数据开发体系架构图加载中"')

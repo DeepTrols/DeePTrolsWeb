@@ -14,7 +14,12 @@ import SmartDataHubFlow from '~/components/demo/smart-data-hub/SmartDataHubFlow.
   >
     <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
       <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
-        <SmartDataHubFlow />
+        <ClientOnly>
+          <SmartDataHubFlow />
+          <template #fallback>
+            <div class="size-full" aria-hidden="true"></div>
+          </template>
+        </ClientOnly>
       </div>
     </div>
   </ProductArchitectureSection>
