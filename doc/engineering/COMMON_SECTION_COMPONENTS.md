@@ -219,6 +219,7 @@
 使用要求：
 - `ProductSystemSection` 只负责 section 背景、`.container`、`SectionHeader` 与内容布局。
 - 桌面流程图外框使用 `components/common/ProductSystemFlowFrame.vue`，具体流程图由页面或业务组件传入。
+- 所有产品架构流程图统一使用数据治理页基准：内部坐标画布宽度为 `1704px`，在 `ProductSystemFlowFrame` 中通过 `left-1/2 -translate-x-1/2` 居中；页面可视容器使用 `w-[min(1704px,100%)]` 并对超出部分对称裁切。后续流程图不得自行采用 1600px、1474px 等新的画布宽度。
 - HOME 当前 VueFlow 由 `components/home/HomeProductSystemFlow.vue` 组合 `ProductSystemFlowFrame` 与 `EnterpriseFlow.client.vue`。
 - HOME 移动端输入输出结构由 `components/home/HomeProductSystemMobileFlow.vue` 承载，不写入公共 section。
 - 底部卡片使用 `components/common/ProductSystemCards.vue`，由 `CardGrid`、`BaseCard`、`IconBox` 组合，并保持 `.dt-product-card`、`.dt-card--adaptive`、`.dt-product-card__accent`、`.dt-icon-box`。

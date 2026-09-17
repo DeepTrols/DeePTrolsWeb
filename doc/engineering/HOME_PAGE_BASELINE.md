@@ -30,6 +30,7 @@
 10. HOME 当前不展示 `CUSTOMER STORIES` section；`HomeProductSystem` 当前挂载 `ProductSystemSection`、`ProductSystemFlowFrame` 架构占位框与 `ProductSystemCards`，不得在 `product-system__content` 中恢复旧桌面或移动端流程图，待流程图重新设计后再单独接入。
 11. HOME 在 `Ecosystem` 与 `Resources` 之间挂载 `components/home/HomeAbout.vue`。该区块参考 DeepCtrls 首页公司与合作客户区域：白色到浅蓝渐变背景、居中 SectionHeading、`/O1CN0.png` 宽幅 banner、`/clients-label.webp` 客户标签，以及三行 `partner-rows` 走马灯。组件必须保持 Tailwind-only，不写 `<style>`；走马灯动画 token 维护在 `assets/css/tailwind.css`。
 12. HOME About 标题不要主动插入换行，保持完整标题一行排版；窄屏仅允许浏览器按容器宽度自然换行。About section 遵循「Section 间距统一规则」，但底部间距按 HOME 专属节奏收窄为 `pb-10`：根节点 `flow-root pb-10`，内部 `.container` 仅保留 `mb-10` 与底部走马灯分隔，渐变背景完整覆盖底部间距区域；下方 `Resources` section 同样按统一规则渲染。
+13. 产品架构与解决方案流程图统一采用 DGP 产品架构的 `1704px` 内部坐标画布基准，并在公共 `ProductSystemFlowFrame` 内水平居中；后续不得为单个流程图另建不同宽度基准。
 
 ---
 ## Typography

@@ -68,7 +68,7 @@ assert(
 assert(
   dlpArchitecture.includes('ProductArchitectureSection') &&
     dlpArchitecture.includes('TagPlatformArchitectureFlow') &&
-    dlpArchitecture.includes('w-[min(1600px,100%)]') &&
+    dlpArchitecture.includes('w-[min(1704px,100%)]') &&
     dlpArchitecture.includes('-translate-x-1/2') &&
     dlpArchitecture.includes('-translate-y-1/2') &&
     !dlpArchitecture.includes('EnterpriseFlow') &&

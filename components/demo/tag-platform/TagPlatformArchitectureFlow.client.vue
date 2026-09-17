@@ -16,15 +16,15 @@ import TagPlatformArchitectureEdge from '~/components/demo/tag-platform/TagPlatf
 import TagPlatformArchitectureNode from '~/components/demo/tag-platform/TagPlatformArchitectureNode.vue'
 
 const nodes: Node[] = [
-  { id: 'business', type: 'tagPlatform', position: { x: 30, y: 120 }, data: { kind: 'source', label: '业务数据', icon: Database, tone: 'violet' }, selectable: false, draggable: false },
-  { id: 'user', type: 'tagPlatform', position: { x: 30, y: 204 }, data: { kind: 'source', label: '用户数据', icon: CircleUserRound, tone: 'blue' }, selectable: false, draggable: false },
-  { id: 'behavior', type: 'tagPlatform', position: { x: 30, y: 288 }, data: { kind: 'source', label: '行为数据', icon: ChartNoAxesCombined, tone: 'amber' }, selectable: false, draggable: false },
-  { id: 'transaction', type: 'tagPlatform', position: { x: 30, y: 372 }, data: { kind: 'source', label: '交易数据', icon: BadgeCent, tone: 'emerald' }, selectable: false, draggable: false },
-  { id: 'external', type: 'tagPlatform', position: { x: 30, y: 456 }, data: { kind: 'source', label: '外部数据', icon: FileInput, tone: 'pink' }, selectable: false, draggable: false },
+  { id: 'business', type: 'tagPlatform', position: { x: 0, y: 120 }, data: { kind: 'source', label: '业务数据', icon: Database, tone: 'violet' }, selectable: false, draggable: false },
+  { id: 'user', type: 'tagPlatform', position: { x: 0, y: 204 }, data: { kind: 'source', label: '用户数据', icon: CircleUserRound, tone: 'blue' }, selectable: false, draggable: false },
+  { id: 'behavior', type: 'tagPlatform', position: { x: 0, y: 288 }, data: { kind: 'source', label: '行为数据', icon: ChartNoAxesCombined, tone: 'amber' }, selectable: false, draggable: false },
+  { id: 'transaction', type: 'tagPlatform', position: { x: 0, y: 372 }, data: { kind: 'source', label: '交易数据', icon: BadgeCent, tone: 'emerald' }, selectable: false, draggable: false },
+  { id: 'external', type: 'tagPlatform', position: { x: 0, y: 456 }, data: { kind: 'source', label: '外部数据', icon: FileInput, tone: 'pink' }, selectable: false, draggable: false },
   {
     id: 'processing',
     type: 'tagPlatform',
-    position: { x: 290, y: 255 },
+    position: { x: 295, y: 255 },
     width: 270,
     data: {
       kind: 'process',
@@ -41,7 +41,7 @@ const nodes: Node[] = [
   {
     id: 'governance',
     type: 'tagPlatform',
-    position: { x: 615, y: 255 },
+    position: { x: 640, y: 255 },
     width: 280,
     data: {
       kind: 'process',
@@ -58,7 +58,7 @@ const nodes: Node[] = [
   {
     id: 'asset-center',
     type: 'tagPlatform',
-    position: { x: 955, y: 238 },
+    position: { x: 1020, y: 238 },
     width: 300,
     data: {
       kind: 'asset',
@@ -89,7 +89,7 @@ const edges: Edge[] = [
   { id: 'governance-assets', source: 'governance', target: 'asset-center', ...edgeDefaults },
 ]
 
-const defaultViewport = { x: 172.5, y: 3, zoom: 1 }
+const defaultViewport = { x: 192, y: 3, zoom: 1 }
 const proOptions = { hideAttribution: true }
 </script>
 

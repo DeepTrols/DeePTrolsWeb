@@ -72,7 +72,7 @@ export function registerDlpVisualContracts() {
     expect(architecture).toContain('ProductArchitectureSection')
     expect(architecture).toContain('title="轻松构建企业标签体系"')
     expect(architecture).toContain('TagPlatformArchitectureFlow')
-    expect(architecture).toContain('w-[min(1600px,100%)]')
+    expect(architecture).toContain('w-[min(1704px,100%)]')
     expect(architecture).toContain('-translate-x-1/2')
     expect(architecture).toContain('-translate-y-1/2')
     expect(architecture).not.toContain('EnterpriseFlow')

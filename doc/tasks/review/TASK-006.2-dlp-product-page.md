@@ -42,7 +42,7 @@
 1. 新增 `/products/data-labeling` 页面，接入公共 Header、Footer 和 SEO。
 2. 新增 `data/dlp.ts`，集中管理 DLP Hero、挑战、核心优势、核心能力时间轴、标签沉淀、应用场景与 CTA 数据。
 3. 新增 `DlpHero` 与 `DlpHeroVisual`，Hero 使用公共 `PageHero`，右侧视觉为 Tailwind-only 图片占位。
-4. 新增 `DlpArchitecture`，复用 `ProductSystemSection` 与 `ProductSystemFlowFrame`；后续接入数据标签平台 Vue Flow 架构图，保留公共 Frame 格子背景并按 1600px 基准居中显示。
+4. 新增 `DlpArchitecture`，复用 `ProductSystemSection` 与 `ProductSystemFlowFrame`；后续接入数据标签平台 Vue Flow 架构图，保留公共 Frame 格子背景并按 1704px 公共流程画布基准居中显示。
 5. 新增 `DlpCapabilityTimelineSection`，按 DLP.md 要求实现 EMQX Edge 风格的中轴交错能力区，文字侧为纯文本块，不使用 card 边框与 icon。
 6. 新增 `DlpAiModelingSection`，实现 AI 辅助建标左右布局，右侧图片占位。
 7. 扩展 `ProductFeatureGridSection` 支持 `columns="three"`，用于 DLP 核心优势三列网格与三张应用场景卡片。
@@ -51,7 +51,7 @@
 10. 复核修复 DLP 核心能力区：移除 `BaseCard` 与 `IconBox`，恢复 EMQX Edge 风格无边框交错叙事排版。
 11. 复核修复 DGP 企业级数据治理区：移除文字侧 `.dt-card` 外壳，保持与产品页交错叙事区一致。
 12. 复核修复 DLP 核心能力与 DGP 企业级数据治理的 `SectionHeader` eyebrow 样式，恢复全局默认标题层级。
-13. 将独立数据标签平台架构 Flow 接入“解决方案”区块，保留 `ProductSystemFlowFrame` 原有格子背景，并在 1600px 坐标系下水平、垂直居中。
+13. 将独立数据标签平台架构 Flow 接入“解决方案”区块，保留 `ProductSystemFlowFrame` 原有格子背景，并在 1704px 公共流程坐标系下水平、垂直居中。
 
 ---
 ## 验收标准
