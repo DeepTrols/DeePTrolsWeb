@@ -42,7 +42,7 @@
 1. 新增 `/products/data-development` 页面，接入公共 Header、Footer 和 SEO。
 2. 新增 `data/ddp.ts`，集中管理 DDP Hero、挑战、核心优势、核心能力时间线、统一数据开发、应用场景与 CTA 数据。
 3. 新增 `DdpHero` 与 `DdpHeroVisual`，Hero 使用公共 `PageHero`，右侧视觉为 Tailwind-only 图片占位。
-4. 新增 `DdpArchitecture`，复用 `ProductSystemSection` 与 `ProductSystemFlowFrame`，暂不传入具体 flow。
+4. 新增 `DdpArchitecture`，复用 `ProductSystemSection` 与 `ProductSystemFlowFrame`；现已接入 Smart Data Hub Vue Flow，保留公共格子背景并按 1704px 统一画布居中。
 5. 新增 `AlternatingTimelineSection` 公共组件，并将 DLP / DDP 核心能力统一改为复用该组件。
 6. 新增 `DdpCapabilityTimelineSection`，按 DDP.md 要求使用核心能力中轴交错时间线。
 7. 新增 `DdpUnifiedDevelopmentSection`，通过 `ProductFeatureGridSection #after` 组合数字 icon 卡片与 `ProductSystemFlowFrame`。

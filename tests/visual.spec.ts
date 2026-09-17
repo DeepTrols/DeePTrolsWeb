@@ -18,6 +18,7 @@ import { registerManufacturingVisualContracts } from './visual/site/solutions/ma
 import { registerSolutionUseCaseVisualContracts } from './visual/site/solutions/use-cases.contract'
 import { registerWhyHomeCommonVisualContracts } from './visual/why-home-common.contract'
 import { registerSmartDataHubVisualContracts } from './visual/demo-smart-data-hub.contract'
+import { registerKnowledgeHubVisualContracts } from './visual/demo-knowledge-hub.contract'
 
 describe('visual implementation contract', () => {
   registerCoreVisualContracts()
@@ -38,6 +39,7 @@ describe('visual implementation contract', () => {
   registerFdeVisualContracts()
   registerDatacenterVisualContracts()
   registerSmartDataHubVisualContracts()
+  registerKnowledgeHubVisualContracts()
 })
 
 registerProductAiiotVisualContracts()

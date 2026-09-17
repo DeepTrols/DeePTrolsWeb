@@ -21,7 +21,7 @@ export function registerSmartDataHubVisualContracts() {
       expect(flow).toContain("label: '开发全流程'")
       expect(flow).toContain("type: 'smartDataHubDynamic'")
       expect(node).toContain("shuyaoLogo from '~/assets/images/brand/shuyao-logo.svg'")
-      expect(node).toContain('class="size-24 object-contain"')
+      expect(node).toContain('class="size-16 object-contain"')
     })
   })
 }

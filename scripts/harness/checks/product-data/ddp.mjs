@@ -85,10 +85,13 @@ assert(
 assert(
   ddpArchitecture.includes('ProductArchitectureSection') &&
     ddpArchitecture.includes('title="构建智能数据开发体系"') &&
-    ddpArchitecture.includes('fallback-text="数据开发体系架构图占位符"') &&
+    ddpArchitecture.includes('SmartDataHubFlow') &&
+    ddpArchitecture.includes('h-[560px] w-[1704px]') &&
+    ddpArchitecture.includes('-translate-x-1/2 -translate-y-1/2') &&
+    ddpArchitecture.includes('fallback-text="数据开发体系架构图加载中"') &&
     !ddpArchitecture.includes('EnterpriseFlow') &&
     !ddpArchitecture.includes('<style'),
-  'DDP architecture must reuse ProductArchitectureSection without a flow chart.',
+  'DDP architecture must reuse ProductArchitectureSection with the centered Smart Data Hub flow.',
 )
 assert(
   ddpTimeline.includes('AlternatingTimelineSection') &&

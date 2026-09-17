@@ -86,7 +86,7 @@ const handleClass = '!size-2 !border-0 !bg-transparent !opacity-0 !pointer-event
     <div class="relative z-10 flex size-full flex-col items-center justify-center rounded-full bg-white">
       <div class="absolute inset-4 rounded-full bg-violet-500/5"></div>
       <div class="absolute flex size-24 items-center justify-center rounded-full border border-violet-500/30 bg-white shadow-lg">
-        <img :src="shuyaoLogo" alt="数曜" class="size-24 object-contain" />
+        <img :src="shuyaoLogo" alt="数曜" class="size-16 object-contain" />
       </div>
       <div class="absolute inset-0">
         <div
