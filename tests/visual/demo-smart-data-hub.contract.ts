@@ -20,7 +20,8 @@ export function registerSmartDataHubVisualContracts() {
       expect(flow).toContain("label: '数曜 · 数据开发平台'")
       expect(flow).toContain("label: '开发全流程'")
       expect(flow).toContain("type: 'smartDataHubDynamic'")
-      expect(node).toContain('src="/logo.svg"')
+      expect(node).toContain("shuyaoLogo from '~/assets/images/brand/shuyao-logo.svg'")
+      expect(node).toContain('class="size-24 object-contain"')
     })
   })
 }

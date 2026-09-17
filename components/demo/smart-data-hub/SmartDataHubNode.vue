@@ -2,6 +2,7 @@
 import { Handle, Position } from '@vue-flow/core'
 import { Check } from '@lucide/vue'
 import type { Component } from 'vue'
+import shuyaoLogo from '~/assets/images/brand/shuyao-logo.svg'
 
 interface SourceItem {
   label: string
@@ -74,18 +75,18 @@ const handleClass = '!size-2 !border-0 !bg-transparent !opacity-0 !pointer-event
     <svg class="absolute -inset-1 size-[calc(100%+8px)] animate-spin [animation-duration:10s]" viewBox="0 0 100 100" aria-hidden="true">
       <defs>
         <linearGradient id="smartDataHubWaveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="var(--ui-primary)" stop-opacity="0" />
-          <stop offset="50%" stop-color="var(--ui-primary)" stop-opacity="0.7" />
-          <stop offset="100%" stop-color="var(--ui-primary)" stop-opacity="0" />
+          <stop offset="0%" stop-color="oklch(0.55 0.25 285)" stop-opacity="0" />
+          <stop offset="50%" stop-color="oklch(0.55 0.25 285)" stop-opacity="0.7" />
+          <stop offset="100%" stop-color="oklch(0.55 0.25 285)" stop-opacity="0" />
         </linearGradient>
       </defs>
       <circle cx="50" cy="50" r="49" fill="none" stroke="url(#smartDataHubWaveGradient)" stroke-width="2" stroke-linecap="round" />
     </svg>
-    <div class="absolute inset-0 animate-pulse rounded-full border border-primary/20 [animation-duration:3s]"></div>
+    <div class="absolute inset-0 animate-pulse rounded-full border border-violet-500/20 [animation-duration:3s]"></div>
     <div class="relative z-10 flex size-full flex-col items-center justify-center rounded-full bg-white">
-      <div class="absolute inset-4 rounded-full bg-primary/5"></div>
-      <div class="absolute flex size-24 items-center justify-center rounded-full border border-primary/30 bg-white shadow-lg">
-        <img src="/logo.svg" alt="数曜" class="w-[76px]" />
+      <div class="absolute inset-4 rounded-full bg-violet-500/5"></div>
+      <div class="absolute flex size-24 items-center justify-center rounded-full border border-violet-500/30 bg-white shadow-lg">
+        <img :src="shuyaoLogo" alt="数曜" class="size-24 object-contain" />
       </div>
       <div class="absolute inset-0">
         <div
@@ -101,7 +102,7 @@ const handleClass = '!size-2 !border-0 !bg-transparent !opacity-0 !pointer-event
         <span class="text-xs text-dt-text-muted">{{ data.subtitle }}</span>
       </div>
       <div class="absolute bottom-[42px] left-1/2 flex -translate-x-1/2 items-center justify-center gap-1.5">
-        <span v-for="tag in data.tags" :key="tag" class="flex items-center gap-1 whitespace-nowrap rounded-full bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+        <span v-for="tag in data.tags" :key="tag" class="flex items-center gap-1 whitespace-nowrap rounded-full bg-violet-500/10 px-2 py-1 text-xs font-medium text-violet-600">
           <Check class="size-3" aria-hidden="true" />
           {{ tag }}
         </span>
