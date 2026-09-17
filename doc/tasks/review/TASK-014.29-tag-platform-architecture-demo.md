@@ -61,7 +61,7 @@
 |----------------|----|
 | Branch         | dev |
 | Commit Message | feat(TASK-014.29): add tag platform architecture demo |
-| Commit Hash    | `cfbd796` |
+| Commit Hash    | `b89b4b7` |
 
 ## 完成说明
 已完成独立数据标签平台架构 Demo，未接入任何业务页面。保留参考结构的 640px 画布、网格与径向背景、顶部命名空间、节点坐标、卡片尺寸、圆角、阴影和动态连线，仅替换需求指定的内容及图标。
