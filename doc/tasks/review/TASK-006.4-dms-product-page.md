@@ -43,7 +43,7 @@
 1. 新增 `/products/data-element-regulation` 页面，接入公共 Header、Footer 和 SEO。
 2. 新增 `data/dms.ts`，集中管理 DMS Hero、挑战、核心能力、智能监管时间线、业务价值、监管流程、应用场景与 CTA 数据。
 3. 新增 `DmsHero` 与 `DmsHeroVisual`，Hero 使用公共 `PageHero`，右侧视觉为 Tailwind-only 图片占位。
-4. 新增 `DmsArchitecture`，复用 `ProductSystemSection` 与 `ProductSystemFlowFrame`，暂不传入具体 flow。
+4. 新增 `DmsArchitecture`，复用 `ProductSystemSection` 与 `ProductSystemFlowFrame`；后续接入数据要素监管 Vue Flow 架构图，保留公共 Frame 格子背景并按 1704px 公共流程画布基准居中显示。
 5. 新增 `DmsIntelligentRegulationSection`，复用公共 `AlternatingTimelineSection` 完成智能监管交错叙事。
 6. 新增 `DmsBusinessValueSection`，按 DMS.md 中 EMQX 产品页业务价值卡片节奏，用 Tailwind-only markup 实现 2×2 价值卡片。
 7. 新增 `DmsRegulationProcessSection`，通过 `ProductFeatureGridSection #before` 组合流程图占位与 3 列阶段卡片。
@@ -53,6 +53,7 @@
 11. 修正业务价值区域：去掉额外 `SectionHeader` 变体，改为与 EMQX 产品页一致的原生标题结构；卡片去掉额外 detail 文案，保持 `metric + h3 + p` 结构，并修复 Tailwind `bg-default` 语义映射避免白底。
 12. 业务价值区域重构：改用公共 `ProductSystemSection` 承载标题与内容；卡片按 EMQX 产品页（emqx.com/zh/products/emqx）业务价值区 1:1 还原（渐变顶线、`metric + h3` 基线行、`mt-4 text-sm text-muted` 描述、`mt-5 text-[13px] italic text-dimmed/60` 注释行）；`data/dms.ts` 恢复 `detail` 字段承载 DMS.md 第三行文案；Tailwind theme 新增 `--color-dimmed: var(--dt-color-text-muted)` 以支持 `text-dimmed/60` 透明度修饰符。
 13. Hero 文案调整：`title-line` 改为「让数据流通安全、可信」，`description` 改为「实现数据要素全流程智能监管，保障数据安全、合规、高效流通。」；同步更新 DMS.md 需求文档、harness 断言、visual 契约与页面 SEO description。
+14. 将数据要素监管架构 Flow 接入“解决方案”区块，保留 `ProductSystemFlowFrame` 原有格子背景，并在 1704px 公共流程坐标系下水平、垂直居中。
 
 ---
 ## 验收标准
@@ -75,6 +76,7 @@
 | `components/product/dms/DmsHero.vue` | 新增 DMS Hero 配置封装 |
 | `components/product/dms/DmsHeroVisual.vue` | 新增 Hero 图片占位视觉 |
 | `components/product/dms/DmsArchitecture.vue` | 新增解决方案架构区 |
+| `components/demo/regulation/RegulationArchitectureFlow.client.vue` | 解决方案区复用的数据要素监管 Vue Flow 架构图 |
 | `components/product/dms/DmsIntelligentRegulationSection.vue` | 新增智能监管交错时间线区 |
 | `components/product/dms/DmsBusinessValueSection.vue` | 新增业务价值区 |
 | `components/product/dms/DmsRegulationProcessSection.vue` | 新增监管流程区 |

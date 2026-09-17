@@ -74,10 +74,13 @@ assert(
 assert(
   dmsArchitecture.includes('ProductArchitectureSection') &&
     dmsArchitecture.includes('title="构建数据要素流通全过程监管体系"') &&
-    dmsArchitecture.includes('fallback-text="数据要素监管体系架构图占位符"') &&
+    dmsArchitecture.includes('RegulationArchitectureFlow') &&
+    dmsArchitecture.includes('w-[min(1704px,100%)]') &&
+    dmsArchitecture.includes('-translate-x-1/2') &&
+    dmsArchitecture.includes('-translate-y-1/2') &&
     !dmsArchitecture.includes('EnterpriseFlow') &&
     !dmsArchitecture.includes('<style'),
-  'DMS architecture must reuse ProductArchitectureSection without a flow chart.',
+  'DMS architecture must reuse ProductArchitectureSection and center the regulation Vue Flow inside the shared grid frame.',
 )
 assert(
   dmsIntelligentRegulation.includes('AlternatingTimelineSection') &&

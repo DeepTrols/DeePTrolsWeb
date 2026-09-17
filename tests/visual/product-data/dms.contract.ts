@@ -73,7 +73,10 @@ export function registerDmsVisualContracts() {
 
     expect(architecture).toContain('ProductArchitectureSection')
     expect(architecture).toContain('title="构建数据要素流通全过程监管体系"')
-    expect(architecture).toContain('fallback-text="数据要素监管体系架构图占位符"')
+    expect(architecture).toContain('RegulationArchitectureFlow')
+    expect(architecture).toContain('w-[min(1704px,100%)]')
+    expect(architecture).toContain('-translate-x-1/2')
+    expect(architecture).toContain('-translate-y-1/2')
     expect(architecture).not.toContain('EnterpriseFlow')
     expect(architecture).not.toContain('<style')
 
