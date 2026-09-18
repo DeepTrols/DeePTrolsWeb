@@ -4,6 +4,7 @@ import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSec
 import ProductSystemFlowFrame from '~/components/common/ProductSystemFlowFrame.vue'
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
 import SectionShell from '~/components/common/section/SectionShell.vue'
+import EducationAgentBaseFlow from '~/components/demo/education-agent-base/EducationAgentBaseFlow.client.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import EducationAgentFlowSection from '~/components/solution/education/EducationAgentFlowSection.vue'
@@ -46,7 +47,21 @@ useSeoMeta({
             width="wide"
           />
         </div>
-        <ProductSystemFlowFrame label="教育智能体运行底座能力图" />
+        <ProductSystemFlowFrame
+          label="教育智能体运行底座能力图"
+          fallback-text="教育智能体运行底座能力图加载中"
+        >
+          <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
+            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+              <ClientOnly>
+                <EducationAgentBaseFlow :viewport-y="21" />
+                <template #fallback>
+                  <div class="size-full" aria-hidden="true"></div>
+                </template>
+              </ClientOnly>
+            </div>
+          </div>
+        </ProductSystemFlowFrame>
       </SectionShell>
       <EducationCapabilityCardsSection />
       <EducationValueSection />

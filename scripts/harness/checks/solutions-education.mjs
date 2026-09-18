@@ -27,7 +27,15 @@ export function checkSolutionsEducationContracts(ctx) {
       educationPage.includes('class="pt-32"') &&
       educationPage.includes('spacing="compact"') &&
       educationPage.includes('eyebrow="解决方案"') &&
-      educationPage.includes('<ProductSystemFlowFrame label="教育智能体运行底座能力图" />') &&
+      educationPage.includes('<ProductSystemFlowFrame') &&
+      educationPage.includes('label="教育智能体运行底座能力图"') &&
+      educationPage.includes('fallback-text="教育智能体运行底座能力图加载中"') &&
+      educationPage.includes('EducationAgentBaseFlow') &&
+      educationPage.includes('<ClientOnly>') &&
+      educationPage.includes('h-[560px] w-[1704px]') &&
+      educationPage.includes('-translate-x-1/2 -translate-y-1/2') &&
+      educationPage.includes(':viewport-y="21"') &&
+      !educationPage.includes(':grid="false"') &&
       educationPage.includes('EducationCapabilityCardsSection') &&
       educationPage.includes('EducationValueSection') &&
       educationPage.includes('EducationAgentFlowSection') &&
