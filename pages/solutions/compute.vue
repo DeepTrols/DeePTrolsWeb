@@ -4,6 +4,8 @@ import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSec
 import ProductSystemFlowFrame from '~/components/common/ProductSystemFlowFrame.vue'
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
 import SectionShell from '~/components/common/section/SectionShell.vue'
+import DatacenterLoopFlow from '~/components/demo/datacenter-loop/DatacenterLoopFlow.client.vue'
+import DatacenterSynergyFlow from '~/components/demo/datacenter-synergy/DatacenterSynergyFlow.client.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import DatacenterHero from '~/components/solution/datacenter/DatacenterHero.vue'
@@ -48,7 +50,21 @@ useSeoMeta({
             width="wide"
           />
         </div>
-        <ProductSystemFlowFrame :label="datacenterSolutionLabel" />
+        <ProductSystemFlowFrame
+          :label="datacenterSolutionLabel"
+          :fallback-text="`${datacenterSolutionLabel}加载中`"
+        >
+          <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
+            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+              <ClientOnly>
+                <DatacenterSynergyFlow :viewport-y="31" />
+                <template #fallback>
+                  <div class="size-full" aria-hidden="true"></div>
+                </template>
+              </ClientOnly>
+            </div>
+          </div>
+        </ProductSystemFlowFrame>
       </SectionShell>
       <ProductFeatureGridSection
         eyebrow="核心能力"
@@ -68,7 +84,21 @@ useSeoMeta({
             width="wide"
           />
         </div>
-        <ProductSystemFlowFrame :label="datacenterLoopLabel" />
+        <ProductSystemFlowFrame
+          :label="datacenterLoopLabel"
+          :fallback-text="`${datacenterLoopLabel}加载中`"
+        >
+          <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
+            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+              <ClientOnly>
+                <DatacenterLoopFlow :viewport-y="-10" />
+                <template #fallback>
+                  <div class="size-full" aria-hidden="true"></div>
+                </template>
+              </ClientOnly>
+            </div>
+          </div>
+        </ProductSystemFlowFrame>
       </SectionShell>
       <DatacenterScenariosSection />
       <CtaSection title-id="datacenter-cta-title" />
