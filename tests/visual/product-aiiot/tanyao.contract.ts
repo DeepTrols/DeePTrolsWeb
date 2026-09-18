@@ -137,6 +137,14 @@ describe('tanyao ai-iot page contract', () => {
     expect(solution).toContain('eyebrow="解决方案"')
     expect(solution).toContain('title-id="tanyao-solution-title"')
     expect(solution).toContain('SystemCards')
+    // the solution frame embeds the tanyao aiot architecture flow, centered on the unified 1704px canvas with the grid kept
+    expect(solution).toContain('TanyaoIotArchitectureFlow')
+    expect(solution).toContain('<ClientOnly>')
+    expect(solution).toContain('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden')
+    expect(solution).toContain('absolute left-1/2 top-1/2 h-[520px] w-[1704px] -translate-x-1/2 -translate-y-1/2')
+    expect(solution).toContain('fallback-text="解决方案架构图加载中"')
+    expect(solution).not.toContain(':grid="false"')
+    expect(solution).not.toContain('<style')
 
     expect(capability).toContain('AlternatingTimelineSection')
     expect(capability).toContain('eyebrow="核心能力"')

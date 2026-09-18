@@ -75,9 +75,14 @@ assert(
     tanyaoSolution.includes('SystemCards') &&
     tanyaoSolution.includes('tanyaoSolutionCards') &&
     tanyaoSolution.includes('eyebrow="解决方案"') &&
-    tanyaoSolution.includes('fallback-text="解决方案流程图占位符"') &&
+    tanyaoSolution.includes('TanyaoIotArchitectureFlow') &&
+    tanyaoSolution.includes('fallback-text="解决方案架构图加载中"') &&
+    tanyaoSolution.includes('<ClientOnly>') &&
+    tanyaoSolution.includes('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden') &&
+    tanyaoSolution.includes('absolute left-1/2 top-1/2 h-[520px] w-[1704px] -translate-x-1/2 -translate-y-1/2') &&
+    !tanyaoSolution.includes(':grid="false"') &&
     !tanyaoSolution.includes('<style'),
-  'TanyaoSolutionSection must combine ProductArchitectureSection with SystemCards and a flow frame placeholder.',
+  'TanyaoSolutionSection must combine ProductArchitectureSection with SystemCards and embed the centered TanyaoIotArchitectureFlow on the unified 1704px canvas while keeping the frame grid background.',
 )
 assert(
   tanyaoCapability.includes('AlternatingTimelineSection') &&
