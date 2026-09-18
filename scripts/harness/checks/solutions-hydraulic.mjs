@@ -25,7 +25,15 @@ export function checkSolutionsHydraulicContracts(ctx) {
       hydraulicPage.includes('class="pt-32"') &&
       hydraulicPage.includes('spacing="compact"') &&
       hydraulicPage.includes('eyebrow="解决方案"') &&
-      hydraulicPage.includes('<ProductSystemFlowFrame label="智慧水利知识中枢能力图" />') &&
+      hydraulicPage.includes('<ProductSystemFlowFrame') &&
+      hydraulicPage.includes('label="智慧水利知识中枢能力图"') &&
+      hydraulicPage.includes('fallback-text="智慧水利知识中枢能力图加载中"') &&
+      hydraulicPage.includes('HydraulicHubFlow') &&
+      hydraulicPage.includes('<ClientOnly>') &&
+      hydraulicPage.includes('h-[560px] w-[1704px]') &&
+      hydraulicPage.includes('-translate-x-1/2 -translate-y-1/2') &&
+      hydraulicPage.includes(':viewport-y="16"') &&
+      !hydraulicPage.includes(':grid="false"') &&
       hydraulicPage.includes('HydraulicCapabilityCardsSection') &&
       hydraulicPage.includes('HydraulicValueSection') &&
       hydraulicPage.includes('HydraulicCustomerCasesSection') &&

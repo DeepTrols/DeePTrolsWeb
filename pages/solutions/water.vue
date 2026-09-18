@@ -3,6 +3,7 @@ import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
 import ProductSystemFlowFrame from '~/components/common/ProductSystemFlowFrame.vue'
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
+import HydraulicHubFlow from '~/components/demo/hydraulic-hub/HydraulicHubFlow.client.vue'
 import SectionShell from '~/components/common/section/SectionShell.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
@@ -45,7 +46,21 @@ useSeoMeta({
             width="wide"
           />
         </div>
-        <ProductSystemFlowFrame label="智慧水利知识中枢能力图" />
+        <ProductSystemFlowFrame
+          label="智慧水利知识中枢能力图"
+          fallback-text="智慧水利知识中枢能力图加载中"
+        >
+          <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
+            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+              <ClientOnly>
+                <HydraulicHubFlow :viewport-y="16" />
+                <template #fallback>
+                  <div class="size-full" aria-hidden="true"></div>
+                </template>
+              </ClientOnly>
+            </div>
+          </div>
+        </ProductSystemFlowFrame>
       </SectionShell>
       <HydraulicCapabilityCardsSection />
       <HydraulicValueSection />
