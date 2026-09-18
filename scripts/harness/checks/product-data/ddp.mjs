@@ -108,9 +108,16 @@ assert(
     ddpUnifiedDevelopment.includes('ProductSystemFlowFrame') &&
     ddpUnifiedDevelopment.includes('title="统一数据开发：从接入到交付"') &&
     ddpUnifiedDevelopment.includes('ddpUnifiedDevelopmentItems') &&
-    ddpUnifiedDevelopment.includes('fallback-text="统一数据开发流程图占位符"') &&
+    ddpUnifiedDevelopment.includes('DdpUnifiedDevelopmentFlow') &&
+    ddpUnifiedDevelopment.includes('<ClientOnly>') &&
+    ddpUnifiedDevelopment.includes('h-[560px] w-[1704px]') &&
+    ddpUnifiedDevelopment.includes('-translate-x-1/2 -translate-y-1/2') &&
+    ddpUnifiedDevelopment.includes(':viewport-y="16"') &&
+    ddpUnifiedDevelopment.includes('label="统一数据开发流程图"') &&
+    ddpUnifiedDevelopment.includes('fallback-text="统一数据开发流程图加载中"') &&
+    !ddpUnifiedDevelopment.includes('占位符') &&
     !ddpUnifiedDevelopment.includes('<style'),
-  'DDP unified development section must compose ProductFeatureGridSection with ProductSystemFlowFrame through the after slot.',
+  'DDP unified development section must compose ProductFeatureGridSection with the centered unified development flow inside ProductSystemFlowFrame through the after slot.',
 )
 const ddpSources = [ddpData, ddpPage, ddpHero, ddpArchitecture, ddpTimeline, ddpUnifiedDevelopment].join('\n')
 for (const text of [
