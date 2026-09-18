@@ -4,6 +4,9 @@ import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSec
 import ProductSystemFlowFrame from '~/components/common/ProductSystemFlowFrame.vue'
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
 import SectionShell from '~/components/common/section/SectionShell.vue'
+import FdeDeliveryFlow from '~/components/demo/fde-delivery/FdeDeliveryFlow.client.vue'
+import FdeSolutionFlow from '~/components/demo/fde-solution/FdeSolutionFlow.client.vue'
+import FdeWorkModeFlow from '~/components/demo/fde-work-mode/FdeWorkModeFlow.client.vue'
 import FdeCapabilityCardsSection from '~/components/solution/fde/FdeCapabilityCardsSection.vue'
 import FdeCustomerCasesSection from '~/components/solution/fde/FdeCustomerCasesSection.vue'
 import FdeEvolutionSection from '~/components/solution/fde/FdeEvolutionSection.vue'
@@ -44,7 +47,22 @@ import {
       spacing="compact"
     >
       <template #before>
-        <ProductSystemFlowFrame :label="fdeSolutionLabel" class="mb-10" />
+        <ProductSystemFlowFrame
+          :label="fdeSolutionLabel"
+          :fallback-text="`${fdeSolutionLabel}加载中`"
+          class="mb-10"
+        >
+          <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
+            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+              <ClientOnly>
+                <FdeSolutionFlow :viewport-y="-17" />
+                <template #fallback>
+                  <div class="size-full" aria-hidden="true"></div>
+                </template>
+              </ClientOnly>
+            </div>
+          </div>
+        </ProductSystemFlowFrame>
       </template>
     </ProductFeatureGridSection>
     <SectionShell title-id="fde-work-mode-title" spacing="compact">
@@ -57,7 +75,21 @@ import {
           width="wide"
         />
       </div>
-      <ProductSystemFlowFrame :label="fdeWorkModeLabel" />
+      <ProductSystemFlowFrame
+        :label="fdeWorkModeLabel"
+        :fallback-text="`${fdeWorkModeLabel}加载中`"
+      >
+        <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
+          <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+            <ClientOnly>
+              <FdeWorkModeFlow :viewport-y="10" />
+              <template #fallback>
+                <div class="size-full" aria-hidden="true"></div>
+              </template>
+            </ClientOnly>
+          </div>
+        </div>
+      </ProductSystemFlowFrame>
     </SectionShell>
     <FdeCapabilityCardsSection />
     <FdeValueSection />
@@ -72,7 +104,21 @@ import {
           width="wide"
         />
       </div>
-      <ProductSystemFlowFrame :label="fdeDeliveryLabel" />
+      <ProductSystemFlowFrame
+        :label="fdeDeliveryLabel"
+        :fallback-text="`${fdeDeliveryLabel}加载中`"
+      >
+        <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
+          <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+            <ClientOnly>
+              <FdeDeliveryFlow :viewport-y="46" />
+              <template #fallback>
+                <div class="size-full" aria-hidden="true"></div>
+              </template>
+            </ClientOnly>
+          </div>
+        </div>
+      </ProductSystemFlowFrame>
     </SectionShell>
     <FdeCustomerCasesSection />
     <CtaSection title-id="fde-cta-title" />

@@ -32,7 +32,22 @@ export function checkSolutionsFdeContracts(ctx) {
       fdePageContent.includes('eyebrow="解决方案"') &&
       fdePageContent.includes(':items="fdeSolutionItems"') &&
       fdePageContent.includes('columns="four"') &&
-      fdePageContent.includes('<ProductSystemFlowFrame :label="fdeSolutionLabel" class="mb-10" />') &&
+      fdePageContent.includes('<ProductSystemFlowFrame') &&
+      fdePageContent.includes(':label="fdeSolutionLabel"') &&
+      fdePageContent.includes(':fallback-text="`${fdeSolutionLabel}加载中`"') &&
+      fdePageContent.includes('class="mb-10"') &&
+      fdePageContent.includes('FdeSolutionFlow') &&
+      fdePageContent.includes(':label="fdeWorkModeLabel"') &&
+      fdePageContent.includes('FdeWorkModeFlow') &&
+      fdePageContent.includes(':label="fdeDeliveryLabel"') &&
+      fdePageContent.includes('FdeDeliveryFlow') &&
+      fdePageContent.includes('<ClientOnly>') &&
+      fdePageContent.includes('h-[560px] w-[1704px]') &&
+      fdePageContent.includes('-translate-x-1/2 -translate-y-1/2') &&
+      fdePageContent.includes(':viewport-y="-17"') &&
+      fdePageContent.includes(':viewport-y="10"') &&
+      fdePageContent.includes(':viewport-y="46"') &&
+      !fdePageContent.includes(':grid="false"') &&
       fdePageContent.includes('eyebrow="FDE工作模式"') &&
       fdePageContent.includes('FdeCapabilityCardsSection') &&
       fdePageContent.includes('<FdeValueSection />') &&
