@@ -14,6 +14,24 @@ export function registerBoyaoVisualContracts() {
     expect(architecture).not.toContain('<style')
   })
 
+  it('renders the boyao integration flow inside the shared grid frame and unified canvas', () => {
+    const integration = readComponent('components/product/boyao/BoyaoIntegrationSection.vue')
+    const flow = readComponent('components/demo/boyao-integration/BoyaoIntegrationFlow.client.vue')
+
+    expect(integration).toContain('ProductArchitectureSection')
+    expect(integration).toContain('BoyaoIntegrationFlow')
+    expect(integration).toContain('<ClientOnly>')
+    expect(integration).toContain('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden')
+    expect(integration).toContain('h-[560px] w-[1704px]')
+    expect(integration).toContain('-translate-x-1/2 -translate-y-1/2')
+    expect(integration).toContain(':viewport-y="16"')
+    expect(integration).toContain('label="博曜系统集成架构图"')
+    expect(integration).toContain('fallback-text="系统集成架构图加载中"')
+    expect(integration).not.toContain(':grid="false"')
+    expect(integration).not.toContain('<style')
+    expect(flow).toContain('viewportY: 26')
+  })
+
   it('renders the boyao hero card icon boxes through the shared IconBox soft tone', () => {
     const iconBox = readComponent('components/common/card/IconBox.vue')
     const featureCard = readComponent('components/common/card/FeatureCard.vue')
