@@ -2,6 +2,18 @@ import { expect, it } from 'vitest'
 import { readComponent } from '../utils'
 
 export function registerBoyaoVisualContracts() {
+  it('renders the knowledge hub flow inside the shared grid frame and unified canvas', () => {
+    const architecture = readComponent('components/product/boyao/BoyaoArchitectureSection.vue')
+
+    expect(architecture).toContain('ProductArchitectureSection')
+    expect(architecture).toContain('KnowledgeHubFlow')
+    expect(architecture).toContain('<ClientOnly>')
+    expect(architecture).toContain('h-[520px] w-[1704px]')
+    expect(architecture).toContain('-translate-x-1/2 -translate-y-1/2')
+    expect(architecture).toContain('fallback-text="统一知识架构图加载中"')
+    expect(architecture).not.toContain('<style')
+  })
+
   it('renders the boyao hero card icon boxes through the shared IconBox soft tone', () => {
     const iconBox = readComponent('components/common/card/IconBox.vue')
     const featureCard = readComponent('components/common/card/FeatureCard.vue')

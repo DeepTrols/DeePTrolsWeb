@@ -21,7 +21,7 @@
 2. 严格按照 `doc/product/PAGE_REQUIREMENTS/PRODUCT/KNOWLEDGE/BOYAO.md` 实现页面结构与文案。
 3. Hero 使用公共 `PageHero`，actions 下方插入三项统计条，右侧视觉 1:1 复刻参考页面的知识流转动画（布局、坐标、配色、动画时长与延迟不变，文字与 icon 替换为知识主题）。
 4. 将核心价值板块的卡片结构抽离为公共组件（`ProductValueSection` / `ValueCard` / `IsoCube`）。
-5. 架构图与系统集成板块使用 `ProductSystemFlowFrame`，flow 暂不传入。
+5. 架构图与系统集成板块使用 `ProductSystemFlowFrame`；架构图已接入 Knowledge Hub Vue Flow，系统集成仍保留占位。
 6. 核心能力板块仅提供占位。
 7. 精准/高效/稳定板块使用文字 + 图片占位符的交替布局。
 8. CTA 使用公共 `CtaSection`。
@@ -46,7 +46,8 @@
 5. 新增 `components/product/boyao/` 组件：
    - `BoyaoHero.vue` + `BoyaoHeroVisual.vue`：neuron 风格知识流转动画（企业知识资产 → 博曜平台三能力卡 → 智能应用/企业场景），保留原布局坐标、蓝紫配色、双 SVG 流光圆点、涟漪与脉冲锚点。
    - `BoyaoCoreValueSection.vue` + `BoyaoEfficiencyVisual.vue` / `BoyaoIntegrationVisual.vue` / `BoyaoApplicationVisual.vue`：三张价值卡动画（知识汇入 IsoCube、解析·抽取·建模分流至知识库/知识图谱/知识应用、3秒获取知识 + ≥50% 检索效率提升）。
-   - `BoyaoArchitectureSection.vue` / `BoyaoIntegrationSection.vue`：`ProductSystemFlowFrame` 占位。
+   - `BoyaoArchitectureSection.vue`：在 `ProductSystemFlowFrame` 内接入 Knowledge Hub Flow，保留格子背景，按 1704px 统一画布居中。
+   - `BoyaoIntegrationSection.vue`：保留 `ProductSystemFlowFrame` 占位。
    - `BoyaoCapabilitySection.vue`：占位面板。
    - `BoyaoShowcaseSection.vue`：精准/高效/稳定交替图文（图片占位符）。
 6. 新增 `pages/products/knowledge-base.vue` 页面与 SEO meta。
