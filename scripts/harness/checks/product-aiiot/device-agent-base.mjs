@@ -47,9 +47,17 @@ assert(
     deviceAgentArchitectureSection.includes('eyebrow="智能体架构"') &&
     deviceAgentArchitectureSection.includes('title="从设备模型，到真正会行动的 Agent"') &&
     deviceAgentArchitectureSection.includes('title-id="device-agent-architecture-title"') &&
-    deviceAgentArchitectureSection.includes('label="Device Agent 智能体架构图占位"') &&
+    deviceAgentArchitectureSection.includes('label="Device Agent 智能体架构图"') &&
+    deviceAgentArchitectureSection.includes('fallback-text="智能体架构图加载中"') &&
+    deviceAgentArchitectureSection.includes('DeviceAgentArchitectureFlow') &&
+    deviceAgentArchitectureSection.includes(':viewport-y="24.7"') &&
+    deviceAgentArchitectureSection.includes(':zoom="0.98"') &&
+    deviceAgentArchitectureSection.includes('<ClientOnly>') &&
+    deviceAgentArchitectureSection.includes('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden') &&
+    deviceAgentArchitectureSection.includes('absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2') &&
+    !deviceAgentArchitectureSection.includes(':grid="false"') &&
     !deviceAgentArchitectureSection.includes('<style'),
-  'The device-agent architecture section must reuse ProductArchitectureSection with a ProductSystemFlowFrame placeholder (no flow yet) and stay Tailwind-only.',
+  'The device-agent architecture section must reuse ProductArchitectureSection and embed the centered DeviceAgentArchitectureFlow on the unified 1704px canvas (0.98 zoom to fit the 560px frame) while keeping the frame grid background, Tailwind-only.',
 )
 assert(
   deviceAgentValueSection.includes('ProductFeatureGridSection') &&

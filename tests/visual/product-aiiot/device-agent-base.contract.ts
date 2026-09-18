@@ -96,7 +96,7 @@ describe('device agent page contract', () => {
     expect(data.indexOf('周报汇总')).toBeLessThan(data.indexOf('智能问数'))
   })
 
-  it('renders Section2 through the shared ProductArchitectureSection with a flow frame placeholder', () => {
+  it('renders Section2 through the shared ProductArchitectureSection with the centered architecture flow', () => {
     const section = readComponent('components/product/device-agent/DeviceAgentArchitectureSection.vue')
 
     expect(section).toContain('ProductArchitectureSection')
@@ -104,7 +104,15 @@ describe('device agent page contract', () => {
     expect(section).toContain('title="从设备模型，到真正会行动的 Agent"')
     expect(section).toContain('title-id="device-agent-architecture-title"')
     expect(section).toContain('subtitle="Agent 理解设备能力，读取实时状态，执行指令并返回可验证的结果。"')
-    expect(section).toContain('Device Agent 智能体架构图占位符')
+    // the frame embeds the device agent architecture flow, centered on the unified 1704px canvas with the grid kept
+    expect(section).toContain('DeviceAgentArchitectureFlow')
+    expect(section).toContain(':viewport-y="24.7"')
+    expect(section).toContain(':zoom="0.98"')
+    expect(section).toContain('<ClientOnly>')
+    expect(section).toContain('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden')
+    expect(section).toContain('absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2')
+    expect(section).toContain('fallback-text="智能体架构图加载中"')
+    expect(section).not.toContain(':grid="false"')
     expect(section).not.toContain('<style')
   })
 
