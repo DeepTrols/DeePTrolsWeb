@@ -20,7 +20,16 @@ export function checkSolutionsManufacturingContracts(ctx) {
       manufacturingPage.includes('header-width="wide"') &&
       !manufacturingPage.includes(':icon-box-size="56"') &&
       !manufacturingPage.includes(':icon-size="48"') &&
-      manufacturingPage.includes('<ProductSystemFlowFrame label="制造智能闭环能力图" class="mb-10" />') &&
+      manufacturingPage.includes('<ProductSystemFlowFrame') &&
+      manufacturingPage.includes('label="制造智能闭环能力图"') &&
+      manufacturingPage.includes('fallback-text="制造智能闭环能力图加载中"') &&
+      manufacturingPage.includes('class="mb-10"') &&
+      manufacturingPage.includes('ManufacturingLoopFlow') &&
+      manufacturingPage.includes('<ClientOnly>') &&
+      manufacturingPage.includes('h-[560px] w-[1704px]') &&
+      manufacturingPage.includes('-translate-x-1/2 -translate-y-1/2') &&
+      manufacturingPage.includes(':viewport-y="48"') &&
+      !manufacturingPage.includes(':grid="false"') &&
       manufacturingPage.includes('ManufacturingCapabilityCardsSection') &&
       manufacturingPage.includes('title="为什么选择深度数智"') &&
       manufacturingPage.includes('columns="three"') &&

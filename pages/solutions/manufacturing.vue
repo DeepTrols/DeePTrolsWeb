@@ -2,6 +2,7 @@
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
 import ProductSystemFlowFrame from '~/components/common/ProductSystemFlowFrame.vue'
+import ManufacturingLoopFlow from '~/components/demo/manufacturing-loop/ManufacturingLoopFlow.client.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import ManufacturingCapabilityCardsSection from '~/components/solution/manufacturing/ManufacturingCapabilityCardsSection.vue'
@@ -44,7 +45,22 @@ useSeoMeta({
         spacing="compact"
       >
         <template #before>
-          <ProductSystemFlowFrame label="制造智能闭环能力图" class="mb-10" />
+          <ProductSystemFlowFrame
+            label="制造智能闭环能力图"
+            fallback-text="制造智能闭环能力图加载中"
+            class="mb-10"
+          >
+            <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
+              <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+                <ClientOnly>
+                  <ManufacturingLoopFlow :viewport-y="48" />
+                  <template #fallback>
+                    <div class="size-full" aria-hidden="true"></div>
+                  </template>
+                </ClientOnly>
+              </div>
+            </div>
+          </ProductSystemFlowFrame>
         </template>
       </ProductFeatureGridSection>
       <ManufacturingCapabilityCardsSection />
