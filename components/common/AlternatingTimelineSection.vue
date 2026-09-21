@@ -9,13 +9,16 @@ export interface AlternatingTimelineItem {
   bullets: string[]
 }
 
-defineProps<{
+withDefaults(defineProps<{
   eyebrow: string
   title: string
   titleId: string
   subtitle: string
   items: AlternatingTimelineItem[]
-}>()
+  transparentVisual?: boolean
+}>(), {
+  transparentVisual: false,
+})
 
 function contentClasses(index: number) {
   return index % 2 === 1 ? 'lg:col-start-2 lg:pl-12' : 'lg:col-start-1 lg:pr-12'
@@ -75,19 +78,21 @@ function visualClasses(index: number) {
               </div>
 
               <div
-                class="relative min-h-[280px] overflow-hidden rounded-2xl bg-dt-bg-soft/30 lg:min-h-[360px]"
-                :class="visualClasses(index)"
-                role="img"
-                :aria-label="`${item.title} 图片占位符`"
+                class="relative min-h-[280px] overflow-hidden rounded-2xl lg:min-h-[360px]"
+                :class="[visualClasses(index), { 'bg-dt-bg-soft/30': !transparentVisual }]"
               >
-                <div
-                  class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:44px_44px] bg-[position:center_center]"
-                  aria-hidden="true"
-                ></div>
-                <div class="absolute inset-8 rounded-2xl bg-dt-bg/45" aria-hidden="true"></div>
-                <div class="absolute inset-0 grid place-items-center text-sm font-medium text-dt-text-muted">
-                  图片占位符
-                </div>
+                <slot name="visual" :item="item" :index="index">
+                  <div class="absolute inset-0" role="img" :aria-label="`${item.title} 图片占位符`">
+                    <div
+                      class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:44px_44px] bg-[position:center_center]"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="absolute inset-8 rounded-2xl bg-dt-bg/45" aria-hidden="true"></div>
+                    <div class="absolute inset-0 grid place-items-center text-sm font-medium text-dt-text-muted">
+                      图片占位符
+                    </div>
+                  </div>
+                </slot>
               </div>
             </div>
           </div>

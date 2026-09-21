@@ -65,6 +65,9 @@ export function registerBoyaoVisualContracts() {
     expect(capability).toContain('eyebrow="核心能力"')
     expect(capability).toContain('title="让企业知识真正理解业务"')
     expect(capability).toContain('title-id="boyao-capability-title"')
+    expect(capability).toContain('BoyaoCapabilityVisual')
+    expect(capability).toContain('transparent-visual')
+    expect(capability).toContain('<template #visual="{ index }">')
     expect(capability).not.toContain('ProductSystemSection')
     expect(boyaoData).toContain('export const boyaoTimelineItems: AlternatingTimelineItem[]')
     expect(boyaoData).not.toContain('boyaoCapabilitiesPlaceholder')
@@ -72,6 +75,27 @@ export function registerBoyaoVisualContracts() {
     expect(page).toContain('BoyaoCapabilitySection')
     expect(page).not.toContain('ServiceShowcaseSection')
     expect(page).not.toContain('boyaoShowcases')
+
+    const capabilityVisual = readComponent('components/product/boyao/capability/BoyaoCapabilityVisual.vue')
+    const parsingVisual = readComponent('components/product/boyao/capability/BoyaoMultimodalParsingVisual.vue')
+    const batchVisual = readComponent('components/product/boyao/capability/BoyaoBatchParsingVisual.vue')
+    const availabilityVisual = readComponent('components/product/boyao/capability/BoyaoHighAvailabilityVisual.vue')
+    expect(capabilityVisual).toContain('BoyaoMultimodalParsingVisual')
+    expect(capabilityVisual).toContain('BoyaoBatchParsingVisual')
+    expect(capabilityVisual).toContain('BoyaoHighAvailabilityVisual')
+    for (const visual of [parsingVisual, batchVisual, availabilityVisual]) {
+      expect(visual).toContain('useRuntimeTimeline(6200)')
+      expect(visual).toContain('min-h-[280px]')
+      expect(visual).toContain('lg:min-h-[360px]')
+      expect(visual).not.toContain('<style')
+      expect(visual).not.toContain('style=')
+    }
+    expect(parsingVisual).toContain('多模态解析引擎')
+    expect(parsingVisual).toContain('Markdown / JSON')
+    expect(batchVisual).toContain('批量解析任务')
+    expect(batchVisual).toContain('100 页 / 1.5 秒')
+    expect(availabilityVisual).toContain('知识服务运行中心')
+    expect(availabilityVisual).toContain('99.999%')
   })
 
   it('renders the boyao xinchuang compatibility grid through the shared CompatibilityGridSection', () => {
