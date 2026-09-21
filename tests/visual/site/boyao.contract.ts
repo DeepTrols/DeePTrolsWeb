@@ -87,6 +87,10 @@ export function registerBoyaoVisualContracts() {
       expect(visual).toContain('useRuntimeTimeline(6200)')
       expect(visual).toContain('min-h-[280px]')
       expect(visual).toContain('lg:min-h-[360px]')
+      expect(visual).toContain('flex items-center border-b border-muted px-4 py-3')
+      expect(visual).toContain('size-3 rounded-full bg-red-500/70')
+      expect(visual).toContain('size-3 rounded-full bg-yellow-500/70')
+      expect(visual).toContain('size-3 rounded-full bg-green-500/70')
       expect(visual).not.toContain('<style')
       expect(visual).not.toContain('style=')
     }
