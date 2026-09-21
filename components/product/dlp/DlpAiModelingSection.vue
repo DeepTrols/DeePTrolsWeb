@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
+import DlpAiModelingVisual from '~/components/product/dlp/DlpAiModelingVisual.vue'
 </script>
 
 <template>
@@ -14,21 +15,7 @@ import SectionHeader from '~/components/common/section/SectionHeader.vue'
         width="wide"
       />
 
-      <div
-        class="relative min-h-[320px] overflow-hidden rounded-2xl bg-dt-bg-soft/40 lg:min-h-[460px]"
-        role="img"
-        aria-label="AI 辅助建标图片占位符"
-      >
-        <div
-          class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:44px_44px] bg-[position:center_center]"
-          aria-hidden="true"
-        ></div>
-        <div class="absolute inset-x-10 top-12 h-24 rounded-full bg-primary/10 blur-3xl" aria-hidden="true"></div>
-        <div class="absolute inset-8 rounded-2xl border border-dt-line-strong bg-dt-bg/55" aria-hidden="true"></div>
-        <div class="absolute inset-0 grid place-items-center text-sm font-medium text-dt-text-muted">
-          图片占位符
-        </div>
-      </div>
+      <DlpAiModelingVisual />
     </div>
   </section>
 </template>

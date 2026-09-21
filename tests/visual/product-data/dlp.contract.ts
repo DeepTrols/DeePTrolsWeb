@@ -100,8 +100,20 @@ export function registerDlpVisualContracts() {
     expect(timeline).not.toContain('<style')
     expect(aiModeling).toContain('SectionHeader')
     expect(aiModeling).toContain('AI 辅助建标')
-    expect(aiModeling).toContain('图片占位符')
+    expect(aiModeling).toContain('DlpAiModelingVisual')
+    expect(aiModeling).not.toContain('图片占位符')
     expect(aiModeling).not.toContain('<style')
+    const aiModelingVisual = readComponent('components/product/dlp/DlpAiModelingVisual.vue')
+    expect(aiModelingVisual).toContain('useRuntimeTimeline(6400)')
+    expect(aiModelingVisual).toContain('flex items-center border-b border-muted px-4 py-3')
+    expect(aiModelingVisual).toContain('bg-red-500/70')
+    expect(aiModelingVisual).toContain('bg-yellow-500/70')
+    expect(aiModelingVisual).toContain('bg-green-500/70')
+    expect(aiModelingVisual).toContain('AI 语义理解')
+    expect(aiModelingVisual).toContain('智能建模结果')
+    expect(aiModelingVisual).toContain('标签模型校验通过，已发布至标签目录')
+    expect(aiModelingVisual).not.toContain('<style')
+    expect(aiModelingVisual).not.toContain('style=')
 
     for (const text of [
       '标准混乱',

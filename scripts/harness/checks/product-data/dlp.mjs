@@ -1,5 +1,6 @@
 export function checkDlpProductContracts(ctx) {
   const { assert, read, dlpData, dlpPage, dlpHero, dlpHeroVisual, dlpHeroSql, dlpArchitecture, dlpTimeline, dlpAiModeling } = ctx
+const dlpAiModelingVisual = read('components/product/dlp/DlpAiModelingVisual.vue')
 assert(
   dlpPage.includes('SiteHeader') &&
     dlpPage.includes('SiteFooter') &&
@@ -89,9 +90,23 @@ assert(
 assert(
   dlpAiModeling.includes('SectionHeader') &&
     dlpAiModeling.includes('AI 辅助建标') &&
-    dlpAiModeling.includes('图片占位符') &&
+    dlpAiModeling.includes('DlpAiModelingVisual') &&
+    !dlpAiModeling.includes('图片占位符') &&
     !dlpAiModeling.includes('<style'),
-  'DLP AI modeling section must use SectionHeader and a Tailwind-only image placeholder.',
+  'DLP AI modeling section must use SectionHeader and the dedicated AI modeling visual.',
+)
+assert(
+  dlpAiModelingVisual.includes('useRuntimeTimeline(6400)') &&
+    dlpAiModelingVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dlpAiModelingVisual.includes('bg-red-500/70') &&
+    dlpAiModelingVisual.includes('bg-yellow-500/70') &&
+    dlpAiModelingVisual.includes('bg-green-500/70') &&
+    dlpAiModelingVisual.includes('AI 语义理解') &&
+    dlpAiModelingVisual.includes('智能建模结果') &&
+    dlpAiModelingVisual.includes('标签模型校验通过，已发布至标签目录') &&
+    !dlpAiModelingVisual.includes('<style') &&
+    !dlpAiModelingVisual.includes('style='),
+  'DLP AI modeling visual must keep the requested traffic-light titlebar and animate requirement-to-model generation.',
 )
 const dlpSources = [dlpData, dlpPage, dlpHero, dlpArchitecture, dlpTimeline, dlpAiModeling].join('\n')
 for (const text of [
