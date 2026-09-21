@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
+import DgpEvolutionVisual from '~/components/product/dgp/evolution/DgpEvolutionVisual.vue'
 import { dgpEvolutionItems } from '~/data/dgp'
 </script>
 
@@ -49,12 +50,10 @@ import { dgpEvolutionItems } from '~/data/dgp'
             <div
               class="relative min-h-[280px] overflow-hidden lg:min-h-[340px]"
               :class="index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : 'lg:col-start-2 lg:row-start-1'"
-              role="img"
-              :aria-label="`${item.title} 配图占位符`"
+              role="group"
+              :aria-label="`${item.title} 核心能力动画`"
             >
-              <div class="absolute inset-0 grid place-items-center text-sm font-medium text-dt-text-muted">
-                图片占位符
-              </div>
+              <DgpEvolutionVisual :index="index" />
             </div>
           </div>
         </div>

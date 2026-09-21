@@ -62,11 +62,13 @@ assert(
     !dgpEvolution.includes('class="dt-card p-6 backdrop-blur-xl"') &&
     dgpEvolution.includes('rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-[13px] font-semibold text-primary/80') &&
     dgpEvolution.includes('lg:grid-cols-2 lg:gap-12') &&
-    dgpEvolution.includes('图片占位符') &&
+    dgpEvolution.includes('DgpEvolutionVisual') &&
+    dgpEvolution.includes('核心能力动画') &&
+    !dgpEvolution.includes('图片占位符') &&
     !dgpEvolution.includes('border border-dt-line bg-dt-bg-soft/40') &&
     !dgpEvolution.includes('SectionHeading') &&
     !dgpEvolution.includes('<style'),
-  'DGP evolution section must keep the required alternating Tailwind layout.',
+  'DGP evolution section must keep the required alternating Tailwind layout and mount its three capability visuals.',
 )
 assert(
   dgpUseCases.includes('class="flow-root pb-32 lg:pb-44"') &&
