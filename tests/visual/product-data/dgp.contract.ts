@@ -14,10 +14,14 @@ export function registerDgpVisualContracts() {
     const iconBox = readComponent('components/common/card/IconBox.vue')
     const cardGrid = readComponent('components/common/card/CardGrid.vue')
     const featureCard = readComponent('components/common/card/FeatureCard.vue')
-    const baseTabs = readComponent('components/common/tabs/BaseTabs.vue')
     const architecture = readComponent('components/product/dgp/DgpArchitecture.vue')
     const systemCards = readComponent('components/common/SystemCards.vue')
     const evolution = readComponent('components/product/dgp/DgpEvolutionSection.vue')
+    const evolutionVisuals = [
+      readComponent('components/product/dgp/evolution/DgpSourceIntegrationVisual.vue'),
+      readComponent('components/product/dgp/evolution/DgpQualityGovernanceVisual.vue'),
+      readComponent('components/product/dgp/evolution/DgpAssetServiceVisual.vue'),
+    ]
     const useCases = readComponent('components/product/dgp/DgpUseCasesSection.vue')
     const data = readComponent('data/dgp.ts')
 
@@ -41,6 +45,7 @@ export function registerDgpVisualContracts() {
     expect(hero).toContain('title-line="可用、可管、可信"')
     expect(hero).toContain('title-gradient="企业数据底座"')
     expect(hero).toContain('visual-label="SHUYAODGP_HORE_WEBM"')
+    expect(hero).toContain('class="min-h-[655px]"')
     expect(hero).toContain('DgpHeroVisual')
     expect(hero).toContain('visual-size="large"')
     expect(pageHero).toContain("visualSize: 'default'")
@@ -123,30 +128,30 @@ export function registerDgpVisualContracts() {
     expect(evolution).not.toContain('border border-dt-line bg-dt-bg-soft/40')
     expect(evolution).not.toContain('SectionHeading')
     expect(evolution).not.toContain('<style')
+    for (const visual of evolutionVisuals) {
+      expect(visual).toContain('useRuntimeTimeline')
+      expect(visual).toContain('flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)] lg:min-h-[340px]')
+      expect(visual).toContain('flex items-center border-b border-muted px-4 py-3')
+      expect(visual).toContain('size-3 rounded-full bg-red-500/70')
+      expect(visual).toContain('size-3 rounded-full bg-yellow-500/70')
+      expect(visual).toContain('size-3 rounded-full bg-green-500/70')
+      expect(visual).toContain('flex flex-1 flex-col p-4 lg:p-5')
+      expect(visual).not.toContain('<style')
+      expect(visual).not.toContain('style=')
+    }
 
-    expect(useCases).toContain('class="flow-root pb-32 lg:pb-44"')
-    expect(useCases).toContain('class="container"')
-    expect(useCases).toContain('text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted')
-    expect(useCases).toContain('text-center text-base text-default')
-    expect(useCases).toContain('lg:whitespace-nowrap')
-    expect(useCases).toContain('BaseTabs')
-    expect(useCases).toContain('useCaseTabs')
-    expect(useCases).toContain('variant="underline"')
-    expect(baseTabs).toContain('role="tablist"')
-    expect(baseTabs).toContain('role="tab"')
-    expect(baseTabs).toContain('data-slot="root"')
-    expect(baseTabs).toContain('data-slot="list"')
-    expect(baseTabs).toContain('data-slot="trigger"')
-    expect(baseTabs).toContain('data-slot="indicator"')
-    expect(baseTabs).toContain('data-slot="label"')
-    expect(baseTabs).toContain('px-5 py-4 text-base font-medium')
-    expect(baseTabs).toContain('border-b border-dt-line')
-    expect(useCases).toContain('role="tabpanel"')
-    expect(useCases).toContain('BaseButton')
-    expect(useCases).toContain('了解更多')
-    expect(useCases).not.toContain('class="dt-tab"')
-    expect(useCases).not.toContain('SectionHeading')
-    expect(useCases).not.toContain('!pb-0')
+    expect(useCases).toContain('SectionShell')
+    expect(useCases).toContain('SectionHeader')
+    expect(useCases).toContain('eyebrow="应用场景"')
+    expect(useCases).toContain('title="数据治理赋能关键业务场景"')
+    expect(useCases).toContain('CardGrid columns="two"')
+    expect(useCases).toContain('BaseCard')
+    expect(useCases).toContain('IconBox')
+    expect(useCases).toContain('CardText')
+    expect(useCases).toContain('equal-height')
+    expect(useCases).not.toContain('BaseTabs')
+    expect(useCases).not.toContain('role="tabpanel"')
+    expect(useCases).not.toContain('min-h-[')
     expect(useCases).not.toContain('<style')
 
     for (const text of [
@@ -154,7 +159,9 @@ export function registerDgpVisualContracts() {
       '数据接入',
       '数据集成',
       '政务数据治理',
-      '物联数据汇聚与治理',
+      '制造数据治理',
+      '企业经营数据治理',
+      'AI 数据基础设施',
     ]) {
       expect(data).toContain(text)
     }

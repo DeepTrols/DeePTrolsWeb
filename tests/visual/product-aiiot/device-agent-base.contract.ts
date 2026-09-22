@@ -16,6 +16,7 @@ describe('device agent page contract', () => {
     expect(hero).toContain('visual-label="DEVICEAGENT_HORE_WEBM"')
     expect(hero).toContain('align="center"')
     expect(hero).not.toContain(':actions')
+    expect(hero).not.toContain('min-h-[655px]')
     expect(hero).toContain('<DeviceAgentHeroVisual />')
 
     // shared PageHero exposes the centered variant without breaking the left baseline
@@ -109,8 +110,9 @@ describe('device agent page contract', () => {
     expect(section).toContain(':viewport-y="24.7"')
     expect(section).toContain(':zoom="0.98"')
     expect(section).toContain('<ClientOnly>')
-    expect(section).toContain('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden')
-    expect(section).toContain('absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2')
+    expect(section).toContain('class="max-lg:hidden"')
+    expect(section).toContain('relative z-[1] mx-auto h-full w-full overflow-hidden @container')
+    expect(section).toContain('absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]')
     expect(section).toContain('fallback-text="智能体架构图加载中"')
     expect(section).not.toContain(':grid="false"')
     expect(section).not.toContain('<style')

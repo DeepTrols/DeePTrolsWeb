@@ -6,6 +6,7 @@ import BoyaoHeroVisual from '~/components/product/boyao/BoyaoHeroVisual.vue'
 
 <template>
   <PageHero
+    class="min-h-[655px]"
     background-image-src="/images/products/product-hero-bg.png"
     badge="博曜·企业级知识管理平台"
     :badge-icon="BookOpen"

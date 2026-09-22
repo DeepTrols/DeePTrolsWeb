@@ -13,9 +13,10 @@ import DeviceAgentArchitectureFlow from '~/components/demo/device-agent/DeviceAg
     fallback-text="智能体架构图加载中"
     :content-flush="false"
     :frame-offset="false"
+    class="max-lg:hidden"
   >
-    <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-      <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+    <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+      <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
         <ClientOnly>
           <DeviceAgentArchitectureFlow :viewport-y="24.7" :zoom="0.98" />
           <template #fallback>

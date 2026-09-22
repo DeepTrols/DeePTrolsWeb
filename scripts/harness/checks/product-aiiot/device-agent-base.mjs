@@ -8,6 +8,7 @@ assert(
     deviceAgentHero.includes('title-line="让Agent基于实时数据决策与行动"') &&
     deviceAgentHero.includes('title-gradient="串联事件、记忆、执行和决策"') &&
     deviceAgentHero.includes('visual-label="DEVICEAGENT_HORE_WEBM"') &&
+    !deviceAgentHero.includes('min-h-[655px]') &&
     !deviceAgentHero.includes(':actions') &&
     deviceAgentHero.includes('Cpu'),
   'DeviceAgentHero must compose the shared PageHero centered variant with the requirement copy; the CTA is rendered by PageHero itself.',
@@ -53,8 +54,9 @@ assert(
     deviceAgentArchitectureSection.includes(':viewport-y="24.7"') &&
     deviceAgentArchitectureSection.includes(':zoom="0.98"') &&
     deviceAgentArchitectureSection.includes('<ClientOnly>') &&
-    deviceAgentArchitectureSection.includes('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden') &&
-    deviceAgentArchitectureSection.includes('absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2') &&
+    deviceAgentArchitectureSection.includes('class="max-lg:hidden"') &&
+    deviceAgentArchitectureSection.includes('relative z-[1] mx-auto h-full w-full overflow-hidden @container') &&
+    deviceAgentArchitectureSection.includes('absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]') &&
     !deviceAgentArchitectureSection.includes(':grid="false"') &&
     !deviceAgentArchitectureSection.includes('<style'),
   'The device-agent architecture section must reuse ProductArchitectureSection and embed the centered DeviceAgentArchitectureFlow on the unified 1704px canvas (0.98 zoom to fit the 560px frame) while keeping the frame grid background, Tailwind-only.',

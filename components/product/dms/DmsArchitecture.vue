@@ -11,9 +11,10 @@ import RegulationArchitectureFlow from '~/components/demo/regulation/RegulationA
     subtitle="以统一监管规则为核心，结合实时监测、智能预警、工单协同与监管驾驶舱，实现风险自动发现、自动预警、自动处置、全过程留痕。"
     label="数曜·数据要素监管平台解决方案架构图"
     fallback-text="数据要素监管体系架构图加载中"
+    class="max-lg:hidden"
   >
-    <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-      <div class="absolute left-1/2 top-1/2 h-[480px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+    <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+      <div class="absolute left-1/2 top-1/2 h-[480px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
         <RegulationArchitectureFlow />
       </div>
     </div>

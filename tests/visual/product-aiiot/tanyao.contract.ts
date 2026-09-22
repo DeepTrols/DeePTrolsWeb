@@ -14,6 +14,7 @@ describe('tanyao ai-iot page contract', () => {
     expect(hero).toContain('title-line="连接、感知、智能"')
     expect(hero).toContain('title-gradient="AIoT智能物联底座"')
     expect(hero).toContain('visual-label="TANYAOIOT_HORE_WEBM"')
+    expect(hero).toContain('class="min-h-[655px]"')
     expect(hero).toContain('visual-size="large"')
     expect(hero).toContain('flush-bottom')
     // the visual right edge follows the boyao baseline (ml-auto canvas), not flush-visual-end
@@ -140,8 +141,8 @@ describe('tanyao ai-iot page contract', () => {
     // the solution frame embeds the tanyao aiot architecture flow, centered on the unified 1704px canvas with the grid kept
     expect(solution).toContain('TanyaoIotArchitectureFlow')
     expect(solution).toContain('<ClientOnly>')
-    expect(solution).toContain('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden')
-    expect(solution).toContain('absolute left-1/2 top-1/2 h-[520px] w-[1704px] -translate-x-1/2 -translate-y-1/2')
+    expect(solution).toContain('relative z-[1] mx-auto h-full w-full overflow-hidden @container')
+    expect(solution).toContain('absolute left-1/2 top-1/2 h-[520px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]')
     expect(solution).toContain('fallback-text="解决方案架构图加载中"')
     expect(solution).not.toContain(':grid="false"')
     expect(solution).not.toContain('<style')
@@ -150,6 +151,34 @@ describe('tanyao ai-iot page contract', () => {
     expect(capability).toContain('eyebrow="核心能力"')
     expect(capability).toContain('title-id="tanyao-capability-title"')
     expect(capability).toContain('tanyaoTimelineItems')
+    expect(capability).toContain('<template #visual="{ index }">')
+    expect(capability).toContain('TanyaoCapabilityVisual')
+    expect(capability).toContain('transparent-visual')
+
+    const capabilityVisual = readComponent('components/product/tanyao/capability/TanyaoCapabilityVisual.vue')
+    expect(capabilityVisual).toContain('defineProps<{ index: number }>()')
+    const capabilityVisuals = [
+      ['components/product/tanyao/capability/TanyaoDeviceConnectVisual.vue', '全栈设备接入', 'PLC 控制器'],
+      ['components/product/tanyao/capability/TanyaoProtocolVisual.vue', '多协议原生支持', 'Modbus'],
+      ['components/product/tanyao/capability/TanyaoEdgeCloudVisual.vue', '云边协同计算', '探曜 Edge'],
+      ['components/product/tanyao/capability/TanyaoTsdbVisual.vue', '时序数据引擎', 'getRuntimeBarWidthClass'],
+      ['components/product/tanyao/capability/TanyaoRuleEngineVisual.vue', '规则引擎', '温度超限'],
+      ['components/product/tanyao/capability/TanyaoAiFusionVisual.vue', 'AI 智能应用落地', '故障预测'],
+    ] as const
+    for (const [path, title, marker] of capabilityVisuals) {
+      const visual = readComponent(path)
+      expect(capabilityVisual).toContain(path.split('/').pop()!.replace('.vue', ''))
+      expect(visual).toContain('useRuntimeTimeline')
+      expect(visual).toContain('flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)] lg:min-h-[360px]')
+      expect(visual).toContain('flex items-center border-b border-muted px-4 py-3')
+      expect(visual).toContain('size-3 rounded-full bg-red-500/70')
+      expect(visual).toContain('size-3 rounded-full bg-yellow-500/70')
+      expect(visual).toContain('size-3 rounded-full bg-green-500/70')
+      expect(visual).toContain(title)
+      expect(visual).toContain(marker)
+      expect(visual).not.toContain('<style')
+      expect(visual).not.toContain('style=')
+    }
 
     // capability items have no bullets, so the shared timeline must guard the list
     expect(timeline).toContain('v-if="item.bullets.length"')

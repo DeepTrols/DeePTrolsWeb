@@ -6,6 +6,7 @@ import DdpHeroVisual from '~/components/product/ddp/DdpHeroVisual.vue'
 
 <template>
   <PageHero
+    class="min-h-[655px]"
     background-image-src="/images/products/product-hero-bg.png"
     badge="数曜·数据开发平台"
     :badge-icon="Network"

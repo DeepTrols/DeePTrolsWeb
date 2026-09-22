@@ -1,5 +1,5 @@
 export function checkDmsProductContracts(ctx) {
-  const { assert, dmsData, dmsPage, dmsHero, dmsHeroVisual, dmsHeroAnimation, dmsArchitecture, dmsIntelligentRegulation, dmsBusinessValue, dmsRegulationProcess } = ctx
+  const { assert, dmsData, dmsPage, dmsHero, dmsHeroVisual, dmsHeroAnimation, dmsArchitecture, dmsIntelligentRegulation, dmsCapabilityVisual, dmsRuleCenterVisual, dmsEventMonitorVisual, dmsWorkOrderVisual, dmsCockpitVisual, dmsLifecycleVisual, dmsBusinessValue, dmsRegulationProcess, dmsRegulationProcessFlow } = ctx
 assert(
   dmsPage.includes('SiteHeader') &&
     dmsPage.includes('SiteFooter') &&
@@ -25,6 +25,7 @@ assert(
     dmsHero.includes('title-line="让数据流通安全、可信"') &&
     dmsHero.includes('title-gradient="全流程监管平台"') &&
     dmsHero.includes('visual-label="SHUYAODMS_HORE_WEBM"') &&
+    dmsHero.includes('class="min-h-[655px]"') &&
     dmsHero.includes('visual-size="large"') &&
     dmsHero.includes('DmsHeroVisual'),
   'DMS hero must follow the PageHero contract from DMS.md and Hero.md.',
@@ -75,7 +76,9 @@ assert(
   dmsArchitecture.includes('ProductArchitectureSection') &&
     dmsArchitecture.includes('title="构建数据要素流通全过程监管体系"') &&
     dmsArchitecture.includes('RegulationArchitectureFlow') &&
-    dmsArchitecture.includes('w-[min(1704px,100%)]') &&
+    dmsArchitecture.includes('class="max-lg:hidden"') &&
+    dmsArchitecture.includes('w-full overflow-hidden @container') &&
+    dmsArchitecture.includes('scale-[min(1,calc(100cqw/1704px))]') &&
     dmsArchitecture.includes('-translate-x-1/2') &&
     dmsArchitecture.includes('-translate-y-1/2') &&
     !dmsArchitecture.includes('EnterpriseFlow') &&
@@ -86,10 +89,83 @@ assert(
   dmsIntelligentRegulation.includes('AlternatingTimelineSection') &&
     dmsIntelligentRegulation.includes('dmsTimelineItems') &&
     dmsIntelligentRegulation.includes('title="智能监管，全程守护"') &&
+    dmsIntelligentRegulation.includes('<template #visual="{ index }">') &&
+    dmsIntelligentRegulation.includes('DmsCapabilityVisual') &&
+    dmsIntelligentRegulation.includes('transparent-visual') &&
     !dmsIntelligentRegulation.includes('BaseCard') &&
     !dmsIntelligentRegulation.includes('IconBox') &&
     !dmsIntelligentRegulation.includes('<style'),
-  'DMS intelligent regulation section must reuse the shared alternating timeline component.',
+  'DMS intelligent regulation section must reuse the shared alternating timeline and inject capability visuals through the visual slot.',
+)
+assert(
+  dmsCapabilityVisual.includes('DmsRuleCenterVisual') &&
+    dmsCapabilityVisual.includes('DmsEventMonitorVisual') &&
+    dmsCapabilityVisual.includes('DmsWorkOrderVisual') &&
+    dmsCapabilityVisual.includes('DmsCockpitVisual') &&
+    dmsCapabilityVisual.includes('DmsLifecycleVisual') &&
+    dmsCapabilityVisual.includes('defineProps<{ index: number }>()'),
+  'DMS capability visual dispatcher must map the five timeline indexes to the five regulation animations.',
+)
+assert(
+  dmsRuleCenterVisual.includes('useRuntimeTimeline') &&
+    dmsRuleCenterVisual.includes('监管规则中心') &&
+    dmsRuleCenterVisual.includes('数据主体准入校验') &&
+    dmsRuleCenterVisual.includes('发布启用') &&
+    dmsRuleCenterVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dmsRuleCenterVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dmsRuleCenterVisual.includes('bg-red-500/70') &&
+    !dmsRuleCenterVisual.includes('<style') &&
+    !dmsRuleCenterVisual.includes('style='),
+  'DMS rule center visual must animate graded rule configuration with the traffic-light titlebar.',
+)
+assert(
+  dmsEventMonitorVisual.includes('useRuntimeTimeline') &&
+    dmsEventMonitorVisual.includes('实时风险监测') &&
+    dmsEventMonitorVisual.includes('异常交易行为') &&
+    dmsEventMonitorVisual.includes('收敛去重') &&
+    dmsEventMonitorVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dmsEventMonitorVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dmsEventMonitorVisual.includes('bg-red-500/70') &&
+    !dmsEventMonitorVisual.includes('<style') &&
+    !dmsEventMonitorVisual.includes('style='),
+  'DMS event monitor visual must animate realtime risk detection with event convergence.',
+)
+assert(
+  dmsWorkOrderVisual.includes('useRuntimeTimeline') &&
+    dmsWorkOrderVisual.includes('智能工单闭环') &&
+    dmsWorkOrderVisual.includes('WO-20260921-017') &&
+    dmsWorkOrderVisual.includes('审计留痕') &&
+    dmsWorkOrderVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dmsWorkOrderVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dmsWorkOrderVisual.includes('bg-red-500/70') &&
+    !dmsWorkOrderVisual.includes('<style') &&
+    !dmsWorkOrderVisual.includes('style='),
+  'DMS work order visual must animate the event-to-workorder closed loop with multi-role assignment.',
+)
+assert(
+  dmsCockpitVisual.includes('useRuntimeTimeline') &&
+    dmsCockpitVisual.includes('getRuntimeBarWidthClass') &&
+    dmsCockpitVisual.includes('可视化监管驾驶舱') &&
+    dmsCockpitVisual.includes('规则运行') &&
+    dmsCockpitVisual.includes('决策支撑') &&
+    dmsCockpitVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dmsCockpitVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dmsCockpitVisual.includes('bg-red-500/70') &&
+    !dmsCockpitVisual.includes('<style') &&
+    !dmsCockpitVisual.includes('style='),
+  'DMS cockpit visual must animate the supervision dashboard metrics with progress bars.',
+)
+assert(
+  dmsLifecycleVisual.includes('useRuntimeTimeline') &&
+    dmsLifecycleVisual.includes('全流程监管体系') &&
+    dmsLifecycleVisual.includes('事前预防') &&
+    dmsLifecycleVisual.includes('全程追溯') &&
+    dmsLifecycleVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dmsLifecycleVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dmsLifecycleVisual.includes('bg-red-500/70') &&
+    !dmsLifecycleVisual.includes('<style') &&
+    !dmsLifecycleVisual.includes('style='),
+  'DMS lifecycle visual must animate the pre/during/post supervision stages with trace archiving.',
 )
 assert(
   dmsBusinessValue.includes('ProductSystemSection') &&
@@ -112,9 +188,33 @@ assert(
     dmsRegulationProcess.includes('ProductSystemFlowFrame') &&
     dmsRegulationProcess.includes('dmsProcessItems') &&
     dmsRegulationProcess.includes('<template #before>') &&
-    dmsRegulationProcess.includes('fallback-text="数据要素监管流程图占位符"') &&
+    dmsRegulationProcess.includes('label="数据要素监管流程图"') &&
+    dmsRegulationProcess.includes('fallback-text="数据要素监管流程图加载中"') &&
+    dmsRegulationProcess.includes('DmsRegulationProcessFlow') &&
+    dmsRegulationProcess.includes('<ClientOnly>') &&
+    dmsRegulationProcess.includes('class="mb-12 max-lg:hidden lg:mb-16"') &&
+    dmsRegulationProcess.includes('h-[560px] w-[1704px]') &&
+    dmsRegulationProcess.includes('w-full overflow-hidden @container') &&
+    dmsRegulationProcess.includes('scale-[min(1,calc(100cqw/1704px))]') &&
+    dmsRegulationProcess.includes('-translate-x-1/2 -translate-y-1/2') &&
+    !dmsRegulationProcess.includes(':grid="false"') &&
+    !dmsRegulationProcess.includes('占位') &&
     !dmsRegulationProcess.includes('<style'),
-  'DMS regulation process must compose ProductFeatureGridSection with ProductSystemFlowFrame through the before slot.',
+  'DMS regulation process must embed the regulation process flow with the scale-to-fit recipe through the before slot.',
+)
+assert(
+  dmsRegulationProcessFlow.includes("type: 'dmsRegulationProcessCurve'") &&
+    dmsRegulationProcessFlow.includes("type: 'dmsRegulationProcessReturn'") &&
+    dmsRegulationProcessFlow.includes('viewportY: 60') &&
+    dmsRegulationProcessFlow.includes('事前预防') &&
+    dmsRegulationProcessFlow.includes('事中监控') &&
+    dmsRegulationProcessFlow.includes('事后处置') &&
+    dmsRegulationProcessFlow.includes('监管分析') &&
+    dmsRegulationProcessFlow.includes('规则持续优化') &&
+    dmsRegulationProcessFlow.includes("sourceHandle: 'loop'") &&
+    dmsRegulationProcessFlow.includes("targetHandle: 'loop'") &&
+    !dmsRegulationProcessFlow.includes('<style'),
+  'DMS regulation process flow must compose the four-stage pipeline with the bottom return loop on the 1704px canvas.',
 )
 const dmsSources = [dmsData, dmsPage, dmsHero, dmsArchitecture, dmsIntelligentRegulation, dmsBusinessValue, dmsRegulationProcess].join('\n')
 for (const text of [

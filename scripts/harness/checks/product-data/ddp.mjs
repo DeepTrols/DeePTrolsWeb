@@ -1,5 +1,5 @@
 export function checkDdpProductContracts(ctx) {
-  const { assert, pageHero, ddpData, ddpPage, ddpHero, ddpHeroVisual, ddpHeroSql, ddpHeroAnimation, ddpFlowCanvas, ddpFlowNode, ddpArchitecture, ddpTimeline, ddpUnifiedDevelopment } = ctx
+  const { assert, pageHero, ddpData, ddpPage, ddpHero, ddpHeroVisual, ddpHeroSql, ddpHeroAnimation, ddpFlowCanvas, ddpFlowNode, ddpArchitecture, ddpTimeline, ddpUnifiedDevelopment, ddpCapabilityVisual, ddpCapabilityIntegrationVisual, ddpCapabilityDevelopmentVisual, ddpCapabilityOrchestrationVisual, ddpCapabilityDeliveryVisual } = ctx
 assert(
   ddpPage.includes('SiteHeader') &&
     ddpPage.includes('SiteFooter') &&
@@ -24,6 +24,7 @@ assert(
     ddpHero.includes('title-line="标准、智能、高效"') &&
     ddpHero.includes('title-gradient="数据开发平台"') &&
     ddpHero.includes('visual-label="SHUYAODDP_HORE_WEBM"') &&
+    ddpHero.includes('class="min-h-[655px]"') &&
     ddpHero.includes('DdpHeroVisual') &&
     ddpHero.includes('visual-size="fluid"') &&
     !ddpHero.includes('visual-size="large"'),
@@ -88,6 +89,9 @@ assert(
     ddpArchitecture.includes('SmartDataHubFlow') &&
     ddpArchitecture.includes('<ClientOnly>') &&
     ddpArchitecture.includes('h-[560px] w-[1704px]') &&
+    ddpArchitecture.includes('class="max-lg:hidden"') &&
+    ddpArchitecture.includes('w-full overflow-hidden @container') &&
+    ddpArchitecture.includes('scale-[min(1,calc(100cqw/1704px))]') &&
     ddpArchitecture.includes('-translate-x-1/2 -translate-y-1/2') &&
     ddpArchitecture.includes('fallback-text="数据开发体系架构图加载中"') &&
     !ddpArchitecture.includes('EnterpriseFlow') &&
@@ -98,10 +102,73 @@ assert(
   ddpTimeline.includes('AlternatingTimelineSection') &&
     ddpTimeline.includes('ddpTimelineItems') &&
     ddpTimeline.includes('title="覆盖数据开发全生命周期"') &&
+    ddpTimeline.includes('<template #visual="{ index }">') &&
+    ddpTimeline.includes('DdpCapabilityVisual') &&
+    ddpTimeline.includes('transparent-visual') &&
     !ddpTimeline.includes('BaseCard') &&
     !ddpTimeline.includes('IconBox') &&
     !ddpTimeline.includes('<style'),
-  'DDP core capability timeline must reuse the shared alternating timeline component.',
+  'DDP core capability timeline must reuse the shared alternating timeline and inject capability visuals through the visual slot.',
+)
+assert(
+  ddpCapabilityVisual.includes('DdpDataIntegrationVisual') &&
+    ddpCapabilityVisual.includes('DdpDataDevelopmentVisual') &&
+    ddpCapabilityVisual.includes('DdpTaskOrchestrationVisual') &&
+    ddpCapabilityVisual.includes('DdpContinuousDeliveryVisual') &&
+    ddpCapabilityVisual.includes('defineProps<{ index: number }>()'),
+  'DDP capability visual dispatcher must map the four timeline indexes to the four capability animations.',
+)
+assert(
+  ddpCapabilityIntegrationVisual.includes('useRuntimeTimeline') &&
+    ddpCapabilityIntegrationVisual.includes('多源数据接入') &&
+    ddpCapabilityIntegrationVisual.includes('连接配置') &&
+    ddpCapabilityIntegrationVisual.includes('统一目录') &&
+    ddpCapabilityIntegrationVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    ddpCapabilityIntegrationVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    ddpCapabilityIntegrationVisual.includes('bg-red-500/70') &&
+    !ddpCapabilityIntegrationVisual.includes('<style') &&
+    !ddpCapabilityIntegrationVisual.includes('style='),
+  'DDP data integration visual must animate multi-source connectors syncing into a unified catalog.',
+)
+assert(
+  ddpCapabilityDevelopmentVisual.includes('useRuntimeTimeline') &&
+    ddpCapabilityDevelopmentVisual.includes('统一开发工作台') &&
+    ddpCapabilityDevelopmentVisual.includes('低代码') &&
+    ddpCapabilityDevelopmentVisual.includes('task_customer_value.sql') &&
+    ddpCapabilityDevelopmentVisual.includes('语法校验') &&
+    ddpCapabilityDevelopmentVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    ddpCapabilityDevelopmentVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    ddpCapabilityDevelopmentVisual.includes('bg-red-500/70') &&
+    !ddpCapabilityDevelopmentVisual.includes('<style') &&
+    !ddpCapabilityDevelopmentVisual.includes('style='),
+  'DDP data development visual must animate the dual-mode SQL workspace with staged validation and run.',
+)
+assert(
+  ddpCapabilityOrchestrationVisual.includes('useRuntimeTimeline') &&
+    ddpCapabilityOrchestrationVisual.includes('getRuntimeBarWidthClass') &&
+    ddpCapabilityOrchestrationVisual.includes('智能任务编排') &&
+    ddpCapabilityOrchestrationVisual.includes('数据抽取') &&
+    ddpCapabilityOrchestrationVisual.includes('计算资源分配') &&
+    ddpCapabilityOrchestrationVisual.includes('资源优化') &&
+    ddpCapabilityOrchestrationVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    ddpCapabilityOrchestrationVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    ddpCapabilityOrchestrationVisual.includes('bg-red-500/70') &&
+    !ddpCapabilityOrchestrationVisual.includes('<style') &&
+    !ddpCapabilityOrchestrationVisual.includes('style='),
+  'DDP task orchestration visual must animate the DAG dependency chain with dynamic resource allocation.',
+)
+assert(
+  ddpCapabilityDeliveryVisual.includes('useRuntimeTimeline') &&
+    ddpCapabilityDeliveryVisual.includes('持续交付流水线') &&
+    ddpCapabilityDeliveryVisual.includes('v2.3.0 已发布') &&
+    ddpCapabilityDeliveryVisual.includes('质量门禁') &&
+    ddpCapabilityDeliveryVisual.includes('运行监控') &&
+    ddpCapabilityDeliveryVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    ddpCapabilityDeliveryVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    ddpCapabilityDeliveryVisual.includes('bg-red-500/70') &&
+    !ddpCapabilityDeliveryVisual.includes('<style') &&
+    !ddpCapabilityDeliveryVisual.includes('style='),
+  'DDP continuous delivery visual must animate the develop-test-release-monitor pipeline with quality gates.',
 )
 assert(
   ddpUnifiedDevelopment.includes('ProductFeatureGridSection') &&
@@ -111,6 +178,9 @@ assert(
     ddpUnifiedDevelopment.includes('DdpUnifiedDevelopmentFlow') &&
     ddpUnifiedDevelopment.includes('<ClientOnly>') &&
     ddpUnifiedDevelopment.includes('h-[560px] w-[1704px]') &&
+    ddpUnifiedDevelopment.includes('mt-12 max-lg:hidden lg:mt-16') &&
+    ddpUnifiedDevelopment.includes('w-full overflow-hidden @container') &&
+    ddpUnifiedDevelopment.includes('scale-[min(1,calc(100cqw/1704px))]') &&
     ddpUnifiedDevelopment.includes('-translate-x-1/2 -translate-y-1/2') &&
     ddpUnifiedDevelopment.includes(':viewport-y="16"') &&
     ddpUnifiedDevelopment.includes('label="统一数据开发流程图"') &&

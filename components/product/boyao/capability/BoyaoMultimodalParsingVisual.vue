@@ -16,7 +16,7 @@ const finished = computed(() => elapsed.value >= 5500)
 </script>
 
 <template>
-  <div class="flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-dt-line bg-white shadow-sm lg:min-h-[360px]" aria-label="多模态文档精准解析动画">
+  <div class="flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)] lg:min-h-[360px]" aria-label="多模态文档精准解析动画">
     <div class="flex items-center border-b border-muted px-4 py-3">
       <div class="flex gap-1.5">
         <div class="size-3 rounded-full bg-red-500/70"></div>

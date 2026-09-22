@@ -1,5 +1,5 @@
 export function checkDlpProductContracts(ctx) {
-  const { assert, read, dlpData, dlpPage, dlpHero, dlpHeroVisual, dlpHeroSql, dlpArchitecture, dlpTimeline, dlpAiModeling } = ctx
+  const { assert, read, dlpData, dlpPage, dlpHero, dlpHeroVisual, dlpHeroSql, dlpArchitecture, dlpTimeline, dlpAiModeling, dlpCapabilityVisual, dlpCapabilityModelingVisual, dlpCapabilityProductionVisual, dlpCapabilityGovernanceVisual, dlpCapabilityServiceVisual, dlpCapabilityScenarioVisual } = ctx
 const dlpAiModelingVisual = read('components/product/dlp/DlpAiModelingVisual.vue')
 assert(
   dlpPage.includes('SiteHeader') &&
@@ -24,6 +24,7 @@ assert(
     dlpHero.includes('title-line="协同、智能、高效"') &&
     dlpHero.includes('title-gradient="标签生产平台"') &&
     dlpHero.includes('visual-label="SHUYAODGP_HORE_WEBM"') &&
+    dlpHero.includes('class="min-h-[655px]"') &&
     dlpHero.includes('DlpHeroVisual') &&
     dlpHero.includes('visual-size="large"'),
   'DLP hero must follow the PageHero contract from DLP.md with the same large visual width as DGP.',
@@ -69,7 +70,9 @@ assert(
 assert(
   dlpArchitecture.includes('ProductArchitectureSection') &&
     dlpArchitecture.includes('TagPlatformArchitectureFlow') &&
-    dlpArchitecture.includes('w-[min(1704px,100%)]') &&
+    dlpArchitecture.includes('class="max-lg:hidden"') &&
+    dlpArchitecture.includes('w-full overflow-hidden @container') &&
+    dlpArchitecture.includes('scale-[min(1,calc(100cqw/1704px))]') &&
     dlpArchitecture.includes('-translate-x-1/2') &&
     dlpArchitecture.includes('-translate-y-1/2') &&
     !dlpArchitecture.includes('EnterpriseFlow') &&
@@ -81,11 +84,92 @@ assert(
     !dlpTimeline.includes('BaseCard') &&
     !dlpTimeline.includes('IconBox') &&
     dlpTimeline.includes('dlpTimelineItems') &&
+    dlpTimeline.includes('<template #visual="{ index }">') &&
+    dlpTimeline.includes('DlpCapabilityVisual') &&
+    dlpTimeline.includes('transparent-visual') &&
     !dlpTimeline.includes('item.icon') &&
     !dlpTimeline.includes('eyebrow-size="sm"') &&
     !dlpTimeline.includes('eyebrow-tone="primary"') &&
     !dlpTimeline.includes('<style'),
-  'DLP core capability timeline must reuse the shared EMQX Edge-like Tailwind-only alternating timeline.',
+  'DLP core capability timeline must reuse the shared alternating timeline and inject capability visuals through the visual slot.',
+)
+assert(
+  dlpCapabilityVisual.includes('DlpTagModelingVisual') &&
+    dlpCapabilityVisual.includes('DlpTagProductionVisual') &&
+    dlpCapabilityVisual.includes('DlpTagGovernanceVisual') &&
+    dlpCapabilityVisual.includes('DlpTagServiceVisual') &&
+    dlpCapabilityVisual.includes('DlpScenarioApplyVisual') &&
+    dlpCapabilityVisual.includes('defineProps<{ index: number }>()'),
+  'DLP capability visual dispatcher must map the five timeline indexes to the five capability animations.',
+)
+assert(
+  dlpCapabilityModelingVisual.includes('useRuntimeTimeline') &&
+    dlpCapabilityModelingVisual.includes('标签模型设计') &&
+    dlpCapabilityModelingVisual.includes('customer/visit_count') &&
+    dlpCapabilityModelingVisual.includes('目录规划') &&
+    dlpCapabilityModelingVisual.includes('模型发布') &&
+    dlpCapabilityModelingVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dlpCapabilityModelingVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dlpCapabilityModelingVisual.includes('bg-red-500/70') &&
+    !dlpCapabilityModelingVisual.includes('<style') &&
+    !dlpCapabilityModelingVisual.includes('style='),
+  'DLP tag modeling visual must animate the standardized tag modeling flow with the shared runtime timeline.',
+)
+assert(
+  dlpCapabilityProductionVisual.includes('useRuntimeTimeline') &&
+    dlpCapabilityProductionVisual.includes('getRuntimeBarWidthClass') &&
+    dlpCapabilityProductionVisual.includes('标签生产任务') &&
+    dlpCapabilityProductionVisual.includes('用户活跃标签') &&
+    dlpCapabilityProductionVisual.includes('规则配置') &&
+    dlpCapabilityProductionVisual.includes('实时更新') &&
+    dlpCapabilityProductionVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dlpCapabilityProductionVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dlpCapabilityProductionVisual.includes('bg-red-500/70') &&
+    !dlpCapabilityProductionVisual.includes('<style') &&
+    !dlpCapabilityProductionVisual.includes('style='),
+  'DLP tag production visual must animate offline/realtime tag production with progress bars.',
+)
+assert(
+  dlpCapabilityGovernanceVisual.includes('useRuntimeTimeline') &&
+    dlpCapabilityGovernanceVisual.includes('标签治理看板') &&
+    dlpCapabilityGovernanceVisual.includes('标签血缘') &&
+    dlpCapabilityGovernanceVisual.includes('版本记录') &&
+    dlpCapabilityGovernanceVisual.includes('生命周期') &&
+    dlpCapabilityGovernanceVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dlpCapabilityGovernanceVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dlpCapabilityGovernanceVisual.includes('bg-red-500/70') &&
+    !dlpCapabilityGovernanceVisual.includes('<style') &&
+    !dlpCapabilityGovernanceVisual.includes('style='),
+  'DLP tag governance visual must animate lineage, version, and quality governance.',
+)
+assert(
+  dlpCapabilityServiceVisual.includes('useRuntimeTimeline') &&
+    dlpCapabilityServiceVisual.includes('标签服务中心') &&
+    dlpCapabilityServiceVisual.includes('统一服务网关') &&
+    dlpCapabilityServiceVisual.includes('API 查询') &&
+    dlpCapabilityServiceVisual.includes('人群圈选') &&
+    dlpCapabilityServiceVisual.includes('调用监控') &&
+    dlpCapabilityServiceVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dlpCapabilityServiceVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dlpCapabilityServiceVisual.includes('bg-red-500/70') &&
+    !dlpCapabilityServiceVisual.includes('<style') &&
+    !dlpCapabilityServiceVisual.includes('style='),
+  'DLP tag service visual must animate tag aggregation through the unified service gateway to three service outputs.',
+)
+assert(
+  dlpCapabilityScenarioVisual.includes('useRuntimeTimeline') &&
+    dlpCapabilityScenarioVisual.includes('标签场景应用') &&
+    dlpCapabilityScenarioVisual.includes('用户画像') &&
+    dlpCapabilityScenarioVisual.includes('精准营销') &&
+    dlpCapabilityScenarioVisual.includes('风险识别') &&
+    dlpCapabilityScenarioVisual.includes('AI 模型') &&
+    dlpCapabilityScenarioVisual.includes('效果回流') &&
+    dlpCapabilityScenarioVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+    dlpCapabilityScenarioVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
+    dlpCapabilityScenarioVisual.includes('bg-red-500/70') &&
+    !dlpCapabilityScenarioVisual.includes('<style') &&
+    !dlpCapabilityScenarioVisual.includes('style='),
+  'DLP scenario apply visual must animate the four business/AI scenarios lighting up with audience growth.',
 )
 assert(
   dlpAiModeling.includes('SectionHeader') &&
@@ -97,6 +181,7 @@ assert(
 )
 assert(
   dlpAiModelingVisual.includes('useRuntimeTimeline(6400)') &&
+    dlpAiModelingVisual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
     dlpAiModelingVisual.includes('flex items-center border-b border-muted px-4 py-3') &&
     dlpAiModelingVisual.includes('bg-red-500/70') &&
     dlpAiModelingVisual.includes('bg-yellow-500/70') &&

@@ -18,7 +18,7 @@ const finished = computed(() => elapsed.value >= 5700)
 </script>
 
 <template>
-  <div class="flex h-full min-h-[320px] flex-col overflow-hidden rounded-2xl border border-muted bg-white shadow-sm lg:min-h-[460px]" aria-label="AI 辅助建标动画">
+  <div class="flex h-full min-h-[320px] flex-col overflow-hidden rounded-2xl border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)] lg:min-h-[460px]" aria-label="AI 辅助建标动画">
     <div class="flex items-center border-b border-muted px-4 py-3">
       <div class="flex gap-1.5">
         <div class="size-3 rounded-full bg-red-500/70"></div>

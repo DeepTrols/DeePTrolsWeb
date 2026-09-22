@@ -11,9 +11,10 @@ import KnowledgeHubFlow from '~/components/demo/knowledge-hub/KnowledgeHubFlow.c
     subtitle="以统一知识架构贯通知识采集、加工、组织与应用，让企业知识从分散沉淀走向智能理解与持续应用。"
     label="博曜·企业级知识管理平台统一知识架构图"
     fallback-text="统一知识架构图加载中"
+    class="max-lg:hidden"
   >
-    <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-      <div class="absolute left-1/2 top-1/2 h-[520px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+    <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+      <div class="absolute left-1/2 top-1/2 h-[520px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
         <ClientOnly>
           <KnowledgeHubFlow />
           <template #fallback>

@@ -15,13 +15,13 @@ import { ddpUnifiedDevelopmentItems } from '~/data/ddp'
     nowrap-subtitle
   >
     <template #after>
-      <div class="mt-12 lg:mt-16">
+      <div class="mt-12 max-lg:hidden lg:mt-16">
         <ProductSystemFlowFrame
           label="统一数据开发流程图"
           fallback-text="统一数据开发流程图加载中"
         >
-          <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+          <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
               <ClientOnly>
                 <DdpUnifiedDevelopmentFlow :viewport-y="16" />
                 <template #fallback>

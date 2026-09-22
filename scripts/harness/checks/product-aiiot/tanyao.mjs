@@ -1,5 +1,5 @@
 export function checkTanyaoProductContracts(ctx) {
-  const { assert, pageHero, tanyaoData, tanyaoPage, tanyaoHero, tanyaoHeroVisual, tanyaoSolution, tanyaoCapability, productMetrics, deviceAgentHeroVisual } = ctx
+  const { assert, pageHero, tanyaoData, tanyaoPage, tanyaoHero, tanyaoHeroVisual, tanyaoSolution, tanyaoCapability, tanyaoCapabilityVisual, tanyaoDeviceConnectVisual, tanyaoProtocolVisual, tanyaoEdgeCloudVisual, tanyaoTsdbVisual, tanyaoRuleEngineVisual, tanyaoAiFusionVisual, productMetrics, deviceAgentHeroVisual } = ctx
 assert(
   pageHero.includes("align?: 'left' | 'center'") &&
     pageHero.includes("align: 'left',") &&
@@ -51,6 +51,7 @@ assert(
     tanyaoHero.includes('title-line="连接、感知、智能"') &&
     tanyaoHero.includes('title-gradient="AIoT智能物联底座"') &&
     tanyaoHero.includes('visual-label="TANYAOIOT_HORE_WEBM"') &&
+    tanyaoHero.includes('class="min-h-[655px]"') &&
     tanyaoHero.includes('flush-bottom') &&
     !tanyaoHero.includes('flush-visual-end') &&
     !tanyaoHero.includes('HeroStatsStrip'),
@@ -78,8 +79,8 @@ assert(
     tanyaoSolution.includes('TanyaoIotArchitectureFlow') &&
     tanyaoSolution.includes('fallback-text="解决方案架构图加载中"') &&
     tanyaoSolution.includes('<ClientOnly>') &&
-    tanyaoSolution.includes('relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden') &&
-    tanyaoSolution.includes('absolute left-1/2 top-1/2 h-[520px] w-[1704px] -translate-x-1/2 -translate-y-1/2') &&
+    tanyaoSolution.includes('relative z-[1] mx-auto h-full w-full overflow-hidden @container') &&
+    tanyaoSolution.includes('absolute left-1/2 top-1/2 h-[520px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]') &&
     !tanyaoSolution.includes(':grid="false"') &&
     !tanyaoSolution.includes('<style'),
   'TanyaoSolutionSection must combine ProductArchitectureSection with SystemCards and embed the centered TanyaoIotArchitectureFlow on the unified 1704px canvas while keeping the frame grid background.',
@@ -89,9 +90,43 @@ assert(
     tanyaoCapability.includes('tanyaoTimelineItems') &&
     tanyaoCapability.includes('eyebrow="核心能力"') &&
     tanyaoCapability.includes('title-id="tanyao-capability-title"') &&
+    tanyaoCapability.includes('<template #visual="{ index }">') &&
+    tanyaoCapability.includes('TanyaoCapabilityVisual') &&
+    tanyaoCapability.includes('transparent-visual') &&
     !tanyaoCapability.includes('<style'),
-  'TanyaoCapabilitySection must reuse the shared AlternatingTimelineSection for the six core capabilities.',
+  'TanyaoCapabilitySection must reuse the shared AlternatingTimelineSection and inject the six capability animations through the visual slot.',
 )
+assert(
+  tanyaoCapabilityVisual.includes('TanyaoDeviceConnectVisual') &&
+    tanyaoCapabilityVisual.includes('TanyaoProtocolVisual') &&
+    tanyaoCapabilityVisual.includes('TanyaoEdgeCloudVisual') &&
+    tanyaoCapabilityVisual.includes('TanyaoTsdbVisual') &&
+    tanyaoCapabilityVisual.includes('TanyaoRuleEngineVisual') &&
+    tanyaoCapabilityVisual.includes('TanyaoAiFusionVisual') &&
+    tanyaoCapabilityVisual.includes('defineProps<{ index: number }>()'),
+  'Tanyao capability visual dispatcher must map the six timeline indexes to the six capability animations.',
+)
+for (const [visual, markers] of [
+  [tanyaoDeviceConnectVisual, ['全栈设备接入', 'PLC 控制器', '在线管理']],
+  [tanyaoProtocolVisual, ['多协议原生支持', 'Modbus', '开放连接器框架']],
+  [tanyaoEdgeCloudVisual, ['云边协同计算', '探曜 Edge', '云端协同']],
+  [tanyaoTsdbVisual, ['时序数据引擎', 'getRuntimeBarWidthClass', '模型训练']],
+  [tanyaoRuleEngineVisual, ['规则引擎', '温度超限', '联动编排']],
+  [tanyaoAiFusionVisual, ['AI 智能应用落地', '故障预测', '落地运行']],
+]) {
+  assert(
+    visual.includes('useRuntimeTimeline') &&
+      visual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+      visual.includes('flex items-center border-b border-muted px-4 py-3') &&
+      visual.includes('bg-red-500/70') &&
+      visual.includes('bg-yellow-500/70') &&
+      visual.includes('bg-green-500/70') &&
+      !visual.includes('<style') &&
+      !visual.includes('style=') &&
+      markers.every((marker) => visual.includes(marker)),
+    `Tanyao capability visual must keep the runtime timeline, traffic-light titlebar and its content markers: ${markers[0]}`,
+  )
+}
 assert(
   tanyaoPage.includes('SiteHeader') &&
     tanyaoPage.includes('SiteFooter') &&

@@ -6,6 +6,7 @@ import DlpHeroVisual from '~/components/product/dlp/DlpHeroVisual.vue'
 
 <template>
   <PageHero
+    class="min-h-[655px]"
     background-image-src="/images/products/product-hero-bg.png"
     badge="数曜·数据标签平台"
     :badge-icon="Boxes"

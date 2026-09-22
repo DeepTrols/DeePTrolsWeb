@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AlternatingTimelineSection from '~/components/common/AlternatingTimelineSection.vue'
+import DdpCapabilityVisual from '~/components/product/ddp/capability/DdpCapabilityVisual.vue'
 import { ddpTimelineItems } from '~/data/ddp'
 </script>
 
@@ -10,5 +11,10 @@ import { ddpTimelineItems } from '~/data/ddp'
     title-id="ddp-capability-flow-title"
     subtitle="从数据集成、开发、编排到调度与运维，提供完整的数据开发能力，帮助企业构建高质量、高效率的数据生产体系。"
     :items="ddpTimelineItems"
-  />
+    transparent-visual
+  >
+    <template #visual="{ index }">
+      <DdpCapabilityVisual :index="index" />
+    </template>
+  </AlternatingTimelineSection>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AlternatingTimelineSection from '~/components/common/AlternatingTimelineSection.vue'
+import DlpCapabilityVisual from '~/components/product/dlp/capability/DlpCapabilityVisual.vue'
 import { dlpTimelineItems } from '~/data/dlp'
 </script>
 
@@ -10,5 +11,10 @@ import { dlpTimelineItems } from '~/data/dlp'
     title-id="dlp-capability-flow-title"
     subtitle="数曜·数据标签平台覆盖标签建模、生产、治理、服务与应用全流程，让企业标签更易构建、更易管理、更易复用。"
     :items="dlpTimelineItems"
-  />
+    transparent-visual
+  >
+    <template #visual="{ index }">
+      <DlpCapabilityVisual :index="index" />
+    </template>
+  </AlternatingTimelineSection>
 </template>

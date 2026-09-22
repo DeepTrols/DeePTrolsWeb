@@ -12,9 +12,10 @@ import BoyaoIntegrationFlow from '~/components/demo/boyao-integration/BoyaoInteg
     :nowrap-subtitle="false"
     label="博曜系统集成架构图"
     fallback-text="系统集成架构图加载中"
+    class="max-lg:hidden"
   >
-    <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-      <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+    <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+      <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
         <ClientOnly>
           <BoyaoIntegrationFlow :viewport-y="16" />
           <template #fallback>
