@@ -3,5 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "types": ["vitest/globals"]
-  }
+  },
+  // admin/ 是独立的 vben 工程（自带 tsconfig 体系），主站 typecheck 排除
+  "exclude": ["admin"]
 }

@@ -3,6 +3,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2026-07-29',
   devtools: { enabled: true },
+  // admin/ 是独立的 vben 后台工程（含自身 node_modules 与 .vue 源文件），
+  // 主站所有扫描/监听（含 nitro dev watcher，走 nuxt.options.ignore）必须整体排除，否则 EMFILE
+  ignore: ['admin/**'],
   css: ['~/assets/css/tailwind.css', '~/assets/scss/main.scss'],
   runtimeConfig: {
     // 私密配置（仅服务端可用）：PostgreSQL 连接串，未配置时 server 层回退 data/*.ts 静态数据
@@ -15,6 +18,18 @@ export default defineNuxtConfig({
     // pnpm 将 vitest 依赖的 vite@5 提升到隐藏层，@nuxt/schema 的 vite 类型会解析到 vite@5，
     // 与 Nuxt/tailwind 插件实际使用的 vite@8 Plugin 类型冲突，此处收敛类型以通过 typecheck。
     plugins: [tailwindcss() as never],
+    server: {
+      watch: {
+        // admin/ 是独立的 vben 工程（含自身 node_modules），主站 watcher 必须排除，否则 EMFILE
+        ignored: ['**/admin/**'],
+      },
+    },
+  },
+  watchers: {
+    chokidar: {
+      // Nuxt 层（pages/server 目录扫描）同样排除 admin/
+      ignored: ['**/admin/**'],
+    },
   },
   app: {
     head: {
