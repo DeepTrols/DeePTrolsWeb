@@ -76,7 +76,8 @@ export function checkNewsDetailContracts(ctx) {
   assert(
     header.includes('isNewsDetailRoute') &&
       header.includes("route.path.startsWith('/news/')") &&
-      header.includes('isCaseDetailRoute.value ||\n    isNewsDetailRoute.value,'),
+      header.includes("route.path === '/contact'") &&
+      header.includes('isCaseDetailRoute.value ||\n    isNewsDetailRoute.value ||\n    isContactRoute.value,'),
     'SiteHeader must treat news detail routes as dark-header routes while keeping the /news list hero on the white foreground.',
   )
 

@@ -17,6 +17,7 @@ export const solutionKeyEnum = pgEnum('solution_key', [
 ])
 export const reportTypeEnum = pgEnum('report_type', ['产品规格书', '电子书', '白皮书', '视频', '幻灯片', '基准测试报告'])
 export const contentStatusEnum = pgEnum('content_status', ['draft', 'published'])
+export const leadStatusEnum = pgEnum('lead_status', ['new', 'followed', 'closed'])
 
 // 列表表：字段与 data/news.ts NewsItem 一一对应；id 沿用静态数据编号（种子按 id upsert）
 export const news = pgTable('news', {
@@ -80,4 +81,17 @@ export const reports = pgTable('reports', {
   status: contentStatusEnum('status').notNull().default('published'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
+// 线索：全站唯一公开写表；phone/email 至少其一由 zod 边界保证（server/utils/leads.ts）
+export const leads = pgTable('leads', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 50 }).notNull(),
+  company: varchar('company', { length: 100 }).notNull().default(''),
+  phone: varchar('phone', { length: 20 }).notNull().default(''),
+  email: varchar('email', { length: 100 }).notNull().default(''),
+  message: text('message').notNull(),
+  source: varchar('source', { length: 200 }).notNull().default('/contact'),
+  status: leadStatusEnum('status').notNull().default('new'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })

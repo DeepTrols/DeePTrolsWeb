@@ -15,6 +15,13 @@
       "when": 1790057131921,
       "tag": "0001_many_ultragirl",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790058736768,
+      "tag": "0002_tan_spencer_smythe",
+      "breakpoints": true
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { describe } from 'vitest'
 import { registerBackendContentVisualContracts } from './visual/backend/content-api.contract'
+import { registerBackendLeadsVisualContracts } from './visual/backend/leads-api.contract'
 import { registerBackendNewsVisualContracts } from './visual/backend/news-api.contract'
 import { registerCoreVisualContracts } from './visual/core.contract'
 import { registerProductAiiotVisualContracts } from './visual/product-aiiot.contract'
@@ -7,6 +8,7 @@ import { registerProductDataVisualContracts } from './visual/product-data.contra
 import { registerAboutVisualContracts } from './visual/site/about.contract'
 import { registerCaseVisualContracts } from './visual/site/case.contract'
 import { registerCaseDetailVisualContracts } from './visual/site/case-detail.contract'
+import { registerContactVisualContracts } from './visual/site/contact.contract'
 import { registerNewsVisualContracts } from './visual/site/news.contract'
 import { registerNewsDetailVisualContracts } from './visual/site/news-detail.contract'
 import { registerReportVisualContracts } from './visual/site/report.contract'
@@ -29,6 +31,7 @@ describe('visual implementation contract', () => {
   registerAboutVisualContracts()
   registerCaseVisualContracts()
   registerCaseDetailVisualContracts()
+  registerContactVisualContracts()
   registerNewsVisualContracts()
   registerNewsDetailVisualContracts()
   registerReportVisualContracts()
@@ -44,6 +47,7 @@ describe('visual implementation contract', () => {
   registerKnowledgeHubVisualContracts()
   registerBackendNewsVisualContracts()
   registerBackendContentVisualContracts()
+  registerBackendLeadsVisualContracts()
 })
 
 registerProductAiiotVisualContracts()

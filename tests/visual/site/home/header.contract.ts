@@ -32,7 +32,7 @@ export function registerHomeHeaderVisualContracts() {
     expect(header).toContain('isDarkHeaderRoute')
     expect(header).toContain('is-dark-header')
     expect(header).toContain(
-      'isProductRoute.value ||\n    isCasesRoute.value ||\n    isAboutRoute.value ||\n    isCaseDetailRoute.value ||\n    isNewsDetailRoute.value,',
+      'isProductRoute.value ||\n    isCasesRoute.value ||\n    isAboutRoute.value ||\n    isCaseDetailRoute.value ||\n    isNewsDetailRoute.value ||\n    isContactRoute.value,',
     )
     expect(header).toContain('isCaseDetailRoute')
     expect(header).toContain("route.path.startsWith('/cases/')")

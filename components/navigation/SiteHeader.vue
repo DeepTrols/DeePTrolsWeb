@@ -27,6 +27,8 @@ const isCaseDetailRoute = computed(() => route.path.startsWith('/cases/'))
 // News detail pages start with the light gradient + grey breadcrumb: black logo + black nav text at top.
 // The /news list page keeps the dark mc-hero underneath, so it stays on the white foreground.
 const isNewsDetailRoute = computed(() => route.path.startsWith('/news/'))
+// Contact page hero is the light PageHero: black logo + black nav text at top.
+const isContactRoute = computed(() => route.path === '/contact')
 // Routes whose heroes are light: black logo + black nav text at top and on hover.
 const isDarkHeaderRoute = computed(
   () =>
@@ -34,7 +36,8 @@ const isDarkHeaderRoute = computed(
     isCasesRoute.value ||
     isAboutRoute.value ||
     isCaseDetailRoute.value ||
-    isNewsDetailRoute.value,
+    isNewsDetailRoute.value ||
+    isContactRoute.value,
 )
 const shouldUseDarkLogo = computed(
   () =>
