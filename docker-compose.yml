@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: deeptrols-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: deeptrols
+    ports:
+      # 本机 5432 已被现有 postgres/SSH 转发占用，容器映射到 5433
+      - '5433:5432'
+    volumes:
+      - deeptrols-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d deeptrols']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  deeptrols-pgdata:

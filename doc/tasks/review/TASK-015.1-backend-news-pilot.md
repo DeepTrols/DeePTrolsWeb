@@ -45,6 +45,16 @@
 
 ## 待办（有 PG 环境后）
 
-1. `cp .env.example .env` 填 NUXT_DATABASE_URL
-2. `pnpm db:migrate && pnpm db:seed`
-3. 重启 dev，验证 /api/news 返回库数据（可改库里标题对比）
+1. ~~`cp .env.example .env` 填 NUXT_DATABASE_URL~~ 已完成
+2. ~~`pnpm db:migrate && pnpm db:seed`~~ 已完成
+3. ~~重启 dev，验证 /api/news 返回库数据~~ 已完成
+
+## 本地 PG 验证记录（2026-09-22）
+
+- `docker-compose.yml`：postgres:17-alpine（本地已有镜像，Docker Hub 拉取超时），容器 `deeptrols-postgres`，**宿主端口 5433**（5432 被本机现有 postgres + SSH 转发占用）
+- `pnpm db:migrate && pnpm db:seed`：news ×40 + news_details ×40 入库
+- 全链路验证通过：
+  - 改库标题 → `/api/news/29` 与 SSR 页 `/news/29` 均输出 DB 值（确认非静态回退）
+  - `status='draft'` → 列表 40→39（枚举过滤端到端生效）
+  - 还原后数据复原；typecheck/lint/test/visual/harness 全绿
+- 坑：drizzle-kit 与 tsx 不自动加载 `.env`，命令需 `export NUXT_DATABASE_URL`（或 `node --env-file`）；drizzle-kit migrate 失败时错误被 spinner 吞掉，先用 `psql` 直连排查
