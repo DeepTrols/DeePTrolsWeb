@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { createError, useRoute } from '#imports'
+import { createError, useFetch, useRoute } from '#imports'
 import ArticleBreadcrumb from '~/components/common/article/ArticleBreadcrumb.vue'
 import ArticleContent from '~/components/common/article/ArticleContent.vue'
 import CtaSection from '~/components/common/CtaSection.vue'
@@ -9,6 +9,7 @@ import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import NewsRelatedAside from '~/components/news/NewsRelatedAside.vue'
 import { formatNewsDateShort, getNewsCategoryLabel, newsItems } from '~/data/news'
 import { getNewsDetailById } from '~/data/news-details'
+import type { NewsPayload } from '~/server/utils/news-repo'
 import type { ArticleBreadcrumbItem } from '~/types/article'
 
 const route = useRoute()
@@ -17,8 +18,13 @@ const routeId = computed(() => {
   return Number(Array.isArray(id) ? id[0] : id)
 })
 
+// Phase 1 试点：正文经 /api/news/:id 读取（DB 未配置时接口侧回退静态数据）；请求失败再回退 data/*
+const { data: payload } = await useFetch<NewsPayload>(() => `/api/news/${routeId.value}`, {
+  watch: [routeId],
+})
+
 const newsItem = computed(() => {
-  const found = newsItems.find((item) => item.id === routeId.value)
+  const found = payload.value?.item ?? newsItems.find((item) => item.id === routeId.value)
 
   if (!found) {
     throw createError({
@@ -32,7 +38,7 @@ const newsItem = computed(() => {
 })
 
 const detail = computed(() => {
-  const found = getNewsDetailById(routeId.value)
+  const found = payload.value?.detail ?? getNewsDetailById(routeId.value)
 
   if (!found) {
     throw createError({

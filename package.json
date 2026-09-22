@@ -12,23 +12,31 @@
     "typecheck": "nuxt typecheck",
     "test": "nuxt prepare && vitest run",
     "test:visual": "nuxt prepare && vitest run tests/visual.spec.ts",
-    "harness:engineering": "node scripts/harness-check.mjs"
+    "harness:engineering": "node scripts/harness-check.mjs",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx scripts/db-seed-news.ts"
   },
   "dependencies": {
     "@lucide/vue": "^1.0.0",
     "@tailwindcss/vite": "^4.1.0",
     "@vue-flow/background": "^1.3.2",
     "@vue-flow/core": "^1.47.0",
+    "drizzle-orm": "^0.45.3",
     "nuxt": "^4.0.0",
+    "postgres": "^3.4.9",
     "tailwindcss": "^4.1.0",
-    "vue": "^3.5.0"
+    "vue": "^3.5.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
     "@types/node": "^22.10.0",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^9.18.0",
     "eslint-plugin-vue": "^9.32.0",
     "sass": "^1.83.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.20.0",
     "vitest": "^2.1.8",

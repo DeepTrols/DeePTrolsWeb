@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useRoute, useRouter } from '#imports'
+import { useFetch, useRoute, useRouter } from '#imports'
 import NewsCategoryTabs from '~/components/news/NewsCategoryTabs.vue'
 import NewsHero from '~/components/news/NewsHero.vue'
 import NewsListSection from '~/components/news/NewsListSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
-import { getNewsByCategory, newsCategoryTabs } from '~/data/news'
-import type { NewsCategory } from '~/data/news'
+import { newsCategoryTabs, newsItems } from '~/data/news'
+import type { NewsCategory, NewsItem } from '~/data/news'
 
 const route = useRoute()
 const router = useRouter()
+
+// Phase 1 试点：列表经 /api/news 读取（DB 未配置时接口侧回退静态数据）；请求失败再回退 data/news.ts
+const { data: newsList } = await useFetch<NewsItem[]>('/api/news', {
+  default: () => newsItems,
+})
 
 function toNewsCategory(value: unknown): NewsCategory {
   return typeof value === 'string' && newsCategoryTabs.some((tab) => tab.key === value)
@@ -20,7 +25,9 @@ function toNewsCategory(value: unknown): NewsCategory {
 
 // ?category= query 校验先例沿用 pages/cases/index.vue；tab 切换时同步 query
 const activeCategory = ref<NewsCategory>(toNewsCategory(route.query.category))
-const categoryItems = computed(() => getNewsByCategory(activeCategory.value))
+const categoryItems = computed(() =>
+  (newsList.value ?? newsItems).filter(item => item.category === activeCategory.value),
+)
 
 watch(
   () => route.query.category,

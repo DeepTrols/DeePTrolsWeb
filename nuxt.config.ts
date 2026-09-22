@@ -4,6 +4,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-07-29',
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css', '~/assets/scss/main.scss'],
+  runtimeConfig: {
+    // 私密配置（仅服务端可用）：PostgreSQL 连接串，未配置时 server 层回退 data/*.ts 静态数据
+    databaseUrl: '',
+  },
   vite: {
     // pnpm 将 vitest 依赖的 vite@5 提升到隐藏层，@nuxt/schema 的 vite 类型会解析到 vite@5，
     // 与 Nuxt/tailwind 插件实际使用的 vite@8 Plugin 类型冲突，此处收敛类型以通过 typecheck。

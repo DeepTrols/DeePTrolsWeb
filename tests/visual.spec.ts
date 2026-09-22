@@ -1,4 +1,5 @@
 import { describe } from 'vitest'
+import { registerBackendNewsVisualContracts } from './visual/backend/news-api.contract'
 import { registerCoreVisualContracts } from './visual/core.contract'
 import { registerProductAiiotVisualContracts } from './visual/product-aiiot.contract'
 import { registerProductDataVisualContracts } from './visual/product-data.contract'
@@ -40,6 +41,7 @@ describe('visual implementation contract', () => {
   registerDatacenterVisualContracts()
   registerSmartDataHubVisualContracts()
   registerKnowledgeHubVisualContracts()
+  registerBackendNewsVisualContracts()
 })
 
 registerProductAiiotVisualContracts()

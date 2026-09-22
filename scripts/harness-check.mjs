@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import process from 'node:process'
 import { checkAboutPageContracts } from './harness/checks/about-page.mjs'
+import { checkBackendNewsContracts } from './harness/checks/backend-news.mjs'
 import { checkCaseDetailContracts } from './harness/checks/case-detail.mjs'
 import { checkCasePageContracts } from './harness/checks/case-page.mjs'
 import { checkDesignSystemContracts } from './harness/checks/design-system.mjs'
@@ -47,6 +48,7 @@ checkCasePageContracts(ctx)
 checkCaseDetailContracts(ctx)
 checkNewsContracts(ctx)
 checkNewsDetailContracts(ctx)
+checkBackendNewsContracts(ctx)
 checkSolutionTemplateContracts(ctx)
 checkSolutionUseCaseContracts(ctx)
 checkSolutionsManufacturingContracts(ctx)
