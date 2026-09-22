@@ -20,7 +20,7 @@ export function checkSolutionsDatacenterContracts(ctx) {
       datacenterPage.includes(':items="datacenterPains"') &&
       datacenterPage.includes('columns="two"') &&
       datacenterPage.includes('header-width="wide"') &&
-      datacenterPage.includes('<SectionShell title-id="datacenter-solution-title" spacing="compact">') &&
+      datacenterPage.includes('<SectionShell title-id="datacenter-solution-title" spacing="compact" class="max-lg:hidden">') &&
       datacenterPage.includes('eyebrow="解决方案"') &&
       datacenterPage.includes('<ProductSystemFlowFrame') &&
       datacenterPage.includes(':label="datacenterSolutionLabel"') &&
@@ -32,7 +32,7 @@ export function checkSolutionsDatacenterContracts(ctx) {
       datacenterPage.includes('subtitle=""') &&
       datacenterPage.includes(':items="datacenterCapabilities"') &&
       datacenterPage.includes('columns="four"') &&
-      datacenterPage.includes('<SectionShell title-id="datacenter-loop-title" spacing="compact">') &&
+      datacenterPage.includes('<SectionShell title-id="datacenter-loop-title" spacing="compact" class="max-lg:hidden">') &&
       datacenterPage.includes('eyebrow="运营闭环"') &&
       datacenterPage.includes(':label="datacenterLoopLabel"') &&
       datacenterPage.includes(':fallback-text="`${datacenterLoopLabel}加载中`"') &&
@@ -40,6 +40,8 @@ export function checkSolutionsDatacenterContracts(ctx) {
       datacenterPage.includes(':viewport-y="-10"') &&
       datacenterPage.includes('<ClientOnly>') &&
       datacenterPage.includes('h-[560px] w-[1704px]') &&
+      datacenterPage.includes('w-full overflow-hidden @container') &&
+      datacenterPage.includes('scale-[min(1,calc(100cqw/1704px))]') &&
       datacenterPage.includes('-translate-x-1/2 -translate-y-1/2') &&
       !datacenterPage.includes(':grid="false"') &&
       datacenterPage.includes('DatacenterScenariosSection') &&

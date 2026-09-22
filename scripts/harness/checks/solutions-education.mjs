@@ -10,6 +10,7 @@ export function checkSolutionsEducationContracts(ctx) {
     educationValueSection,
     educationAgentFlowSection,
     educationAgentDiagram,
+    educationAgentBaseFlow,
     educationCases,
     educationData,
     productFeatureGridSection,
@@ -33,9 +34,16 @@ export function checkSolutionsEducationContracts(ctx) {
       educationPage.includes('EducationAgentBaseFlow') &&
       educationPage.includes('<ClientOnly>') &&
       educationPage.includes('h-[560px] w-[1704px]') &&
+      educationPage.includes('class="max-lg:hidden"') &&
+      educationPage.includes('w-full overflow-hidden @container') &&
+      educationPage.includes('scale-[min(1,calc(100cqw/1704px))]') &&
       educationPage.includes('-translate-x-1/2 -translate-y-1/2') &&
       educationPage.includes(':viewport-y="21"') &&
       !educationPage.includes(':grid="false"') &&
+      !educationAgentBaseFlow.includes('stage-connect') &&
+      !educationAgentBaseFlow.includes('stage-runtime') &&
+      !educationAgentBaseFlow.includes('stage-agents') &&
+      !educationAgentBaseFlow.includes("kind: 'stage'") &&
       educationPage.includes('EducationCapabilityCardsSection') &&
       educationPage.includes('EducationValueSection') &&
       educationPage.includes('EducationAgentFlowSection') &&

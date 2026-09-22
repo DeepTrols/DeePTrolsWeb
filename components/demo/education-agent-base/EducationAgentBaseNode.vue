@@ -36,13 +36,8 @@ interface AgentNodeData {
   tone: ChipTone
 }
 
-interface StageNodeData {
-  kind: 'stage'
-  label: string
-}
-
 defineProps<{
-  data: ResourceNodeData | GatewayNodeData | RuntimeNodeData | AgentNodeData | StageNodeData
+  data: ResourceNodeData | GatewayNodeData | RuntimeNodeData | AgentNodeData
 }>()
 
 const toneClasses = {
@@ -112,9 +107,5 @@ const handleClass = '!size-2 !border-0 !bg-transparent !opacity-0 !pointer-event
       <span class="whitespace-nowrap text-[11px] font-medium text-dt-text-muted">{{ data.sublabel }}</span>
     </div>
     <span :class="['absolute right-3 top-3 rounded-full border bg-white px-2 py-0.5 text-[10px] font-semibold', toneClasses[data.tone]]">{{ data.badge }}</span>
-  </div>
-
-  <div v-else-if="data.kind === 'stage'" class="pointer-events-none flex items-center whitespace-nowrap rounded-full border border-primary/30 bg-white px-3.5 py-1.5 shadow-md">
-    <span class="text-xs font-semibold text-primary">{{ data.label }}</span>
   </div>
 </template>

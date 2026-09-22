@@ -30,9 +30,11 @@ const sourceData = [
 ] as const
 
 const nodes: Node[] = [
-  ...sourceData.flatMap((source, index) => [
+  // 协议标签节点采用自居中定位（-translate-1/2）：position 即标签中心点。
+  // 横轴锚定连接线段中点 310（源节点右缘 240 → step 拐点 380），纵轴对齐源节点中心（h-8 → +16），保证标签与连接线严格居中。
+  ...sourceData.flatMap(source => [
     { id: source.id, type: 'knowledgeHub', position: { x: 100, y: source.y }, width: 140, data: { kind: 'source', label: source.label, icon: source.icon, tone: source.tone }, selectable: false, draggable: false },
-    { id: `${source.id}-label`, type: 'knowledgeHub', position: { x: 320, y: source.y - (index === 1 ? 8 : 2) }, data: { kind: 'label', label: source.protocol }, selectable: false, draggable: false },
+    { id: `${source.id}-label`, type: 'knowledgeHub', position: { x: 310, y: source.y + 16 }, data: { kind: 'label', label: source.protocol }, selectable: false, draggable: false },
   ]),
   {
     id: 'processing', type: 'knowledgeHub', position: { x: 520, y: 100 }, width: 170, height: 300,

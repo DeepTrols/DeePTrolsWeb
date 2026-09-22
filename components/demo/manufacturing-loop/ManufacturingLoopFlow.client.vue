@@ -40,7 +40,8 @@ import ManufacturingLoopReturnEdge from '~/components/demo/manufacturing-loop/Ma
 // 智能制造解决方案「融合数据、知识、物联与 AI，构建制造智能闭环」：横向主链 + 底部回流闭环。
 // 左列制造现场 ×4 → 探曜·物联感知 → 数曜·数据智能 → 博曜·知识中枢 → 智曜·AI 引擎 → 右列智能应用 ×4，
 // 底部回流 lane 由 能源智能管理 应用下行、横穿画布、上行回到 业务系统，表达「执行 → 反馈 → 现场/业务」闭环。
-// 阶段 pill（无序号）：实时感知 / 智能分析 / 自主决策 / 决策执行 压在对应连接器上，闭环反馈压在回流 lane 上。
+// 阶段序列（实时感知 → 智能分析 → 自主决策 → 决策执行）由页面顶部 EMQX 风格悬浮 pill 承担（data/solutions/manufacturing.ts manufacturingStages），
+// 画布内仅保留「闭环反馈」pill 压在回流 lane 上。
 // 统一 1704px 画布：节点宽 220+200×4+220=1240，五段连接区各约 93；x：0/313/606/899/1192/1484。
 const sources = [
   { id: 'line', label: '生产设备与产线', icon: Factory, tone: 'violet', y: 34 },
@@ -124,10 +125,6 @@ const nodes: Node[] = [
     selectable: false,
     draggable: false,
   })),
-  { id: 'stage-sensing', type: 'manufacturingLoop', position: { x: 228, y: 191 }, data: { kind: 'stage', label: '实时感知' }, selectable: false, draggable: false },
-  { id: 'stage-analysis', type: 'manufacturingLoop', position: { x: 814, y: 191 }, data: { kind: 'stage', label: '智能分析' }, selectable: false, draggable: false },
-  { id: 'stage-decision', type: 'manufacturingLoop', position: { x: 1107, y: 191 }, data: { kind: 'stage', label: '自主决策' }, selectable: false, draggable: false },
-  { id: 'stage-execution', type: 'manufacturingLoop', position: { x: 1400, y: 191 }, data: { kind: 'stage', label: '决策执行' }, selectable: false, draggable: false },
   { id: 'stage-feedback', type: 'manufacturingLoop', position: { x: 814, y: 413 }, data: { kind: 'stage', label: '闭环反馈' }, selectable: false, draggable: false },
   ...apps.map(app => ({
     id: `app-${app.id}`,

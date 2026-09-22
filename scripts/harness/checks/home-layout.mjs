@@ -78,6 +78,8 @@ assert(
     productSystem.includes('ProductSystemCards') &&
     productSystem.includes('DeepTrolsArchitectureFlow') &&
     productSystem.includes('label="DeepTrols OPS 产品架构图"') &&
+    productSystem.includes('w-full overflow-hidden @container') &&
+    productSystem.includes('scale-[min(1,calc(100cqw/1600px))]') &&
     !productSystem.includes(':grid="false"') &&
     !productSystem.includes('HomeProductSystemFlow') &&
     !productSystem.includes('HomeProductSystemMobileFlow') &&

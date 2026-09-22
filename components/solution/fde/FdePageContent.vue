@@ -52,8 +52,8 @@ import {
           :fallback-text="`${fdeSolutionLabel}加载中`"
           class="mb-10"
         >
-          <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+          <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
               <ClientOnly>
                 <FdeSolutionFlow :viewport-y="-17" />
                 <template #fallback>
@@ -65,7 +65,7 @@ import {
         </ProductSystemFlowFrame>
       </template>
     </ProductFeatureGridSection>
-    <SectionShell title-id="fde-work-mode-title" spacing="compact">
+    <SectionShell title-id="fde-work-mode-title" spacing="compact" class="max-lg:hidden">
       <div class="mb-12 lg:mb-16">
         <SectionHeader
           title-id="fde-work-mode-title"
@@ -79,8 +79,8 @@ import {
         :label="fdeWorkModeLabel"
         :fallback-text="`${fdeWorkModeLabel}加载中`"
       >
-        <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-          <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+        <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+          <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
             <ClientOnly>
               <FdeWorkModeFlow :viewport-y="10" />
               <template #fallback>
@@ -94,7 +94,7 @@ import {
     <FdeCapabilityCardsSection />
     <FdeValueSection />
     <FdeUseCasesSection />
-    <SectionShell title-id="fde-delivery-title" spacing="compact">
+    <SectionShell title-id="fde-delivery-title" spacing="compact" class="max-lg:hidden">
       <div class="mb-12 lg:mb-16">
         <SectionHeader
           title-id="fde-delivery-title"
@@ -108,8 +108,8 @@ import {
         :label="fdeDeliveryLabel"
         :fallback-text="`${fdeDeliveryLabel}加载中`"
       >
-        <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-          <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+        <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+          <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
             <ClientOnly>
               <FdeDeliveryFlow :viewport-y="46" />
               <template #fallback>

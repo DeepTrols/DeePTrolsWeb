@@ -52,6 +52,8 @@ export function registerCoreVisualContracts() {
     expect(readComponent('components/navigation/SiteHeaderMobileNav.vue')).toContain('mobile-navigation')
     expect(productSystem).toContain('ProductSystemFlowFrame')
     expect(productSystem).toContain('DeepTrolsArchitectureFlow')
+    expect(productSystem).toContain('w-full overflow-hidden @container')
+    expect(productSystem).toContain('scale-[min(1,calc(100cqw/1600px))]')
     expect(productSystem).not.toContain(':grid="false"')
     expect(productSystem).not.toContain('HomeProductSystemFlow')
     expect(productSystem).not.toContain('HomeProductSystemMobileFlow')

@@ -10,6 +10,7 @@ export function checkSolutionsEnergySavingContracts(ctx) {
     energySavingValueSection,
     energySavingCases,
     energySavingData,
+    energyStorageHubFlow,
   } = ctx
 
   assert(
@@ -21,12 +22,41 @@ export function checkSolutionsEnergySavingContracts(ctx) {
       energySavingPage.includes('header-width="wide"') &&
       energySavingPage.includes('class="pt-32"') &&
       energySavingPage.includes('spacing="compact"') &&
-      energySavingPage.includes('<ProductSystemFlowFrame label="储能智能运营能力图" />') &&
       energySavingPage.includes('EnergySavingCapabilityCardsSection') &&
       energySavingPage.includes('EnergySavingValueSection') &&
       energySavingPage.includes('EnergySavingCustomerCasesSection') &&
       energySavingPage.includes('CtaSection'),
     'Energy-saving page must assemble hero, pain grid, flow frame, capability cards, value cards, cases, and CTA.',
+  )
+  assert(
+    energySavingPage.includes('<SectionShell title-id="energy-saving-system-title" spacing="compact" class="max-lg:hidden">') &&
+      energySavingPage.includes('eyebrow="解决方案"') &&
+      energySavingPage.includes('<ProductSystemFlowFrame label="储能智能运营能力图" fallback-text="储能智能运营能力图加载中">') &&
+      energySavingPage.includes('EnergyStorageHubFlow') &&
+      energySavingPage.includes('<ClientOnly>') &&
+      energySavingPage.includes('h-[560px] w-[1704px]') &&
+      energySavingPage.includes('w-full overflow-hidden @container') &&
+      energySavingPage.includes('scale-[min(1,calc(100cqw/1704px))]') &&
+      energySavingPage.includes('-translate-x-1/2 -translate-y-1/2') &&
+      !energySavingPage.includes(':grid="false"') &&
+      !energySavingPage.includes('<style') &&
+      !energySavingPage.includes('style='),
+    'Energy-saving system section must embed the energy storage hub flow with the scale-to-fit recipe and hide on mobile.',
+  )
+  assert(
+    energyStorageHubFlow.includes("type: 'energyStorageHubCurve'") &&
+      energyStorageHubFlow.includes('viewportY: 21') &&
+      energyStorageHubFlow.includes('PCS 储能变流器') &&
+      energyStorageHubFlow.includes('BMS 电池管理') &&
+      energyStorageHubFlow.includes('EMS 能源管理') &&
+      energyStorageHubFlow.includes('探曜·AI 物联感知') &&
+      energyStorageHubFlow.includes('数曜·数据治理') &&
+      energyStorageHubFlow.includes('储能数据资产') &&
+      energyStorageHubFlow.includes('运行监测与预警') &&
+      energyStorageHubFlow.includes('电池健康评估') &&
+      energyStorageHubFlow.includes('充放电策略优化') &&
+      !energyStorageHubFlow.includes('<style'),
+    'Energy storage hub flow must compose the 5-source → sense → govern → apps topology on the 1704px canvas.',
   )
   assert(
     energySavingHeroComponent.includes('class="relative h-[586px] overflow-hidden bg-[#1f49e5]"') &&

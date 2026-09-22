@@ -31,6 +31,9 @@ export function checkSolutionsHydraulicContracts(ctx) {
       hydraulicPage.includes('HydraulicHubFlow') &&
       hydraulicPage.includes('<ClientOnly>') &&
       hydraulicPage.includes('h-[560px] w-[1704px]') &&
+      hydraulicPage.includes('class="max-lg:hidden"') &&
+      hydraulicPage.includes('w-full overflow-hidden @container') &&
+      hydraulicPage.includes('scale-[min(1,calc(100cqw/1704px))]') &&
       hydraulicPage.includes('-translate-x-1/2 -translate-y-1/2') &&
       hydraulicPage.includes(':viewport-y="16"') &&
       !hydraulicPage.includes(':grid="false"') &&

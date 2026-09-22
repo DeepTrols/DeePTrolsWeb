@@ -27,8 +27,13 @@ export function checkSolutionsManufacturingContracts(ctx) {
       manufacturingPage.includes('ManufacturingLoopFlow') &&
       manufacturingPage.includes('<ClientOnly>') &&
       manufacturingPage.includes('h-[560px] w-[1704px]') &&
+      manufacturingPage.includes('w-full overflow-hidden @container') &&
+      manufacturingPage.includes('scale-[min(1,calc(100cqw/1704px))]') &&
       manufacturingPage.includes('-translate-x-1/2 -translate-y-1/2') &&
       manufacturingPage.includes(':viewport-y="48"') &&
+      manufacturingPage.includes('pointer-events-none absolute left-1/2 top-5 z-20 w-[96%] max-w-6xl -translate-x-1/2') &&
+      manufacturingPage.includes('rounded-full border border-dashed border-primary/40 bg-white/95 px-4 py-2.5 shadow-sm backdrop-blur-sm') &&
+      manufacturingPage.includes('manufacturingStages') &&
       !manufacturingPage.includes(':grid="false"') &&
       manufacturingPage.includes('ManufacturingCapabilityCardsSection') &&
       manufacturingPage.includes('title="为什么选择深度数智"') &&
@@ -93,6 +98,11 @@ export function checkSolutionsManufacturingContracts(ctx) {
       manufacturingData.includes("title: '智能制造解决方案'") &&
       manufacturingData.includes("title: 'APS智能生产排程'") &&
       manufacturingData.includes("title: '某大型装备制造企业'") &&
+      manufacturingData.includes('export const manufacturingStages: ManufacturingStage[]') &&
+      manufacturingData.includes("{ label: '实时感知', icon: Radar }") &&
+      manufacturingData.includes("{ label: '智能分析', icon: BrainCircuit }") &&
+      manufacturingData.includes("{ label: '自主决策', icon: Sparkles }") &&
+      manufacturingData.includes("{ label: '决策执行', icon: Zap }") &&
       manufacturingData.includes("value: '2,000+'"),
     'Manufacturing page copy must stay centralized in data/solutions/manufacturing.ts.',
   )

@@ -3,17 +3,35 @@ import {
   Bot,
   Boxes,
   Brain,
+  BrainCircuit,
   Cable,
   Cloud,
   Cpu,
   Database,
   Network,
+  Radar,
   RadioTower,
   Server,
+  Sparkles,
   Unlink,
   Workflow,
+  Zap,
 } from '@lucide/vue'
+import type { Component } from 'vue'
 import type { ProductFeatureGridItem } from '~/components/common/ProductFeatureGridSection.vue'
+
+export interface ManufacturingStage {
+  label: string
+  icon: Component
+}
+
+// 制造智能闭环阶段条：实时感知 → 智能分析 → 自主决策 → 决策执行（架构图顶部 EMQX 风格悬浮 pill）
+export const manufacturingStages: ManufacturingStage[] = [
+  { label: '实时感知', icon: Radar },
+  { label: '智能分析', icon: BrainCircuit },
+  { label: '自主决策', icon: Sparkles },
+  { label: '决策执行', icon: Zap },
+]
 
 export const manufacturingHero = {
   title: '智能制造解决方案',

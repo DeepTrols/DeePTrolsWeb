@@ -17,7 +17,7 @@ defineProps<{ data: NodeData }>()
 
 <template>
   <KnowledgeSourceNode v-if="data.kind === 'source'" :data="data" />
-  <div v-else-if="data.kind === 'label'" class="pointer-events-none whitespace-pre-line rounded-md border border-dt-line/50 bg-white/80 px-2 py-1 text-center text-[10px] font-medium leading-tight text-dt-text-muted backdrop-blur-sm">
+  <div v-else-if="data.kind === 'label'" class="pointer-events-none -translate-x-1/2 -translate-y-1/2 whitespace-pre-line rounded-md border border-dt-line/50 bg-white/80 px-2 py-1 text-center text-[10px] font-medium leading-tight text-dt-text-muted backdrop-blur-sm">
     {{ data.label }}
   </div>
   <KnowledgeProcessingNode v-else-if="data.kind === 'processing'" :data="data" />

@@ -43,6 +43,9 @@ export function checkSolutionsFdeContracts(ctx) {
       fdePageContent.includes('FdeDeliveryFlow') &&
       fdePageContent.includes('<ClientOnly>') &&
       fdePageContent.includes('h-[560px] w-[1704px]') &&
+      fdePageContent.includes('class="max-lg:hidden"') &&
+      fdePageContent.includes('w-full overflow-hidden @container') &&
+      fdePageContent.includes('scale-[min(1,calc(100cqw/1704px))]') &&
       fdePageContent.includes('-translate-x-1/2 -translate-y-1/2') &&
       fdePageContent.includes(':viewport-y="-17"') &&
       fdePageContent.includes(':viewport-y="10"') &&

@@ -17,8 +17,10 @@ import { productCards } from '~/data/home'
     <ProductSystemFlowFrame
       label="DeepTrols OPS 产品架构图"
     >
-      <div class="relative z-[1] mx-auto h-full w-[min(1600px,100%)]">
-        <DeepTrolsArchitectureFlow />
+      <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+        <div class="absolute left-1/2 top-1/2 h-[560px] w-[1600px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1600px))]">
+          <DeepTrolsArchitectureFlow />
+        </div>
       </div>
     </ProductSystemFlowFrame>
     <ProductSystemCards :cards="productCards" />

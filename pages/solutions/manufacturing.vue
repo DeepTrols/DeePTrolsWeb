@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ArrowRight } from '@lucide/vue'
 import CtaSection from '~/components/common/CtaSection.vue'
 import ProductFeatureGridSection from '~/components/common/ProductFeatureGridSection.vue'
 import ProductSystemFlowFrame from '~/components/common/ProductSystemFlowFrame.vue'
@@ -12,6 +13,7 @@ import {
   manufacturingAdvantages,
   manufacturingPains,
   manufacturingSolutionItems,
+  manufacturingStages,
 } from '~/data/solutions/manufacturing'
 
 useSeoMeta({
@@ -50,8 +52,24 @@ useSeoMeta({
             fallback-text="制造智能闭环能力图加载中"
             class="mb-10"
           >
-            <div class="relative z-[1] mx-auto h-full w-[min(1704px,100%)] overflow-hidden">
-              <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2">
+            <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+              <!-- EMQX 风格阶段条：实时感知 → 智能分析 → 自主决策 → 决策执行，悬浮于架构图顶部 -->
+              <div class="pointer-events-none absolute left-1/2 top-5 z-20 w-[96%] max-w-6xl -translate-x-1/2">
+                <div class="rounded-full border border-dashed border-primary/40 bg-white/95 px-4 py-2.5 shadow-sm backdrop-blur-sm">
+                  <div class="flex items-center justify-center gap-3">
+                    <template v-for="(stage, index) in manufacturingStages" :key="stage.label">
+                      <span class="flex items-center gap-2">
+                        <span class="flex size-8 items-center justify-center rounded-full border border-primary/35 bg-primary/10 text-primary">
+                          <component :is="stage.icon" class="size-4" aria-hidden="true" />
+                        </span>
+                        <span class="whitespace-nowrap text-[15px] font-semibold text-dt-text-highlighted">{{ stage.label }}</span>
+                      </span>
+                      <ArrowRight v-if="index < manufacturingStages.length - 1" class="size-4 shrink-0 text-primary/50" aria-hidden="true" />
+                    </template>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
                 <ClientOnly>
                   <ManufacturingLoopFlow :viewport-y="48" />
                   <template #fallback>

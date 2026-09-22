@@ -10,6 +10,7 @@ import EnergySavingCapabilityCardsSection from '~/components/solution/energy-sav
 import EnergySavingCustomerCasesSection from '~/components/solution/energy-saving/EnergySavingCustomerCasesSection.vue'
 import EnergySavingHero from '~/components/solution/energy-saving/EnergySavingHero.vue'
 import EnergySavingValueSection from '~/components/solution/energy-saving/EnergySavingValueSection.vue'
+import EnergyStorageHubFlow from '~/components/demo/energy-storage-hub/EnergyStorageHubFlow.client.vue'
 import { energySavingPains } from '~/data/solutions/energy-saving'
 
 useSeoMeta({
@@ -34,18 +35,29 @@ useSeoMeta({
         columns="two"
         header-width="wide"
       />
-      <SectionShell title-id="energy-saving-system-title" spacing="compact">
+      <SectionShell title-id="energy-saving-system-title" spacing="compact" class="max-lg:hidden">
         <div class="mb-12 text-center lg:mb-16">
           <SectionHeader
             title-id="energy-saving-system-title"
-            eyebrow="行业痛点"
+            eyebrow="解决方案"
             title="构建设备感知与数据驱动的智慧储能运营体系"
             subtitle="融合探曜·AI 物联感知与数曜·数据治理能力，打通 PCS、BMS、EMS 及各类储能设备与业务系统，实现统一接入、实时感知、数据治理与运行分析，构建从设备监测、状态评估到故障预警与策略优化的一体化智慧储能解决方案。"
             align="center"
             width="wide"
           />
         </div>
-        <ProductSystemFlowFrame label="储能智能运营能力图" />
+        <ProductSystemFlowFrame label="储能智能运营能力图" fallback-text="储能智能运营能力图加载中">
+          <div class="relative z-[1] mx-auto h-full w-full overflow-hidden @container">
+            <div class="absolute left-1/2 top-1/2 h-[560px] w-[1704px] -translate-x-1/2 -translate-y-1/2 scale-[min(1,calc(100cqw/1704px))]">
+              <ClientOnly>
+                <EnergyStorageHubFlow />
+                <template #fallback>
+                  <div class="size-full" aria-hidden="true"></div>
+                </template>
+              </ClientOnly>
+            </div>
+          </div>
+        </ProductSystemFlowFrame>
       </SectionShell>
       <EnergySavingCapabilityCardsSection />
       <EnergySavingValueSection />

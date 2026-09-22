@@ -19,7 +19,7 @@ const toneClasses = {
 </script>
 
 <template>
-  <div :class="['flex w-[140px] items-center gap-2 rounded-lg border bg-white px-3 py-1.5 shadow-lg', toneClasses[data.tone]]">
+  <div :class="['flex h-8 w-[140px] items-center gap-2 rounded-lg border bg-white px-3 shadow-lg', toneClasses[data.tone]]">
     <span class="flex size-5 items-center justify-center">
       <component :is="data.icon" class="size-4" aria-hidden="true" />
     </span>

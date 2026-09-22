@@ -26,6 +26,7 @@ import EducationAgentBaseNode from '~/components/demo/education-agent-base/Educa
 // 左列资源 ×5（大模型/知识/MCP/Tools/校园业务系统）扇入 智曜·统一接入 网关面板，
 // 网关汇入中央 智曜·Agent Runtime 运行底座（2×2 象限：模型调用/任务编排/工具执行/运行治理），
 // 底座向右扇出「教、学、管、服」教育智能体 ×4，AI 从回答问题走向理解任务、调用工具和完成业务。
+// 阶段语义由节点与连线承载，画布内不再叠加独立阶段 pill。
 // 统一 1704px 画布：节点宽 220+240+400+268=1128，三段连接区各 192；x：0/412/844/1436。
 const resources = [
   { id: 'llm', label: '大模型服务', icon: BrainCircuit, tone: 'violet', y: 30 },
@@ -89,9 +90,6 @@ const nodes: Node[] = [
     selectable: false,
     draggable: false,
   },
-  { id: 'stage-connect', type: 'educationAgentBase', position: { x: 272, y: 242 }, data: { kind: 'stage', label: '统一连接' }, selectable: false, draggable: false },
-  { id: 'stage-runtime', type: 'educationAgentBase', position: { x: 708, y: 242 }, data: { kind: 'stage', label: '运行底座' }, selectable: false, draggable: false },
-  { id: 'stage-agents', type: 'educationAgentBase', position: { x: 1290, y: 242 }, data: { kind: 'stage', label: '教 · 学 · 管 · 服' }, selectable: false, draggable: false },
   ...agents.map(agent => ({
     id: `agent-${agent.id}`,
     type: 'educationAgentBase',
