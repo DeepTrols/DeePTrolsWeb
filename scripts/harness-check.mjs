@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import process from 'node:process'
 import { checkAboutPageContracts } from './harness/checks/about-page.mjs'
 import { checkBackendContentContracts } from './harness/checks/backend-content.mjs'
+import { checkBackendAdminContracts } from './harness/checks/backend-admin.mjs'
 import { checkBackendLeadsContracts } from './harness/checks/backend-leads.mjs'
 import { checkBackendNewsContracts } from './harness/checks/backend-news.mjs'
 import { checkCaseDetailContracts } from './harness/checks/case-detail.mjs'
@@ -54,6 +55,7 @@ checkNewsDetailContracts(ctx)
 checkBackendNewsContracts(ctx)
 checkBackendContentContracts(ctx)
 checkBackendLeadsContracts(ctx)
+checkBackendAdminContracts(ctx)
 checkContactPageContracts(ctx)
 checkSolutionTemplateContracts(ctx)
 checkSolutionUseCaseContracts(ctx)

@@ -7,6 +7,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // 私密配置（仅服务端可用）：PostgreSQL 连接串，未配置时 server 层回退 data/*.ts 静态数据
     databaseUrl: '',
+    // 管理后台（Phase 3）：登录密码与 session 加密密码（≥32 位随机串）；未配置时 admin API 返回 503
+    adminPassword: '',
+    sessionPassword: '',
   },
   vite: {
     // pnpm 将 vitest 依赖的 vite@5 提升到隐藏层，@nuxt/schema 的 vite 类型会解析到 vite@5，

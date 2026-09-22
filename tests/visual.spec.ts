@@ -1,4 +1,5 @@
 import { describe } from 'vitest'
+import { registerBackendAdminVisualContracts } from './visual/backend/admin-api.contract'
 import { registerBackendContentVisualContracts } from './visual/backend/content-api.contract'
 import { registerBackendLeadsVisualContracts } from './visual/backend/leads-api.contract'
 import { registerBackendNewsVisualContracts } from './visual/backend/news-api.contract'
@@ -48,6 +49,7 @@ describe('visual implementation contract', () => {
   registerBackendNewsVisualContracts()
   registerBackendContentVisualContracts()
   registerBackendLeadsVisualContracts()
+  registerBackendAdminVisualContracts()
 })
 
 registerProductAiiotVisualContracts()
