@@ -148,33 +148,15 @@ heading__eyebrow：资产赋能
 
 7、板块：
 section-heading__eyebrow：应用场景
-标题：推动企业数据基础设施建设
-副标题：构建统一的数据治理体系，帮助企业实现数据标准化、资产化与智能化，持续释放数据价值。
+标题：数据治理赋能关键业务场景
+副标题：面向政务、制造、企业经营与 AI 应用，构建可持续演进的高质量数据基础。
 
-Tabs：
-tab1:政务数据
-标题：政务数据治理
-描述：打通跨部门、跨层级数据资源，建立统一的数据标准、数据目录与共享交换体系，支撑公共数据资源高效流通与应用。
-button“了解更多<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--lucide shrink-0 size-4" width="1em" height="1em" viewBox="0 0 24 24" data-slot="trailingIcon"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>”
-左侧图片：图片占位符（后续替换）
+使用 `CardGrid columns="two"` 与 `BaseCard` 构建 2×2 应用场景卡片，卡片不设置固定高度，通过等高网格随内容自适应。
 
-tab2:智能制造
-标题：物联数据汇聚与治理
-描述：统一采集设备、MES、ERP、SCADA 等多源数据，构建制造数据底座，为质量分析、设备预测及 AI 应用提供可信数据。
-button“了解更多<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--lucide shrink-0 size-4" width="1em" height="1em" viewBox="0 0 24 24" data-slot="trailingIcon"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>”
-左侧图片：图片占位符（后续替换）
-
-tab3:预测性维护
-标题：预测性维护
-描述：从关键资产采集实时振动、温度和使用数据，为 AI/ML 模型提供输入，在故障发生前精准预测。
-button“了解更多<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--lucide shrink-0 size-4" width="1em" height="1em" viewBox="0 0 24 24" data-slot="trailingIcon"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>”
-左侧图片：图片占位符（后续替换）
-
-tab4:能源电力
-标题：数据引擎
-描述：汇聚设备、监测、调度及业务数据，形成统一能源数据底座，为设备运维、负荷预测及能源优化提供数据支撑。
-button“了解更多<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--lucide shrink-0 size-4" width="1em" height="1em" viewBox="0 0 24 24" data-slot="trailingIcon"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>”
-左侧图片：图片占位符（后续替换）
+1. 政务数据治理：跨部门数据汇聚、公共数据目录、共享交换与授权运营。
+2. 制造数据治理：设备与业务数据融合、生产主数据统一、质量追溯与设备分析。
+3. 企业经营数据治理：统一客户与产品主数据、经营指标口径管理、数据质量监控与追溯。
+4. AI 数据基础设施：AI 训练数据集建设、数据资产服务化发布、模型与智能体数据供给。
 
 
 8、板块：

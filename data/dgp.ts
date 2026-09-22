@@ -5,14 +5,17 @@ import {
   Blocks,
   Boxes,
   Database,
+  Factory,
   FileText,
   Gauge,
+  Landmark,
   Layers3,
   Network,
   ServerCog,
   ShieldCheck,
   Sparkles,
   Tags,
+  TrendingUp,
 } from '@lucide/vue'
 import type { Component } from 'vue'
 import type { ProductMetricItem } from '~/components/common/ProductMetricsSection.vue'
@@ -36,11 +39,10 @@ export interface DgpEvolutionItem {
 }
 
 export interface DgpUseCase {
-  key: string
-  tab: string
   title: string
   description: string
-  href: string
+  points: string[]
+  icon: Component
 }
 
 export interface DgpGovernanceScene {
@@ -165,34 +167,32 @@ export const dgpEvolutionItems: DgpEvolutionItem[] = [
 
 export const dgpUseCases: DgpUseCase[] = [
   {
-    key: 'government',
-    tab: '政务数据',
     title: '政务数据治理',
     description:
       '打通跨部门、跨层级数据资源，建立统一的数据标准、数据目录与共享交换体系，支撑公共数据资源高效流通与应用。',
-    href: '/solutions/public-sector-data',
+    points: ['跨部门数据汇聚', '公共数据目录', '共享交换与授权运营'],
+    icon: Landmark,
   },
   {
-    key: 'manufacturing',
-    tab: '智能制造',
-    title: '物联数据汇聚与治理',
+    title: '制造数据治理',
     description:
       '统一采集设备、MES、ERP、SCADA 等多源数据，构建制造数据底座，为质量分析、设备预测及 AI 应用提供可信数据。',
-    href: '/solutions/manufacturing',
+    points: ['设备与业务数据融合', '生产主数据统一', '质量追溯与设备分析'],
+    icon: Factory,
   },
   {
-    key: 'predictive-maintenance',
-    tab: '预测性维护',
-    title: '预测性维护',
-    description: '从关键资产采集实时振动、温度和使用数据，为 AI/ML 模型提供输入，在故障发生前精准预测。',
-    href: '/solutions/predictive-maintenance',
+    title: '企业经营数据治理',
+    description:
+      '整合客户、订单、财务与供应链数据，统一指标口径与主数据，为经营分析和管理决策提供可信依据。',
+    points: ['统一客户与产品主数据', '经营指标口径管理', '数据质量监控与追溯'],
+    icon: TrendingUp,
   },
   {
-    key: 'energy',
-    tab: '能源电力',
-    title: '数据引擎',
-    description: '汇聚设备、监测、调度及业务数据，形成统一能源数据底座，为设备运维、负荷预测及能源优化提供数据支撑。',
-    href: '/solutions/energy',
+    title: 'AI 数据基础设施',
+    description:
+      '将治理后的数据沉淀为可查找、可理解、可调用的高质量数据资产，持续为大模型、智能体与业务 AI 应用供给数据。',
+    points: ['AI 训练数据集建设', '数据资产服务化发布', '模型与智能体数据供给'],
+    icon: Sparkles,
   },
 ]
 

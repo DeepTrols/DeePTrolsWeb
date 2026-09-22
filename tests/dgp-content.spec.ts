@@ -26,6 +26,13 @@ describe('DGP product page content contract', () => {
     expect(dgpCapabilities).toHaveLength(8)
     expect(dgpEvolutionItems).toHaveLength(3)
     expect(dgpUseCases).toHaveLength(4)
+    expect(dgpUseCases.map((item) => item.title)).toEqual([
+      '政务数据治理',
+      '制造数据治理',
+      '企业经营数据治理',
+      'AI 数据基础设施',
+    ])
+    expect(dgpUseCases.every((item) => item.points.length === 3)).toBe(true)
     expect(dgpCtaActions.map((action) => action.label)).toEqual(['咨询合作', '申请试用'])
   })
 

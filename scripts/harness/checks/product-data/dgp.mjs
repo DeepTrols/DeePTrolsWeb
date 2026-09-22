@@ -1,5 +1,5 @@
 export function checkDgpProductContracts(ctx) {
-  const { assert, sectionHeader, baseTabs, dgpData, dgpPage, dgpHero, dgpHeroVisual, dgpArchitecture, dgpEvolution, dgpUseCases } = ctx
+  const { assert, sectionHeader, dgpData, dgpPage, dgpHero, dgpHeroVisual, dgpArchitecture, dgpEvolution, dgpEvolutionSourceVisual, dgpEvolutionQualityVisual, dgpEvolutionAssetVisual, dgpUseCases } = ctx
 assert(
   dgpPage.includes('SiteHeader') &&
     dgpPage.includes('SiteFooter') &&
@@ -22,6 +22,7 @@ assert(
     dgpHero.includes('title-gradient="企业数据底座"') &&
     dgpHero.includes('visual-label="SHUYAODGP_HORE_WEBM"') &&
     dgpHero.includes('visual-size="large"') &&
+    dgpHero.includes('class="min-h-[655px]"') &&
     dgpHero.includes('DgpHeroVisual'),
   'DGP hero must follow the PageHero contract from DGP.md.',
 )
@@ -42,6 +43,8 @@ assert(
 assert(
   dgpArchitecture.includes('ProductArchitectureSection') &&
     dgpArchitecture.includes('产品架构图占位符') &&
+    dgpArchitecture.includes('w-full overflow-hidden @container') &&
+    dgpArchitecture.includes('scale-[min(1,calc(100cqw/1704px))]') &&
     !dgpArchitecture.includes(':heading-wide="false"') &&
     !dgpArchitecture.includes(':nowrap-subtitle="false"') &&
     dgpArchitecture.includes('SystemCards') &&
@@ -70,31 +73,35 @@ assert(
     !dgpEvolution.includes('<style'),
   'DGP evolution section must keep the required alternating Tailwind layout and mount its three capability visuals.',
 )
+for (const visual of [dgpEvolutionSourceVisual, dgpEvolutionQualityVisual, dgpEvolutionAssetVisual]) {
+  assert(
+    visual.includes('useRuntimeTimeline') &&
+      visual.includes('border border-muted bg-white shadow-[0_0_16px_rgba(15,23,42,0.08)] transition-shadow duration-500 hover:shadow-[0_0_28px_rgba(30,68,224,0.22)]') &&
+      visual.includes('flex items-center border-b border-muted px-4 py-3') &&
+      visual.includes('size-3 rounded-full bg-red-500/70') &&
+      visual.includes('size-3 rounded-full bg-yellow-500/70') &&
+      visual.includes('size-3 rounded-full bg-green-500/70') &&
+      visual.includes('flex flex-1 flex-col p-4 lg:p-5') &&
+      !visual.includes('<style') &&
+      !visual.includes('style='),
+    'DGP evolution capability visuals must carry the shared runtime timeline and the macOS window traffic-light bar.',
+  )
+}
 assert(
-  dgpUseCases.includes('class="flow-root pb-32 lg:pb-44"') &&
-    dgpUseCases.includes('class="container"') &&
-    dgpUseCases.includes('text-center text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted') &&
-    dgpUseCases.includes('text-center text-base text-default') &&
-    dgpUseCases.includes('lg:whitespace-nowrap') &&
-    dgpUseCases.includes('BaseTabs') &&
-    dgpUseCases.includes('useCaseTabs') &&
-    dgpUseCases.includes('variant="underline"') &&
-    baseTabs.includes('role="tablist"') &&
-    baseTabs.includes('data-slot="root"') &&
-    baseTabs.includes('data-slot="list"') &&
-    baseTabs.includes('data-slot="trigger"') &&
-    baseTabs.includes('data-slot="indicator"') &&
-    baseTabs.includes('data-slot="label"') &&
-    baseTabs.includes('px-5 py-4 text-base font-medium') &&
-    baseTabs.includes('border-b border-dt-line') &&
-    dgpUseCases.includes('role="tabpanel"') &&
-    dgpUseCases.includes('BaseButton') &&
-    dgpUseCases.includes('了解更多') &&
-    !dgpUseCases.includes('class="dt-tab"') &&
-    !dgpUseCases.includes('SectionHeading') &&
-    !dgpUseCases.includes('!pb-0') &&
+  dgpUseCases.includes('SectionShell') &&
+    dgpUseCases.includes('SectionHeader') &&
+    dgpUseCases.includes('eyebrow="应用场景"') &&
+    dgpUseCases.includes('title="数据治理赋能关键业务场景"') &&
+    dgpUseCases.includes('CardGrid columns="two"') &&
+    dgpUseCases.includes('BaseCard') &&
+    dgpUseCases.includes('IconBox') &&
+    dgpUseCases.includes('CardText') &&
+    dgpUseCases.includes('equal-height') &&
+    !dgpUseCases.includes('BaseTabs') &&
+    !dgpUseCases.includes('role="tabpanel"') &&
+    !dgpUseCases.includes('min-h-[') &&
     !dgpUseCases.includes('<style'),
-  'DGP use cases must keep the EMQX product tabs and shared button implementation.',
+  'DGP use cases must use the shared 2x2 BaseCard scene grid.',
 )
 const dgpSources = [dgpData, dgpPage, dgpHero, dgpArchitecture, dgpEvolution, dgpUseCases].join('\n')
 for (const text of [
@@ -103,7 +110,7 @@ for (const text of [
   '数据接入 → 智能治理 → 数据赋能',
   '专为企业数据治理打造',
   '企业数据治理体系的演进',
-  '推动企业数据基础设施建设',
+  '数据治理赋能关键业务场景',
 ]) {
   assert(dgpSources.includes(text), `DGP requirement text is missing: ${text}`)
 }
@@ -115,7 +122,9 @@ for (const text of [
   '数据集成',
   '数据资产',
   '政务数据治理',
-  '物联数据汇聚与治理',
+  '制造数据治理',
+  '企业经营数据治理',
+  'AI 数据基础设施',
 ]) {
   assert(dgpData.includes(text), `DGP configured content is missing: ${text}`)
 }
