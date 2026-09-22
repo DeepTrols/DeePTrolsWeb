@@ -1,0 +1,78 @@
+export function checkBackendContentContracts(ctx) {
+  const {
+    assert,
+    backendNewsSchema,
+    backendCasesRepo,
+    backendReportsRepo,
+    backendCasesListApi,
+    backendCaseDetailApi,
+    backendReportsListApi,
+    backendNewsSeed,
+    casePage,
+    caseDetailPage,
+    reportPage,
+  } = ctx
+
+  assert(
+    backendNewsSchema.includes("pgEnum('solution_key'") &&
+      backendNewsSchema.includes("pgEnum('report_type', ['产品规格书', '电子书', '白皮书', '视频', '幻灯片', '基准测试报告'])") &&
+      backendNewsSchema.includes("pgEnum('content_status', ['draft', 'published'])") &&
+      backendNewsSchema.includes("pgTable('cases'") &&
+      backendNewsSchema.includes("pgTable('case_details'") &&
+      backendNewsSchema.includes("pgTable('reports'") &&
+      backendNewsSchema.includes("jsonb('related_products').$type<CaseRelatedProduct[]>()") &&
+      backendNewsSchema.includes("serial('id').primaryKey()") &&
+      backendNewsSchema.includes("varchar('href', { length: 500 }).notNull().unique()"),
+    'Backend content schema must mirror CaseResource/CaseDetail/ReportResource with solution_key/report_type/content_status enums, jsonb blocks + relatedProducts, and href-unique reports.',
+  )
+
+  assert(
+    backendCasesRepo.includes('export async function listCaseResources(): Promise<CaseResource[]>') &&
+      backendCasesRepo.includes('export async function getCasePayloadBySlug(slug: string)') &&
+      backendCasesRepo.includes("eq(cases.status, 'published')") &&
+      backendCasesRepo.includes('asc(cases.sortOrder)') &&
+      backendCasesRepo.includes('parseArticleBlocks(row.blocks)') &&
+      backendCasesRepo.includes('parseCaseRelatedProducts(row.relatedProducts)') &&
+      backendCasesRepo.includes('export function parseCaseRelatedProducts(input: unknown): CaseRelatedProduct[]') &&
+      backendCasesRepo.includes('getStaticCasePayload') &&
+      backendCasesRepo.includes('useNewsDatabase'),
+    'Cases repo must read published rows from PG when configured, validate blocks + relatedProducts via zod, and always fall back to data/*.ts.',
+  )
+
+  assert(
+    backendReportsRepo.includes('export async function listReportResources(): Promise<ReportResource[]>') &&
+      backendReportsRepo.includes("eq(reports.status, 'published')") &&
+      backendReportsRepo.includes('asc(reports.sortOrder)') &&
+      backendReportsRepo.includes('useNewsDatabase'),
+    'Reports repo must read published rows from PG when configured and always fall back to data/reports.ts.',
+  )
+
+  assert(
+    backendCasesListApi.includes('listCaseResources') &&
+      backendCaseDetailApi.includes('getCasePayloadBySlug') &&
+      backendCaseDetailApi.includes('statusCode: 400') &&
+      backendCaseDetailApi.includes('statusCode: 404') &&
+      backendReportsListApi.includes('listReportResources'),
+    'Cases/reports APIs must expose GET /api/cases, GET /api/cases/:slug (400/404 semantics), and GET /api/reports.',
+  )
+
+  assert(
+    backendNewsSeed.includes('caseResources.entries()') &&
+      backendNewsSeed.includes('reportResources.entries()') &&
+      backendNewsSeed.includes('target: cases.slug') &&
+      backendNewsSeed.includes('target: reports.href') &&
+      backendNewsSeed.includes('parseCaseRelatedProducts(detail.relatedProducts)'),
+    'Seed script must upsert cases by slug and reports by href idempotently with relatedProducts validation.',
+  )
+
+  assert(
+    casePage.includes("useFetch<CaseResource[]>('/api/cases'") &&
+      casePage.includes('default: () => caseResources') &&
+      caseDetailPage.includes('useFetch<CasePayload>(() => `/api/cases/${routeSlug.value}`') &&
+      caseDetailPage.includes('payload.value?.detail ?? getCaseDetailBySlug') &&
+      caseDetailPage.includes('payload.value?.resources ?? caseResources') &&
+      reportPage.includes("useFetch<ReportResource[]>('/api/reports'") &&
+      reportPage.includes('default: () => reportResources'),
+    'Cases/reports pages must fetch from the API with static-data fallback so the site renders without a database.',
+  )
+}

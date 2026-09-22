@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
+import { caseDetails } from '../data/case-details'
 import { newsDetails } from '../data/news-details'
 import { articleBlockSchema, articleBlocksSchema, parseArticleBlocks } from '../server/utils/article-blocks'
+import { parseCaseRelatedProducts } from '../server/utils/cases-repo'
 
 describe('article-blocks zod protocol', () => {
   it('accepts every block kind from the ArticleBlock discriminated union', () => {
@@ -28,6 +30,15 @@ describe('article-blocks zod protocol', () => {
     for (const detail of newsDetails) {
       const blocks = parseArticleBlocks(detail.blocks)
       expect(blocks.length).toBeGreaterThan(0)
+    }
+  })
+
+  it('validates all 7 seeded case details (blocks + relatedProducts) end to end', () => {
+    expect(caseDetails).toHaveLength(7)
+    for (const detail of caseDetails) {
+      const blocks = parseArticleBlocks(detail.blocks)
+      expect(blocks.length).toBeGreaterThan(0)
+      expect(parseCaseRelatedProducts(detail.relatedProducts).length).toBeGreaterThan(0)
     }
   })
 })

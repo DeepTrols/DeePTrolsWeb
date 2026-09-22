@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -8,7 +9,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '~': new URL('.', import.meta.url).pathname,
+      // fileURLToPath 解码中文目录（pathname 会把「项目」百分号编码导致运行时 ~/ 导入解析失败）
+      '~': fileURLToPath(new URL('.', import.meta.url)),
     },
   },
 })

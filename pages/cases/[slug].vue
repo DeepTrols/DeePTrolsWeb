@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { createError, useRoute } from '#imports'
+import { createError, useFetch, useRoute } from '#imports'
 import ArticleBreadcrumb from '~/components/common/article/ArticleBreadcrumb.vue'
 import ArticleContent from '~/components/common/article/ArticleContent.vue'
 import ArticleLinkRows from '~/components/common/article/ArticleLinkRows.vue'
@@ -10,6 +10,7 @@ import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import { caseResources } from '~/data/cases'
 import { getCaseDetailBySlug } from '~/data/case-details'
 import { reportFilterTabs } from '~/data/reports'
+import type { CasePayload } from '~/server/utils/cases-repo'
 import type { ArticleBreadcrumbItem, ArticleLinkRowItem } from '~/types/article'
 
 const route = useRoute()
@@ -18,8 +19,13 @@ const routeSlug = computed(() => {
   return Array.isArray(slug) ? slug[0] : slug
 })
 
+// Phase 1 复制：详情经 /api/cases/:slug 读取（DB 未配置时接口侧回退静态数据）；请求失败再回退 data/*
+const { data: payload } = await useFetch<CasePayload>(() => `/api/cases/${routeSlug.value}`, {
+  watch: [routeSlug],
+})
+
 const detail = computed(() => {
-  const found = getCaseDetailBySlug(routeSlug.value ?? '')
+  const found = payload.value?.detail ?? getCaseDetailBySlug(routeSlug.value ?? '')
 
   if (!found) {
     throw createError({
@@ -43,8 +49,10 @@ const breadcrumbItems = computed<ArticleBreadcrumbItem[]>(() => [
   { label: detail.value.title },
 ])
 
+const relatedResources = computed(() => payload.value?.resources ?? caseResources)
+
 const relatedCaseRows = computed<ArticleLinkRowItem[]>(() =>
-  caseResources
+  relatedResources.value
     .filter((item) => item.href !== `/cases/${detail.value.slug}`)
     .map((item) => ({ label: item.title, href: item.href })),
 )
@@ -52,7 +60,7 @@ const relatedCaseRows = computed<ArticleLinkRowItem[]>(() =>
 useSeoMeta({
   title: `${detail.value.title} - 行业案例 - DeepTrols`,
   description:
-    caseResources.find((item) => item.href === `/cases/${detail.value.slug}`)?.summary ?? '',
+    relatedResources.value.find((item) => item.href === `/cases/${detail.value.slug}`)?.summary ?? '',
 })
 </script>
 

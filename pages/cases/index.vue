@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useRoute } from '#imports'
+import { useFetch, useRoute } from '#imports'
 import CaseFeaturedSection from '~/components/case/CaseFeaturedSection.vue'
 import CaseHero from '~/components/case/CaseHero.vue'
 import CaseResourcesSection from '~/components/case/CaseResourcesSection.vue'
@@ -9,8 +9,14 @@ import SiteFooter from '~/components/layout/SiteFooter.vue'
 import ReportFilterBar from '~/components/service/report/ReportFilterBar.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import { caseMetrics, caseResources } from '~/data/cases'
+import type { CaseResource } from '~/data/cases'
 import { reportFilterTabs } from '~/data/reports'
 import type { ReportFilterKey } from '~/data/reports'
+
+// Phase 1 复制：列表经 /api/cases 读取（DB 未配置时接口侧回退静态数据）；请求失败再回退 data/cases.ts
+const { data: caseList } = await useFetch<CaseResource[]>('/api/cases', {
+  default: () => caseResources,
+})
 
 const route = useRoute()
 const categoryQuery = route.query.category
@@ -23,7 +29,7 @@ const caseSearchQuery = ref('')
 const filteredCaseResources = computed(() => {
   const keyword = caseSearchQuery.value.trim().toLocaleLowerCase()
 
-  return caseResources.filter((item) => {
+  return (caseList.value ?? caseResources).filter((item) => {
     const matchesFilter = activeCaseFilter.value === 'all' || item.solutionKey === activeCaseFilter.value
     const searchableText = `${item.title} ${item.summary}`.toLocaleLowerCase()
     const matchesSearch = !keyword || searchableText.includes(keyword)

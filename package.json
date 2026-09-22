@@ -15,7 +15,7 @@
     "harness:engineering": "node scripts/harness-check.mjs",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "tsx scripts/db-seed-news.ts"
+    "db:seed": "tsx scripts/db-seed.ts"
   },
   "dependencies": {
     "@lucide/vue": "^1.0.0",

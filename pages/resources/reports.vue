@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useFetch } from '#imports'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import ReportFeaturedSection from '~/components/service/report/ReportFeaturedSection.vue'
 import ReportFilterBar from '~/components/service/report/ReportFilterBar.vue'
 import ReportHero from '~/components/service/report/ReportHero.vue'
 import ReportResourcesSection from '~/components/service/report/ReportResourcesSection.vue'
-import { reportResources, type ReportFilterKey } from '~/data/reports'
+import { reportResources, type ReportFilterKey, type ReportResource } from '~/data/reports'
+
+// Phase 1 复制：列表经 /api/reports 读取（DB 未配置时接口侧回退静态数据）；请求失败再回退 data/reports.ts
+const { data: reportList } = await useFetch<ReportResource[]>('/api/reports', {
+  default: () => reportResources,
+})
 
 const activeReportFilter = ref<ReportFilterKey>('all')
 const reportSearchQuery = ref('')
 const filteredReportResources = computed(() => {
   const keyword = reportSearchQuery.value.trim().toLocaleLowerCase()
 
-  return reportResources.filter((item) => {
+  return (reportList.value ?? reportResources).filter((item) => {
     const matchesFilter = activeReportFilter.value === 'all' || item.solutionKey === activeReportFilter.value
     const searchableText = `${item.type} ${item.category} ${item.title} ${item.summary}`.toLocaleLowerCase()
     const matchesSearch = !keyword || searchableText.includes(keyword)

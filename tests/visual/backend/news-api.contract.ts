@@ -9,7 +9,7 @@ export function registerBackendNewsVisualContracts() {
     const blocks = readComponent('server/utils/article-blocks.ts')
     const listApi = readComponent('server/api/news/index.get.ts')
     const detailApi = readComponent('server/api/news/[id].get.ts')
-    const seed = readComponent('scripts/db-seed-news.ts')
+    const seed = readComponent('scripts/db-seed.ts')
     const drizzleConfig = readComponent('drizzle.config.ts')
     const nuxtConfig = readComponent('nuxt.config.ts')
     const listPage = readComponent('pages/news/index.vue')
