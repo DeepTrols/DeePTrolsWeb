@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
     onSuccess?: () => Promise<void> | void,
   ) {
     // 异步处理用户登录操作（服务端写入封闭 cookie session）
-    let userInfo: null | UserInfo = null;
+    let userInfo: null | UserInfo;
     try {
       loginLoading.value = true;
       await loginApi(params);

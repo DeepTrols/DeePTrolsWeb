@@ -1,0 +1,93 @@
+<script lang="ts" setup>
+import type { AdminReportRecord } from '#/api/content';
+
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+import { Button, message, Popconfirm, Space, Table, Tag } from 'ant-design-vue';
+
+import { deleteReportApi, listAdminReportsApi } from '#/api/content';
+
+import { statusColors, statusLabels } from '../shared/options';
+
+defineOptions({ name: 'ContentReports' });
+
+const router = useRouter();
+const rows = ref<AdminReportRecord[]>([]);
+const loading = ref(false);
+
+async function fetchRows() {
+  loading.value = true;
+  try {
+    rows.value = await listAdminReportsApi();
+  } finally {
+    loading.value = false;
+  }
+}
+
+async function handleDelete(id: number) {
+  await deleteReportApi(id);
+  message.success('已删除');
+  await fetchRows();
+}
+
+const columns = [
+  { dataIndex: 'id', title: 'ID', width: 70 },
+  { dataIndex: 'title', ellipsis: true, title: '标题' },
+  { dataIndex: 'type', title: '类型', width: 120 },
+  { dataIndex: 'category', title: '分类', width: 120 },
+  { dataIndex: 'href', ellipsis: true, title: '链接', width: 220 },
+  { dataIndex: 'sortOrder', title: '排序', width: 70 },
+  { dataIndex: 'status', title: '状态', width: 100 },
+  { dataIndex: 'actions', fixed: 'right' as const, title: '操作', width: 150 },
+];
+
+onMounted(fetchRows);
+</script>
+
+<template>
+  <div class="p-4">
+    <div class="mb-4 flex items-center justify-between">
+      <span class="text-sm text-gray-500">共 {{ rows.length }} 条</span>
+      <Button type="primary" @click="router.push('/content/reports/create')">
+        新建报告
+      </Button>
+    </div>
+    <Table
+      :columns="columns"
+      :data-source="rows"
+      :loading="loading"
+      :pagination="{ pageSize: 20 }"
+      row-key="id"
+    >
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'status'">
+          <Tag
+            :color="statusColors[record.status as keyof typeof statusColors]"
+          >
+            {{ statusLabels[record.status as keyof typeof statusLabels] }}
+          </Tag>
+        </template>
+        <template v-else-if="column.dataIndex === 'actions'">
+          <Space>
+            <Button
+              size="small"
+              type="link"
+              @click="router.push(`/content/reports/${record.id}`)"
+            >
+              编辑
+            </Button>
+            <Popconfirm
+              cancel-text="取消"
+              ok-text="删除"
+              title="确认删除该报告？"
+              @confirm="handleDelete(record.id)"
+            >
+              <Button danger size="small" type="link">删除</Button>
+            </Popconfirm>
+          </Space>
+        </template>
+      </template>
+    </Table>
+  </div>
+</template>

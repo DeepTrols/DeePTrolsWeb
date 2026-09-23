@@ -8,9 +8,14 @@ const MAX_REQUESTS = 5
 const buckets = new Map<string, number[]>()
 
 export function consumeRateLimit(key: string, now: number = Date.now()): boolean {
-  const since = now - WINDOW_MS
+  return consumeRateLimitWith(key, MAX_REQUESTS, WINDOW_MS, now)
+}
+
+/** 自定义窗口/上限的同款限流（如 admin 上传 30 次/10 分钟），签名锁定场景用基础版 */
+export function consumeRateLimitWith(key: string, max: number, windowMs: number, now: number = Date.now()): boolean {
+  const since = now - windowMs
   const hits = (buckets.get(key) ?? []).filter(timestamp => timestamp > since)
-  if (hits.length >= MAX_REQUESTS) {
+  if (hits.length >= max) {
     buckets.set(key, hits)
     return false
   }

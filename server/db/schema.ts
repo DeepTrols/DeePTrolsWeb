@@ -95,3 +95,14 @@ export const leads = pgTable('leads', {
   status: leadStatusEnum('status').notNull().default('new'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
+
+// 媒体库：admin 上传的图片资源；path 为站点可访问路径（/uploads/YYYY-MM/<uuid>.<ext>），文件本体走 StorageDriver（server/utils/storage.ts）
+export const mediaAssets = pgTable('media_assets', {
+  id: serial('id').primaryKey(),
+  path: varchar('path', { length: 500 }).notNull().unique(),
+  filename: varchar('filename', { length: 255 }).notNull(),
+  mime: varchar('mime', { length: 100 }).notNull(),
+  size: integer('size').notNull(),
+  alt: varchar('alt', { length: 500 }).notNull().default(''),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+})

@@ -35,3 +35,6 @@ Thumbs.db
 
 # Local duplicate source asset; production video lives in public/
 TresJS /
+
+# Admin 上传的媒体文件（入库记录见 media_assets，文件本体不入 git）
+public/uploads/
