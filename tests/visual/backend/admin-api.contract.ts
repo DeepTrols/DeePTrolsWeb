@@ -161,4 +161,39 @@ export function registerBackendAdminVisualContracts() {
     expect(composable).toContain('useFooterNavigation')
     expect(composable).toContain('default: () => primaryNavigation')
   })
+
+  it('guards the CMS pages APIs with requireAdmin, reserved-path blacklist, and published-only public reads', () => {
+    const pagesUtil = readComponent('server/utils/pages-admin.ts')
+    const publicApi = readComponent('server/api/pages/[...path].get.ts')
+    const listApi = readComponent('server/api/admin/pages/index.get.ts')
+    const createApi = readComponent('server/api/admin/pages/index.post.ts')
+    const getApi = readComponent('server/api/admin/pages/[...slug].get.ts')
+    const putApi = readComponent('server/api/admin/pages/[...slug].put.ts')
+    const deleteApi = readComponent('server/api/admin/pages/[...slug].delete.ts')
+    const catchAll = readComponent('pages/[...slug].vue')
+    const cmsView = readComponent('components/common/CmsPageView.vue')
+
+    // 保留路径黑名单：代码路由占用即渲染不到，必须提前拦截
+    expect(pagesUtil).toContain('export const CMS_RESERVED_EXACT_PATHS')
+    expect(pagesUtil).toContain('export const CMS_RESERVED_PREFIXES')
+    expect(pagesUtil).toContain('export function isReservedPagePath(slug: string)')
+    expect(pagesUtil).toContain("z.literal('richText')")
+    expect(pagesUtil).toContain('pageUpdateSchema = pageInputSchema.omit({ slug: true })')
+    expect(pagesUtil).toContain("row.status !== 'published'")
+
+    for (const route of [listApi, createApi, getApi, putApi, deleteApi]) {
+      expect(route).toContain('requireAdmin')
+    }
+    expect(createApi).toContain("statusCode: 400, statusMessage: 'Invalid page input'")
+    expect(createApi).toContain("statusCode: 409, statusMessage: 'Page slug already exists'")
+    expect(createApi).toContain('statusCode: 503')
+    expect(putApi).toContain('pageUpdateSchema')
+    expect(getApi).toContain("statusCode: 404, statusMessage: 'Page not found'")
+    expect(deleteApi).toContain("statusCode: 404, statusMessage: 'Page not found'")
+
+    expect(publicApi).toContain('getPublishedPage')
+    expect(publicApi).not.toContain('requireAdmin')
+    expect(catchAll).toContain('CmsPageView')
+    expect(cmsView).toContain('ArticleContent')
+  })
 }

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute } from '#imports'
+import { useFetch, useRoute } from '#imports'
 import BaseButton from '~/components/common/BaseButton.vue'
+import CmsPageView from '~/components/common/CmsPageView.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
+import type { PublishedPagePayload } from '~/server/utils/pages-admin'
 
 const route = useRoute()
 const pageTitle = computed(() => {
@@ -11,15 +13,21 @@ const pageTitle = computed(() => {
   return slug ? slug.replaceAll('-', ' ') : 'DeepTrols'
 })
 
+// CMS 分发：published 页命中即渲染；404/草稿/无 DB → data 为 null → 保留占位页
+const { data: cmsPage } = await useFetch<PublishedPagePayload>(`/api/pages${route.path}`, {
+  key: `cms-page${route.path}`,
+})
+
 useSeoMeta({
-  title: () => `${pageTitle.value} - DeepTrols`,
-  description: 'DeepTrols 官网内容建设中。',
-  robots: 'noindex, nofollow',
+  title: () => `${cmsPage.value?.title ?? pageTitle.value} - DeepTrols`,
+  description: () => cmsPage.value?.seoDescription || 'DeepTrols 官网内容建设中。',
+  robots: () => (cmsPage.value ? 'index, follow' : 'noindex, nofollow'),
 })
 </script>
 
 <template>
-  <div class="site-shell">
+  <CmsPageView v-if="cmsPage" :page="cmsPage" />
+  <div v-else class="site-shell">
     <SiteHeader />
     <main id="main-content" class="placeholder-page">
       <section class="flow-root pb-32 lg:pb-44" aria-labelledby="placeholder-title">

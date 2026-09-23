@@ -36,6 +36,15 @@ export function checkBackendAdminContracts(ctx) {
     backendNavigationApi,
     backendAdminMenuGetApi,
     backendAdminMenuPutApi,
+    backendPagesAdminUtil,
+    backendPagesPublicApi,
+    backendAdminPagesListApi,
+    backendAdminPagesCreateApi,
+    backendAdminPageGetApi,
+    backendAdminPageUpdateApi,
+    backendAdminPageDeleteApi,
+    cmsPageView,
+    catchAllPage,
     navIconRegistry,
     navigationComposable,
     backendNuxtConfig,
@@ -181,5 +190,44 @@ export function checkBackendAdminContracts(ctx) {
       navigationComposable.includes('useFooterNavigation') &&
       navigationComposable.includes('default: () => primaryNavigation'),
     'Navigation APIs must stay DB-first with static fallback; admin menus routes behind requireAdmin; composable keeps useFetch default fallback.',
+  )
+
+  assert(
+    backendPagesAdminUtil.includes('export const CMS_RESERVED_EXACT_PATHS') &&
+      backendPagesAdminUtil.includes('export const CMS_RESERVED_PREFIXES') &&
+      backendPagesAdminUtil.includes('export function isReservedPagePath(slug: string)') &&
+      backendPagesAdminUtil.includes("z.literal('richText')") &&
+      backendPagesAdminUtil.includes('articleBlocksSchema') &&
+      backendPagesAdminUtil.includes('pageUpdateSchema = pageInputSchema.omit({ slug: true })') &&
+      backendPagesAdminUtil.includes('export async function getPublishedPage(') &&
+      backendPagesAdminUtil.includes("row.status !== 'published'") &&
+      backendPagesAdminUtil.includes("Promise<'conflict' | string | null>"),
+    'Pages protocol must keep reserved-path blacklist, richText section schema over ArticleBlock[], immutable slug PK, published-only public reads, and conflict semantics.',
+  )
+
+  const pagesRoutes = [
+    backendAdminPagesListApi,
+    backendAdminPagesCreateApi,
+    backendAdminPageGetApi,
+    backendAdminPageUpdateApi,
+    backendAdminPageDeleteApi,
+  ]
+  assert(
+    pagesRoutes.every((route) => route.includes('requireAdmin')) &&
+      backendAdminPagesCreateApi.includes("statusCode: 400, statusMessage: 'Invalid page input'") &&
+      backendAdminPagesCreateApi.includes("statusCode: 409, statusMessage: 'Page slug already exists'") &&
+      backendAdminPagesCreateApi.includes('statusCode: 503') &&
+      backendAdminPageGetApi.includes("statusCode: 404, statusMessage: 'Page not found'") &&
+      backendAdminPageUpdateApi.includes('pageUpdateSchema') &&
+      backendAdminPageUpdateApi.includes("statusCode: 404, statusMessage: 'Page not found'") &&
+      backendAdminPageDeleteApi.includes("statusCode: 404, statusMessage: 'Page not found'") &&
+      backendPagesPublicApi.includes('getPublishedPage') &&
+      backendPagesPublicApi.includes("statusCode: 404, statusMessage: 'Page not found'") &&
+      catchAllPage.includes('CmsPageView') &&
+      catchAllPage.includes('`/api/pages${route.path}`') &&
+      cmsPageView.includes('ArticleContent') &&
+      cmsPageView.includes('SiteHeader') &&
+      cmsPageView.includes('SiteFooter'),
+    'CMS pages routes must stay behind requireAdmin with 400/404/409/503 semantics; public API serves published only; catch-all dispatches to CmsPageView.',
   )
 }

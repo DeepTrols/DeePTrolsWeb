@@ -113,3 +113,15 @@ export const navMenus = pgTable('nav_menus', {
   items: jsonb('items').notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
+
+// CMS 页：slug 主键存完整路径（如 /solutions/smart-retail）；sections 存区块数组（Phase C 仅 richText，写入侧经 zod 校验，见 server/utils/pages-admin.ts）
+export const pages = pgTable('pages', {
+  slug: varchar('slug', { length: 300 }).primaryKey(),
+  title: varchar('title', { length: 500 }).notNull(),
+  seoDescription: varchar('seo_description', { length: 500 }).notNull().default(''),
+  status: contentStatusEnum('status').notNull().default('draft'),
+  sortOrder: integer('sort_order').notNull().default(0),
+  sections: jsonb('sections').notNull().default([]),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
