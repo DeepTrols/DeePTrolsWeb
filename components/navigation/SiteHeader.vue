@@ -8,6 +8,10 @@ import SiteHeaderMenuButton from '~/components/navigation/SiteHeaderMenuButton.v
 import SiteHeaderMobileNav from '~/components/navigation/SiteHeaderMobileNav.vue'
 import { primaryNavigation } from '~/data/navigation'
 import type { NavItem } from '~/data/navigation'
+import { useHeaderNavigation } from '~/composables/use-navigation'
+
+const { data: headerMenu } = await useHeaderNavigation()
+const navigation = computed(() => headerMenu.value ?? primaryNavigation)
 
 const activeIndex = ref<number | null>(null)
 const isMobileOpen = ref(false)
@@ -17,7 +21,7 @@ const isHeaderHovering = ref(false)
 const headerRef = ref<HTMLElement | null>(null)
 const closeTimer = ref<ReturnType<typeof setTimeout> | null>(null)
 const route = useRoute()
-const activeItem = computed(() => (activeIndex.value === null ? undefined : primaryNavigation[activeIndex.value]))
+const activeItem = computed(() => (activeIndex.value === null ? undefined : navigation.value[activeIndex.value]))
 const isHomeRoute = computed(() => route.path === '/')
 const isProductRoute = computed(() => route.path === '/products' || route.path.startsWith('/products/'))
 const isCasesRoute = computed(() => route.path === '/resources' || route.path.startsWith('/resources/'))
@@ -76,7 +80,7 @@ function cancelClose() {
 
 function openMega(index: number) {
   cancelClose()
-  const item = primaryNavigation[index]
+  const item = navigation.value[index]
   activeIndex.value = item && hasMega(item) ? index : null
 }
 
@@ -231,7 +235,7 @@ onBeforeUnmount(() => {
           </NuxtLink>
 
           <SiteHeaderDesktopNav
-            :items="primaryNavigation"
+            :items="navigation"
             :active-index="activeIndex"
             @enter="handleNavMouseEnter"
             @leave="handleNavMouseLeave"
@@ -260,6 +264,6 @@ onBeforeUnmount(() => {
       </div>
     </Transition>
 
-    <SiteHeaderMobileNav :items="primaryNavigation" :open="isMobileOpen" @close="closeMobileMenu" />
+    <SiteHeaderMobileNav :items="navigation" :open="isMobileOpen" @close="closeMobileMenu" />
   </header>
 </template>

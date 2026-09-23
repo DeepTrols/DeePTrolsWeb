@@ -106,3 +106,10 @@ export const mediaAssets = pgTable('media_assets', {
   alt: varchar('alt', { length: 500 }).notNull().default(''),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
+
+// 导航菜单：key 主键（header/footer），items 存整棵菜单树（写入侧经 zod 校验，见 server/utils/menu-admin.ts）
+export const navMenus = pgTable('nav_menus', {
+  key: varchar('key', { length: 50 }).primaryKey(),
+  items: jsonb('items').notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})

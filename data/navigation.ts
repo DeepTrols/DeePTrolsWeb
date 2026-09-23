@@ -1,22 +1,14 @@
-import {
-  BatteryCharging,
-  BookOpen,
-  Bot,
-  Droplets,
-  Factory,
-  GraduationCap,
-  PlugZap,
-  RadioTower,
-  Rocket,
-} from '@lucide/vue'
-import type { Component } from 'vue'
-
+/**
+ * 主导航数据（菜单管理的静态回退快照，TASK-015.8）。
+ * icon 只存 lucide 组件名字符串（可序列化入库），渲染侧经
+ * components/navigation/nav-icons.ts 注册表解析为组件。
+ */
 export interface NavLink {
   label: string
   description?: string
   href: string
   activePaths?: string[]
-  icon?: Component
+  icon?: string
   hot?: boolean
 }
 
@@ -36,7 +28,7 @@ export interface NavFeature {
   title: string
   description: string
   href: string
-  icon: Component
+  icon: string
 }
 
 export interface NavItem {
@@ -73,7 +65,7 @@ export const primaryNavigation: NavItem[] = [
         description: '让企业知识可沉淀、可理解、可调用',
         href: '/products/knowledge-base',
         links: [
-          { label: '博曜·企业级知识管理平台', description: '构建AI可理解的知识体系', href: '/products/knowledge-base', icon: BookOpen },
+          { label: '博曜·企业级知识管理平台', description: '构建AI可理解的知识体系', href: '/products/knowledge-base', icon: 'BookOpen' },
         ],
       },
       {
@@ -81,7 +73,7 @@ export const primaryNavigation: NavItem[] = [
         description: '汇聚算力与模型能力，驱动企业智能应用',
         href: '/products/agentos',
         links: [
-          { label: '智曜·AgentOS', description: 'Agent基础设施平台', href: '/products/agentos', icon: Bot },
+          { label: '智曜·AgentOS', description: 'Agent基础设施平台', href: '/products/agentos', icon: 'Bot' },
         ],
       },
       {
@@ -89,7 +81,7 @@ export const primaryNavigation: NavItem[] = [
         description: '连接设备与场景，让 AI 感知真实世界',
         href: '/products/ai-iot',
         links: [
-          { label: '探曜·AI物联感知平台', description: '实现设备、数据与智能应用互联', href: '/products/ai-iot', icon: RadioTower },
+          { label: '探曜·AI物联感知平台', description: '实现设备、数据与智能应用互联', href: '/products/ai-iot', icon: 'RadioTower' },
           { label: 'Device Agent', description: '具备自主执行能力的设备智能体', href: '/products/device-agent' },
         ],
       },
@@ -109,26 +101,26 @@ export const primaryNavigation: NavItem[] = [
             label: '智能制造解决方案',
             description: '融合设备、数据与智能生产',
             href: '/solutions/manufacturing',
-            icon: Factory,
+            icon: 'Factory',
           },
           {
             label: '智慧储能解决方案',
             description: '驱动储能安全、高效与智能运营',
             href: '/solutions/energy',
-            icon: BatteryCharging,
+            icon: 'BatteryCharging',
           },
           {
             label: '智慧水利解决方案',
             description: '感知水务全域，智能调度运营',
             href: '/solutions/water',
-            icon: Droplets,
+            icon: 'Droplets',
           },
           {
             label: '智慧教育解决方案',
             description: 'AI赋能教学、管理与学习',
             href: '/services/smart-education',
             activePaths: ['/solutions/smart-education'],
-            icon: GraduationCap,
+            icon: 'GraduationCap',
           },
         ],
       },
@@ -140,14 +132,14 @@ export const primaryNavigation: NavItem[] = [
             description: '深入业务现场，让AI真正落地',
             href: '/services/enterprise-ai-delivery',
             activePaths: ['/solutions/fde'],
-            icon: Rocket,
+            icon: 'Rocket',
             hot: true,
           },
           {
             label: '算电协同运营方案',
             description: '统筹算力、电力、冷却与储能',
             href: '/solutions/compute',
-            icon: PlugZap,
+            icon: 'PlugZap',
             hot: true,
           },
         ],

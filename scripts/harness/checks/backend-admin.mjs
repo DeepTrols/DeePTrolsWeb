@@ -32,6 +32,12 @@ export function checkBackendAdminContracts(ctx) {
     backendAdminUploadApi,
     backendAdminMediaListApi,
     backendAdminMediaDeleteApi,
+    backendMenuAdminUtil,
+    backendNavigationApi,
+    backendAdminMenuGetApi,
+    backendAdminMenuPutApi,
+    navIconRegistry,
+    navigationComposable,
     backendNuxtConfig,
   } = ctx
 
@@ -147,5 +153,33 @@ export function checkBackendAdminContracts(ctx) {
       backendAdminMediaDeleteApi.includes("statusCode: 400, statusMessage: 'Invalid media id'") &&
       backendAdminMediaDeleteApi.includes("statusCode: 404, statusMessage: 'Media not found'"),
     'Admin upload/media routes must stay behind requireAdmin with rate-limited multipart upload (400/413/415/503) and 400/404 delete semantics.',
+  )
+
+  assert(
+    backendMenuAdminUtil.includes("export const menuKeySchema = z.enum(['header', 'footer'])") &&
+      backendMenuAdminUtil.includes('export const headerMenuSchema') &&
+      backendMenuAdminUtil.includes('export const footerMenuSchema') &&
+      backendMenuAdminUtil.includes('export function parseMenuItems(key: MenuKey, items: unknown)') &&
+      backendMenuAdminUtil.includes('export async function getMenuItems(') &&
+      backendMenuAdminUtil.includes('export async function upsertMenuItems(key: MenuKey') &&
+      navIconRegistry.includes('export const navIconComponents: Record<string, Component>') &&
+      navIconRegistry.includes('export function resolveNavIcon(name?: string)'),
+    'Menu protocol must keep key enum (header/footer), whole-tree zod schemas, icon registry, and get/upsert helpers.',
+  )
+
+  assert(
+    backendNavigationApi.includes('getMenuItems') &&
+      backendNavigationApi.includes('primaryNavigation') &&
+      backendNavigationApi.includes("statusCode: 400, statusMessage: 'Invalid menu key'") &&
+      backendNavigationApi.includes('footerColumns') &&
+      backendAdminMenuGetApi.includes('requireAdmin') &&
+      backendAdminMenuGetApi.includes("source: 'static'") &&
+      backendAdminMenuPutApi.includes('requireAdmin') &&
+      backendAdminMenuPutApi.includes("statusCode: 400, statusMessage: 'Invalid menu items'") &&
+      backendAdminMenuPutApi.includes('statusCode: 503') &&
+      navigationComposable.includes('useHeaderNavigation') &&
+      navigationComposable.includes('useFooterNavigation') &&
+      navigationComposable.includes('default: () => primaryNavigation'),
+    'Navigation APIs must stay DB-first with static fallback; admin menus routes behind requireAdmin; composable keeps useFetch default fallback.',
   )
 }

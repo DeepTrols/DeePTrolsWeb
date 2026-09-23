@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useFooterNavigation } from '~/composables/use-navigation'
 import { footerColumns } from '~/data/footer'
+
+const { data: footerMenu } = await useFooterNavigation()
+const columns = computed(() => footerMenu.value?.columns ?? footerColumns)
 </script>
 
 <template>
@@ -12,7 +17,7 @@ import { footerColumns } from '~/data/footer'
 
     <nav class="site-footer__nav" aria-label="页脚导航">
       <div class="site-footer__columns">
-        <section v-for="column in footerColumns" :key="column.title" class="site-footer__column">
+        <section v-for="column in columns" :key="column.title" class="site-footer__column">
           <h4>{{ column.title }}</h4>
           <template v-for="(group, groupIndex) in column.groups" :key="`${column.title}-${groupIndex}`">
             <ul class="site-footer__list">

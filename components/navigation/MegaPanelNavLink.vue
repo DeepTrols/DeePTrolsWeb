@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import type { NavLink } from '~/data/navigation'
+import { computed } from 'vue'
+import { resolveNavIcon } from '~/components/navigation/nav-icons'
 
-defineProps<{
+const props = defineProps<{
   link: NavLink
 }>()
 
 defineEmits<{
   navigate: []
 }>()
+
+const linkIcon = computed(() => resolveNavIcon(props.link.icon))
 </script>
 
 <template>
@@ -18,7 +22,7 @@ defineEmits<{
     @click="$emit('navigate')"
   >
     <span v-if="link.hot" class="mega-panel__hot">hot</span>
-    <component v-if="link.icon" :is="link.icon" :size="22" aria-hidden="true" />
+    <component v-if="linkIcon" :is="linkIcon" :size="22" aria-hidden="true" />
     <span>
       <strong>{{ link.label }}</strong>
       <small v-if="link.description">{{ link.description }}</small>

@@ -125,4 +125,40 @@ export function registerBackendAdminVisualContracts() {
     expect(mediaDeleteApi).toContain("statusCode: 400, statusMessage: 'Invalid media id'")
     expect(mediaDeleteApi).toContain("statusCode: 404, statusMessage: 'Media not found'")
   })
+
+  it('guards the menu management APIs with requireAdmin, whole-tree zod schemas, and static fallbacks', () => {
+    const menuUtil = readComponent('server/utils/menu-admin.ts')
+    const navIcons = readComponent('components/navigation/nav-icons.ts')
+    const navigationApi = readComponent('server/api/navigation.get.ts')
+    const menuGetApi = readComponent('server/api/admin/menus/[key].get.ts')
+    const menuPutApi = readComponent('server/api/admin/menus/[key].put.ts')
+    const composable = readComponent('composables/use-navigation.ts')
+    const navigationData = readComponent('data/navigation.ts')
+
+    expect(menuUtil).toContain("export const menuKeySchema = z.enum(['header', 'footer'])")
+    expect(menuUtil).toContain('export const headerMenuSchema')
+    expect(menuUtil).toContain('export const footerMenuSchema')
+    expect(menuUtil).toContain('navIconComponents')
+    expect(menuUtil).toContain('export async function getMenuItems(')
+    expect(menuUtil).toContain('export async function upsertMenuItems(key: MenuKey')
+    expect(navIcons).toContain('export function resolveNavIcon(name?: string)')
+
+    // 导航数据的 icon 字段必须是可序列化的字符串（入库前提）
+    expect(navigationData).toContain('icon?: string')
+    expect(navigationData).not.toContain('Component')
+
+    expect(navigationApi).toContain('getMenuItems')
+    expect(navigationApi).toContain('primaryNavigation')
+    expect(navigationApi).toContain('footerColumns')
+    expect(navigationApi).toContain("statusCode: 400, statusMessage: 'Invalid menu key'")
+    expect(menuGetApi).toContain('requireAdmin')
+    expect(menuGetApi).toContain("source: 'static'")
+    expect(menuPutApi).toContain('requireAdmin')
+    expect(menuPutApi).toContain("statusCode: 400, statusMessage: 'Invalid menu items'")
+    expect(menuPutApi).toContain('statusCode: 503')
+
+    expect(composable).toContain('useHeaderNavigation')
+    expect(composable).toContain('useFooterNavigation')
+    expect(composable).toContain('default: () => primaryNavigation')
+  })
 }

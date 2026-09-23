@@ -2,6 +2,7 @@
 import { ArrowRight } from '@lucide/vue'
 import MegaPanelNavLink from '~/components/navigation/MegaPanelNavLink.vue'
 import MegaPanelProduct from '~/components/navigation/MegaPanelProduct.vue'
+import { resolveNavIcon } from '~/components/navigation/nav-icons'
 import type { NavColumn, NavItem, NavLink } from '~/data/navigation'
 
 defineProps<{
@@ -64,7 +65,7 @@ function linksFor(column: NavColumn): NavLink[] {
         class="mega-panel__feature"
         @click="$emit('navigate')"
       >
-        <component :is="feature.icon" :size="24" aria-hidden="true" />
+        <component :is="resolveNavIcon(feature.icon)" :size="24" aria-hidden="true" />
         <span>
           <strong>{{ feature.title }}</strong>
           <small>{{ feature.description }}</small>

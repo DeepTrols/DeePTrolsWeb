@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useFooterNavigation } from '~/composables/use-navigation'
 import { footerSocials } from '~/data/footer'
+
+const { data: footerMenu } = await useFooterNavigation()
+const socials = computed(() => footerMenu.value?.socials ?? footerSocials)
 </script>
 
 <template>
   <div class="site-footer__socials" aria-label="社交媒体">
-    <template v-for="social in footerSocials" :key="social.label">
+    <template v-for="social in socials" :key="social.label">
       <a
         v-if="social.href"
         :href="social.href"
