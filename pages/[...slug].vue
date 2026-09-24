@@ -14,8 +14,11 @@ const pageTitle = computed(() => {
 })
 
 // CMS 分发：published 页命中即渲染；404/草稿/无 DB → data 为 null → 保留占位页
+// ?preview=1 透传（015.13 草稿预览）：key 拼 :preview 后缀防 published/draft 缓存互污
+const isPreview = computed(() => route.query.preview === '1')
 const { data: cmsPage } = await useFetch<PublishedPagePayload>(`/api/pages${route.path}`, {
-  key: `cms-page${route.path}`,
+  key: `cms-page${route.path}${isPreview.value ? ':preview' : ''}`,
+  query: isPreview.value ? { preview: '1' } : undefined,
 })
 
 useSeoMeta({

@@ -129,13 +129,14 @@ export interface AdminPagePayload extends PageInput {
   updatedAt: string
 }
 
-/** 公开侧载荷：仅 published 页，供 catch-all 分发器渲染 */
+/** 公开侧载荷：仅 published 页，供 catch-all 分发器渲染；preview（015.13）= 管理员草稿预览标记 */
 export interface PublishedPagePayload {
   slug: string
   title: string
   seoDescription: string
   sections: PageSection[]
   updatedAt: string
+  preview?: boolean
 }
 
 /** 页面列表（admin）：代码页目录在前（只读），CMS 页在后（含草稿，按 sortOrder）；保留路径黑名单保证两者不撞 slug */

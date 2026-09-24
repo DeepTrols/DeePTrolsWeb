@@ -37,6 +37,21 @@ export async function requireAdmin(event: H3Event) {
   return session
 }
 
+/** 软守卫（015.13 草稿预览）：是否已登录 admin。未配置/未登录/异常一律 false，不抛错 */
+export async function isAdminRequest(event: H3Event): Promise<boolean> {
+  try {
+    const { sessionPassword } = useRuntimeConfig()
+    if (!sessionPassword) {
+      return false
+    }
+    const session = await useAdminSession(event)
+    return session.data.admin === true
+  }
+  catch {
+    return false
+  }
+}
+
 /** 恒定时间密码比对，防时序侧信道 */
 export function verifyAdminPassword(input: unknown, expected: string): boolean {
   if (typeof input !== 'string' || !expected) {

@@ -1,12 +1,21 @@
 <script lang="ts" setup>
+import type { ComponentRegistryEntry } from '#/api/components';
 import type { FeatureGridItem, PageSection } from '#/api/pages';
 
 import { computed, ref, watch } from 'vue';
 
-import { Button, Input, Select, Textarea } from 'ant-design-vue';
+import {
+  Button,
+  Input,
+  InputNumber,
+  Select,
+  Switch,
+  Textarea,
+} from 'ant-design-vue';
 
 import { NAV_ICON_OPTIONS } from '#/api/menus';
 
+import BlocksEditor from '../../content/shared/BlocksEditor.vue';
 import ImageField from '../../content/shared/ImageField.vue';
 import { del } from '../../menus/shared';
 import {
@@ -18,7 +27,9 @@ import {
 defineOptions({ name: 'SectionBody' });
 
 // 组件管理（015.12）：custom 组件下拉按启停过滤；缺省回退静态全量
+// 组件注册表（015.13）：customComponents 描述符驱动 custom props 动态表单
 const props = defineProps<{
+  customComponents?: ComponentRegistryEntry[];
   customSectionOptions?: { label: string; value: string }[];
 }>();
 
@@ -29,17 +40,36 @@ const customOptions = computed(
   () => props.customSectionOptions ?? defaultCustomSectionOptions,
 );
 
-/** richText 的 blocks 草稿：合法 JSON 实时落回 section.blocks，非法保留草稿继续编辑 */
+/** 当前 custom 组件的注册表条目（描述符表单数据源；无条目 = 零 props 组件） */
+const customEntry = computed(() => {
+  const s = section.value;
+  if (s.type !== 'custom') return undefined;
+  return props.customComponents?.find((c) => c.name === s.name);
+});
+
+/** richText 富文本（015.13）：BlocksEditor null = 不可转换/空 → 不回写 section.blocks，红字提示 */
+const richBlocks = ref<null | unknown[]>(null);
+const richInvalid = computed(() => richBlocks.value === null);
+
+/** richText 的 blocks 草稿：合法 JSON 实时落回 section.blocks，非法保留草稿继续编辑（高级逃生门） */
 const blocksDraft = ref('');
 watch(
   () => section.value,
   (s) => {
     if (s.type === 'richText') {
+      richBlocks.value = s.blocks;
       blocksDraft.value = JSON.stringify(s.blocks, null, 2);
     }
   },
   { immediate: true },
 );
+
+watch(richBlocks, (value) => {
+  // null 不回写：保留已存 blocks（防止误清空），由红字提示运营
+  if (value && section.value.type === 'richText') {
+    section.value.blocks = value;
+  }
+});
 
 function onBlocksInput(text: string) {
   blocksDraft.value = text;
@@ -47,6 +77,7 @@ function onBlocksInput(text: string) {
     const value = JSON.parse(text);
     if (Array.isArray(value) && section.value.type === 'richText') {
       section.value.blocks = value;
+      richBlocks.value = value;
     }
   } catch {
     // JSON 未输完，保持草稿
@@ -70,6 +101,81 @@ function onTagsChange(item: FeatureGridItem, event: Event) {
     .map((tag) => tag.trim())
     .filter(Boolean);
   item.tags = tags.length > 0 ? tags : undefined;
+}
+
+// ---- custom props 描述符表单（015.13） ----
+
+function customProps(): Record<string, unknown> {
+  return section.value.type === 'custom' ? (section.value.props ?? {}) : {};
+}
+
+function propValue(key: string): unknown {
+  return customProps()[key];
+}
+
+/** 模板内类型断言会撞 vue/no-deprecated-filter（| 误判为过滤器），值读取统一走脚本 helper */
+function strProp(key: string): string | undefined {
+  const value = propValue(key);
+  return typeof value === 'string' ? value : undefined;
+}
+
+function numProp(key: string): number | undefined {
+  const value = propValue(key);
+  return typeof value === 'number' ? value : undefined;
+}
+
+function setProp(key: string, value: unknown) {
+  if (section.value.type !== 'custom') return;
+  section.value.props = { ...customProps(), [key]: value };
+}
+
+/** 切换组件名 → 按描述符 default 重置 props（稀疏存储；空则不挂 props 键） */
+watch(
+  () => (section.value.type === 'custom' ? section.value.name : undefined),
+  (name, oldName) => {
+    if (!name || !oldName || name === oldName) return;
+    if (section.value.type !== 'custom') return;
+    const entry = props.customComponents?.find((c) => c.name === name);
+    const next: Record<string, unknown> = {};
+    for (const field of entry?.fields ?? []) {
+      if (field.default !== undefined) {
+        next[field.key] = field.default;
+      }
+    }
+    section.value.props = Object.keys(next).length > 0 ? next : undefined;
+  },
+);
+
+/** json 类字段：草稿失焦 parse 写回；非法保留草稿并标红 */
+const jsonDrafts = ref<Record<string, string>>({});
+const jsonInvalid = ref<Record<string, boolean>>({});
+watch(
+  customEntry,
+  (entry) => {
+    const drafts: Record<string, string> = {};
+    for (const field of entry?.fields ?? []) {
+      if (field.type === 'json') {
+        drafts[field.key] = JSON.stringify(
+          propValue(field.key) ?? field.default ?? null,
+          null,
+          2,
+        );
+      }
+    }
+    jsonDrafts.value = drafts;
+    jsonInvalid.value = {};
+  },
+  { immediate: true },
+);
+
+function onJsonBlur(key: string) {
+  const text = jsonDrafts.value[key] ?? '';
+  try {
+    setProp(key, JSON.parse(text));
+    jsonInvalid.value[key] = false;
+  } catch {
+    jsonInvalid.value[key] = true;
+  }
 }
 </script>
 
@@ -193,16 +299,23 @@ function onTagsChange(item: FeatureGridItem, event: Event) {
     </template>
 
     <template v-else-if="section.type === 'richText'">
-      <Textarea
-        :value="blocksDraft"
-        class="font-mono"
-        :rows="8"
-        @update:value="onBlocksInput"
-      />
-      <div class="text-xs text-gray-400">
-        ArticleBlock[] JSON（heading / paragraph / list / quote / image /
-        divider），合法 JSON 实时生效
+      <BlocksEditor v-model:blocks="richBlocks" />
+      <div v-if="richInvalid" class="text-xs text-red-500">
+        正文为空或含不可转换内容，当前修改不会写入区块（已存内容保留）
       </div>
+      <details class="text-xs text-gray-400">
+        <summary class="cursor-pointer">高级：直接编辑 JSON</summary>
+        <Textarea
+          :value="blocksDraft"
+          class="mt-2 font-mono"
+          :rows="8"
+          @update:value="onBlocksInput"
+        />
+        <div class="mt-1">
+          ArticleBlock[] JSON（heading / paragraph / list / quote / image /
+          divider），合法 JSON 实时生效
+        </div>
+      </details>
     </template>
 
     <template v-else-if="section.type === 'logoStrip'">
@@ -241,8 +354,75 @@ function onTagsChange(item: FeatureGridItem, event: Event) {
         :options="customOptions"
         class="w-64"
       />
+      <template v-if="customEntry && customEntry.fields.length > 0">
+        <div
+          v-for="field in customEntry.fields"
+          :key="field.key"
+          class="grid gap-1"
+        >
+          <span class="text-xs text-gray-400">
+            {{ field.label }}{{ field.required ? '（必填）' : '' }}
+          </span>
+          <Input
+            v-if="field.type === 'string'"
+            :placeholder="field.placeholder"
+            :value="strProp(field.key)"
+            @update:value="(v) => setProp(field.key, v)"
+          />
+          <Textarea
+            v-else-if="field.type === 'text'"
+            :placeholder="field.placeholder"
+            :rows="3"
+            :value="strProp(field.key)"
+            @update:value="(v) => setProp(field.key, v)"
+          />
+          <InputNumber
+            v-else-if="field.type === 'number'"
+            class="w-40"
+            :value="numProp(field.key)"
+            @update:value="(v) => setProp(field.key, v)"
+          />
+          <Switch
+            v-else-if="field.type === 'boolean'"
+            :checked="Boolean(propValue(field.key))"
+            @update:checked="(v) => setProp(field.key, v)"
+          />
+          <Select
+            v-else-if="field.type === 'select'"
+            class="w-48"
+            :options="field.options"
+            :value="strProp(field.key)"
+            @update:value="(v) => setProp(field.key, v)"
+          />
+          <ImageField
+            v-else-if="field.type === 'image'"
+            :value="strProp(field.key)"
+            @update:value="(v) => setProp(field.key, v)"
+          />
+          <Select
+            v-else-if="field.type === 'icon'"
+            allow-clear
+            class="w-48"
+            :options="NAV_ICON_OPTIONS"
+            :value="strProp(field.key)"
+            @update:value="(v) => setProp(field.key, v)"
+          />
+          <template v-else>
+            <Textarea
+              v-model:value="jsonDrafts[field.key]"
+              class="font-mono"
+              :placeholder="field.placeholder"
+              :rows="4"
+              @blur="() => onJsonBlur(field.key)"
+            />
+            <div v-if="jsonInvalid[field.key]" class="text-xs text-red-500">
+              JSON 非法，未写入（保留草稿继续编辑）
+            </div>
+          </template>
+        </div>
+      </template>
       <div class="text-xs text-gray-400">
-        逃生门：按名嵌入零 props 定制组件（架构图类），props 不入库
+        {{ customEntry?.description ?? '按名嵌入定制组件' }}
       </div>
     </template>
   </div>

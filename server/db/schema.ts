@@ -137,3 +137,13 @@ export const componentStates = pgTable('component_states', {
   disabled: jsonb('disabled').$type<string[]>().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
+
+// 区块模板库（015.13）：运营可复用的区块快照；section 存单个 PageSection（写入侧经 zod 校验，见 server/utils/preset-admin.ts）
+export const sectionPresets = pgTable('section_presets', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 200 }).notNull(),
+  description: varchar('description', { length: 500 }).notNull().default(''),
+  section: jsonb('section').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})

@@ -37,6 +37,7 @@ export const requiredTaskFiles = [
   'TASK-014.23-news-list-page.md',
   'TASK-014.24-news-detail-page.md',
   'TASK-015.12-site-management-enhancements.md',
+  'TASK-015.13-component-registry-and-page-builder.md',
 ]
 
 export const requiredFiles = [
@@ -284,6 +285,17 @@ export const requiredFiles = [
   'components/sections/CmsImageBanner.vue',
   'components/sections/custom-names.ts',
   'components/sections/custom-registry.ts',
+  'components/sections/custom-props.ts',
+  'server/utils/preset-admin.ts',
+  'server/api/admin/presets/index.get.ts',
+  'server/api/admin/presets/index.post.ts',
+  'server/api/admin/presets/[id].put.ts',
+  'server/api/admin/presets/[id].delete.ts',
+  'admin/apps/web-antd/src/api/presets.ts',
+  'admin/apps/web-antd/src/views/pages/components/SectionPalette.vue',
+  'admin/apps/web-antd/src/views/pages/presets.vue',
+  'tests/component-registry.spec.ts',
+  'tests/preset-admin.spec.ts',
   'tests/page-sections.spec.ts',
   'admin/apps/web-antd/src/api/pages.ts',
   'admin/apps/web-antd/src/router/routes/modules/pages.ts',

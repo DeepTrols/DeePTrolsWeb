@@ -1,3 +1,4 @@
+import type { ComponentFieldMeta } from '#/api/components';
 import type { PageSection } from '#/api/pages';
 
 export type SectionType = PageSection['type'];
@@ -30,34 +31,70 @@ export const spacingOptions = [
   { label: '宽松', value: 'default' },
 ];
 
-/** 定制组件中文名（组件管理页与编辑下拉共用） */
+/** 定制组件中文名（组件管理页与编辑下拉共用；API registry 下发后以其为准，此为 fallback） */
 export const customSectionLabels: Record<string, string> = {
+  AboutAddressSection: '公司地址',
+  AboutContactSection: '联系方式',
+  AboutHeroStats: '关键数据带',
+  AboutIntroSection: '公司介绍',
+  AboutTextBlock: '段落文本块',
+  AboutValuesSection: '价值观',
+  ContactFormSection: '线索表单',
   DdpArchitecture: '博曜数据开发架构图',
   DlpArchitecture: '数据标注平台架构图',
   DmsArchitecture: '数据要素监管架构图',
+  HomeCustomerLogos: '客户 Logo 墙',
+  HomeDeliverables: '交付成果',
+  WhyEngine: '产品引擎矩阵',
+  WhyServiceReset: '服务概览',
+  WhyTrustTabs: '信任背书',
 };
 
-/** 组件管理页说明列（8 标准区块 + 定制组件） */
+/** 组件管理页说明列（8 标准区块 + 定制组件；API registry 下发后以其为准，此为 fallback） */
 export const componentDescriptions: Record<string, string> = {
+  AboutAddressSection: '关于页地址信息（定制，数据驱动）',
+  AboutContactSection: '关于页联系方式卡片（定制，数据驱动）',
+  AboutHeroStats: '关于页关键数字网格（定制，props: items）',
+  AboutIntroSection: '关于页公司简介 + 图片轮播（定制，数据驱动）',
+  AboutTextBlock: '大字号段落文本块（定制，props: paragraphs/align/size）',
+  AboutValuesSection: '关于页价值观卡片（定制，数据驱动）',
+  ContactFormSection: '线索收集表单（定制，提交 POST /api/leads）',
   cta: '行动号召横幅：标题 + 描述 + 按钮',
-  custom: '逃生门：按名嵌入定制架构组件（props 不入库）',
+  custom: '逃生门：按名嵌入定制组件（015.13 起支持 props）',
   DdpArchitecture: '博曜 DDP 产品架构图（定制）',
   DlpArchitecture: '数据标注 DLP 产品架构图（定制）',
   DmsArchitecture: '数据要素 DMS 产品架构图（定制）',
   featureGrid: '卡片网格：标题/副题/图标/要点/标签，两至四列',
   hero: '页面主标题区（含时替代默认页头）',
+  HomeCustomerLogos: '首页客户 Logo 展示（定制，数据驱动）',
+  HomeDeliverables: '首页交付成果展示（定制，数据驱动）',
   imageBanner: '容器宽大图 + 可选说明文字',
   logoStrip: '合作伙伴静态 logo 墙（图或文字）',
   metrics: '指标带：数值 + 说明，1-8 条',
   richText: '正文富文本（ArticleBlock[]）',
+  WhyEngine: '为什么页引擎矩阵区（定制，数据驱动）',
+  WhyServiceReset: '为什么页服务重定义区（定制，数据驱动）',
+  WhyTrustTabs: '为什么页信任标签页（定制，数据驱动）',
 };
 
-/** 与服务端 custom-names.ts 注册表保持一致（逃生门） */
+/** 与服务端 custom-names.ts 注册表保持一致（fallback；优先用 API registry） */
 export const customSectionOptions = [
+  'AboutAddressSection',
+  'AboutContactSection',
+  'AboutHeroStats',
+  'AboutIntroSection',
+  'AboutTextBlock',
+  'AboutValuesSection',
+  'ContactFormSection',
   'DdpArchitecture',
   'DlpArchitecture',
   'DmsArchitecture',
-].map((value) => ({ label: value, value }));
+  'HomeCustomerLogos',
+  'HomeDeliverables',
+  'WhyEngine',
+  'WhyServiceReset',
+  'WhyTrustTabs',
+].map((value) => ({ label: customSectionLabels[value] ?? value, value }));
 
 /** 各型默认新区块（spacing 默认 compact = 现状视觉） */
 export function createSection(type: SectionType): PageSection {
@@ -121,6 +158,26 @@ export function createSection(type: SectionType): PageSection {
       };
     }
   }
+}
+
+/** 拖入定制组件的新区块（015.13）：props 初值取描述符 default（稀疏存储，SFC withDefaults 兜底） */
+export function createCustomSection(
+  name: string,
+  fields?: ComponentFieldMeta[],
+): PageSection {
+  const props: Record<string, unknown> = {};
+  for (const field of fields ?? []) {
+    if (field.default !== undefined) {
+      props[field.key] = field.default;
+    }
+  }
+  return {
+    name,
+    props: Object.keys(props).length > 0 ? props : undefined,
+    spacing: 'compact',
+    type: 'custom',
+    visible: true,
+  };
 }
 
 /** 列表行摘要（类型标签旁的辅助文本） */

@@ -21,6 +21,12 @@ function gridItems(section: Extract<PageSection, { type: 'featureGrid' }>) {
   return section.items.map(item => ({ ...item, icon: resolveNavIcon(item.icon) }))
 }
 
+// custom 注册组件 props 透传（015.13）：过滤 on* 事件键做纵深防御（v-bind 注入保护）
+function customProps(section: Extract<PageSection, { type: 'custom' }>): Record<string, unknown> {
+  const props = section.props ?? {}
+  return Object.fromEntries(Object.entries(props).filter(([key]) => !/^on/i.test(key)))
+}
+
 // 间距三档（SectionShell 节奏）：cta（定高横幅）与 custom（自包含架构图）加在外层包裹 div；richText 内联 section 用同一张映射
 function spacingClass(section: PageSection): string {
   switch (section.spacing) {
@@ -87,7 +93,7 @@ function spacingClass(section: PageSection): string {
       :spacing="section.spacing"
     />
     <div v-else-if="section.type === 'custom'" :class="spacingClass(section)">
-      <component :is="customSectionComponents[section.name]" />
+      <component :is="customSectionComponents[section.name]" v-bind="customProps(section)" />
     </div>
   </template>
 </template>

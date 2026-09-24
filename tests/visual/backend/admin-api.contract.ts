@@ -280,7 +280,95 @@ export function registerBackendAdminVisualContracts() {
     expect(homeInsightsSection).toContain('default: () => insights')
   })
 
+  it('guards the component registry, section presets, drag page builder, and draft preview (015.13)', () => {
+    const customProps = readComponent('components/sections/custom-props.ts')
+    const sectionsUtil = readComponent('server/utils/page-sections.ts')
+    const cmsRenderer = readComponent('components/sections/CmsPageRenderer.vue')
+    const componentUtil = readComponent('server/utils/component-admin.ts')
+    const componentsGet = readComponent('server/api/admin/components/index.get.ts')
+    const adminUtil = readComponent('server/utils/admin.ts')
+    const publicApi = readComponent('server/api/pages/[...path].get.ts')
+    const catchAll = readComponent('pages/[...slug].vue')
+    const cmsView = readComponent('components/common/CmsPageView.vue')
+
+    // 注册组件元数据：纯 TS（禁 .vue import）+ 全名覆盖 Record
+    expect(customProps).toContain('CUSTOM_COMPONENT_META')
+    expect(customProps).toContain('Record<CustomSectionName, RegisteredComponentMeta>')
+    expect(customProps).not.toContain(".vue'")
+    // 协议：custom 稀疏 props + per-name superRefine 校验
+    expect(sectionsUtil).toContain('superRefine')
+    expect(sectionsUtil).toContain('props: z.record(')
+    // 渲染：custom 分支 v-bind 透传（on* 过滤在 customProps）
+    expect(cmsRenderer).toContain('v-bind="customProps(section)"')
+    // 发现 API：registry + usage
+    expect(componentUtil).toContain('export function listComponentRegistry(')
+    expect(componentUtil).toContain('export function scanSectionUsage(')
+    expect(componentUtil).toContain('export async function getComponentUsage(')
+    expect(componentsGet).toContain('listComponentRegistry')
+    expect(componentsGet).toContain('usage')
+
+    // 模板库：协议层 + 4 路由 requireAdmin（400/404/503 语义）
+    const presetUtil = readComponent('server/utils/preset-admin.ts')
+    expect(presetUtil).toContain('export const presetInputSchema')
+    expect(presetUtil).toContain('section: pageSectionSchema')
+    expect(presetUtil).toContain('export async function listPresets(')
+    expect(presetUtil).toContain('export async function createPreset(')
+    expect(presetUtil).toContain('export async function updatePreset(')
+    expect(presetUtil).toContain('export async function deletePreset(')
+    const presetList = readComponent('server/api/admin/presets/index.get.ts')
+    const presetCreate = readComponent('server/api/admin/presets/index.post.ts')
+    const presetUpdate = readComponent('server/api/admin/presets/[id].put.ts')
+    const presetDelete = readComponent('server/api/admin/presets/[id].delete.ts')
+    for (const route of [presetList, presetCreate, presetUpdate, presetDelete]) {
+      expect(route).toContain('requireAdmin')
+    }
+    expect(presetCreate).toContain('statusCode: 400')
+    expect(presetCreate).toContain('statusCode: 503')
+    expect(presetUpdate).toContain('statusCode: 404')
+    expect(presetDelete).toContain('statusCode: 404')
+
+    // vben 拖拽编辑器：useSortable + 面板 clone + BlocksEditor + 描述符表单
+    const sectionsEditor = readComponent(
+      'admin/apps/web-antd/src/views/pages/components/SectionsEditor.vue',
+    )
+    const sectionPalette = readComponent(
+      'admin/apps/web-antd/src/views/pages/components/SectionPalette.vue',
+    )
+    const sectionBody = readComponent(
+      'admin/apps/web-antd/src/views/pages/components/SectionBody.vue',
+    )
+    const webAntdPkg = readComponent('admin/apps/web-antd/package.json')
+    expect(sectionsEditor).toContain('useSortable')
+    expect(sectionsEditor).toContain('SectionPalette')
+    expect(sectionPalette).toContain("pull: 'clone'")
+    expect(sectionBody).toContain('BlocksEditor')
+    expect(sectionBody).toContain('customComponents')
+    expect(webAntdPkg).toContain('@vueuse/integrations')
+
+    // 模板库 vben 侧：API + 路由 + 列表页
+    const presetsApi = readComponent('admin/apps/web-antd/src/api/presets.ts')
+    const pagesRoutes = readComponent('admin/apps/web-antd/src/router/routes/modules/pages.ts')
+    const presetsView = readComponent('admin/apps/web-antd/src/views/pages/presets.vue')
+    expect(presetsApi).toContain('listPresetsApi')
+    expect(pagesRoutes).toContain('/pages/presets')
+    expect(presetsView).toContain('deletePresetApi')
+
+    // 草稿预览：软守卫 + 显式 query 触发 + 缓存 key 隔离 + 横幅 + iframe Drawer
+    expect(adminUtil).toContain(
+      'export async function isAdminRequest(event: H3Event): Promise<boolean>',
+    )
+    expect(publicApi).toContain('isAdminRequest')
+    expect(publicApi).toContain("query.preview === '1'")
+    expect(publicApi).toContain('getAdminPage')
+    expect(catchAll).toContain(':preview')
+    expect(cmsView).toContain('page.preview')
+    const pagesEdit = readComponent('admin/apps/web-antd/src/views/pages/edit.vue')
+    expect(pagesEdit).toContain('iframe')
+    expect(pagesEdit).toContain('preview=1')
+  })
+
   it('guards the rich-text blocks editor with a blocks↔HTML converter and media-library upload', () => {
+
     const blocksHtml = readComponent(
       'admin/apps/web-antd/src/views/content/shared/blocks-html.ts',
     )

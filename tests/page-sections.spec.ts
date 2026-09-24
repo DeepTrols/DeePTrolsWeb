@@ -135,6 +135,55 @@ describe('customSectionSchema（逃生门）', () => {
     )
     expect(CUSTOM_SECTION_NAMES.length).toBeGreaterThan(0)
   })
+
+  it('零 props 向后兼容（015.10 既有数据无 props 键）', () => {
+    const parsed = pageSectionsSchema.safeParse([{ type: 'custom', name: 'WhyEngine' }])
+    expect(parsed.success).toBe(true)
+  })
+
+  it('props 按组件 schema 校验：合法通过', () => {
+    const parsed = pageSectionsSchema.safeParse([
+      {
+        type: 'custom',
+        name: 'AboutTextBlock',
+        props: { paragraphs: ['第一段', '第二段'], align: 'left', size: 'default' },
+      },
+      {
+        type: 'custom',
+        name: 'AboutHeroStats',
+        props: { items: [{ value: '500+', label: '全球客户' }] },
+      },
+    ])
+    expect(parsed.success).toBe(true)
+  })
+
+  it('props 按组件 schema 校验：缺必填/非法枚举/多余键被拒', () => {
+    expect(
+      pageSectionsSchema.safeParse([{ type: 'custom', name: 'AboutTextBlock' }]).success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'custom', name: 'AboutTextBlock', props: { paragraphs: '不是数组' } },
+      ]).success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'custom', name: 'AboutTextBlock', props: { paragraphs: ['ok'], align: 'justify' } },
+      ]).success,
+    ).toBe(false)
+    // strict：多余键被拒（防 v-bind 注入面）
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'custom', name: 'AboutTextBlock', props: { paragraphs: ['ok'], onClick: 'x' } },
+      ]).success,
+    ).toBe(false)
+    // 零 props 组件带 props 也被 strict 拒绝
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'custom', name: 'WhyEngine', props: { title: 'x' } },
+      ]).success,
+    ).toBe(false)
+  })
 })
 
 describe('pageSectionSchema discriminatedUnion', () => {

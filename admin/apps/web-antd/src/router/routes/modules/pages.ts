@@ -36,6 +36,15 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/pages/edit.vue'),
         meta: editMeta('编辑页面'),
       },
+      {
+        name: 'PagePresets',
+        path: '/pages/presets',
+        component: () => import('#/views/pages/presets.vue'),
+        meta: {
+          icon: 'lucide:blocks',
+          title: '区块模板',
+        },
+      },
     ],
   },
 ];

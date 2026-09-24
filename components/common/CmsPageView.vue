@@ -17,6 +17,13 @@ const hasHero = computed(() =>
 <template>
   <div class="site-shell">
     <SiteHeader />
+    <div
+      v-if="page.preview"
+      class="border-b border-amber-300 bg-amber-50 px-4 py-2 text-center text-sm font-medium text-amber-800"
+      role="status"
+    >
+      草稿预览 · 仅管理员可见
+    </div>
     <main id="main-content">
       <section
         v-if="!hasHero"

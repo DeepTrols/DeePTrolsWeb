@@ -77,6 +77,7 @@ export type PageSection =
     }
   | {
       name: string;
+      props?: Record<string, unknown>;
       spacing: SectionSpacing;
       type: 'custom';
       visible: boolean;

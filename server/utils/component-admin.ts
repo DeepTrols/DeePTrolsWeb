@@ -1,8 +1,11 @@
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { CUSTOM_SECTION_NAMES } from '~/components/sections/custom-names'
+import type { ComponentFieldMeta } from '~/components/sections/custom-props'
+import { CUSTOM_COMPONENT_META } from '~/components/sections/custom-props'
 import { useNewsDatabase } from '../db/client'
-import { componentStates } from '../db/schema'
+import { componentStates, pages } from '../db/schema'
+import { pageSectionsSchema } from './page-sections'
 
 /**
  * 组件管理（015.12）：页面可插入组件 = 8 标准区块 type + 定制架构组件（CUSTOM_SECTION_NAMES）。
@@ -77,5 +80,74 @@ export async function setDisabledComponents(disabled: string[]): Promise<boolean
   }
   catch {
     return false
+  }
+}
+
+/** 注册组件发现（015.13）：schema 不出门的 JSON 子集（label/description/category/fields 给 vben 动态表单） */
+export interface ComponentRegistryEntry {
+  name: string
+  label: string
+  description: string
+  category: 'architecture' | 'content' | 'form' | 'marketing'
+  fields: ComponentFieldMeta[]
+}
+
+export function listComponentRegistry(): ComponentRegistryEntry[] {
+  return CUSTOM_SECTION_NAMES.map(name => {
+    const meta = CUSTOM_COMPONENT_META[name]
+    return {
+      name,
+      label: meta.label,
+      description: meta.description,
+      category: meta.category,
+      fields: meta.fields,
+    }
+  })
+}
+
+/** 组件使用统计：组件 ID（标准型=type，定制=组件名）→ 引用页数与 slug 列表 */
+export interface ComponentUsage {
+  count: number
+  slugs: string[]
+}
+
+/** 纯函数：对页面 rows 统计每个组件的引用次数（sections 解析失败的行跳过；visible:false 也算使用） */
+export function scanSectionUsage(rows: { sections: unknown, slug: string }[]): Record<string, ComponentUsage> {
+  const usage: Record<string, { count: number, slugs: Set<string> }> = {}
+  for (const row of rows) {
+    const parsed = pageSectionsSchema.safeParse(row.sections)
+    if (!parsed.success) {
+      continue
+    }
+    const seen = new Set<string>()
+    for (const section of parsed.data) {
+      const id = section.type === 'custom' ? section.name : section.type
+      if (seen.has(id)) {
+        continue
+      }
+      seen.add(id)
+      usage[id] ??= { count: 0, slugs: new Set() }
+      usage[id].count += 1
+      usage[id].slugs.add(row.slug)
+    }
+  }
+  return Object.fromEntries(
+    Object.entries(usage).map(([id, entry]) => [id, { count: entry.count, slugs: [...entry.slugs].sort() }]),
+  )
+}
+
+/** DB 读取全部页面 sections 并统计；无 DB/失败返回 {} */
+export async function getComponentUsage(): Promise<Record<string, ComponentUsage>> {
+  const db = useNewsDatabase()
+  if (!db) {
+    return {}
+  }
+
+  try {
+    const rows = await db.select({ slug: pages.slug, sections: pages.sections }).from(pages).limit(500)
+    return scanSectionUsage(rows)
+  }
+  catch {
+    return {}
   }
 }

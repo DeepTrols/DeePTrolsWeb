@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { CUSTOM_SECTION_NAMES } from '~/components/sections/custom-names'
+import { CUSTOM_COMPONENT_META } from '~/components/sections/custom-props'
 import { navIconComponents } from '~/components/navigation/nav-icons'
 import { articleBlocksSchema } from './article-blocks'
 
@@ -111,11 +112,13 @@ export const imageBannerSectionSchema = z.object({
   caption: z.string().trim().max(500).optional(),
 })
 
-/** 逃生门：按名映射现有零 props 定制组件（注册表见 custom-names.ts），props 不入库 */
+/** 逃生门/注册组件：按名映射定制组件（注册表见 custom-names.ts，元数据见 custom-props.ts）。
+ *  props 为稀疏存储（015.13）：zod 不设默认值，渲染靠 SFC withDefaults，入库前按组件 schema 校验 */
 export const customSectionSchema = z.object({
   type: z.literal('custom'),
   ...sharedFields,
   name: z.enum(CUSTOM_SECTION_NAMES),
+  props: z.record(z.string(), z.unknown()).optional(),
 })
 
 export const pageSectionSchema = z.discriminatedUnion('type', [
@@ -128,5 +131,21 @@ export const pageSectionSchema = z.discriminatedUnion('type', [
   imageBannerSectionSchema,
   customSectionSchema,
 ])
-export const pageSectionsSchema = z.array(pageSectionSchema).max(50)
+export const pageSectionsSchema = z.array(pageSectionSchema).max(50).superRefine((sections, ctx) => {
+  // zod v3 discriminatedUnion 成员不能挂 superRefine → custom 的 per-name props 校验集中在这里
+  for (const [index, section] of sections.entries()) {
+    if (section.type !== 'custom') continue
+    const meta = CUSTOM_COMPONENT_META[section.name]
+    const result = meta.schema.safeParse(section.props ?? {})
+    if (!result.success) {
+      for (const issue of result.error.issues) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `${section.name}: ${issue.message}`,
+          path: [index, 'props', ...issue.path],
+        })
+      }
+    }
+  }
+})
 export type PageSection = z.infer<typeof pageSectionSchema>

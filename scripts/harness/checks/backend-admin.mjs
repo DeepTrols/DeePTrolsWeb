@@ -61,6 +61,18 @@ export function checkBackendAdminContracts(ctx) {
     adminComponentsApi,
     adminComponentsRoutes,
     adminComponentsView,
+    cmsCustomProps,
+    backendPresetAdminUtil,
+    backendAdminPresetsListApi,
+    backendAdminPresetsCreateApi,
+    backendAdminPresetUpdateApi,
+    backendAdminPresetDeleteApi,
+    adminPresetsApi,
+    adminSectionPalette,
+    adminPresetsView,
+    adminPagesRoutes,
+    adminPagesEditView,
+    adminWebAntdPkg,
     homeInsights,
     navIconRegistry,
     navigationComposable,
@@ -325,5 +337,63 @@ export function checkBackendAdminContracts(ctx) {
       homeInsights.includes("useFetch<InsightItem[]>('/api/home/insights'") &&
       homeInsights.includes('default: () => insights'),
     'Home insights must merge featured published news (publishedAt desc) then reports (sortOrder asc), capped at 4, with static fallback in both the public API and the component useFetch default.',
+  )
+
+  assert(
+    cmsCustomProps.includes('CUSTOM_COMPONENT_META') &&
+      cmsCustomProps.includes('Record<CustomSectionName, RegisteredComponentMeta>') &&
+      !cmsCustomProps.includes(".vue'") &&
+      backendPageSectionsUtil.includes('superRefine') &&
+      backendPageSectionsUtil.includes('props: z.record(') &&
+      cmsPageRenderer.includes('v-bind="customProps(section)"') &&
+      backendComponentAdminUtil.includes('export function listComponentRegistry(') &&
+      backendComponentAdminUtil.includes('export function scanSectionUsage(') &&
+      backendComponentAdminUtil.includes('export async function getComponentUsage(') &&
+      backendAdminComponentsGetApi.includes('listComponentRegistry') &&
+      backendAdminComponentsGetApi.includes('usage'),
+    'Component registry (015.13) must keep a Vue-free CUSTOM_COMPONENT_META record, per-name props superRefine validation, renderer v-bind passthrough, and registry/usage on the admin components GET.',
+  )
+
+  assert(
+    backendPresetAdminUtil.includes('export const presetInputSchema') &&
+      backendPresetAdminUtil.includes('section: pageSectionSchema') &&
+      backendPresetAdminUtil.includes('export async function listPresets(') &&
+      backendPresetAdminUtil.includes('export async function createPreset(') &&
+      backendPresetAdminUtil.includes('export async function updatePreset(') &&
+      backendPresetAdminUtil.includes('export async function deletePreset(') &&
+      backendAdminPresetsListApi.includes('requireAdmin') &&
+      backendAdminPresetsCreateApi.includes('requireAdmin') &&
+      backendAdminPresetsCreateApi.includes('statusCode: 400') &&
+      backendAdminPresetsCreateApi.includes('statusCode: 503') &&
+      backendAdminPresetUpdateApi.includes('requireAdmin') &&
+      backendAdminPresetUpdateApi.includes('statusCode: 404') &&
+      backendAdminPresetDeleteApi.includes('requireAdmin') &&
+      backendAdminPresetDeleteApi.includes('statusCode: 404'),
+    'Section presets (015.13) must keep the zod input schema (name/description/section) and four requireAdmin routes with 400/404/503 semantics.',
+  )
+
+  assert(
+    adminSectionsEditor.includes('useSortable') &&
+      adminSectionsEditor.includes('SectionPalette') &&
+      adminSectionPalette.includes("pull: 'clone'") &&
+      adminSectionBody.includes('BlocksEditor') &&
+      adminSectionBody.includes('customComponents') &&
+      adminWebAntdPkg.includes('@vueuse/integrations') &&
+      adminPagesEditView.includes('iframe') &&
+      adminPagesEditView.includes('preview=1') &&
+      adminPresetsApi.includes('listPresetsApi') &&
+      adminPagesRoutes.includes('/pages/presets') &&
+      adminPresetsView.includes('deletePresetApi'),
+    'vben page builder (015.13) must keep the sortable palette/editor, BlocksEditor rich text, descriptor-driven custom props, preview drawer, and presets list route.',
+  )
+
+  assert(
+    backendAdminUtil.includes('export async function isAdminRequest(event: H3Event): Promise<boolean>') &&
+      backendPagesPublicApi.includes('isAdminRequest') &&
+      backendPagesPublicApi.includes("query.preview === '1'") &&
+      backendPagesPublicApi.includes('getAdminPage') &&
+      catchAllPage.includes(':preview') &&
+      cmsPageView.includes('page.preview'),
+    'Draft preview (015.13) must keep the soft isAdminRequest guard, the explicit ?preview=1 branch (admin page first), the dispatcher preview cache key, and the CmsPageView banner.',
   )
 }

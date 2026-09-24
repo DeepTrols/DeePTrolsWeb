@@ -1,11 +1,14 @@
 <script lang="ts" setup>
+import type { ComponentRegistryEntry } from '#/api/components';
 import type { PageInput, PageSection } from '#/api/pages';
+import type { SectionPreset } from '#/api/presets';
 
 import { computed, onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import {
   Button,
+  Drawer,
   Form,
   FormItem,
   Input,
@@ -18,6 +21,7 @@ import {
 
 import { getComponentsApi } from '#/api/components';
 import { createPageApi, getAdminPageApi, updatePageApi } from '#/api/pages';
+import { listPresetsApi } from '#/api/presets';
 
 import {
   parseJsonField,
@@ -58,7 +62,10 @@ const sectionsText = ref('');
 const sectionMode = ref<'json' | 'structured'>('structured');
 
 // 组件管理（015.12）：新增区块下拉按启停过滤；拉取失败回退全量（不影响已编辑内容）
+// 组件注册表（015.13）：custom props 描述符表单数据源；模板库供面板拖入
 const disabledComponents = ref<string[]>([]);
+const customComponents = ref<ComponentRegistryEntry[]>([]);
+const presets = ref<SectionPreset[]>([]);
 const enabledSectionTypeOptions = computed(() =>
   sectionTypeOptions.filter(
     (option) => !disabledComponents.value.includes(option.value),
@@ -69,6 +76,33 @@ const enabledCustomSectionOptions = computed(() =>
     (option) => !disabledComponents.value.includes(option.value),
   ),
 );
+const enabledCustomComponents = computed(() =>
+  customComponents.value.filter(
+    (entry) => !disabledComponents.value.includes(entry.name),
+  ),
+);
+
+async function loadPresets() {
+  try {
+    const payload = await listPresetsApi();
+    presets.value = payload.presets;
+  } catch {
+    // 拉取失败回退空模板列表
+  }
+}
+
+// 草稿预览（015.13）：iframe 加载主站 ?preview=1（cookie 同站共享）；未保存新页禁用
+const previewOpen = ref(false);
+const previewStamp = ref(0);
+const previewUrl = computed(() => {
+  const base = import.meta.env.DEV ? 'http://localhost:3000' : '';
+  const slug = form.slug || pageSlug.value || '';
+  return `${base}${slug}?preview=1&_t=${previewStamp.value}`;
+});
+function openPreview() {
+  previewStamp.value = Date.now();
+  previewOpen.value = true;
+}
 
 const sectionsPlaceholder =
   '[{"type":"richText","blocks":[{"type":"paragraph","text":"正文"}]}]';
@@ -88,12 +122,14 @@ function handleModeChange() {
 }
 
 onMounted(async () => {
-  try {
-    const payload = await getComponentsApi();
-    disabledComponents.value = payload.disabled;
-  } catch {
-    // 拉取失败回退全量组件
-  }
+  await Promise.allSettled([
+    (async () => {
+      const payload = await getComponentsApi();
+      disabledComponents.value = payload.disabled;
+      customComponents.value = payload.registry;
+    })(),
+    loadPresets(),
+  ]);
   if (!isEdit.value) {
     form.sections = [createSection('richText')];
     sectionsText.value = toJsonText(form.sections);
@@ -204,8 +240,11 @@ async function save(publish = false) {
         <SectionsEditor
           v-if="sectionMode === 'structured'"
           v-model:sections="form.sections"
+          :custom-components="enabledCustomComponents"
           :custom-section-options="enabledCustomSectionOptions"
+          :presets="presets"
           :section-type-options="enabledSectionTypeOptions"
+          @preset-saved="loadPresets"
         />
         <Textarea
           v-else
@@ -231,8 +270,30 @@ async function save(publish = false) {
         <Button :loading="saving" class="mr-2" @click="save(true)">
           保存并发布
         </Button>
+        <Button
+          class="mr-2"
+          :disabled="!isEdit"
+          title="预览最新保存内容（先保存草稿再预览）"
+          @click="openPreview"
+        >
+          预览草稿
+        </Button>
         <Button @click="router.push('/pages')">返回</Button>
       </FormItem>
     </Form>
+
+    <Drawer
+      v-model:open="previewOpen"
+      placement="right"
+      title="草稿预览（最新保存内容）"
+      width="80%"
+    >
+      <iframe
+        v-if="previewOpen"
+        class="h-full w-full border-0"
+        :src="previewUrl"
+        title="草稿预览"
+      ></iframe>
+    </Drawer>
   </div>
 </template>
