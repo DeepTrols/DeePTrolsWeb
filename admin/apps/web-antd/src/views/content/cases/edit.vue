@@ -17,6 +17,7 @@ import {
 
 import { createCaseApi, getAdminCaseApi, updateCaseApi } from '#/api/content';
 
+import BlocksEditor from '../shared/BlocksEditor.vue';
 import ImageField from '../shared/ImageField.vue';
 import {
   parseJsonField,
@@ -54,16 +55,13 @@ const form = reactive<
   summary: '',
   title: '',
 });
-const blocksText = ref('');
+const blocksValue = ref<null | unknown[]>(null);
 const relatedProductsText = ref('');
 const relatedProductsPlaceholder =
   '[{"name":"DGP","desc":"...","href":"/products/dgp"}]';
 
 onMounted(async () => {
   if (!isEdit.value) {
-    blocksText.value = toJsonText([
-      { text: '在此填写正文段落', type: 'paragraph' },
-    ]);
     relatedProductsText.value = '[]';
     return;
   }
@@ -75,7 +73,7 @@ onMounted(async () => {
   try {
     const payload = await getAdminCaseApi(slug);
     Object.assign(form, payload);
-    blocksText.value = toJsonText(payload.blocks);
+    blocksValue.value = payload.blocks;
     relatedProductsText.value = toJsonText(payload.relatedProducts);
   } finally {
     loading.value = false;
@@ -83,9 +81,8 @@ onMounted(async () => {
 });
 
 async function save(publish = false) {
-  const blocks = parseJsonField(blocksText.value);
-  if (!blocks || blocks.length === 0) {
-    message.error('正文 blocks JSON 格式错误（须为非空数组）');
+  if (blocksValue.value === null) {
+    message.error('正文为空或包含不支持的元素，请检查编辑器内容');
     return;
   }
   const relatedProducts = parseJsonField(relatedProductsText.value);
@@ -95,7 +92,7 @@ async function save(publish = false) {
   }
   const payload = {
     ...form,
-    blocks,
+    blocks: blocksValue.value,
     relatedProducts,
     solutionKey: form.solutionKey ?? null,
     status: publish ? ('published' as const) : form.status,
@@ -174,12 +171,8 @@ async function save(publish = false) {
       <FormItem label="详情头图" required>
         <ImageField v-model:value="form.heroImage" />
       </FormItem>
-      <FormItem label="正文 blocks" required>
-        <Textarea v-model:value="blocksText" class="font-mono" :rows="14" />
-        <div class="mt-1 text-xs text-gray-400">
-          ArticleBlock[] JSON：heading / paragraph / list / quote / image /
-          divider
-        </div>
+      <FormItem label="正文" required>
+        <BlocksEditor v-model:blocks="blocksValue" />
       </FormItem>
       <FormItem label="相关产品">
         <Textarea

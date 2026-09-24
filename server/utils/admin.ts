@@ -12,7 +12,14 @@ export function useAdminSession(event: H3Event) {
   return useSession(event, {
     name: SESSION_NAME,
     password: sessionPassword,
-    cookie: { httpOnly: true, sameSite: 'lax', path: '/' },
+    // h3 默认 secure:true——本地 http 下非 Chrome 浏览器（Safari/Firefox）会拒存 Secure cookie，
+    // 表现为登录后所有请求 401；仅生产（HTTPS 部署）开 Secure
+    cookie: {
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+      secure: process.env.NODE_ENV === 'production',
+    },
   })
 }
 

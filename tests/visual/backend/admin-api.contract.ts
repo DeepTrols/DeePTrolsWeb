@@ -164,6 +164,7 @@ export function registerBackendAdminVisualContracts() {
 
   it('guards the CMS pages APIs with requireAdmin, reserved-path blacklist, and published-only public reads', () => {
     const pagesUtil = readComponent('server/utils/pages-admin.ts')
+    const sectionsUtil = readComponent('server/utils/page-sections.ts')
     const publicApi = readComponent('server/api/pages/[...path].get.ts')
     const listApi = readComponent('server/api/admin/pages/index.get.ts')
     const createApi = readComponent('server/api/admin/pages/index.post.ts')
@@ -172,14 +173,36 @@ export function registerBackendAdminVisualContracts() {
     const deleteApi = readComponent('server/api/admin/pages/[...slug].delete.ts')
     const catchAll = readComponent('pages/[...slug].vue')
     const cmsView = readComponent('components/common/CmsPageView.vue')
+    const cmsRenderer = readComponent('components/sections/CmsPageRenderer.vue')
+    const customNames = readComponent('components/sections/custom-names.ts')
+    const customRegistry = readComponent('components/sections/custom-registry.ts')
 
     // 保留路径黑名单：代码路由占用即渲染不到，必须提前拦截
     expect(pagesUtil).toContain('export const CMS_RESERVED_EXACT_PATHS')
     expect(pagesUtil).toContain('export const CMS_RESERVED_PREFIXES')
     expect(pagesUtil).toContain('export function isReservedPagePath(slug: string)')
-    expect(pagesUtil).toContain("z.literal('richText')")
+    // 页面列表全量：代码页目录在前（source:'code' 只读），CMS 页在后
+    expect(pagesUtil).toContain('export const CODE_PAGE_CATALOG')
+    expect(pagesUtil).toContain("source: 'cms' | 'code'")
+    expect(pagesUtil).toContain('[...codeRows, ...cmsRows]')
     expect(pagesUtil).toContain('pageUpdateSchema = pageInputSchema.omit({ slug: true })')
     expect(pagesUtil).toContain("row.status !== 'published'")
+
+    // 区块协议：discriminatedUnion 七标准型 + custom 逃生门（名字必须登记）
+    expect(sectionsUtil).toContain("z.discriminatedUnion('type'")
+    expect(sectionsUtil).toContain("z.literal('hero')")
+    expect(sectionsUtil).toContain("z.literal('metrics')")
+    expect(sectionsUtil).toContain("z.literal('featureGrid')")
+    expect(sectionsUtil).toContain("z.literal('cta')")
+    expect(sectionsUtil).toContain("z.literal('richText')")
+    expect(sectionsUtil).toContain("z.literal('logoStrip')")
+    expect(sectionsUtil).toContain("z.literal('imageBanner')")
+    expect(sectionsUtil).toContain("z.literal('custom')")
+    expect(sectionsUtil).toContain('articleBlocksSchema')
+    expect(sectionsUtil).toContain('z.enum(CUSTOM_SECTION_NAMES)')
+    expect(sectionsUtil).toContain("sectionSpacingSchema = z.enum(['tight', 'compact', 'default'])")
+    expect(customNames).toContain('CUSTOM_SECTION_NAMES')
+    expect(customRegistry).toContain('Record<CustomSectionName, Component>')
 
     for (const route of [listApi, createApi, getApi, putApi, deleteApi]) {
       expect(route).toContain('requireAdmin')
@@ -194,6 +217,101 @@ export function registerBackendAdminVisualContracts() {
     expect(publicApi).toContain('getPublishedPage')
     expect(publicApi).not.toContain('requireAdmin')
     expect(catchAll).toContain('CmsPageView')
-    expect(cmsView).toContain('ArticleContent')
+    expect(cmsView).toContain('CmsPageRenderer')
+    // 渲染器：visible 过滤 + custom 逃生门分发
+    expect(cmsRenderer).toContain('section.visible')
+    expect(cmsRenderer).toContain('customSectionComponents[section.name]')
+
+    // vben 结构化编辑器：defineModel 双向 + 排序/显隐 + richText JSON 草稿
+    const sectionsHelper = readComponent(
+      'admin/apps/web-antd/src/views/pages/sections.ts',
+    )
+    const sectionsEditor = readComponent(
+      'admin/apps/web-antd/src/views/pages/components/SectionsEditor.vue',
+    )
+    const sectionBody = readComponent(
+      'admin/apps/web-antd/src/views/pages/components/SectionBody.vue',
+    )
+    expect(sectionsHelper).toContain('export function createSection(')
+    expect(sectionsHelper).toContain('export function sectionSummary(')
+    expect(sectionsHelper).toContain('customSectionOptions')
+    expect(sectionsHelper).toContain('spacingOptions')
+    expect(sectionsEditor).toContain("defineModel<PageSection[]>('sections'")
+    expect(sectionsEditor).toContain('moveItem(sections')
+    expect(sectionsEditor).toContain('v-model:checked="s.visible"')
+    expect(sectionBody).toContain("defineModel<PageSection>('section'")
+    expect(sectionBody).toContain('function onBlocksInput(')
+    expect(sectionBody).toContain('NAV_ICON_OPTIONS')
+    expect(sectionBody).toContain('featureGridColumnOptions')
+    expect(sectionBody).toContain('spacingOptions')
+    expect(cmsRenderer).toContain('spacingClass(section)')
+  })
+
+  it('guards component management (zod disabled list behind requireAdmin) and home insights featured fallback', () => {
+    const componentUtil = readComponent('server/utils/component-admin.ts')
+    const componentsGet = readComponent('server/api/admin/components/index.get.ts')
+    const componentsPut = readComponent('server/api/admin/components/index.put.ts')
+    const insightsApi = readComponent('server/api/home/insights.get.ts')
+    const homeInsightsSection = readComponent('components/home/HomeInsights.vue')
+    const newsUtil = readComponent('server/utils/news-admin.ts')
+    const reportsUtil = readComponent('server/utils/reports-admin.ts')
+
+    expect(componentUtil).toContain('export const PAGE_COMPONENT_IDS')
+    expect(componentUtil).toContain('export const disabledComponentsSchema')
+    expect(componentUtil).toContain('CUSTOM_SECTION_NAMES')
+    expect(componentUtil).toContain('export async function getDisabledComponents(')
+    expect(componentUtil).toContain('export async function setDisabledComponents(')
+    expect(componentUtil).toContain('onConflictDoUpdate')
+    expect(componentsGet).toContain('requireAdmin')
+    expect(componentsGet).toContain("source: 'static'")
+    expect(componentsPut).toContain('requireAdmin')
+    expect(componentsPut).toContain('disabledComponentsSchema')
+    expect(componentsPut).toContain("statusCode: 400, statusMessage: 'Invalid component list'")
+    expect(componentsPut).toContain('statusCode: 503')
+
+    // 首页推荐：featured 且 published 的新闻优先、报告补足、封顶 4 条，双层静态回退
+    expect(newsUtil).toContain('featured: z.boolean().default(false)')
+    expect(reportsUtil).toContain('featured: z.boolean().default(false)')
+    expect(insightsApi).toContain('eq(news.featured, true)')
+    expect(insightsApi).toContain('eq(reports.featured, true)')
+    expect(insightsApi).toContain('staticInsights')
+    expect(insightsApi).not.toContain('requireAdmin')
+    expect(homeInsightsSection).toContain("useFetch<InsightItem[]>('/api/home/insights'")
+    expect(homeInsightsSection).toContain('default: () => insights')
+  })
+
+  it('guards the rich-text blocks editor with a blocks↔HTML converter and media-library upload', () => {
+    const blocksHtml = readComponent(
+      'admin/apps/web-antd/src/views/content/shared/blocks-html.ts',
+    )
+    const blocksEditor = readComponent(
+      'admin/apps/web-antd/src/views/content/shared/BlocksEditor.vue',
+    )
+    const newsEdit = readComponent(
+      'admin/apps/web-antd/src/views/content/news/edit.vue',
+    )
+    const casesEdit = readComponent(
+      'admin/apps/web-antd/src/views/content/cases/edit.vue',
+    )
+
+    // 转换器：双向 + 防注入 + heading 夹紧 2-4
+    expect(blocksHtml).toContain('export function blocksToHtml(')
+    expect(blocksHtml).toContain('export function htmlToBlocks(')
+    expect(blocksHtml).toContain('escapeHtml')
+    expect(blocksHtml).toContain('clampHeadingLevel')
+
+    // 编辑器：VbenTiptap + defineModel blocks + 回环哨兵 + 媒体库上传
+    expect(blocksEditor).toContain("from '@vben/plugins/tiptap'")
+    expect(blocksEditor).toContain("defineModel<null | unknown[]>('blocks'")
+    expect(blocksEditor).toContain('uploadMediaApi')
+    expect(blocksEditor).toContain('lastEmitted')
+
+    // 编辑页：BlocksEditor 接入 + null 守卫阻止保存
+    for (const page of [newsEdit, casesEdit]) {
+      expect(page).toContain('BlocksEditor')
+      expect(page).toContain('v-model:blocks="blocksValue"')
+      expect(page).toContain('blocksValue.value === null')
+      expect(page).not.toContain('blocksText')
+    }
   })
 }

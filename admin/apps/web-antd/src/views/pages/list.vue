@@ -34,6 +34,7 @@ async function handleDelete(slug: string) {
 const columns = [
   { dataIndex: 'slug', title: '路径', width: 260 },
   { dataIndex: 'title', ellipsis: true, title: '标题' },
+  { dataIndex: 'source', title: '来源', width: 90 },
   { dataIndex: 'sortOrder', title: '排序', width: 70 },
   { dataIndex: 'status', title: '状态', width: 100 },
   { dataIndex: 'updatedAt', title: '更新时间', width: 180 },
@@ -62,18 +63,30 @@ onMounted(fetchRows);
         <template v-if="column.dataIndex === 'slug'">
           <a :href="record.slug" target="_blank">{{ record.slug }}</a>
         </template>
+        <template v-else-if="column.dataIndex === 'source'">
+          <Tag :color="record.source === 'cms' ? 'blue' : 'default'">
+            {{ record.source === 'cms' ? 'CMS' : '代码页' }}
+          </Tag>
+        </template>
+        <template v-else-if="column.dataIndex === 'sortOrder'">
+          {{ record.sortOrder ?? '—' }}
+        </template>
         <template v-else-if="column.dataIndex === 'status'">
           <Tag
+            v-if="record.status"
             :color="statusColors[record.status as keyof typeof statusColors]"
           >
             {{ statusLabels[record.status as keyof typeof statusLabels] }}
           </Tag>
+          <span v-else>—</span>
         </template>
         <template v-else-if="column.dataIndex === 'updatedAt'">
-          {{ new Date(record.updatedAt).toLocaleString() }}
+          {{
+            record.updatedAt ? new Date(record.updatedAt).toLocaleString() : '—'
+          }}
         </template>
         <template v-else-if="column.dataIndex === 'actions'">
-          <Space>
+          <Space v-if="record.source === 'cms'">
             <Button
               size="small"
               type="link"
@@ -95,6 +108,15 @@ onMounted(fetchRows);
               <Button danger size="small" type="link">删除</Button>
             </Popconfirm>
           </Space>
+          <Button
+            v-else
+            :href="record.slug"
+            size="small"
+            target="_blank"
+            type="link"
+          >
+            查看
+          </Button>
         </template>
       </template>
     </Table>

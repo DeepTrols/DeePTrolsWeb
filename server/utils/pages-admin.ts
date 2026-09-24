@@ -2,8 +2,9 @@ import { asc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { useNewsDatabase } from '../db/client'
 import { pages } from '../db/schema'
-import { articleBlocksSchema } from './article-blocks'
 import { contentStatusSchema } from './content-admin'
+import { pageSectionsSchema } from './page-sections'
+import type { PageSection } from './page-sections'
 
 /**
  * 代码静态路由完整路径：CMS 页不可占用。
@@ -46,6 +47,49 @@ export function isReservedPagePath(slug: string): boolean {
   return CMS_RESERVED_PREFIXES.some(prefix => slug === prefix || slug.startsWith(`${prefix}/`))
 }
 
+/**
+ * 代码页目录（只读）：静态代码路由 + 动态路由模式 + /demo 演示页。
+ * 代码页是 Vue SFC，内容无法表单化——后台列表全量展示但仅可「查看」，不可编辑/删除。
+ * 完整性由 tests/pages-admin.spec.ts 锁定（覆盖全部 CMS_RESERVED_EXACT_PATHS 且静态路径全部保留）。
+ */
+export const CODE_PAGE_CATALOG = [
+  { path: '/', title: '首页' },
+  { path: '/about_us', title: '关于我们' },
+  { path: '/contact', title: '联系我们' },
+  { path: '/why-deeptrols', title: '为什么选择深度数智' },
+  { path: '/products/ai-iot', title: '探曜 · AIoT 产品页' },
+  { path: '/products/data-development', title: '博曜 · 数据开发平台（DDP）' },
+  { path: '/products/data-element-regulation', title: '数曜 · 数据要素监管（DMS）' },
+  { path: '/products/data-governance', title: '数曜 · 数据治理平台（DGP）' },
+  { path: '/products/data-labeling', title: '数曜 · 数据标注平台（DLP）' },
+  { path: '/products/device-agent', title: '设备智能体产品页' },
+  { path: '/products/knowledge-base', title: '企业知识库产品页' },
+  { path: '/resources/reports', title: '资源与报告' },
+  { path: '/services/enterprise-ai-delivery', title: '企业级 AI 交付服务（FDE）' },
+  { path: '/services/smart-education', title: '智慧教育服务' },
+  { path: '/solutions/compute', title: '算力中心方案' },
+  { path: '/solutions/energy', title: '智慧能源方案' },
+  { path: '/solutions/fde', title: 'FDE 方案' },
+  { path: '/solutions/manufacturing', title: '智能制造方案' },
+  { path: '/solutions/water', title: '智慧水利方案' },
+  { path: '/news', title: '新闻列表（动态路由）' },
+  { path: '/news/:id', title: '新闻详情（动态路由）' },
+  { path: '/cases', title: '案例列表（动态路由）' },
+  { path: '/cases/:slug', title: '案例详情（动态路由）' },
+  { path: '/solutions/:slug', title: '方案详情（动态路由，CMS 可回退接管）' },
+  { path: '/demo/agentos-flow', title: 'Demo · AgentOS 流程' },
+  { path: '/demo/authine-ai-application', title: 'Demo · Authine AI 应用' },
+  { path: '/demo/boyao-integration', title: 'Demo · 博曜集成' },
+  { path: '/demo/data-regulation-architecture', title: 'Demo · 数据要素监管架构' },
+  { path: '/demo/device-agent-architecture', title: 'Demo · 设备智能体架构' },
+  { path: '/demo/emqx-platform-architecture', title: 'Demo · EMQX 平台架构' },
+  { path: '/demo/flowmq-how-it-works', title: 'Demo · FlowMQ 工作原理' },
+  { path: '/demo/knowledge-hub', title: 'Demo · 知识中枢' },
+  { path: '/demo/smart-data-hub', title: 'Demo · 智能数据中枢' },
+  { path: '/demo/tag-platform-architecture', title: 'Demo · 标签平台架构' },
+  { path: '/demo/tanyao-iot-architecture', title: 'Demo · 探曜 IoT 架构' },
+] as const
+
 /** 页面路径：完整路径（含前导斜杠），小写字母/数字/连字符/斜杠，不允许尾斜杠与保留路径 */
 export const pageSlugSchema = z
   .string()
@@ -54,14 +98,6 @@ export const pageSlugSchema = z
   .max(300)
   .regex(/^\/[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*$/, 'Invalid page path')
   .refine(slug => !isReservedPagePath(slug), { message: 'Reserved page path' })
-
-/** Phase C 唯一区块类型：富文本（ArticleBlock[]）；Phase D 布局管理扩展为 discriminatedUnion */
-export const pageSectionSchema = z.object({
-  type: z.literal('richText'),
-  blocks: articleBlocksSchema,
-})
-export const pageSectionsSchema = z.array(pageSectionSchema).max(50)
-export type PageSection = z.infer<typeof pageSectionSchema>
 
 /** CMS 页写入协议（新建/更新同一形状；slug 主键冲突返回 'conflict'） */
 export const pageInputSchema = z.object({
@@ -81,9 +117,12 @@ export type PageUpdate = z.infer<typeof pageUpdateSchema>
 export interface AdminPageRecord {
   slug: string
   title: string
-  status: z.infer<typeof contentStatusSchema>
-  sortOrder: number
-  updatedAt: string
+  /** cms = DB 里可编辑的 CMS 页；code = 代码静态/动态路由（只读，仅可查看线上页） */
+  source: 'cms' | 'code'
+  /** 代码页无 CMS 语义字段，为 null */
+  status: z.infer<typeof contentStatusSchema> | null
+  sortOrder: number | null
+  updatedAt: string | null
 }
 
 export interface AdminPagePayload extends PageInput {
@@ -99,11 +138,20 @@ export interface PublishedPagePayload {
   updatedAt: string
 }
 
-/** 页面列表（admin）：含草稿，按 sortOrder；未配置 DB 返回空表 */
+/** 页面列表（admin）：代码页目录在前（只读），CMS 页在后（含草稿，按 sortOrder）；保留路径黑名单保证两者不撞 slug */
 export async function listAdminPages(): Promise<AdminPageRecord[]> {
+  const codeRows: AdminPageRecord[] = CODE_PAGE_CATALOG.map(entry => ({
+    slug: entry.path,
+    title: entry.title,
+    source: 'code' as const,
+    status: null,
+    sortOrder: null,
+    updatedAt: null,
+  }))
+
   const db = useNewsDatabase()
   if (!db) {
-    return []
+    return codeRows
   }
 
   try {
@@ -119,10 +167,18 @@ export async function listAdminPages(): Promise<AdminPageRecord[]> {
       .orderBy(asc(pages.sortOrder), asc(pages.slug))
       .limit(500)
 
-    return rows.map(row => ({ ...row, updatedAt: row.updatedAt.toISOString() }))
+    const cmsRows: AdminPageRecord[] = rows.map(row => ({
+      slug: row.slug,
+      title: row.title,
+      source: 'cms' as const,
+      status: row.status,
+      sortOrder: row.sortOrder,
+      updatedAt: row.updatedAt.toISOString(),
+    }))
+    return [...codeRows, ...cmsRows]
   }
   catch {
-    return []
+    return codeRows
   }
 }
 

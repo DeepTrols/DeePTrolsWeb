@@ -162,6 +162,7 @@ export const harnessSourcePaths = {
   navIconRegistry: 'components/navigation/nav-icons.ts',
   navigationComposable: 'composables/use-navigation.ts',
   backendPagesAdminUtil: 'server/utils/pages-admin.ts',
+  backendPageSectionsUtil: 'server/utils/page-sections.ts',
   backendPagesPublicApi: 'server/api/pages/[...path].get.ts',
   backendAdminPagesListApi: 'server/api/admin/pages/index.get.ts',
   backendAdminPagesCreateApi: 'server/api/admin/pages/index.post.ts',
@@ -169,7 +170,27 @@ export const harnessSourcePaths = {
   backendAdminPageUpdateApi: 'server/api/admin/pages/[...slug].put.ts',
   backendAdminPageDeleteApi: 'server/api/admin/pages/[...slug].delete.ts',
   cmsPageView: 'components/common/CmsPageView.vue',
+  cmsPageRenderer: 'components/sections/CmsPageRenderer.vue',
+  cmsCustomNames: 'components/sections/custom-names.ts',
+  cmsCustomRegistry: 'components/sections/custom-registry.ts',
   catchAllPage: 'pages/[...slug].vue',
+  adminPagesSectionsHelper: 'admin/apps/web-antd/src/views/pages/sections.ts',
+  adminSectionsEditor:
+    'admin/apps/web-antd/src/views/pages/components/SectionsEditor.vue',
+  adminSectionBody:
+    'admin/apps/web-antd/src/views/pages/components/SectionBody.vue',
+  contentBlocksHtml:
+    'admin/apps/web-antd/src/views/content/shared/blocks-html.ts',
+  contentBlocksEditor:
+    'admin/apps/web-antd/src/views/content/shared/BlocksEditor.vue',
+  backendComponentAdminUtil: 'server/utils/component-admin.ts',
+  backendAdminComponentsGetApi: 'server/api/admin/components/index.get.ts',
+  backendAdminComponentsPutApi: 'server/api/admin/components/index.put.ts',
+  backendHomeInsightsApi: 'server/api/home/insights.get.ts',
+  adminComponentsApi: 'admin/apps/web-antd/src/api/components.ts',
+  adminComponentsRoutes:
+    'admin/apps/web-antd/src/router/routes/modules/components.ts',
+  adminComponentsView: 'admin/apps/web-antd/src/views/components/index.vue',
   backendDrizzleConfig: 'drizzle.config.ts',
   backendNuxtConfig: 'nuxt.config.ts',
   caseDetailsDoc: 'doc/product/PAGE_REQUIREMENTS/CASE/Case_Details/CaseDetails.md',

@@ -4,9 +4,22 @@ import type { AdminReportRecord } from '#/api/content';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { Button, message, Popconfirm, Space, Table, Tag } from 'ant-design-vue';
+import {
+  Button,
+  message,
+  Popconfirm,
+  Space,
+  Switch,
+  Table,
+  Tag,
+} from 'ant-design-vue';
 
-import { deleteReportApi, listAdminReportsApi } from '#/api/content';
+import {
+  deleteReportApi,
+  getAdminReportApi,
+  listAdminReportsApi,
+  updateReportApi,
+} from '#/api/content';
 
 import { statusColors, statusLabels } from '../shared/options';
 
@@ -31,6 +44,29 @@ async function handleDelete(id: number) {
   await fetchRows();
 }
 
+/** 首页推荐开关：拉完整记录翻转 featured 后整体 PUT */
+async function toggleFeatured(record: AdminReportRecord, checked: boolean) {
+  try {
+    const payload = await getAdminReportApi(record.id);
+    await updateReportApi(record.id, {
+      category: payload.category,
+      featured: checked,
+      href: payload.href,
+      image: payload.image,
+      solutionKey: payload.solutionKey,
+      sortOrder: payload.sortOrder,
+      status: payload.status,
+      summary: payload.summary,
+      title: payload.title,
+      type: payload.type,
+    });
+    message.success(checked ? '已推荐到首页' : '已取消推荐');
+    await fetchRows();
+  } catch {
+    message.error('推荐状态更新失败');
+  }
+}
+
 const columns = [
   { dataIndex: 'id', title: 'ID', width: 70 },
   { dataIndex: 'title', ellipsis: true, title: '标题' },
@@ -39,6 +75,7 @@ const columns = [
   { dataIndex: 'href', ellipsis: true, title: '链接', width: 220 },
   { dataIndex: 'sortOrder', title: '排序', width: 70 },
   { dataIndex: 'status', title: '状态', width: 100 },
+  { dataIndex: 'featured', title: '推荐到首页', width: 100 },
   { dataIndex: 'actions', fixed: 'right' as const, title: '操作', width: 150 },
 ];
 
@@ -67,6 +104,16 @@ onMounted(fetchRows);
           >
             {{ statusLabels[record.status as keyof typeof statusLabels] }}
           </Tag>
+        </template>
+        <template v-else-if="column.dataIndex === 'featured'">
+          <Switch
+            :checked="record.featured"
+            size="small"
+            @change="
+              (checked) =>
+                toggleFeatured(record as AdminReportRecord, checked as boolean)
+            "
+          />
         </template>
         <template v-else-if="column.dataIndex === 'actions'">
           <Space>

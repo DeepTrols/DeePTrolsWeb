@@ -37,6 +37,7 @@ export function checkBackendAdminContracts(ctx) {
     backendAdminMenuGetApi,
     backendAdminMenuPutApi,
     backendPagesAdminUtil,
+    backendPageSectionsUtil,
     backendPagesPublicApi,
     backendAdminPagesListApi,
     backendAdminPagesCreateApi,
@@ -44,7 +45,23 @@ export function checkBackendAdminContracts(ctx) {
     backendAdminPageUpdateApi,
     backendAdminPageDeleteApi,
     cmsPageView,
+    cmsPageRenderer,
+    cmsCustomNames,
+    cmsCustomRegistry,
     catchAllPage,
+    adminPagesSectionsHelper,
+    adminSectionsEditor,
+    adminSectionBody,
+    contentBlocksHtml,
+    contentBlocksEditor,
+    backendComponentAdminUtil,
+    backendAdminComponentsGetApi,
+    backendAdminComponentsPutApi,
+    backendHomeInsightsApi,
+    adminComponentsApi,
+    adminComponentsRoutes,
+    adminComponentsView,
+    homeInsights,
     navIconRegistry,
     navigationComposable,
     backendNuxtConfig,
@@ -196,13 +213,20 @@ export function checkBackendAdminContracts(ctx) {
     backendPagesAdminUtil.includes('export const CMS_RESERVED_EXACT_PATHS') &&
       backendPagesAdminUtil.includes('export const CMS_RESERVED_PREFIXES') &&
       backendPagesAdminUtil.includes('export function isReservedPagePath(slug: string)') &&
-      backendPagesAdminUtil.includes("z.literal('richText')") &&
-      backendPagesAdminUtil.includes('articleBlocksSchema') &&
+      backendPagesAdminUtil.includes('export const CODE_PAGE_CATALOG') &&
+      backendPagesAdminUtil.includes("source: 'cms' | 'code'") &&
+      backendPagesAdminUtil.includes("[...codeRows, ...cmsRows]") &&
       backendPagesAdminUtil.includes('pageUpdateSchema = pageInputSchema.omit({ slug: true })') &&
       backendPagesAdminUtil.includes('export async function getPublishedPage(') &&
       backendPagesAdminUtil.includes("row.status !== 'published'") &&
-      backendPagesAdminUtil.includes("Promise<'conflict' | string | null>"),
-    'Pages protocol must keep reserved-path blacklist, richText section schema over ArticleBlock[], immutable slug PK, published-only public reads, and conflict semantics.',
+      backendPagesAdminUtil.includes("Promise<'conflict' | string | null>") &&
+      backendPageSectionsUtil.includes("z.discriminatedUnion('type'") &&
+      backendPageSectionsUtil.includes("z.literal('richText')") &&
+      backendPageSectionsUtil.includes('articleBlocksSchema') &&
+      backendPageSectionsUtil.includes('z.enum(CUSTOM_SECTION_NAMES)') &&
+      backendPageSectionsUtil.includes('visible: z.boolean().default(true)') &&
+      backendPageSectionsUtil.includes("sectionSpacingSchema = z.enum(['tight', 'compact', 'default'])"),
+    'Pages protocol must keep reserved-path blacklist, code-page catalog merge (source cms|code), immutable slug PK, published-only public reads, conflict semantics, and a discriminatedUnion section schema with spacing enum and custom escape hatch.',
   )
 
   const pagesRoutes = [
@@ -225,9 +249,81 @@ export function checkBackendAdminContracts(ctx) {
       backendPagesPublicApi.includes("statusCode: 404, statusMessage: 'Page not found'") &&
       catchAllPage.includes('CmsPageView') &&
       catchAllPage.includes('`/api/pages${route.path}`') &&
-      cmsPageView.includes('ArticleContent') &&
+      cmsPageView.includes('CmsPageRenderer') &&
       cmsPageView.includes('SiteHeader') &&
-      cmsPageView.includes('SiteFooter'),
-    'CMS pages routes must stay behind requireAdmin with 400/404/409/503 semantics; public API serves published only; catch-all dispatches to CmsPageView.',
+      cmsPageView.includes('SiteFooter') &&
+      cmsPageRenderer.includes('section.visible') &&
+      cmsPageRenderer.includes('customSectionComponents[section.name]') &&
+      cmsCustomNames.includes('CUSTOM_SECTION_NAMES') &&
+      cmsCustomRegistry.includes('Record<CustomSectionName, Component>'),
+    'CMS pages routes must stay behind requireAdmin with 400/404/409/503 semantics; public API serves published only; catch-all dispatches to CmsPageView; renderer filters visible and resolves the custom escape hatch.',
+  )
+
+  assert(
+    adminPagesSectionsHelper.includes('export function createSection(') &&
+      adminPagesSectionsHelper.includes('export function sectionSummary(') &&
+      adminPagesSectionsHelper.includes('customSectionOptions') &&
+      adminSectionsEditor.includes("defineModel<PageSection[]>('sections'") &&
+      adminSectionsEditor.includes('moveItem(sections') &&
+      adminSectionsEditor.includes('v-model:checked="s.visible"') &&
+      adminSectionBody.includes("defineModel<PageSection>('section'") &&
+      adminSectionBody.includes('function onBlocksInput(') &&
+      adminSectionBody.includes('NAV_ICON_OPTIONS') &&
+      adminSectionBody.includes('featureGridColumnOptions'),
+    'vben structured section editor must keep the createSection factory, defineModel-based sections/SectionBody editing, move up/down ordering, visible switch, and richText JSON draft.',
+  )
+
+  assert(
+    contentBlocksHtml.includes('export function blocksToHtml(') &&
+      contentBlocksHtml.includes('export function htmlToBlocks(') &&
+      contentBlocksHtml.includes('escapeHtml') &&
+      contentBlocksHtml.includes('clampHeadingLevel') &&
+      contentBlocksEditor.includes("from '@vben/plugins/tiptap'") &&
+      contentBlocksEditor.includes("defineModel<null | unknown[]>('blocks'") &&
+      contentBlocksEditor.includes('uploadMediaApi') &&
+      contentBlocksEditor.includes('lastEmitted'),
+    'vben rich-text blocks editor must keep the blocksToHtml/htmlToBlocks converter (escaped, heading-clamped) and the VbenTiptap wrapper with defineModel blocks, lastEmitted loop guard, and media-library image upload.',
+  )
+
+  assert(
+    backendComponentAdminUtil.includes('export const PAGE_COMPONENT_IDS') &&
+      backendComponentAdminUtil.includes('export const disabledComponentsSchema') &&
+      backendComponentAdminUtil.includes('CUSTOM_SECTION_NAMES') &&
+      backendComponentAdminUtil.includes('export async function getDisabledComponents(') &&
+      backendComponentAdminUtil.includes('export async function setDisabledComponents(') &&
+      backendComponentAdminUtil.includes('onConflictDoUpdate') &&
+      backendAdminComponentsGetApi.includes('requireAdmin') &&
+      backendAdminComponentsGetApi.includes("source: 'static'") &&
+      backendAdminComponentsPutApi.includes('requireAdmin') &&
+      backendAdminComponentsPutApi.includes('disabledComponentsSchema') &&
+      backendAdminComponentsPutApi.includes("statusCode: 400, statusMessage: 'Invalid component list'") &&
+      backendAdminComponentsPutApi.includes('statusCode: 503') &&
+      adminComponentsApi.includes('getComponentsApi') &&
+      adminComponentsApi.includes('saveComponentsApi') &&
+      adminComponentsRoutes.includes('/components') &&
+      adminComponentsView.includes('sectionTypeLabels') &&
+      adminComponentsView.includes('customSectionLabels') &&
+      adminComponentsView.includes('Switch'),
+    'Component management must keep a zod-validated disabled list (8 section types + custom registry names) behind requireAdmin with static fallback, plus the vben /components toggle page.',
+  )
+
+  assert(
+    cmsPageRenderer.includes('spacingClass(section)') &&
+      cmsPageRenderer.includes(':spacing="section.spacing"') &&
+      adminPagesSectionsHelper.includes('spacingOptions') &&
+      adminSectionBody.includes('spacingOptions'),
+    'Section spacing must be a three-tier enum end-to-end: zod schema, renderer spacingClass, and the vben editor spacing select.',
+  )
+
+  assert(
+    backendNewsAdminUtil.includes('featured: z.boolean().default(false)') &&
+      backendReportsAdminUtil.includes('featured: z.boolean().default(false)') &&
+      backendHomeInsightsApi.includes('eq(news.featured, true)') &&
+      backendHomeInsightsApi.includes('eq(reports.featured, true)') &&
+      backendHomeInsightsApi.includes('staticInsights') &&
+      !backendHomeInsightsApi.includes('requireAdmin') &&
+      homeInsights.includes("useFetch<InsightItem[]>('/api/home/insights'") &&
+      homeInsights.includes('default: () => insights'),
+    'Home insights must merge featured published news (publishedAt desc) then reports (sortOrder asc), capped at 4, with static fallback in both the public API and the component useFetch default.',
   )
 }

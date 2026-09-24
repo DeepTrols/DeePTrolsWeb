@@ -16,6 +16,7 @@ export interface AdminNewsRecord {
   category: 'company' | 'insight' | 'media';
   publishedAt: string;
   status: ContentStatus;
+  featured: boolean;
   hasDetail: boolean;
   updatedAt: string;
 }
@@ -27,6 +28,7 @@ export interface NewsInput {
   category: 'company' | 'insight' | 'media';
   publishedAt: string;
   status: ContentStatus;
+  featured: boolean;
   blocks: unknown[];
 }
 
@@ -68,6 +70,7 @@ export interface AdminReportRecord {
   href: string;
   sortOrder: number;
   status: ContentStatus;
+  featured: boolean;
   updatedAt: string;
 }
 
@@ -81,6 +84,7 @@ export interface ReportInput {
   href: string;
   sortOrder: number;
   status: ContentStatus;
+  featured: boolean;
 }
 
 export interface AdminReportPayload extends ReportInput {

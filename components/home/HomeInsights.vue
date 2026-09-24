@@ -1,10 +1,19 @@
 <script setup lang="ts">
+import { useFetch } from '#imports'
+import { computed } from 'vue'
 import BaseButton from '~/components/common/BaseButton.vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
 import { insights } from '~/data/home'
+import type { InsightItem } from '~/data/home'
 
-const featuredInsight = insights[0]
-const sideInsights = insights.slice(1)
+// 推荐位双层回退（015.12）：/api/home/insights DB 优先（featured 新闻/报告），API 内部与这里各有一层静态回退
+const { data: insightItems } = useFetch<InsightItem[]>('/api/home/insights', {
+  key: 'home-insights',
+  default: () => insights,
+})
+
+const featuredInsight = computed(() => insightItems.value[0])
+const sideInsights = computed(() => insightItems.value.slice(1))
 </script>
 
 <template>

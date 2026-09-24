@@ -2,13 +2,15 @@ import { readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import {
+  CMS_RESERVED_EXACT_PATHS,
   CMS_RESERVED_PREFIXES,
+  CODE_PAGE_CATALOG,
   isReservedPagePath,
   pageInputSchema,
-  pageSectionSchema,
   pageSlugSchema,
   pageUpdateSchema,
 } from '../server/utils/pages-admin'
+import { pageSectionsSchema } from '../server/utils/page-sections'
 
 describe('pageSlugSchema', () => {
   it('接受合法完整路径', () => {
@@ -96,24 +98,60 @@ describe('保留清单完整性', () => {
   })
 })
 
-describe('pageSectionSchema', () => {
-  it('接受 richText 区块（ArticleBlock[]）', () => {
-    const section = {
-      type: 'richText',
-      blocks: [
-        { type: 'heading', level: 2, text: '标题' },
-        { type: 'paragraph', text: '正文' },
-      ],
+describe('CODE_PAGE_CATALOG（代码页只读清单）', () => {
+  const catalogPaths = CODE_PAGE_CATALOG.map(entry => entry.path)
+
+  it('覆盖全部 CMS_RESERVED_EXACT_PATHS', () => {
+    for (const path of CMS_RESERVED_EXACT_PATHS) {
+      expect(catalogPaths, `代码页目录缺少保留路径 ${path}`).toContain(path)
     }
-    expect(pageSectionSchema.safeParse(section).success).toBe(true)
   })
 
-  it('拒绝未知区块类型与非法 block', () => {
-    expect(pageSectionSchema.safeParse({ type: 'hero', blocks: [] }).success).toBe(false)
-    expect(
-      pageSectionSchema.safeParse({ type: 'richText', blocks: [{ type: 'paragraph', text: '' }] }).success,
-    ).toBe(false)
-    expect(pageSectionSchema.safeParse({ type: 'richText', blocks: [] }).success).toBe(false)
+  it('静态路径全部为保留路径（防止漏登记导致与 CMS 撞车）', () => {
+    for (const path of catalogPaths) {
+      if (path.includes(':')) {
+        continue
+      }
+      expect(isReservedPagePath(path), `目录静态路径 ${path} 未被保留清单覆盖`).toBe(true)
+    }
+  })
+
+  it('动态路由模式条目固定（news/cases/solutions 详情）', () => {
+    const dynamic = catalogPaths.filter(path => path.includes(':'))
+    expect(dynamic.sort()).toEqual(['/cases/:slug', '/news/:id', '/solutions/:slug'])
+  })
+
+  it('/demo 演示页逐个登记且全部保留', () => {
+    const demos = catalogPaths.filter(path => path.startsWith('/demo/'))
+    expect(demos.length).toBe(11)
+    for (const path of demos) {
+      expect(isReservedPagePath(path)).toBe(true)
+    }
+  })
+})
+
+describe('pageSectionsSchema（Phase C richText 兼容）', () => {
+  it('Phase C richText 区块形状保持兼容', () => {
+    const sections = [
+      {
+        type: 'richText',
+        blocks: [
+          { type: 'heading', level: 2, text: '标题' },
+          { type: 'paragraph', text: '正文' },
+        ],
+      },
+    ]
+    const parsed = pageSectionsSchema.safeParse(sections)
+    expect(parsed.success).toBe(true)
+    if (parsed.success) {
+      // visible 默认补 true
+      expect(parsed.data[0]?.visible).toBe(true)
+    }
+  })
+
+  it('拒绝未知区块类型与空 blocks', () => {
+    expect(pageSectionsSchema.safeParse([{ type: 'hero', blocks: [] }]).success).toBe(false)
+    expect(pageSectionsSchema.safeParse([{ type: 'richText', blocks: [] }]).success).toBe(false)
   })
 })
 

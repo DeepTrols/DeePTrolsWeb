@@ -11,10 +11,12 @@ import {
   Input,
   InputNumber,
   message,
+  RadioGroup,
   Select,
   Textarea,
 } from 'ant-design-vue';
 
+import { getComponentsApi } from '#/api/components';
 import { createPageApi, getAdminPageApi, updatePageApi } from '#/api/pages';
 
 import {
@@ -22,6 +24,12 @@ import {
   statusOptions,
   toJsonText,
 } from '../content/shared/options';
+import SectionsEditor from './components/SectionsEditor.vue';
+import {
+  createSection,
+  customSectionOptions,
+  sectionTypeOptions,
+} from './sections';
 
 defineOptions({ name: 'PageEdit' });
 
@@ -46,18 +54,49 @@ const form = reactive<PageInput>({
   title: '',
 });
 const sectionsText = ref('');
+// 结构化 / JSON 高级双模式：切结构化时先解析 JSON 草稿，失败则留在 JSON 模式
+const sectionMode = ref<'json' | 'structured'>('structured');
+
+// 组件管理（015.12）：新增区块下拉按启停过滤；拉取失败回退全量（不影响已编辑内容）
+const disabledComponents = ref<string[]>([]);
+const enabledSectionTypeOptions = computed(() =>
+  sectionTypeOptions.filter(
+    (option) => !disabledComponents.value.includes(option.value),
+  ),
+);
+const enabledCustomSectionOptions = computed(() =>
+  customSectionOptions.filter(
+    (option) => !disabledComponents.value.includes(option.value),
+  ),
+);
 
 const sectionsPlaceholder =
   '[{"type":"richText","blocks":[{"type":"paragraph","text":"正文"}]}]';
 
+function handleModeChange() {
+  if (sectionMode.value === 'json') {
+    sectionsText.value = toJsonText(form.sections);
+    return;
+  }
+  const parsed = parseJsonField(sectionsText.value) as null | PageSection[];
+  if (!parsed) {
+    message.error('JSON 草稿无法解析，已留在 JSON 模式');
+    sectionMode.value = 'json';
+    return;
+  }
+  form.sections = parsed;
+}
+
 onMounted(async () => {
+  try {
+    const payload = await getComponentsApi();
+    disabledComponents.value = payload.disabled;
+  } catch {
+    // 拉取失败回退全量组件
+  }
   if (!isEdit.value) {
-    sectionsText.value = toJsonText([
-      {
-        blocks: [{ text: '在此填写正文段落', type: 'paragraph' }],
-        type: 'richText',
-      },
-    ]);
+    form.sections = [createSection('richText')];
+    sectionsText.value = toJsonText(form.sections);
     return;
   }
   const slug = pageSlug.value;
@@ -75,7 +114,10 @@ onMounted(async () => {
 });
 
 async function save(publish = false) {
-  const sections = parseJsonField(sectionsText.value) as null | PageSection[];
+  const sections =
+    sectionMode.value === 'json'
+      ? (parseJsonField(sectionsText.value) as null | PageSection[])
+      : form.sections;
   if (!sections) {
     message.error('区块 sections JSON 格式错误（须为数组，可为空 []）');
     return;
@@ -149,15 +191,32 @@ async function save(publish = false) {
         />
       </FormItem>
       <FormItem label="区块 sections">
+        <RadioGroup
+          v-model:value="sectionMode"
+          class="mb-2"
+          option-type="button"
+          :options="[
+            { label: '结构化', value: 'structured' },
+            { label: 'JSON', value: 'json' },
+          ]"
+          @change="handleModeChange"
+        />
+        <SectionsEditor
+          v-if="sectionMode === 'structured'"
+          v-model:sections="form.sections"
+          :custom-section-options="enabledCustomSectionOptions"
+          :section-type-options="enabledSectionTypeOptions"
+        />
         <Textarea
+          v-else
           v-model:value="sectionsText"
           class="font-mono"
           :placeholder="sectionsPlaceholder"
           :rows="14"
         />
         <div class="mt-1 text-xs text-gray-400">
-          Phase C 仅支持 richText 区块：blocks 为 ArticleBlock[] JSON（heading /
-          paragraph / list / quote / image / divider）
+          支持 hero / metrics / featureGrid / cta / richText / logoStrip /
+          imageBanner / custom 区块；服务端 zod 兜底校验
         </div>
       </FormItem>
       <FormItem :wrapper-col="{ offset: 3, span: 16 }">

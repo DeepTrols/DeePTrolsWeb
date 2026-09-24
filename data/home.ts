@@ -99,13 +99,9 @@ export interface CustomerStory {
   stats: CustomerStoryStat[]
 }
 
-export interface InsightItem {
-  category: string
-  title: string
-  summary: string
-  image: string
-  href: string
-}
+// InsightItem 与 insights 已抽到 data/home-insights.ts（015.12：server 路由回退需避开本文件的 ?url 资源导入）
+export type { InsightItem } from './home-insights'
+export { insights } from './home-insights'
 
 export interface HomeAboutPartner {
   name: string
@@ -416,37 +412,6 @@ export const customerStories: CustomerStory[] = [
       { value: 'AI辅助', label: '服务响应提效', icon: Bot },
       { value: '经营侧', label: '洞察分析支持', icon: ChartNoAxesCombined },
     ],
-  },
-]
-
-export const insights: InsightItem[] = [
-  {
-    category: 'Engineering',
-    title: '企业 AI 平台建设中的数据、知识与执行闭环',
-    summary: '从业务目标出发，规划可持续演进的企业级 AI 能力体系。',
-    image: '/images/home/solutions/data.DHKY-NE1.png',
-    href: '/insights/enterprise-ai-platform',
-  },
-  {
-    category: 'Agent',
-    title: '面向场景的智能体应用工程实践',
-    summary: '让智能体围绕业务流程协作，而不是停留在单点工具调用。',
-    image: '/images/home/solutions/industrial.K00G2HaS.png',
-    href: '/insights/agent-engineering',
-  },
-  {
-    category: 'Knowledge',
-    title: '知识工程如何支撑企业智能决策',
-    summary: '用结构化知识资产提升检索、推理与执行质量。',
-    image: '/images/home/solutions/data-center-ai.CDu93Miw.png',
-    href: '/insights/knowledge-engineering',
-  },
-  {
-    category: 'Infrastructure',
-    title: 'AI 基础设施的成本、治理与安全边界',
-    summary: '在模型、算力与 Token 统一管理中建立企业级运行秩序。',
-    image: '/images/home/solutions/smart-energy.DHKY-NE1.png',
-    href: '/insights/ai-infrastructure',
   },
 ]
 

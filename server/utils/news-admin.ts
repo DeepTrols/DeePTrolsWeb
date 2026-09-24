@@ -17,6 +17,7 @@ export const newsInputSchema = z.object({
   category: newsCategorySchema,
   publishedAt: isoDateSchema,
   status: newsStatusSchema.default('draft'),
+  featured: z.boolean().default(false),
   blocks: articleBlocksSchema,
 })
 export type NewsInput = z.infer<typeof newsInputSchema>
@@ -27,6 +28,7 @@ export interface AdminNewsRecord {
   category: z.infer<typeof newsCategorySchema>
   publishedAt: string
   status: z.infer<typeof newsStatusSchema>
+  featured: boolean
   hasDetail: boolean
   updatedAt: string
 }
@@ -39,6 +41,7 @@ export interface AdminNewsPayload {
   category: z.infer<typeof newsCategorySchema>
   publishedAt: string
   status: z.infer<typeof newsStatusSchema>
+  featured: boolean
   /** 无详情行时为 null（旧数据可经更新补写） */
   blocks: ArticleBlock[] | null
 }
@@ -58,6 +61,7 @@ export async function listAdminNews(): Promise<AdminNewsRecord[]> {
         category: news.category,
         publishedAt: news.publishedAt,
         status: news.status,
+        featured: news.featured,
         detailId: newsDetails.newsId,
         updatedAt: news.updatedAt,
       })
@@ -72,6 +76,7 @@ export async function listAdminNews(): Promise<AdminNewsRecord[]> {
       category: row.category,
       publishedAt: row.publishedAt,
       status: row.status,
+      featured: row.featured,
       hasDetail: row.detailId !== null,
       updatedAt: row.updatedAt.toISOString(),
     }))
@@ -98,6 +103,7 @@ export async function getAdminNews(id: number): Promise<AdminNewsPayload | null>
         category: news.category,
         publishedAt: news.publishedAt,
         status: news.status,
+        featured: news.featured,
         blocks: newsDetails.blocks,
       })
       .from(news)

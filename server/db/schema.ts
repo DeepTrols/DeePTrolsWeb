@@ -1,4 +1,4 @@
-import { integer, jsonb, pgEnum, pgTable, serial, text, timestamp, varchar, date } from 'drizzle-orm/pg-core'
+import { boolean, integer, jsonb, pgEnum, pgTable, serial, text, timestamp, varchar, date } from 'drizzle-orm/pg-core'
 import type { ArticleBlock } from '~/types/article'
 import type { CaseRelatedProduct } from '~/data/case-details'
 
@@ -28,6 +28,8 @@ export const news = pgTable('news', {
   category: newsCategoryEnum('category').notNull(),
   publishedAt: date('published_at', { mode: 'string' }).notNull(),
   status: newsStatusEnum('status').notNull().default('published'),
+  // 首页「创新、洞察与新闻」推荐位（015.12）：featured 且 published 的新闻优先进入 /api/home/insights
+  featured: boolean('featured').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
@@ -79,6 +81,8 @@ export const reports = pgTable('reports', {
   href: varchar('href', { length: 500 }).notNull().unique(),
   sortOrder: integer('sort_order').notNull(),
   status: contentStatusEnum('status').notNull().default('published'),
+  // 首页推荐位（015.12）：featured 且 published 的报告按 sortOrder 补足新闻之后的推荐位
+  featured: boolean('featured').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
@@ -123,5 +127,13 @@ export const pages = pgTable('pages', {
   sortOrder: integer('sort_order').notNull().default(0),
   sections: jsonb('sections').notNull().default([]),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
+// 组件启停（015.12）：key 主键单行 'page-sections'，disabled 存被禁用的区块/定制组件 ID 列表
+// 编辑面语义：仅影响 admin 编辑器「新增区块」下拉，渲染器与 zod 不变（已发布页照常渲染）
+export const componentStates = pgTable('component_states', {
+  key: varchar('key', { length: 50 }).primaryKey(),
+  disabled: jsonb('disabled').$type<string[]>().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })

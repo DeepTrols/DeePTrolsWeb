@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import ArticleContent from '~/components/common/article/ArticleContent.vue'
+import { computed } from 'vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
+import CmsPageRenderer from '~/components/sections/CmsPageRenderer.vue'
 import type { PublishedPagePayload } from '~/server/utils/pages-admin'
 
 // CMS 页统一渲染器：catch-all 分发器与 /solutions/[slug] 回退分支共用（后者受 harness 约束不能自带 shell）
-defineProps<{ page: PublishedPagePayload }>()
+const props = defineProps<{ page: PublishedPagePayload }>()
+
+// 页面含可见 hero 区块时由 hero 承担 h1，默认页头不再渲染（避免双主标题）
+const hasHero = computed(() =>
+  props.page.sections.some(section => section.type === 'hero' && section.visible),
+)
 </script>
 
 <template>
   <div class="site-shell">
     <SiteHeader />
     <main id="main-content">
-      <section class="container pb-10 pt-32 lg:pt-40" aria-labelledby="cms-page-title">
+      <section
+        v-if="!hasHero"
+        class="container pb-10 pt-32 lg:pt-40"
+        aria-labelledby="cms-page-title"
+      >
         <p class="text-[13px] font-semibold uppercase tracking-wide text-primary">DeepTrols</p>
         <h1
           id="cms-page-title"
@@ -24,13 +34,7 @@ defineProps<{ page: PublishedPagePayload }>()
           {{ page.seoDescription }}
         </p>
       </section>
-      <section
-        v-for="(section, index) in page.sections"
-        :key="index"
-        class="container py-6 lg:py-10"
-      >
-        <ArticleContent v-if="section.type === 'richText'" :blocks="section.blocks" />
-      </section>
+      <CmsPageRenderer :sections="page.sections" />
     </main>
     <SiteFooter />
   </div>

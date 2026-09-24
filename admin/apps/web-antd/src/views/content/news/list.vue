@@ -4,9 +4,22 @@ import type { AdminNewsRecord } from '#/api/content';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { Button, message, Popconfirm, Space, Table, Tag } from 'ant-design-vue';
+import {
+  Button,
+  message,
+  Popconfirm,
+  Space,
+  Switch,
+  Table,
+  Tag,
+} from 'ant-design-vue';
 
-import { deleteNewsApi, listAdminNewsApi } from '#/api/content';
+import {
+  deleteNewsApi,
+  getAdminNewsApi,
+  listAdminNewsApi,
+  updateNewsApi,
+} from '#/api/content';
 
 import {
   newsCategoryLabels,
@@ -35,6 +48,31 @@ async function handleDelete(id: number) {
   await fetchRows();
 }
 
+/** 首页推荐开关：拉完整记录（含正文 blocks）翻转 featured 后整体 PUT */
+async function toggleFeatured(record: AdminNewsRecord, checked: boolean) {
+  try {
+    const payload = await getAdminNewsApi(record.id);
+    if (!payload.blocks) {
+      message.error('该新闻缺少正文，请先在编辑页补全后再推荐');
+      return;
+    }
+    await updateNewsApi(record.id, {
+      blocks: payload.blocks,
+      category: payload.category,
+      coverImage: payload.coverImage,
+      featured: checked,
+      publishedAt: payload.publishedAt,
+      status: payload.status,
+      summary: payload.summary,
+      title: payload.title,
+    });
+    message.success(checked ? '已推荐到首页' : '已取消推荐');
+    await fetchRows();
+  } catch {
+    message.error('推荐状态更新失败');
+  }
+}
+
 const columns = [
   { dataIndex: 'id', title: 'ID', width: 70 },
   { dataIndex: 'title', ellipsis: true, title: '标题' },
@@ -42,6 +80,7 @@ const columns = [
   { dataIndex: 'publishedAt', title: '发布日期', width: 120 },
   { dataIndex: 'status', title: '状态', width: 100 },
   { dataIndex: 'hasDetail', title: '正文', width: 80 },
+  { dataIndex: 'featured', title: '推荐到首页', width: 100 },
   { dataIndex: 'actions', fixed: 'right' as const, title: '操作', width: 150 },
 ];
 
@@ -77,6 +116,16 @@ onMounted(fetchRows);
         <template v-else-if="column.dataIndex === 'hasDetail'">
           <Tag v-if="record.hasDetail" color="blue">有</Tag>
           <Tag v-else color="red">缺失</Tag>
+        </template>
+        <template v-else-if="column.dataIndex === 'featured'">
+          <Switch
+            :checked="record.featured"
+            size="small"
+            @change="
+              (checked) =>
+                toggleFeatured(record as AdminNewsRecord, checked as boolean)
+            "
+          />
         </template>
         <template v-else-if="column.dataIndex === 'actions'">
           <Space>

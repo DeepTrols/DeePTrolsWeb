@@ -12,6 +12,7 @@ import {
   InputNumber,
   message,
   Select,
+  Switch,
   Textarea,
 } from 'ant-design-vue';
 
@@ -45,6 +46,7 @@ const form = reactive<
   Omit<ReportInput, 'solutionKey'> & { solutionKey?: SolutionKey }
 >({
   category: '',
+  featured: false,
   href: '',
   image: '',
   solutionKey: undefined,
@@ -68,6 +70,7 @@ onMounted(async () => {
     const payload = await getAdminReportApi(id);
     Object.assign(form, {
       category: payload.category,
+      featured: payload.featured,
       href: payload.href,
       image: payload.image,
       solutionKey: payload.solutionKey,
@@ -152,6 +155,12 @@ async function save(publish = false) {
           :options="statusOptions"
           style="max-width: 200px"
         />
+      </FormItem>
+      <FormItem label="推荐到首页">
+        <Switch v-model:checked="form.featured" />
+        <span class="ml-2 text-xs text-gray-400">
+          推荐且已发布的报告在新闻之后补足首页推荐位（按排序，最多共 4 条）
+        </span>
       </FormItem>
       <FormItem :wrapper-col="{ offset: 3, span: 16 }">
         <Button

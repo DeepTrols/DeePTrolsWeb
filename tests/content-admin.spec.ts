@@ -43,6 +43,11 @@ describe('news input protocol', () => {
     expect(parsed.status).toBe('draft')
   })
 
+  it('featured 默认 false 且透传 true（首页推荐位）', () => {
+    expect(newsInputSchema.parse(validNews).featured).toBe(false)
+    expect(newsInputSchema.parse({ ...validNews, featured: true }).featured).toBe(true)
+  })
+
   it('rejects bad category, bad date, and empty blocks', () => {
     expect(newsInputSchema.safeParse({ ...validNews, category: 'other' }).success).toBe(false)
     expect(newsInputSchema.safeParse({ ...validNews, publishedAt: '2026/09/22' }).success).toBe(false)
@@ -82,6 +87,11 @@ describe('report input protocol', () => {
   it('accepts a valid payload and defaults status to draft', () => {
     const parsed = reportInputSchema.parse(validReport)
     expect(parsed.status).toBe('draft')
+  })
+
+  it('featured 默认 false 且透传 true（首页推荐位）', () => {
+    expect(reportInputSchema.parse(validReport).featured).toBe(false)
+    expect(reportInputSchema.parse({ ...validReport, featured: true }).featured).toBe(true)
   })
 
   it('rejects unknown type and negative sortOrder', () => {

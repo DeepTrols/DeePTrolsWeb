@@ -11,18 +11,15 @@ import {
   Input,
   message,
   Select,
+  Switch,
   Textarea,
 } from 'ant-design-vue';
 
 import { createNewsApi, getAdminNewsApi, updateNewsApi } from '#/api/content';
 
+import BlocksEditor from '../shared/BlocksEditor.vue';
 import ImageField from '../shared/ImageField.vue';
-import {
-  newsCategoryOptions,
-  parseJsonField,
-  statusOptions,
-  toJsonText,
-} from '../shared/options';
+import { newsCategoryOptions, statusOptions } from '../shared/options';
 
 defineOptions({ name: 'ContentNewsEdit' });
 
@@ -41,19 +38,16 @@ const form = reactive<NewsInput>({
   blocks: [],
   category: 'company',
   coverImage: '',
+  featured: false,
   publishedAt: new Date().toISOString().slice(0, 10),
   status: 'draft',
   summary: '',
   title: '',
 });
-const blocksText = ref('');
-const blocksPlaceholder = '[{"type":"paragraph","text":"..."}]';
+const blocksValue = ref<null | unknown[]>(null);
 
 onMounted(async () => {
   if (!isEdit.value) {
-    blocksText.value = toJsonText([
-      { text: '在此填写正文段落', type: 'paragraph' },
-    ]);
     return;
   }
   const id = newsId.value;
@@ -66,26 +60,26 @@ onMounted(async () => {
     Object.assign(form, {
       category: payload.category,
       coverImage: payload.coverImage,
+      featured: payload.featured,
       publishedAt: payload.publishedAt,
       status: payload.status,
       summary: payload.summary,
       title: payload.title,
     });
-    blocksText.value = toJsonText(payload.blocks);
+    blocksValue.value = payload.blocks;
   } finally {
     loading.value = false;
   }
 });
 
 async function save(publish = false) {
-  const blocks = parseJsonField(blocksText.value);
-  if (!blocks || blocks.length === 0) {
-    message.error('正文 blocks JSON 格式错误（须为非空数组）');
+  if (blocksValue.value === null) {
+    message.error('正文为空或包含不支持的元素，请检查编辑器内容');
     return;
   }
   const payload: NewsInput = {
     ...form,
-    blocks,
+    blocks: blocksValue.value,
     status: publish ? 'published' : form.status,
   };
   saving.value = true;
@@ -137,17 +131,14 @@ async function save(publish = false) {
           style="max-width: 200px"
         />
       </FormItem>
-      <FormItem label="正文 blocks" required>
-        <Textarea
-          v-model:value="blocksText"
-          class="font-mono"
-          :rows="16"
-          :placeholder="blocksPlaceholder"
-        />
-        <div class="mt-1 text-xs text-gray-400">
-          ArticleBlock[] JSON：heading / paragraph / list / quote / image /
-          divider，保存时服务端做判别联合校验
-        </div>
+      <FormItem label="推荐到首页">
+        <Switch v-model:checked="form.featured" />
+        <span class="ml-2 text-xs text-gray-400">
+          推荐且已发布的新闻优先进入首页「创新、洞察与新闻」（最多 4 条）
+        </span>
+      </FormItem>
+      <FormItem label="正文" required>
+        <BlocksEditor v-model:blocks="blocksValue" />
       </FormItem>
       <FormItem :wrapper-col="{ offset: 3, span: 16 }">
         <Button

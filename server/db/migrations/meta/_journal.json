@@ -43,6 +43,13 @@
       "when": 1790132988513,
       "tag": "0005_loose_yellowjacket",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790158130667,
+      "tag": "0006_watery_shriek",
+      "breakpoints": true
     }
   ]
 }

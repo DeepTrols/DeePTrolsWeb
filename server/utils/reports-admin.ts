@@ -17,6 +17,7 @@ export const reportInputSchema = z.object({
   href: z.string().trim().min(1).max(500),
   sortOrder: z.number().int().min(0),
   status: contentStatusSchema.default('draft'),
+  featured: z.boolean().default(false),
 })
 export type ReportInput = z.infer<typeof reportInputSchema>
 
@@ -28,6 +29,7 @@ export interface AdminReportRecord {
   href: string
   sortOrder: number
   status: z.infer<typeof contentStatusSchema>
+  featured: boolean
   updatedAt: string
 }
 
@@ -52,6 +54,7 @@ export async function listAdminReports(): Promise<AdminReportRecord[]> {
         href: reports.href,
         sortOrder: reports.sortOrder,
         status: reports.status,
+        featured: reports.featured,
         updatedAt: reports.updatedAt,
       })
       .from(reports)
@@ -84,6 +87,7 @@ export async function getAdminReport(id: number): Promise<AdminReportPayload | n
         href: reports.href,
         sortOrder: reports.sortOrder,
         status: reports.status,
+        featured: reports.featured,
       })
       .from(reports)
       .where(eq(reports.id, id))

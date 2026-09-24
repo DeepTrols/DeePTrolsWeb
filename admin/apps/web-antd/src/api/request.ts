@@ -60,7 +60,13 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     },
   });
 
-  // 主站 API 直接返回业务数据（无 code/data 包装），axios data 即最终数据
+  // 主站 API 直接返回业务数据（无 code/data 包装）：在此剥掉 axios 外壳。
+  // 注意 vben 的 responseReturn:'data' 只在 defaultResponseInterceptor 内生效；
+  // 我们不注册它（它要求 {code:0,data} 信封），不剥壳时请求拿到的是整个 AxiosResponse
+  client.addResponseInterceptor({
+    fulfilled: (response) => response.data,
+  });
+
   // 401 时触发重新登录
   client.addResponseInterceptor(
     authenticateResponseInterceptor({

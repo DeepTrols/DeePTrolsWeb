@@ -9,18 +9,19 @@ export interface ProductMetricItem {
 const props = withDefaults(
   defineProps<{
     items: ProductMetricItem[]
-    spacing?: 'default' | 'compact'
+    spacing?: 'default' | 'compact' | 'tight'
   }>(),
   {
     spacing: 'default',
   },
 )
 
-// Section rhythm mirrors SectionShell spacing variants (default pb-32 lg:pb-44, compact pb-16 lg:pb-32).
+// Section rhythm mirrors SectionShell spacing variants (default pb-32 lg:pb-44, compact pb-16 lg:pb-32, tight pb-8 lg:pb-16).
 const shellClasses = computed(() => [
   'product-metrics flow-root bg-white',
   props.spacing === 'default' && 'pb-32 lg:pb-44',
   props.spacing === 'compact' && 'pb-16 lg:pb-32',
+  props.spacing === 'tight' && 'pb-8 lg:pb-16',
 ])
 
 // Divider borders follow the DeepCtrls product-metrics reference:
