@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { NewsInput } from '#/api/content';
 
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onActivated, onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import {
@@ -46,12 +46,15 @@ const form = reactive<NewsInput>({
 });
 const blocksValue = ref<null | unknown[]>(null);
 
-onMounted(async () => {
+async function loadRecord() {
   if (!isEdit.value) {
     return;
   }
   const id = newsId.value;
   if (id === null) {
+    return;
+  }
+  if (loading.value) {
     return;
   }
   loading.value = true;
@@ -69,6 +72,19 @@ onMounted(async () => {
     blocksValue.value = payload.blocks;
   } finally {
     loading.value = false;
+  }
+}
+
+onMounted(loadRecord);
+
+// keep-alive 页签再次激活时重取最新记录，避免保存时用旧数据静默覆盖他人修改；
+// 首次激活紧随 onMounted 触发，跳过以免双重拉取
+let activatedOnce = false;
+onActivated(() => {
+  if (activatedOnce) {
+    void loadRecord();
+  } else {
+    activatedOnce = true;
   }
 });
 

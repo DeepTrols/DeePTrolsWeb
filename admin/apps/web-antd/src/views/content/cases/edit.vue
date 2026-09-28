@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { CaseInput, SolutionKey } from '#/api/content';
 
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onActivated, onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import {
@@ -60,13 +60,15 @@ const relatedProductsText = ref('');
 const relatedProductsPlaceholder =
   '[{"name":"DGP","desc":"...","href":"/products/dgp"}]';
 
-onMounted(async () => {
+async function loadRecord() {
   if (!isEdit.value) {
-    relatedProductsText.value = '[]';
     return;
   }
   const slug = caseSlug.value;
   if (slug === null) {
+    return;
+  }
+  if (loading.value) {
     return;
   }
   loading.value = true;
@@ -77,6 +79,25 @@ onMounted(async () => {
     relatedProductsText.value = toJsonText(payload.relatedProducts);
   } finally {
     loading.value = false;
+  }
+}
+
+onMounted(async () => {
+  if (!isEdit.value) {
+    relatedProductsText.value = '[]';
+    return;
+  }
+  await loadRecord();
+});
+
+// keep-alive 页签再次激活时重取最新记录，避免保存时用旧数据静默覆盖他人修改；
+// 首次激活紧随 onMounted 触发，跳过以免双重拉取
+let activatedOnce = false;
+onActivated(() => {
+  if (activatedOnce) {
+    void loadRecord();
+  } else {
+    activatedOnce = true;
   }
 });
 

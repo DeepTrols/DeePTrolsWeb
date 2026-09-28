@@ -3,7 +3,7 @@ import type { ComponentRegistryEntry } from '#/api/components';
 import type { PageInput, PageSection } from '#/api/pages';
 import type { SectionPreset } from '#/api/presets';
 
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onActivated, onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import {
@@ -121,6 +121,27 @@ function handleModeChange() {
   form.sections = parsed;
 }
 
+async function loadRecord() {
+  if (!isEdit.value) {
+    return;
+  }
+  const slug = pageSlug.value;
+  if (slug === null) {
+    return;
+  }
+  if (loading.value) {
+    return;
+  }
+  loading.value = true;
+  try {
+    const payload = await getAdminPageApi(slug);
+    Object.assign(form, payload);
+    sectionsText.value = toJsonText(payload.sections);
+  } finally {
+    loading.value = false;
+  }
+}
+
 onMounted(async () => {
   await Promise.allSettled([
     (async () => {
@@ -135,17 +156,17 @@ onMounted(async () => {
     sectionsText.value = toJsonText(form.sections);
     return;
   }
-  const slug = pageSlug.value;
-  if (slug === null) {
-    return;
-  }
-  loading.value = true;
-  try {
-    const payload = await getAdminPageApi(slug);
-    Object.assign(form, payload);
-    sectionsText.value = toJsonText(payload.sections);
-  } finally {
-    loading.value = false;
+  await loadRecord();
+});
+
+// keep-alive 页签再次激活时重取最新记录，避免保存时用旧数据静默覆盖他人修改；
+// 首次激活紧随 onMounted 触发，跳过以免双重拉取（组件/模板库仅挂载时拉取）
+let activatedOnce = false;
+onActivated(() => {
+  if (activatedOnce) {
+    void loadRecord();
+  } else {
+    activatedOnce = true;
   }
 });
 
