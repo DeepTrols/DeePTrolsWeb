@@ -1,12 +1,13 @@
 import { requireAdmin } from '../../utils/admin'
-import { consumeRateLimitWith } from '../../utils/rate-limit'
+import { consumeRateLimitWith, getRateLimitIP } from '../../utils/rate-limit'
 import { createMediaRecord, extensionForMime, MAX_UPLOAD_BYTES, sniffImageMime } from '../../utils/media-admin'
 import { createLocalStorageDriver } from '../../utils/storage'
 
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
 
-  const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
+  // 限流 key 默认取 socket 对端地址，不信任客户端 XFF（防伪造绕过），见 rate-limit.ts
+  const ip = getRateLimitIP(event)
   if (!consumeRateLimitWith(`admin-upload:${ip}`, 30, 10 * 60 * 1000)) {
     throw createError({ statusCode: 429, statusMessage: 'Too many uploads' })
   }
