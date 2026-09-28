@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import type { ArticleBlock } from '~/types/article'
+import { safeUrlSchema } from './safe-url'
 
 /**
  * ArticleBlock（types/article.ts）的运行时校验协议。
@@ -29,7 +30,7 @@ const quoteBlock = z.object({
 
 const imageBlock = z.object({
   type: z.literal('image'),
-  src: z.string().min(1),
+  src: safeUrlSchema(),
   alt: z.string().min(1),
   caption: z.string().optional(),
 })

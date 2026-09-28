@@ -3,23 +3,25 @@ import { z } from 'zod'
 import { navIconComponents } from '~/components/navigation/nav-icons'
 import { useNewsDatabase } from '../db/client'
 import { navMenus } from '../db/schema'
+import { safeUrlSchema } from './safe-url'
 
 /** 菜单 key：header 主导航 / footer 页脚 */
 export const menuKeySchema = z.enum(['header', 'footer'])
 export type MenuKey = z.infer<typeof menuKeySchema>
 
-/** icon 只接受 nav-icons 注册表已登记的名字（未登记会在渲染侧静默不渲染，这里提前拦截） */
+/** icon 只接受 nav-icons 注册表已登记的名字（未登记会在渲染侧静默不渲染，这里提前拦截）
+ *  Object.hasOwn：`in` 会命中原型链键（toString/constructor 等），导致白名单绕过 */
 const navIconNameSchema = z
   .string()
   .trim()
   .min(1)
   .max(50)
-  .refine(name => name in navIconComponents, { message: 'Unknown nav icon' })
+  .refine(name => Object.hasOwn(navIconComponents, name), { message: 'Unknown nav icon' })
 
 const navLinkSchema = z.object({
   label: z.string().trim().min(1).max(100),
   description: z.string().trim().max(200).optional(),
-  href: z.string().trim().min(1).max(500),
+  href: safeUrlSchema(500),
   activePaths: z.array(z.string().trim().min(1).max(200)).max(20).optional(),
   icon: navIconNameSchema.optional(),
   hot: z.boolean().optional(),
@@ -30,11 +32,11 @@ const navColumnBaseSchema = z.object({
   title: z.string().trim().min(1).max(100),
   subtitle: z.string().trim().max(100).optional(),
   description: z.string().trim().max(200).optional(),
-  href: z.string().trim().min(1).max(500).optional(),
+  href: safeUrlSchema(500).optional(),
   activePaths: z.array(z.string().trim().min(1).max(200)).max(20).optional(),
   links: z.array(navLinkSchema).max(50).optional(),
   footerLabel: z.string().trim().max(100).optional(),
-  footerHref: z.string().trim().min(1).max(500).optional(),
+  footerHref: safeUrlSchema(500).optional(),
 })
 // groups 自嵌套一层（NavColumn.groups?: NavColumn[]）
 const navColumnSchema: z.ZodType<NavColumnInput> = navColumnBaseSchema.extend({
@@ -44,13 +46,13 @@ const navColumnSchema: z.ZodType<NavColumnInput> = navColumnBaseSchema.extend({
 const navFeatureSchema = z.object({
   title: z.string().trim().min(1).max(100),
   description: z.string().trim().min(1).max(200),
-  href: z.string().trim().min(1).max(500),
+  href: safeUrlSchema(500),
   icon: navIconNameSchema,
 })
 
 const navItemSchema = z.object({
   label: z.string().trim().min(1).max(100),
-  href: z.string().trim().min(1).max(500),
+  href: safeUrlSchema(500),
   activePaths: z.array(z.string().trim().min(1).max(200)).max(20).optional(),
   layout: z.enum(['product', 'solutions']).optional(),
   megaTitle: z.string().trim().max(100).optional(),
@@ -65,7 +67,7 @@ export type HeaderMenuItems = z.infer<typeof headerMenuSchema>
 
 const footerLinkSchema = z.object({
   label: z.string().trim().min(1).max(100),
-  href: z.string().trim().min(1).max(500),
+  href: safeUrlSchema(500),
   arrow: z.boolean().optional(),
 })
 
@@ -76,7 +78,7 @@ const footerColumnSchema = z.object({
 
 const footerSocialSchema = z.object({
   label: z.string().trim().min(1).max(100),
-  href: z.string().trim().min(1).max(500).optional(),
+  href: safeUrlSchema(500).optional(),
   path: z.string().trim().min(1),
 })
 

@@ -6,6 +6,7 @@ import { useNewsDatabase } from '../db/client'
 import { caseDetails, cases } from '../db/schema'
 import { articleBlocksSchema, parseArticleBlocks } from './article-blocks'
 import { contentStatusSchema, solutionKeySchema } from './content-admin'
+import { safeUrlSchema } from './safe-url'
 
 /** slug 协议：与公开路由 /cases/[slug] 段一致 */
 export const caseSlugSchema = z.string().regex(/^[a-z0-9][a-z0-9-]*$/).max(200)
@@ -13,7 +14,7 @@ export const caseSlugSchema = z.string().regex(/^[a-z0-9][a-z0-9-]*$/).max(200)
 const relatedProductSchema = z.object({
   name: z.string().min(1),
   desc: z.string().min(1),
-  href: z.string().min(1),
+  href: safeUrlSchema(),
 })
 
 /** 案例写入协议（新建含 slug；slug 为主键不可改，更新走 caseUpdateSchema） */

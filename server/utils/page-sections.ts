@@ -3,6 +3,7 @@ import { CUSTOM_SECTION_NAMES } from '~/components/sections/custom-names'
 import { CUSTOM_COMPONENT_META } from '~/components/sections/custom-props'
 import { navIconComponents } from '~/components/navigation/nav-icons'
 import { articleBlocksSchema } from './article-blocks'
+import { safeUrlSchema } from './safe-url'
 
 /**
  * CMS 页面区块协议（Phase D 布局管理）。
@@ -57,7 +58,8 @@ export const featureGridSectionSchema = z.object({
         icon: z
           .string()
           .trim()
-          .refine(name => name in navIconComponents, { message: 'Unknown nav icon' })
+          // Object.hasOwn：`in` 会命中原型链键（toString/constructor 等），导致白名单绕过
+          .refine(name => Object.hasOwn(navIconComponents, name), { message: 'Unknown nav icon' })
           .optional(),
         points: z.array(z.string().trim().min(1).max(200)).max(8).optional(),
         tags: z.array(z.string().trim().min(1).max(50)).max(8).optional(),
@@ -74,7 +76,7 @@ export const ctaSectionSchema = z.object({
   title: z.string().trim().min(1).max(500),
   description: z.string().trim().max(1000).optional(),
   ctaLabel: z.string().trim().min(1).max(100).default('免费获取专属方案'),
-  ctaHref: z.string().trim().min(1).max(500).default('/contact'),
+  ctaHref: safeUrlSchema(500).default('/contact'),
 })
 
 /** 富文本：ArticleBlock[]（Phase C 唯一类型，形状不变） */

@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { useNewsDatabase } from '../db/client'
 import { reports } from '../db/schema'
 import { contentStatusSchema, solutionKeySchema } from './content-admin'
+import { safeUrlSchema } from './safe-url'
 
 export const reportTypeSchema = z.enum(['产品规格书', '电子书', '白皮书', '视频', '幻灯片', '基准测试报告'])
 
@@ -14,7 +15,7 @@ export const reportInputSchema = z.object({
   title: z.string().trim().min(1).max(500),
   summary: z.string().trim().min(1),
   image: z.string().trim().min(1).max(1000),
-  href: z.string().trim().min(1).max(500),
+  href: safeUrlSchema(500),
   sortOrder: z.number().int().min(0),
   status: contentStatusSchema.default('draft'),
   featured: z.boolean().default(false),
