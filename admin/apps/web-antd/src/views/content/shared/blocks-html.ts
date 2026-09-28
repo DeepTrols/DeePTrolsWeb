@@ -2,6 +2,12 @@
  * ArticleBlock[] ↔ 富文本 HTML 双向转换（纯函数，无依赖）。
  * 存储协议不变：heading(2-4)/paragraph/list/quote/image/divider；
  * 行内格式（加粗/斜体/链接/颜色）靠 textContent 在 HTML→blocks 方向自然剥离。
+ *
+ * image.caption 以 <img title> 属性承载：tiptap Image 扩展（@tiptap/extension-image v3）
+ * 原生声明 src/alt/title(/width/height) 属性，未声明属性（如 data-caption）会被编辑器
+ * schema 剥离，导致 blocks→HTML→编辑器→HTML→blocks 往返丢失；title 为 null 时
+ * prosemirror 序列化会跳过该属性，无 caption 的图片不产生冗余属性。
+ * 公开站仍按协议以 block.caption → figcaption 渲染，服务端协议不变。
  */
 
 function escapeHtml(text: string): string {
@@ -45,7 +51,10 @@ export function blocksToHtml(blocks: unknown[]): string {
       case 'image': {
         const src = escapeHtml(textOf(block.src));
         const alt = escapeHtml(textOf(block.alt));
-        parts.push(`<p><img src="${src}" alt="${alt}"></p>`);
+        // caption → title（编辑器侧载体，见文件头注释）；无/纯空白 caption 不输出属性
+        const caption = textOf(block.caption).trim();
+        const title = caption === '' ? '' : ` title="${escapeHtml(caption)}"`;
+        parts.push(`<p><img src="${src}" alt="${alt}"${title}></p>`);
         break;
       }
       case 'list': {
@@ -78,8 +87,11 @@ export function blocksToHtml(blocks: unknown[]): string {
 function imageBlockFrom(img: Element): null | Record<string, unknown> {
   const src = img.getAttribute('src') ?? '';
   if (!src) return null;
+  // title 为 caption 的编辑器侧载体；空/纯空白不回写（保持协议字段稀疏）
+  const caption = (img.getAttribute('title') ?? '').trim();
   return {
     alt: img.getAttribute('alt') || '正文配图',
+    ...(caption === '' ? {} : { caption }),
     src,
     type: 'image',
   };

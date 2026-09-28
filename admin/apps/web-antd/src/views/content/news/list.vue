@@ -16,9 +16,8 @@ import {
 
 import {
   deleteNewsApi,
-  getAdminNewsApi,
   listAdminNewsApi,
-  updateNewsApi,
+  setNewsFeaturedApi,
 } from '#/api/content';
 
 import {
@@ -48,24 +47,10 @@ async function handleDelete(id: number) {
   await fetchRows();
 }
 
-/** 首页推荐开关：拉完整记录（含正文 blocks）翻转 featured 后整体 PUT */
+/** 首页推荐开关：PATCH 单列切换（审计#16）——不再 GET→整条 PUT 读改写，取消推荐也不再被缺正文的旧数据阻止 */
 async function toggleFeatured(record: AdminNewsRecord, checked: boolean) {
   try {
-    const payload = await getAdminNewsApi(record.id);
-    if (!payload.blocks) {
-      message.error('该新闻缺少正文，请先在编辑页补全后再推荐');
-      return;
-    }
-    await updateNewsApi(record.id, {
-      blocks: payload.blocks,
-      category: payload.category,
-      coverImage: payload.coverImage,
-      featured: checked,
-      publishedAt: payload.publishedAt,
-      status: payload.status,
-      summary: payload.summary,
-      title: payload.title,
-    });
+    await setNewsFeaturedApi(record.id, checked);
     message.success(checked ? '已推荐到首页' : '已取消推荐');
     await fetchRows();
   } catch {

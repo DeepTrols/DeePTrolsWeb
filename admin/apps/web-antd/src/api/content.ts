@@ -102,6 +102,12 @@ export const updateNewsApi = (id: number, data: NewsInput) =>
   requestClient.put(`/admin/news/${id}`, data);
 export const deleteNewsApi = (id: number) =>
   requestClient.delete(`/admin/news/${id}`);
+/** 首页推荐单列切换（审计#16）：RequestClient 无 patch 快捷方法，走通用 request */
+export const setNewsFeaturedApi = (id: number, featured: boolean) =>
+  requestClient.request<{ ok: boolean }>(`/admin/news/${id}/featured`, {
+    data: { featured },
+    method: 'PATCH',
+  });
 
 // 案例
 export const listAdminCasesApi = () =>
@@ -126,3 +132,9 @@ export const updateReportApi = (id: number, data: ReportInput) =>
   requestClient.put(`/admin/reports/${id}`, data);
 export const deleteReportApi = (id: number) =>
   requestClient.delete(`/admin/reports/${id}`);
+/** 首页推荐单列切换（审计#16）：RequestClient 无 patch 快捷方法，走通用 request */
+export const setReportFeaturedApi = (id: number, featured: boolean) =>
+  requestClient.request<{ ok: boolean }>(`/admin/reports/${id}/featured`, {
+    data: { featured },
+    method: 'PATCH',
+  });

@@ -16,9 +16,8 @@ import {
 
 import {
   deleteReportApi,
-  getAdminReportApi,
   listAdminReportsApi,
-  updateReportApi,
+  setReportFeaturedApi,
 } from '#/api/content';
 
 import { statusColors, statusLabels } from '../shared/options';
@@ -44,22 +43,10 @@ async function handleDelete(id: number) {
   await fetchRows();
 }
 
-/** 首页推荐开关：拉完整记录翻转 featured 后整体 PUT */
+/** 首页推荐开关：PATCH 单列切换（审计#16）——不再 GET→整条 PUT 读改写 */
 async function toggleFeatured(record: AdminReportRecord, checked: boolean) {
   try {
-    const payload = await getAdminReportApi(record.id);
-    await updateReportApi(record.id, {
-      category: payload.category,
-      featured: checked,
-      href: payload.href,
-      image: payload.image,
-      solutionKey: payload.solutionKey,
-      sortOrder: payload.sortOrder,
-      status: payload.status,
-      summary: payload.summary,
-      title: payload.title,
-      type: payload.type,
-    });
+    await setReportFeaturedApi(record.id, checked);
     message.success(checked ? '已推荐到首页' : '已取消推荐');
     await fetchRows();
   } catch {

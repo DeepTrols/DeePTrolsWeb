@@ -53,9 +53,31 @@ const richInvalid = computed(() => richBlocks.value === null);
 
 /** richText 的 blocks 草稿：合法 JSON 实时落回 section.blocks，非法保留草稿继续编辑（高级逃生门） */
 const blocksDraft = ref('');
+
+// featureGrid 卡片的要点/标签草稿（受控输入的原始文本，按卡片稳定 key 隔离）
+const pointsDrafts = ref<Record<number, string>>({});
+const tagsDrafts = ref<Record<number, string>>({});
+
+// 稳定 key：卡片/行删除、上下移时防组件按索引复用导致 DOM/草稿串位
+// （对象身份由 WeakMap 持久化，同 SectionsEditor.keyOf 先例；admin 纯客户端，无 SSR 顾虑）
+const itemKeys = new WeakMap<object, number>();
+let nextItemKey = 0;
+function keyOf(item: object): number {
+  let key = itemKeys.get(item);
+  if (key === undefined) {
+    key = nextItemKey;
+    nextItemKey += 1;
+    itemKeys.set(item, key);
+  }
+  return key;
+}
+
 watch(
   () => section.value,
   (s) => {
+    // 区块对象整体替换（重载/复用）：清空卡片草稿，由新数据重新播种
+    pointsDrafts.value = {};
+    tagsDrafts.value = {};
     if (s.type === 'richText') {
       richBlocks.value = s.blocks;
       blocksDraft.value = JSON.stringify(s.blocks, null, 2);
@@ -84,19 +106,28 @@ function onBlocksInput(text: string) {
   }
 }
 
-// featureGrid 卡片的要点/标签：多行/逗号分隔文本 ↔ 数组，失焦时写回（空则清掉字段）
-function onPointsChange(item: FeatureGridItem, event: Event) {
-  const target = event.target as HTMLTextAreaElement | null;
-  const lines = (target?.value ?? '')
+// featureGrid 卡片的要点/标签：受控输入（草稿按卡片稳定 key 隔离，输入即解析写回数组）。
+// 草稿保留原始文本（如行尾换行、未闭合逗号），数组仅存非空项；空则清掉字段。
+function pointsValue(item: FeatureGridItem): string {
+  return pointsDrafts.value[keyOf(item)] ?? (item.points ?? []).join('\n');
+}
+
+function onPointsInput(item: FeatureGridItem, value: string) {
+  pointsDrafts.value[keyOf(item)] = value;
+  const lines = value
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean);
   item.points = lines.length > 0 ? lines : undefined;
 }
 
-function onTagsChange(item: FeatureGridItem, event: Event) {
-  const target = event.target as HTMLInputElement | null;
-  const tags = (target?.value ?? '')
+function tagsValue(item: FeatureGridItem): string {
+  return tagsDrafts.value[keyOf(item)] ?? (item.tags ?? []).join(', ');
+}
+
+function onTagsInput(item: FeatureGridItem, value: string) {
+  tagsDrafts.value[keyOf(item)] = value;
+  const tags = value
     .split(/[,，]/)
     .map((tag) => tag.trim())
     .filter(Boolean);
@@ -146,12 +177,13 @@ watch(
   },
 );
 
-/** json 类字段：草稿失焦 parse 写回；非法保留草稿并标红 */
+/** json 类字段：草稿失焦 parse 写回；非法保留草稿并标红。
+ * 依赖 section 身份：区块对象被替换（即使组件名相同）时草稿必须重新播种，防止旧 JSON 失焦写进新区块 */
 const jsonDrafts = ref<Record<string, string>>({});
 const jsonInvalid = ref<Record<string, boolean>>({});
 watch(
-  customEntry,
-  (entry) => {
+  [customEntry, () => section.value],
+  ([entry]) => {
     const drafts: Record<string, string> = {};
     for (const field of entry?.fields ?? []) {
       if (field.type === 'json') {
@@ -202,7 +234,7 @@ function onJsonBlur(key: string) {
     <template v-else-if="section.type === 'metrics'">
       <div
         v-for="(item, i) in section.items"
-        :key="i"
+        :key="keyOf(item)"
         class="flex items-center gap-2"
       >
         <Input v-model:value="item.value" class="w-40" placeholder="数值" />
@@ -236,7 +268,7 @@ function onJsonBlur(key: string) {
       />
       <div
         v-for="(item, i) in section.items"
-        :key="i"
+        :key="keyOf(item)"
         class="rounded border border-dashed border-gray-200 p-2"
       >
         <div class="mb-2 flex items-center gap-2">
@@ -265,15 +297,15 @@ function onJsonBlur(key: string) {
         />
         <div class="mt-2 grid gap-2">
           <Textarea
-            :default-value="(item.points ?? []).join('\n')"
             :rows="2"
-            placeholder="要点（可选，每行一条，失焦生效）"
-            @change="(e) => onPointsChange(item, e)"
+            :value="pointsValue(item)"
+            placeholder="要点（可选，每行一条）"
+            @update:value="(v) => onPointsInput(item, v)"
           />
           <Input
-            :default-value="(item.tags ?? []).join(', ')"
-            placeholder="标签（可选，逗号分隔，失焦生效）"
-            @change="(e) => onTagsChange(item, e)"
+            :value="tagsValue(item)"
+            placeholder="标签（可选，逗号分隔）"
+            @update:value="(v) => onTagsInput(item, v)"
           />
         </div>
       </div>
@@ -322,7 +354,7 @@ function onJsonBlur(key: string) {
       <Input v-model:value="section.title" placeholder="标题（可选）" />
       <div
         v-for="(logo, i) in section.logos"
-        :key="i"
+        :key="keyOf(logo)"
         class="flex items-center gap-2"
       >
         <Input v-model:value="logo.name" class="w-44" placeholder="名称" />
