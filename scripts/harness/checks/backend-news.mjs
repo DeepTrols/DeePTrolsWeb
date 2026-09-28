@@ -74,8 +74,9 @@ export function checkBackendNewsContracts(ctx) {
     newsPage.includes("useFetch<NewsItem[]>('/api/news'") &&
       newsPage.includes('default: () => newsItems') &&
       newsDetailPage.includes('useFetch<NewsPayload>(() => `/api/news/${routeId.value}`') &&
+      newsDetailPage.includes('error.value?.statusCode === 404') &&
       newsDetailPage.includes('payload.value?.item ?? newsItems.find') &&
       newsDetailPage.includes('payload.value?.detail ?? getNewsDetailById'),
-    'News pages must fetch from the API with static-data fallback so the site renders without a database.',
+    'News pages must fetch from the API with dual failure semantics: an explicit API 404 (unpublished/deleted content) must surface the 404 page without reviving static seeds, while non-404 failures keep the static-data fallback so the site renders without a database.',
   )
 }

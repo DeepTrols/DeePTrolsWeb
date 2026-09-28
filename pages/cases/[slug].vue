@@ -20,11 +20,24 @@ const routeSlug = computed(() => {
 })
 
 // Phase 1 复制：详情经 /api/cases/:slug 读取（DB 未配置时接口侧回退静态数据）；请求失败再回退 data/*
-const { data: payload } = await useFetch<CasePayload>(() => `/api/cases/${routeSlug.value}`, {
+const { data: payload, error } = await useFetch<CasePayload>(() => `/api/cases/${routeSlug.value}`, {
   watch: [routeSlug],
 })
 
+// 失败双语义（审计#22）：API 明确 404 = 案例已下架/删除/不存在 → 页面必须 404，
+// 绝不回退静态种子（否则后台下架不生效）；其他失败（网络错误/5xx）→ 保留静态兜底维持站点韧性。
+// 无 DB 时 API 本身返回静态数据（200），不会进入任何兜底分支。
+const apiNotFound = computed(() => error.value?.statusCode === 404)
+
 const detail = computed(() => {
+  if (apiNotFound.value) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Case not found',
+      fatal: true,
+    })
+  }
+
   const found = payload.value?.detail ?? getCaseDetailBySlug(routeSlug.value ?? '')
 
   if (!found) {

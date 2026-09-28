@@ -19,11 +19,24 @@ const routeId = computed(() => {
 })
 
 // Phase 1 试点：正文经 /api/news/:id 读取（DB 未配置时接口侧回退静态数据）；请求失败再回退 data/*
-const { data: payload } = await useFetch<NewsPayload>(() => `/api/news/${routeId.value}`, {
+const { data: payload, error } = await useFetch<NewsPayload>(() => `/api/news/${routeId.value}`, {
   watch: [routeId],
 })
 
+// 失败双语义（审计#22）：API 明确 404 = 内容已下架/删除/不存在 → 页面必须 404，
+// 绝不回退静态种子（否则后台下架不生效）；其他失败（网络错误/5xx）→ 保留下方静态兜底维持站点韧性。
+// 无 DB 时 API 本身返回静态数据（200），不会进入任何兜底分支。
+const apiNotFound = computed(() => error.value?.statusCode === 404)
+
 const newsItem = computed(() => {
+  if (apiNotFound.value) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'News not found',
+      fatal: true,
+    })
+  }
+
   const found = payload.value?.item ?? newsItems.find((item) => item.id === routeId.value)
 
   if (!found) {
@@ -38,6 +51,14 @@ const newsItem = computed(() => {
 })
 
 const detail = computed(() => {
+  if (apiNotFound.value) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'News detail not found',
+      fatal: true,
+    })
+  }
+
   const found = payload.value?.detail ?? getNewsDetailById(routeId.value)
 
   if (!found) {

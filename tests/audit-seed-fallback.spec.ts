@@ -11,9 +11,13 @@ import { listReportResources } from '../server/utils/reports-repo'
  *
  * 新契约（三个仓储统一）：
  * - db === null（未配置 DATABASE_URL）→ 静态回退保留；
- * - 查询抛错 → 静态回退保留（现有 catch 行为，错误日志重构属后续任务）；
+ * - 查询抛错 → 静态回退保留（catch 已经 logServerError 落日志，审计#12）；
  * - 查询成功 → DB 结果是唯一事实源：详情行级未命中返回 null（端点映射 404）、
  *   列表为空返回空数组，静态种子不得复活（否则后台下架/删除不生效）。
+ *
+ * 页面层双语义（审计#22）：详情 API 明确 404 时页面抛 createError(404)，绝不回退
+ * 静态种子；其他失败（网络错误/5xx）页面才保留 data/* 静态兜底。
+ * 见 pages/news/[id].vue 与 pages/cases/[slug].vue 的 apiNotFound 守卫。
  */
 
 /** 最小 drizzle 查询链替身：所有链式方法透传，await 时按调用序返回预置结果 */

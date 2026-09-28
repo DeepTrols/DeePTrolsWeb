@@ -69,10 +69,11 @@ export function checkBackendContentContracts(ctx) {
     casePage.includes("useFetch<CaseResource[]>('/api/cases'") &&
       casePage.includes('default: () => caseResources') &&
       caseDetailPage.includes('useFetch<CasePayload>(() => `/api/cases/${routeSlug.value}`') &&
+      caseDetailPage.includes('error.value?.statusCode === 404') &&
       caseDetailPage.includes('payload.value?.detail ?? getCaseDetailBySlug') &&
       caseDetailPage.includes('payload.value?.resources ?? caseResources') &&
       reportPage.includes("useFetch<ReportResource[]>('/api/reports'") &&
       reportPage.includes('default: () => reportResources'),
-    'Cases/reports pages must fetch from the API with static-data fallback so the site renders without a database.',
+    'Cases/reports pages must fetch from the API with dual failure semantics: an explicit API 404 (unpublished/deleted content) must surface the 404 page without reviving static seeds, while non-404 failures keep the static-data fallback so the site renders without a database.',
   )
 }

@@ -17,15 +17,35 @@
 
 新增行为测试：`tests/audit-rate-limit.spec.ts`（5 例）、`tests/audit-seed-fallback.spec.ts`（11 例）、`tests/audit-url-safety.spec.ts`（13 例）。
 
-## 遗留项（Wave 1 执行中发现，任务 #22 跟踪）
+## 遗留项（Wave 1 发现 → 已由 #22 解决）
 
-- 页面层 `?? 静态数据` 兜底使已下架内容仍可渲染（`pages/news/[id].vue`、`pages/cases/[slug].vue`；需 pages + harness + visual 契约三处联动）
-- `cases-repo.ts:18` 读侧 `caseRelatedProductSchema.href` 未入白名单（历史入库的 javascript: href 读取侧仍放行）
-- DB 存量 URL 字段未清洗（写入侧已封死）
+- ~~页面层 `?? 静态数据` 兜底使已下架内容仍可渲染~~ → #22 双语义：API 404 → 页面 fatal 404；非 404 失败保留静态兜底
+- ~~cases-repo.ts 读侧 href 未入白名单~~ → #22 读取边界"消毒而非拒绝"：不安全 href → `'#'` + 日志
+- ~~DB 存量 URL 字段未清洗~~ → #22 新增只读排查脚本 `scripts/check-unsafe-urls.ts`（需在有 DB 环境执行）
 
-## Wave 2（P1）—— 待执行
+## Wave 2（P1）—— 已完成（2026-09-28）
 
-请求体大小限制 + 上传链路生产可用性（#11）/ 仓储层错误处理三态重构 + 可选乐观锁（#12）/ cookie Secure 显式化 + sessionPassword 长度校验（#13）/ leads PII 脱敏（#14）/ news 主键 sequence 迁移 + 23505→409（#15）/ featured PATCH 端点（#16）/ blocks-html caption 往返 + SectionBody 受控（#17）/ 页面层兜底遗留（#22）
+| # | 修复 | 关键改动 |
+|---|------|---------|
+| #12 | 仓储层错误处理重构 | 新增 `server-log.ts`（logServerError/internalServerError）；9 个 `*-admin.ts` + 3 个 `*-repo.ts` 三态语义：未配置→503 哨兵 / 未命中→404 / 异常→结构化日志+500 穿透；公开读静态回退保留且落日志 |
+| #11 | 请求体限制 + 上传生产可用 | `body-limit.ts` content-length 前置校验（login/leads 64KB、upload MAX+1MB → 413）；新增 `server/routes/uploads/[...path].get.ts` 运行时磁盘流式直出（防路径穿越 + 扩展名白名单 + immutable 强缓存），`NUXT_UPLOADS_DIR` 支持挂载卷 |
+| #14 | leads 回退安全 | 日志 PII 全脱敏；生产形态（已配 SESSION/ADMIN_PASSWORD）无 DB → 503，线索不再静默丢弃 |
+| #13 | 会话安全 | cookie Secure 改 `!import.meta.dev`（摆脱 NODE_ENV 依赖）；sessionPassword <32 字符 → 明确 500 配置错误（指引去重打印） |
+| #15 | 主键竞态（保守方案，无迁移） | createNews 23505 重算 id 重试（≤3 次）耗尽 → 409；pages/reports check-then-insert/update 23505 → 409；**sequence 根治方案留待确认（迁移 0008）** |
+| #16 | featured 切换 | 新增 `PATCH /api/admin/news|reports/:id/featured`（单列更新、三态语义）；admin 列表页开关改调 PATCH，取消推荐不再被缺 blocks 阻止，消除整条 PUT 读改写 |
+| #17 | 编辑器数据丢失 | blocks-html 以 `<img title>` 承载 caption 完成 tiptap 往返（headless Chromium 真实验证）；SectionBody featureGrid 受控输入 + WeakMap 稳定 key，并修复 custom 组件 json 草稿同类串卡 |
+| #22 | 页面层 404 双语义 | `pages/news/[id].vue`、`pages/cases/[slug].vue`：API 404 → fatal 404（静态种子不复活）；网络/5xx 失败保留静态兜底；harness 与 visual 契约同步 |
+
+新增行为测试：`audit-error-states`（52 例）、`audit-body-limit`、`audit-session-security`（7 例）、`audit-conflict-409`（9 例）、`audit-featured-patch`（16 例）；`leads.spec.ts` 同步扩展。
+
+## Wave 2 后新遗留（并入 #20 / 待决策）
+
+- 存量 URL 排查需在有 DB 环境执行：`NUXT_DATABASE_URL=... npx tsx scripts/check-unsafe-urls.ts`
+- news 主键 sequence 迁移（0008）根治方案待确认
+- 新端点/新脚本未登记 harness `sources.mjs`/`required-files.mjs`
+- `leads.ts` insertLead 的 DB 异常分支未接结构化日志
+- 富文本编辑器内暂无 caption 可视化编辑 UI（title 仅作往返载体）
+- 管理类列表 GET 现在可能返回 500（此前静默空列表），admin 端错误提示体验待确认
 
 ## Wave 3（P2）—— 待执行
 
