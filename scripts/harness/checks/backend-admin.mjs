@@ -76,6 +76,19 @@ export function checkBackendAdminContracts(ctx) {
     homeInsights,
     navIconRegistry,
     navigationComposable,
+    backendShowcaseAdminUtil,
+    backendShowcasePublicApi,
+    backendAdminShowcaseGetApi,
+    backendAdminShowcasePutApi,
+    showcaseComposable,
+    homeLogosData,
+    homeCustomerLogos,
+    aboutIntroImageCarousel,
+    adminShowcaseApi,
+    adminShowcaseRoutes,
+    adminCropperUpload,
+    adminShowcaseGalleryView,
+    adminShowcaseLogosView,
     backendNuxtConfig,
   } = ctx
 
@@ -219,6 +232,67 @@ export function checkBackendAdminContracts(ctx) {
       navigationComposable.includes('useFooterNavigation') &&
       navigationComposable.includes('default: () => primaryNavigation'),
     'Navigation APIs must stay DB-first with static fallback; admin menus routes behind requireAdmin; composable keeps useFetch default fallback.',
+  )
+
+  assert(
+    backendShowcaseAdminUtil.includes(
+      "SHOWCASE_KEYS = ['about-gallery', 'home-logos'] as const",
+    ) &&
+      backendShowcaseAdminUtil.includes('export const galleryItemSchema') &&
+      backendShowcaseAdminUtil.includes('safeUrlSchema(500)') &&
+      backendShowcaseAdminUtil.includes('export const logoItemSchema') &&
+      backendShowcaseAdminUtil.includes('export function parseShowcaseItems(') &&
+      backendShowcaseAdminUtil.includes('export async function getShowcase(') &&
+      backendShowcaseAdminUtil.includes('export async function putShowcase('),
+    'Showcase protocol (015.14) must keep the about-gallery/home-logos key whitelist, gallery/logo item zod schemas, and get/put helpers with three-state semantics.',
+  )
+
+  assert(
+    backendShowcasePublicApi.includes('getShowcase') &&
+      backendShowcasePublicApi.includes('aboutIntroGallery') &&
+      backendShowcasePublicApi.includes('customerLogos') &&
+      backendShowcasePublicApi.includes(
+        "statusCode: 400, statusMessage: 'Invalid showcase key'",
+      ) &&
+      backendShowcasePublicApi.includes("source: 'static'") &&
+      backendAdminShowcaseGetApi.includes('requireAdmin') &&
+      backendAdminShowcaseGetApi.includes('skippedTextEntries') &&
+      backendAdminShowcaseGetApi.includes(
+        "statusCode: 404, statusMessage: 'Unknown showcase key'",
+      ) &&
+      backendAdminShowcasePutApi.includes('requireAdmin') &&
+      backendAdminShowcasePutApi.includes(
+        "statusCode: 400, statusMessage: 'Invalid showcase items'",
+      ) &&
+      backendAdminShowcasePutApi.includes('statusCode: 503') &&
+      showcaseComposable.includes('useShowcaseGallery') &&
+      showcaseComposable.includes('useShowcaseLogos') &&
+      showcaseComposable.includes("key: 'showcase-about-gallery'") &&
+      showcaseComposable.includes("key: 'showcase-home-logos'") &&
+      showcaseComposable.includes('default: () => aboutIntroGallery') &&
+      showcaseComposable.includes('default: () => customerLogos') &&
+      homeLogosData.includes('export const customerLogos') &&
+      aboutIntroImageCarousel.includes('useShowcaseGallery') &&
+      homeCustomerLogos.includes('useShowcaseLogos'),
+    'Showcase APIs (015.14) must stay DB-first with static fallback (admin GET counts skippedTextEntries); composable keeps fixed keys + default fallback; both main-site components consume the composable.',
+  )
+
+  assert(
+    adminShowcaseApi.includes('getShowcaseApi') &&
+      adminShowcaseApi.includes('saveShowcaseApi') &&
+      adminShowcaseApi.includes('skippedTextEntries') &&
+      adminShowcaseRoutes.includes("path: '/showcase/gallery'") &&
+      adminShowcaseRoutes.includes("path: '/showcase/logos'") &&
+      adminCropperUpload.includes('VCropper') &&
+      adminCropperUpload.includes('getCropImage') &&
+      adminCropperUpload.includes('uploadMediaApi') &&
+      adminCropperUpload.includes('maxOutputHeight') &&
+      adminShowcaseGalleryView.includes("aspect-ratio=\"10:16\"") &&
+      adminShowcaseGalleryView.includes(':output-height="768"') &&
+      adminShowcaseGalleryView.includes(':output-width="480"') &&
+      adminShowcaseLogosView.includes(':max-output-height="192"') &&
+      adminShowcaseLogosView.includes('skippedTextEntries > 0'),
+    'vben showcase modules (015.14) must keep the /showcase routes, the VCropper-based CropperUpload (10:16 fixed gallery crop, free logo crop capped at 192px height), and gallery/logos editor views.',
   )
 
   assert(

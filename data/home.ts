@@ -47,6 +47,7 @@ import yongzhongLogo from '../assets/images/compatibility/yongzhong-office-logo.
 import zhaoxinLogo from '../assets/images/compatibility/zhaoxin-logo.svg?url'
 import zhongchuangLogo from '../assets/images/compatibility/zhongchuang-logo.svg?url'
 import zhongkeFangdeLogo from '../assets/images/compatibility/zhongke-fangde-logo.svg?url'
+import { customerLogos } from './home-logos'
 
 export interface Deliverable {
   title: string
@@ -103,6 +104,10 @@ export interface CustomerStory {
 export type { InsightItem } from './home-insights'
 export { insights } from './home-insights'
 
+// CustomerLogo 与 customerLogos 已抽到 data/home-logos.ts（015.14：server 路由回退需避开本文件的 ?url 资源导入）
+export type { CustomerLogo } from './home-logos'
+export { customerLogos }
+
 export interface HomeAboutPartner {
   name: string
   image?: string
@@ -118,18 +123,6 @@ export interface HomeAboutContent {
   clientsLabelAlt: string
   partnerRows: HomeAboutPartner[][]
 }
-
-export const customerLogos = [
-  { name: '武汉大数据', image: '/images/logos/wh-bigdata.png' },
-  { name: '一汽丰田', image: '/images/logos/faw-toyota.png' },
-  { name: '同仁堂健康', image: '/images/logos/tongrentang.png' },
-  { name: '广药白云山', text: 'GYBYS' },
-  { name: '岚图汽车', text: 'VOYAH' },
-  { name: '赛睿', text: 'SteelSeries' },
-  { name: '伟创力', text: 'Flex' },
-  { name: '北京航空航天大学', image: '/images/logos/beihang.png' },
-  { name: '中国地质大学', text: 'CUG' },
-]
 
 export const homeAbout: HomeAboutContent = {
   eyebrow: '关于我们',

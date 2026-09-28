@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import CarouselControls from '~/components/common/carousel/CarouselControls.vue'
+import { useShowcaseGallery } from '~/composables/use-showcase'
 import { aboutIntroGallery } from '~/data/about'
 
+// 015.14：图集素材走 /api/showcase（DB 优先），fetch 失败回退静态 import
+const { data: gallery } = useShowcaseGallery()
+const galleryItems = computed(() => gallery.value ?? aboutIntroGallery)
+
 const trackRef = ref<HTMLElement | null>(null)
-const photoCount = aboutIntroGallery.length
+const photoCount = computed(() => galleryItems.value.length)
 const canGoPrevious = ref(false)
-const canGoNext = ref(photoCount > 1)
+const canGoNext = ref(aboutIntroGallery.length > 1)
 
 function updateControls() {
   const track = trackRef.value
@@ -78,8 +83,8 @@ onBeforeUnmount(() => {
       @scroll="updateControls"
     >
       <figure
-        v-for="(item, index) in aboutIntroGallery"
-        :key="item.alt"
+        v-for="(item, index) in galleryItems"
+        :key="`${item.alt}-${index}`"
         role="group"
         aria-roledescription="slide"
         :aria-label="`${index + 1} / ${photoCount}`"

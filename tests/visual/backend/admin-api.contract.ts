@@ -162,6 +162,60 @@ export function registerBackendAdminVisualContracts() {
     expect(composable).toContain('default: () => primaryNavigation')
   })
 
+  it('guards the showcase (015.14) APIs with requireAdmin, per-key zod schemas, and static fallbacks', () => {
+    const showcaseUtil = readComponent('server/utils/showcase-admin.ts')
+    const publicApi = readComponent('server/api/showcase/index.get.ts')
+    const getApi = readComponent('server/api/admin/showcase/[key].get.ts')
+    const putApi = readComponent('server/api/admin/showcase/[key].put.ts')
+    const composable = readComponent('composables/use-showcase.ts')
+    const logosData = readComponent('data/home-logos.ts')
+    const carousel = readComponent('components/about/AboutIntroImageCarousel.vue')
+    const customerLogos = readComponent('components/home/HomeCustomerLogos.vue')
+    const adminApi = readComponent('admin/apps/web-antd/src/api/showcase.ts')
+    const adminRoutes = readComponent('admin/apps/web-antd/src/router/routes/modules/showcase.ts')
+    const cropperUpload = readComponent('admin/apps/web-antd/src/views/showcase/components/CropperUpload.vue')
+
+    expect(showcaseUtil).toContain("SHOWCASE_KEYS = ['about-gallery', 'home-logos'] as const")
+    expect(showcaseUtil).toContain('export const galleryItemSchema')
+    expect(showcaseUtil).toContain('export const logoItemSchema')
+    expect(showcaseUtil).toContain('safeUrlSchema(500)')
+    expect(showcaseUtil).toContain('export function parseShowcaseItems(')
+    expect(showcaseUtil).toContain('export async function getShowcase(')
+    expect(showcaseUtil).toContain('export async function putShowcase(')
+
+    expect(publicApi).toContain('getShowcase')
+    expect(publicApi).toContain('aboutIntroGallery')
+    expect(publicApi).toContain('customerLogos')
+    expect(publicApi).toContain("statusCode: 400, statusMessage: 'Invalid showcase key'")
+    expect(getApi).toContain('requireAdmin')
+    expect(getApi).toContain("source: 'static'")
+    // Logo 静态回退的纯文本条目被丢弃时必须显式计数（保存不致静默丢失）
+    expect(getApi).toContain('skippedTextEntries')
+    expect(getApi).toContain("statusCode: 404, statusMessage: 'Unknown showcase key'")
+    expect(putApi).toContain('requireAdmin')
+    expect(putApi).toContain("statusCode: 400, statusMessage: 'Invalid showcase items'")
+    expect(putApi).toContain('statusCode: 503')
+
+    // 静态回退数据必须可被 server 路由 import（纯字符串模块，无 ?url 资源导入）
+    expect(logosData).toContain('export const customerLogos')
+    expect(logosData).not.toContain('?url')
+
+    expect(composable).toContain('useShowcaseGallery')
+    expect(composable).toContain('useShowcaseLogos')
+    expect(composable).toContain("key: 'showcase-about-gallery'")
+    expect(composable).toContain("key: 'showcase-home-logos'")
+    expect(carousel).toContain('useShowcaseGallery')
+    expect(customerLogos).toContain('useShowcaseLogos')
+
+    expect(adminApi).toContain('getShowcaseApi')
+    expect(adminApi).toContain('saveShowcaseApi')
+    expect(adminRoutes).toContain("path: '/showcase/gallery'")
+    expect(adminRoutes).toContain("path: '/showcase/logos'")
+    expect(cropperUpload).toContain('VCropper')
+    expect(cropperUpload).toContain('getCropImage')
+    expect(cropperUpload).toContain('uploadMediaApi')
+  })
+
   it('guards the CMS pages APIs with requireAdmin, reserved-path blacklist, and published-only public reads', () => {
     const pagesUtil = readComponent('server/utils/pages-admin.ts')
     const sectionsUtil = readComponent('server/utils/page-sections.ts')

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useShowcaseLogos } from '~/composables/use-showcase'
 import { customerLogos } from '~/data/home'
 
-const logoRows = computed(() => [...customerLogos, ...customerLogos])
+// 015.14：Logo 素材走 /api/showcase（DB 优先），fetch 失败回退静态 import（含纯文本条目）
+const { data: logos } = useShowcaseLogos()
+const logoList = computed(() => logos.value ?? customerLogos)
+const logoRows = computed(() => [...logoList.value, ...logoList.value])
 </script>
 
 <template>

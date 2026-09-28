@@ -147,3 +147,12 @@ export const sectionPresets = pgTable('section_presets', {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
+
+// 展示位素材（015.14）：key 主键（about-gallery 关于页图集 / home-logos 首页 Logo 墙），items 存整列素材（写入侧经 zod 校验，见 server/utils/showcase-admin.ts）
+export const showcaseLists = pgTable('showcase_lists', {
+  key: varchar('key', { length: 50 }).primaryKey(),
+  label: varchar('label', { length: 100 }).notNull().default(''),
+  items: jsonb('items').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
