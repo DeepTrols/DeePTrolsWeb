@@ -12,7 +12,9 @@ export interface NewsPayload {
 
 /**
  * 新闻仓储（Phase 1 试点）：配置了 NUXT_DATABASE_URL 时读 PostgreSQL，
- * 未配置 / 查询失败 / 表为空时回退 data/*.ts 静态数据（种子数据源）。
+ * 未配置 / 查询失败时回退 data/*.ts 静态数据（种子数据源）。
+ * 查询成功时 DB 结果是唯一事实源：列表为空返回空数组、详情行级未命中返回 null
+ * （消费端点映射 404），保证后台下架（转草稿）/删除即时生效，静态种子不复活。
  * 前端页面只依赖本仓储的返回结构，无需感知数据来源。
  */
 export async function listNewsItems(category?: NewsCategory): Promise<NewsItem[]> {
@@ -40,9 +42,6 @@ export async function listNewsItems(category?: NewsCategory): Promise<NewsItem[]
       .where(and(...conditions))
       .orderBy(desc(news.publishedAt), desc(news.id))
 
-    if (!rows.length) {
-      return fallback
-    }
     return rows
   }
   catch {
@@ -74,7 +73,8 @@ export async function getNewsPayloadById(id: number): Promise<NewsPayload | null
 
     const row = rows[0]
     if (!row) {
-      return getStaticPayload(id)
+      // 查询成功但无匹配行（已下架/删除/不存在）：DB 是唯一事实源，返回 null 由端点映射 404
+      return null
     }
 
     const { blocks, ...item } = row

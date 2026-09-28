@@ -5,7 +5,8 @@ import { reports } from '../db/schema'
 
 /**
  * 报告仓储（Phase 1 复制）：配置了 NUXT_DATABASE_URL 时读 PostgreSQL，
- * 未配置 / 查询失败 / 表为空时回退 data/reports.ts 静态数据（种子数据源）。
+ * 未配置 / 查询失败时回退 data/reports.ts 静态数据（种子数据源）。
+ * 查询成功时 DB 结果是唯一事实源：表为空返回空数组（不回退静态，保证下架/删除即时生效）。
  * 报告无详情页，仅列表实体。
  */
 export async function listReportResources(): Promise<ReportResource[]> {
@@ -29,9 +30,6 @@ export async function listReportResources(): Promise<ReportResource[]> {
       .where(eq(reports.status, 'published'))
       .orderBy(asc(reports.sortOrder))
 
-    if (!rows.length) {
-      return reportResources
-    }
     return rows.map(row => ({ ...row, solutionKey: row.solutionKey ?? undefined }))
   }
   catch {

@@ -48,7 +48,7 @@ export function checkBackendNewsContracts(ctx) {
       backendNewsRepo.includes('parseArticleBlocks(blocks)') &&
       backendNewsRepo.includes('getStaticPayload') &&
       backendNewsRepo.includes('useNewsDatabase'),
-    'News repo must read published rows from PG when configured and always fall back to data/*.ts (empty result or failure).',
+    'News repo must read published rows from PG when configured, treat DB as the single source of truth on success (empty list stays empty, row miss returns null for 404), and fall back to data/*.ts only when unconfigured or on query failure.',
   )
 
   assert(

@@ -36,7 +36,7 @@ export function checkBackendContentContracts(ctx) {
       backendCasesRepo.includes('export function parseCaseRelatedProducts(input: unknown): CaseRelatedProduct[]') &&
       backendCasesRepo.includes('getStaticCasePayload') &&
       backendCasesRepo.includes('useNewsDatabase'),
-    'Cases repo must read published rows from PG when configured, validate blocks + relatedProducts via zod, and always fall back to data/*.ts.',
+    'Cases repo must read published rows from PG when configured, validate blocks + relatedProducts via zod, treat DB as the single source of truth on success (row miss returns null for 404), and fall back to data/*.ts only when unconfigured or on query failure.',
   )
 
   assert(
@@ -44,7 +44,7 @@ export function checkBackendContentContracts(ctx) {
       backendReportsRepo.includes("eq(reports.status, 'published')") &&
       backendReportsRepo.includes('asc(reports.sortOrder)') &&
       backendReportsRepo.includes('useNewsDatabase'),
-    'Reports repo must read published rows from PG when configured and always fall back to data/reports.ts.',
+    'Reports repo must read published rows from PG when configured (empty table returns an empty array) and fall back to data/reports.ts only when unconfigured or on query failure.',
   )
 
   assert(

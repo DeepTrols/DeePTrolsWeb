@@ -24,7 +24,9 @@ export function parseCaseRelatedProducts(input: unknown): CaseRelatedProduct[] {
 
 /**
  * 案例仓储（Phase 1 复制）：配置了 NUXT_DATABASE_URL 时读 PostgreSQL，
- * 未配置 / 查询失败 / 表为空时回退 data/*.ts 静态数据（种子数据源）。
+ * 未配置 / 查询失败时回退 data/*.ts 静态数据（种子数据源）。
+ * 查询成功时 DB 结果是唯一事实源：列表为空返回空数组、详情行级未命中返回 null
+ * （消费端点映射 404），保证后台下架（转草稿）/删除即时生效，静态种子不复活。
  */
 export async function listCaseResources(): Promise<CaseResource[]> {
   const db = useNewsDatabase()
@@ -45,9 +47,6 @@ export async function listCaseResources(): Promise<CaseResource[]> {
       .where(eq(cases.status, 'published'))
       .orderBy(asc(cases.sortOrder))
 
-    if (!rows.length) {
-      return caseResources
-    }
     return rows.map(row => ({
       solutionKey: row.solutionKey ?? undefined,
       title: row.title,
@@ -85,7 +84,8 @@ export async function getCasePayloadBySlug(slug: string): Promise<CasePayload | 
 
     const row = rows[0]
     if (!row) {
-      return getStaticCasePayload(slug, resources)
+      // 查询成功但无匹配行（已下架/删除/不存在）：DB 是唯一事实源，返回 null 由端点映射 404
+      return null
     }
 
     return {
