@@ -7,7 +7,7 @@ import TanyaoHeroVisual from '~/components/product/tanyao/TanyaoHeroVisual.vue'
 <template>
   <PageHero
     class="min-h-[655px]"
-    background-image-src="/images/products/product-hero-bg.png"
+    background-image-src="/images/products/product-hero-bg.webp"
     badge="探曜·AI物联感知平台"
     :badge-icon="RadioTower"
     title-id="tanyao-hero-title"

@@ -116,10 +116,10 @@ export function checkServiceReportContracts(ctx) {
   assert(footerData.includes("href: '/resources/reports'"), 'Footer service link must link to /resources/reports.')
 
   for (const image of [
-    'public/images/home/solutions/data-center-ai.CDu93Miw.png',
-    'public/images/home/solutions/data.DHKY-NE1.png',
+    'public/images/home/solutions/data-center-ai.CDu93Miw.webp',
+    'public/images/home/solutions/data.DHKY-NE1.webp',
     'public/images/solutions/data-engineering.jpg',
-    'public/images/home/solutions/industrial.K00G2HaS.png',
+    'public/images/home/solutions/industrial.K00G2HaS.webp',
     'public/images/solutions/data-center.jpg',
     'public/images/solutions/smart-energy.jpg',
   ]) {

@@ -2,7 +2,7 @@ export function checkDeviceAgentBaseContracts(ctx) {
   const { assert, featureCard, deviceAgentData, deviceAgentPage, deviceAgentHero, deviceAgentArchitectureSection, deviceAgentValueSection, deviceAgentRuntimeSection } = ctx
 assert(
   deviceAgentHero.includes('PageHero') &&
-    deviceAgentHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
+    deviceAgentHero.includes('background-image-src="/images/products/product-hero-bg.webp"') &&
     deviceAgentHero.includes('align="center"') &&
     deviceAgentHero.includes('badge="Device Agent"') &&
     deviceAgentHero.includes('title-line="让Agent基于实时数据决策与行动"') &&

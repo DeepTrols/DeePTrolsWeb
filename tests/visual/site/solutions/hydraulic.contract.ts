@@ -105,12 +105,12 @@ export function registerHydraulicVisualContracts() {
     expect(cardText).toContain('card-text__title')
     expect(cardText).toContain('card-text__description')
 
-    expect(data).toContain("image: '/images/solutions/hydraulic-hero.png'")
+    expect(data).toContain("image: '/images/solutions/hydraulic-hero.webp'")
     expect(data).toContain("title: '智慧水利解决方案'")
     expect(data).toContain("title: '水利知识库管理'")
     expect(data).toContain("title: '某省级水利知识平台'")
     expect(data).toContain("value: '185类'")
-    expect(existsSync(join(root, 'public/images/solutions/hydraulic-hero.png'))).toBe(true)
+    expect(existsSync(join(root, 'public/images/solutions/hydraulic-hero.webp'))).toBe(true)
     expect(existsSync(join(root, 'public/images/solutions/hydraulic/image-placeholder.svg'))).toBe(true)
   })
 }

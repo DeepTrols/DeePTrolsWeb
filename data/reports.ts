@@ -47,7 +47,7 @@ export const reportResources: ReportResource[] = [
     category: '企业 AI',
     title: '企业级 AI 应用落地白皮书',
     summary: '从场景规划、数据准备、知识构建到智能体交付，系统梳理企业 AI 应用建设路径。',
-    image: '/images/home/solutions/data-center-ai.CDu93Miw.png',
+    image: '/images/home/solutions/data-center-ai.CDu93Miw.webp',
     href: '/resources/reports/enterprise-ai-application',
   },
   {
@@ -55,7 +55,7 @@ export const reportResources: ReportResource[] = [
     category: '数据工程',
     title: 'AI 时代的数据治理与数据底座报告',
     summary: '围绕数据标准、质量、资产与服务化能力，解析高质量数据如何支撑智能化创新。',
-    image: '/images/home/solutions/data.DHKY-NE1.png',
+    image: '/images/home/solutions/data.DHKY-NE1.webp',
     href: '/resources/reports/ai-data-governance',
   },
   {
@@ -71,7 +71,7 @@ export const reportResources: ReportResource[] = [
     category: '工业智能',
     title: '工业现场智能体应用场景解析视频',
     summary: '以设备数据、事件处置、工单协同与运行优化为主线，讲解智能体在工业现场的落地方式。',
-    image: '/images/home/solutions/industrial.K00G2HaS.png',
+    image: '/images/home/solutions/industrial.K00G2HaS.webp',
     href: '/resources/reports/industrial-agent',
   },
   {

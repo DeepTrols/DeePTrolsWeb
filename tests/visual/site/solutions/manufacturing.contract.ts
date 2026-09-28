@@ -102,11 +102,11 @@ export function registerManufacturingVisualContracts() {
     expect(cases).toContain('查看案例详情')
     expect(cases).not.toContain('<style')
 
-    expect(data).toContain("image: '/images/solutions/manufacturing-hero.png'")
+    expect(data).toContain("image: '/images/solutions/manufacturing-hero.webp'")
     expect(data).toContain("title: '智能制造解决方案'")
     expect(data).toContain("title: 'APS智能生产排程'")
     expect(data).toContain("title: '某大型装备制造企业'")
     expect(data).toContain("value: '2,000+'")
-    expect(existsSync(join(root, 'public/images/solutions/manufacturing-hero.png'))).toBe(true)
+    expect(existsSync(join(root, 'public/images/solutions/manufacturing-hero.webp'))).toBe(true)
   })
 }

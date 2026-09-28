@@ -7,7 +7,7 @@ describe('device agent page contract', () => {
     const hero = readComponent('components/product/device-agent/DeviceAgentHero.vue')
     const pageHero = readComponent('components/common/PageHero.vue')
 
-    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.webp"')
     expect(hero).toContain('badge="Device Agent"')
     expect(hero).toContain('Cpu')
     expect(hero).toContain('title-id="device-agent-hero-title"')

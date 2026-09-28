@@ -10,7 +10,7 @@ export const energySavingHero = {
   title: '智慧储能解决方案',
   description:
     '融合探曜·AI 物联感知与数曜·数据治理能力，实现储能设备统一接入、实时采集、边缘协同与多源异构数据治理。构建贯通设备、数据与业务的储能数字化底座，支撑运行监测、能效分析、故障预警、健康评估与充放电策略智能优化。',
-  image: '/images/solutions/energy-saving-hero.png',
+  image: '/images/solutions/energy-saving-hero.webp',
   imageAlt: '智慧储能解决方案',
 }
 

@@ -7,7 +7,7 @@ import DgpHeroVisual from '~/components/product/dgp/DgpHeroVisual.vue'
 <template>
   <PageHero
     class="min-h-[655px]"
-    background-image-src="/images/products/product-hero-bg.png"
+    background-image-src="/images/products/product-hero-bg.webp"
     badge="数曜·数据治理平台"
     :badge-icon="Database"
     title-id="dgp-hero-title"

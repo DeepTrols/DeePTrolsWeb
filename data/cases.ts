@@ -31,7 +31,7 @@ export const caseResources: CaseResource[] = [
     title: '汽车零部件龙头企业设备智能体实践',
     summary:
       '基于探窑物联网关与 DeviceAgent 设备智能体，打通设备数据采集、异常事件处置与工单协同，助力产线非计划停机时间显著下降。',
-    image: '/images/home/solutions/industrial.K00G2HaS.png',
+    image: '/images/home/solutions/industrial.K00G2HaS.webp',
     href: '/cases/automotive-parts-device-agent',
   },
   {
@@ -39,7 +39,7 @@ export const caseResources: CaseResource[] = [
     title: '能源集团级数据治理平台建设实践',
     summary:
       '以数遥 DGP 与 DMS 为核心构建集团数据标准、质量与资产目录体系，实现数据要素统一管理与服务化输出，支撑下游 AI 应用建设。',
-    image: '/images/home/solutions/data.DHKY-NE1.png',
+    image: '/images/home/solutions/data.DHKY-NE1.webp',
     href: '/cases/energy-group-data-governance',
   },
   {
@@ -55,7 +55,7 @@ export const caseResources: CaseResource[] = [
     title: '流域管理机构智慧水利监测调度实践',
     summary:
       '融合物联感知与 AI 分析能力，构建水情监测、汛期预警与水资源调度一体化平台，提升流域管理的精细化与智能化水平。',
-    image: '/images/home/solutions/smart-Water.DHKY-NE1.png',
+    image: '/images/home/solutions/smart-Water.DHKY-NE1.webp',
     href: '/cases/basin-smart-water',
   },
   {
@@ -63,7 +63,7 @@ export const caseResources: CaseResource[] = [
     title: '高等院校 AI 教育智能体应用实践',
     summary:
       '面向教学管理与课堂答疑场景部署教育智能体，沉淀课程知识资产，为师生提供全天候智能问答与个性化学习支持。',
-    image: '/images/solutions/education-hero.png',
+    image: '/images/solutions/education-hero.webp',
     href: '/cases/university-ai-education',
   },
   {
@@ -71,7 +71,7 @@ export const caseResources: CaseResource[] = [
     title: '零售企业 AI 应用前沿部署交付实践',
     summary:
       '以前沿部署工程师（FDE）驻场方式，从业务原型验证到生产级交付持续迭代，帮助客户在数周内完成 AI 应用规模化落地。',
-    image: '/images/home/solutions/data-center-ai.CDu93Miw.png',
+    image: '/images/home/solutions/data-center-ai.CDu93Miw.webp',
     href: '/cases/retail-fde-delivery',
   },
   {
@@ -79,7 +79,7 @@ export const caseResources: CaseResource[] = [
     title: '数据中心算电协同运营实践',
     summary:
       '围绕算力调度与能耗优化构建算电协同运营体系，结合 Token Hub 模型调用治理，实现算力资源利用率与运营成本的双向改善。',
-    image: '/images/home/solutions/smart-energy.DHKY-NE1.png',
+    image: '/images/home/solutions/smart-energy.DHKY-NE1.webp',
     href: '/cases/datacenter-compute-power',
   },
 ]

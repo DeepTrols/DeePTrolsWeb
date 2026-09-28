@@ -26,7 +26,7 @@ export function registerHomeHeroProductVisualContracts() {
     expect(page).not.toContain('<HomeCases />')
     expect(hero).toContain('class="home-shell home-hero__content pt-40 pb-32 lg:pb-44"')
     expect(hero).toContain('aspect-ratio: 1920 / 655')
-    expect(hero).toContain('url("/images/home/deepctrls-hero-ai.png")')
+    expect(hero).toContain('url("/images/home/deepctrls-hero-ai.webp")')
     expect(hero).toContain('linear-gradient(90deg, rgba(0, 0, 0, 0.55)')
     expect(hero).toContain('width: var(--dt-container)')
     expect(hero).toContain('top: clamp(78px, 10.729vw, 206px)')

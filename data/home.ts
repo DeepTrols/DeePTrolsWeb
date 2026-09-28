@@ -187,7 +187,7 @@ export const deliverables: Deliverable[] = [
     description:
       '通过连接企业数据、知识、模型与业务系统，围绕企业真实业务场景，提供从需求梳理、场景规划、智能体设计到应用开发、系统集成和持续运营的全流程服务。',
     icon: BrainCircuit,
-    image: '/images/home/solutions/industrial.K00G2HaS.png',
+    image: '/images/home/solutions/industrial.K00G2HaS.webp',
     href: '/services/enterprise-ai-delivery',
   },
   {
@@ -195,7 +195,7 @@ export const deliverables: Deliverable[] = [
     description:
       '面向企业 AI 应用规模化建设需求，提供统一技术架构、平台研发、系统集成、数据工程、知识工程、模型服务和智能体工程等平台工程服务。',
     icon: Waypoints,
-    image: '/images/home/solutions/data.DHKY-NE1.png',
+    image: '/images/home/solutions/data.DHKY-NE1.webp',
     href: '/services/platform-engineering',
   },
   {
@@ -203,7 +203,7 @@ export const deliverables: Deliverable[] = [
     description:
       '围绕企业 AI 应用所需的算力、模型、数据和开发资源，提供 AI 服务器、算力中心规划建设、异构算力调度、模型接入管理、Token 管理及资源运营服务。',
     icon: Cpu,
-    image: '/images/home/solutions/data-center-ai.CDu93Miw.png',
+    image: '/images/home/solutions/data-center-ai.CDu93Miw.webp',
     href: '/services/infrastructure',
   },
 ]
@@ -281,7 +281,7 @@ export const solutions: SolutionItem[] = [
     title: '智能制造智能中枢',
     englishTitle: 'Manufacturing Intelligence Hub',
     description: '融合 AI、数据与工业物联，打造覆盖制造全流程的智能化能力体系。',
-    image: '/images/home/solutions/industrial.K00G2HaS.png',
+    image: '/images/home/solutions/industrial.K00G2HaS.webp',
     href: '/solutions/manufacturing',
   },
   {
@@ -290,7 +290,7 @@ export const solutions: SolutionItem[] = [
     title: '生态环境智能感知',
     englishTitle: 'Environmental Intelligence Sensing',
     description: '基于多源数据融合与 AI 推理，实现环境风险的智能识别、评估与预警。',
-    image: '/images/home/solutions/smart-env.CWc2pooP.png',
+    image: '/images/home/solutions/smart-env.CWc2pooP.webp',
     href: '/solutions/environment',
   },
   {
@@ -299,7 +299,7 @@ export const solutions: SolutionItem[] = [
     title: '电网运维、储能管理和智能计量',
     englishTitle: 'Energy Intelligence',
     description: '构建覆盖能源监测、分析、调度与优化的一体化智能能源体系。',
-    image: '/images/home/solutions/smart-energy.DHKY-NE1.png',
+    image: '/images/home/solutions/smart-energy.DHKY-NE1.webp',
     href: '/solutions/energy',
   },
   {
@@ -308,7 +308,7 @@ export const solutions: SolutionItem[] = [
     title: '空间推理智能体',
     englishTitle: 'Spatial Reasoning Agent',
     description: '让 AI 理解空间数据，并驱动 GIS 智能分析与交互决策。',
-    image: '/images/home/solutions/smart-Water.DHKY-NE1.png',
+    image: '/images/home/solutions/smart-Water.DHKY-NE1.webp',
     href: '/solutions/water',
   },
   {
@@ -317,7 +317,7 @@ export const solutions: SolutionItem[] = [
     title: 'AI算力基础设施',
     englishTitle: 'AI Computing Infrastructure',
     description: '提供海外 AI 服务器供应、算力中心建设及交付服务。',
-    image: '/images/home/solutions/data-center-ai.CDu93Miw.png',
+    image: '/images/home/solutions/data-center-ai.CDu93Miw.webp',
     href: '/solutions/compute',
   },
   {
@@ -326,7 +326,7 @@ export const solutions: SolutionItem[] = [
     title: '数据工程',
     englishTitle: 'Data Engineering',
     description: '覆盖数据采集、治理、开发与管理，构建统一数据底座。',
-    image: '/images/home/solutions/data.DHKY-NE1.png',
+    image: '/images/home/solutions/data.DHKY-NE1.webp',
     href: '/solutions/data-governance',
   },
 ]
@@ -381,7 +381,7 @@ export const customerStories: CustomerStory[] = [
     title: '构建国家级数据基础设施，释放公共数据价值',
     description:
       '围绕公共数据交易流通平台建设，提供数据汇聚、数据治理、可信流通及共享交换能力，支撑武汉国家级数据基础设施试点建设。',
-    image: '/images/home/solutions/data.DHKY-NE1.png',
+    image: '/images/home/solutions/data.DHKY-NE1.webp',
     href: '/cases/wuhan-data',
     stats: customerStoryStats,
   },
@@ -391,7 +391,7 @@ export const customerStories: CustomerStory[] = [
     title: '打造制造数据闭环，提升智能运营效率',
     description:
       '连接生产、质量、设备与供应链数据，构建可持续演进的数据与知识底座，让智能分析和运营决策进入真实业务流程。',
-    image: '/images/home/solutions/industrial.K00G2HaS.png',
+    image: '/images/home/solutions/industrial.K00G2HaS.webp',
     href: '/cases/manufacturing-intelligence',
     stats: [
       { value: '跨系统', label: '制造数据联通', icon: Network },
@@ -405,7 +405,7 @@ export const customerStories: CustomerStory[] = [
     title: '沉淀行业知识资产，支撑健康业务智能化',
     description:
       '围绕知识采集、组织、检索与应用，帮助业务团队沉淀行业经验和产品知识，提升服务响应、内容生产与经营分析效率。',
-    image: '/images/home/solutions/smart-env.CWc2pooP.png',
+    image: '/images/home/solutions/smart-env.CWc2pooP.webp',
     href: '/cases/knowledge-intelligence',
     stats: [
       { value: '知识库', label: '业务经验沉淀', icon: FileText },

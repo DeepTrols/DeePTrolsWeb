@@ -39,7 +39,7 @@ export function registerDdpVisualContracts() {
     expect(page).not.toContain('<style')
 
     expect(hero).toContain('PageHero')
-    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.webp"')
     expect(hero).toContain('import { Network }')
     expect(hero).toContain('badge="数曜·数据开发平台"')
     expect(hero).toContain('title-line="标准、智能、高效"')

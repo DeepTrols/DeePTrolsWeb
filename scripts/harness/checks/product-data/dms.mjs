@@ -19,7 +19,7 @@ assert(
 )
 assert(
   dmsHero.includes('PageHero') &&
-    dmsHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
+    dmsHero.includes('background-image-src="/images/products/product-hero-bg.webp"') &&
     dmsHero.includes('import { HardDrive }') &&
     dmsHero.includes('badge="数曜·数据要素监管平台"') &&
     dmsHero.includes('title-line="让数据流通安全、可信"') &&

@@ -37,7 +37,7 @@ export const manufacturingHero = {
   title: '智能制造解决方案',
   description:
     '融合数曜数据智能、博曜知识中枢、探曜物联感知与智曜 AI 引擎，贯通制造企业设备、数据、知识与业务流程，构建从实时感知、数据治理、智能分析到自主决策与执行的制造智能体系，推动生产优化、质量提升、设备运维与能源管理持续智能化。',
-  image: '/images/solutions/manufacturing-hero.png',
+  image: '/images/solutions/manufacturing-hero.webp',
   imageAlt: '智能制造解决方案',
 }
 

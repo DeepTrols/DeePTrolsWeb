@@ -156,7 +156,7 @@ export function registerEducationVisualContracts() {
     expect(cardText).toContain('v-if="subtitle"')
     expect(cardText).not.toContain('.card-text__subtitle')
 
-    expect(data).toContain("image: '/images/solutions/education-hero.png'")
+    expect(data).toContain("image: '/images/solutions/education-hero.webp'")
     expect(data).toContain("title: '智慧教育解决方案'")
     expect(data).toContain("title: '教育大模型网关'")
     expect(data).toContain("badge: '01'")
@@ -167,7 +167,7 @@ export function registerEducationVisualContracts() {
     expect(data).toContain("title: 'AI 教师助手'")
     expect(data).toContain("title: '某高校教育智能体平台'")
     expect(data).toContain("value: '10,000+'")
-    expect(existsSync(join(root, 'public/images/solutions/education-hero.png'))).toBe(true)
+    expect(existsSync(join(root, 'public/images/solutions/education-hero.webp'))).toBe(true)
     expect(existsSync(join(root, 'public/images/solutions/education/image-placeholder.svg'))).toBe(true)
   })
 }

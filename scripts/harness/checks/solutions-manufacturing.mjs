@@ -94,7 +94,7 @@ export function checkSolutionsManufacturingContracts(ctx) {
     'Manufacturing customer cases must reproduce the EMQX case card layout with Tailwind only.',
   )
   assert(
-    manufacturingData.includes("image: '/images/solutions/manufacturing-hero.png'") &&
+    manufacturingData.includes("image: '/images/solutions/manufacturing-hero.webp'") &&
       manufacturingData.includes("title: '智能制造解决方案'") &&
       manufacturingData.includes("title: 'APS智能生产排程'") &&
       manufacturingData.includes("title: '某大型装备制造企业'") &&
@@ -107,7 +107,7 @@ export function checkSolutionsManufacturingContracts(ctx) {
     'Manufacturing page copy must stay centralized in data/solutions/manufacturing.ts.',
   )
   assert(
-    existsSync(join(root, 'public/images/solutions/manufacturing-hero.png')),
+    existsSync(join(root, 'public/images/solutions/manufacturing-hero.webp')),
     'Manufacturing hero banner must live under public/images/solutions.',
   )
 }

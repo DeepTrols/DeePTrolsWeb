@@ -23,7 +23,7 @@
   color: #ffffff;
   background-image:
     linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0, rgba(0, 0, 0, 0.26) 38%, rgba(0, 0, 0, 0) 62%),
-    url("/images/home/deepctrls-hero-ai.png");
+    url("/images/home/deepctrls-hero-ai.webp");
   background-position: 50% 50%;
   background-size: cover;
 }

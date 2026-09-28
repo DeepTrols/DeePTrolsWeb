@@ -39,7 +39,7 @@ export function registerDgpVisualContracts() {
     expect(page).not.toContain('top-padding')
 
     expect(hero).toContain('PageHero')
-    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.webp"')
     expect(hero).toContain('import { Database }')
     expect(hero).toContain('badge="数曜·数据治理平台"')
     expect(hero).toContain('title-line="可用、可管、可信"')

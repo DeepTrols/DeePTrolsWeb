@@ -31,7 +31,7 @@ export const educationHero = {
   title: '智慧教育解决方案',
   description:
     '基于智曜·智能引擎，统一接入大模型、知识、工具与校园业务系统，构建面向教育场景的 AI 智能体与智能工作流，为教学、学习、教务和校园服务提供可持续扩展的智能能力，推动教育从数字化应用走向 AI 原生。',
-  image: '/images/solutions/education-hero.png',
+  image: '/images/solutions/education-hero.webp',
   imageAlt: '智慧教育解决方案',
 }
 

@@ -55,6 +55,40 @@ describe('lead input zod protocol', () => {
   })
 })
 
+describe('footer subscribe lead path（审计#18：仅邮箱订阅）', () => {
+  it('accepts an email-only subscription and leaves name/message undefined', () => {
+    const parsed = leadInputSchema.parse({
+      email: 'reader@example.com',
+      source: '/footer-subscribe',
+    })
+    expect(parsed.email).toBe('reader@example.com')
+    expect(parsed.source).toBe('/footer-subscribe')
+    expect(parsed.phone).toBe('')
+    expect(parsed.company).toBe('')
+    expect(parsed.name).toBeUndefined()
+    expect(parsed.message).toBeUndefined()
+  })
+
+  it('rejects a subscription with no email and no phone (API maps to 400)', () => {
+    expect(leadInputSchema.safeParse({ source: '/footer-subscribe' }).success).toBe(false)
+    expect(leadInputSchema.safeParse({ email: '', source: '/footer-subscribe' }).success).toBe(false)
+  })
+
+  it('still rejects honeypot-filled subscriptions', () => {
+    const result = leadInputSchema.safeParse({
+      email: 'reader@example.com',
+      source: '/footer-subscribe',
+      website: 'https://spam.example',
+    })
+    expect(result.success).toBe(false)
+  })
+
+  it('rejects an invalid email or a non-path source on the subscription path', () => {
+    expect(leadInputSchema.safeParse({ email: 'not-an-email', source: '/footer-subscribe' }).success).toBe(false)
+    expect(leadInputSchema.safeParse({ email: 'reader@example.com', source: 'footer-subscribe' }).success).toBe(false)
+  })
+})
+
 describe('sliding window rate limit', () => {
   it('allows up to 5 requests per 10-minute window then rejects', () => {
     const key = 'test:ip-a'
@@ -131,5 +165,49 @@ describe('insertLead 无数据库回退（审计中危#9：PII 脱敏 + 生产�
   it('生产形态（配置了 admin 密码）无 DB：同样抛 503', async () => {
     process.env.NUXT_ADMIN_PASSWORD = 'admin-secret'
     await expect(insertLead(parsed)).rejects.toMatchObject({ statusCode: 503 })
+  })
+
+  it('仅邮箱订阅（无 name/message）本地开发无 DB：返回 true 可入库，且日志不含邮箱 PII', async () => {
+    const subscription = leadInputSchema.parse({ email: 'reader@example.com', source: '/footer-subscribe' })
+    await expect(insertLead(subscription)).resolves.toBe(true)
+    expect(loggedText()).not.toContain('reader@example.com')
+  })
+})
+
+describe('insertLead DB 写入异常（审计中危#14：logServerError 结构化日志，不静默吞错）', () => {
+  const parsed = leadInputSchema.parse({
+    name: '张三',
+    phone: '13812345678',
+    email: 'zhangsan@example.com',
+    message: '希望了解设备智能体在产线的落地方式。',
+    source: '/footer-subscribe',
+  })
+
+  let errorSpy: ReturnType<typeof vi.spyOn>
+
+  beforeEach(() => {
+    // 桩化一个「insert().values() 必然 reject」的 db，命中 catch 分支
+    dbState.current = {
+      insert: () => ({ values: () => Promise.reject(new Error('connection lost')) }),
+    }
+    errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    errorSpy.mockRestore()
+    dbState.current = null
+  })
+
+  it('插入异常：返回 false 交给 API 层 500，经 console.error 记录 scope，且不含 PII', async () => {
+    await expect(insertLead(parsed)).resolves.toBe(false)
+    const logged = errorSpy.mock.calls
+      .map(args => args.map(arg => (arg instanceof Error ? arg.message : JSON.stringify(arg))).join(' '))
+      .join('\n')
+    expect(logged).toContain('leads.insertLead')
+    expect(logged).toContain('/footer-subscribe')
+    expect(logged).not.toContain('张三')
+    expect(logged).not.toContain('13812345678')
+    expect(logged).not.toContain('zhangsan@example.com')
+    expect(logged).not.toContain('落地方式')
   })
 })

@@ -43,7 +43,7 @@ export function registerBoyaoVisualContracts() {
     const hero = readComponent('components/product/boyao/BoyaoHero.vue')
     const heroVisual = readComponent('components/product/boyao/BoyaoHeroVisual.vue')
 
-    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.webp"')
     expect(hero).toContain('class="min-h-[655px]"')
     expect(iconBox).toContain("tone?: 'primary' | 'muted' | 'white' | 'gradient' | 'soft'")
     expect(iconBox).toContain('icon-box--tone-soft')

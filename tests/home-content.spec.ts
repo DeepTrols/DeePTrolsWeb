@@ -74,12 +74,12 @@ describe('home content contract', () => {
 
   it('uses available public solution assets', () => {
     expect(solutions.map((solution) => solution.image)).toEqual([
-      '/images/home/solutions/industrial.K00G2HaS.png',
-      '/images/home/solutions/smart-env.CWc2pooP.png',
-      '/images/home/solutions/smart-energy.DHKY-NE1.png',
-      '/images/home/solutions/smart-Water.DHKY-NE1.png',
-      '/images/home/solutions/data-center-ai.CDu93Miw.png',
-      '/images/home/solutions/data.DHKY-NE1.png',
+      '/images/home/solutions/industrial.K00G2HaS.webp',
+      '/images/home/solutions/smart-env.CWc2pooP.webp',
+      '/images/home/solutions/smart-energy.DHKY-NE1.webp',
+      '/images/home/solutions/smart-Water.DHKY-NE1.webp',
+      '/images/home/solutions/data-center-ai.CDu93Miw.webp',
+      '/images/home/solutions/data.DHKY-NE1.webp',
     ])
     expect(solutions.map((solution) => solution.href)).toEqual([
       '/solutions/manufacturing',

@@ -12,18 +12,18 @@ export function registerCoreVisualContracts() {
     expect(page).not.toContain('class="home-hero-deliverables__video"')
     expect(page).not.toContain('home-hero-bg.mp4')
     expect(hero).toContain('aspect-ratio: 1920 / 655')
-    expect(hero).toContain('url("/images/home/deepctrls-hero-ai.png")')
+    expect(hero).toContain('url("/images/home/deepctrls-hero-ai.webp")')
 
     for (const asset of [
-      'public/images/home/deepctrls-hero-ai.png',
+      'public/images/home/deepctrls-hero-ai.webp',
       'public/images/brand/deeptrols-logo-black.png',
       'public/images/brand/deeptrols-logo-white.png',
-      'public/images/home/solutions/industrial.K00G2HaS.png',
-      'public/images/home/solutions/smart-env.CWc2pooP.png',
-      'public/images/home/solutions/smart-energy.DHKY-NE1.png',
-      'public/images/home/solutions/smart-Water.DHKY-NE1.png',
-      'public/images/home/solutions/data-center-ai.CDu93Miw.png',
-      'public/images/home/solutions/data.DHKY-NE1.png',
+      'public/images/home/solutions/industrial.K00G2HaS.webp',
+      'public/images/home/solutions/smart-env.CWc2pooP.webp',
+      'public/images/home/solutions/smart-energy.DHKY-NE1.webp',
+      'public/images/home/solutions/smart-Water.DHKY-NE1.webp',
+      'public/images/home/solutions/data-center-ai.CDu93Miw.webp',
+      'public/images/home/solutions/data.DHKY-NE1.webp',
     ]) {
       expect(existsSync(join(root, asset))).toBe(true)
     }

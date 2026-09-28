@@ -7,7 +7,7 @@ import DmsHeroVisual from '~/components/product/dms/DmsHeroVisual.vue'
 <template>
   <PageHero
     class="min-h-[655px]"
-    background-image-src="/images/products/product-hero-bg.png"
+    background-image-src="/images/products/product-hero-bg.webp"
     badge="数曜·数据要素监管平台"
     :badge-icon="HardDrive"
     title-id="dms-hero-title"

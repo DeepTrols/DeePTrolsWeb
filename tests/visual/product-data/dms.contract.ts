@@ -33,7 +33,7 @@ export function registerDmsVisualContracts() {
     expect(page).not.toContain('<style')
 
     expect(hero).toContain('PageHero')
-    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.png"')
+    expect(hero).toContain('background-image-src="/images/products/product-hero-bg.webp"')
     expect(hero).toContain('import { HardDrive }')
     expect(hero).toContain('badge="数曜·数据要素监管平台"')
     expect(hero).toContain('title-line="让数据流通安全、可信"')

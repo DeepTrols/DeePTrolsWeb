@@ -18,7 +18,7 @@ assert(
 )
 assert(
   ddpHero.includes('PageHero') &&
-    ddpHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
+    ddpHero.includes('background-image-src="/images/products/product-hero-bg.webp"') &&
     ddpHero.includes('import { Network }') &&
     ddpHero.includes('badge="数曜·数据开发平台"') &&
     ddpHero.includes('title-line="标准、智能、高效"') &&

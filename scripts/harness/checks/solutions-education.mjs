@@ -166,7 +166,7 @@ export function checkSolutionsEducationContracts(ctx) {
     'Feature grid cards must thread optional subtitle and tags from ProductFeatureGridSection through FeatureCard into CardText without new styles.',
   )
   assert(
-    educationData.includes("image: '/images/solutions/education-hero.png'") &&
+    educationData.includes("image: '/images/solutions/education-hero.webp'") &&
       educationData.includes("title: '智慧教育解决方案'") &&
       educationData.includes("title: '教育大模型网关'") &&
       educationData.includes("badge: '01'") &&
@@ -180,7 +180,7 @@ export function checkSolutionsEducationContracts(ctx) {
     'Education page copy must stay centralized in data/solutions/education.ts, including EMQX cube color classes as literal strings.',
   )
   assert(
-    existsSync(join(root, 'public/images/solutions/education-hero.png')) &&
+    existsSync(join(root, 'public/images/solutions/education-hero.webp')) &&
       existsSync(join(root, 'public/images/solutions/education/image-placeholder.svg')),
     'Education hero banner and placeholder must live under public/images/solutions.',
   )

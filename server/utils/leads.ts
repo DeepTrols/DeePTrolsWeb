@@ -1,18 +1,21 @@
 import { z } from 'zod'
 import { useNewsDatabase } from '../db/client'
 import { leads } from '../db/schema'
+import { logServerError } from './server-log'
 
 /**
  * 线索写入协议：POST /api/leads 的唯一入口校验。
  * phone/email 至少其一；website 为蜜罐字段，必须为空（机器人填了即 400）。
+ * name/message 为可选：联系表单仍会带上二者，页脚「仅邮箱」订阅（source='/footer-subscribe'）
+ * 只提交 email 时二者缺省，由 insertLead 落库为空串（DB 列为 notNull）。
  */
 export const leadInputSchema = z
   .object({
-    name: z.string().trim().min(1).max(50),
+    name: z.string().trim().min(1).max(50).optional(),
     company: z.string().trim().max(100).default(''),
     phone: z.union([z.literal(''), z.string().trim().regex(/^1[3-9]\d{9}$/)]).default(''),
     email: z.union([z.literal(''), z.email().max(100)]).default(''),
-    message: z.string().trim().min(1).max(1000),
+    message: z.string().trim().min(1).max(1000).optional(),
     source: z.string().trim().max(200).regex(/^\//).default('/contact'),
     website: z.string().max(0).optional(),
   })
@@ -24,7 +27,8 @@ export type LeadInput = z.infer<typeof leadInputSchema>
 
 /**
  * 线索落库：
- * - 已配置数据库 → 正常插入；插入失败返回 false，由 API 层统一 500（不暴露内部错误）。
+ * - 已配置数据库 → 正常插入；插入异常先经 logServerError 结构化落日志（审计中危#14：不静默吞错，
+ *   context 仅带 source 等非 PII 标识），再返回 false，由 API 层统一 500（不暴露内部错误）。
  * - 未配置 NUXT_DATABASE_URL：
  *   - 生产形态（配置了 NUXT_SESSION_PASSWORD / NUXT_ADMIN_PASSWORD）→ 抛 503，绝不静默丢弃线索；
  *   - 本地开发（无上述密码）→ 返回 true，便于无 PG 时走完表单流程调试。
@@ -48,17 +52,19 @@ export async function insertLead(input: LeadInput): Promise<boolean> {
     await db
       .insert(leads)
       .values({
-        name: input.name,
+        name: input.name ?? '',
         company: input.company,
         phone: input.phone,
         email: input.email,
-        message: input.message,
+        message: input.message ?? '',
         source: input.source,
         status: 'new',
       })
     return true
   }
-  catch {
+  catch (error) {
+    // DB 真实异常不得静默：按全站统一格式落结构化日志；context 只放 source（路径标识，非 PII）
+    logServerError('leads.insertLead', error, { source: input.source })
     return false
   }
 }

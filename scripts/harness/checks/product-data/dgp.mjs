@@ -15,7 +15,7 @@ assert(
 )
 assert(
   dgpHero.includes('PageHero') &&
-    dgpHero.includes('background-image-src="/images/products/product-hero-bg.png"') &&
+    dgpHero.includes('background-image-src="/images/products/product-hero-bg.webp"') &&
     dgpHero.includes('import { Database }') &&
     dgpHero.includes('badge="数曜·数据治理平台"') &&
     dgpHero.includes('title-line="可用、可管、可信"') &&

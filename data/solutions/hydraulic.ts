@@ -14,7 +14,7 @@ export const hydraulicHero = {
   title: '智慧水利解决方案',
   description:
     '融合数曜·数据治理与博曜·企业级知识管理能力，汇聚水利基础、监测、业务与空间数据，构建覆盖知识治理、知识图谱、智能检索与业务推理的智慧水利知识中枢，为防洪减灾、水资源管理及“四预”业务提供可信、智能的决策支撑。',
-  image: '/images/solutions/hydraulic-hero.png',
+  image: '/images/solutions/hydraulic-hero.webp',
   imageAlt: '智慧水利解决方案',
 }
 

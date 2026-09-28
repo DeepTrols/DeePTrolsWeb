@@ -113,7 +113,7 @@ export function checkSolutionsEnergySavingContracts(ctx) {
     'Energy-saving customer cases must reproduce the manufacturing EMQX case card layout with Tailwind only.',
   )
   assert(
-    energySavingData.includes("image: '/images/solutions/energy-saving-hero.png'") &&
+    energySavingData.includes("image: '/images/solutions/energy-saving-hero.webp'") &&
       energySavingData.includes("title: '智慧储能解决方案'") &&
       energySavingData.includes("title: '储能设备接入管理'") &&
       energySavingData.includes("title: '某大型工业园区储能项目'") &&
@@ -121,7 +121,7 @@ export function checkSolutionsEnergySavingContracts(ctx) {
     'Energy-saving page copy must stay centralized in data/solutions/energy-saving.ts.',
   )
   assert(
-    existsSync(join(root, 'public/images/solutions/energy-saving-hero.png')) &&
+    existsSync(join(root, 'public/images/solutions/energy-saving-hero.webp')) &&
       existsSync(join(root, 'public/images/solutions/energy-saving/image-placeholder.svg')),
     'Energy-saving hero banner and placeholder must live under public/images/solutions.',
   )

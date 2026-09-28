@@ -6,7 +6,7 @@ import DeviceAgentHeroVisual from '~/components/product/device-agent/DeviceAgent
 
 <template>
   <PageHero
-    background-image-src="/images/products/product-hero-bg.png"
+    background-image-src="/images/products/product-hero-bg.webp"
     badge="Device Agent"
     :badge-icon="Cpu"
     title-id="device-agent-hero-title"

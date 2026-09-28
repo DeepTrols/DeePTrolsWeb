@@ -99,12 +99,12 @@ export function registerEnergySavingVisualContracts() {
     expect(cases).toContain('查看案例详情')
     expect(cases).not.toContain('<style')
 
-    expect(data).toContain("image: '/images/solutions/energy-saving-hero.png'")
+    expect(data).toContain("image: '/images/solutions/energy-saving-hero.webp'")
     expect(data).toContain("title: '智慧储能解决方案'")
     expect(data).toContain("title: '储能设备接入管理'")
     expect(data).toContain("title: '某大型工业园区储能项目'")
     expect(data).toContain("value: '99.9%'")
-    expect(existsSync(join(root, 'public/images/solutions/energy-saving-hero.png'))).toBe(true)
+    expect(existsSync(join(root, 'public/images/solutions/energy-saving-hero.webp'))).toBe(true)
     expect(existsSync(join(root, 'public/images/solutions/energy-saving/image-placeholder.svg'))).toBe(true)
   })
 }

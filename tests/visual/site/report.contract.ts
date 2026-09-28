@@ -100,7 +100,7 @@ export function registerReportVisualContracts() {
     expect(data).toContain("type: '视频'")
     expect(data).toContain("type: '幻灯片'")
     expect(data).toContain("type: '基准测试报告'")
-    expect(data).toContain("image: '/images/home/solutions/data-center-ai.CDu93Miw.png'")
+    expect(data).toContain("image: '/images/home/solutions/data-center-ai.CDu93Miw.webp'")
     expect(data).not.toContain('doc/product/PAGE_REQUIREMENTS')
     expect(navigation).toContain("href: '/cases'")
     expect(footer).toContain("href: '/resources/reports'")

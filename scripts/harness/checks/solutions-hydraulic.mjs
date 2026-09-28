@@ -110,7 +110,7 @@ export function checkSolutionsHydraulicContracts(ctx) {
     'Feature grid cards must thread optional bullet points from ProductFeatureGridSection through FeatureCard into CardText without new styles.',
   )
   assert(
-    hydraulicData.includes("image: '/images/solutions/hydraulic-hero.png'") &&
+    hydraulicData.includes("image: '/images/solutions/hydraulic-hero.webp'") &&
       hydraulicData.includes("title: '智慧水利解决方案'") &&
       hydraulicData.includes("title: '水利知识库管理'") &&
       hydraulicData.includes("title: '某省级水利知识平台'") &&
@@ -118,7 +118,7 @@ export function checkSolutionsHydraulicContracts(ctx) {
     'Hydraulic page copy must stay centralized in data/solutions/hydraulic.ts.',
   )
   assert(
-    existsSync(join(root, 'public/images/solutions/hydraulic-hero.png')) &&
+    existsSync(join(root, 'public/images/solutions/hydraulic-hero.webp')) &&
       existsSync(join(root, 'public/images/solutions/hydraulic/image-placeholder.svg')),
     'Hydraulic hero banner and placeholder must live under public/images/solutions.',
   )
