@@ -6,6 +6,7 @@ import { CUSTOM_COMPONENT_META } from '~/components/sections/custom-props'
 import { useNewsDatabase } from '../db/client'
 import { componentStates, pages } from '../db/schema'
 import { pageSectionsSchema } from './page-sections'
+import { internalServerError, logServerError } from './server-log'
 
 /**
  * 组件管理（015.12）：页面可插入组件 = 8 标准区块 type + 定制架构组件（CUSTOM_SECTION_NAMES）。
@@ -35,7 +36,7 @@ export const disabledComponentsSchema = z
   .max(100)
   .refine(ids => ids.every(id => knownIds.has(id)), { message: 'Unknown component id' })
 
-/** 读禁用清单：命中返回 { disabled, updatedAt }；无 DB/未入库/zod 复验失败返回 null（调用方按 [] 处理） */
+/** 读禁用清单：命中返回 { disabled, updatedAt }；无 DB/未入库/zod 复验失败返回 null（调用方按 [] 处理，复验失败会记录日志）；查询异常记录日志后抛出（端点 500） */
 export async function getDisabledComponents(): Promise<{ disabled: string[], updatedAt: string } | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -54,14 +55,19 @@ export async function getDisabledComponents(): Promise<{ disabled: string[], upd
       return null
     }
     const parsed = disabledComponentsSchema.safeParse(row.disabled)
-    return parsed.success ? { disabled: parsed.data, updatedAt: row.updatedAt.toISOString() } : null
+    if (!parsed.success) {
+      // 脏数据行：记录后按未入库处理（回退全启用），不再静默吞掉
+      logServerError('component-admin.getDisabledComponents', parsed.error, { key: COMPONENT_STATE_KEY })
+      return null
+    }
+    return { disabled: parsed.data, updatedAt: row.updatedAt.toISOString() }
   }
-  catch {
-    return null
+  catch (error) {
+    throw internalServerError('component-admin.getDisabledComponents', error)
   }
 }
 
-/** 写禁用清单（upsert 幂等）：成功 true；无 DB/失败 false */
+/** 写禁用清单（upsert 幂等）：成功 true；未配置 DB 返回 false（端点 503）；异常记录日志后抛出（端点 500） */
 export async function setDisabledComponents(disabled: string[]): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -78,8 +84,8 @@ export async function setDisabledComponents(disabled: string[]): Promise<boolean
       })
     return true
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('component-admin.setDisabledComponents', error, { count: disabled.length })
   }
 }
 
@@ -136,7 +142,7 @@ export function scanSectionUsage(rows: { sections: unknown, slug: string }[]): R
   )
 }
 
-/** DB 读取全部页面 sections 并统计；无 DB/失败返回 {} */
+/** DB 读取全部页面 sections 并统计；无 DB 返回 {}；查询异常记录日志后抛出（端点 500） */
 export async function getComponentUsage(): Promise<Record<string, ComponentUsage>> {
   const db = useNewsDatabase()
   if (!db) {
@@ -147,7 +153,7 @@ export async function getComponentUsage(): Promise<Record<string, ComponentUsage
     const rows = await db.select({ slug: pages.slug, sections: pages.sections }).from(pages).limit(500)
     return scanSectionUsage(rows)
   }
-  catch {
-    return {}
+  catch (error) {
+    throw internalServerError('component-admin.getComponentUsage', error)
   }
 }

@@ -4,6 +4,7 @@ import { navIconComponents } from '~/components/navigation/nav-icons'
 import { useNewsDatabase } from '../db/client'
 import { navMenus } from '../db/schema'
 import { safeUrlSchema } from './safe-url'
+import { internalServerError, logServerError } from './server-log'
 
 /** 菜单 key：header 主导航 / footer 页脚 */
 export const menuKeySchema = z.enum(['header', 'footer'])
@@ -95,7 +96,8 @@ export function parseMenuItems(key: MenuKey, items: unknown): HeaderMenuItems | 
   return result.success ? result.data : null
 }
 
-/** 读菜单：命中返回 { items, updatedAt }；无 DB/未命中/失败返回 null（调用方回退静态数据） */
+/** 读菜单：命中返回 { items, updatedAt }；无 DB/未命中/zod 复验失败/查询异常返回 null（调用方回退静态数据）。
+ *  公开导航 GET /api/navigation 依赖此回退，异常不抛出，但必须记录日志让故障可见 */
 export async function getMenuItems(
   key: MenuKey,
 ): Promise<{ items: HeaderMenuItems | FooterMenuItems, updatedAt: string } | null> {
@@ -116,14 +118,20 @@ export async function getMenuItems(
       return null
     }
     const items = parseMenuItems(key, row.items)
-    return items ? { items, updatedAt: row.updatedAt.toISOString() } : null
+    if (!items) {
+      // 库内菜单树未过 zod 复验（脏数据）：记录后按未入库处理（回退静态快照）
+      logServerError('menu-admin.getMenuItems', 'menu items failed zod revalidation', { key })
+      return null
+    }
+    return { items, updatedAt: row.updatedAt.toISOString() }
   }
-  catch {
+  catch (error) {
+    logServerError('menu-admin.getMenuItems', error, { key })
     return null
   }
 }
 
-/** 写菜单（整树覆盖，upsert 幂等）：成功 true；无 DB/失败 false */
+/** 写菜单（整树覆盖，upsert 幂等）：成功 true；未配置 DB 返回 false（端点 503）；异常记录日志后抛出（端点 500） */
 export async function upsertMenuItems(key: MenuKey, items: HeaderMenuItems | FooterMenuItems): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -137,7 +145,7 @@ export async function upsertMenuItems(key: MenuKey, items: HeaderMenuItems | Foo
       .onConflictDoUpdate({ target: navMenus.key, set: { items, updatedAt: new Date() } })
     return true
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('menu-admin.upsertMenuItems', error, { key })
   }
 }

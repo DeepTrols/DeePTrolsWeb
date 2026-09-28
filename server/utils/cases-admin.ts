@@ -7,6 +7,7 @@ import { caseDetails, cases } from '../db/schema'
 import { articleBlocksSchema, parseArticleBlocks } from './article-blocks'
 import { contentStatusSchema, solutionKeySchema } from './content-admin'
 import { safeUrlSchema } from './safe-url'
+import { internalServerError } from './server-log'
 
 /** slug 协议：与公开路由 /cases/[slug] 段一致 */
 export const caseSlugSchema = z.string().regex(/^[a-z0-9][a-z0-9-]*$/).max(200)
@@ -48,7 +49,7 @@ export interface AdminCaseRecord {
 
 export type AdminCasePayload = CaseInput
 
-/** 案例列表（admin）：含草稿，按 sortOrder；未配置 DB 返回空表 */
+/** 案例列表（admin）：含草稿，按 sortOrder；未配置 DB 返回空表；查询异常记录日志后抛出（端点 500） */
 export async function listAdminCases(): Promise<AdminCaseRecord[]> {
   const db = useNewsDatabase()
   if (!db) {
@@ -81,12 +82,12 @@ export async function listAdminCases(): Promise<AdminCaseRecord[]> {
       updatedAt: row.updatedAt.toISOString(),
     }))
   }
-  catch {
-    return []
+  catch (error) {
+    throw internalServerError('cases-admin.listAdminCases', error)
   }
 }
 
-/** 编辑载荷；无详情行时返回 null（案例必须有详情才有意义，缺详情视为不可用） */
+/** 编辑载荷；无详情行时返回 null（案例必须有详情才有意义，缺详情视为不可用）；未配置 DB/未命中返回 null，异常记录日志后抛出（端点 500） */
 export async function getAdminCase(slug: string): Promise<AdminCasePayload | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -133,12 +134,12 @@ export async function getAdminCase(slug: string): Promise<AdminCasePayload | nul
       relatedProducts: row.relatedProducts as CaseRelatedProduct[],
     }
   }
-  catch {
-    return null
+  catch (error) {
+    throw internalServerError('cases-admin.getAdminCase', error, { slug })
   }
 }
 
-/** 新建：slug 冲突返回 'conflict'；成功返回 slug；无 DB/失败返回 null */
+/** 新建：slug 冲突返回 'conflict'；成功返回 slug；未配置 DB 返回 null；异常记录日志后抛出（端点 500） */
 export async function createCase(input: CaseInput): Promise<'conflict' | string | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -164,12 +165,12 @@ export async function createCase(input: CaseInput): Promise<'conflict' | string 
       return slug
     })
   }
-  catch {
-    return null
+  catch (error) {
+    throw internalServerError('cases-admin.createCase', error, { slug: input.slug })
   }
 }
 
-/** 更新：slug 不变，其余全量替换；命中行返回 true */
+/** 更新：slug 不变，其余全量替换；命中行返回 true，未配置 DB/未命中返回 false；异常记录日志后抛出（端点 500） */
 export async function updateCase(slug: string, input: CaseUpdate): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -201,12 +202,12 @@ export async function updateCase(slug: string, input: CaseUpdate): Promise<boole
       return true
     })
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('cases-admin.updateCase', error, { slug })
   }
 }
 
-/** 删除：详情行随 FK 级联；命中行返回 true */
+/** 删除：详情行随 FK 级联；命中行返回 true，未配置 DB/未命中返回 false；异常记录日志后抛出（端点 500） */
 export async function deleteCase(slug: string): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -217,7 +218,7 @@ export async function deleteCase(slug: string): Promise<boolean> {
     const rows = await db.delete(cases).where(eq(cases.slug, slug)).returning({ slug: cases.slug })
     return rows.length > 0
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('cases-admin.deleteCase', error, { slug })
   }
 }

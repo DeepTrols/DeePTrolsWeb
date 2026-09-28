@@ -3,8 +3,10 @@ import { z } from 'zod'
 import { useNewsDatabase } from '../db/client'
 import { pages } from '../db/schema'
 import { contentStatusSchema } from './content-admin'
+import { isUniqueViolationError } from './news-admin'
 import { pageSectionsSchema } from './page-sections'
 import type { PageSection } from './page-sections'
+import { internalServerError, logServerError } from './server-log'
 
 /**
  * 代码静态路由完整路径：CMS 页不可占用。
@@ -139,7 +141,7 @@ export interface PublishedPagePayload {
   preview?: boolean
 }
 
-/** 页面列表（admin）：代码页目录在前（只读），CMS 页在后（含草稿，按 sortOrder）；保留路径黑名单保证两者不撞 slug */
+/** 页面列表（admin）：代码页目录在前（只读），CMS 页在后（含草稿，按 sortOrder）；保留路径黑名单保证两者不撞 slug；查询异常记录日志后抛出（端点 500） */
 export async function listAdminPages(): Promise<AdminPageRecord[]> {
   const codeRows: AdminPageRecord[] = CODE_PAGE_CATALOG.map(entry => ({
     slug: entry.path,
@@ -178,8 +180,8 @@ export async function listAdminPages(): Promise<AdminPageRecord[]> {
     }))
     return [...codeRows, ...cmsRows]
   }
-  catch {
-    return codeRows
+  catch (error) {
+    throw internalServerError('pages-admin.listAdminPages', error)
   }
 }
 
@@ -197,6 +199,8 @@ export async function getAdminPage(slug: string): Promise<AdminPagePayload | nul
     }
     const sections = pageSectionsSchema.safeParse(row.sections)
     if (!sections.success) {
+      // 脏数据行：记录后按未命中处理（端点 404），避免静默吞掉数据完整性问题
+      logServerError('pages-admin.getAdminPage', sections.error, { slug })
       return null
     }
     return {
@@ -209,12 +213,12 @@ export async function getAdminPage(slug: string): Promise<AdminPagePayload | nul
       updatedAt: row.updatedAt.toISOString(),
     }
   }
-  catch {
-    return null
+  catch (error) {
+    throw internalServerError('pages-admin.getAdminPage', error, { slug })
   }
 }
 
-/** 公开读取：仅 published；sections 出库再过一次 zod（防脏数据打爆渲染器） */
+/** 公开读取：仅 published；sections 出库再过一次 zod（防脏数据打爆渲染器）；异常记录日志后按未命中回退（端点 404 → 分发器占位页） */
 export async function getPublishedPage(slug: string): Promise<PublishedPagePayload | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -229,6 +233,7 @@ export async function getPublishedPage(slug: string): Promise<PublishedPagePaylo
     }
     const sections = pageSectionsSchema.safeParse(row.sections)
     if (!sections.success) {
+      logServerError('pages-admin.getPublishedPage', sections.error, { slug })
       return null
     }
     return {
@@ -239,12 +244,17 @@ export async function getPublishedPage(slug: string): Promise<PublishedPagePaylo
       updatedAt: row.updatedAt.toISOString(),
     }
   }
-  catch {
+  catch (error) {
+    // 公开读路径：刻意保留优雅降级（404 → catch-all 分发器回退占位页），但必须留日志
+    logServerError('pages-admin.getPublishedPage', error, { slug })
     return null
   }
 }
 
-/** 新建：slug 冲突返回 'conflict'；成功返回 slug；无 DB/失败返回 null */
+/**
+ * 新建：slug 冲突返回 'conflict'（预检查 + 并发窗口兜底，审计#15）；成功返回 slug；
+ * 未配置 DB 返回 null；异常记录日志后抛出（端点 500）。
+ */
 export async function createPage(input: PageInput): Promise<'conflict' | string | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -259,12 +269,18 @@ export async function createPage(input: PageInput): Promise<'conflict' | string 
     const rows = await db.insert(pages).values(input).returning({ slug: pages.slug })
     return rows[0]?.slug ?? null
   }
-  catch {
-    return null
+  catch (error) {
+    if (isUniqueViolationError(error)) {
+      // check-then-insert 并发窗口：预检查放行后 slug 主键被另一请求抢先占用（23505）
+      // → 与预检查冲突同一语义（端点 409），只落 warn，不算服务端故障
+      console.warn('[server] pages-admin.createPage unique conflict', { slug: input.slug })
+      return 'conflict'
+    }
+    throw internalServerError('pages-admin.createPage', error, { slug: input.slug })
   }
 }
 
-/** 更新：命中行返回 true；未命中/失败返回 false */
+/** 更新：命中行返回 true；未配置 DB/未命中返回 false；异常记录日志后抛出（端点 500） */
 export async function updatePage(slug: string, input: PageUpdate): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -279,12 +295,12 @@ export async function updatePage(slug: string, input: PageUpdate): Promise<boole
       .returning({ slug: pages.slug })
     return rows.length > 0
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('pages-admin.updatePage', error, { slug })
   }
 }
 
-/** 删除：命中行返回 true */
+/** 删除：命中行返回 true，未配置 DB/未命中返回 false；异常记录日志后抛出（端点 500） */
 export async function deletePage(slug: string): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -295,7 +311,7 @@ export async function deletePage(slug: string): Promise<boolean> {
     const rows = await db.delete(pages).where(eq(pages.slug, slug)).returning({ slug: pages.slug })
     return rows.length > 0
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('pages-admin.deletePage', error, { slug })
   }
 }

@@ -4,6 +4,7 @@ import type { InsightItem } from '~/data/home-insights'
 import { newsCategoryTabs } from '~/data/news'
 import { useNewsDatabase } from '../../db/client'
 import { news, reports } from '../../db/schema'
+import { logServerError } from '../../utils/server-log'
 
 const MAX_ITEMS = 4
 
@@ -13,6 +14,7 @@ const newsCategoryLabels = new Map(newsCategoryTabs.map(tab => [tab.key, tab.lab
  * GET /api/home/insights — 首页「创新、洞察与新闻」推荐位（015.12）。
  * 合并规则：featured 且 published 的新闻（publishedAt desc）优先 → 报告（sortOrder asc）补足 → 封顶 4 条。
  * DB 不可用 / 查询异常 / 零推荐 → 回退 data/home-insights.ts 静态 insights（双层回退先例：页面层 useFetch 还有 default 兜底）。
+ * 查询异常的回退是刻意设计（公开读优雅降级），但必须经 logServerError 落日志让故障可见（审计#6）。
  */
 export default defineEventHandler(async (): Promise<InsightItem[]> => {
   const db = useNewsDatabase()
@@ -61,7 +63,8 @@ export default defineEventHandler(async (): Promise<InsightItem[]> => {
 
     return items.length > 0 ? items : staticInsights
   }
-  catch {
+  catch (error) {
+    logServerError('api.home.insights', error)
     return staticInsights
   }
 })

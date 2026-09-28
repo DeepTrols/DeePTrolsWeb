@@ -5,6 +5,8 @@ import { getCaseDetailBySlug, type CaseDetail, type CaseRelatedProduct } from '~
 import { useNewsDatabase } from '../db/client'
 import { caseDetails, cases } from '../db/schema'
 import { parseArticleBlocks } from './article-blocks'
+import { isSafeUrl } from './safe-url'
+import { logServerError } from './server-log'
 
 export interface CasePayload {
   detail: CaseDetail
@@ -23,10 +25,30 @@ export function parseCaseRelatedProducts(input: unknown): CaseRelatedProduct[] {
 }
 
 /**
+ * 读侧 href 消毒（审计#22 纵深防御）：写侧已由 cases-admin 的 safeUrlSchema 封死，
+ * 但历史入库的脏 href（如 javascript:）读取时仍会放行。这里消毒而非拒绝——
+ * 不安全值替换为 '#' 并记日志（供 scripts/check-unsafe-urls.ts 存量排查对照），
+ * 避免整行解析失败导致含脏数据的旧案例整体 404。
+ */
+function sanitizeCaseRelatedProducts(products: CaseRelatedProduct[], slug: string): CaseRelatedProduct[] {
+  return products.map((product) => {
+    if (isSafeUrl(product.href)) {
+      return product
+    }
+    logServerError('cases-repo.sanitizeCaseRelatedProducts', 'unsafe relatedProducts href replaced with #', {
+      slug,
+      href: product.href,
+    })
+    return { ...product, href: '#' }
+  })
+}
+
+/**
  * 案例仓储（Phase 1 复制）：配置了 NUXT_DATABASE_URL 时读 PostgreSQL，
  * 未配置 / 查询失败时回退 data/*.ts 静态数据（种子数据源）。
  * 查询成功时 DB 结果是唯一事实源：列表为空返回空数组、详情行级未命中返回 null
  * （消费端点映射 404），保证后台下架（转草稿）/删除即时生效，静态种子不复活。
+ * 查询失败的静态回退是刻意设计（公开读优雅降级），但 catch 必须经 logServerError 落日志（审计#6）。
  */
 export async function listCaseResources(): Promise<CaseResource[]> {
   const db = useNewsDatabase()
@@ -55,7 +77,8 @@ export async function listCaseResources(): Promise<CaseResource[]> {
       href: `/cases/${row.slug}`,
     }))
   }
-  catch {
+  catch (error) {
+    logServerError('cases-repo.listCaseResources', error)
     return caseResources
   }
 }
@@ -95,12 +118,13 @@ export async function getCasePayloadBySlug(slug: string): Promise<CasePayload | 
         categoryKey: row.categoryKey,
         heroImage: row.heroImage,
         blocks: parseArticleBlocks(row.blocks),
-        relatedProducts: parseCaseRelatedProducts(row.relatedProducts),
+        relatedProducts: sanitizeCaseRelatedProducts(parseCaseRelatedProducts(row.relatedProducts), row.slug),
       },
       resources,
     }
   }
-  catch {
+  catch (error) {
+    logServerError('cases-repo.getCasePayloadBySlug', error, { slug })
     return getStaticCasePayload(slug, resources)
   }
 }

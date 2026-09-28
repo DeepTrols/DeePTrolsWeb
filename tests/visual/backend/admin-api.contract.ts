@@ -402,4 +402,64 @@ export function registerBackendAdminVisualContracts() {
       expect(page).not.toContain('blocksText')
     }
   })
+
+  it('guards the 23505 conflict mapping and featured single-column PATCH endpoints (audit #15/#16)', () => {
+    const newsUtil = readComponent('server/utils/news-admin.ts')
+    const pagesUtil = readComponent('server/utils/pages-admin.ts')
+    const reportsUtil = readComponent('server/utils/reports-admin.ts')
+    const newsFeaturedApi = readComponent(
+      'server/api/admin/news/[id]/featured.patch.ts',
+    )
+    const reportFeaturedApi = readComponent(
+      'server/api/admin/reports/[id]/featured.patch.ts',
+    )
+
+    // 审计#15：23505 唯一冲突 → createNews 重算 id 重试（最多 3 次）、耗尽 409；
+    // check-then-insert/update 并发窗口映射既有 conflict 哨兵（端点 409），只落 warn
+    expect(newsUtil).toContain('export function isUniqueViolationError(error: unknown): boolean')
+    expect(newsUtil).toContain("=== '23505'")
+    expect(newsUtil).toContain('CREATE_NEWS_MAX_RETRIES = 3')
+    expect(newsUtil).toContain("statusCode: 409, statusMessage: 'News id conflict'")
+    expect(pagesUtil).toContain('isUniqueViolationError')
+    expect(reportsUtil).toContain('isUniqueViolationError')
+
+    // 审计#16：featured 单列切换三态（null→503 / false→404 / true→ok；异常 500 穿透）
+    expect(newsUtil).toContain(
+      'export async function setNewsFeatured(id: number, featured: boolean): Promise<boolean | null>',
+    )
+    expect(reportsUtil).toContain(
+      'export async function setReportFeatured(id: number, featured: boolean): Promise<boolean | null>',
+    )
+    expect(newsUtil).toContain('.set({ featured })')
+    expect(reportsUtil).toContain('.set({ featured })')
+    for (const route of [newsFeaturedApi, reportFeaturedApi]) {
+      expect(route).toContain('requireAdmin')
+      expect(route).toContain('z.object({ featured: z.boolean() })')
+      expect(route).toContain("statusCode: 400, statusMessage: 'Invalid featured payload'")
+      expect(route).toContain('statusCode: 503')
+      expect(route).toContain('statusCode: 404')
+    }
+    expect(newsFeaturedApi).toContain('setNewsFeatured')
+    expect(newsFeaturedApi).toContain("statusCode: 404, statusMessage: 'News not found'")
+    expect(reportFeaturedApi).toContain('setReportFeatured')
+    expect(reportFeaturedApi).toContain("statusCode: 404, statusMessage: 'Report not found'")
+
+    // vben 列表页：推荐开关改走 PATCH 单列端点，消除 GET→整条 PUT 读改写与缺正文守卫
+    const contentApi = readComponent('admin/apps/web-antd/src/api/content.ts')
+    const newsList = readComponent(
+      'admin/apps/web-antd/src/views/content/news/list.vue',
+    )
+    const reportsList = readComponent(
+      'admin/apps/web-antd/src/views/content/reports/list.vue',
+    )
+    expect(contentApi).toContain('export const setNewsFeaturedApi')
+    expect(contentApi).toContain('export const setReportFeaturedApi')
+    expect(contentApi).toContain("method: 'PATCH'")
+    expect(newsList).toContain('setNewsFeaturedApi(record.id, checked)')
+    expect(newsList).not.toContain('getAdminNewsApi')
+    expect(newsList).not.toContain('updateNewsApi')
+    expect(reportsList).toContain('setReportFeaturedApi(record.id, checked)')
+    expect(reportsList).not.toContain('getAdminReportApi')
+    expect(reportsList).not.toContain('updateReportApi')
+  })
 }

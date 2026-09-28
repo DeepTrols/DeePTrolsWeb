@@ -1,7 +1,11 @@
 import { requireAdmin } from '../../utils/admin'
+import { assertBodyWithinLimit } from '../../utils/body-limit'
 import { consumeRateLimitWith, getRateLimitIP } from '../../utils/rate-limit'
 import { createMediaRecord, extensionForMime, MAX_UPLOAD_BYTES, sniffImageMime } from '../../utils/media-admin'
 import { createLocalStorageDriver } from '../../utils/storage'
+
+// multipart 边界/字段头有额外开销，预检上限在文件上限之上再留 1MB 余量；精确的 5MB 仍由读后校验兜底
+const MAX_UPLOAD_BODY_BYTES = MAX_UPLOAD_BYTES + 1024 * 1024
 
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
@@ -12,6 +16,9 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 429, statusMessage: 'Too many uploads' })
   }
 
+  // 读取前先按 Content-Length 挡下超大 multipart body（h3 readMultipartFormData 无默认上限，防内存打爆）；
+  // chunked 无 Content-Length 时放行，由下方精确的 5MB 读后校验兜底
+  assertBodyWithinLimit(event, MAX_UPLOAD_BODY_BYTES)
   const form = await readMultipartFormData(event)
   const file = form?.find(part => part.name === 'file')
   if (!file?.data?.length || !file.filename) {

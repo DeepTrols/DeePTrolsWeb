@@ -3,7 +3,9 @@ import { z } from 'zod'
 import { useNewsDatabase } from '../db/client'
 import { reports } from '../db/schema'
 import { contentStatusSchema, solutionKeySchema } from './content-admin'
+import { isUniqueViolationError } from './news-admin'
 import { safeUrlSchema } from './safe-url'
+import { internalServerError } from './server-log'
 
 export const reportTypeSchema = z.enum(['产品规格书', '电子书', '白皮书', '视频', '幻灯片', '基准测试报告'])
 
@@ -38,7 +40,7 @@ export interface AdminReportPayload extends ReportInput {
   id: number
 }
 
-/** 报告列表（admin）：含草稿，按 sortOrder；未配置 DB 返回空表 */
+/** 报告列表（admin）：含草稿，按 sortOrder；未配置 DB 返回空表；查询异常记录日志后抛出（端点 500） */
 export async function listAdminReports(): Promise<AdminReportRecord[]> {
   const db = useNewsDatabase()
   if (!db) {
@@ -64,8 +66,8 @@ export async function listAdminReports(): Promise<AdminReportRecord[]> {
 
     return rows.map(row => ({ ...row, updatedAt: row.updatedAt.toISOString() }))
   }
-  catch {
-    return []
+  catch (error) {
+    throw internalServerError('reports-admin.listAdminReports', error)
   }
 }
 
@@ -96,12 +98,15 @@ export async function getAdminReport(id: number): Promise<AdminReportPayload | n
 
     return rows[0] ?? null
   }
-  catch {
-    return null
+  catch (error) {
+    throw internalServerError('reports-admin.getAdminReport', error, { id })
   }
 }
 
-/** 新建：href 冲突返回 'conflict'；成功返回新 id；无 DB/失败返回 null */
+/**
+ * 新建：href 冲突返回 'conflict'（预检查 + 并发窗口兜底，审计#15）；成功返回新 id；
+ * 未配置 DB 返回 null；异常记录日志后抛出（端点 500）。
+ */
 export async function createReport(input: ReportInput): Promise<'conflict' | number | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -116,12 +121,18 @@ export async function createReport(input: ReportInput): Promise<'conflict' | num
     const rows = await db.insert(reports).values(input).returning({ id: reports.id })
     return rows[0]?.id ?? null
   }
-  catch {
-    return null
+  catch (error) {
+    if (isUniqueViolationError(error)) {
+      // check-then-insert 并发窗口：预检查放行后 href 唯一索引被另一请求抢先占用（23505）
+      // → 与预检查冲突同一语义（端点 409），只落 warn，不算服务端故障
+      console.warn('[server] reports-admin.createReport unique conflict', { href: input.href })
+      return 'conflict'
+    }
+    throw internalServerError('reports-admin.createReport', error, { href: input.href })
   }
 }
 
-/** 更新：href 冲突返回 'conflict'；命中行返回 true；未命中/失败返回 false */
+/** 更新：href 冲突返回 'conflict'（预检查 + 并发窗口兜底，审计#15）；命中行返回 true；未配置 DB/未命中返回 false；异常记录日志后抛出（端点 500） */
 export async function updateReport(id: number, input: ReportInput): Promise<'conflict' | boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -140,12 +151,17 @@ export async function updateReport(id: number, input: ReportInput): Promise<'con
       .returning({ id: reports.id })
     return rows.length > 0
   }
-  catch {
-    return false
+  catch (error) {
+    if (isUniqueViolationError(error)) {
+      // check-then-update 并发窗口：href 被另一请求抢先占用（23505）→ 既有 conflict 语义（端点 409）
+      console.warn('[server] reports-admin.updateReport unique conflict', { id })
+      return 'conflict'
+    }
+    throw internalServerError('reports-admin.updateReport', error, { id })
   }
 }
 
-/** 删除：命中行返回 true */
+/** 删除：命中行返回 true，未配置 DB/未命中返回 false；异常记录日志后抛出（端点 500） */
 export async function deleteReport(id: number): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -156,7 +172,31 @@ export async function deleteReport(id: number): Promise<boolean> {
     const rows = await db.delete(reports).where(eq(reports.id, id)).returning({ id: reports.id })
     return rows.length > 0
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('reports-admin.deleteReport', error, { id })
+  }
+}
+
+/**
+ * featured 单列切换（审计#16）：只更新 featured 一列，不触碰其他字段——
+ * 列表页推荐开关不再走「GET 整条 → 全量 PUT」读改写。
+ * 命中行返回 true；行不存在返回 false（端点 404）；未配置 DB 返回 null（端点 503）；异常记录日志后抛出（端点 500）。
+ */
+export async function setReportFeatured(id: number, featured: boolean): Promise<boolean | null> {
+  const db = useNewsDatabase()
+  if (!db) {
+    return null
+  }
+
+  try {
+    const rows = await db
+      .update(reports)
+      .set({ featured })
+      .where(eq(reports.id, id))
+      .returning({ id: reports.id })
+    return rows.length > 0
+  }
+  catch (error) {
+    throw internalServerError('reports-admin.setReportFeatured', error, { id })
   }
 }

@@ -55,6 +55,8 @@ export function registerBackendNewsVisualContracts() {
     expect(listPage).toContain("useFetch<NewsItem[]>('/api/news'")
     expect(listPage).toContain('default: () => newsItems')
     expect(detailPage).toContain('useFetch<NewsPayload>(() => `/api/news/${routeId.value}`')
+    // 失败双语义（审计#22）：API 明确 404 → 页面 404（不回退静态种子）；其他失败 → 静态兜底保渲染
+    expect(detailPage).toContain('error.value?.statusCode === 404')
     expect(detailPage).toContain('payload.value?.item ?? newsItems.find')
     expect(detailPage).toContain('payload.value?.detail ?? getNewsDetailById')
   })

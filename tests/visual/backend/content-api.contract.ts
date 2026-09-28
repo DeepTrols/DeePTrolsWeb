@@ -51,6 +51,8 @@ export function registerBackendContentVisualContracts() {
     expect(casesPage).toContain("useFetch<CaseResource[]>('/api/cases'")
     expect(casesPage).toContain('default: () => caseResources')
     expect(caseDetailPage).toContain('useFetch<CasePayload>(() => `/api/cases/${routeSlug.value}`')
+    // 失败双语义（审计#22）：API 明确 404 → 页面 404（不回退静态种子）；其他失败 → 静态兜底保渲染
+    expect(caseDetailPage).toContain('error.value?.statusCode === 404')
     expect(caseDetailPage).toContain('payload.value?.detail ?? getCaseDetailBySlug')
     expect(caseDetailPage).toContain('payload.value?.resources ?? caseResources')
     expect(reportsPage).toContain("useFetch<ReportResource[]>('/api/reports'")

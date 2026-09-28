@@ -1,7 +1,7 @@
 import { requireAdmin } from '../../../utils/admin'
 import { footerMenuSchema, headerMenuSchema, menuKeySchema, upsertMenuItems } from '../../../utils/menu-admin'
 
-// PUT /api/admin/menus/[key] — admin 整树覆盖写：zod 校验 400；无 DB/写入失败 503
+// PUT /api/admin/menus/[key] — admin 整树覆盖写：zod 校验 400；无 DB 503；写入异常由 menu-admin 记录日志后抛出 → 500
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
 

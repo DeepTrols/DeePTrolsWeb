@@ -1,6 +1,7 @@
 import { desc, eq } from 'drizzle-orm'
 import { useNewsDatabase } from '../db/client'
 import { mediaAssets } from '../db/schema'
+import { internalServerError, logServerError } from './server-log'
 
 /** 上传协议边界（TASK-015.7）：白名单位图类型 + 5MB 上限；SVG 同源直开有 XSS 面，首期禁传 */
 export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
@@ -60,7 +61,7 @@ function toRecord(row: typeof mediaAssets.$inferSelect): MediaAssetRecord {
   return { ...row, createdAt: row.createdAt.toISOString() }
 }
 
-/** 媒体列表（admin）：最新在前；未配置 DB 返回空表（读侧不报错，页面显示空状态） */
+/** 媒体列表（admin）：最新在前；未配置 DB 返回空表；查询异常记录日志后抛出（端点 500） */
 export async function listMedia(): Promise<MediaAssetRecord[]> {
   const db = useNewsDatabase()
   if (!db) {
@@ -75,12 +76,14 @@ export async function listMedia(): Promise<MediaAssetRecord[]> {
       .limit(500)
     return rows.map(toRecord)
   }
-  catch {
-    return []
+  catch (error) {
+    throw internalServerError('media-admin.listMedia', error)
   }
 }
 
-/** 登记上传记录：成功返回行；无 DB/失败返回 null（调用方需回滚已落盘文件） */
+/** 登记上传记录：成功返回行；无 DB/失败返回 null（调用方需回滚已落盘文件）。
+ *  注意：此处异常不抛出——upload.post.ts 依赖 null 分支删除已落盘文件，抛出会跳过回滚产生孤儿资源；
+ *  失败原因通过 logServerError 落日志（状态码细化属上传链路任务） */
 export async function createMediaRecord(input: MediaAssetInput): Promise<MediaAssetRecord | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -91,12 +94,13 @@ export async function createMediaRecord(input: MediaAssetInput): Promise<MediaAs
     const rows = await db.insert(mediaAssets).values(input).returning()
     return rows[0] ? toRecord(rows[0]) : null
   }
-  catch {
+  catch (error) {
+    logServerError('media-admin.createMediaRecord', error, { path: input.path })
     return null
   }
 }
 
-/** 删除记录：命中返回 path（调用方负责删文件）；未命中/无 DB/失败返回 null */
+/** 删除记录：命中返回 path（调用方负责删文件）；未命中/无 DB 返回 null（端点 404）；异常记录日志后抛出（端点 500） */
 export async function deleteMediaRecord(id: number): Promise<string | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -110,7 +114,7 @@ export async function deleteMediaRecord(id: number): Promise<string | null> {
       .returning({ path: mediaAssets.path })
     return rows[0]?.path ?? null
   }
-  catch {
-    return null
+  catch (error) {
+    throw internalServerError('media-admin.deleteMediaRecord', error, { id })
   }
 }

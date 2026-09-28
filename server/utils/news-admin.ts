@@ -5,6 +5,7 @@ import { useNewsDatabase } from '../db/client'
 import { news, newsDetails } from '../db/schema'
 import { articleBlocksSchema, parseArticleBlocks } from './article-blocks'
 import { isoDateSchema } from './content-admin'
+import { internalServerError } from './server-log'
 
 export const newsCategorySchema = z.enum(['company', 'media', 'insight'])
 export const newsStatusSchema = z.enum(['draft', 'published'])
@@ -46,7 +47,7 @@ export interface AdminNewsPayload {
   blocks: ArticleBlock[] | null
 }
 
-/** 新闻列表（admin）：含草稿，最新更新在前；未配置 DB 返回空表 */
+/** 新闻列表（admin）：含草稿，最新更新在前；未配置 DB 返回空表；查询异常记录日志后抛出（端点 500） */
 export async function listAdminNews(): Promise<AdminNewsRecord[]> {
   const db = useNewsDatabase()
   if (!db) {
@@ -81,12 +82,12 @@ export async function listAdminNews(): Promise<AdminNewsRecord[]> {
       updatedAt: row.updatedAt.toISOString(),
     }))
   }
-  catch {
-    return []
+  catch (error) {
+    throw internalServerError('news-admin.listAdminNews', error)
   }
 }
 
-/** 编辑载荷：含 blocks；无详情行时 blocks 为 null（表单显示空态） */
+/** 编辑载荷：含 blocks；无详情行时 blocks 为 null（表单显示空态）；未配置 DB/未命中返回 null，异常记录日志后抛出（端点 500） */
 export async function getAdminNews(id: number): Promise<AdminNewsPayload | null> {
   const db = useNewsDatabase()
   if (!db) {
@@ -120,34 +121,60 @@ export async function getAdminNews(id: number): Promise<AdminNewsPayload | null>
       blocks: row.blocks ? parseArticleBlocks(row.blocks) : null,
     }
   }
-  catch {
-    return null
+  catch (error) {
+    throw internalServerError('news-admin.getAdminNews', error, { id })
   }
 }
 
-/** 新建：id 取 max(id)+1（静态种子占用 1..N，新增顺延）；返回新 id，无 DB/失败返回 null */
+/**
+ * postgres 23505（unique_violation）判定（审计#15）：news/pages/reports 写路径共用——
+ * createNews 据此对 max(id)+1 主键竞态重试，check-then-insert 的并发窗口据此映射为既有 conflict（409）语义。
+ */
+export function isUniqueViolationError(error: unknown): boolean {
+  return typeof error === 'object' && error !== null && (error as { code?: unknown }).code === '23505'
+}
+
+/** createNews 主键竞态重试上限（保守方案，不做 schema 迁移）：重试用尽仍 23505 → 按冲突语义抛 409 */
+const CREATE_NEWS_MAX_RETRIES = 3
+
+/**
+ * 新建：id 取 max(id)+1（静态种子占用 1..N，新增顺延）；返回新 id，未配置 DB 返回 null。
+ * 并发下两个请求可能算出同一 id（23505 主键冲突）：捕获后重算 id 重试（最多 CREATE_NEWS_MAX_RETRIES 次），
+ * 仍冲突按重复语义抛 409（只落 warn，不算服务端故障）；其余异常记录日志后抛出（端点 500）。
+ */
 export async function createNews(input: NewsInput): Promise<number | null> {
   const db = useNewsDatabase()
   if (!db) {
     return null
   }
 
-  try {
-    return await db.transaction(async (tx) => {
-      const rows = await tx.select({ value: max(news.id) }).from(news)
-      const id = (rows[0]?.value ?? 0) + 1
-      const { blocks, ...fields } = input
-      await tx.insert(news).values({ id, ...fields })
-      await tx.insert(newsDetails).values({ newsId: id, blocks: blocks as ArticleBlock[] })
-      return id
-    })
-  }
-  catch {
-    return null
+  const { blocks, ...fields } = input
+  let conflictRetries = 0
+  for (;;) {
+    try {
+      return await db.transaction(async (tx) => {
+        const rows = await tx.select({ value: max(news.id) }).from(news)
+        const id = (rows[0]?.value ?? 0) + 1
+        await tx.insert(news).values({ id, ...fields })
+        await tx.insert(newsDetails).values({ newsId: id, blocks: blocks as ArticleBlock[] })
+        return id
+      })
+    }
+    catch (error) {
+      if (!isUniqueViolationError(error)) {
+        throw internalServerError('news-admin.createNews', error)
+      }
+      conflictRetries += 1
+      if (conflictRetries > CREATE_NEWS_MAX_RETRIES) {
+        console.warn('[server] news-admin.createNews unique conflict persists', { retries: CREATE_NEWS_MAX_RETRIES })
+        throw createError({ statusCode: 409, statusMessage: 'News id conflict' })
+      }
+      console.warn('[server] news-admin.createNews unique conflict, retrying', { attempt: conflictRetries })
+    }
   }
 }
 
-/** 更新：列表字段全量替换 + 详情 upsert（缺详情行的旧数据可补写）；命中行返回 true */
+/** 更新：列表字段全量替换 + 详情 upsert（缺详情行的旧数据可补写）；命中行返回 true，未配置 DB/未命中返回 false；异常记录日志后抛出（端点 500） */
 export async function updateNews(id: number, input: NewsInput): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -172,12 +199,12 @@ export async function updateNews(id: number, input: NewsInput): Promise<boolean>
       return true
     })
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('news-admin.updateNews', error, { id })
   }
 }
 
-/** 删除：详情行随 FK 级联；命中行返回 true */
+/** 删除：详情行随 FK 级联；命中行返回 true，未配置 DB/未命中返回 false；异常记录日志后抛出（端点 500） */
 export async function deleteNews(id: number): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -188,7 +215,31 @@ export async function deleteNews(id: number): Promise<boolean> {
     const rows = await db.delete(news).where(eq(news.id, id)).returning({ id: news.id })
     return rows.length > 0
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('news-admin.deleteNews', error, { id })
+  }
+}
+
+/**
+ * featured 单列切换（审计#16）：只更新 featured 一列，不触碰 blocks 等其他字段——
+ * 列表页推荐开关不再走「GET 整条 → 全量 PUT」读改写，缺正文的旧数据也可取消推荐。
+ * 命中行返回 true；行不存在返回 false（端点 404）；未配置 DB 返回 null（端点 503）；异常记录日志后抛出（端点 500）。
+ */
+export async function setNewsFeatured(id: number, featured: boolean): Promise<boolean | null> {
+  const db = useNewsDatabase()
+  if (!db) {
+    return null
+  }
+
+  try {
+    const rows = await db
+      .update(news)
+      .set({ featured })
+      .where(eq(news.id, id))
+      .returning({ id: news.id })
+    return rows.length > 0
+  }
+  catch (error) {
+    throw internalServerError('news-admin.setNewsFeatured', error, { id })
   }
 }

@@ -2,6 +2,7 @@ import { desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { useNewsDatabase } from '../db/client'
 import { leads } from '../db/schema'
+import { internalServerError } from './server-log'
 
 /** 线索状态流转协议：admin PATCH 的入口校验 */
 export const leadStatusSchema = z.enum(['new', 'followed', 'closed'])
@@ -19,7 +20,7 @@ export interface LeadRecord {
   createdAt: string
 }
 
-/** 线索列表（admin）：最新在前；未配置 DB 返回空表（读侧不报错，页面显示空状态） */
+/** 线索列表（admin）：最新在前；未配置 DB 返回空表（页面显示空状态）；查询异常记录日志后抛出（端点 500） */
 export async function listLeads(): Promise<LeadRecord[]> {
   const db = useNewsDatabase()
   if (!db) {
@@ -45,12 +46,12 @@ export async function listLeads(): Promise<LeadRecord[]> {
 
     return rows.map(row => ({ ...row, createdAt: row.createdAt.toISOString() }))
   }
-  catch {
-    return []
+  catch (error) {
+    throw internalServerError('leads-admin.listLeads', error)
   }
 }
 
-/** 状态流转：命中行返回 true；未配置 DB / 未知 id / 失败返回 false（API 层 404 语义） */
+/** 状态流转：命中行返回 true；未配置 DB / 未知 id 返回 false（API 层 404 语义）；异常记录日志后抛出（端点 500） */
 export async function updateLeadStatus(id: number, status: LeadStatus): Promise<boolean> {
   const db = useNewsDatabase()
   if (!db) {
@@ -65,7 +66,7 @@ export async function updateLeadStatus(id: number, status: LeadStatus): Promise<
       .returning({ id: leads.id })
     return rows.length > 0
   }
-  catch {
-    return false
+  catch (error) {
+    throw internalServerError('leads-admin.updateLeadStatus', error, { id })
   }
 }
