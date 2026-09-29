@@ -15,7 +15,8 @@ export function registerBackendNewsVisualContracts() {
     const listPage = readComponent('pages/news/index.vue')
     const detailPage = readComponent('pages/news/[id].vue')
 
-    expect(schema).toContain("pgEnum('news_category', ['company', 'media', 'insight'])")
+    // 015.16：分类动态化——news.category 由 pgEnum 改 varchar(50)，取值由 content_categories 表管理
+    expect(schema).toContain("varchar('category', { length: 50 })")
     expect(schema).toContain("pgEnum('news_status', ['draft', 'published'])")
     expect(schema).toContain("pgTable('news'")
     expect(schema).toContain("pgTable('news_details'")
@@ -39,7 +40,7 @@ export function registerBackendNewsVisualContracts() {
     expect(blocks).toContain('export function parseArticleBlocks(input: unknown): ArticleBlock[]')
 
     expect(listApi).toContain('listNewsItems')
-    expect(listApi).toContain('newsCategoryTabs.some(tab => tab.key === query.category)')
+    expect(listApi).toContain('query.category.length <= 50')
     expect(detailApi).toContain('getNewsPayloadById')
     expect(detailApi).toContain("statusCode: 404")
     expect(detailApi).toContain("statusCode: 400")

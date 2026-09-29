@@ -220,6 +220,21 @@ export const harnessSourcePaths = {
     'server/api/admin/reports/[id]/featured.patch.ts',
   backendAdminCaseFeaturedPatchApi:
     'server/api/admin/cases/[slug]/featured.patch.ts',
+  backendCategoryAdminUtil: 'server/utils/category-admin.ts',
+  backendCategoriesPublicApi: 'server/api/categories/index.get.ts',
+  backendAdminCategoriesListApi: 'server/api/admin/categories/index.get.ts',
+  backendAdminCategoriesCreateApi: 'server/api/admin/categories/index.post.ts',
+  backendAdminCategoryUpdateApi:
+    'server/api/admin/categories/[scope]/[key].put.ts',
+  backendAdminCategoryDeleteApi:
+    'server/api/admin/categories/[scope]/[key].delete.ts',
+  solutionCategoriesData: 'data/solution-categories.ts',
+  categoriesComposable: 'composables/use-categories.ts',
+  adminContentRoutes:
+    'admin/apps/web-antd/src/router/routes/modules/content.ts',
+  adminCategoriesView: 'admin/apps/web-antd/src/views/content/categories.vue',
+  adminContentOptions:
+    'admin/apps/web-antd/src/views/content/shared/options.ts',
   adminComponentsApi: 'admin/apps/web-antd/src/api/components.ts',
   adminComponentsRoutes:
     'admin/apps/web-antd/src/router/routes/modules/components.ts',

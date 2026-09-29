@@ -8,6 +8,7 @@ import ProductMetricsSection from '~/components/common/ProductMetricsSection.vue
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import ReportFilterBar from '~/components/service/report/ReportFilterBar.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
+import { useSolutionCategories } from '~/composables/use-categories'
 import { caseMetrics, caseResources } from '~/data/cases'
 import type { CaseResource } from '~/data/cases'
 import { reportFilterTabs } from '~/data/reports'
@@ -19,10 +20,16 @@ const { data: caseList } = await useFetch<CaseResource[]>('/api/cases', {
 })
 
 const route = useRoute()
+// 015.16：行业分类动态化——?category= 校验以动态分类为准（与 ReportFilterBar 共享同一 useFetch 缓存），失败回退静态 reportFilterTabs
+const { data: solutionTabs } = await useSolutionCategories()
+const solutionKeys = computed(() => [
+  'all',
+  ...(solutionTabs.value ?? reportFilterTabs.slice(1)).map(tab => tab.key),
+])
 const categoryQuery = route.query.category
 const activeCaseFilter = ref<ReportFilterKey>(
-  typeof categoryQuery === 'string' && reportFilterTabs.some((tab) => tab.key === categoryQuery)
-    ? (categoryQuery as ReportFilterKey)
+  typeof categoryQuery === 'string' && solutionKeys.value.includes(categoryQuery)
+    ? categoryQuery
     : 'all',
 )
 const caseSearchQuery = ref('')

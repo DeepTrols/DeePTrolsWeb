@@ -1,12 +1,6 @@
-export type ReportResourceType = '产品规格书' | '电子书' | '白皮书' | '视频' | '幻灯片' | '基准测试报告'
-export type ReportSolutionFilterKey =
-  | 'data-infrastructure'
-  | 'knowledge-engineering'
-  | 'smart-manufacturing'
-  | 'smart-water'
-  | 'smart-education'
-  | 'fde'
-  | 'compute-power'
+// 015.16 起分类动态化（content_categories 表，scope=report-type / solution）：key 放宽为任意字符串，静态常量仅作回退
+export type ReportResourceType = string
+export type ReportSolutionFilterKey = string
 export type ReportFilterKey = 'all' | ReportSolutionFilterKey
 
 export interface ReportFilterTab {

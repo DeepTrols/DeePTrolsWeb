@@ -6,6 +6,7 @@ import NewsHero from '~/components/news/NewsHero.vue'
 import NewsListSection from '~/components/news/NewsListSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
+import { useNewsCategories } from '~/composables/use-categories'
 import { newsCategoryTabs, newsItems } from '~/data/news'
 import type { NewsCategory, NewsItem } from '~/data/news'
 
@@ -17,10 +18,14 @@ const { data: newsList } = await useFetch<NewsItem[]>('/api/news', {
   default: () => newsItems,
 })
 
+// 015.16：分类动态化——query 校验以动态 tabs 为准（与 NewsCategoryTabs 共享同一 useFetch 缓存 key），失败回退静态
+const { data: dynamicCategories } = useNewsCategories()
+
 function toNewsCategory(value: unknown): NewsCategory {
-  return typeof value === 'string' && newsCategoryTabs.some((tab) => tab.key === value)
-    ? (value as NewsCategory)
-    : 'company'
+  const tabs = dynamicCategories.value ?? newsCategoryTabs
+  return typeof value === 'string' && tabs.some((tab) => tab.key === value)
+    ? value
+    : (tabs[0]?.key ?? 'company')
 }
 
 // ?category= query 校验先例沿用 pages/cases/index.vue；tab 切换时同步 query

@@ -584,4 +584,88 @@ export function registerBackendAdminVisualContracts() {
     expect(casesList).toContain('setCaseFeaturedApi(record.slug, checked)')
     expect(casesList).toContain('案例精选最多 3 条')
   })
+
+  it('drives content categories from content_categories with soft-FK guards (015.16)', () => {
+    const categoryAdmin = readComponent('server/utils/category-admin.ts')
+
+    // 协议层：三 scope 白名单、静态快照回退、软外键存在性校验、引用计数删除保护
+    expect(categoryAdmin).toContain('CATEGORY_SCOPES')
+    expect(categoryAdmin).toContain("'news-category', 'solution', 'report-type'")
+    expect(categoryAdmin).toContain('export function staticCategoriesFor(')
+    expect(categoryAdmin).toContain('export async function assertCategoryExists(')
+    expect(categoryAdmin).toContain('export async function countCategoryRefs(')
+    expect(categoryAdmin).toContain("return 'in-use'")
+
+    // 公开读 DB 优先回退静态快照；admin 四路由三态语义
+    const publicApi = readComponent('server/api/categories/index.get.ts')
+    expect(publicApi).toContain("source: 'static' as const")
+    expect(publicApi).toContain('staticCategoriesFor(scope)')
+    expect(
+      readComponent('server/api/admin/categories/index.post.ts'),
+    ).toContain("'Category already exists'")
+    expect(
+      readComponent('server/api/admin/categories/[scope]/[key].delete.ts'),
+    ).toContain('Category in use')
+
+    // 软外键：六条内容写入路径全部过存在性校验
+    for (const route of [
+      'server/api/admin/news/index.post.ts',
+      'server/api/admin/news/[id].put.ts',
+    ]) {
+      expect(readComponent(route)).toContain("assertCategoryExists('news-category'")
+    }
+    for (const route of [
+      'server/api/admin/cases/index.post.ts',
+      'server/api/admin/cases/[slug].put.ts',
+    ]) {
+      expect(readComponent(route)).toContain("assertCategoryExists('solution'")
+    }
+    for (const route of [
+      'server/api/admin/reports/index.post.ts',
+      'server/api/admin/reports/[id].put.ts',
+    ]) {
+      expect(readComponent(route)).toContain("assertCategoryExists('report-type'")
+    }
+
+    // zod z.enum 全部放宽为字符串格式校验（存在性校验在路由层）
+    for (const util of [
+      'server/utils/content-admin.ts',
+      'server/utils/news-admin.ts',
+      'server/utils/reports-admin.ts',
+    ]) {
+      expect(readComponent(util)).toContain('z.string().trim().min(1).max(50)')
+    }
+
+    // 静态快照模块 + 主站 composable + 消费点
+    const snapshotData = readComponent('data/solution-categories.ts')
+    expect(snapshotData).toContain('export const solutionCategories')
+    expect(snapshotData).toContain('export const reportTypeCategories')
+    const composable = readComponent('composables/use-categories.ts')
+    expect(composable).toContain('useNewsCategories')
+    expect(composable).toContain('useSolutionCategories')
+    expect(composable).toContain('useReportTypes')
+    const tabs = readComponent('components/news/NewsCategoryTabs.vue')
+    expect(tabs).toContain('useNewsCategories')
+    expect(tabs).toContain('class="container flex h-[74px]"')
+    const filterBar = readComponent(
+      'components/service/report/ReportFilterBar.vue',
+    )
+    expect(filterBar).toContain('useSolutionCategories')
+    expect(filterBar).toContain('withTypeFilter')
+
+    // vben：分类管理路由 + 视图 + 异步 options
+    const routes = readComponent(
+      'admin/apps/web-antd/src/router/routes/modules/content.ts',
+    )
+    const view = readComponent(
+      'admin/apps/web-antd/src/views/content/categories.vue',
+    )
+    const options = readComponent(
+      'admin/apps/web-antd/src/views/content/shared/options.ts',
+    )
+    expect(routes).toContain('/content/categories')
+    expect(view).toContain('listAdminCategoriesApi')
+    expect(view).toContain('refs')
+    expect(options).toContain('useCategoryOptions')
+  })
 }

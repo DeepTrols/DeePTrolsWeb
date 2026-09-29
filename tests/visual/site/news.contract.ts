@@ -49,8 +49,9 @@ export function registerNewsVisualContracts() {
 
     expect(tabs).toContain('shadow-[0_12px_20px_#f1f5fa]')
     expect(tabs).toContain('h-[74px]')
-    expect(tabs).toContain('class="container grid h-[74px] grid-cols-3"')
-    expect(tabs).toContain('grid-cols-3')
+    expect(tabs).toContain('class="container flex h-[74px]"')
+    expect(tabs).toContain('flex-1')
+    expect(tabs).toContain('useNewsCategories')
     expect(tabs).toContain('text-lg leading-[73px] text-[#969696]')
     expect(tabs).toContain('hover:text-primary')
     expect(tabs).toContain('h-1 w-[263px] max-w-full -translate-x-1/2 bg-primary')
@@ -90,7 +91,7 @@ export function registerNewsVisualContracts() {
     expect(pager).not.toContain('<style')
     expect(pager).not.toContain('style=')
 
-    expect(data).toContain('export type NewsCategory = \'company\' | \'media\' | \'insight\'')
+    expect(data).toContain('export type NewsCategory = string')
     expect(data).toContain('export const newsItems: NewsItem[] = [')
     expect(data).toContain('模拟样例')
     expect(data).toContain("{ key: 'company', label: '公司动态' }")

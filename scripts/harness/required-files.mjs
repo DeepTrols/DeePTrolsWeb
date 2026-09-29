@@ -40,6 +40,7 @@ export const requiredTaskFiles = [
   'TASK-015.13-component-registry-and-page-builder.md',
   'TASK-015.14-showcase-modules.md',
   'TASK-015.15-featured-rules.md',
+  'TASK-015.16-content-categories.md',
 ]
 
 export const requiredFiles = [
@@ -201,6 +202,7 @@ export const requiredFiles = [
   'server/db/migrations/0006_watery_shriek.sql',
   'server/db/migrations/0008_regular_ezekiel_stane.sql',
   'server/db/migrations/0009_tiny_thunderbird.sql',
+  'server/db/migrations/0010_damp_skreet.sql',
   'server/utils/article-blocks.ts',
   'server/utils/news-repo.ts',
   'server/utils/cases-repo.ts',
@@ -212,6 +214,16 @@ export const requiredFiles = [
   'server/utils/body-limit.ts',
   'server/utils/featured-limits.ts',
   'tests/featured-limits.spec.ts',
+  'server/utils/category-admin.ts',
+  'server/api/categories/index.get.ts',
+  'server/api/admin/categories/index.get.ts',
+  'server/api/admin/categories/index.post.ts',
+  'server/api/admin/categories/[scope]/[key].put.ts',
+  'server/api/admin/categories/[scope]/[key].delete.ts',
+  'data/solution-categories.ts',
+  'composables/use-categories.ts',
+  'admin/apps/web-antd/src/views/content/categories.vue',
+  'tests/category-admin.spec.ts',
   'server/routes/uploads/[...path].get.ts',
   'server/api/news/index.get.ts',
   'server/api/news/[id].get.ts',

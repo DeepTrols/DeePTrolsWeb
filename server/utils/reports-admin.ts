@@ -7,7 +7,8 @@ import { isUniqueViolationError } from './news-admin'
 import { safeUrlSchema } from './safe-url'
 import { internalServerError } from './server-log'
 
-export const reportTypeSchema = z.enum(['产品规格书', '电子书', '白皮书', '视频', '幻灯片', '基准测试报告'])
+/** 报告类型 key（015.16 起动态化：key=label 允许中文；存在性校验在写入路由经 category-admin.assertCategoryExists；静态快照见 data/solution-categories.ts） */
+export const reportTypeSchema = z.string().trim().min(1).max(50)
 
 /** 报告写入协议（新建/更新同一形状；href 唯一约束冲突返回 'conflict'） */
 export const reportInputSchema = z.object({

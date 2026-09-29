@@ -14,8 +14,9 @@ export function registerBackendContentVisualContracts() {
     const caseDetailPage = readComponent('pages/cases/[slug].vue')
     const reportsPage = readComponent('pages/resources/reports.vue')
 
-    expect(schema).toContain("pgEnum('solution_key'")
-    expect(schema).toContain("pgEnum('report_type', ['产品规格书', '电子书', '白皮书', '视频', '幻灯片', '基准测试报告'])")
+    // 015.16：分类动态化——solution_key/report_type 等五列由 pgEnum 改 varchar(50)，取值由 content_categories 表管理
+    expect(schema).toContain("varchar('solution_key', { length: 50 })")
+    expect(schema).toContain("varchar('type', { length: 50 })")
     expect(schema).toContain("pgEnum('content_status', ['draft', 'published'])")
     expect(schema).toContain("pgTable('cases'")
     expect(schema).toContain("pgTable('case_details'")

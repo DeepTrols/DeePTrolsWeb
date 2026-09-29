@@ -24,9 +24,13 @@ import {
   solutionKeyOptions,
   statusOptions,
   toJsonText,
+  useCategoryOptions,
 } from '../shared/options';
 
 defineOptions({ name: 'ContentCaseEdit' });
+
+// 015.16：行业分类 options 动态化（分类管理维护），失败回退静态 solutionKeyOptions
+const industryOptions = useCategoryOptions('solution', solutionKeyOptions);
 
 const route = useRoute();
 const router = useRouter();
@@ -162,7 +166,7 @@ async function save(publish = false) {
         <Select
           v-model:value="form.solutionKey"
           allow-clear
-          :options="solutionKeyOptions"
+          :options="industryOptions"
           style="max-width: 240px"
         />
       </FormItem>
@@ -186,7 +190,7 @@ async function save(publish = false) {
       <FormItem label="详情分类" required>
         <Select
           v-model:value="form.categoryKey"
-          :options="solutionKeyOptions"
+          :options="industryOptions"
           style="max-width: 240px"
         />
       </FormItem>

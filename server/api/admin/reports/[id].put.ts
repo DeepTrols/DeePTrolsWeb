@@ -1,4 +1,5 @@
 import { requireAdmin } from '../../../utils/admin'
+import { assertCategoryExists } from '../../../utils/category-admin'
 import { assertFeaturedBudget } from '../../../utils/featured-limits'
 import { reportInputSchema, updateReport } from '../../../utils/reports-admin'
 
@@ -22,6 +23,12 @@ export default defineEventHandler(async (event) => {
     if (budget === null) {
       throw createError({ statusCode: 503, statusMessage: 'Database not configured' })
     }
+  }
+
+  // 分类软外键存在性校验（015.16，未知分类 400）：type 必填、solutionKey 可空；category 为自由文本不校验
+  await assertCategoryExists('report-type', parsed.data.type)
+  if (parsed.data.solutionKey) {
+    await assertCategoryExists('solution', parsed.data.solutionKey)
   }
 
   const updated = await updateReport(id, parsed.data)

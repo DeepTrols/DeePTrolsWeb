@@ -98,6 +98,19 @@ export function checkBackendAdminContracts(ctx) {
     backendNewsRepo,
     caseFeaturedSection,
     newsHeroComponent,
+    backendCategoryAdminUtil,
+    backendCategoriesPublicApi,
+    backendAdminCategoriesListApi,
+    backendAdminCategoriesCreateApi,
+    backendAdminCategoryUpdateApi,
+    backendAdminCategoryDeleteApi,
+    solutionCategoriesData,
+    categoriesComposable,
+    adminContentRoutes,
+    adminCategoriesView,
+    adminContentOptions,
+    newsCategoryTabs,
+    reportFilterBar,
   } = ctx
 
   assert(
@@ -509,5 +522,45 @@ export function checkBackendAdminContracts(ctx) {
       newsHeroComponent.includes('item.featured === true') &&
       newsHeroComponent.includes('getNewsByCategory'),
     'Featured budget (015.15) must hard-cap home (news+reports ≤4) and cases (≤3) with 409 on every write path, expose featured in the public list projections, and drive CaseFeaturedSection / NewsHero from the public APIs with static fallback kept in place.',
+  )
+
+  assert(
+    backendCategoryAdminUtil.includes('CATEGORY_SCOPES') &&
+      backendCategoryAdminUtil.includes("'news-category', 'solution', 'report-type'") &&
+      backendCategoryAdminUtil.includes('export function staticCategoriesFor(') &&
+      backendCategoryAdminUtil.includes('export async function assertCategoryExists(') &&
+      backendCategoryAdminUtil.includes('export async function countCategoryRefs(') &&
+      backendCategoryAdminUtil.includes("return 'in-use'") &&
+      backendCategoryAdminUtil.includes('statusCode: 400') &&
+      backendCategoriesPublicApi.includes("source: 'static' as const") &&
+      backendCategoriesPublicApi.includes('staticCategoriesFor(scope)') &&
+      backendAdminCategoriesListApi.includes('listAdminCategories') &&
+      backendAdminCategoriesCreateApi.includes("'Category already exists'") &&
+      backendAdminCategoryUpdateApi.includes('updateCategory') &&
+      backendAdminCategoryDeleteApi.includes("'in-use'") &&
+      backendAdminCategoryDeleteApi.includes('Category in use') &&
+      backendAdminNewsCreateApi.includes("assertCategoryExists('news-category'") &&
+      backendAdminNewsUpdateApi.includes("assertCategoryExists('news-category'") &&
+      backendAdminCasesCreateApi.includes("assertCategoryExists('solution'") &&
+      backendAdminCaseUpdateApi.includes("assertCategoryExists('solution'") &&
+      backendAdminReportsCreateApi.includes("assertCategoryExists('report-type'") &&
+      backendAdminReportUpdateApi.includes("assertCategoryExists('report-type'") &&
+      backendContentAdminUtil.includes('z.string().trim().min(1).max(50)') &&
+      backendNewsAdminUtil.includes('z.string().trim().min(1).max(50)') &&
+      backendReportsAdminUtil.includes('z.string().trim().min(1).max(50)') &&
+      solutionCategoriesData.includes('export const solutionCategories') &&
+      solutionCategoriesData.includes('export const reportTypeCategories') &&
+      categoriesComposable.includes('useNewsCategories') &&
+      categoriesComposable.includes('useSolutionCategories') &&
+      categoriesComposable.includes('useReportTypes') &&
+      newsCategoryTabs.includes('useNewsCategories') &&
+      reportFilterBar.includes('useSolutionCategories') &&
+      reportFilterBar.includes('useReportTypes') &&
+      reportFilterBar.includes('withTypeFilter') &&
+      adminContentRoutes.includes('/content/categories') &&
+      adminCategoriesView.includes('listAdminCategoriesApi') &&
+      adminCategoriesView.includes('refs') &&
+      adminContentOptions.includes('useCategoryOptions'),
+    'Content categories (015.16) must be DB-driven (content_categories, 3 scopes) with static snapshot fallback on the public API, soft-FK existence checks (400) on all six content write paths, reference-counted delete (409 in-use), a dual-filter ReportFilterBar (industry + type), and an admin categories view with async Select options.',
   )
 }

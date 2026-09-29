@@ -1,4 +1,5 @@
 import { requireAdmin } from '../../../utils/admin'
+import { assertCategoryExists } from '../../../utils/category-admin'
 import { assertFeaturedBudget } from '../../../utils/featured-limits'
 import { newsInputSchema, updateNews } from '../../../utils/news-admin'
 
@@ -23,6 +24,9 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 503, statusMessage: 'Database not configured' })
     }
   }
+
+  // category 软外键存在性校验（015.16，未知分类 400）
+  await assertCategoryExists('news-category', parsed.data.category)
 
   const updated = await updateNews(id, parsed.data)
   if (!updated) {

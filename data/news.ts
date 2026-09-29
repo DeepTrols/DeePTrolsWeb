@@ -1,4 +1,5 @@
-export type NewsCategory = 'company' | 'media' | 'insight'
+// 015.16 起分类动态化（content_categories 表，scope=news-category）：key 放宽为任意字符串，静态 tabs 仅作回退
+export type NewsCategory = string
 
 export interface NewsItem {
   id: number

@@ -14,8 +14,8 @@ export function checkBackendContentContracts(ctx) {
   } = ctx
 
   assert(
-    backendNewsSchema.includes("pgEnum('solution_key'") &&
-      backendNewsSchema.includes("pgEnum('report_type', ['产品规格书', '电子书', '白皮书', '视频', '幻灯片', '基准测试报告'])") &&
+    backendNewsSchema.includes("varchar('solution_key', { length: 50 })") &&
+      backendNewsSchema.includes("varchar('type', { length: 50 })") &&
       backendNewsSchema.includes("pgEnum('content_status', ['draft', 'published'])") &&
       backendNewsSchema.includes("pgTable('cases'") &&
       backendNewsSchema.includes("pgTable('case_details'") &&
@@ -23,7 +23,7 @@ export function checkBackendContentContracts(ctx) {
       backendNewsSchema.includes("jsonb('related_products').$type<CaseRelatedProduct[]>()") &&
       backendNewsSchema.includes("serial('id').primaryKey()") &&
       backendNewsSchema.includes("varchar('href', { length: 500 }).notNull().unique()"),
-    'Backend content schema must mirror CaseResource/CaseDetail/ReportResource with solution_key/report_type/content_status enums, jsonb blocks + relatedProducts, and href-unique reports.',
+    'Backend content schema must mirror CaseResource/CaseDetail/ReportResource with varchar category columns (015.16: dynamic categories via content_categories), content_status enum, jsonb blocks + relatedProducts, and href-unique reports.',
   )
 
   assert(

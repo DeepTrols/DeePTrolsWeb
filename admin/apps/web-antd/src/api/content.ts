@@ -1,19 +1,13 @@
 import { requestClient } from '#/api/request';
 
 export type ContentStatus = 'draft' | 'published';
-export type SolutionKey =
-  | 'compute-power'
-  | 'data-infrastructure'
-  | 'fde'
-  | 'knowledge-engineering'
-  | 'smart-education'
-  | 'smart-manufacturing'
-  | 'smart-water';
+/** 015.16 起分类动态化（content_categories 表）：key 放宽为任意字符串 */
+export type SolutionKey = string;
 
 export interface AdminNewsRecord {
   id: number;
   title: string;
-  category: 'company' | 'insight' | 'media';
+  category: string;
   publishedAt: string;
   status: ContentStatus;
   featured: boolean;
@@ -25,7 +19,7 @@ export interface NewsInput {
   title: string;
   summary: string;
   coverImage: string;
-  category: 'company' | 'insight' | 'media';
+  category: string;
   publishedAt: string;
   status: ContentStatus;
   featured: boolean;
@@ -146,3 +140,48 @@ export const setReportFeaturedApi = (id: number, featured: boolean) =>
     data: { featured },
     method: 'PATCH',
   });
+
+// 内容分类（015.16）
+export type CategoryScope = 'news-category' | 'report-type' | 'solution';
+
+export interface AdminCategoryRecord {
+  scope: CategoryScope;
+  key: string;
+  label: string;
+  sortOrder: number;
+  /** 引用计数（删除前置提示；被引用时服务端 409 拒绝删除） */
+  refs: number;
+  updatedAt: string;
+}
+
+export interface CategoryInput {
+  scope: CategoryScope;
+  key: string;
+  label: string;
+  sortOrder: number;
+}
+
+/** 公开端点（无需会话）：编辑页 Select options 也用同一数据源，静态回退在服务端完成 */
+export const listCategoriesApi = (scope: CategoryScope) =>
+  requestClient.get<{ items: { key: string; label: string }[] }>(
+    '/categories',
+    { params: { scope } },
+  );
+
+export const listAdminCategoriesApi = (scope: CategoryScope) =>
+  requestClient.get<AdminCategoryRecord[]>('/admin/categories', {
+    params: { scope },
+  });
+export const createCategoryApi = (data: CategoryInput) =>
+  requestClient.post<{ ok: boolean }>('/admin/categories', data);
+export const updateCategoryApi = (
+  scope: CategoryScope,
+  key: string,
+  data: { label: string; sortOrder: number },
+) =>
+  requestClient.put(
+    `/admin/categories/${scope}/${encodeURIComponent(key)}`,
+    data,
+  );
+export const deleteCategoryApi = (scope: CategoryScope, key: string) =>
+  requestClient.delete(`/admin/categories/${scope}/${encodeURIComponent(key)}`);

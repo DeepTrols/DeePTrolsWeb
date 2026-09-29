@@ -56,14 +56,15 @@ export function checkNewsContracts(ctx) {
   assert(
       newsCategoryTabs.includes('shadow-[0_12px_20px_#f1f5fa]') &&
       newsCategoryTabs.includes('h-[74px]') &&
-      newsCategoryTabs.includes('class="container grid h-[74px] grid-cols-3"') &&
-      newsCategoryTabs.includes('grid-cols-3') &&
+      newsCategoryTabs.includes('class="container flex h-[74px]"') &&
+      newsCategoryTabs.includes('flex-1') &&
+      newsCategoryTabs.includes('useNewsCategories') &&
       newsCategoryTabs.includes('text-lg leading-[73px] text-[#969696]') &&
       newsCategoryTabs.includes('hover:text-primary') &&
       newsCategoryTabs.includes('h-1 w-[263px] max-w-full -translate-x-1/2 bg-primary') &&
       !newsCategoryTabs.includes('<style') &&
       !newsCategoryTabs.includes('style='),
-    'NewsCategoryTabs must replicate the mc-tabs bar (74px white strip, three equal 18px tabs, 263x4 primary underline).',
+    'NewsCategoryTabs must replicate the mc-tabs bar (74px white strip, equal-width 18px tabs, 263x4 primary underline); 015.16: tabs source is dynamic (/api/categories) with static fallback and count-agnostic flex layout.',
   )
 
   assert(
@@ -103,7 +104,7 @@ export function checkNewsContracts(ctx) {
   )
 
   assert(
-    newsData.includes("export type NewsCategory = 'company' | 'media' | 'insight'") &&
+    newsData.includes("export type NewsCategory = string") &&
       newsData.includes('export const newsItems: NewsItem[] = [') &&
       newsData.includes('模拟样例') &&
       newsData.includes("{ key: 'company', label: '公司动态' }") &&

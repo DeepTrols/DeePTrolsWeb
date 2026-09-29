@@ -31,8 +31,8 @@ export function checkCaseDetailContracts(ctx) {
 
   assert(
     casePage.includes('route.query.category') &&
-      casePage.includes('reportFilterTabs.some((tab) => tab.key === categoryQuery)'),
-    'Cases list page must honor the ?category= query used by the detail breadcrumb.',
+      casePage.includes('solutionKeys.value.includes(categoryQuery)'),
+    'Cases list page must honor the ?category= query used by the detail breadcrumb (015.16: validated against dynamic solution categories).',
   )
 
   assert(

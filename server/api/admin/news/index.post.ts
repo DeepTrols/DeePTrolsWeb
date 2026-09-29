@@ -1,8 +1,9 @@
 import { requireAdmin } from '../../../utils/admin'
+import { assertCategoryExists } from '../../../utils/category-admin'
 import { assertFeaturedBudget } from '../../../utils/featured-limits'
 import { createNews, newsInputSchema } from '../../../utils/news-admin'
 
-// POST /api/admin/news — 新建新闻（默认草稿，id 自动顺延）；featured: true 过推荐位预算（015.15，超限 409）
+// POST /api/admin/news — 新建新闻（默认草稿，id 自动顺延）；featured: true 过推荐位预算（015.15，超限 409）；category 软外键存在性校验（015.16，未知分类 400）
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
 
@@ -17,6 +18,8 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 503, statusMessage: 'Database not configured' })
     }
   }
+
+  await assertCategoryExists('news-category', parsed.data.category)
 
   const id = await createNews(parsed.data)
   if (id === null) {

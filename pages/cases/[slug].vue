@@ -10,6 +10,7 @@ import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import { caseResources } from '~/data/cases'
 import { getCaseDetailBySlug } from '~/data/case-details'
 import { reportFilterTabs } from '~/data/reports'
+import { useSolutionCategories } from '~/composables/use-categories'
 import type { CasePayload } from '~/server/utils/cases-repo'
 import type { ArticleBreadcrumbItem, ArticleLinkRowItem } from '~/types/article'
 
@@ -51,8 +52,12 @@ const detail = computed(() => {
   return found
 })
 
+// 015.16：行业标签动态化——key→label 以 /api/categories（solution）为准，失败回退静态 reportFilterTabs
+const { data: solutionTabs } = await useSolutionCategories()
+
 const categoryLabel = computed(() => {
-  const tab = reportFilterTabs.find((item) => item.key === detail.value.categoryKey)
+  const tabs = solutionTabs.value ?? reportFilterTabs
+  const tab = tabs.find((item) => item.key === detail.value.categoryKey)
   return tab?.label ?? '行业案例'
 })
 

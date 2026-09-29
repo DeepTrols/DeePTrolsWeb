@@ -1,14 +1,12 @@
-import { newsCategoryTabs } from '~/data/news'
-import type { NewsCategory } from '~/data/news'
 import { listNewsItems } from '../../utils/news-repo'
 
-// GET /api/news?category=company|media|insight — 公开读；DB 未配置时自动回退静态数据
+// GET /api/news?category=<key> — 公开读；DB 未配置时自动回退静态数据
+// 015.16：分类动态化后 key 不再限静态三值——任意 ≤50 字符串透传 repo 等值过滤（未知 key 得空表）
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
-  const category: NewsCategory | undefined
-    = typeof query.category === 'string' && newsCategoryTabs.some(tab => tab.key === query.category)
-      ? (query.category as NewsCategory)
-      : undefined
+  const category = typeof query.category === 'string' && query.category.trim().length > 0 && query.category.length <= 50
+    ? query.category
+    : undefined
 
   return await listNewsItems(category)
 })

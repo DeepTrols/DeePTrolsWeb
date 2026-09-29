@@ -49,7 +49,9 @@ describe('news input protocol', () => {
   })
 
   it('rejects bad category, bad date, and empty blocks', () => {
-    expect(newsInputSchema.safeParse({ ...validNews, category: 'other' }).success).toBe(false)
+    // 015.16：分类动态化——category 只做格式校验（非空 ≤50），存在性校验移至写入路由（category-admin.assertCategoryExists）
+    expect(newsInputSchema.safeParse({ ...validNews, category: '' }).success).toBe(false)
+    expect(newsInputSchema.safeParse({ ...validNews, category: 'other' }).success).toBe(true)
     expect(newsInputSchema.safeParse({ ...validNews, publishedAt: '2026/09/22' }).success).toBe(false)
     expect(newsInputSchema.safeParse({ ...validNews, blocks: [] }).success).toBe(false)
     expect(newsInputSchema.safeParse({ ...validNews, blocks: [{ type: 'video' }] }).success).toBe(false)
@@ -78,7 +80,9 @@ describe('case input protocol', () => {
   })
 
   it('rejects unknown solutionKey and empty relatedProducts entry', () => {
-    expect(caseInputSchema.safeParse({ ...validCase, categoryKey: 'unknown' }).success).toBe(false)
+    // 015.16：行业分类动态化——categoryKey 只做格式校验，存在性校验移至写入路由
+    expect(caseInputSchema.safeParse({ ...validCase, categoryKey: '' }).success).toBe(false)
+    expect(caseInputSchema.safeParse({ ...validCase, categoryKey: 'unknown' }).success).toBe(true)
     expect(caseInputSchema.safeParse({ ...validCase, relatedProducts: [{ name: '', desc: 'x', href: '/x' }] }).success).toBe(false)
   })
 })
@@ -95,7 +99,9 @@ describe('report input protocol', () => {
   })
 
   it('rejects unknown type and negative sortOrder', () => {
-    expect(reportInputSchema.safeParse({ ...validReport, type: '手册' }).success).toBe(false)
+    // 015.16：报告类型动态化——type 只做格式校验（非空 ≤50），存在性校验移至写入路由
+    expect(reportInputSchema.safeParse({ ...validReport, type: '' }).success).toBe(false)
+    expect(reportInputSchema.safeParse({ ...validReport, type: '手册' }).success).toBe(true)
     expect(reportInputSchema.safeParse({ ...validReport, sortOrder: -1 }).success).toBe(false)
   })
 })

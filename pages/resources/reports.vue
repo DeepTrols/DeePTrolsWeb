@@ -15,16 +15,19 @@ const { data: reportList } = await useFetch<ReportResource[]>('/api/reports', {
 })
 
 const activeReportFilter = ref<ReportFilterKey>('all')
+// 015.16：报告页双筛选——行业（solution scope）+ 类型（report-type scope，key=label）
+const activeReportType = ref<string>('all')
 const reportSearchQuery = ref('')
 const filteredReportResources = computed(() => {
   const keyword = reportSearchQuery.value.trim().toLocaleLowerCase()
 
   return (reportList.value ?? reportResources).filter((item) => {
     const matchesFilter = activeReportFilter.value === 'all' || item.solutionKey === activeReportFilter.value
+    const matchesType = activeReportType.value === 'all' || item.type === activeReportType.value
     const searchableText = `${item.type} ${item.category} ${item.title} ${item.summary}`.toLocaleLowerCase()
     const matchesSearch = !keyword || searchableText.includes(keyword)
 
-    return matchesFilter && matchesSearch
+    return matchesFilter && matchesType && matchesSearch
   })
 })
 
@@ -45,7 +48,9 @@ useSeoMeta({
       <div class="container">
         <ReportFilterBar
           v-model:active-filter="activeReportFilter"
+          v-model:active-type="activeReportType"
           v-model:search-query="reportSearchQuery"
+          with-type-filter
         />
       </div>
       <ReportResourcesSection :items="filteredReportResources" />

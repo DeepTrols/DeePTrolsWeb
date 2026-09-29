@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useNewsCategories } from '~/composables/use-categories'
 import { newsCategoryTabs } from '~/data/news'
 import type { NewsCategory } from '~/data/news'
 
-// 复刻参考站 mc-tabs：74px 白底分类 tab 条（三等分）+ 263×4 主色下划条，
+// 复刻参考站 mc-tabs：74px 白底分类 tab 条（等分 flex）+ 263×4 主色下划条，
 // 激活/hover 文字变主色；切换由父页面同步 ?category= query。
+// 015.16：分类数据源改 /api/categories（DB 优先，失败回退静态 newsCategoryTabs），数量自适应（flex-1）。
 defineProps<{
   activeCategory: NewsCategory
 }>()
@@ -11,16 +14,19 @@ defineProps<{
 defineEmits<{
   change: [category: NewsCategory]
 }>()
+
+const { data: dynamicTabs } = useNewsCategories()
+const tabs = computed(() => dynamicTabs.value ?? newsCategoryTabs)
 </script>
 
 <template>
   <nav class="bg-white shadow-[0_12px_20px_#f1f5fa]" aria-label="新闻分类">
-    <div class="container grid h-[74px] grid-cols-3">
+    <div class="container flex h-[74px]">
       <button
-        v-for="tab in newsCategoryTabs"
+        v-for="tab in tabs"
         :key="tab.key"
         type="button"
-        class="relative cursor-pointer text-lg leading-[73px] text-[#969696] transition-colors duration-200 hover:text-primary"
+        class="relative flex-1 cursor-pointer text-lg leading-[73px] text-[#969696] transition-colors duration-200 hover:text-primary"
         :class="tab.key === activeCategory ? 'text-primary' : ''"
         :aria-current="tab.key === activeCategory ? 'true' : undefined"
         @click="$emit('change', tab.key)"

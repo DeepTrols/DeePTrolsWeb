@@ -7,6 +7,7 @@ import CtaSection from '~/components/common/CtaSection.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import NewsRelatedAside from '~/components/news/NewsRelatedAside.vue'
+import { useNewsCategories } from '~/composables/use-categories'
 import { formatNewsDateShort, getNewsCategoryLabel, newsItems } from '~/data/news'
 import { getNewsDetailById } from '~/data/news-details'
 import type { NewsPayload } from '~/server/utils/news-repo'
@@ -72,7 +73,13 @@ const detail = computed(() => {
   return found
 })
 
-const categoryLabel = computed(() => getNewsCategoryLabel(newsItem.value.category))
+// 015.16：分类标签动态化——key→label 以 /api/categories（news-category）为准，失败回退静态 getNewsCategoryLabel
+const { data: newsCategories } = await useNewsCategories()
+
+const categoryLabel = computed(
+  () => newsCategories.value?.find((tab) => tab.key === newsItem.value.category)?.label
+    ?? getNewsCategoryLabel(newsItem.value.category),
+)
 
 const breadcrumbItems = computed<ArticleBreadcrumbItem[]>(() => [
   { label: '新闻动态', href: '/news' },

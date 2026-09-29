@@ -49,6 +49,12 @@ vi.mock('../server/utils/admin', () => ({
   isAdminRequest: async () => false,
 }))
 
+// 015.16：写入路由在仓储调用前做分类存在性校验（由 tests/category-admin.spec.ts 专项覆盖）——
+// 本文件聚焦 23505 竞态语义，替身为空操作以隔离（否则分类查询会消耗脚本化 select 队列）
+vi.mock('../server/utils/category-admin', () => ({
+  assertCategoryExists: async () => {},
+}))
+
 function chainOver(promise: PromiseLike<unknown>): FakeChain {
   const chain = {} as FakeChain
   const passthrough = () => chain

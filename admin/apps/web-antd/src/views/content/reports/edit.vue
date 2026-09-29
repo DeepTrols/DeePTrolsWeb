@@ -27,9 +27,14 @@ import {
   reportTypeOptions,
   solutionKeyOptions,
   statusOptions,
+  useCategoryOptions,
 } from '../shared/options';
 
 defineOptions({ name: 'ContentReportEdit' });
+
+// 015.16：类型/行业 options 动态化（分类管理维护），失败回退静态常量
+const typeOptions = useCategoryOptions('report-type', reportTypeOptions);
+const industryOptions = useCategoryOptions('solution', solutionKeyOptions);
 
 const route = useRoute();
 const router = useRouter();
@@ -130,7 +135,7 @@ async function save(publish = false) {
       <FormItem label="类型" required>
         <Select
           v-model:value="form.type"
-          :options="reportTypeOptions"
+          :options="typeOptions"
           style="max-width: 240px"
         />
       </FormItem>
@@ -146,7 +151,7 @@ async function save(publish = false) {
         <Select
           v-model:value="form.solutionKey"
           allow-clear
-          :options="solutionKeyOptions"
+          :options="industryOptions"
           style="max-width: 240px"
         />
       </FormItem>

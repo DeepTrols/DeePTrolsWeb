@@ -59,6 +59,12 @@ const routes: RouteRecordRaw[] = [
         meta: { icon: 'lucide:book-open', title: '报告管理' },
       },
       {
+        name: 'ContentCategories',
+        path: '/content/categories',
+        component: () => import('#/views/content/categories.vue'),
+        meta: { icon: 'lucide:tags', title: '分类管理' },
+      },
+      {
         name: 'ContentReportCreate',
         path: '/content/reports/create',
         component: () => import('#/views/content/reports/edit.vue'),

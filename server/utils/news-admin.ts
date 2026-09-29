@@ -7,7 +7,8 @@ import { articleBlocksSchema, parseArticleBlocks } from './article-blocks'
 import { isoDateSchema } from './content-admin'
 import { internalServerError } from './server-log'
 
-export const newsCategorySchema = z.enum(['company', 'media', 'insight'])
+/** 新闻分类 key（015.16 起动态化：格式校验在此，存在性校验在写入路由经 category-admin.assertCategoryExists；静态快照见 data/news.ts newsCategoryTabs） */
+export const newsCategorySchema = z.string().trim().min(1).max(50)
 export const newsStatusSchema = z.enum(['draft', 'published'])
 
 /** 新闻写入协议（admin 新建/更新同一形状；blocks 过 ArticleBlock 判别联合校验） */

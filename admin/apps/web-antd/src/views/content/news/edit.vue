@@ -19,9 +19,19 @@ import { createNewsApi, getAdminNewsApi, updateNewsApi } from '#/api/content';
 
 import BlocksEditor from '../shared/BlocksEditor.vue';
 import ImageField from '../shared/ImageField.vue';
-import { newsCategoryOptions, statusOptions } from '../shared/options';
+import {
+  newsCategoryOptions,
+  statusOptions,
+  useCategoryOptions,
+} from '../shared/options';
 
 defineOptions({ name: 'ContentNewsEdit' });
+
+// 015.16：分类 options 动态化（分类管理维护），失败回退静态 newsCategoryOptions
+const categoryOptions = useCategoryOptions(
+  'news-category',
+  newsCategoryOptions,
+);
 
 const route = useRoute();
 const router = useRouter();
@@ -131,7 +141,7 @@ async function save(publish = false) {
         <ImageField v-model:value="form.coverImage" />
       </FormItem>
       <FormItem label="分类" required>
-        <Select v-model:value="form.category" :options="newsCategoryOptions" />
+        <Select v-model:value="form.category" :options="categoryOptions" />
       </FormItem>
       <FormItem label="发布日期" required>
         <Input

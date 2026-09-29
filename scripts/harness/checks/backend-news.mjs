@@ -15,14 +15,14 @@ export function checkBackendNewsContracts(ctx) {
   } = ctx
 
   assert(
-    backendNewsSchema.includes("pgEnum('news_category', ['company', 'media', 'insight'])") &&
+    backendNewsSchema.includes("varchar('category', { length: 50 })") &&
       backendNewsSchema.includes("pgEnum('news_status', ['draft', 'published'])") &&
       backendNewsSchema.includes("pgTable('news'") &&
       backendNewsSchema.includes("pgTable('news_details'") &&
       backendNewsSchema.includes("jsonb('blocks').$type<ArticleBlock[]>()") &&
       backendNewsSchema.includes("date('published_at', { mode: 'string' })") &&
       backendNewsSchema.includes("onDelete: 'cascade'"),
-    'Backend news schema must mirror NewsItem/NewsDetail with enum constraints, jsonb ArticleBlock blocks, and a cascading 1:1 detail table.',
+    'Backend news schema must mirror NewsItem/NewsDetail with a varchar category column (015.16: dynamic categories via content_categories), jsonb ArticleBlock blocks, and a cascading 1:1 detail table.',
   )
 
   assert(
@@ -53,11 +53,11 @@ export function checkBackendNewsContracts(ctx) {
 
   assert(
     backendNewsListApi.includes('listNewsItems') &&
-      backendNewsListApi.includes('newsCategoryTabs.some(tab => tab.key === query.category)') &&
+      backendNewsListApi.includes('query.category.length <= 50') &&
       backendNewsDetailApi.includes('getNewsPayloadById') &&
       backendNewsDetailApi.includes('statusCode: 400') &&
       backendNewsDetailApi.includes('statusCode: 404'),
-    'News API must expose GET /api/news with category validation and GET /api/news/:id with 400/404 semantics.',
+    'News API must expose GET /api/news with category pass-through (015.16: dynamic categories — any ≤50 string, repo equality-filtered) and GET /api/news/:id with 400/404 semantics.',
   )
 
   assert(

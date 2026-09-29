@@ -28,7 +28,7 @@ export function registerCaseDetailVisualContracts() {
     expect(page).not.toContain('style=')
 
     expect(listPage).toContain('route.query.category')
-    expect(listPage).toContain('reportFilterTabs.some((tab) => tab.key === categoryQuery)')
+    expect(listPage).toContain('solutionKeys.value.includes(categoryQuery)')
 
     expect(breadcrumb).toContain('bg-[#eff0f3]')
     expect(breadcrumb).toContain('pt-[var(--dt-header-height)]')
