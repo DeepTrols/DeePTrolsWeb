@@ -20,7 +20,39 @@ export interface LogoItem {
   text?: string;
 }
 
+/** hero 版式（015.18）：与服务端 page-sections.ts heroVariantSchema 一致 */
+export type HeroVariant =
+  | 'banner-dark'
+  | 'fullscreen-image'
+  | 'fullscreen-video'
+  | 'simple'
+  | 'split-visual';
+
 export type PageSection =
+  | {
+      align?: 'center' | 'left';
+      backgroundImage?: string;
+      backgroundVideo?: string;
+      badge?: string;
+      ctaHref?: string;
+      ctaLabel?: string;
+      description?: string;
+      eyebrow?: string;
+      mediaType?: 'image' | 'video';
+      secondaryCtaHref?: string;
+      secondaryCtaLabel?: string;
+      spacing: SectionSpacing;
+      subtitle?: string;
+      title: string;
+      titleLines?: string[];
+      type: 'hero';
+      variant: HeroVariant;
+      visible: boolean;
+      visualAlt?: string;
+      visualImage?: string;
+      visualName?: string;
+      visualType?: 'component' | 'image' | 'none';
+    }
   | {
       alt: string;
       caption?: string;
@@ -49,17 +81,10 @@ export type PageSection =
       ctaHref: string;
       ctaLabel: string;
       description?: string;
+      metrics?: { label: string; value?: string }[];
       spacing: SectionSpacing;
       title: string;
       type: 'cta';
-      visible: boolean;
-    }
-  | {
-      eyebrow?: string;
-      spacing: SectionSpacing;
-      subtitle?: string;
-      title: string;
-      type: 'hero';
       visible: boolean;
     }
   | {

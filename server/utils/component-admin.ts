@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { CUSTOM_SECTION_NAMES } from '~/components/sections/custom-names'
 import type { ComponentFieldMeta } from '~/components/sections/custom-props'
 import { CUSTOM_COMPONENT_META } from '~/components/sections/custom-props'
+import { HERO_VISUAL_LABELS, HERO_VISUAL_NAMES } from '~/components/sections/hero-visual-names'
 import { useNewsDatabase } from '../db/client'
 import { componentStates, pages } from '../db/schema'
 import { pageSectionsSchema } from './page-sections'
@@ -109,6 +110,11 @@ export function listComponentRegistry(): ComponentRegistryEntry[] {
       fields: meta.fields,
     }
   })
+}
+
+/** hero split-visual 视觉白名单发现（015.18）：name + 中文名下发给 vben hero 表单下拉 */
+export function listHeroVisuals(): { label: string, name: string }[] {
+  return HERO_VISUAL_NAMES.map(name => ({ name, label: HERO_VISUAL_LABELS[name] }))
 }
 
 /** 组件使用统计：组件 ID（标准型=type，定制=组件名）→ 引用页数与 slug 列表 */

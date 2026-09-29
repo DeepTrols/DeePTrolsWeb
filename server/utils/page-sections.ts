@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { CUSTOM_SECTION_NAMES } from '~/components/sections/custom-names'
 import { CUSTOM_COMPONENT_META } from '~/components/sections/custom-props'
+import { HERO_VISUAL_NAMES } from '~/components/sections/hero-visual-names'
 import { navIconComponents } from '~/components/navigation/nav-icons'
 import { articleBlocksSchema } from './article-blocks'
 import { safeUrlSchema } from './safe-url'
@@ -17,13 +18,46 @@ const visibleField = { visible: z.boolean().default(true) }
 export const sectionSpacingSchema = z.enum(['tight', 'compact', 'default']).default('compact')
 const sharedFields = { ...visibleField, spacing: sectionSpacingSchema }
 
-/** 大图横幅： eyebrow/title/subtitle 居中头图区（页面含 hero 区块时替代默认页头） */
+/**
+ * Hero 版式（015.18）：simple=极简文本（存量默认，向后兼容）；
+ * fullscreen-image=全屏背景图横幅（首页 HomeHero 形态）；split-visual=图文分栏（PageHero 家族归并）；
+ * banner-dark=深色媒体横幅（方案页五合一，mediaType 选图/视频）；fullscreen-video=全屏视频居中（FDE 形态）。
+ * per-variant 必填组校验集中在 pageSectionsSchema.superRefine（union 成员不能挂 superRefine）。
+ */
+export const heroVariantSchema = z
+  .enum(['simple', 'fullscreen-image', 'split-visual', 'banner-dark', 'fullscreen-video'])
+  .default('simple')
+
+/** 大图横幅： eyebrow/title/subtitle 居中头图区（页面含 hero 区块时替代默认页头）；
+ *  015.18 起 variant 驱动版式，扁平字段组按 variant 取用（未用字段允许存在但不渲染） */
 export const heroSectionSchema = z.object({
   type: z.literal('hero'),
   ...sharedFields,
+  variant: heroVariantSchema,
   eyebrow: z.string().trim().max(100).optional(),
   title: z.string().trim().min(1).max(500),
   subtitle: z.string().trim().max(1000).optional(),
+  /** fullscreen-image：多行主标题（缺省回退 [title]） */
+  titleLines: z.array(z.string().trim().min(1).max(200)).min(1).max(4).optional(),
+  /** fullscreen-image / banner-dark(image)：背景图（站内路径或 http(s)） */
+  backgroundImage: z.string().trim().max(1000).optional(),
+  /** banner-dark(video) / fullscreen-video：背景视频 */
+  backgroundVideo: z.string().trim().max(1000).optional(),
+  /** banner-dark：媒体类型（缺省 image） */
+  mediaType: z.enum(['image', 'video']).optional(),
+  /** split-visual：徽标文案与对齐（缺省 left） */
+  badge: z.string().trim().max(100).optional(),
+  description: z.string().trim().max(1000).optional(),
+  align: z.enum(['left', 'center']).optional(),
+  ctaLabel: z.string().trim().max(100).optional(),
+  ctaHref: safeUrlSchema(500).optional(),
+  secondaryCtaLabel: z.string().trim().max(100).optional(),
+  secondaryCtaHref: safeUrlSchema(500).optional(),
+  /** split-visual 右侧视觉：none（缺省）/ component（白名单动画）/ image（静态图） */
+  visualType: z.enum(['none', 'component', 'image']).optional(),
+  visualName: z.enum(HERO_VISUAL_NAMES).optional(),
+  visualImage: z.string().trim().max(1000).optional(),
+  visualAlt: z.string().trim().max(500).optional(),
 })
 
 /** 指标带：复用 ProductMetricsSection（items { value, label }，1-8 条） */
@@ -134,6 +168,57 @@ export const pageSectionSchema = z.discriminatedUnion('type', [
   customSectionSchema,
 ])
 export const pageSectionsSchema = z.array(pageSectionSchema).max(50).superRefine((sections, ctx) => {
+  // hero 型区块至多 1 个：多 hero 会渲染出多个 h1，破坏页面标题语义
+  let heroCount = 0
+  for (const [index, section] of sections.entries()) {
+    if (section.type !== 'hero') continue
+    heroCount += 1
+    if (heroCount > 1) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'At most one hero section is allowed',
+        path: [index],
+      })
+    }
+    // per-variant 必填组（015.18）：flat 字段组按 variant 校验，缺字段在这里统一报错
+    const requireField = (field: 'backgroundImage' | 'backgroundVideo' | 'visualImage' | 'visualName', message: string) => {
+      if (!section[field]) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message, path: [index, field] })
+      }
+    }
+    switch (section.variant) {
+      case 'banner-dark': {
+        if ((section.mediaType ?? 'image') === 'video') {
+          requireField('backgroundVideo', 'banner-dark video hero requires backgroundVideo')
+        }
+        else {
+          requireField('backgroundImage', 'banner-dark image hero requires backgroundImage')
+        }
+        break
+      }
+      case 'fullscreen-image': {
+        requireField('backgroundImage', 'fullscreen-image hero requires backgroundImage')
+        break
+      }
+      case 'fullscreen-video': {
+        requireField('backgroundVideo', 'fullscreen-video hero requires backgroundVideo')
+        break
+      }
+      case 'split-visual': {
+        const visualType = section.visualType ?? 'none'
+        if (visualType === 'component') {
+          requireField('visualName', 'split-visual component hero requires visualName')
+        }
+        if (visualType === 'image') {
+          requireField('visualImage', 'split-visual image hero requires visualImage')
+        }
+        break
+      }
+      default: {
+        break
+      }
+    }
+  }
   // zod v3 discriminatedUnion 成员不能挂 superRefine → custom 的 per-name props 校验集中在这里
   for (const [index, section] of sections.entries()) {
     if (section.type !== 'custom') continue

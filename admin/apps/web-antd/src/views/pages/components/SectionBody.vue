@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ComponentRegistryEntry } from '#/api/components';
+import type { ComponentRegistryEntry, HeroVisualEntry } from '#/api/components';
 import type { FeatureGridItem, PageSection } from '#/api/pages';
 
 import { computed, ref, watch } from 'vue';
@@ -20,7 +20,12 @@ import ImageField from '../../content/shared/ImageField.vue';
 import { del } from '../../menus/shared';
 import {
   customSectionOptions as defaultCustomSectionOptions,
+  heroVisualOptions as defaultHeroVisualOptions,
   featureGridColumnOptions,
+  heroAlignOptions,
+  heroMediaTypeOptions,
+  heroVariantOptions,
+  heroVisualTypeOptions,
   spacingOptions,
 } from '../sections';
 
@@ -28,9 +33,11 @@ defineOptions({ name: 'SectionBody' });
 
 // 组件管理（015.12）：custom 组件下拉按启停过滤；缺省回退静态全量
 // 组件注册表（015.13）：customComponents 描述符驱动 custom props 动态表单
+// hero 版式（015.18）：heroVisuals 白名单驱动 split-visual 视觉下拉；缺省回退静态
 const props = defineProps<{
   customComponents?: ComponentRegistryEntry[];
   customSectionOptions?: { label: string; value: string }[];
+  heroVisuals?: HeroVisualEntry[];
 }>();
 
 // 单区块按 type 的字段表单：defineModel 对象字段可直接 v-model（NavColumnEditor 循环别名同一先例）
@@ -39,6 +46,23 @@ const section = defineModel<PageSection>('section', { required: true });
 const customOptions = computed(
   () => props.customSectionOptions ?? defaultCustomSectionOptions,
 );
+
+/** hero split-visual 视觉下拉：API 白名单优先，缺省回退静态 */
+const heroVisualOptions = computed(() =>
+  props.heroVisuals && props.heroVisuals.length > 0
+    ? props.heroVisuals.map((v) => ({ label: v.label, value: v.name }))
+    : defaultHeroVisualOptions,
+);
+
+/** hero fullscreen-image 的多行标题草稿（每行一条；空则清掉字段回退单行 title） */
+const titleLinesDraft = ref('');
+
+function onTitleLinesInput(value: string) {
+  titleLinesDraft.value = value;
+  if (section.value.type !== 'hero') return;
+  const lines = value.split('\n').filter((line) => line.trim().length > 0);
+  section.value.titleLines = lines.length > 0 ? lines : undefined;
+}
 
 /** 当前 custom 组件的注册表条目（描述符表单数据源；无条目 = 零 props 组件） */
 const customEntry = computed(() => {
@@ -81,6 +105,9 @@ watch(
     if (s.type === 'richText') {
       richBlocks.value = s.blocks;
       blocksDraft.value = JSON.stringify(s.blocks, null, 2);
+    }
+    if (s.type === 'hero') {
+      titleLinesDraft.value = (s.titleLines ?? []).join('\n');
     }
   },
   { immediate: true },
@@ -222,13 +249,165 @@ function onJsonBlur(key: string) {
       />
     </div>
     <template v-if="section.type === 'hero'">
-      <Input v-model:value="section.eyebrow" placeholder="眉题（可选）" />
-      <Input v-model:value="section.title" placeholder="主标题（必填）" />
-      <Textarea
-        v-model:value="section.subtitle"
-        :rows="2"
-        placeholder="副标题（可选）"
-      />
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-400">版式</span>
+        <Select
+          v-model:value="section.variant"
+          :options="heroVariantOptions"
+          class="w-40"
+        />
+      </div>
+
+      <!-- 极简文本（默认） -->
+      <template v-if="section.variant === 'simple'">
+        <Input v-model:value="section.eyebrow" placeholder="眉题（可选）" />
+        <Input v-model:value="section.title" placeholder="主标题（必填）" />
+        <Textarea
+          v-model:value="section.subtitle"
+          :rows="2"
+          placeholder="副标题（可选）"
+        />
+      </template>
+
+      <!-- 全屏背景图横幅（首页 HomeHero 形态） -->
+      <template v-else-if="section.variant === 'fullscreen-image'">
+        <Input v-model:value="section.title" placeholder="主标题（必填）" />
+        <Textarea
+          :rows="3"
+          :value="titleLinesDraft"
+          placeholder="多行标题（可选，每行一条；留空用主标题）"
+          @update:value="onTitleLinesInput"
+        />
+        <Textarea
+          v-model:value="section.subtitle"
+          :rows="2"
+          placeholder="副标题（可选）"
+        />
+        <ImageField v-model:value="section.backgroundImage" />
+        <div class="flex gap-2">
+          <Input
+            v-model:value="section.ctaLabel"
+            placeholder="按钮文案（可选）"
+          />
+          <Input
+            v-model:value="section.ctaHref"
+            placeholder="按钮链接（可选）"
+          />
+        </div>
+      </template>
+
+      <!-- 图文分栏（PageHero 家族归并） -->
+      <template v-else-if="section.variant === 'split-visual'">
+        <div class="flex gap-2">
+          <Input v-model:value="section.badge" placeholder="徽章（可选）" />
+          <Select
+            v-model:value="section.align"
+            :options="heroAlignOptions"
+            class="w-28"
+            placeholder="对齐"
+          />
+        </div>
+        <Input v-model:value="section.title" placeholder="主标题（必填）" />
+        <Textarea
+          v-model:value="section.description"
+          :rows="2"
+          placeholder="描述（可选）"
+        />
+        <div class="flex gap-2">
+          <Input
+            v-model:value="section.ctaLabel"
+            placeholder="按钮文案（可选）"
+          />
+          <Input
+            v-model:value="section.ctaHref"
+            placeholder="按钮链接（可选）"
+          />
+        </div>
+        <div class="flex gap-2">
+          <Input
+            v-model:value="section.secondaryCtaLabel"
+            placeholder="次按钮文案（可选）"
+          />
+          <Input
+            v-model:value="section.secondaryCtaHref"
+            placeholder="次按钮链接（可选）"
+          />
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-400">视觉</span>
+          <Select
+            v-model:value="section.visualType"
+            :options="heroVisualTypeOptions"
+            class="w-36"
+          />
+        </div>
+        <Select
+          v-if="section.visualType === 'component'"
+          v-model:value="section.visualName"
+          :options="heroVisualOptions"
+          class="w-64"
+          placeholder="选择注册动画组件"
+        />
+        <template v-if="section.visualType === 'image'">
+          <ImageField v-model:value="section.visualImage" />
+          <Input
+            v-model:value="section.visualAlt"
+            placeholder="视觉图 alt（可选）"
+          />
+        </template>
+      </template>
+
+      <!-- 深色媒体横幅（方案页五合一） -->
+      <template v-else-if="section.variant === 'banner-dark'">
+        <Input v-model:value="section.title" placeholder="主标题（必填）" />
+        <Textarea
+          v-model:value="section.description"
+          :rows="2"
+          placeholder="描述（可选）"
+        />
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-400">媒体</span>
+          <Select
+            v-model:value="section.mediaType"
+            :options="heroMediaTypeOptions"
+            class="w-28"
+            placeholder="类型"
+          />
+        </div>
+        <ImageField
+          v-if="(section.mediaType ?? 'image') === 'image'"
+          v-model:value="section.backgroundImage"
+        />
+        <Input
+          v-else
+          v-model:value="section.backgroundVideo"
+          placeholder="背景视频 URL（mp4）"
+        />
+        <div class="flex gap-2">
+          <Input
+            v-model:value="section.ctaLabel"
+            placeholder="按钮文案（可选）"
+          />
+          <Input
+            v-model:value="section.ctaHref"
+            placeholder="按钮链接（可选）"
+          />
+        </div>
+      </template>
+
+      <!-- 全屏视频居中（FDE 形态，无 CTA） -->
+      <template v-else-if="section.variant === 'fullscreen-video'">
+        <Input v-model:value="section.title" placeholder="主标题（必填）" />
+        <Textarea
+          v-model:value="section.description"
+          :rows="2"
+          placeholder="描述（可选）"
+        />
+        <Input
+          v-model:value="section.backgroundVideo"
+          placeholder="背景视频 URL（mp4，必填）"
+        />
+      </template>
     </template>
 
     <template v-else-if="section.type === 'metrics'">
@@ -328,6 +507,30 @@ function onJsonBlur(key: string) {
         <Input v-model:value="section.ctaLabel" placeholder="按钮文案" />
         <Input v-model:value="section.ctaHref" placeholder="按钮链接" />
       </div>
+      <!-- 指标带（015.18 首页接管：HomeCta 三标签；空数组/未设置 = CtaSection 内建默认） -->
+      <div
+        v-for="(metric, i) in section.metrics ?? []"
+        :key="keyOf(metric)"
+        class="flex items-center gap-2"
+      >
+        <Input v-model:value="metric.label" placeholder="指标说明" />
+        <Button
+          danger
+          size="small"
+          type="link"
+          @click="section.metrics?.splice(i, 1)"
+        >
+          删除
+        </Button>
+      </div>
+      <Button
+        class="self-start"
+        @click="
+          section.metrics = [...(section.metrics ?? []), { label: '指标说明' }]
+        "
+      >
+        新增指标
+      </Button>
     </template>
 
     <template v-else-if="section.type === 'richText'">

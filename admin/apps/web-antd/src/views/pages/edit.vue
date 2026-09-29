@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ComponentRegistryEntry } from '#/api/components';
+import type { ComponentRegistryEntry, HeroVisualEntry } from '#/api/components';
 import type { PageInput, PageSection } from '#/api/pages';
 import type { SectionPreset } from '#/api/presets';
 
@@ -65,6 +65,7 @@ const sectionMode = ref<'json' | 'structured'>('structured');
 // 组件注册表（015.13）：custom props 描述符表单数据源；模板库供面板拖入
 const disabledComponents = ref<string[]>([]);
 const customComponents = ref<ComponentRegistryEntry[]>([]);
+const heroVisuals = ref<HeroVisualEntry[]>([]);
 const presets = ref<SectionPreset[]>([]);
 const enabledSectionTypeOptions = computed(() =>
   sectionTypeOptions.filter(
@@ -94,12 +95,17 @@ async function loadPresets() {
 // 草稿预览（015.13）：iframe 加载主站 ?preview=1（cookie 同站共享）；未保存新页禁用
 const previewOpen = ref(false);
 const previewStamp = ref(0);
+// 预览 slug 只接受站内绝对路径：route.query.slug 可被构造，不过滤协议会把
+// javascript:/data: 送进同源 iframe 的 src，形成管理员上下文执行面
+const PREVIEW_SLUG_RE = /^\/[a-z0-9-/]+$/;
 const previewUrl = computed(() => {
   const base = import.meta.env.DEV ? 'http://localhost:3000' : '';
   const slug = form.slug || pageSlug.value || '';
+  if (!PREVIEW_SLUG_RE.test(slug)) return '';
   return `${base}${slug}?preview=1&_t=${previewStamp.value}`;
 });
 function openPreview() {
+  if (!previewUrl.value) return;
   previewStamp.value = Date.now();
   previewOpen.value = true;
 }
@@ -148,6 +154,7 @@ onMounted(async () => {
       const payload = await getComponentsApi();
       disabledComponents.value = payload.disabled;
       customComponents.value = payload.registry;
+      heroVisuals.value = payload.heroVisuals;
     })(),
     loadPresets(),
   ]);
@@ -203,6 +210,8 @@ async function save(publish = false) {
     }
     message.success(publish ? '已发布' : '已保存');
     router.push('/pages');
+  } catch {
+    // 失败提示由请求拦截器统一弹出；此处吞掉避免 unhandled rejection
   } finally {
     saving.value = false;
   }
@@ -263,6 +272,7 @@ async function save(publish = false) {
           v-model:sections="form.sections"
           :custom-components="enabledCustomComponents"
           :custom-section-options="enabledCustomSectionOptions"
+          :hero-visuals="heroVisuals"
           :presets="presets"
           :section-type-options="enabledSectionTypeOptions"
           @preset-saved="loadPresets"
@@ -310,7 +320,7 @@ async function save(publish = false) {
       width="80%"
     >
       <iframe
-        v-if="previewOpen"
+        v-if="previewOpen && previewUrl"
         class="h-full w-full border-0"
         :src="previewUrl"
         title="草稿预览"

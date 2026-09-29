@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { SectionType } from '../sections';
 
-import type { ComponentRegistryEntry } from '#/api/components';
+import type { ComponentRegistryEntry, HeroVisualEntry } from '#/api/components';
 import type { PageSection } from '#/api/pages';
 import type { SectionPreset } from '#/api/presets';
 
@@ -36,9 +36,11 @@ defineOptions({ name: 'SectionsEditor' });
 
 // 组件管理（015.12）：父级传入按启停过滤后的选项；缺省回退静态全量
 // 拖拽编辑器（015.13）：customComponents 描述符驱动 props 表单；presets 供模板拖入
+// hero 版式（015.18）：heroVisuals 白名单驱动 split-visual 视觉下拉
 const props = defineProps<{
   customComponents?: ComponentRegistryEntry[];
   customSectionOptions?: { label: string; value: string }[];
+  heroVisuals?: HeroVisualEntry[];
   presets?: SectionPreset[];
   sectionTypeOptions?: { label: string; value: SectionType }[];
 }>();
@@ -227,6 +229,7 @@ function add() {
             <SectionBody
               :custom-components="customComponents"
               :custom-section-options="customSectionOptions"
+              :hero-visuals="heroVisuals"
               :section="s"
             />
           </div>

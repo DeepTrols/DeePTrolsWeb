@@ -32,8 +32,15 @@ export interface ComponentUsage {
   slugs: string[];
 }
 
+/** hero split-visual 视觉白名单条目（015.18）：与服务端 hero-visual-names.ts 对齐 */
+export interface HeroVisualEntry {
+  label: string;
+  name: string;
+}
+
 export interface AdminComponentsPayload {
   disabled: string[];
+  heroVisuals: HeroVisualEntry[];
   registry: ComponentRegistryEntry[];
   source: 'db' | 'static';
   updatedAt: null | string;

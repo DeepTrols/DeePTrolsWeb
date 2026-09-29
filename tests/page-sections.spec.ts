@@ -33,6 +33,147 @@ describe('heroSectionSchema', () => {
   })
 })
 
+describe('hero variant（015.18 五版式）', () => {
+  it('无 variant 向后兼容解析为 simple（存量数据）', () => {
+    const parsed = heroSectionSchema.safeParse({ type: 'hero', title: '标题' })
+    expect(parsed.success).toBe(true)
+    if (parsed.success) {
+      expect(parsed.data.variant).toBe('simple')
+    }
+  })
+
+  it('simple 无附加必填组', () => {
+    expect(
+      pageSectionsSchema.safeParse([{ type: 'hero', variant: 'simple', title: '标题' }]).success,
+    ).toBe(true)
+  })
+
+  it('fullscreen-image 必须有 backgroundImage', () => {
+    expect(
+      pageSectionsSchema.safeParse([{ type: 'hero', variant: 'fullscreen-image', title: '标题' }])
+        .success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        {
+          type: 'hero',
+          variant: 'fullscreen-image',
+          title: '标题',
+          titleLines: ['第一行', '第二行'],
+          backgroundImage: '/images/hero.webp',
+        },
+      ]).success,
+    ).toBe(true)
+  })
+
+  it('fullscreen-video 必须有 backgroundVideo', () => {
+    expect(
+      pageSectionsSchema.safeParse([{ type: 'hero', variant: 'fullscreen-video', title: '标题' }])
+        .success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'hero', variant: 'fullscreen-video', title: '标题', backgroundVideo: '/hero.mp4' },
+      ]).success,
+    ).toBe(true)
+  })
+
+  it('banner-dark 按 mediaType 联动必填（缺省 image）', () => {
+    // 缺省 image → 要 backgroundImage
+    expect(
+      pageSectionsSchema.safeParse([{ type: 'hero', variant: 'banner-dark', title: '标题' }])
+        .success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'hero', variant: 'banner-dark', title: '标题', backgroundImage: '/b.webp' },
+      ]).success,
+    ).toBe(true)
+    // video → 要 backgroundVideo，backgroundImage 不算数
+    expect(
+      pageSectionsSchema.safeParse([
+        {
+          type: 'hero',
+          variant: 'banner-dark',
+          title: '标题',
+          mediaType: 'video',
+          backgroundImage: '/b.webp',
+        },
+      ]).success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        {
+          type: 'hero',
+          variant: 'banner-dark',
+          title: '标题',
+          mediaType: 'video',
+          backgroundVideo: '/b.mp4',
+        },
+      ]).success,
+    ).toBe(true)
+  })
+
+  it('split-visual 按 visualType 联动必填（缺省 none 无必填）', () => {
+    expect(
+      pageSectionsSchema.safeParse([{ type: 'hero', variant: 'split-visual', title: '标题' }])
+        .success,
+    ).toBe(true)
+    // component → 要白名单 visualName
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'hero', variant: 'split-visual', title: '标题', visualType: 'component' },
+      ]).success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        {
+          type: 'hero',
+          variant: 'split-visual',
+          title: '标题',
+          visualType: 'component',
+          visualName: 'NotRegistered',
+        },
+      ]).success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        {
+          type: 'hero',
+          variant: 'split-visual',
+          title: '标题',
+          visualType: 'component',
+          visualName: 'DgpHeroVisual',
+        },
+      ]).success,
+    ).toBe(true)
+    // image → 要 visualImage
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'hero', variant: 'split-visual', title: '标题', visualType: 'image' },
+      ]).success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        {
+          type: 'hero',
+          variant: 'split-visual',
+          title: '标题',
+          visualType: 'image',
+          visualImage: '/v.webp',
+          visualAlt: '视觉图',
+        },
+      ]).success,
+    ).toBe(true)
+  })
+
+  it('拒绝未知 variant', () => {
+    expect(
+      pageSectionsSchema.safeParse([{ type: 'hero', variant: 'carousel', title: '标题' }]).success,
+    ).toBe(false)
+  })
+})
+
 describe('metricsSectionSchema', () => {
   it('接受 1-8 条指标', () => {
     const section = { type: 'metrics', items: [{ value: '99.9%', label: '可用性' }] }
@@ -211,5 +352,29 @@ describe('pageSectionSchema discriminatedUnion', () => {
       { type: 'richText', blocks: [{ type: 'divider' }], visible: false },
     ]
     expect(pageSectionsSchema.safeParse(sections).success).toBe(true)
+  })
+
+  it('拒绝多个 hero 区块（页面只允许一个 hero，避免多 h1）', () => {
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'hero', title: '标题 A' },
+        { type: 'hero', title: '标题 B' },
+      ]).success,
+    ).toBe(false)
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'metrics', items: [{ value: '1', label: 'x' }] },
+        { type: 'hero', title: '标题 A' },
+        { type: 'cta', title: 'CTA' },
+        { type: 'hero', title: '标题 B' },
+      ]).success,
+    ).toBe(false)
+    // 单 hero 不受影响
+    expect(
+      pageSectionsSchema.safeParse([
+        { type: 'hero', title: '标题 A' },
+        { type: 'cta', title: 'CTA' },
+      ]).success,
+    ).toBe(true)
   })
 })
