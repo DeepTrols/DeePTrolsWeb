@@ -65,6 +65,12 @@ const routes: RouteRecordRaw[] = [
         meta: { icon: 'lucide:tags', title: '分类管理' },
       },
       {
+        name: 'ContentSolutionCases',
+        path: '/content/solution-cases',
+        component: () => import('#/views/content/solution-cases.vue'),
+        meta: { icon: 'lucide:layout-list', title: '方案案例推荐' },
+      },
+      {
         name: 'ContentReportCreate',
         path: '/content/reports/create',
         component: () => import('#/views/content/reports/edit.vue'),

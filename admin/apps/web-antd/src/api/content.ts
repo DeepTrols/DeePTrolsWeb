@@ -198,3 +198,33 @@ export const deleteCategoryApi = (scope: CategoryScope, key: string) =>
       ...suppressErrorToastConfig,
     },
   );
+
+// 方案页案例推荐（015.17）：solution_case_picks 表，每页 ≤3 条有序案例 slug
+export type SolutionCasePageKey =
+  | 'energy'
+  | 'fde'
+  | 'manufacturing'
+  | 'smart-education'
+  | 'water';
+
+export interface AdminSolutionCasePicksPayload {
+  items: string[];
+  key: SolutionCasePageKey;
+  source: 'db' | 'static';
+  updatedAt: null | string;
+}
+
+export const getSolutionCasePicksApi = (key: SolutionCasePageKey) =>
+  requestClient.get<AdminSolutionCasePicksPayload>(
+    `/admin/solutions/${key}/cases`,
+  );
+// 400（非法整列 / 未知案例 slug）由视图组件弹中文提示，抑制拦截器统一 toast
+export const saveSolutionCasePicksApi = (
+  key: SolutionCasePageKey,
+  items: string[],
+) =>
+  requestClient.put<{ ok: boolean }>(
+    `/admin/solutions/${key}/cases`,
+    { items },
+    { ...suppressErrorToastConfig },
+  );

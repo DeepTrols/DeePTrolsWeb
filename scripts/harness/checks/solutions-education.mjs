@@ -143,13 +143,10 @@ export function checkSolutionsEducationContracts(ctx) {
     'Education architecture diagram must keep the split EMQX Edge 760-wide canvas contract.',
   )
   assert(
-    educationCases.includes('class="container pb-32 lg:pb-44"') &&
-      educationCases.includes('class="flex flex-col gap-11"') &&
-      educationCases.includes('lg:flex-row-reverse') &&
-      educationCases.includes('lg:w-[320px]') &&
-      educationCases.includes('查看案例详情') &&
+    educationCases.includes('SolutionCasePicksSection') &&
+      educationCases.includes('page-key="smart-education"') &&
       !educationCases.includes('<style'),
-    'Education customer cases must reproduce the manufacturing EMQX case card layout with Tailwind only.',
+    'Education customer cases section must delegate to SolutionCasePicksSection with the smart-education page key (015.17).',
   )
   assert(
     productFeatureGridSection.includes('subtitle?: string') &&
@@ -174,9 +171,7 @@ export function checkSolutionsEducationContracts(ctx) {
       educationData.includes("'bg-fuchsia-500/12'") &&
       educationData.includes("'text-blue-500'") &&
       educationData.includes("name: '智曜·AgentOS'") &&
-      educationData.includes("title: 'AI 教师助手'") &&
-      educationData.includes("title: '某高校教育智能体平台'") &&
-      educationData.includes("value: '10,000+'"),
+      educationData.includes("title: 'AI 教师助手'"),
     'Education page copy must stay centralized in data/solutions/education.ts, including EMQX cube color classes as literal strings.',
   )
   assert(

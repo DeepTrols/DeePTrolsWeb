@@ -91,13 +91,10 @@ export function checkSolutionsHydraulicContracts(ctx) {
     'Hydraulic value section must reproduce the HOME WhyTrustTabs card layout with Tailwind-only tags.',
   )
   assert(
-    hydraulicCases.includes('class="container pb-32 lg:pb-44"') &&
-      hydraulicCases.includes('class="flex flex-col gap-11"') &&
-      hydraulicCases.includes('lg:flex-row-reverse') &&
-      hydraulicCases.includes('lg:w-[320px]') &&
-      hydraulicCases.includes('查看案例详情') &&
+    hydraulicCases.includes('SolutionCasePicksSection') &&
+      hydraulicCases.includes('page-key="water"') &&
       !hydraulicCases.includes('<style'),
-    'Hydraulic customer cases must reproduce the manufacturing EMQX case card layout with Tailwind only.',
+    'Hydraulic customer cases section must delegate to SolutionCasePicksSection with the water page key (015.17).',
   )
   assert(
     productFeatureGridSection.includes('points?: string[]') &&
@@ -112,9 +109,7 @@ export function checkSolutionsHydraulicContracts(ctx) {
   assert(
     hydraulicData.includes("image: '/images/solutions/hydraulic-hero.webp'") &&
       hydraulicData.includes("title: '智慧水利解决方案'") &&
-      hydraulicData.includes("title: '水利知识库管理'") &&
-      hydraulicData.includes("title: '某省级水利知识平台'") &&
-      hydraulicData.includes("value: '185类'"),
+      hydraulicData.includes("title: '水利知识库管理'"),
     'Hydraulic page copy must stay centralized in data/solutions/hydraulic.ts.',
   )
   assert(

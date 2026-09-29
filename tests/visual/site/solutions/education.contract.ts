@@ -136,11 +136,8 @@ export function registerEducationVisualContracts() {
     expect(agentDiagram).not.toContain('leftTop.label')
     expect(agentDiagram).not.toContain('<style')
 
-    expect(cases).toContain('class="container pb-32 lg:pb-44"')
-    expect(cases).toContain('class="flex flex-col gap-11"')
-    expect(cases).toContain('lg:flex-row-reverse')
-    expect(cases).toContain('lg:w-[320px]')
-    expect(cases).toContain('查看案例详情')
+    expect(cases).toContain('SolutionCasePicksSection')
+    expect(cases).toContain('page-key="smart-education"')
     expect(cases).not.toContain('<style')
 
     // 共享组件 subtitle/tags 扩展（向后兼容）
@@ -165,8 +162,6 @@ export function registerEducationVisualContracts() {
     expect(data).toContain("'text-blue-500'")
     expect(data).toContain("name: '智曜·AgentOS'")
     expect(data).toContain("title: 'AI 教师助手'")
-    expect(data).toContain("title: '某高校教育智能体平台'")
-    expect(data).toContain("value: '10,000+'")
     expect(existsSync(join(root, 'public/images/solutions/education-hero.webp'))).toBe(true)
     expect(existsSync(join(root, 'public/images/solutions/education/image-placeholder.svg'))).toBe(true)
   })

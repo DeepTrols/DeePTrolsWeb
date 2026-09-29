@@ -161,3 +161,12 @@ export const showcaseLists = pgTable('showcase_lists', {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
+
+// 方案页案例推荐（015.17）：key 主键（manufacturing/water/energy/smart-education/fde 五个代码页），
+// items 存有序案例 slug 数组（≤3 且不重复，写入侧经 zod 校验 + cases 表存在性软外键，见 server/utils/solution-cases-admin.ts）
+export const solutionCasePicks = pgTable('solution_case_picks', {
+  key: varchar('key', { length: 50 }).primaryKey(),
+  items: jsonb('items').$type<string[]>().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})

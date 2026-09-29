@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
   fdeCapabilities,
-  fdeCases,
   fdeCoreValues,
   fdeEvolutionItems,
   fdeHero,
@@ -53,7 +52,5 @@ describe('FDE solution page content contract', () => {
     expect(fdeCapabilities.every((item) => item.points.length === 3)).toBe(true)
     expect(fdeCoreValues).toHaveLength(4)
     expect(fdeCoreValues.every((item) => item.tags?.length === 3)).toBe(true)
-    expect(fdeCases).toHaveLength(3)
-    expect(fdeCases.every((item) => item.stats.length === 3)).toBe(true)
   })
 })

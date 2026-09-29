@@ -235,15 +235,10 @@ export function checkSolutionsFdeContracts(ctx) {
   )
 
   assert(
-    fdeCases.includes('class="container pb-32 lg:pb-44"') &&
-      fdeCases.includes('class="flex flex-col gap-11"') &&
-      fdeCases.includes('flex flex-col rounded-lg border border-default lg:flex-row') &&
-      fdeCases.includes('lg:flex-row-reverse') &&
-      fdeCases.includes('bg-[image:var(--dt-gradient-text)] bg-clip-text text-transparent') &&
-      fdeCases.includes('lg:w-[320px]') &&
-      fdeCases.includes('<BaseButton href="/cases">查看案例详情</BaseButton>') &&
+    fdeCases.includes('SolutionCasePicksSection') &&
+      fdeCases.includes('page-key="fde"') &&
       !fdeCases.includes('<style'),
-    'FDE cases must reproduce the smart-education solution case layout with Tailwind only.',
+    'FDE customer cases section must delegate to SolutionCasePicksSection with the fde page key (015.17).',
   )
 
   assert(

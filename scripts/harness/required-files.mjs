@@ -41,6 +41,7 @@ export const requiredTaskFiles = [
   'TASK-015.14-showcase-modules.md',
   'TASK-015.15-featured-rules.md',
   'TASK-015.16-content-categories.md',
+  'TASK-015.17-solution-case-picks.md',
 ]
 
 export const requiredFiles = [
@@ -203,6 +204,7 @@ export const requiredFiles = [
   'server/db/migrations/0008_regular_ezekiel_stane.sql',
   'server/db/migrations/0009_tiny_thunderbird.sql',
   'server/db/migrations/0010_damp_skreet.sql',
+  'server/db/migrations/0011_big_crusher_hogan.sql',
   'server/utils/article-blocks.ts',
   'server/utils/news-repo.ts',
   'server/utils/cases-repo.ts',
@@ -224,6 +226,14 @@ export const requiredFiles = [
   'composables/use-categories.ts',
   'admin/apps/web-antd/src/views/content/categories.vue',
   'tests/category-admin.spec.ts',
+  'server/utils/solution-cases-admin.ts',
+  'server/api/solutions/[key]/cases.get.ts',
+  'server/api/admin/solutions/[key]/cases.get.ts',
+  'server/api/admin/solutions/[key]/cases.put.ts',
+  'data/solution-case-picks.ts',
+  'components/solution/SolutionCasePicksSection.vue',
+  'admin/apps/web-antd/src/views/content/solution-cases.vue',
+  'tests/solution-cases-admin.spec.ts',
   'server/routes/uploads/[...path].get.ts',
   'server/api/news/index.get.ts',
   'server/api/news/[id].get.ts',

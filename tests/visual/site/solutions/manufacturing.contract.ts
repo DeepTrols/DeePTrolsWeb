@@ -95,18 +95,13 @@ export function registerManufacturingVisualContracts() {
     expect(cards).toContain('group-hover:opacity-100')
     expect(cards).not.toContain('<style')
 
-    expect(cases).toContain('class="container pb-32 lg:pb-44"')
-    expect(cases).toContain('class="flex flex-col gap-11"')
-    expect(cases).toContain('lg:flex-row-reverse')
-    expect(cases).toContain('lg:w-[320px]')
-    expect(cases).toContain('查看案例详情')
+    expect(cases).toContain('SolutionCasePicksSection')
+    expect(cases).toContain('page-key="manufacturing"')
     expect(cases).not.toContain('<style')
 
     expect(data).toContain("image: '/images/solutions/manufacturing-hero.webp'")
     expect(data).toContain("title: '智能制造解决方案'")
     expect(data).toContain("title: 'APS智能生产排程'")
-    expect(data).toContain("title: '某大型装备制造企业'")
-    expect(data).toContain("value: '2,000+'")
     expect(existsSync(join(root, 'public/images/solutions/manufacturing-hero.webp'))).toBe(true)
   })
 }

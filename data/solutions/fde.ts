@@ -238,52 +238,6 @@ export const fdeUseCases: FdeUseCase[] = [
   },
 ]
 
-export interface FdeCaseStat {
-  value: string
-  label: string
-}
-
-export interface FdeCase {
-  title: string
-  description: string
-  stats: FdeCaseStat[]
-  reversed?: boolean
-}
-
-export const fdeCases: FdeCase[] = [
-  {
-    title: '某大型制造企业',
-    description:
-      '围绕生产现场数据与核心业务流程，由 FDE 团队深入业务部门，与工艺、设备及信息化团队共同梳理 AI 应用场景，连接 MES、ERP、设备数据与企业知识，快速构建设备分析与生产辅助智能体，并在真实生产环境持续迭代。',
-    stats: [
-      { value: '20+', label: '核心业务场景梳理' },
-      { value: '10+', label: '业务系统与数据源连接' },
-      { value: '周级', label: 'AI 场景快速验证' },
-    ],
-  },
-  {
-    title: '某能源企业',
-    description:
-      '围绕能源运营与设备管理场景，将运行数据、设备资料、历史工单和专业知识统一接入 AI 应用，通过 FDE 模式快速完成场景定义、知识构建、Agent 开发与业务系统集成。',
-    stats: [
-      { value: '百万级', label: '运行数据处理' },
-      { value: '多系统', label: '业务数据统一连接' },
-      { value: '持续迭代', label: '生产级 AI 应用' },
-    ],
-    reversed: true,
-  },
-  {
-    title: '某大型集团企业',
-    description:
-      '面向集团内部知识获取与业务协同需求，FDE 团队与客户业务人员联合构建企业 AI 助手，连接内部知识、业务数据和办公系统，实现从智能问答逐步扩展至数据分析、材料生成与业务任务执行。',
-    stats: [
-      { value: '10+', label: '核心业务部门覆盖' },
-      { value: '100,000+', label: '企业知识资产接入' },
-      { value: '多场景', label: 'AI Agent 持续扩展' },
-    ],
-  },
-]
-
 export const fdeWorkModeLabel = 'FDE 工作模式能力图'
 export const fdeDeliveryLabel = 'FDE 交付流程能力图'
 export const fdeSolutionLabel = 'FDE 解决方案能力图'

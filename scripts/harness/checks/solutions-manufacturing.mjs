@@ -85,25 +85,20 @@ export function checkSolutionsManufacturingContracts(ctx) {
     'Manufacturing capability cards must reproduce the DeepCtrls sc-card drawer animation with Tailwind only.',
   )
   assert(
-    manufacturingCases.includes('class="container pb-32 lg:pb-44"') &&
-      manufacturingCases.includes('class="flex flex-col gap-11"') &&
-      manufacturingCases.includes('lg:flex-row-reverse') &&
-      manufacturingCases.includes('lg:w-[320px]') &&
-      manufacturingCases.includes('查看案例详情') &&
+    manufacturingCases.includes('SolutionCasePicksSection') &&
+      manufacturingCases.includes('page-key="manufacturing"') &&
       !manufacturingCases.includes('<style'),
-    'Manufacturing customer cases must reproduce the EMQX case card layout with Tailwind only.',
+    'Manufacturing customer cases section must delegate to SolutionCasePicksSection with the manufacturing page key (015.17).',
   )
   assert(
     manufacturingData.includes("image: '/images/solutions/manufacturing-hero.webp'") &&
       manufacturingData.includes("title: '智能制造解决方案'") &&
       manufacturingData.includes("title: 'APS智能生产排程'") &&
-      manufacturingData.includes("title: '某大型装备制造企业'") &&
       manufacturingData.includes('export const manufacturingStages: ManufacturingStage[]') &&
       manufacturingData.includes("{ label: '实时感知', icon: Radar }") &&
       manufacturingData.includes("{ label: '智能分析', icon: BrainCircuit }") &&
       manufacturingData.includes("{ label: '自主决策', icon: Sparkles }") &&
-      manufacturingData.includes("{ label: '决策执行', icon: Zap }") &&
-      manufacturingData.includes("value: '2,000+'"),
+      manufacturingData.includes("{ label: '决策执行', icon: Zap }"),
     'Manufacturing page copy must stay centralized in data/solutions/manufacturing.ts.',
   )
   assert(

@@ -229,14 +229,8 @@ export function registerFdeVisualContracts() {
     expect(valueSection).not.toContain('<style')
     expect(valueSection).not.toContain('style=')
 
-    expect(cases).toContain('class="container pb-32 lg:pb-44"')
-    expect(cases).toContain('class="flex flex-col gap-11"')
-    expect(cases).toContain('flex flex-col rounded-lg border border-default lg:flex-row')
-    expect(cases).toContain('lg:flex-row-reverse')
-    expect(cases).toContain('bg-[image:var(--dt-gradient-text)] bg-clip-text text-transparent')
-    expect(cases).toContain('lg:w-[320px]')
-    expect(cases).toContain('<BaseButton href="/cases">查看案例详情</BaseButton>')
-    expect(cases).toContain('src="/images/solutions/fde/image-placeholder.svg"')
+    expect(cases).toContain('SolutionCasePicksSection')
+    expect(cases).toContain('page-key="fde"')
     expect(cases).not.toContain('<style')
 
     expect(data).toContain("video: '/images/solutions/fde/hero-bg.mp4'")

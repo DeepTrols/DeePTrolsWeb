@@ -111,6 +111,13 @@ export function checkBackendAdminContracts(ctx) {
     adminContentOptions,
     newsCategoryTabs,
     reportFilterBar,
+    solutionCasePicksData,
+    backendSolutionCasesAdminUtil,
+    backendSolutionCasesPublicApi,
+    backendAdminSolutionCasesGetApi,
+    backendAdminSolutionCasesPutApi,
+    solutionCasePicksSection,
+    adminSolutionCasesView,
   } = ctx
 
   assert(
@@ -562,5 +569,48 @@ export function checkBackendAdminContracts(ctx) {
       adminCategoriesView.includes('refs') &&
       adminContentOptions.includes('useCategoryOptions'),
     'Content categories (015.16) must be DB-driven (content_categories, 3 scopes) with static snapshot fallback on the public API, soft-FK existence checks (400) on all six content write paths, reference-counted delete (409 in-use), a dual-filter ReportFilterBar (industry + type), and an admin categories view with async Select options.',
+  )
+
+  assert(
+    solutionCasePicksData.includes(
+      "SOLUTION_CASE_PAGE_KEYS = ['manufacturing', 'water', 'energy', 'smart-education', 'fde'] as const",
+    ) &&
+      solutionCasePicksData.includes('SOLUTION_CASE_FALLBACK_CATEGORY') &&
+      solutionCasePicksData.includes('export function staticSolutionCaseFallback(') &&
+      solutionCasePicksData.includes('export function caseSlugFromHref(') &&
+      backendSolutionCasesAdminUtil.includes('solutionCasePageKeySchema = z.enum(SOLUTION_CASE_PAGE_KEYS)') &&
+      backendSolutionCasesAdminUtil.includes('.max(3)') &&
+      backendSolutionCasesAdminUtil.includes("'Duplicate case slug'") &&
+      backendSolutionCasesAdminUtil.includes('export async function getSolutionCasePicks(') &&
+      backendSolutionCasesAdminUtil.includes('export async function putSolutionCasePicks(') &&
+      backendSolutionCasesAdminUtil.includes('Unknown case slug:') &&
+      backendSolutionCasesAdminUtil.includes('onConflictDoUpdate') &&
+      backendSolutionCasesAdminUtil.includes('export async function resolveSolutionCases(') &&
+      backendSolutionCasesAdminUtil.includes("eq(cases.status, 'published')") &&
+      backendSolutionCasesAdminUtil.includes('inArray(cases.slug, picks.items)'),
+    'Solution case picks protocol (015.17) must keep the five-page key whitelist + fallback category map in a shared pure data module, a ≤3 dedup zod schema, three-state get, upsert put with soft-FK slug existence 400, and published-only ordered resolution.',
+  )
+
+  assert(
+    backendSolutionCasesPublicApi.includes('resolveSolutionCases') &&
+      backendSolutionCasesPublicApi.includes("statusCode: 400, statusMessage: 'Invalid solution case key'") &&
+      !backendSolutionCasesPublicApi.includes('requireAdmin') &&
+      !backendSolutionCasesPublicApi.includes('statusCode: 503') &&
+      backendAdminSolutionCasesGetApi.includes('requireAdmin') &&
+      backendAdminSolutionCasesGetApi.includes("source: 'static' as const") &&
+      backendAdminSolutionCasesGetApi.includes('caseSlugFromHref') &&
+      backendAdminSolutionCasesPutApi.includes('requireAdmin') &&
+      backendAdminSolutionCasesPutApi.includes("statusCode: 400, statusMessage: 'Invalid solution case picks'") &&
+      backendAdminSolutionCasesPutApi.includes('statusCode: 503') &&
+      solutionCasePicksSection.includes('useFetch(`/api/solutions/${props.pageKey}/cases`') &&
+      solutionCasePicksSection.includes('key: `solution-cases-${props.pageKey}`') &&
+      solutionCasePicksSection.includes('staticSolutionCaseFallback') &&
+      adminContentRoutes.includes('/content/solution-cases') &&
+      adminSolutionCasesView.includes('getSolutionCasePicksApi') &&
+      adminSolutionCasesView.includes('saveSolutionCasePicksApi') &&
+      adminSolutionCasesView.includes('listAdminCasesApi') &&
+      adminSolutionCasesView.includes('moveItem') &&
+      adminSolutionCasesView.includes('MAX_PICKS = 3'),
+    'Solution case picks APIs (015.17) must keep the public GET public-and-never-503 (static fallback), admin GET/PUT behind requireAdmin with 400/503 semantics, the main-site component on a fixed per-key useFetch with static fallback, and the vben tabbed editor wired to the cases list with moveItem ordering.',
   )
 }

@@ -668,4 +668,62 @@ export function registerBackendAdminVisualContracts() {
     expect(view).toContain('refs')
     expect(options).toContain('useCategoryOptions')
   })
+
+  it('drives solution page case picks from solution_case_picks (015.17)', () => {
+    const util = readComponent('server/utils/solution-cases-admin.ts')
+
+    // 协议层：五页 key 白名单 + ≤3 去重 schema + 三态 get + 软外键 put + published-only 解析
+    expect(util).toContain('solutionCasePageKeySchema = z.enum(SOLUTION_CASE_PAGE_KEYS)')
+    expect(util).toContain('.max(3)')
+    expect(util).toContain("'Duplicate case slug'")
+    expect(util).toContain('export async function getSolutionCasePicks(')
+    expect(util).toContain('export async function putSolutionCasePicks(')
+    expect(util).toContain('Unknown case slug:')
+    expect(util).toContain('onConflictDoUpdate')
+    expect(util).toContain('export async function resolveSolutionCases(')
+    expect(util).toContain("eq(cases.status, 'published')")
+    expect(util).toContain('inArray(cases.slug, picks.items)')
+
+    // 共享纯数据模块：key 注册表 + 回退分类映射 + 静态回退（server/client 双用）
+    const picksData = readComponent('data/solution-case-picks.ts')
+    expect(picksData).toContain(
+      "SOLUTION_CASE_PAGE_KEYS = ['manufacturing', 'water', 'energy', 'smart-education', 'fde'] as const",
+    )
+    expect(picksData).toContain('SOLUTION_CASE_FALLBACK_CATEGORY')
+    expect(picksData).toContain('export function staticSolutionCaseFallback(')
+
+    // 公开读永不 503（静态回退兜底）；admin GET/PUT 挂 requireAdmin，400/503 语义
+    const publicApi = readComponent('server/api/solutions/[key]/cases.get.ts')
+    expect(publicApi).toContain('resolveSolutionCases')
+    expect(publicApi).toContain("statusCode: 400, statusMessage: 'Invalid solution case key'")
+    expect(publicApi).not.toContain('requireAdmin')
+    expect(publicApi).not.toContain('statusCode: 503')
+    const adminGet = readComponent('server/api/admin/solutions/[key]/cases.get.ts')
+    const adminPut = readComponent('server/api/admin/solutions/[key]/cases.put.ts')
+    expect(adminGet).toContain('requireAdmin')
+    expect(adminGet).toContain("source: 'static' as const")
+    expect(adminPut).toContain('requireAdmin')
+    expect(adminPut).toContain("statusCode: 400, statusMessage: 'Invalid solution case picks'")
+    expect(adminPut).toContain('statusCode: 503')
+
+    // 主站组件：固定 per-key useFetch + 静态回退
+    const section = readComponent('components/solution/SolutionCasePicksSection.vue')
+    expect(section).toContain('useFetch(`/api/solutions/${props.pageKey}/cases`')
+    expect(section).toContain('key: `solution-cases-${props.pageKey}`')
+    expect(section).toContain('staticSolutionCaseFallback')
+
+    // vben：/content/solution-cases 路由 + 视图接案例列表 + 上移下移
+    const routes = readComponent(
+      'admin/apps/web-antd/src/router/routes/modules/content.ts',
+    )
+    const view = readComponent(
+      'admin/apps/web-antd/src/views/content/solution-cases.vue',
+    )
+    expect(routes).toContain('/content/solution-cases')
+    expect(view).toContain('getSolutionCasePicksApi')
+    expect(view).toContain('saveSolutionCasePicksApi')
+    expect(view).toContain('listAdminCasesApi')
+    expect(view).toContain('moveItem')
+    expect(view).toContain('MAX_PICKS = 3')
+  })
 }

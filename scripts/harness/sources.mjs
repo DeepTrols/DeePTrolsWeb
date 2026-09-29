@@ -230,6 +230,13 @@ export const harnessSourcePaths = {
     'server/api/admin/categories/[scope]/[key].delete.ts',
   solutionCategoriesData: 'data/solution-categories.ts',
   categoriesComposable: 'composables/use-categories.ts',
+  solutionCasePicksData: 'data/solution-case-picks.ts',
+  backendSolutionCasesAdminUtil: 'server/utils/solution-cases-admin.ts',
+  backendSolutionCasesPublicApi: 'server/api/solutions/[key]/cases.get.ts',
+  backendAdminSolutionCasesGetApi: 'server/api/admin/solutions/[key]/cases.get.ts',
+  backendAdminSolutionCasesPutApi: 'server/api/admin/solutions/[key]/cases.put.ts',
+  solutionCasePicksSection: 'components/solution/SolutionCasePicksSection.vue',
+  adminSolutionCasesView: 'admin/apps/web-antd/src/views/content/solution-cases.vue',
   adminContentRoutes:
     'admin/apps/web-antd/src/router/routes/modules/content.ts',
   adminCategoriesView: 'admin/apps/web-antd/src/views/content/categories.vue',

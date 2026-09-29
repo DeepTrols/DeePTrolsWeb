@@ -104,20 +104,15 @@ export function checkSolutionsEnergySavingContracts(ctx) {
     'Energy-saving value section must render a left-aligned title-only header with three BaseCards.',
   )
   assert(
-    energySavingCases.includes('class="container pb-32 lg:pb-44"') &&
-      energySavingCases.includes('class="flex flex-col gap-11"') &&
-      energySavingCases.includes('lg:flex-row-reverse') &&
-      energySavingCases.includes('lg:w-[320px]') &&
-      energySavingCases.includes('查看案例详情') &&
+    energySavingCases.includes('SolutionCasePicksSection') &&
+      energySavingCases.includes('page-key="energy"') &&
       !energySavingCases.includes('<style'),
-    'Energy-saving customer cases must reproduce the manufacturing EMQX case card layout with Tailwind only.',
+    'Energy-saving customer cases section must delegate to SolutionCasePicksSection with the energy page key (015.17).',
   )
   assert(
     energySavingData.includes("image: '/images/solutions/energy-saving-hero.webp'") &&
       energySavingData.includes("title: '智慧储能解决方案'") &&
-      energySavingData.includes("title: '储能设备接入管理'") &&
-      energySavingData.includes("title: '某大型工业园区储能项目'") &&
-      energySavingData.includes("value: '99.9%'"),
+      energySavingData.includes("title: '储能设备接入管理'"),
     'Energy-saving page copy must stay centralized in data/solutions/energy-saving.ts.',
   )
   assert(
