@@ -51,8 +51,8 @@ async function toggleFeatured(record: AdminReportRecord, checked: boolean) {
     await fetchRows();
   } catch (error: unknown) {
     // 推荐位预算硬限制（015.15）：409 = 首页推荐已达 4 条上限
-    const status = (error as null | { response?: { status?: number } })
-      ?.response?.status;
+    // vben RequestClient 抛的是 h3 错误体（error.response 已丢失），状态码读 statusCode
+    const status = (error as null | { statusCode?: number })?.statusCode;
     message.error(
       status === 409
         ? '首页推荐最多 4 条（新闻+报告合计），请先取消其他推荐'

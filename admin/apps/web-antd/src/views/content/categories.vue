@@ -95,8 +95,8 @@ async function handleSave() {
     modalOpen.value = false;
     await fetchRows();
   } catch (error: unknown) {
-    const status = (error as null | { response?: { status?: number } })
-      ?.response?.status;
+    // vben RequestClient 抛的是 h3 错误体（error.response 已丢失），状态码读 statusCode
+    const status = (error as null | { statusCode?: number })?.statusCode;
     if (status === 409) {
       message.error('同 scope 下该 key 已存在');
     }
@@ -113,8 +113,8 @@ async function handleDelete(record: AdminCategoryRecord) {
     await fetchRows();
   } catch (error: unknown) {
     // 软外键（015.16）：409 = 分类仍被内容引用，服务端 statusMessage 附引用数
-    const status = (error as null | { response?: { status?: number } })
-      ?.response?.status;
+    // vben RequestClient 抛的是 h3 错误体（error.response 已丢失），状态码读 statusCode
+    const status = (error as null | { statusCode?: number })?.statusCode;
     message.error(
       status === 409
         ? `该分类仍被 ${record.refs} 条内容引用，无法删除`

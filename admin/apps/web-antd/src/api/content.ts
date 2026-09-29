@@ -1,4 +1,4 @@
-import { requestClient } from '#/api/request';
+import { requestClient, suppressErrorToastConfig } from '#/api/request';
 
 export type ContentStatus = 'draft' | 'published';
 /** 015.16 起分类动态化（content_categories 表）：key 放宽为任意字符串 */
@@ -103,6 +103,8 @@ export const setNewsFeaturedApi = (id: number, featured: boolean) =>
   requestClient.request<{ ok: boolean }>(`/admin/news/${id}/featured`, {
     data: { featured },
     method: 'PATCH',
+    // 409 推荐位上限由列表页组件弹中文提示，抑制拦截器统一 toast
+    ...suppressErrorToastConfig,
   });
 
 // 案例
@@ -121,6 +123,7 @@ export const setCaseFeaturedApi = (slug: string, featured: boolean) =>
   requestClient.request<{ ok: boolean }>(`/admin/cases/${slug}/featured`, {
     data: { featured },
     method: 'PATCH',
+    ...suppressErrorToastConfig,
   });
 
 // 报告
@@ -139,6 +142,7 @@ export const setReportFeaturedApi = (id: number, featured: boolean) =>
   requestClient.request<{ ok: boolean }>(`/admin/reports/${id}/featured`, {
     data: { featured },
     method: 'PATCH',
+    ...suppressErrorToastConfig,
   });
 
 // 内容分类（015.16）
@@ -172,8 +176,11 @@ export const listAdminCategoriesApi = (scope: CategoryScope) =>
   requestClient.get<AdminCategoryRecord[]>('/admin/categories', {
     params: { scope },
   });
+// 分类 CRUD 的 409（key 冲突 / 引用中）由视图组件弹中文提示
 export const createCategoryApi = (data: CategoryInput) =>
-  requestClient.post<{ ok: boolean }>('/admin/categories', data);
+  requestClient.post<{ ok: boolean }>('/admin/categories', data, {
+    ...suppressErrorToastConfig,
+  });
 export const updateCategoryApi = (
   scope: CategoryScope,
   key: string,
@@ -182,6 +189,12 @@ export const updateCategoryApi = (
   requestClient.put(
     `/admin/categories/${scope}/${encodeURIComponent(key)}`,
     data,
+    { ...suppressErrorToastConfig },
   );
 export const deleteCategoryApi = (scope: CategoryScope, key: string) =>
-  requestClient.delete(`/admin/categories/${scope}/${encodeURIComponent(key)}`);
+  requestClient.delete(
+    `/admin/categories/${scope}/${encodeURIComponent(key)}`,
+    {
+      ...suppressErrorToastConfig,
+    },
+  );

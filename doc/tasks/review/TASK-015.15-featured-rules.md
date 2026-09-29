@@ -52,3 +52,10 @@
 
 - 迁移 0009 已对本地 PG（docker deeptrols-postgres，宿主 5433）apply，`\d cases` 确认 featured 列 not null default false
 - `pnpm vitest run tests/featured-limits.spec.ts` 18/18 通过
+
+## 勘误（2026-09-29 E2E 补验发现）
+
+- vben `RequestClient.request()` catch 里 `throw error.response ? error.response.data : error`——组件 catch 拿到的是 h3 错误体（`{statusCode, statusMessage, message}`），`error?.response?.status` 永远 undefined，列表页/分类视图的 409 中文提示分支实际不可达；已改为读 `error?.statusCode`（news/cases/reports 列表 + categories 视图共 5 处）
+- request.ts 错误拦截器误取 `responseData.error`（h3 错误体里该字段是 boolean true）导致统一错误 toast 空白；已改为取 statusMessage/message 字符串
+- 组件自定义错误提示的请求挂 `suppressErrorToastConfig`（request.ts 导出）抑制拦截器统一 toast，避免双语义双 toast
+- E2E（系统 Chrome + dt-admin cookie 注入）10/10：第 5 条推荐 Switch 弹「首页推荐最多 4 条（新闻+报告合计）」、分类管理 UI CRUD + 重复 key/in-use 409 toast、新闻编辑页 Select 动态分类、主站 /news tab SSR 渲染

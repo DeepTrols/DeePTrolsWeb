@@ -1,7 +1,7 @@
 /**
  * 该文件可自行根据业务逻辑进行调整
  */
-import type { RequestClientOptions } from '@vben/request';
+import type { RequestClientConfig, RequestClientOptions } from '@vben/request';
 
 import { useAppConfig } from '@vben/hooks';
 import { preferences } from '@vben/preferences';
@@ -15,6 +15,13 @@ import { useAccessStore } from '@vben/stores';
 import { message } from 'ant-design-vue';
 
 import { useAuthStore } from '#/store';
+
+// 组件自行处理错误提示（如推荐位/分类的 409 中文文案）时在请求 config 置 true，拦截器不再弹统一错误 toast
+// （axios config 允许透传自定义字段；web-antd 无法对 axios 做模块增强——它是 @vben/request 的间接依赖）
+// 交叉类型绕过 RequestClientConfig 全可选属性的弱类型检查（suppressErrorMessage 非其声明属性）
+export const suppressErrorToastConfig: RequestClientConfig & {
+  suppressErrorMessage: boolean;
+} = { suppressErrorMessage: true };
 
 const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
@@ -82,9 +89,15 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   client.addResponseInterceptor(
     errorMessageResponseInterceptor((msg: string, error) => {
       // 这里可以根据业务进行定制,你可以拿到 error 内的信息进行定制化处理，根据不同的 code 做不同的提示，而不是直接使用 message.error 提示 msg
-      // 当前mock接口返回的错误字段是 error 或者 message
+      if (error?.config?.suppressErrorMessage) {
+        return;
+      }
+      // 主站 h3 错误体里 error 字段是 boolean true（勿取），可读文案在 statusMessage/message
       const responseData = error?.response?.data ?? {};
-      const errorMessage = responseData?.error ?? responseData?.message ?? '';
+      const errorMessage =
+        [responseData?.statusMessage, responseData?.message].find(
+          (m) => typeof m === 'string',
+        ) ?? '';
       // 如果没有错误信息，则会根据状态码进行提示
       message.error(errorMessage || msg);
     }),
