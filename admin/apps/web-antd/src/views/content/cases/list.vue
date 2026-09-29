@@ -4,9 +4,21 @@ import type { AdminCaseRecord } from '#/api/content';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { Button, message, Popconfirm, Space, Table, Tag } from 'ant-design-vue';
+import {
+  Button,
+  message,
+  Popconfirm,
+  Space,
+  Switch,
+  Table,
+  Tag,
+} from 'ant-design-vue';
 
-import { deleteCaseApi, listAdminCasesApi } from '#/api/content';
+import {
+  deleteCaseApi,
+  listAdminCasesApi,
+  setCaseFeaturedApi,
+} from '#/api/content';
 
 import {
   solutionKeyLabels,
@@ -35,6 +47,24 @@ async function handleDelete(slug: string) {
   await fetchRows();
 }
 
+/** 案例精选推荐开关：PATCH 单列切换（015.15，镜像审计#16） */
+async function toggleFeatured(record: AdminCaseRecord, checked: boolean) {
+  try {
+    await setCaseFeaturedApi(record.slug, checked);
+    message.success(checked ? '已推荐到案例精选' : '已取消推荐');
+    await fetchRows();
+  } catch (error: unknown) {
+    // 推荐位预算硬限制（015.15）：409 = 案例精选已达 3 条上限
+    const status = (error as null | { response?: { status?: number } })
+      ?.response?.status;
+    message.error(
+      status === 409
+        ? '案例精选最多 3 条，请先取消其他推荐'
+        : '推荐状态更新失败',
+    );
+  }
+}
+
 const columns = [
   { dataIndex: 'slug', title: 'Slug', width: 220 },
   { dataIndex: 'title', ellipsis: true, title: '标题' },
@@ -42,6 +72,7 @@ const columns = [
   { dataIndex: 'sortOrder', title: '排序', width: 70 },
   { dataIndex: 'status', title: '状态', width: 100 },
   { dataIndex: 'hasDetail', title: '详情', width: 80 },
+  { dataIndex: 'featured', title: '推荐', width: 80 },
   { dataIndex: 'actions', fixed: 'right' as const, title: '操作', width: 150 },
 ];
 
@@ -83,6 +114,16 @@ onMounted(fetchRows);
         <template v-else-if="column.dataIndex === 'hasDetail'">
           <Tag v-if="record.hasDetail" color="blue">有</Tag>
           <Tag v-else color="red">缺失</Tag>
+        </template>
+        <template v-else-if="column.dataIndex === 'featured'">
+          <Switch
+            :checked="record.featured"
+            size="small"
+            @change="
+              (checked) =>
+                toggleFeatured(record as AdminCaseRecord, checked as boolean)
+            "
+          />
         </template>
         <template v-else-if="column.dataIndex === 'actions'">
           <Space>

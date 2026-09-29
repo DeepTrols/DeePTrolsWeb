@@ -39,6 +39,7 @@ export const requiredTaskFiles = [
   'TASK-015.12-site-management-enhancements.md',
   'TASK-015.13-component-registry-and-page-builder.md',
   'TASK-015.14-showcase-modules.md',
+  'TASK-015.15-featured-rules.md',
 ]
 
 export const requiredFiles = [
@@ -199,6 +200,7 @@ export const requiredFiles = [
   'server/db/migrations/0005_loose_yellowjacket.sql',
   'server/db/migrations/0006_watery_shriek.sql',
   'server/db/migrations/0008_regular_ezekiel_stane.sql',
+  'server/db/migrations/0009_tiny_thunderbird.sql',
   'server/utils/article-blocks.ts',
   'server/utils/news-repo.ts',
   'server/utils/cases-repo.ts',
@@ -208,6 +210,8 @@ export const requiredFiles = [
   'server/utils/safe-url.ts',
   'server/utils/server-log.ts',
   'server/utils/body-limit.ts',
+  'server/utils/featured-limits.ts',
+  'tests/featured-limits.spec.ts',
   'server/routes/uploads/[...path].get.ts',
   'server/api/news/index.get.ts',
   'server/api/news/[id].get.ts',
@@ -229,6 +233,9 @@ export const requiredFiles = [
   'tests/audit-conflict-409.spec.ts',
   'tests/audit-body-limit.spec.ts',
   'tests/audit-featured-patch.spec.ts',
+  'tests/audit-component-schema.spec.ts',
+  'tests/audit-insights-merge.spec.ts',
+  'tests/audit-blocks-html.spec.ts',
   'tests/visual/backend/news-api.contract.ts',
   'tests/visual/backend/content-api.contract.ts',
   'tests/visual/backend/leads-api.contract.ts',
@@ -253,6 +260,7 @@ export const requiredFiles = [
   'server/api/admin/news/[id].put.ts',
   'server/api/admin/news/[id].delete.ts',
   'server/api/admin/news/[id]/featured.patch.ts',
+  'server/api/admin/cases/[slug]/featured.patch.ts',
   'server/api/admin/cases/index.get.ts',
   'server/api/admin/cases/index.post.ts',
   'server/api/admin/cases/[slug].get.ts',

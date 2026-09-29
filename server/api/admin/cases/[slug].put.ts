@@ -1,7 +1,8 @@
 import { requireAdmin } from '../../../utils/admin'
 import { caseSlugSchema, caseUpdateSchema, updateCase } from '../../../utils/cases-admin'
+import { assertFeaturedBudget } from '../../../utils/featured-limits'
 
-// PUT /api/admin/cases/:slug — 全量更新（slug 不可改）
+// PUT /api/admin/cases/:slug — 全量更新（slug 不可改）；featured: true 过推荐位预算（015.15，超限 409，排除自身）
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
 
@@ -13,6 +14,13 @@ export default defineEventHandler(async (event) => {
   const parsed = caseUpdateSchema.safeParse(await readBody(event))
   if (!parsed.success) {
     throw createError({ statusCode: 400, statusMessage: 'Invalid case input' })
+  }
+
+  if (parsed.data.featured) {
+    const budget = await assertFeaturedBudget('cases', { caseSlug: slugParsed.data })
+    if (budget === null) {
+      throw createError({ statusCode: 503, statusMessage: 'Database not configured' })
+    }
   }
 
   const updated = await updateCase(slugParsed.data, parsed.data)

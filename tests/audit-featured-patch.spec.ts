@@ -242,7 +242,8 @@ describe('audit#16: PATCH /api/admin/news/:id/featured 端点', () => {
     dbState.current = createThrowingDb(dbError)
     bodyState.current = { featured: true }
     await expect(invokeNewsFeatured({ params: { id: '7' } })).rejects.toMatchObject({ statusCode: 500 })
-    expect(loggedText()).toContain('news-admin.setNewsFeatured')
+    // 015.15：featured=true 时预算校验（featured-limits.countFeatured）先于置位执行，异常日志落在预算层
+    expect(loggedText()).toContain('featured-limits.countFeatured')
   })
 })
 

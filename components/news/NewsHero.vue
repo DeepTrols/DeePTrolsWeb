@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { useFetch } from '#imports'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { formatNewsDate, getNewsByCategory } from '~/data/news'
-import type { NewsCategory } from '~/data/news'
+import type { NewsCategory, NewsItem } from '~/data/news'
 
 // 复刻参考站 mc-hero：650px 深色横幅，轮播当前分类最新 3 条头条（6s 自动 + 分段点击），
 // 左文右图 + 底部分段条；使用项目统一 container 宽度与其他页面保持一致。
@@ -11,7 +12,24 @@ const props = defineProps<{
 
 const AUTOPLAY_INTERVAL = 6000
 
-const headlines = computed(() => getNewsByCategory(props.category).slice(0, 3))
+// 头条接后台推荐（015.15）：DB 数据 featured 优先、不足按发布时间（DB 已 desc）补足、封顶 3 条；
+// fetch 失败/无数据回退静态 getNewsByCategory(...).slice(0, 3)（文本原位保留，contract 锁定）。
+const { data: newsList } = useFetch('/api/news', {
+  key: `news-hero-${props.category}`,
+  query: computed(() => ({ category: props.category })),
+  default: () => null as NewsItem[] | null,
+})
+
+const staticHeadlines = computed(() => getNewsByCategory(props.category).slice(0, 3))
+const headlines = computed<NewsItem[]>(() => {
+  const dynamic = newsList.value
+  if (!dynamic || dynamic.length === 0) {
+    return staticHeadlines.value
+  }
+  const featured = dynamic.filter(item => item.featured === true)
+  const rest = dynamic.filter(item => item.featured !== true)
+  return [...featured, ...rest].slice(0, 3)
+})
 const activeIndex = ref(0)
 const activeHeadline = computed(() => headlines.value[activeIndex.value])
 let autoplayTimer: ReturnType<typeof setInterval> | null = null

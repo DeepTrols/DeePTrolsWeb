@@ -1,7 +1,8 @@
 import { requireAdmin } from '../../../utils/admin'
+import { assertFeaturedBudget } from '../../../utils/featured-limits'
 import { reportInputSchema, updateReport } from '../../../utils/reports-admin'
 
-// PUT /api/admin/reports/:id — 全量更新（href 冲突 409）
+// PUT /api/admin/reports/:id — 全量更新（href 冲突 409）；featured: true 过推荐位预算（015.15，超限 409，排除自身）
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
 
@@ -14,6 +15,13 @@ export default defineEventHandler(async (event) => {
   const parsed = reportInputSchema.safeParse(await readBody(event))
   if (!parsed.success) {
     throw createError({ statusCode: 400, statusMessage: 'Invalid report input' })
+  }
+
+  if (parsed.data.featured) {
+    const budget = await assertFeaturedBudget('home', { reportId: id })
+    if (budget === null) {
+      throw createError({ statusCode: 503, statusMessage: 'Database not configured' })
+    }
   }
 
   const updated = await updateReport(id, parsed.data)

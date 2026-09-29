@@ -516,4 +516,72 @@ export function registerBackendAdminVisualContracts() {
     expect(reportsList).not.toContain('getAdminReportApi')
     expect(reportsList).not.toContain('updateReportApi')
   })
+
+  it('hard-caps featured budgets end-to-end (015.15): home news+reports ≤4, cases ≤3', () => {
+    const limitsUtil = readComponent('server/utils/featured-limits.ts')
+    const casesAdminUtil = readComponent('server/utils/cases-admin.ts')
+    const casesRepo = readComponent('server/utils/cases-repo.ts')
+    const newsRepo = readComponent('server/utils/news-repo.ts')
+    const caseFeaturedApi = readComponent(
+      'server/api/admin/cases/[slug]/featured.patch.ts',
+    )
+
+    // 预算工具：home 复用首页上限常量、news+reports 合并计数；超限 409；无 DB null 哨兵
+    expect(limitsUtil).toContain('FEATURED_LIMITS')
+    expect(limitsUtil).toContain('home: HOME_INSIGHTS_MAX_ITEMS')
+    expect(limitsUtil).toContain('cases: 3')
+    expect(limitsUtil).toContain('export async function assertFeaturedBudget(')
+    expect(limitsUtil).toContain('statusCode: 409')
+
+    // 全部写入路径收口：PATCH 单列 + POST/PUT 整单（news/reports/cases 对称）
+    for (const route of [
+      'server/api/admin/news/[id]/featured.patch.ts',
+      'server/api/admin/reports/[id]/featured.patch.ts',
+      'server/api/admin/news/index.post.ts',
+      'server/api/admin/news/[id].put.ts',
+      'server/api/admin/reports/index.post.ts',
+      'server/api/admin/reports/[id].put.ts',
+    ]) {
+      expect(readComponent(route)).toContain("assertFeaturedBudget('home'")
+    }
+    for (const route of [
+      'server/api/admin/cases/index.post.ts',
+      'server/api/admin/cases/[slug].put.ts',
+      'server/api/admin/cases/[slug]/featured.patch.ts',
+    ]) {
+      expect(readComponent(route)).toContain("assertFeaturedBudget('cases'")
+    }
+
+    // 案例 featured PATCH 端点三态 + 404
+    expect(caseFeaturedApi).toContain('requireAdmin')
+    expect(caseFeaturedApi).toContain('z.object({ featured: z.boolean() })')
+    expect(caseFeaturedApi).toContain('setCaseFeatured')
+    expect(caseFeaturedApi).toContain(
+      "statusCode: 404, statusMessage: 'Case not found'",
+    )
+    expect(casesAdminUtil).toContain('export async function setCaseFeatured(')
+
+    // 公开读投影透出 featured，主站两组件动态优先 + 静态回退原位保留
+    expect(casesRepo).toContain('featured: cases.featured')
+    expect(newsRepo).toContain('featured: news.featured')
+    const caseFeaturedSection = readComponent(
+      'components/case/CaseFeaturedSection.vue',
+    )
+    const newsHero = readComponent('components/news/NewsHero.vue')
+    expect(caseFeaturedSection).toContain("useFetch('/api/cases'")
+    expect(caseFeaturedSection).toContain('item.featured === true')
+    expect(caseFeaturedSection).toContain('caseFeatured')
+    expect(newsHero).toContain("useFetch('/api/news'")
+    expect(newsHero).toContain('item.featured === true')
+    expect(newsHero).toContain('getNewsByCategory')
+
+    // vben：案例推荐列 + PATCH 单列端点
+    const contentApi = readComponent('admin/apps/web-antd/src/api/content.ts')
+    const casesList = readComponent(
+      'admin/apps/web-antd/src/views/content/cases/list.vue',
+    )
+    expect(contentApi).toContain('export const setCaseFeaturedApi')
+    expect(casesList).toContain('setCaseFeaturedApi(record.slug, checked)')
+    expect(casesList).toContain('案例精选最多 3 条')
+  })
 }

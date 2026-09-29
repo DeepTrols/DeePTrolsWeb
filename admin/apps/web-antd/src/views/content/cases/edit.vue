@@ -45,6 +45,7 @@ const form = reactive<
   blocks: [],
   categoryKey: 'data-infrastructure',
   detailTitle: '',
+  featured: false,
   heroImage: '',
   image: '',
   relatedProducts: [],

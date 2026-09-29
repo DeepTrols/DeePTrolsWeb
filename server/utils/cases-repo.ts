@@ -64,6 +64,8 @@ export async function listCaseResources(): Promise<CaseResource[]> {
         summary: cases.summary,
         image: cases.image,
         solutionKey: cases.solutionKey,
+        // 公开投影含 featured（015.15）：CaseFeaturedSection 取 featured 案例；公开字段无保密问题
+        featured: cases.featured,
       })
       .from(cases)
       .where(eq(cases.status, 'published'))
@@ -71,6 +73,7 @@ export async function listCaseResources(): Promise<CaseResource[]> {
 
     return rows.map(row => ({
       solutionKey: row.solutionKey ?? undefined,
+      featured: row.featured,
       title: row.title,
       summary: row.summary,
       image: row.image,

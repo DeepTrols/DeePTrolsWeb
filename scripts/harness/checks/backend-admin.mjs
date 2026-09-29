@@ -90,6 +90,14 @@ export function checkBackendAdminContracts(ctx) {
     adminShowcaseGalleryView,
     adminShowcaseLogosView,
     backendNuxtConfig,
+    backendFeaturedLimitsUtil,
+    backendAdminNewsFeaturedPatchApi,
+    backendAdminReportFeaturedPatchApi,
+    backendAdminCaseFeaturedPatchApi,
+    backendCasesRepo,
+    backendNewsRepo,
+    caseFeaturedSection,
+    newsHeroComponent,
   } = ctx
 
   assert(
@@ -469,5 +477,37 @@ export function checkBackendAdminContracts(ctx) {
       catchAllPage.includes(':preview') &&
       cmsPageView.includes('page.preview'),
     'Draft preview (015.13) must keep the soft isAdminRequest guard, the explicit ?preview=1 branch (admin page first), the dispatcher preview cache key, and the CmsPageView banner.',
+  )
+
+  assert(
+    backendFeaturedLimitsUtil.includes('FEATURED_LIMITS') &&
+      backendFeaturedLimitsUtil.includes('cases: 3') &&
+      backendFeaturedLimitsUtil.includes('home: HOME_INSIGHTS_MAX_ITEMS') &&
+      backendFeaturedLimitsUtil.includes('export async function countFeatured(') &&
+      backendFeaturedLimitsUtil.includes('export async function assertFeaturedBudget(') &&
+      backendFeaturedLimitsUtil.includes('statusCode: 409') &&
+      backendAdminNewsFeaturedPatchApi.includes("assertFeaturedBudget('home', { newsId: id })") &&
+      backendAdminReportFeaturedPatchApi.includes("assertFeaturedBudget('home', { reportId: id })") &&
+      backendAdminNewsCreateApi.includes("assertFeaturedBudget('home')") &&
+      backendAdminNewsUpdateApi.includes("assertFeaturedBudget('home', { newsId: id })") &&
+      backendAdminReportsCreateApi.includes("assertFeaturedBudget('home')") &&
+      backendAdminReportUpdateApi.includes("assertFeaturedBudget('home', { reportId: id })") &&
+      backendAdminCasesCreateApi.includes("assertFeaturedBudget('cases')") &&
+      backendAdminCaseUpdateApi.includes("assertFeaturedBudget('cases', { caseSlug: slugParsed.data })") &&
+      backendAdminCaseFeaturedPatchApi.includes('requireAdmin') &&
+      backendAdminCaseFeaturedPatchApi.includes("assertFeaturedBudget('cases', { caseSlug: slug })") &&
+      backendAdminCaseFeaturedPatchApi.includes('setCaseFeatured') &&
+      backendAdminCaseFeaturedPatchApi.includes("statusCode: 404, statusMessage: 'Case not found'") &&
+      backendCasesAdminUtil.includes('export async function setCaseFeatured(') &&
+      backendCasesAdminUtil.includes('featured: cases.featured') &&
+      backendCasesRepo.includes('featured: cases.featured') &&
+      backendNewsRepo.includes('featured: news.featured') &&
+      caseFeaturedSection.includes("useFetch('/api/cases'") &&
+      caseFeaturedSection.includes('item.featured === true') &&
+      caseFeaturedSection.includes('caseFeatured') &&
+      newsHeroComponent.includes("useFetch('/api/news'") &&
+      newsHeroComponent.includes('item.featured === true') &&
+      newsHeroComponent.includes('getNewsByCategory'),
+    'Featured budget (015.15) must hard-cap home (news+reports ≤4) and cases (≤3) with 409 on every write path, expose featured in the public list projections, and drive CaseFeaturedSection / NewsHero from the public APIs with static fallback kept in place.',
   )
 }

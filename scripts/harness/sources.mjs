@@ -214,6 +214,12 @@ export const harnessSourcePaths = {
   adminPagesEditView: 'admin/apps/web-antd/src/views/pages/edit.vue',
   adminWebAntdPkg: 'admin/apps/web-antd/package.json',
   backendHomeInsightsApi: 'server/api/home/insights.get.ts',
+  backendFeaturedLimitsUtil: 'server/utils/featured-limits.ts',
+  backendAdminNewsFeaturedPatchApi: 'server/api/admin/news/[id]/featured.patch.ts',
+  backendAdminReportFeaturedPatchApi:
+    'server/api/admin/reports/[id]/featured.patch.ts',
+  backendAdminCaseFeaturedPatchApi:
+    'server/api/admin/cases/[slug]/featured.patch.ts',
   adminComponentsApi: 'admin/apps/web-antd/src/api/components.ts',
   adminComponentsRoutes:
     'admin/apps/web-antd/src/router/routes/modules/components.ts',

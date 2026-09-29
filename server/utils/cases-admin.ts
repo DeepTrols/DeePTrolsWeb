@@ -27,6 +27,7 @@ export const caseInputSchema = z.object({
   solutionKey: solutionKeySchema.nullable().default(null),
   sortOrder: z.number().int().min(0),
   status: contentStatusSchema.default('draft'),
+  featured: z.boolean().default(false),
   detailTitle: z.string().trim().min(1).max(500),
   categoryKey: solutionKeySchema,
   heroImage: z.string().trim().min(1).max(1000),
@@ -43,6 +44,7 @@ export interface AdminCaseRecord {
   solutionKey: string | null
   sortOrder: number
   status: z.infer<typeof contentStatusSchema>
+  featured: boolean
   hasDetail: boolean
   updatedAt: string
 }
@@ -64,6 +66,7 @@ export async function listAdminCases(): Promise<AdminCaseRecord[]> {
         solutionKey: cases.solutionKey,
         sortOrder: cases.sortOrder,
         status: cases.status,
+        featured: cases.featured,
         detailSlug: caseDetails.caseSlug,
         updatedAt: cases.updatedAt,
       })
@@ -78,6 +81,7 @@ export async function listAdminCases(): Promise<AdminCaseRecord[]> {
       solutionKey: row.solutionKey,
       sortOrder: row.sortOrder,
       status: row.status,
+      featured: row.featured,
       hasDetail: row.detailSlug !== null,
       updatedAt: row.updatedAt.toISOString(),
     }))
@@ -104,6 +108,7 @@ export async function getAdminCase(slug: string): Promise<AdminCasePayload | nul
         solutionKey: cases.solutionKey,
         sortOrder: cases.sortOrder,
         status: cases.status,
+        featured: cases.featured,
         detailTitle: caseDetails.title,
         categoryKey: caseDetails.categoryKey,
         heroImage: caseDetails.heroImage,
@@ -127,6 +132,7 @@ export async function getAdminCase(slug: string): Promise<AdminCasePayload | nul
       solutionKey: row.solutionKey,
       sortOrder: row.sortOrder,
       status: row.status,
+      featured: row.featured,
       detailTitle: row.detailTitle,
       categoryKey: row.categoryKey,
       heroImage: row.heroImage,
@@ -152,8 +158,8 @@ export async function createCase(input: CaseInput): Promise<'conflict' | string 
       if (existing.length) {
         return 'conflict'
       }
-      const { slug, title, summary, image, solutionKey, sortOrder, status, detailTitle, categoryKey, heroImage, blocks, relatedProducts } = input
-      await tx.insert(cases).values({ slug, title, summary, image, solutionKey, sortOrder, status })
+      const { slug, title, summary, image, solutionKey, sortOrder, status, featured, detailTitle, categoryKey, heroImage, blocks, relatedProducts } = input
+      await tx.insert(cases).values({ slug, title, summary, image, solutionKey, sortOrder, status, featured })
       await tx.insert(caseDetails).values({
         caseSlug: slug,
         title: detailTitle,
@@ -179,10 +185,10 @@ export async function updateCase(slug: string, input: CaseUpdate): Promise<boole
 
   try {
     return await db.transaction(async (tx) => {
-      const { title, summary, image, solutionKey, sortOrder, status, detailTitle, categoryKey, heroImage, blocks, relatedProducts } = input
+      const { title, summary, image, solutionKey, sortOrder, status, featured, detailTitle, categoryKey, heroImage, blocks, relatedProducts } = input
       const rows = await tx
         .update(cases)
-        .set({ title, summary, image, solutionKey, sortOrder, status, updatedAt: new Date() })
+        .set({ title, summary, image, solutionKey, sortOrder, status, featured, updatedAt: new Date() })
         .where(eq(cases.slug, slug))
         .returning({ slug: cases.slug })
       if (!rows.length) {
@@ -220,5 +226,29 @@ export async function deleteCase(slug: string): Promise<boolean> {
   }
   catch (error) {
     throw internalServerError('cases-admin.deleteCase', error, { slug })
+  }
+}
+
+/**
+ * featured 单列切换（015.15，镜像 audit#16）：只更新 featured 一列，不触碰其他字段——
+ * 列表页推荐开关不再走「GET 整条 → 全量 PUT」读改写。
+ * 命中行返回 true；行不存在返回 false（端点 404）；未配置 DB 返回 null（端点 503）；异常记录日志后抛出（端点 500）。
+ */
+export async function setCaseFeatured(slug: string, featured: boolean): Promise<boolean | null> {
+  const db = useNewsDatabase()
+  if (!db) {
+    return null
+  }
+
+  try {
+    const rows = await db
+      .update(cases)
+      .set({ featured })
+      .where(eq(cases.slug, slug))
+      .returning({ slug: cases.slug })
+    return rows.length > 0
+  }
+  catch (error) {
+    throw internalServerError('cases-admin.setCaseFeatured', error, { slug })
   }
 }

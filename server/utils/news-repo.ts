@@ -40,6 +40,8 @@ export async function listNewsItems(category?: NewsCategory): Promise<NewsItem[]
         coverImage: news.coverImage,
         category: news.category,
         publishedAt: news.publishedAt,
+        // 公开投影含 featured（015.15）：NewsHero 按分类取 featured 优先；公开字段无保密问题
+        featured: news.featured,
       })
       .from(news)
       .where(and(...conditions))

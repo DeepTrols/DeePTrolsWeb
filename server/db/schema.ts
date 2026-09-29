@@ -52,6 +52,8 @@ export const cases = pgTable('cases', {
   solutionKey: solutionKeyEnum('solution_key'),
   sortOrder: integer('sort_order').notNull(),
   status: contentStatusEnum('status').notNull().default('published'),
+  // 案例页精选推荐位（015.15）：featured 且 published 的案例进入 CaseFeaturedSection，上限见 featured-limits.ts
+  featured: boolean('featured').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })

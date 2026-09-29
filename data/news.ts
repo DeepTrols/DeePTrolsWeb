@@ -8,6 +8,8 @@ export interface NewsItem {
   category: NewsCategory
   /** 发布日期（东八区，YYYY-MM-DD）；展示格式由 formatNewsDate / formatNewsDateShort 派生 */
   publishedAt: string
+  /** 首页/新闻页推荐位标记（015.15）：仅 DB 数据源投影，静态种子不带 */
+  featured?: boolean
 }
 
 export interface NewsCategoryTab {

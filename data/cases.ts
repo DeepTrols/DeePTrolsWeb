@@ -8,6 +8,8 @@ export interface CaseResource {
   summary: string
   image: string
   href: string
+  /** 案例页精选推荐位标记（015.15）：仅 DB 数据源投影，静态种子不带 */
+  featured?: boolean
 }
 
 export const caseHero = {

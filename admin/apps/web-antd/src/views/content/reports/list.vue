@@ -49,8 +49,15 @@ async function toggleFeatured(record: AdminReportRecord, checked: boolean) {
     await setReportFeaturedApi(record.id, checked);
     message.success(checked ? '已推荐到首页' : '已取消推荐');
     await fetchRows();
-  } catch {
-    message.error('推荐状态更新失败');
+  } catch (error: unknown) {
+    // 推荐位预算硬限制（015.15）：409 = 首页推荐已达 4 条上限
+    const status = (error as null | { response?: { status?: number } })
+      ?.response?.status;
+    message.error(
+      status === 409
+        ? '首页推荐最多 4 条（新闻+报告合计），请先取消其他推荐'
+        : '推荐状态更新失败',
+    );
   }
 }
 

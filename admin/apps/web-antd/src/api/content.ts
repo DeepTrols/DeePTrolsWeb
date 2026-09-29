@@ -43,6 +43,7 @@ export interface AdminCaseRecord {
   solutionKey: null | SolutionKey;
   sortOrder: number;
   status: ContentStatus;
+  featured: boolean;
   hasDetail: boolean;
   updatedAt: string;
 }
@@ -55,6 +56,7 @@ export interface CaseInput {
   solutionKey: null | SolutionKey;
   sortOrder: number;
   status: ContentStatus;
+  featured: boolean;
   detailTitle: string;
   categoryKey: SolutionKey;
   heroImage: string;
@@ -120,6 +122,12 @@ export const updateCaseApi = (slug: string, data: Omit<CaseInput, 'slug'>) =>
   requestClient.put(`/admin/cases/${slug}`, data);
 export const deleteCaseApi = (slug: string) =>
   requestClient.delete(`/admin/cases/${slug}`);
+/** 案例精选推荐单列切换（015.15，镜像审计#16）：RequestClient 无 patch 快捷方法，走通用 request */
+export const setCaseFeaturedApi = (slug: string, featured: boolean) =>
+  requestClient.request<{ ok: boolean }>(`/admin/cases/${slug}/featured`, {
+    data: { featured },
+    method: 'PATCH',
+  });
 
 // 报告
 export const listAdminReportsApi = () =>
