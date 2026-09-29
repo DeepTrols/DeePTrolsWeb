@@ -6,8 +6,13 @@ import AboutIntroSection from '~/components/about/AboutIntroSection.vue'
 import AboutTextBlock from '~/components/about/AboutTextBlock.vue'
 import AboutValuesSection from '~/components/about/AboutValuesSection.vue'
 import ContactFormSection from '~/components/contact/ContactFormSection.vue'
+import HomeAbout from '~/components/home/HomeAbout.vue'
 import HomeCustomerLogos from '~/components/home/HomeCustomerLogos.vue'
 import HomeDeliverables from '~/components/home/HomeDeliverables.vue'
+import HomeEcosystem from '~/components/home/HomeEcosystem.vue'
+import HomeInsights from '~/components/home/HomeInsights.vue'
+import HomeProductSystem from '~/components/home/HomeProductSystem.vue'
+import HomeSolutions from '~/components/home/HomeSolutions.vue'
 import DdpArchitecture from '~/components/product/ddp/DdpArchitecture.vue'
 import DlpArchitecture from '~/components/product/dlp/DlpArchitecture.vue'
 import DmsArchitecture from '~/components/product/dms/DmsArchitecture.vue'
@@ -29,8 +34,13 @@ export const customSectionComponents: Record<CustomSectionName, Component> = {
   DdpArchitecture,
   DlpArchitecture,
   DmsArchitecture,
+  HomeAbout,
   HomeCustomerLogos,
   HomeDeliverables,
+  HomeEcosystem,
+  HomeInsights,
+  HomeProductSystem,
+  HomeSolutions,
   WhyEngine,
   WhyServiceReset,
   WhyTrustTabs,

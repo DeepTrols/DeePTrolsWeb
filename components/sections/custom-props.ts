@@ -1,10 +1,12 @@
 import { z } from 'zod'
+import { navIconComponents } from '~/components/navigation/nav-icons'
 import type { CustomSectionName } from './custom-names'
 
 /**
  * 注册组件 props 元数据（015.13 一期）：服务端 zod 校验 + admin 表单描述符的单源事实。
  * 纯 TS 模块：禁止 import .vue / 资源（?url），server 侧（component-admin）与客户端共享。
  * schema 用于 page-sections.ts 的 superRefine 入库校验；fields 经 API 下发给 vben 动态生成表单。
+ * 015.18 首页段组件：props 全可选（稀疏存储，零 props = SFC 缺省读 data 静态）。
  */
 
 export interface ComponentFieldMeta {
@@ -28,6 +30,31 @@ export interface RegisteredComponentMeta {
 const emptyMeta = {
   schema: z.object({}).strict(),
   fields: [] as ComponentFieldMeta[],
+}
+
+/** 可选短文本（015.18 首页段 props 稀疏存储） */
+const optText = (max: number) => z.string().trim().min(1).max(max).optional()
+
+/** 图标名白名单（nav-icons 注册表；Object.hasOwn 防原型链键绕过，page-sections 同例） */
+const iconName = z
+  .string()
+  .trim()
+  .min(1)
+  .max(50)
+  .refine(name => Object.hasOwn(navIconComponents, name), { message: 'Unknown nav icon' })
+
+/** 首页段标题三件套字段（vben 动态表单共用） */
+const headingFields: ComponentFieldMeta[] = [
+  { key: 'eyebrow', label: '眉题', type: 'string' },
+  { key: 'title', label: '标题', type: 'string' },
+  { key: 'subtitle', label: '副标题', type: 'text' },
+]
+
+/** 首页段标题三件套 schema（全可选） */
+const headingShape = {
+  eyebrow: optText(100),
+  title: optText(200),
+  subtitle: z.string().trim().max(500).optional(),
 }
 
 export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponentMeta> = {
@@ -93,9 +120,188 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
   },
   WhyTrustTabs: {
     label: '信任背书',
-    description: '为什么选择我们页的信任标签页（数据驱动）',
+    description: '为什么页/首页信任标签页（props 全可选，缺省读 data/why 静态）',
     category: 'marketing',
-    ...emptyMeta,
+    schema: z
+      .object({
+        title: optText(200),
+        tablistLabel: optText(100),
+        tabs: z
+          .array(
+            z.object({
+              key: z.string().trim().min(1).max(50),
+              label: z.string().trim().min(1).max(50),
+              features: z
+                .array(
+                  z.object({
+                    title: z.string().trim().min(1).max(100),
+                    subtitle: z.string().trim().min(1).max(100),
+                    description: z.string().trim().min(1).max(1000),
+                    icon: iconName.optional(),
+                  }),
+                )
+                .min(1)
+                .max(8),
+            }),
+          )
+          .min(1)
+          .max(8)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      { key: 'title', label: '标题', type: 'string' },
+      { key: 'tablistLabel', label: '标签组 aria 名', type: 'string' },
+      {
+        key: 'tabs',
+        label: '标签页（JSON 数组 {key,label,features[{title,subtitle,description,icon}]}）',
+        type: 'json',
+        placeholder: '[{"key":"technology","label":"面向技术层","features":[...]}]',
+      },
+    ],
+  },
+  HomeProductSystem: {
+    label: '智能底座',
+    description: '首页智能底座段（架构图保持代码内置；props 全可选，缺省读 data 静态）',
+    category: 'marketing',
+    schema: z
+      .object({
+        ...headingShape,
+        flowLabel: optText(100),
+        cards: z
+          .array(
+            z.object({
+              name: z.string().trim().min(1).max(50),
+              title: optText(200),
+              description: z.string().trim().min(1).max(500),
+              icon: iconName.optional(),
+            }),
+          )
+          .min(1)
+          .max(8)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      ...headingFields,
+      { key: 'flowLabel', label: '架构图 aria 标签', type: 'string' },
+      {
+        key: 'cards',
+        label: '产品卡片（JSON 数组 {name,title,description,icon}）',
+        type: 'json',
+        placeholder: '[{"name":"数曜","description":"...","icon":"Database"}]',
+      },
+    ],
+  },
+  HomeSolutions: {
+    label: '解决方案',
+    description: '首页解决方案轮播段（props 全可选，缺省读 data 静态）',
+    category: 'marketing',
+    schema: z
+      .object({
+        ...headingShape,
+        items: z
+          .array(
+            z.object({
+              key: z.string().trim().min(1).max(50),
+              tab: z.string().trim().min(1).max(50),
+              title: z.string().trim().min(1).max(200),
+              englishTitle: z.string().trim().max(200).optional(),
+              description: z.string().trim().min(1).max(500),
+              image: z.string().trim().min(1).max(1000),
+              href: z.string().trim().min(1).max(500),
+            }),
+          )
+          .min(1)
+          .max(12)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      ...headingFields,
+      {
+        key: 'items',
+        label: '方案项（JSON 数组 {key,tab,title,description,image,href}）',
+        type: 'json',
+        placeholder: '[{"key":"manufacturing","tab":"智能制造","title":"...","description":"...","image":"/images/...","href":"/solutions/..."}]',
+      },
+    ],
+  },
+  HomeEcosystem: {
+    label: '开放生态',
+    description: '首页 ecosystem 段（SVG 视觉代码内置；props 全可选，缺省读 data 静态）',
+    category: 'marketing',
+    schema: z
+      .object({
+        ...headingShape,
+        cards: z
+          .array(
+            z.object({
+              title: z.string().trim().min(1).max(100),
+              description: z.string().trim().min(1).max(500),
+              tag: z.string().trim().min(1).max(100),
+              href: z.string().trim().min(1).max(500),
+              points: z.array(z.string().trim().min(1).max(200)).max(8).optional(),
+              icon: iconName.optional(),
+              variant: z.enum(['token', 'agent', 'infra', 'report']),
+            }),
+          )
+          .min(1)
+          .max(8)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      ...headingFields,
+      {
+        key: 'cards',
+        label: '生态卡片（JSON 数组 {title,description,tag,href,points,icon,variant}）',
+        type: 'json',
+        placeholder: '[{"title":"Token Hub","description":"...","tag":"...","href":"/services/token-hub","variant":"token"}]',
+      },
+    ],
+  },
+  HomeAbout: {
+    label: '关于我们',
+    description: '首页关于我们段（partnerRows 走 015.14 showcase 渠道；props 全可选）',
+    category: 'marketing',
+    schema: z
+      .object({
+        eyebrow: optText(100),
+        title: optText(200),
+        bannerImage: z.string().trim().max(1000).optional(),
+        bannerAlt: z.string().trim().max(200).optional(),
+        clientsLabelImage: z.string().trim().max(1000).optional(),
+        clientsLabelAlt: z.string().trim().max(200).optional(),
+      })
+      .strict(),
+    fields: [
+      { key: 'eyebrow', label: '眉题', type: 'string' },
+      { key: 'title', label: '标题', type: 'string' },
+      { key: 'bannerImage', label: '横幅图', type: 'image' },
+      { key: 'bannerAlt', label: '横幅图 alt', type: 'string' },
+      { key: 'clientsLabelImage', label: '客户标签图', type: 'image' },
+      { key: 'clientsLabelAlt', label: '客户标签图 alt', type: 'string' },
+    ],
+  },
+  HomeInsights: {
+    label: 'Resources 推荐',
+    description: '首页 Resources 段（条目永远走 /api/home/insights 推荐位；仅标题/More 链接可配）',
+    category: 'marketing',
+    schema: z
+      .object({
+        eyebrow: optText(100),
+        title: optText(200),
+        moreLabel: optText(50),
+        moreHref: z.string().trim().max(500).optional(),
+      })
+      .strict(),
+    fields: [
+      { key: 'eyebrow', label: '眉题', type: 'string' },
+      { key: 'title', label: '标题', type: 'string' },
+      { key: 'moreLabel', label: 'More 按钮文案', type: 'string' },
+      { key: 'moreHref', label: 'More 按钮链接', type: 'string' },
+    ],
   },
   HomeCustomerLogos: {
     label: '客户 Logo 墙',

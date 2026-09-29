@@ -17,6 +17,8 @@ withDefaults(
     hideCta?: boolean
     visualSize?: 'default' | 'large' | 'fluid'
     align?: 'left' | 'center'
+    ctaLabel?: string
+    ctaHref?: string
   }>(),
   {
     badge: undefined,
@@ -30,6 +32,8 @@ withDefaults(
     hideCta: false,
     visualSize: 'default',
     align: 'left',
+    ctaLabel: '免费获取专属方案',
+    ctaHref: '/contact',
   },
 )
 
@@ -105,8 +109,8 @@ const hasVisual = computed(() => Boolean(slots.visual))
             class="page-hero__actions flex flex-wrap items-center justify-center gap-4"
             :class="align === 'center' ? '' : 'lg:justify-start'"
           >
-            <NuxtLink class="page-hero__cta" to="/contact">
-              <span>免费获取专属方案</span>
+            <NuxtLink class="page-hero__cta" :to="ctaHref">
+              <span>{{ ctaLabel }}</span>
               <span class="page-hero__cta-arrow" aria-hidden="true"></span>
             </NuxtLink>
           </div>

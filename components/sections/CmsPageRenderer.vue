@@ -73,6 +73,7 @@ function spacingClass(section: PageSection): string {
         :description="section.description ?? ''"
         :cta-label="section.ctaLabel"
         :cta-href="section.ctaHref"
+        :metrics="section.metrics ?? []"
       />
     </div>
     <section

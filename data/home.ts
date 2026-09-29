@@ -13,12 +13,12 @@ import {
   Landmark,
   Network,
   Orbit,
-  RadioTower,
   ShieldCheck,
   Sparkles,
   Waypoints,
 } from '@lucide/vue'
 import type { Component } from 'vue'
+import { resolveNavIcon } from '~/components/navigation/nav-icons'
 import boyaoLogo from '../assets/images/brand/boyao-logo.svg?url'
 import deepseekLogo from '../assets/images/brand/deepseek-logo.svg?url'
 import kimiLogo from '../assets/images/brand/kimi-logo.svg?url'
@@ -48,6 +48,7 @@ import zhaoxinLogo from '../assets/images/compatibility/zhaoxin-logo.svg?url'
 import zhongchuangLogo from '../assets/images/compatibility/zhongchuang-logo.svg?url'
 import zhongkeFangdeLogo from '../assets/images/compatibility/zhongke-fangde-logo.svg?url'
 import { customerLogos } from './home-logos'
+import { homeAboutContent, homeEcosystemCards, homeProductCards, homeSolutionItems } from './home-sections'
 
 export interface Deliverable {
   title: string
@@ -124,13 +125,12 @@ export interface HomeAboutContent {
   partnerRows: HomeAboutPartner[][]
 }
 
+// 首页段字面值已抽到 data/home-sections.ts（015.18：server seed/parity 需避开本文件的 ?url 资源导入）；
+// 此处解析图标字符串为组件并保持导出签名不变
+const iconOf = (name: string): Component => resolveNavIcon(name) ?? FileText
+
 export const homeAbout: HomeAboutContent = {
-  eyebrow: '关于我们',
-  title: '深度数智，企业AI基础设施赛道的构建者与引领者',
-  bannerImage: '/O1CN0.png',
-  bannerAlt: '深度数智企业 AI 基础设施能力',
-  clientsLabelImage: '/clients-label.webp',
-  clientsLabelAlt: '世界级客户的选择',
+  ...homeAboutContent,
   partnerRows: [
     [
       ...customerLogos,
@@ -236,130 +236,11 @@ export const platformOutputs = [
   },
 ]
 
-export const productCards: ProductCard[] = [
-  {
-    name: '数曜',
-    title: '构建企业可信数据资产，打造AI时代的数据基础',
-    description:
-      '围绕数据采集、治理、开发、资产管理与共享流通，帮助企业建立统一、高质量的数据资产体系，为AI应用持续提供可信数据支撑。',
-    icon: Database,
-  },
-  {
-    name: '博曜',
-    title: '构建企业知识资产，释放组织知识价值',
-    description:
-      '围绕知识采集、加工、组织与应用，帮助企业沉淀业务经验和行业知识，打造可检索、可推理、持续演进的知识体系。',
-    icon: FileText,
-  },
-  {
-    name: '探曜',
-    title: '连接工业现场，驱动制造智能升级',
-    description:
-      '聚焦工业物联网与 Manufacturing AI，提供设备互联、实时感知、生产优化和智能决策能力，推动制造过程持续智能化。',
-    icon: RadioTower,
-  },
-  {
-    name: '智曜',
-    title: '构建企业AI基础设施，夯实智能应用底座',
-    description:
-      '提供模型、算力、推理、Token 与 AI 开发平台等基础设施产品，为企业构建统一、安全、高效的 AI 运行环境。',
-    icon: Cpu,
-  },
-]
+export const productCards: ProductCard[] = homeProductCards.map((card) => ({ ...card, icon: iconOf(card.icon) }))
 
-export const solutions: SolutionItem[] = [
-  {
-    key: 'manufacturing',
-    tab: '智能制造',
-    title: '智能制造智能中枢',
-    englishTitle: 'Manufacturing Intelligence Hub',
-    description: '融合 AI、数据与工业物联，打造覆盖制造全流程的智能化能力体系。',
-    image: '/images/home/solutions/industrial.K00G2HaS.webp',
-    href: '/solutions/manufacturing',
-  },
-  {
-    key: 'environment',
-    tab: '智慧环保',
-    title: '生态环境智能感知',
-    englishTitle: 'Environmental Intelligence Sensing',
-    description: '基于多源数据融合与 AI 推理，实现环境风险的智能识别、评估与预警。',
-    image: '/images/home/solutions/smart-env.CWc2pooP.webp',
-    href: '/solutions/environment',
-  },
-  {
-    key: 'energy',
-    tab: '智慧能源',
-    title: '电网运维、储能管理和智能计量',
-    englishTitle: 'Energy Intelligence',
-    description: '构建覆盖能源监测、分析、调度与优化的一体化智能能源体系。',
-    image: '/images/home/solutions/smart-energy.DHKY-NE1.webp',
-    href: '/solutions/energy',
-  },
-  {
-    key: 'water',
-    tab: '智慧水利',
-    title: '空间推理智能体',
-    englishTitle: 'Spatial Reasoning Agent',
-    description: '让 AI 理解空间数据，并驱动 GIS 智能分析与交互决策。',
-    image: '/images/home/solutions/smart-Water.DHKY-NE1.webp',
-    href: '/solutions/water',
-  },
-  {
-    key: 'compute',
-    tab: '算力中心',
-    title: 'AI算力基础设施',
-    englishTitle: 'AI Computing Infrastructure',
-    description: '提供海外 AI 服务器供应、算力中心建设及交付服务。',
-    image: '/images/home/solutions/data-center-ai.CDu93Miw.webp',
-    href: '/solutions/compute',
-  },
-  {
-    key: 'data',
-    tab: '数据治理',
-    title: '数据工程',
-    englishTitle: 'Data Engineering',
-    description: '覆盖数据采集、治理、开发与管理，构建统一数据底座。',
-    image: '/images/home/solutions/data.DHKY-NE1.webp',
-    href: '/solutions/data-governance',
-  },
-]
+export const solutions: SolutionItem[] = homeSolutionItems
 
-export const ecosystemCards: EcosystemCard[] = [
-  {
-    title: 'Token Hub',
-    description: '统一管理企业 AI Token，实现模型调用、配额控制与成本管理',
-    tag: 'AI Token Service',
-    href: '/services/token-hub',
-    points: ['支持DeepSeek、Qwen、OpenAI等模型接入', 'Token 配额、成本及调用统计', '企业级统一 API 接入'],
-    icon: Sparkles,
-    variant: 'token',
-  },
-  {
-    title: '智能体社区',
-    description: '汇聚行业智能体、实践案例与开发资源，加速 AI 应用落地',
-    tag: 'Agent Community',
-    href: '/community',
-    points: ['行业智能体持续更新', '开源项目与实践案例', '社区交流与技术分享'],
-    icon: Bot,
-    variant: 'agent',
-  },
-  {
-    title: '算力与基础设施',
-    description: '提供海外 AI 服务器供应、算力中心建设及基础设施交付。',
-    tag: 'AI Infrastructure',
-    href: '/services/infrastructure',
-    icon: Cpu,
-    variant: 'infra',
-  },
-  {
-    title: '行业白皮书',
-    description: 'AI 行业前沿研究、技术实践与数字化建设参考。',
-    tag: 'Industry Insights',
-    href: '/resources/reports',
-    icon: FileText,
-    variant: 'report',
-  },
-]
+export const ecosystemCards: EcosystemCard[] = homeEcosystemCards.map((card) => ({ ...card, icon: iconOf(card.icon) }))
 
 export const customerStoryStats: CustomerStoryStat[] = [
   { value: '国家级', label: '数据基础设施试点', icon: Landmark },

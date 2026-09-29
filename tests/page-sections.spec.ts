@@ -227,6 +227,27 @@ describe('ctaSectionSchema', () => {
       expect(parsed.data.ctaHref).toBe('/contact')
     }
   })
+
+  it('metrics 指标带（015.18 首页接管）：label 必填 value 可选，≤8 条', () => {
+    expect(
+      ctaSectionSchema.safeParse({
+        type: 'cta',
+        title: '行动起来',
+        metrics: [{ label: '新一代智能基础设施' }, { label: '覆盖率', value: '99%' }],
+      }).success,
+    ).toBe(true)
+    expect(
+      ctaSectionSchema.safeParse({ type: 'cta', title: '行动起来', metrics: [{ value: '99%' }] })
+        .success,
+    ).toBe(false)
+    expect(
+      ctaSectionSchema.safeParse({
+        type: 'cta',
+        title: '行动起来',
+        metrics: Array.from({ length: 9 }, (_, i) => ({ label: `指标${i}` })),
+      }).success,
+    ).toBe(false)
+  })
 })
 
 describe('richTextSectionSchema', () => {

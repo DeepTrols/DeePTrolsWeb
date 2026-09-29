@@ -1,7 +1,28 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
-import { homeAbout } from '~/data/home'
+import { homeAbout as defaultHomeAbout } from '~/data/home'
+
+// CMS 接管（015.18）：全部 props 可选，缺省读 data 静态 = 代码回退与 CMS 渲染共用同一 SFC；
+// partnerRows 不进 props（?url 资产 + 015.14 showcase 渠道），由默认数据直通
+const props = defineProps<{
+  eyebrow?: string
+  title?: string
+  bannerImage?: string
+  bannerAlt?: string
+  clientsLabelImage?: string
+  clientsLabelAlt?: string
+}>()
+
+const homeAbout = computed(() => ({
+  eyebrow: props.eyebrow ?? defaultHomeAbout.eyebrow,
+  title: props.title ?? defaultHomeAbout.title,
+  bannerImage: props.bannerImage ?? defaultHomeAbout.bannerImage,
+  bannerAlt: props.bannerAlt ?? defaultHomeAbout.bannerAlt,
+  clientsLabelImage: props.clientsLabelImage ?? defaultHomeAbout.clientsLabelImage,
+  clientsLabelAlt: props.clientsLabelAlt ?? defaultHomeAbout.clientsLabelAlt,
+  partnerRows: defaultHomeAbout.partnerRows,
+}))
 
 const rowAnimationClasses = [
   'animate-home-about-marquee-right',
@@ -9,7 +30,7 @@ const rowAnimationClasses = [
   'animate-home-about-marquee-right',
 ] as const
 
-const partnerRows = computed(() => homeAbout.partnerRows.map((row) => [...row, ...row, ...row, ...row]))
+const partnerRows = computed(() => homeAbout.value.partnerRows.map((row) => [...row, ...row, ...row, ...row]))
 </script>
 
 <template>

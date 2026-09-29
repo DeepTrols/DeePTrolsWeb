@@ -103,7 +103,7 @@ export const featureGridSectionSchema = z.object({
     .max(24),
 })
 
-/** CTA 横幅：复用 CtaSection */
+/** CTA 横幅：复用 CtaSection；metrics 指标带（015.18 首页接管：HomeCta 三标签透传） */
 export const ctaSectionSchema = z.object({
   type: z.literal('cta'),
   ...sharedFields,
@@ -111,6 +111,15 @@ export const ctaSectionSchema = z.object({
   description: z.string().trim().max(1000).optional(),
   ctaLabel: z.string().trim().min(1).max(100).default('免费获取专属方案'),
   ctaHref: safeUrlSchema(500).default('/contact'),
+  metrics: z
+    .array(
+      z.object({
+        label: z.string().trim().min(1).max(200),
+        value: z.string().trim().max(100).optional(),
+      }),
+    )
+    .max(8)
+    .optional(),
 })
 
 /** 富文本：ArticleBlock[]（Phase C 唯一类型，形状不变） */

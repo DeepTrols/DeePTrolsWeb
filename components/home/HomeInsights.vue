@@ -3,8 +3,19 @@ import { useFetch } from '#imports'
 import { computed } from 'vue'
 import BaseButton from '~/components/common/BaseButton.vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
-import { insights } from '~/data/home'
-import type { InsightItem } from '~/data/home'
+import { insights, type InsightItem } from '~/data/home'
+import { homeInsightsHeading } from '~/data/home-sections'
+
+// CMS 接管（015.18）：标题/More 链接可配，条目永远走 /api/home/insights（015.12 推荐位渠道）
+withDefaults(
+  defineProps<{ eyebrow?: string, title?: string, moreLabel?: string, moreHref?: string }>(),
+  {
+    eyebrow: homeInsightsHeading.eyebrow,
+    title: homeInsightsHeading.title,
+    moreLabel: homeInsightsHeading.moreLabel,
+    moreHref: homeInsightsHeading.moreHref,
+  },
+)
 
 // 推荐位双层回退（015.12）：/api/home/insights DB 优先（featured 新闻/报告），API 内部与这里各有一层静态回退
 const { data: insightItems } = useFetch<InsightItem[]>('/api/home/insights', {
@@ -22,12 +33,12 @@ const sideInsights = computed(() => insightItems.value.slice(1))
       <div class="insights__header">
         <SectionHeading
           class="insights__heading"
-          eyebrow="Resources"
-          title="创新、洞察与新闻"
+          :eyebrow="eyebrow"
+          :title="title"
           title-id="insights-title"
         />
-        <BaseButton href="/insights" variant="secondary" size="lg" class="insights__all-link insights__all-link--desktop">
-          查看全部资源
+        <BaseButton :href="moreHref" variant="secondary" size="lg" class="insights__all-link insights__all-link--desktop">
+          {{ moreLabel }}
         </BaseButton>
       </div>
 
@@ -43,7 +54,7 @@ const sideInsights = computed(() => insightItems.value.slice(1))
         </NuxtLink>
 
         <div class="insights__list">
-          <NuxtLink v-for="item in sideInsights" :key="item.title" :to="item.href" class="group insights__item">
+          <NuxtLink v-for="item in sideInsights" :key="item.href" :to="item.href" class="group insights__item">
             <div class="insights__item-image">
               <img :src="item.image" :alt="item.title" loading="lazy">
             </div>
@@ -56,8 +67,8 @@ const sideInsights = computed(() => insightItems.value.slice(1))
       </div>
 
       <div class="insights__mobile-action">
-        <BaseButton href="/insights" variant="secondary" size="lg" class="insights__all-link">
-          查看全部资源
+        <BaseButton :href="moreHref" variant="secondary" size="lg" class="insights__all-link">
+          {{ moreLabel }}
         </BaseButton>
       </div>
     </div>

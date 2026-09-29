@@ -26,6 +26,7 @@ const shellClasses = computed(() => [
 
 // Divider borders follow the DeepCtrls product-metrics reference:
 // desktop 1x4 (right divider between cells), mobile 2x2 (bottom divider on the top row).
+// metrics 协议允许 1-8 条：超出 4 条按行折返，边框样式按 index % 4 复用同一行的规则。
 const cellBorderClasses = ['border-b border-r sm:border-b-0', 'border-b sm:border-b-0 sm:border-r', 'border-r', '']
 </script>
 
@@ -37,9 +38,9 @@ const cellBorderClasses = ['border-b border-r sm:border-b-0', 'border-b sm:borde
       >
         <div
           v-for="(item, index) in items"
-          :key="item.label"
+          :key="`${index}-${item.label}`"
           class="grid place-content-center border-[#edf0f6] px-[18px] py-6 text-center"
-          :class="cellBorderClasses[index]"
+          :class="cellBorderClasses[index % 4]"
         >
           <strong class="text-[29px] leading-[27px] font-medium text-black">{{ item.value }}</strong>
           <span class="mt-[14px] text-[15px] leading-[18px] text-[#455c78]">{{ item.label }}</span>

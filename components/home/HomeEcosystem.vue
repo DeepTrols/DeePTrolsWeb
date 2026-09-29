@@ -1,8 +1,43 @@
 <script setup lang="ts">
-import { ArrowRight, CheckCircle2 } from '@lucide/vue'
+import { ArrowRight, CheckCircle2, FileText } from '@lucide/vue'
+import { computed } from 'vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
 import HomeEcosystemVisual from '~/components/home/HomeEcosystemVisual.vue'
+import { resolveNavIcon } from '~/components/navigation/nav-icons'
 import { ecosystemCards } from '~/data/home'
+import { homeEcosystemHeading } from '~/data/home-sections'
+
+// CMS 接管（015.18）：全部 props 可选，缺省读 data 静态 = 代码回退与 CMS 渲染共用同一 SFC
+export interface HomeEcosystemCardInput {
+  title: string
+  description: string
+  tag: string
+  href: string
+  points?: string[]
+  icon?: string
+  variant: 'token' | 'agent' | 'infra' | 'report'
+}
+
+const props = withDefaults(
+  defineProps<{
+    eyebrow?: string
+    title?: string
+    subtitle?: string
+    cards?: HomeEcosystemCardInput[]
+  }>(),
+  {
+    eyebrow: homeEcosystemHeading.eyebrow,
+    title: homeEcosystemHeading.title,
+    subtitle: homeEcosystemHeading.subtitle,
+    cards: undefined,
+  },
+)
+
+const resolvedCards = computed(() =>
+  props.cards
+    ? props.cards.map((card) => ({ ...card, icon: resolveNavIcon(card.icon) ?? FileText }))
+    : ecosystemCards,
+)
 </script>
 
 <template>
@@ -10,16 +45,16 @@ import { ecosystemCards } from '~/data/home'
     <div class="container">
       <SectionHeading
         id="ecosystem-title"
-        eyebrow="ecosystem"
-        title="连接企业 AI 全链路的开放生态"
-        subtitle="连接算力、模型、社区与行业知识，构建开放 AI 生态"
+        :eyebrow="eyebrow"
+        :title="title"
+        :subtitle="subtitle"
         align="center"
         nowrap-subtitle
       />
 
       <div class="ecosystem__grid">
         <NuxtLink
-          v-for="card in ecosystemCards"
+          v-for="card in resolvedCards"
           :key="card.title"
           :to="card.href"
           class="group ecosystem-card dt-ecosystem-card"

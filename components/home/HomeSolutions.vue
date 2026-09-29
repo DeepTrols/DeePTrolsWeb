@@ -6,11 +6,30 @@ import CarouselRoot from '~/components/common/carousel/CarouselRoot.vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
 import BaseTabs from '~/components/common/tabs/BaseTabs.vue'
 import { solutions } from '~/data/home'
+import type { SolutionItem } from '~/data/home'
+import { homeSolutionsHeading } from '~/data/home-sections'
 
-const activeKey = ref(solutions[0]?.key ?? '')
-const activeSolution = computed(() => solutions.find((solution) => solution.key === activeKey.value) ?? solutions[0])
-const activeIndex = computed(() => Math.max(solutions.findIndex((solution) => solution.key === activeKey.value), 0))
-const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution.key, label: solution.tab })))
+// CMS 接管（015.18）：全部 props 可选，缺省读 data 静态 = 代码回退与 CMS 渲染共用同一 SFC
+const props = withDefaults(
+  defineProps<{
+    eyebrow?: string
+    title?: string
+    subtitle?: string
+    items?: SolutionItem[]
+  }>(),
+  {
+    eyebrow: homeSolutionsHeading.eyebrow,
+    title: homeSolutionsHeading.title,
+    subtitle: homeSolutionsHeading.subtitle,
+    items: undefined,
+  },
+)
+
+const resolvedItems = computed(() => props.items ?? solutions)
+const activeKey = ref(resolvedItems.value[0]?.key ?? '')
+const activeSolution = computed(() => resolvedItems.value.find((solution) => solution.key === activeKey.value) ?? resolvedItems.value[0])
+const activeIndex = computed(() => Math.max(resolvedItems.value.findIndex((solution) => solution.key === activeKey.value), 0))
+const solutionTabs = computed(() => resolvedItems.value.map((solution) => ({ key: solution.key, label: solution.tab })))
 </script>
 
 <template>
@@ -19,9 +38,9 @@ const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution
       <div class="solutions__heading">
         <SectionHeading
           id="solutions-title"
-          eyebrow="Use Cases"
-          title="驱动各行业智能提升"
-          subtitle="覆盖智能制造、企业运营、AI基础设施等核心领域，帮助企业快速构建可持续演进的智能化能力"
+          :eyebrow="eyebrow"
+          :title="title"
+          :subtitle="subtitle"
           nowrap-subtitle
         />
       </div>
@@ -40,11 +59,11 @@ const solutionTabs = computed(() => solutions.map((solution) => ({ key: solution
         v-if="activeSolution"
         class="solutions__carousel"
         :active-index="activeIndex"
-        :item-count="solutions.length"
+        :item-count="resolvedItems.length"
         labelled-by="solutions-title"
       >
         <div
-          v-for="solution in solutions"
+          v-for="solution in resolvedItems"
           :id="`solution-panel-${solution.key}`"
           :key="solution.key"
           role="group"
