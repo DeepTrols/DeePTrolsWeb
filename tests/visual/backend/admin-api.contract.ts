@@ -301,6 +301,76 @@ export function registerBackendAdminVisualContracts() {
     expect(cmsRenderer).toContain('spacingClass(section)')
   })
 
+  it('guards the home takeover protocol: five-variant hero, 8-section seed, takeover route, and index dispatcher (015.18)', () => {
+    const sectionsUtil = readComponent('server/utils/page-sections.ts')
+    const pagesUtil = readComponent('server/utils/pages-admin.ts')
+    const homePageUtil = readComponent('server/utils/home-page.ts')
+    const takeoverApi = readComponent('server/api/admin/pages/takeover.post.ts')
+    const homeSectionsData = readComponent('data/home-sections.ts')
+    const whyTrustData = readComponent('data/why-trust.ts')
+    const indexPage = readComponent('pages/index.vue')
+    const heroVisualNames = readComponent('components/sections/hero-visual-names.ts')
+    const heroVisualRegistry = readComponent('components/sections/hero-visual-registry.ts')
+
+    // hero 五版式 + per-variant 必填组集中在 pageSectionsSchema.superRefine
+    expect(sectionsUtil).toContain('heroVariantSchema')
+    expect(sectionsUtil).toContain(
+      ".enum(['simple', 'fullscreen-image', 'split-visual', 'banner-dark', 'fullscreen-video'])",
+    )
+    expect(sectionsUtil).toContain('fullscreen-image hero requires backgroundImage')
+    expect(sectionsUtil).toContain('z.enum(HERO_VISUAL_NAMES)')
+    expect(heroVisualNames).toContain('HERO_VISUAL_NAMES')
+    expect(heroVisualRegistry).toContain('Record<HeroVisualName, Component>')
+
+    // 接管白名单：isReservedPagePath 语义不变，仅 takeover 端点 + pageSlugSchema 特判放行
+    expect(pagesUtil).toContain('export const CMS_TAKEOVER_PATHS')
+    expect(pagesUtil).toContain('export function isTakeoverPath(slug: string)')
+    expect(pagesUtil).toContain('takenOver')
+
+    // 8 段 seed：可见 fullscreen-image hero 在首，5 首页 custom + WhyTrustTabs + cta
+    expect(homePageUtil).toContain('export function buildHomePageSeed()')
+    expect(homePageUtil).toContain("variant: 'fullscreen-image'")
+    expect(homePageUtil).toContain("name: 'HomeProductSystem'")
+    expect(homePageUtil).toContain("name: 'HomeSolutions'")
+    expect(homePageUtil).toContain("name: 'HomeEcosystem'")
+    expect(homePageUtil).toContain("name: 'WhyTrustTabs'")
+    expect(homePageUtil).toContain("name: 'HomeAbout'")
+    expect(homePageUtil).toContain("name: 'HomeInsights'")
+    expect(homeSectionsData).toContain('export const homeHeroContent')
+    expect(homeSectionsData).toContain('export const homeCtaContent')
+    expect(whyTrustData).toContain('export const whyTrustTabsData')
+
+    // takeover 端点：requireAdmin + 400 白名单 / 409 已有行 / 503 无库，插入 draft
+    expect(takeoverApi).toContain('requireAdmin')
+    expect(takeoverApi).toContain('isTakeoverPath')
+    expect(takeoverApi).toContain("statusCode: 400, statusMessage: 'Path is not take-over-able'")
+    expect(takeoverApi).toContain("statusCode: 409, statusMessage: 'Page slug already exists'")
+    expect(takeoverApi).toContain('statusCode: 503')
+    expect(takeoverApi).toContain("status: 'draft'")
+    expect(takeoverApi).toContain('buildHomePageSeed()')
+
+    // 首页分发器：CMS 命中渲染 CmsPageView，未命中 v-else 回落代码 8 段
+    expect(indexPage).toContain("useFetch<PublishedPagePayload>('/api/pages'")
+    expect(indexPage).toContain('<CmsPageView v-if="cmsPage" :page="cmsPage" />')
+    expect(indexPage).toContain('<div v-else class="site-shell">')
+    expect(indexPage).toContain('<HomeHero />')
+
+    // 根页路由（尾斜杠不命中 [...path]/[...slug] catch-all，index 路由确定性接管 slug='/'）
+    const publicIndexApi = readComponent('server/api/pages/index.get.ts')
+    const adminIndexGetApi = readComponent('server/api/admin/pages/index.get.ts')
+    const adminIndexPutApi = readComponent('server/api/admin/pages/index.put.ts')
+    const adminIndexDeleteApi = readComponent('server/api/admin/pages/index.delete.ts')
+    expect(publicIndexApi).toContain("getPublishedPage('/')")
+    expect(publicIndexApi).toContain('preview')
+    expect(adminIndexGetApi).toContain('getQuery(event).slug')
+    expect(adminIndexGetApi).toContain('listAdminPages')
+    expect(adminIndexPutApi).toContain('requireAdmin')
+    expect(adminIndexPutApi).toContain('pageUpdateSchema')
+    expect(adminIndexDeleteApi).toContain('requireAdmin')
+    expect(adminIndexDeleteApi).toContain('pageSlugSchema')
+    expect(adminIndexDeleteApi).toContain('deletePage')
+  })
+
   it('guards component management (zod disabled list behind requireAdmin) and home insights featured fallback', () => {
     const componentUtil = readComponent('server/utils/component-admin.ts')
     const componentsGet = readComponent('server/api/admin/components/index.get.ts')

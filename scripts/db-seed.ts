@@ -18,10 +18,12 @@ import {
   navMenus,
   news,
   newsDetails as newsDetailsTable,
+  pages,
   reports,
 } from '../server/db/schema'
 import { parseArticleBlocks } from '../server/utils/article-blocks'
 import { parseCaseRelatedProducts } from '../server/utils/cases-repo'
+import { buildHomePageSeed, HOME_PAGE_SLUG, HOME_PAGE_TITLE } from '../server/utils/home-page'
 import { parseMenuItems } from '../server/utils/menu-admin'
 
 const databaseUrl = process.env.NUXT_DATABASE_URL ?? process.env.DATABASE_URL
@@ -179,9 +181,24 @@ for (const menu of menuSeeds) {
     .onConflictDoUpdate({ target: navMenus.key, set: { items: parsed, updatedAt: new Date() } })
 }
 
+// 首页接管 seed（015.18c）：刻意 onConflictDoNothing（不同于上方 DoUpdate）——
+// 页面接管后是运营资产，重复跑 seed 不得覆盖管理员编辑；初始状态 draft，发布前线上仍走代码渲染
+await db
+  .insert(pages)
+  .values({
+    slug: HOME_PAGE_SLUG,
+    title: HOME_PAGE_TITLE,
+    seoDescription: '',
+    sortOrder: 0,
+    status: 'draft',
+    sections: buildHomePageSeed(),
+  })
+  .onConflictDoNothing({ target: pages.slug })
+
 await sql.end()
 console.log(
   `种子完成：news ×${newsItems.length}，news_details ×${newsDetails.length}，`
   + `cases ×${caseResources.length}，case_details ×${caseDetails.length}，`
-  + `reports ×${reportResources.length}，nav_menus ×${menuSeeds.length}（upsert 幂等）。`,
+  + `reports ×${reportResources.length}，nav_menus ×${menuSeeds.length}（upsert 幂等），`
+  + 'pages 首页接管 seed（onConflictDoNothing）。',
 )

@@ -64,7 +64,8 @@ export function checkAboutPageContracts(ctx) {
       pageHero.includes('v-if="badge"') &&
       pageHero.includes('v-if="titleGradient"') &&
       pageHero.includes('class="page-hero__cta"') &&
-      pageHero.includes('to="/contact"') &&
+      pageHero.includes(':to="ctaHref"') &&
+      pageHero.includes("ctaHref: '/contact'") &&
       pageHero.includes('免费获取专属方案') &&
       !pageHero.includes('BaseButton') &&
       pageHero.includes('v-if="hasVisual"') &&

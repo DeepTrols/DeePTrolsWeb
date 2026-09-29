@@ -1,16 +1,36 @@
 import { readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import {
   CMS_RESERVED_EXACT_PATHS,
   CMS_RESERVED_PREFIXES,
+  CMS_TAKEOVER_PATHS,
   CODE_PAGE_CATALOG,
   isReservedPagePath,
+  isTakeoverPath,
+  listAdminPages,
   pageInputSchema,
   pageSlugSchema,
   pageUpdateSchema,
 } from '../server/utils/pages-admin'
 import { pageSectionsSchema } from '../server/utils/page-sections'
+
+// listAdminPages 合并用例的最小 db 替身（audit-error-states.spec.ts 同配方）
+const dbState = vi.hoisted(() => ({ current: null as { select: (...args: unknown[]) => unknown } | null }))
+vi.mock('../server/db/client', () => ({
+  useNewsDatabase: () => dbState.current,
+}))
+
+/** select().from().orderBy().limit() 链透传，await 时 resolve 指定行 */
+function fakeDbReturning(rows: unknown[]) {
+  const chain = {
+    then: (resolve: (value: unknown) => unknown) => Promise.resolve(rows).then(resolve),
+    from: () => chain,
+    orderBy: () => chain,
+    limit: () => chain,
+  }
+  return { select: () => chain }
+}
 
 describe('pageSlugSchema', () => {
   it('接受合法完整路径', () => {
@@ -25,7 +45,6 @@ describe('pageSlugSchema', () => {
     expect(pageSlugSchema.safeParse('/a/').success).toBe(false)
     expect(pageSlugSchema.safeParse('/a//b').success).toBe(false)
     expect(pageSlugSchema.safeParse('/-a').success).toBe(false)
-    expect(pageSlugSchema.safeParse('/').success).toBe(false)
   })
 
   it('拒绝保留路径（代码路由与系统前缀）', () => {
@@ -40,6 +59,74 @@ describe('pageSlugSchema', () => {
 
   it('允许 /solutions/<new-slug>（代码动态路由有 CMS 回退分支）', () => {
     expect(pageSlugSchema.safeParse('/solutions/smart-logistics').success).toBe(true)
+  })
+})
+
+describe('接管白名单（015.18）', () => {
+  it("slug '/' 经接管特判放行，但保留语义不变", () => {
+    // pageSlugSchema 对接管白名单路径特判放行（只能经 takeover 端点写入）
+    expect(pageSlugSchema.safeParse('/').success).toBe(true)
+    // isReservedPagePath 对 '/' 仍返回 true：普通 CMS 页/目录扫描语义不受影响
+    expect(isReservedPagePath('/')).toBe(true)
+    expect(isTakeoverPath('/')).toBe(true)
+    expect(CMS_TAKEOVER_PATHS).toContain('/')
+  })
+
+  it('白名单外的保留路径不放行', () => {
+    expect(isTakeoverPath('/contact')).toBe(false)
+    expect(pageSlugSchema.safeParse('/contact').success).toBe(false)
+    expect(pageSlugSchema.safeParse('/about_us').success).toBe(false)
+  })
+
+  it('pageInputSchema 接受 slug=/ 的接管种子载荷', () => {
+    const parsed = pageInputSchema.safeParse({
+      slug: '/',
+      title: '首页',
+      status: 'draft',
+      sections: [{ type: 'hero', variant: 'fullscreen-image', title: '标题', backgroundImage: '/h.webp' }],
+    })
+    expect(parsed.success).toBe(true)
+  })
+})
+
+describe('listAdminPages 接管合并（015.18）', () => {
+  it('无 DB：仅代码页目录，全部 source=code 且无 takenOver', async () => {
+    dbState.current = null
+    const rows = await listAdminPages()
+    expect(rows.length).toBe(CODE_PAGE_CATALOG.length)
+    expect(rows.every(row => row.source === 'code')).toBe(true)
+    expect(rows.every(row => !row.takenOver)).toBe(true)
+  })
+
+  it("CMS 行命中接管白名单路径 '/'：折叠进 code 行（takenOver + status/updatedAt 取 CMS 值），不重复出行", async () => {
+    const updatedAt = new Date('2026-09-29T00:00:00.000Z')
+    dbState.current = fakeDbReturning([
+      { slug: '/', title: '首页', status: 'draft', sortOrder: 0, updatedAt },
+    ])
+    const rows = await listAdminPages()
+    // 不产生重复的 '/' 行
+    expect(rows.filter(row => row.slug === '/').length).toBe(1)
+    const homeRow = rows.find(row => row.slug === '/')
+    expect(homeRow?.source).toBe('code')
+    expect(homeRow?.takenOver).toBe(true)
+    expect(homeRow?.status).toBe('draft')
+    expect(homeRow?.updatedAt).toBe(updatedAt.toISOString())
+    expect(rows.length).toBe(CODE_PAGE_CATALOG.length)
+  })
+
+  it('普通 CMS 行不受合并影响，追加在代码页目录之后', async () => {
+    const updatedAt = new Date('2026-09-29T00:00:00.000Z')
+    dbState.current = fakeDbReturning([
+      { slug: '/x-page', title: 'X', status: 'published', sortOrder: 1, updatedAt },
+    ])
+    const rows = await listAdminPages()
+    expect(rows.length).toBe(CODE_PAGE_CATALOG.length + 1)
+    const cmsRow = rows.at(-1)
+    expect(cmsRow?.slug).toBe('/x-page')
+    expect(cmsRow?.source).toBe('cms')
+    expect(cmsRow?.takenOver).toBeUndefined()
+    // 代码行不受影响
+    expect(rows.find(row => row.slug === '/')?.takenOver).toBeUndefined()
   })
 })
 
@@ -149,8 +236,10 @@ describe('pageSectionsSchema（Phase C richText 兼容）', () => {
     }
   })
 
-  it('拒绝未知区块类型与空 blocks', () => {
+  it('拒绝缺必填 title 的 hero 与空 blocks 的 richText', () => {
+    // hero 协议是 title 必填（blocks 不是 hero 字段）：缺 title 即被拒
     expect(pageSectionsSchema.safeParse([{ type: 'hero', blocks: [] }]).success).toBe(false)
+    // richText 协议要求 blocks min(1)：空数组被拒
     expect(pageSectionsSchema.safeParse([{ type: 'richText', blocks: [] }]).success).toBe(false)
   })
 })

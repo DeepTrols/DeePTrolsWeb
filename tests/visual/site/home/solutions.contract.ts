@@ -7,11 +7,15 @@ export function registerHomeSolutionsVisualContracts() {
       baseTabs,
       homeSolutions,
       carouselRoot,
+      homeSectionsData,
     } = loadHomeVisualSources()
 
-    expect(homeSolutions).toContain('eyebrow="Use Cases"')
-    expect(homeSolutions).toContain('title="驱动各行业智能提升"')
-    expect(homeSolutions).toContain('覆盖智能制造、企业运营、AI基础设施等核心领域，帮助企业快速构建可持续演进的智能化能力')
+    // 015.18：标题文案经 props 传入，缺省值住在 data/home-sections.ts
+    expect(homeSolutions).toContain(':eyebrow="eyebrow"')
+    expect(homeSolutions).toContain(':title="title"')
+    expect(homeSectionsData).toContain("eyebrow: 'Use Cases'")
+    expect(homeSectionsData).toContain("title: '驱动各行业智能提升'")
+    expect(homeSectionsData).toContain('覆盖智能制造、企业运营、AI基础设施等核心领域，帮助企业快速构建可持续演进的智能化能力')
     expect(homeSolutions).toContain('nowrap-subtitle')
     expect(homeSolutions).toContain('background: var(--dt-color-bg)')
     expect(homeSolutions).not.toContain('background: #f0f5ff')
@@ -28,7 +32,7 @@ export function registerHomeSolutionsVisualContracts() {
     expect(baseTabs).toContain('dt-tab')
     expect(homeSolutions).toContain('CarouselRoot')
     expect(homeSolutions).toContain(':active-index="activeIndex"')
-    expect(homeSolutions).toContain(':item-count="solutions.length"')
+    expect(homeSolutions).toContain(':item-count="resolvedItems.length"')
     expect(homeSolutions).toContain('labelled-by="solutions-title"')
     expect(homeSolutions).toContain('--dt-carousel-align: flex-start')
     expect(homeSolutions).toContain('--dt-carousel-gutter: -16px')

@@ -115,6 +115,8 @@ export interface AdminPageRecord {
   source: 'cms' | 'code';
   sortOrder: null | number;
   status: ContentStatus | null;
+  /** 015.18 接管标记：代码路径命中接管白名单且 DB 存在同 slug CMS 行 */
+  takenOver?: boolean;
   updatedAt: null | string;
 }
 
@@ -136,15 +138,27 @@ export type PageUpdateInput = Omit<PageInput, 'slug'>;
 export const listAdminPagesApi = () =>
   requestClient.get<AdminPageRecord[]>('/admin/pages');
 
-/** slug 含前导斜杠（如 /solutions/smart-retail），直接拼接 */
+/**
+ * slug 含前导斜杠（如 /solutions/smart-retail），直接拼接；
+ * slug='/'（015.18 接管页）时 /admin/pages/ 尾斜杠不命中 [...slug] 路由，改走 index 路由 ?slug= 分支
+ */
+const pageUrl = (slug: string) =>
+  slug === '/'
+    ? `/admin/pages?slug=${encodeURIComponent('/')}`
+    : `/admin/pages${slug}`;
+
 export const getAdminPageApi = (slug: string) =>
-  requestClient.get<AdminPagePayload>(`/admin/pages${slug}`);
+  requestClient.get<AdminPagePayload>(pageUrl(slug));
 
 export const createPageApi = (data: PageInput) =>
   requestClient.post<{ slug: string }>('/admin/pages', data);
 
 export const updatePageApi = (slug: string, data: PageUpdateInput) =>
-  requestClient.put(`/admin/pages${slug}`, data);
+  requestClient.put(pageUrl(slug), { ...data, slug });
 
 export const deletePageApi = (slug: string) =>
-  requestClient.delete(`/admin/pages${slug}`);
+  requestClient.delete(pageUrl(slug));
+
+/** 接管代码页（015.18）：白名单路径（当前仅 '/'）创建 draft 种子页；409 = 已存在 */
+export const takeoverPageApi = (slug: string) =>
+  requestClient.post<{ slug: string }>('/admin/pages/takeover', { slug });

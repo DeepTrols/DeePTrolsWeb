@@ -38,6 +38,13 @@ export function checkBackendAdminContracts(ctx) {
     backendAdminMenuPutApi,
     backendPagesAdminUtil,
     backendPageSectionsUtil,
+    backendHomePageUtil,
+    backendAdminPagesTakeoverApi,
+    backendAdminPagesIndexPutApi,
+    backendAdminPagesIndexDeleteApi,
+    backendPagesPublicIndexApi,
+    homeSectionsData,
+    whyTrustData,
     backendPagesPublicApi,
     backendAdminPagesListApi,
     backendAdminPagesCreateApi,
@@ -339,8 +346,45 @@ export function checkBackendAdminContracts(ctx) {
       backendPageSectionsUtil.includes('articleBlocksSchema') &&
       backendPageSectionsUtil.includes('z.enum(CUSTOM_SECTION_NAMES)') &&
       backendPageSectionsUtil.includes('visible: z.boolean().default(true)') &&
-      backendPageSectionsUtil.includes("sectionSpacingSchema = z.enum(['tight', 'compact', 'default'])"),
-    'Pages protocol must keep reserved-path blacklist, code-page catalog merge (source cms|code), immutable slug PK, published-only public reads, conflict semantics, and a discriminatedUnion section schema with spacing enum and custom escape hatch.',
+      backendPageSectionsUtil.includes("sectionSpacingSchema = z.enum(['tight', 'compact', 'default'])") &&
+      backendPagesAdminUtil.includes('export const CMS_TAKEOVER_PATHS') &&
+      backendPagesAdminUtil.includes('export function isTakeoverPath(slug: string)') &&
+      backendPagesAdminUtil.includes('takenOver'),
+    'Pages protocol must keep reserved-path blacklist, code-page catalog merge (source cms|code), immutable slug PK, published-only public reads, conflict semantics, a discriminatedUnion section schema with spacing enum and custom escape hatch, plus the 015.18 takeover whitelist (CMS_TAKEOVER_PATHS/isTakeoverPath/takenOver merge).',
+  )
+
+  assert(
+    backendPageSectionsUtil.includes('heroVariantSchema') &&
+      backendPageSectionsUtil.includes(
+        ".enum(['simple', 'fullscreen-image', 'split-visual', 'banner-dark', 'fullscreen-video'])",
+      ) &&
+      backendPageSectionsUtil.includes('fullscreen-image hero requires backgroundImage') &&
+      backendHomePageUtil.includes('export function buildHomePageSeed()') &&
+      backendHomePageUtil.includes("variant: 'fullscreen-image'") &&
+      backendHomePageUtil.includes("name: 'HomeProductSystem'") &&
+      backendHomePageUtil.includes("name: 'HomeSolutions'") &&
+      backendHomePageUtil.includes("name: 'HomeEcosystem'") &&
+      backendHomePageUtil.includes("name: 'WhyTrustTabs'") &&
+      backendHomePageUtil.includes("name: 'HomeAbout'") &&
+      backendHomePageUtil.includes("name: 'HomeInsights'") &&
+      backendHomePageUtil.includes('homeHeroContent') &&
+      homeSectionsData.includes('export const homeHeroContent') &&
+      homeSectionsData.includes('export const homeCtaContent') &&
+      homeSectionsData.includes('export const homeCtaMetrics') &&
+      whyTrustData.includes('export const whyTrustTabsData') &&
+      backendAdminPagesTakeoverApi.includes('requireAdmin') &&
+      backendAdminPagesTakeoverApi.includes('isTakeoverPath') &&
+      backendAdminPagesTakeoverApi.includes("statusCode: 400, statusMessage: 'Path is not take-over-able'") &&
+      backendAdminPagesTakeoverApi.includes("statusCode: 409, statusMessage: 'Page slug already exists'") &&
+      backendAdminPagesTakeoverApi.includes('statusCode: 503') &&
+      backendAdminPagesTakeoverApi.includes("status: 'draft'") &&
+      backendAdminPagesTakeoverApi.includes('buildHomePageSeed()') &&
+      backendPagesPublicIndexApi.includes("getPublishedPage('/')") &&
+      backendAdminPagesIndexPutApi.includes('requireAdmin') &&
+      backendAdminPagesIndexPutApi.includes('pageUpdateSchema') &&
+      backendAdminPagesIndexDeleteApi.includes('requireAdmin') &&
+      backendAdminPagesIndexDeleteApi.includes('deletePage'),
+    'Home takeover (015.18c) must keep the five-variant hero schema, the 8-section buildHomePageSeed (visible fullscreen-image hero first, 5 home custom sections + WhyTrustTabs + cta) sourced from data/home-sections.ts + data/why-trust.ts, and the takeover route behind requireAdmin with 400/409/503 semantics inserting a draft row.',
   )
 
   const pagesRoutes = [

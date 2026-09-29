@@ -16,6 +16,7 @@ export function registerHomeHeroProductVisualContracts() {
       logos,
       deliverables,
       productSystem,
+      homeSectionsData,
     } = loadHomeVisualSources()
 
     expect(page).not.toContain('class="home-hero-deliverables"')
@@ -66,9 +67,13 @@ export function registerHomeHeroProductVisualContracts() {
     expect(deliverables).toContain('display: none')
     expect(deliverables).not.toContain('What We Deliver')
 
-    expect(productSystem).toContain('eyebrow="DeepTrols OPS"')
-    expect(productSystem).toContain('title="连接真实业务与人工智能"')
-    expect(productSystem).toContain('以数据与知识底座桥接企业业务与人工智能。赋能 AI Agent，实现对真实业务的支撑。')
+    // 015.18：标题文案经 props 传入，缺省值住在 data/home-sections.ts（CMS 接管共用同一 SFC）
+    expect(productSystem).toContain(':eyebrow="eyebrow"')
+    expect(productSystem).toContain(':title="title"')
+    expect(productSystem).toContain('homeProductSystemHeading')
+    expect(homeSectionsData).toContain("eyebrow: 'DeepTrols OPS'")
+    expect(homeSectionsData).toContain("title: '连接真实业务与人工智能'")
+    expect(homeSectionsData).toContain('以数据与知识底座桥接企业业务与人工智能。赋能 AI Agent，实现对真实业务的支撑。')
     expect(productSystem).toContain('ProductSystemSection')
     expect(productSystem).toContain('padded-top')
     expect(productSystem).toContain('ProductSystemFlowFrame')
@@ -76,7 +81,8 @@ export function registerHomeHeroProductVisualContracts() {
     expect(productSystem).not.toContain('HomeProductSystemMobileFlow')
     expect(productSystem).toContain('ProductSystemCards')
     expect(productSystem).toContain('DeepTrolsArchitectureFlow')
-    expect(productSystem).toContain('label="DeepTrols OPS 产品架构图"')
+    expect(productSystem).toContain(':label="flowLabel"')
+    expect(homeSectionsData).toContain("flowLabel: 'DeepTrols OPS 产品架构图'")
     expect(productSystem).not.toContain(':grid="false"')
     expect(productSystemSection).toContain('SectionShell')
     expect(productSystemSection).toContain('SectionHeader')

@@ -6,6 +6,8 @@ export function loadHomeVisualSources() {
     const siteHeaderStyles = readComponent('assets/scss/components/_site-header.scss')
     const page = readComponent('pages/index.vue')
     const homeData = readComponent('data/home.ts')
+    const homeSectionsData = readComponent('data/home-sections.ts')
+    const whyTrustData = readComponent('data/why-trust.ts')
     const header = readComponent('components/navigation/SiteHeader.vue')
     const headerDesktopNav = readComponent('components/navigation/SiteHeaderDesktopNav.vue')
     const headerActions = readComponent('components/navigation/SiteHeaderActions.vue')
@@ -62,6 +64,8 @@ export function loadHomeVisualSources() {
     siteHeaderStyles,
     page,
     homeData,
+    homeSectionsData,
+    whyTrustData,
     header,
     headerDesktopNav,
     headerActions,

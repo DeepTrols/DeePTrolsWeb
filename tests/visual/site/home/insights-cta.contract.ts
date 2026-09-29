@@ -7,13 +7,17 @@ export function registerHomeInsightsCtaVisualContracts() {
       ctaSection,
       homeInsights,
       homeCta,
+      homeSectionsData,
     } = loadHomeVisualSources()
 
     expect(homeInsights).toContain('SectionHeading')
     expect(homeInsights).toContain('class="section insights flow-root pt-32 pb-32 lg:pb-44"')
     expect(homeInsights).toContain('class="container"')
-    expect(homeInsights).toContain('eyebrow="Resources"')
-    expect(homeInsights).toContain('title="创新、洞察与新闻"')
+    // 015.18：标题文案经 props 传入，缺省值住在 data/home-sections.ts
+    expect(homeInsights).toContain(':eyebrow="eyebrow"')
+    expect(homeInsights).toContain(':title="title"')
+    expect(homeSectionsData).toContain("eyebrow: 'Resources'")
+    expect(homeSectionsData).toContain("title: '创新、洞察与新闻'")
     expect(homeInsights).toContain('title-id="insights-title"')
     expect(homeInsights).toContain('class="insights__layout"')
     expect(homeInsights).toContain('grid-template-columns: 1fr')
@@ -39,7 +43,9 @@ export function registerHomeInsightsCtaVisualContracts() {
     expect(homeInsights).toContain('class="insights__all-link insights__all-link--desktop"')
     expect(homeInsights).toContain('class="insights__mobile-action"')
     expect(homeInsights).toContain('BaseButton')
-    expect(homeInsights).toContain('查看全部资源')
+    expect(homeInsights).toContain('{{ moreLabel }}')
+    expect(homeSectionsData).toContain("moreLabel: '查看全部资源'")
+    expect(homeSectionsData).toContain("moreHref: '/insights'")
     expect(homeInsights).not.toContain('insights__topline')
     expect(homeInsights).not.toContain('transform: translateY')
 

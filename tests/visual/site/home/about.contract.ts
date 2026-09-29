@@ -6,6 +6,7 @@ export function registerHomeAboutVisualContracts() {
     const {
       homeAbout,
       homeData,
+      homeSectionsData,
       page,
       tailwind,
     } = loadHomeVisualSources()
@@ -32,12 +33,14 @@ export function registerHomeAboutVisualContracts() {
     expect(homeAbout).toContain('block h-[55px] w-36 object-contain')
     expect(homeAbout).not.toContain('<style')
 
+    // 015.18：homeAbout 字面值抽到 data/home-sections.ts（server 共享），partnerRows（?url 资产）留在 data/home.ts
     expect(homeData).toContain("export const homeAbout: HomeAboutContent")
-    expect(homeData).toContain("eyebrow: '关于我们'")
-    expect(homeData).toContain("title: '深度数智，企业AI基础设施赛道的构建者与引领者'")
-    expect(homeData).toContain("bannerImage: '/O1CN0.png'")
-    expect(homeData).toContain("clientsLabelImage: '/clients-label.webp'")
     expect(homeData).toContain('partnerRows')
+    expect(homeData).toContain('homeAboutContent')
+    expect(homeSectionsData).toContain("eyebrow: '关于我们'")
+    expect(homeSectionsData).toContain("title: '深度数智，企业AI基础设施赛道的构建者与引领者'")
+    expect(homeSectionsData).toContain("bannerImage: '/O1CN0.png'")
+    expect(homeSectionsData).toContain("clientsLabelImage: '/clients-label.webp'")
     expect(tailwind).toContain('--animate-home-about-marquee-left')
     expect(tailwind).toContain('--animate-home-about-marquee-right')
     expect(tailwind).toContain('@keyframes home-about-marquee-left')

@@ -56,7 +56,7 @@ export function registerAboutVisualContracts() {
     expect(pageHero).toContain('v-if="badge"')
     expect(pageHero).toContain('v-if="titleGradient"')
     expect(pageHero).toContain('class="page-hero__cta"')
-    expect(pageHero).toContain('to="/contact"')
+    expect(pageHero).toContain(':to="ctaHref"')
     expect(pageHero).toContain('免费获取专属方案')
     expect(pageHero).not.toContain('BaseButton')
     expect(pageHero).toContain('v-if="hasVisual"')

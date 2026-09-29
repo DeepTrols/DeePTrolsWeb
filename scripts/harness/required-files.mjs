@@ -42,6 +42,7 @@ export const requiredTaskFiles = [
   'TASK-015.15-featured-rules.md',
   'TASK-015.16-content-categories.md',
   'TASK-015.17-solution-case-picks.md',
+  'TASK-015.18-home-takeover.md',
 ]
 
 export const requiredFiles = [
@@ -338,6 +339,20 @@ export const requiredFiles = [
   'server/api/admin/pages/[...slug].get.ts',
   'server/api/admin/pages/[...slug].put.ts',
   'server/api/admin/pages/[...slug].delete.ts',
+  'server/api/admin/pages/index.put.ts',
+  'server/api/admin/pages/index.delete.ts',
+  'server/api/pages/index.get.ts',
+  'server/api/admin/pages/takeover.post.ts',
+  'server/utils/home-page.ts',
+  'data/home-sections.ts',
+  'data/why-trust.ts',
+  'components/sections/hero-visual-names.ts',
+  'components/sections/hero-visual-registry.ts',
+  'components/sections/heroes/CmsHeroFullscreenImage.vue',
+  'components/sections/heroes/CmsHeroSplitVisual.vue',
+  'components/sections/heroes/CmsHeroBannerDark.vue',
+  'components/sections/heroes/CmsHeroFullscreenVideo.vue',
+  'tests/home-page-seed.spec.ts',
   'components/common/CmsPageView.vue',
   'tests/pages-admin.spec.ts',
   'server/utils/page-sections.ts',

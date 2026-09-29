@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, homeAbout, homeData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
+  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, homeAbout, homeData, homeSectionsData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -29,6 +29,10 @@ assert(
   'HOME page must keep the Customer Stories and Deliverables sections unmounted until they are requested again.',
 )
 assert(
+  page.includes('CmsPageView') && page.includes("useFetch<PublishedPagePayload>('/api/pages'") && page.includes('<CmsPageView v-if="cmsPage" :page="cmsPage" />') && page.includes('<div v-else class="site-shell">'),
+  'HOME page must dispatch to the CMS takeover renderer and keep the code-rendered sections as the v-else fallback.',
+)
+assert(
   page.includes('<HomeEcosystem />\n      <WhyTrustTabs />\n      <HomeAbout />\n      <HomeInsights />'),
   'HOME page must mount WhyTrustTabs after ecosystem and HomeAbout before Resources.',
 )
@@ -52,15 +56,16 @@ assert(
 )
 assert(
   homeData.includes("export const homeAbout: HomeAboutContent") &&
-    homeData.includes("eyebrow: '关于我们'") &&
-    homeData.includes("title: '深度数智，企业AI基础设施赛道的构建者与引领者'") &&
-    homeData.includes("bannerImage: '/O1CN0.png'") &&
-    homeData.includes("clientsLabelImage: '/clients-label.webp'") &&
+    homeData.includes('homeAboutContent') &&
+    homeSectionsData.includes("eyebrow: '关于我们'") &&
+    homeSectionsData.includes("title: '深度数智，企业AI基础设施赛道的构建者与引领者'") &&
+    homeSectionsData.includes("bannerImage: '/O1CN0.png'") &&
+    homeSectionsData.includes("clientsLabelImage: '/clients-label.webp'") &&
     tailwind.includes('--animate-home-about-marquee-left') &&
     tailwind.includes('--animate-home-about-marquee-right') &&
     tailwind.includes('@keyframes home-about-marquee-left') &&
     tailwind.includes('@keyframes home-about-marquee-right'),
-  'HomeAbout content and marquee animation tokens must be centralized in data/home.ts and Tailwind v4 theme.',
+  'HomeAbout content literals must be centralized in data/home-sections.ts (015.18 pure module), composed by data/home.ts, with marquee animation tokens in Tailwind v4 theme.',
 )
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
 assert(homeInsights.includes('class="section insights flow-root pt-32 pb-32 lg:pb-44"') && homeInsights.includes('class="container"'), 'HomeInsights must follow the unified section spacing rule (flow-root pt-32 pb-32 lg:pb-44 shell + plain container).')
@@ -77,7 +82,8 @@ assert(
     productSystem.includes('ProductSystemFlowFrame') &&
     productSystem.includes('ProductSystemCards') &&
     productSystem.includes('DeepTrolsArchitectureFlow') &&
-    productSystem.includes('label="DeepTrols OPS 产品架构图"') &&
+    productSystem.includes(':label="flowLabel"') &&
+    homeSectionsData.includes("flowLabel: 'DeepTrols OPS 产品架构图'") &&
     productSystem.includes('w-full overflow-hidden @container') &&
     productSystem.includes('scale-[min(1,calc(100cqw/1600px))]') &&
     !productSystem.includes(':grid="false"') &&

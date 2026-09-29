@@ -50,6 +50,18 @@ export function isReservedPagePath(slug: string): boolean {
 }
 
 /**
+ * 接管白名单（015.18）：保留路径中允许被 CMS 页覆盖渲染的代码路由。
+ * 接管 = 代码路由的分发器优先读已发布 CMS 页，未配置/未发布回落代码渲染（线上零风险）。
+ * isReservedPagePath 对这些路径仍返回 true（普通 CMS 页不得撞代码路由），
+ * 仅 takeover 端点 + pageSlugSchema 特判放行。
+ */
+export const CMS_TAKEOVER_PATHS = ['/'] as const
+
+export function isTakeoverPath(slug: string): boolean {
+  return (CMS_TAKEOVER_PATHS as readonly string[]).includes(slug)
+}
+
+/**
  * 代码页目录（只读）：静态代码路由 + 动态路由模式 + /demo 演示页。
  * 代码页是 Vue SFC，内容无法表单化——后台列表全量展示但仅可「查看」，不可编辑/删除。
  * 完整性由 tests/pages-admin.spec.ts 锁定（覆盖全部 CMS_RESERVED_EXACT_PATHS 且静态路径全部保留）。
@@ -92,14 +104,15 @@ export const CODE_PAGE_CATALOG = [
   { path: '/demo/tanyao-iot-architecture', title: 'Demo · 探曜 IoT 架构' },
 ] as const
 
-/** 页面路径：完整路径（含前导斜杠），小写字母/数字/连字符/斜杠，不允许尾斜杠与保留路径 */
+/** 页面路径：完整路径（含前导斜杠），小写字母/数字/连字符/斜杠，不允许尾斜杠与保留路径；
+ * 接管白名单路径（015.18，当前仅 '/'）特判放行——只能经 takeover 端点写入 */
 export const pageSlugSchema = z
   .string()
   .trim()
-  .min(2)
+  .min(1)
   .max(300)
-  .regex(/^\/[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*$/, 'Invalid page path')
-  .refine(slug => !isReservedPagePath(slug), { message: 'Reserved page path' })
+  .refine(slug => slug === '/' || /^\/[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*$/.test(slug), { message: 'Invalid page path' })
+  .refine(slug => isTakeoverPath(slug) || !isReservedPagePath(slug), { message: 'Reserved page path' })
 
 /** CMS 页写入协议（新建/更新同一形状；slug 主键冲突返回 'conflict'） */
 export const pageInputSchema = z.object({
@@ -121,10 +134,12 @@ export interface AdminPageRecord {
   title: string
   /** cms = DB 里可编辑的 CMS 页；code = 代码静态/动态路由（只读，仅可查看线上页） */
   source: 'cms' | 'code'
-  /** 代码页无 CMS 语义字段，为 null */
+  /** 代码页无 CMS 语义字段，为 null；被接管时代码行折叠 CMS 行的 status */
   status: z.infer<typeof contentStatusSchema> | null
   sortOrder: number | null
   updatedAt: string | null
+  /** 015.18 接管标记：代码路径命中接管白名单且 DB 存在同 slug CMS 行 */
+  takenOver?: boolean
 }
 
 export interface AdminPagePayload extends PageInput {
@@ -170,14 +185,25 @@ export async function listAdminPages(): Promise<AdminPageRecord[]> {
       .orderBy(asc(pages.sortOrder), asc(pages.slug))
       .limit(500)
 
-    const cmsRows: AdminPageRecord[] = rows.map(row => ({
-      slug: row.slug,
-      title: row.title,
-      source: 'cms' as const,
-      status: row.status,
-      sortOrder: row.sortOrder,
-      updatedAt: row.updatedAt.toISOString(),
-    }))
+    const cmsRows: AdminPageRecord[] = []
+    for (const row of rows) {
+      // 接管合并（015.18）：CMS 行命中接管白名单的代码路径 → 折叠进 code 行（takenOver + status/updatedAt 取 CMS 值），不重复出行
+      const codeRow = codeRows.find(entry => entry.slug === row.slug)
+      if (codeRow && isTakeoverPath(row.slug)) {
+        codeRow.takenOver = true
+        codeRow.status = row.status
+        codeRow.updatedAt = row.updatedAt.toISOString()
+        continue
+      }
+      cmsRows.push({
+        slug: row.slug,
+        title: row.title,
+        source: 'cms' as const,
+        status: row.status,
+        sortOrder: row.sortOrder,
+        updatedAt: row.updatedAt.toISOString(),
+      })
+    }
     return [...codeRows, ...cmsRows]
   }
   catch (error) {

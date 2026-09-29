@@ -1,5 +1,5 @@
 export function checkWhyPageContracts(ctx) {
-  const { assert, tailwind, sectionShell, baseCard, iconBox, cardGrid, baseTabs, pageHero, pageHeroStyles, heroLogoStrip, trustTabsSection, serviceShowcaseSection, engineLinksSection, whyData, whyPage, whyHero, whyHeroLogos, whyHeroVisual, whyHeroAnimation, whyTrustTabs, whyService, whyEngine } = ctx
+  const { assert, tailwind, sectionShell, baseCard, iconBox, cardGrid, baseTabs, pageHero, pageHeroStyles, heroLogoStrip, trustTabsSection, serviceShowcaseSection, engineLinksSection, whyData, whyTrustData, whyPage, whyHero, whyHeroLogos, whyHeroVisual, whyHeroAnimation, whyTrustTabs, whyService, whyEngine } = ctx
 assert(whyPage.includes('SiteHeader') && whyPage.includes('SiteFooter'), 'Why page must reuse global Header and Footer.')
 assert(
   whyPage.includes('WhyHero') &&
@@ -158,8 +158,8 @@ assert(
 )
 assert(whyService.includes('ServiceShowcaseSection') && serviceShowcaseSection.includes('SectionHeader') && whyService.includes('fangangaishu.png?url') && !whyService.includes('new URL('), 'Why service section must use ServiceShowcaseSection and import the required overview image via ?url.')
 assert(whyEngine.includes('EngineLinksSection') && whyEngine.includes('whyEngineLinks') && engineLinksSection.includes('SectionHeader'), 'Why engine section must reuse EngineLinksSection and configured links.')
-assert(whyData.includes('label: \'面向技术层\'') && whyData.includes('label: \'面向业务层\'') && whyData.includes('label: \'面向服务层\'') && whyData.includes('label: \'面向长期价值\''), 'Why page must define four trust tabs.')
-const whyTrustFeatureGroups = [...whyData.matchAll(/label: '[^']+',[\s\S]*?features: \[([\s\S]*?)\n {4}\],/g)]
+assert(whyTrustData.includes('label: \'面向技术层\'') && whyTrustData.includes('label: \'面向业务层\'') && whyTrustData.includes('label: \'面向服务层\'') && whyTrustData.includes('label: \'面向长期价值\'') && whyData.includes('whyTrustTabsData'), 'Why page must define four trust tabs (literals in data/why-trust.ts, composed by data/why.ts).')
+const whyTrustFeatureGroups = [...whyTrustData.matchAll(/label: '[^']+',[\s\S]*?features: \[([\s\S]*?)\n {4}\],/g)]
 assert(
   whyTrustFeatureGroups.length === 4 &&
     whyTrustFeatureGroups.every(([, group]) => (group.match(/\n {8}title: /g) ?? []).length === 4),

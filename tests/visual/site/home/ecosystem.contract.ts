@@ -11,11 +11,16 @@ export function registerHomeEcosystemVisualContracts() {
       ecosystemInfraVisual,
       ecosystemReportVisual,
       ecosystemVisualData,
+      homeSectionsData,
     } = loadHomeVisualSources()
 
-    expect(homeEcosystem).toContain('eyebrow="ecosystem"')
-    expect(homeEcosystem).toContain('title="连接企业 AI 全链路的开放生态"')
-    expect(homeEcosystem).toContain('subtitle="连接算力、模型、社区与行业知识，构建开放 AI 生态"')
+    // 015.18：标题文案经 props 传入，缺省值住在 data/home-sections.ts
+    expect(homeEcosystem).toContain(':eyebrow="eyebrow"')
+    expect(homeEcosystem).toContain(':title="title"')
+    expect(homeEcosystem).toContain(':subtitle="subtitle"')
+    expect(homeSectionsData).toContain("eyebrow: 'ecosystem'")
+    expect(homeSectionsData).toContain("title: '连接企业 AI 全链路的开放生态'")
+    expect(homeSectionsData).toContain("subtitle: '连接算力、模型、社区与行业知识，构建开放 AI 生态'")
     expect(homeEcosystem).toContain('nowrap-subtitle')
     expect(homeEcosystem).toContain('.ecosystem :deep(.section-heading__subtitle)')
     expect(homeEcosystem).toContain('font-size: 20px')
