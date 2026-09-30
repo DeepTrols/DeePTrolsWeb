@@ -355,13 +355,27 @@ export function registerBackendAdminVisualContracts() {
     expect(takeoverApi).toContain("statusCode: 409, statusMessage: 'Page slug already exists'")
     expect(takeoverApi).toContain('statusCode: 503')
     expect(takeoverApi).toContain("status: 'draft'")
-    expect(takeoverApi).toContain('buildHomePageSeed()')
+    expect(takeoverApi).toContain('TAKEOVER_SEEDS')
+    expect(takeoverApi).toContain('buildAboutPageSeed')
 
     // 首页分发器：CMS 命中渲染 CmsPageView，未命中 v-else 回落代码 8 段
     expect(indexPage).toContain("useFetch<PublishedPagePayload>('/api/pages'")
-    expect(indexPage).toContain('<CmsPageView v-if="cmsPage" :page="cmsPage" />')
+    expect(indexPage).toContain('v-if="renderedPage"')
     expect(indexPage).toContain('<div v-else class="site-shell">')
     expect(indexPage).toContain('<HomeHero />')
+
+    // 关于页分发器（015.20b）：同首页语义 + 7 段代码回退；seed 七段齐全防发布丢段
+    const aboutPage = readComponent('pages/about_us.vue')
+    const aboutSeed = readComponent('server/utils/about-page.ts')
+    const cmsView = readComponent('components/common/CmsPageView.vue')
+    expect(aboutPage).toContain("useFetch<PublishedPagePayload>('/api/pages/about_us'")
+    expect(aboutPage).toContain('cms-page/about_us')
+    expect(aboutPage).toContain('v-if="renderedPage"')
+    expect(aboutPage).toContain('<AboutHero />')
+    expect(aboutSeed).toContain('export function buildAboutPageSeed()')
+    expect(aboutSeed).toContain("name: 'AboutHero'")
+    expect(aboutSeed).toContain("name: 'AboutContactSection'")
+    expect(cmsView).toContain('CUSTOM_HERO_NAMES')
 
     // 根页路由（尾斜杠不命中 [...path]/[...slug] catch-all，index 路由确定性接管 slug='/'）
     const publicIndexApi = readComponent('server/api/pages/index.get.ts')
@@ -422,6 +436,16 @@ export function registerBackendAdminVisualContracts() {
     const publicApi = readComponent('server/api/pages/[...path].get.ts')
     const catchAll = readComponent('pages/[...slug].vue')
     const cmsView = readComponent('components/common/CmsPageView.vue')
+    const propListField = readComponent(
+      'admin/apps/web-antd/src/views/pages/components/PropListField.vue',
+    )
+
+    // list 行编辑器（015.20a）：文字/图片/图标/嵌套逐行编辑，替代裸 JSON
+    expect(customProps).toContain("| 'list' |")
+    expect(propListField).toContain('ImageField')
+    expect(propListField).toContain('field.itemFields')
+    expect(propListField).toContain('NAV_ICON_OPTIONS')
+    expect(propListField).toContain('fallback')
 
     // 注册组件元数据：纯 TS（禁 .vue import；015.19d 的 contentEntry.dataPath 是纯路径字符串非 import）
     expect(customProps).toContain('CUSTOM_COMPONENT_META')
@@ -478,6 +502,8 @@ export function registerBackendAdminVisualContracts() {
     expect(sectionPalette).toContain("pull: 'clone'")
     expect(sectionBody).toContain('BlocksEditor')
     expect(sectionBody).toContain('customComponents')
+    expect(sectionBody).toContain("field.type === 'list'")
+    expect(sectionBody).toContain('PropListField')
     expect(webAntdPkg).toContain('@vueuse/integrations')
 
     // 模板库 vben 侧：API + 路由 + 列表页
@@ -500,12 +526,15 @@ export function registerBackendAdminVisualContracts() {
     const pagesEdit = readComponent('admin/apps/web-antd/src/views/pages/edit.vue')
     expect(pagesEdit).toContain('iframe')
     expect(pagesEdit).toContain('preview=1')
-    // 015.19e 实时预览：postMessage 桥 + 主站三重门 + origin 白名单 + 客户端消毒
+    // 015.19e/015.20b 实时预览：postMessage 桥 + 主站三重门 + origin 白名单 + 客户端消毒（composable 三页共用）
+    const livePreview = readComponent('composables/use-cms-live-preview.ts')
     expect(pagesEdit).toContain('dt-cms-live-preview')
     expect(pagesEdit).toContain('liveTargetOrigin')
-    expect(catchAll).toContain("route.query.live === '1'")
-    expect(catchAll).toContain('LIVE_ALLOWED_ORIGINS')
-    expect(catchAll).toContain('function sanitizeSections(')
+    expect(catchAll).toContain('useCmsLivePreview')
+    expect(livePreview).toContain("route.query.live === '1'")
+    expect(livePreview).toContain('LIVE_ALLOWED_ORIGINS')
+    expect(livePreview).toContain('function sanitizeSections(')
+    expect(livePreview).toContain('dt-cms-live-preview-ready')
     expect(cmsView).toContain('previewBanner')
   })
 

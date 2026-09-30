@@ -3,8 +3,16 @@ import { requestClient } from '#/api/request';
 /** 注册组件表单描述符（015.13）：与服务端 components/sections/custom-props.ts 对齐 */
 export interface ComponentFieldMeta {
   default?: unknown;
+  /** list 字段：prop 缺失时编辑器的预览行（不自动落库） */
+  fallback?: unknown;
+  /** list 字段：对象行子字段描述符（可再嵌套一层 list） */
+  itemFields?: ComponentFieldMeta[];
+  /** list 字段：标量行元素类型（与 itemFields 互斥） */
+  itemType?: 'number' | 'string';
   key: string;
   label: string;
+  maxItems?: number;
+  minItems?: number;
   options?: { label: string; value: string }[];
   placeholder?: string;
   required?: boolean;
@@ -13,6 +21,7 @@ export interface ComponentFieldMeta {
     | 'icon'
     | 'image'
     | 'json'
+    | 'list'
     | 'number'
     | 'select'
     | 'string'

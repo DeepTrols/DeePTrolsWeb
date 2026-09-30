@@ -1,6 +1,7 @@
 import type { Component } from 'vue'
 import AboutAddressSection from '~/components/about/AboutAddressSection.vue'
 import AboutContactSection from '~/components/about/AboutContactSection.vue'
+import AboutHero from '~/components/about/AboutHero.vue'
 import AboutHeroStats from '~/components/about/AboutHeroStats.vue'
 import AboutIntroSection from '~/components/about/AboutIntroSection.vue'
 import AboutTextBlock from '~/components/about/AboutTextBlock.vue'
@@ -26,6 +27,7 @@ import type { CustomSectionName } from './custom-names'
 export const customSectionComponents: Record<CustomSectionName, Component> = {
   AboutAddressSection,
   AboutContactSection,
+  AboutHero,
   AboutHeroStats,
   AboutIntroSection,
   AboutTextBlock,

@@ -1,20 +1,33 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
-import { aboutAddress, aboutMap } from '~/data/about'
+import { aboutAddress as staticAddress, aboutMap } from '~/data/about'
+
+// 015.20b：CMS props 稀疏覆盖（后台文字编辑）；地图 iframe 保持代码内置。同名遮蔽保持模板/锁不变
+const props = withDefaults(
+  defineProps<{ address?: string, company?: string, title?: string }>(),
+  {
+    address: undefined,
+    company: '武汉深度数智科技有限公司',
+    title: '公司地址',
+  },
+)
+
+const aboutAddress = computed(() => props.address ?? staticAddress)
 </script>
 
 <template>
   <section class="flow-root pb-32 lg:pb-44" aria-labelledby="about-address-title">
     <div class="container">
       <div class="mb-12 lg:mb-16">
-        <SectionHeader title="公司地址" title-id="about-address-title" align="center" />
+        <SectionHeader :title="title" title-id="about-address-title" align="center" />
       </div>
 
       <div class="grid gap-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-stretch">
         <div class="rounded-2xl border border-default bg-default p-6 text-left shadow-sm transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 sm:p-8">
           <p class="text-sm font-semibold uppercase tracking-wide text-primary">DeepTrols HQ</p>
           <h3 class="mt-4 text-2xl font-semibold leading-tight text-highlighted sm:text-3xl">
-            武汉深度数智科技有限公司
+            {{ company }}
           </h3>
           <p class="mt-5 text-lg leading-relaxed text-muted sm:text-xl">{{ aboutAddress }}</p>
           <a

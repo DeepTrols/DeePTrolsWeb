@@ -62,20 +62,25 @@ describe('pageSlugSchema', () => {
   })
 })
 
-describe('接管白名单（015.18）', () => {
-  it("slug '/' 经接管特判放行，但保留语义不变", () => {
+describe('接管白名单（015.18/015.20）', () => {
+  it("slug '/' 与 '/about_us' 经接管特判放行，但保留语义不变", () => {
     // pageSlugSchema 对接管白名单路径特判放行（只能经 takeover 端点写入）
     expect(pageSlugSchema.safeParse('/').success).toBe(true)
-    // isReservedPagePath 对 '/' 仍返回 true：普通 CMS 页/目录扫描语义不受影响
+    expect(pageSlugSchema.safeParse('/about_us').success).toBe(true)
+    // isReservedPagePath 对接管路径仍返回 true：普通 CMS 页/目录扫描语义不受影响
     expect(isReservedPagePath('/')).toBe(true)
+    expect(isReservedPagePath('/about_us')).toBe(true)
     expect(isTakeoverPath('/')).toBe(true)
+    expect(isTakeoverPath('/about_us')).toBe(true)
     expect(CMS_TAKEOVER_PATHS).toContain('/')
+    expect(CMS_TAKEOVER_PATHS).toContain('/about_us')
   })
 
   it('白名单外的保留路径不放行', () => {
     expect(isTakeoverPath('/contact')).toBe(false)
+    expect(isTakeoverPath('/why-deeptrols')).toBe(false)
     expect(pageSlugSchema.safeParse('/contact').success).toBe(false)
-    expect(pageSlugSchema.safeParse('/about_us').success).toBe(false)
+    expect(pageSlugSchema.safeParse('/why-deeptrols').success).toBe(false)
   })
 
   it('pageInputSchema 接受 slug=/ 的接管种子载荷', () => {

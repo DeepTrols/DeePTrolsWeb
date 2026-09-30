@@ -342,7 +342,7 @@ describe('customSectionSchema（逃生门）', () => {
     // 零 props 组件带 props 也被 strict 拒绝
     expect(
       pageSectionsSchema.safeParse([
-        { type: 'custom', name: 'WhyEngine', props: { title: 'x' } },
+        { type: 'custom', name: 'HomeCustomerLogos', props: { title: 'x' } },
       ]).success,
     ).toBe(false)
   })

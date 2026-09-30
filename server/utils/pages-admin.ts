@@ -55,7 +55,7 @@ export function isReservedPagePath(slug: string): boolean {
  * isReservedPagePath 对这些路径仍返回 true（普通 CMS 页不得撞代码路由），
  * 仅 takeover 端点 + pageSlugSchema 特判放行。
  */
-export const CMS_TAKEOVER_PATHS = ['/'] as const
+export const CMS_TAKEOVER_PATHS = ['/', '/about_us'] as const
 
 export function isTakeoverPath(slug: string): boolean {
   return (CMS_TAKEOVER_PATHS as readonly string[]).includes(slug)
@@ -105,13 +105,13 @@ export const CODE_PAGE_CATALOG = [
 ] as const
 
 /** 页面路径：完整路径（含前导斜杠），小写字母/数字/连字符/斜杠，不允许尾斜杠与保留路径；
- * 接管白名单路径（015.18，当前仅 '/'）特判放行——只能经 takeover 端点写入 */
+ * 接管白名单路径（015.18/015.20：'/' 与 '/about_us'）特判放行——只能经 takeover 端点写入 */
 export const pageSlugSchema = z
   .string()
   .trim()
   .min(1)
   .max(300)
-  .refine(slug => slug === '/' || /^\/[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*$/.test(slug), { message: 'Invalid page path' })
+  .refine(slug => isTakeoverPath(slug) || /^\/[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*$/.test(slug), { message: 'Invalid page path' })
   .refine(slug => isTakeoverPath(slug) || !isReservedPagePath(slug), { message: 'Reserved page path' })
 
 /** CMS 页写入协议（新建/更新同一形状；slug 主键冲突返回 'conflict'） */

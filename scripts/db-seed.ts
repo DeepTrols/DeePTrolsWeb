@@ -23,6 +23,7 @@ import {
 } from '../server/db/schema'
 import { parseArticleBlocks } from '../server/utils/article-blocks'
 import { parseCaseRelatedProducts } from '../server/utils/cases-repo'
+import { ABOUT_PAGE_SLUG, ABOUT_PAGE_TITLE, buildAboutPageSeed } from '../server/utils/about-page'
 import { buildHomePageSeed, HOME_PAGE_SLUG, HOME_PAGE_TITLE } from '../server/utils/home-page'
 import { parseMenuItems } from '../server/utils/menu-admin'
 
@@ -197,10 +198,23 @@ await db
   })
   .onConflictDoNothing({ target: pages.slug })
 
+// 关于我们页接管 seed（015.20b）：同首页语义（DoNothing + draft）
+await db
+  .insert(pages)
+  .values({
+    slug: ABOUT_PAGE_SLUG,
+    title: ABOUT_PAGE_TITLE,
+    seoDescription: '',
+    sortOrder: 0,
+    status: 'draft',
+    sections: buildAboutPageSeed(),
+  })
+  .onConflictDoNothing({ target: pages.slug })
+
 await sql.end()
 console.log(
   `种子完成：news ×${newsItems.length}，news_details ×${newsDetails.length}，`
   + `cases ×${caseResources.length}，case_details ×${caseDetails.length}，`
   + `reports ×${reportResources.length}，nav_menus ×${menuSeeds.length}（upsert 幂等），`
-  + 'pages 首页接管 seed（onConflictDoNothing）。',
+  + 'pages 首页/关于我们接管 seed（onConflictDoNothing）。',
 )

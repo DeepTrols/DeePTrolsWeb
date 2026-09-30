@@ -29,7 +29,7 @@ assert(
   'HOME page must keep the Customer Stories and Deliverables sections unmounted until they are requested again.',
 )
 assert(
-  page.includes('CmsPageView') && page.includes("useFetch<PublishedPagePayload>('/api/pages'") && page.includes('<CmsPageView v-if="cmsPage" :page="cmsPage" />') && page.includes('<div v-else class="site-shell">'),
+  page.includes('CmsPageView') && page.includes("useFetch<PublishedPagePayload>('/api/pages'") && page.includes('v-if="renderedPage"') && page.includes('<div v-else class="site-shell">'),
   'HOME page must dispatch to the CMS takeover renderer and keep the code-rendered sections as the v-else fallback.',
 )
 assert(

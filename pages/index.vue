@@ -5,6 +5,7 @@ import CmsPageView from '~/components/common/CmsPageView.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import WhyTrustTabs from '~/components/why/WhyTrustTabs.vue'
+import { useCmsLivePreview } from '~/composables/use-cms-live-preview'
 import type { PublishedPagePayload } from '~/server/utils/pages-admin'
 
 // CMS 接管（015.18c）：已发布 '/' 页命中即渲染后台编排结果；404/草稿/无 DB/失败 → data 为 null → 回落代码 8 段（线上零风险）
@@ -17,16 +18,38 @@ const { data: cmsPage } = await useFetch<PublishedPagePayload>('/api/pages', {
   query: isPreview.value ? { preview: '1' } : undefined,
 })
 
+// 015.19e 实时预览：未保存 sections 经 postMessage 桥覆盖渲染（见 composable）
+const { liveSections, liveMeta } = useCmsLivePreview(cmsPage)
+const renderedPage = computed(() => {
+  const page = cmsPage.value
+  if (!page) {
+    return null
+  }
+  if (!liveSections.value) {
+    return page
+  }
+  return {
+    ...page,
+    sections: liveSections.value,
+    seoDescription: liveMeta.value?.seoDescription ?? page.seoDescription,
+    title: liveMeta.value?.title ?? page.title,
+  }
+})
+
 useSeoMeta({
-  title: () => (cmsPage.value ? `${cmsPage.value.title} - DeepTrols` : 'DeepTrols - 构建企业级 AI 能力体系'),
-  description: () => cmsPage.value?.seoDescription || '面向企业客户的数据、知识、智能体与 AI 基础设施建设服务。',
-  ogTitle: () => (cmsPage.value ? `${cmsPage.value.title} - DeepTrols` : 'DeepTrols - 构建企业级 AI 能力体系'),
-  ogDescription: () => cmsPage.value?.seoDescription || '让数据成为资产，让知识驱动决策，让 AI 创造价值。',
+  title: () => (renderedPage.value ? `${renderedPage.value.title} - DeepTrols` : 'DeepTrols - 构建企业级 AI 能力体系'),
+  description: () => renderedPage.value?.seoDescription || '面向企业客户的数据、知识、智能体与 AI 基础设施建设服务。',
+  ogTitle: () => (renderedPage.value ? `${renderedPage.value.title} - DeepTrols` : 'DeepTrols - 构建企业级 AI 能力体系'),
+  ogDescription: () => renderedPage.value?.seoDescription || '让数据成为资产，让知识驱动决策，让 AI 创造价值。',
 })
 </script>
 
 <template>
-  <CmsPageView v-if="cmsPage" :page="cmsPage" />
+  <CmsPageView
+    v-if="renderedPage"
+    :page="renderedPage"
+    :preview-banner="liveSections ? '实时预览 · 未保存内容' : undefined"
+  />
   <div v-else class="site-shell">
     <SiteHeader />
     <main id="main-content">

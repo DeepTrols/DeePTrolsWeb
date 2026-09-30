@@ -35,8 +35,8 @@ async function handleDelete(slug: string) {
   }
 }
 
-// 接管白名单（015.18）：与服务端 pages-admin CMS_TAKEOVER_PATHS 保持一致（当前仅首页）
-const TAKEOVER_PATHS = new Set(['/']);
+// 接管白名单（015.18/015.20）：与服务端 pages-admin CMS_TAKEOVER_PATHS 保持一致（首页 + 关于我们）
+const TAKEOVER_PATHS = new Set(['/', '/about_us']);
 function isTakeoverable(slug: string) {
   return TAKEOVER_PATHS.has(slug);
 }

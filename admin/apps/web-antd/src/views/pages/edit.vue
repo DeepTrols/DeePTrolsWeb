@@ -102,7 +102,8 @@ const previewOpen = ref(false);
 const previewStamp = ref(0);
 // 预览 slug 只接受站内绝对路径：route.query.slug 可被构造，不过滤协议会把
 // javascript:/data: 送进同源 iframe 的 src，形成管理员上下文执行面
-const PREVIEW_SLUG_RE = /^\/[a-z0-9-/]+$/;
+// （'*' 余量兼容首页 '/'；下划线兼容接管路径 /about_us）
+const PREVIEW_SLUG_RE = /^\/[a-z0-9_/-]*$/;
 const previewFrame = useTemplateRef<HTMLIFrameElement>('previewFrame');
 const previewUrl = computed(() => {
   const base = import.meta.env.DEV ? 'http://localhost:3000' : '';

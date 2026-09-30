@@ -7,6 +7,7 @@
 export const CUSTOM_SECTION_NAMES = [
   'AboutAddressSection',
   'AboutContactSection',
+  'AboutHero',
   'AboutHeroStats',
   'AboutIntroSection',
   'AboutTextBlock',

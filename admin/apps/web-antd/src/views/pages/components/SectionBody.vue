@@ -18,6 +18,7 @@ import { NAV_ICON_OPTIONS } from '#/api/menus';
 import BlocksEditor from '../../content/shared/BlocksEditor.vue';
 import ImageField from '../../content/shared/ImageField.vue';
 import { del } from '../../menus/shared';
+import PropListField from './PropListField.vue';
 import {
   customSectionOptions as defaultCustomSectionOptions,
   heroVisualOptions as defaultHeroVisualOptions,
@@ -640,6 +641,12 @@ function onJsonBlur(key: string) {
             class="w-48"
             :options="NAV_ICON_OPTIONS"
             :value="strProp(field.key)"
+            @update:value="(v) => setProp(field.key, v)"
+          />
+          <PropListField
+            v-else-if="field.type === 'list'"
+            :field="field"
+            :value="propValue(field.key)"
             @update:value="(v) => setProp(field.key, v)"
           />
           <template v-else>

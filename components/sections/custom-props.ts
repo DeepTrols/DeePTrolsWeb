@@ -1,5 +1,10 @@
 import { z } from 'zod'
 import { navIconComponents } from '~/components/navigation/nav-icons'
+import { aboutAddress, aboutContacts, aboutIntroParagraphs, aboutValues } from '~/data/about'
+import { deliverablesData } from '~/data/home-deliverables'
+import { homeEcosystemCards, homeProductCards, homeSolutionItems } from '~/data/home-sections'
+import { whyEngineHeading, whyEngineLinksData, whyServiceItemsData, whyServiceResetHeading } from '~/data/why-sections'
+import { whyTrustTabsData } from '~/data/why-trust'
 import type { CustomSectionName } from './custom-names'
 
 /**
@@ -12,11 +17,20 @@ import type { CustomSectionName } from './custom-names'
 export interface ComponentFieldMeta {
   key: string
   label: string
-  type: 'boolean' | 'icon' | 'image' | 'json' | 'number' | 'select' | 'string' | 'text'
+  type: 'boolean' | 'icon' | 'image' | 'json' | 'list' | 'number' | 'select' | 'string' | 'text'
   required?: boolean
   options?: { label: string; value: string }[]
   default?: unknown
   placeholder?: string
+  /** list 字段：对象行的子字段描述符（可再嵌套一层 list） */
+  itemFields?: ComponentFieldMeta[]
+  /** list 字段：标量行元素类型（与 itemFields 互斥） */
+  itemType?: 'number' | 'string'
+  /** list 字段：行数上下限（仅编辑器按钮态；服务端权威是 zod min/max） */
+  minItems?: number
+  maxItems?: number
+  /** list 字段：prop 缺失时编辑器的预览行（不自动落库，保持稀疏存储） */
+  fallback?: unknown
 }
 
 export interface RegisteredComponentMeta {
@@ -90,45 +104,210 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
   },
   AboutIntroSection: {
     label: '公司介绍',
-    description: '关于我们页公司简介 + 图片轮播（数据驱动）',
+    description: '关于我们页公司简介 + 图片轮播（图集走素材管理；文字可后台编辑）',
     category: 'content',
-    ...emptyMeta,
-    contentEntry: { label: '关于页静态数据', dataPath: 'data/about.ts' },
+    schema: z
+      .object({
+        title: optText(100),
+        paragraphs: z
+          .array(z.string().trim().min(1).max(2000))
+          .min(1)
+          .max(12)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      { key: 'title', label: '标题', type: 'string', default: '公司介绍' },
+      {
+        key: 'paragraphs',
+        label: '简介段落',
+        type: 'list',
+        itemType: 'string',
+        minItems: 1,
+        maxItems: 12,
+        fallback: aboutIntroParagraphs,
+      },
+    ],
   },
   AboutValuesSection: {
     label: '价值观',
-    description: '关于我们页价值观卡片（数据驱动）',
+    description: '关于我们页价值观卡片（数据驱动，可后台编辑）',
     category: 'content',
-    ...emptyMeta,
-    contentEntry: { label: '关于页静态数据', dataPath: 'data/about.ts' },
+    schema: z
+      .object({
+        title: optText(200),
+        subtitle: optText(500),
+        items: z
+          .array(
+            z.object({
+              title: z.string().trim().min(1).max(100),
+              revealTitle: z.string().trim().min(1).max(100),
+              description: z.string().trim().min(1).max(1000),
+            }),
+          )
+          .min(1)
+          .max(8)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      { key: 'title', label: '标题', type: 'string', default: '我们的核心价值观' },
+      {
+        key: 'subtitle',
+        label: '副标题',
+        type: 'text',
+        default: '这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。',
+      },
+      {
+        key: 'items',
+        label: '价值观卡片',
+        type: 'list',
+        minItems: 1,
+        maxItems: 8,
+        fallback: aboutValues,
+        itemFields: [
+          { key: 'title', label: '卡片标题', type: 'string', required: true },
+          { key: 'revealTitle', label: '展开标题', type: 'string', required: true },
+          { key: 'description', label: '描述', type: 'text', required: true },
+        ],
+      },
+    ],
   },
   AboutAddressSection: {
     label: '公司地址',
-    description: '关于我们页地址信息（数据驱动）',
+    description: '关于我们页地址信息（地图嵌入保持代码内置；文字可后台编辑）',
     category: 'content',
-    ...emptyMeta,
-    contentEntry: { label: '关于页静态数据', dataPath: 'data/about.ts' },
+    schema: z
+      .object({
+        title: optText(100),
+        company: optText(200),
+        address: optText(500),
+      })
+      .strict(),
+    fields: [
+      { key: 'title', label: '标题', type: 'string', default: '公司地址' },
+      { key: 'company', label: '公司名', type: 'string', default: '武汉深度数智科技有限公司' },
+      { key: 'address', label: '地址', type: 'text', default: aboutAddress },
+    ],
   },
   AboutContactSection: {
     label: '联系方式',
-    description: '关于我们页联系方式卡片（数据驱动）',
+    description: '关于我们页联系方式卡片（数据驱动，可后台编辑）',
     category: 'content',
-    ...emptyMeta,
-    contentEntry: { label: '关于页静态数据', dataPath: 'data/about.ts' },
+    schema: z
+      .object({
+        title: optText(100),
+        items: z
+          .array(
+            z.object({
+              label: z.string().trim().min(1).max(100),
+              value: z.string().trim().min(1).max(200),
+              href: z.string().trim().min(1).max(500),
+            }),
+          )
+          .min(1)
+          .max(8)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      { key: 'title', label: '标题', type: 'string', default: '联系我们' },
+      {
+        key: 'items',
+        label: '联系方式',
+        type: 'list',
+        minItems: 1,
+        maxItems: 8,
+        fallback: aboutContacts,
+        itemFields: [
+          { key: 'label', label: '名称', type: 'string', required: true },
+          { key: 'value', label: '内容', type: 'string', required: true },
+          { key: 'href', label: '链接', type: 'string', required: true },
+        ],
+      },
+    ],
   },
   WhyEngine: {
     label: '产品引擎矩阵',
-    description: '为什么选择我们页的引擎矩阵区（数据驱动）',
+    description: '为什么选择我们页的引擎矩阵区（链接可后台编辑）',
     category: 'marketing',
-    ...emptyMeta,
-    contentEntry: { label: 'why 页静态数据', dataPath: 'data/why.ts' },
+    schema: z
+      .object({
+        eyebrow: optText(100),
+        title: optText(200),
+        description: optText(1000),
+        links: z
+          .array(
+            z.object({
+              title: z.string().trim().min(1).max(200),
+              description: z.string().trim().min(1).max(500),
+              href: z.string().trim().min(1).max(500),
+              icon: iconName.optional(),
+            }),
+          )
+          .min(1)
+          .max(8)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      { key: 'eyebrow', label: '眉题', type: 'string', default: whyEngineHeading.eyebrow },
+      { key: 'title', label: '标题', type: 'string', default: whyEngineHeading.title },
+      { key: 'description', label: '描述', type: 'text', default: whyEngineHeading.description },
+      {
+        key: 'links',
+        label: '引擎链接',
+        type: 'list',
+        minItems: 1,
+        maxItems: 8,
+        fallback: whyEngineLinksData,
+        itemFields: [
+          { key: 'title', label: '标题', type: 'string', required: true },
+          { key: 'description', label: '描述', type: 'text', required: true },
+          { key: 'href', label: '链接', type: 'string', required: true },
+          { key: 'icon', label: '图标', type: 'icon' },
+        ],
+      },
+    ],
   },
   WhyServiceReset: {
     label: '服务概览',
-    description: '为什么选择我们页的服务重定义区（数据驱动）',
+    description: '为什么选择我们页的服务重定义区（概览图代码内置；条目可后台编辑）',
     category: 'marketing',
-    ...emptyMeta,
-    contentEntry: { label: 'why 页静态数据', dataPath: 'data/why.ts' },
+    schema: z
+      .object({
+        eyebrow: optText(100),
+        title: optText(200),
+        items: z
+          .array(
+            z.object({
+              title: z.string().trim().min(1).max(200),
+              description: z.string().trim().min(1).max(1000),
+              icon: iconName.optional(),
+            }),
+          )
+          .min(1)
+          .max(8)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      { key: 'eyebrow', label: '眉题', type: 'string', default: whyServiceResetHeading.eyebrow },
+      { key: 'title', label: '标题', type: 'string', default: whyServiceResetHeading.title },
+      {
+        key: 'items',
+        label: '服务条目',
+        type: 'list',
+        minItems: 1,
+        maxItems: 8,
+        fallback: whyServiceItemsData,
+        itemFields: [
+          { key: 'title', label: '标题', type: 'string', required: true },
+          { key: 'description', label: '描述', type: 'text', required: true },
+          { key: 'icon', label: '图标', type: 'icon' },
+        ],
+      },
+    ],
   },
   WhyTrustTabs: {
     label: '信任背书',
@@ -166,9 +345,28 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
       { key: 'tablistLabel', label: '标签组 aria 名', type: 'string' },
       {
         key: 'tabs',
-        label: '标签页（JSON 数组 {key,label,features[{title,subtitle,description,icon}]}）',
-        type: 'json',
-        placeholder: '[{"key":"technology","label":"面向技术层","features":[...]}]',
+        label: '标签页',
+        type: 'list',
+        minItems: 1,
+        maxItems: 8,
+        fallback: whyTrustTabsData,
+        itemFields: [
+          { key: 'key', label: 'key', type: 'string', required: true },
+          { key: 'label', label: '标签文案', type: 'string', required: true },
+          {
+            key: 'features',
+            label: '特性卡',
+            type: 'list',
+            minItems: 1,
+            maxItems: 8,
+            itemFields: [
+              { key: 'title', label: '标题', type: 'string', required: true },
+              { key: 'subtitle', label: '副标题', type: 'string', required: true },
+              { key: 'description', label: '描述', type: 'text', required: true },
+              { key: 'icon', label: '图标', type: 'icon' },
+            ],
+          },
+        ],
       },
     ],
   },
@@ -199,9 +397,17 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
       { key: 'flowLabel', label: '架构图 aria 标签', type: 'string' },
       {
         key: 'cards',
-        label: '产品卡片（JSON 数组 {name,title,description,icon}）',
-        type: 'json',
-        placeholder: '[{"name":"数曜","description":"...","icon":"Database"}]',
+        label: '产品卡片',
+        type: 'list',
+        minItems: 1,
+        maxItems: 8,
+        fallback: homeProductCards,
+        itemFields: [
+          { key: 'name', label: '产品名', type: 'string', required: true },
+          { key: 'title', label: '标题', type: 'string' },
+          { key: 'description', label: '描述', type: 'text', required: true },
+          { key: 'icon', label: '图标', type: 'icon' },
+        ],
       },
     ],
   },
@@ -233,9 +439,20 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
       ...headingFields,
       {
         key: 'items',
-        label: '方案项（JSON 数组 {key,tab,title,description,image,href}）',
-        type: 'json',
-        placeholder: '[{"key":"manufacturing","tab":"智能制造","title":"...","description":"...","image":"/images/...","href":"/solutions/..."}]',
+        label: '方案项',
+        type: 'list',
+        minItems: 1,
+        maxItems: 12,
+        fallback: homeSolutionItems,
+        itemFields: [
+          { key: 'key', label: 'key', type: 'string', required: true },
+          { key: 'tab', label: 'tab 文案', type: 'string', required: true },
+          { key: 'title', label: '标题', type: 'string', required: true },
+          { key: 'englishTitle', label: '英文标题', type: 'string' },
+          { key: 'description', label: '描述', type: 'text', required: true },
+          { key: 'image', label: '配图', type: 'image', required: true },
+          { key: 'href', label: '跳转链接', type: 'string', required: true },
+        ],
       },
     ],
   },
@@ -267,9 +484,37 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
       ...headingFields,
       {
         key: 'cards',
-        label: '生态卡片（JSON 数组 {title,description,tag,href,points,icon,variant}）',
-        type: 'json',
-        placeholder: '[{"title":"Token Hub","description":"...","tag":"...","href":"/services/token-hub","variant":"token"}]',
+        label: '生态卡片',
+        type: 'list',
+        minItems: 1,
+        maxItems: 8,
+        fallback: homeEcosystemCards,
+        itemFields: [
+          { key: 'title', label: '标题', type: 'string', required: true },
+          { key: 'description', label: '描述', type: 'text', required: true },
+          { key: 'tag', label: '标签', type: 'string', required: true },
+          { key: 'href', label: '跳转链接', type: 'string', required: true },
+          {
+            key: 'points',
+            label: '要点',
+            type: 'list',
+            itemType: 'string',
+            maxItems: 8,
+          },
+          { key: 'icon', label: '图标', type: 'icon' },
+          {
+            key: 'variant',
+            label: '视觉变体',
+            type: 'select',
+            required: true,
+            options: [
+              { label: 'token', value: 'token' },
+              { label: 'agent', value: 'agent' },
+              { label: 'infra', value: 'infra' },
+              { label: 'report', value: 'report' },
+            ],
+          },
+        ],
       },
     ],
   },
@@ -324,10 +569,42 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
   },
   HomeDeliverables: {
     label: '交付成果',
-    description: '首页交付成果展示（数据驱动）',
+    description: '首页交付成果轮播（CSS 仅支持 3 屏，items 硬限 3 条；可后台编辑）',
     category: 'marketing',
-    ...emptyMeta,
-    contentEntry: { label: '首页静态数据', dataPath: 'data/home.ts' },
+    schema: z
+      .object({
+        items: z
+          .array(
+            z.object({
+              title: z.string().trim().min(1).max(200),
+              description: z.string().trim().min(1).max(1000),
+              icon: iconName.optional(),
+              image: z.string().trim().min(1).max(1000),
+              href: z.string().trim().min(1).max(500),
+            }),
+          )
+          .min(3)
+          .max(3)
+          .optional(),
+      })
+      .strict(),
+    fields: [
+      {
+        key: 'items',
+        label: '业务方向（固定 3 屏）',
+        type: 'list',
+        minItems: 3,
+        maxItems: 3,
+        fallback: deliverablesData,
+        itemFields: [
+          { key: 'title', label: '标题', type: 'string', required: true },
+          { key: 'description', label: '描述', type: 'text', required: true },
+          { key: 'icon', label: '图标', type: 'icon' },
+          { key: 'image', label: '配图', type: 'image', required: true },
+          { key: 'href', label: '跳转链接', type: 'string', required: true },
+        ],
+      },
+    ],
   },
   AboutTextBlock: {
     label: '段落文本块',
@@ -343,11 +620,13 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
     fields: [
       {
         key: 'paragraphs',
-        label: '段落（JSON 字符串数组）',
-        type: 'json',
+        label: '段落',
+        type: 'list',
+        itemType: 'string',
         required: true,
+        minItems: 1,
+        maxItems: 12,
         default: [''],
-        placeholder: '["第一段","第二段"]',
       },
       {
         key: 'align',
@@ -372,6 +651,13 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
       },
     ],
   },
+  AboutHero: {
+    label: '关于页 Hero',
+    description: '关于我们页首屏视觉（零 props 自包含，视觉/动画代码内置）',
+    category: 'content',
+    ...emptyMeta,
+    contentEntry: { label: '组件源码（Hero 视觉内置）', dataPath: 'components/about/AboutHero.vue' },
+  },
   AboutHeroStats: {
     label: '关键数据带',
     description: '关于页关键数字（value/label 三列网格）',
@@ -392,11 +678,16 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
     fields: [
       {
         key: 'items',
-        label: '数据项（JSON 数组 {value,label}）',
-        type: 'json',
+        label: '数据项',
+        type: 'list',
         required: true,
+        minItems: 1,
+        maxItems: 6,
         default: [{ value: '500+', label: '全球客户' }],
-        placeholder: '[{"value":"500+","label":"全球客户"}]',
+        itemFields: [
+          { key: 'value', label: '数值', type: 'string', required: true },
+          { key: 'label', label: '名称', type: 'string', required: true },
+        ],
       },
     ],
   },

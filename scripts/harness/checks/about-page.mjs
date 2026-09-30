@@ -8,6 +8,7 @@ export function checkAboutPageContracts(ctx) {
     pageHeroStyles,
     aboutData,
     aboutPage,
+    aboutPageSeed,
     aboutHero,
     aboutHeroStats,
     aboutIntroSection,
@@ -124,32 +125,37 @@ export function checkAboutPageContracts(ctx) {
   )
   assert(
     aboutValuesSection.includes('SectionHeader') &&
-      aboutValuesSection.includes('title="我们的核心价值观"') &&
+      aboutValuesSection.includes(':title="title"') &&
       aboutValuesSection.includes('title-id="about-values-title"') &&
-      aboutValuesSection.includes('subtitle="这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。"') &&
+      aboutValuesSection.includes(':subtitle="subtitle"') &&
       aboutValuesSection.includes(':nowrap-subtitle="true"') &&
       aboutValuesSection.includes('grid grid-cols-1 gap-6 md:grid-cols-3') &&
       aboutValuesSection.includes('tabindex="0"') &&
       aboutValuesSection.includes('translate-y-full') &&
       aboutValuesSection.includes('group-hover:translate-y-0') &&
       aboutValuesSection.includes('group-focus-visible:translate-y-0') &&
-      aboutValuesSection.includes('<style scoped lang="scss">'),
-    'About values section must render the required 3-card animated value grid.',
+      aboutValuesSection.includes('<style scoped lang="scss">') &&
+      aboutPageSeed.includes('我们的核心价值观') &&
+      aboutPageSeed.includes('这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。'),
+    'About values section must render the required 3-card animated value grid (heading copy single-sourced in the takeover seed).',
   )
   assert(
-    aboutAddressSection.includes('title="公司地址"') &&
+    aboutAddressSection.includes(':title="title"') &&
+      aboutAddressSection.includes('{{ company }}') &&
       aboutAddressSection.includes('aboutMap') &&
       aboutAddressSection.includes('<iframe') &&
-      aboutAddressSection.includes('查看地图'),
+      aboutAddressSection.includes('查看地图') &&
+      aboutPageSeed.includes('公司地址'),
     'About address must render a map-based address panel.',
   )
   assert(
     aboutContactSection.includes('SectionHeader') &&
-      aboutContactSection.includes('title="联系我们"') &&
+      aboutContactSection.includes(':title="title"') &&
       aboutContactSection.includes('title-id="about-contact-title"') &&
       aboutContactSection.includes('grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2') &&
       aboutContactSection.includes('v-for="item in aboutContacts"') &&
-      !aboutContactSection.includes('aboutContacts.filter'),
+      !aboutContactSection.includes('aboutContacts.filter') &&
+      aboutPageSeed.includes('联系我们'),
     'About contact section must render four channels as a two-by-two grid.',
   )
   assert(

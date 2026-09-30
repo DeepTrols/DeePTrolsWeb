@@ -1,13 +1,23 @@
 <script setup lang="ts">
+import type { AboutContactItem } from '~/data/about'
+import { computed } from 'vue'
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
-import { aboutContacts } from '~/data/about'
+import { aboutContacts as staticContacts } from '~/data/about'
+
+// 015.20b：CMS props 稀疏覆盖（后台行编辑）；缺省回退 data 静态。同名遮蔽保持模板/锁不变
+const props = withDefaults(
+  defineProps<{ items?: AboutContactItem[], title?: string }>(),
+  { items: undefined, title: '联系我们' },
+)
+
+const aboutContacts = computed(() => props.items ?? staticContacts)
 </script>
 
 <template>
   <section class="flow-root pb-32 lg:pb-44" aria-labelledby="about-contact-title">
     <div class="container">
       <div class="mb-12 text-center lg:mb-16">
-        <SectionHeader title="联系我们" title-id="about-contact-title" align="center" />
+        <SectionHeader :title="title" title-id="about-contact-title" align="center" />
       </div>
 
       <div class="about-contact-grid grid grid-cols-1 overflow-hidden rounded-2xl border border-default md:grid-cols-2">

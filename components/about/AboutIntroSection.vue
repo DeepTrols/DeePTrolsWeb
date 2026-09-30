@@ -1,8 +1,17 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import AboutIntroImageCarousel from '~/components/about/AboutIntroImageCarousel.vue'
 import AboutTextBlock from '~/components/about/AboutTextBlock.vue'
 import SectionShell from '~/components/common/section/SectionShell.vue'
-import { aboutIntroParagraphs } from '~/data/about'
+import { aboutIntroParagraphs as staticParagraphs } from '~/data/about'
+
+// 015.20b：CMS props 稀疏覆盖（后台行编辑）；缺省回退 data 静态。同名遮蔽保持模板/锁不变
+const props = withDefaults(
+  defineProps<{ paragraphs?: string[], title?: string }>(),
+  { paragraphs: undefined, title: '公司介绍' },
+)
+
+const aboutIntroParagraphs = computed(() => props.paragraphs ?? staticParagraphs)
 </script>
 
 <template>
@@ -12,7 +21,7 @@ import { aboutIntroParagraphs } from '~/data/about'
         id="about-intro-title"
         class="mb-6 text-4xl font-bold leading-[1.2] tracking-tight whitespace-nowrap text-highlighted sm:text-5xl"
       >
-        公司介绍
+        {{ title }}
       </h2>
       <AboutTextBlock :paragraphs="aboutIntroParagraphs" align="left" size="full" />
       <AboutIntroImageCarousel class="mt-10" />

@@ -200,6 +200,9 @@ export const harnessSourcePaths = {
     'admin/apps/web-antd/src/views/pages/components/SectionsEditor.vue',
   adminSectionBody:
     'admin/apps/web-antd/src/views/pages/components/SectionBody.vue',
+  adminPropListField:
+    'admin/apps/web-antd/src/views/pages/components/PropListField.vue',
+  livePreviewComposable: 'composables/use-cms-live-preview.ts',
   contentBlocksHtml:
     'admin/apps/web-antd/src/views/content/shared/blocks-html.ts',
   contentBlocksEditor:
@@ -220,6 +223,7 @@ export const harnessSourcePaths = {
   adminPagesRoutes: 'admin/apps/web-antd/src/router/routes/modules/pages.ts',
   adminPagesEditView: 'admin/apps/web-antd/src/views/pages/edit.vue',
   adminWebAntdPkg: 'admin/apps/web-antd/package.json',
+  adminWebAntdViteConfig: 'admin/apps/web-antd/vite.config.ts',
   backendHomeInsightsApi: 'server/api/home/insights.get.ts',
   backendFeaturedLimitsUtil: 'server/utils/featured-limits.ts',
   backendAdminNewsFeaturedPatchApi: 'server/api/admin/news/[id]/featured.patch.ts',
@@ -299,6 +303,9 @@ export const harnessSourcePaths = {
   reportResourceCard: 'components/service/report/ReportResourceCard.vue',
   aboutData: 'data/about.ts',
   aboutPage: 'pages/about_us.vue',
+  aboutPageSeed: 'server/utils/about-page.ts',
+  whySectionsData: 'data/why-sections.ts',
+  homeDeliverablesData: 'data/home-deliverables.ts',
   aboutHero: 'components/about/AboutHero.vue',
   aboutHeroStats: 'components/about/AboutHeroStats.vue',
   aboutIntroSection: 'components/about/AboutIntroSection.vue',

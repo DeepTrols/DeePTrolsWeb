@@ -1,16 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import type { Deliverable } from '~/data/home'
+import type { DeliverableData } from '~/data/home-deliverables'
+import { computed, ref } from 'vue'
+import { FileText } from '@lucide/vue'
 import BaseButton from '~/components/common/BaseButton.vue'
-import { deliverables } from '~/data/home'
+import { resolveNavIcon } from '~/components/navigation/nav-icons'
+import { deliverables as staticDeliverables } from '~/data/home'
+
+// 015.20b：CMS props 稀疏覆盖（后台行编辑）；缺省回退 data 静态。同名遮蔽保持模板/锁不变
+const props = withDefaults(defineProps<{ items?: DeliverableData[] }>(), { items: undefined })
+
+const deliverables = computed<Deliverable[]>(() =>
+  props.items
+    ? props.items.map(item => ({ ...item, icon: resolveNavIcon(item.icon) ?? FileText }))
+    : staticDeliverables,
+)
 
 const activeDeliverableIndex = ref(0)
 
 function showPreviousDeliverable() {
-  activeDeliverableIndex.value = (activeDeliverableIndex.value + deliverables.length - 1) % deliverables.length
+  activeDeliverableIndex.value = (activeDeliverableIndex.value + deliverables.value.length - 1) % deliverables.value.length
 }
 
 function showNextDeliverable() {
-  activeDeliverableIndex.value = (activeDeliverableIndex.value + 1) % deliverables.length
+  activeDeliverableIndex.value = (activeDeliverableIndex.value + 1) % deliverables.value.length
 }
 </script>
 

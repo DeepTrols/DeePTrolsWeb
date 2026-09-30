@@ -15,7 +15,6 @@ import {
   Orbit,
   ShieldCheck,
   Sparkles,
-  Waypoints,
 } from '@lucide/vue'
 import type { Component } from 'vue'
 import { resolveNavIcon } from '~/components/navigation/nav-icons'
@@ -48,6 +47,7 @@ import zhaoxinLogo from '../assets/images/compatibility/zhaoxin-logo.svg?url'
 import zhongchuangLogo from '../assets/images/compatibility/zhongchuang-logo.svg?url'
 import zhongkeFangdeLogo from '../assets/images/compatibility/zhongke-fangde-logo.svg?url'
 import { customerLogos } from './home-logos'
+import { deliverablesData } from './home-deliverables'
 import { homeAboutContent, homeEcosystemCards, homeProductCards, homeSolutionItems } from './home-sections'
 
 export interface Deliverable {
@@ -174,32 +174,11 @@ export const homeAbout: HomeAboutContent = {
   ],
 }
 
-export const deliverables: Deliverable[] = [
-  {
-    title: '企业级 AI 应用构建与业务智能化服务',
-    description:
-      '通过连接企业数据、知识、模型与业务系统，围绕企业真实业务场景，提供从需求梳理、场景规划、智能体设计到应用开发、系统集成和持续运营的全流程服务。',
-    icon: BrainCircuit,
-    image: '/images/home/solutions/industrial.K00G2HaS.webp',
-    href: '/services/enterprise-ai-delivery',
-  },
-  {
-    title: '企业级 AI 平台工程与数字化系统建设服务',
-    description:
-      '面向企业 AI 应用规模化建设需求，提供统一技术架构、平台研发、系统集成、数据工程、知识工程、模型服务和智能体工程等平台工程服务。',
-    icon: Waypoints,
-    image: '/images/home/solutions/data.DHKY-NE1.webp',
-    href: '/services/platform-engineering',
-  },
-  {
-    title: 'AI 算力、模型与基础资源一体化服务',
-    description:
-      '围绕企业 AI 应用所需的算力、模型、数据和开发资源，提供 AI 服务器、算力中心规划建设、异构算力调度、模型接入管理、Token 管理及资源运营服务。',
-    icon: Cpu,
-    image: '/images/home/solutions/data-center-ai.CDu93Miw.webp',
-    href: '/services/infrastructure',
-  },
-]
+// 交付成果字面值已抽到 data/home-deliverables.ts（015.20b：组件描述符 default 需纯字符串模块）
+export const deliverables: Deliverable[] = deliverablesData.map(item => ({
+  ...item,
+  icon: iconOf(item.icon),
+}))
 
 export const platformInputs = [
   { label: '数据', icon: Database },

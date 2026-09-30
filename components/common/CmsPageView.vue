@@ -12,9 +12,13 @@ const props = defineProps<{
   previewBanner?: string
 }>()
 
-// 页面含可见 hero 区块时由 hero 承担 h1，默认页头不再渲染（避免双主标题）
+// 页面含可见 hero 区块时由 hero 承担 h1，默认页头不再渲染（避免双主标题）。
+// 定制 hero（015.20b：AboutHero 自带 h1 页首视觉）同样计入
+const CUSTOM_HERO_NAMES = ['AboutHero'] as const
 const hasHero = computed(() =>
-  props.page.sections.some(section => section.type === 'hero' && section.visible),
+  props.page.sections.some(section =>
+    (section.type === 'hero' || (section.type === 'custom' && (CUSTOM_HERO_NAMES as readonly string[]).includes(section.name))) && section.visible,
+  ),
 )
 </script>
 

@@ -59,6 +59,10 @@ export function checkBackendAdminContracts(ctx) {
     adminPagesSectionsHelper,
     adminSectionsEditor,
     adminSectionBody,
+    adminPropListField,
+    livePreviewComposable,
+    aboutPageSeed,
+    aboutPage,
     contentBlocksHtml,
     contentBlocksEditor,
     backendComponentAdminUtil,
@@ -390,7 +394,8 @@ export function checkBackendAdminContracts(ctx) {
       backendAdminPagesTakeoverApi.includes("statusCode: 409, statusMessage: 'Page slug already exists'") &&
       backendAdminPagesTakeoverApi.includes('statusCode: 503') &&
       backendAdminPagesTakeoverApi.includes("status: 'draft'") &&
-      backendAdminPagesTakeoverApi.includes('buildHomePageSeed()') &&
+      backendAdminPagesTakeoverApi.includes('TAKEOVER_SEEDS') &&
+      backendAdminPagesTakeoverApi.includes('buildAboutPageSeed') &&
       backendPagesPublicIndexApi.includes("getPublishedPage('/')") &&
       backendAdminPagesIndexPutApi.includes('requireAdmin') &&
       backendAdminPagesIndexPutApi.includes('pageUpdateSchema') &&
@@ -541,6 +546,18 @@ export function checkBackendAdminContracts(ctx) {
       adminSectionPalette.includes("pull: 'clone'") &&
       adminSectionBody.includes('BlocksEditor') &&
       adminSectionBody.includes('customComponents') &&
+      adminSectionBody.includes("field.type === 'list'") &&
+      adminSectionBody.includes('PropListField') &&
+      adminPropListField.includes('ImageField') &&
+      adminPropListField.includes('field.itemFields') &&
+      adminPropListField.includes('NAV_ICON_OPTIONS') &&
+      adminPropListField.includes('fallback') &&
+      aboutPage.includes("useFetch<PublishedPagePayload>('/api/pages/about_us'") &&
+      aboutPage.includes('cms-page/about_us') &&
+      aboutPage.includes('v-if="renderedPage"') &&
+      aboutPageSeed.includes('export function buildAboutPageSeed()') &&
+      aboutPageSeed.includes("name: 'AboutHero'") &&
+      cmsPageView.includes('CUSTOM_HERO_NAMES') &&
       adminWebAntdPkg.includes('@vueuse/integrations') &&
       adminPagesEditView.includes('iframe') &&
       adminPagesEditView.includes('preview=1') &&
@@ -559,9 +576,11 @@ export function checkBackendAdminContracts(ctx) {
       cmsPageView.includes('page.preview') &&
       adminPagesEditView.includes('dt-cms-live-preview') &&
       adminPagesEditView.includes('liveTargetOrigin') &&
-      catchAllPage.includes("route.query.live === '1'") &&
-      catchAllPage.includes('LIVE_ALLOWED_ORIGINS') &&
-      catchAllPage.includes('function sanitizeSections('),
+      catchAllPage.includes('useCmsLivePreview') &&
+      livePreviewComposable.includes("route.query.live === '1'") &&
+      livePreviewComposable.includes('LIVE_ALLOWED_ORIGINS') &&
+      livePreviewComposable.includes('function sanitizeSections(') &&
+      livePreviewComposable.includes('dt-cms-live-preview-ready'),
     'Draft preview (015.13) must keep the soft isAdminRequest guard, the explicit ?preview=1 branch (admin page first), the dispatcher preview cache key, and the CmsPageView banner; live preview (015.19e) must keep the postMessage bridge with origin whitelist both ends and client-side sanitizing.',
   )
 

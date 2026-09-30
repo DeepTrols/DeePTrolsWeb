@@ -1,6 +1,20 @@
 <script setup lang="ts">
+import type { AboutValueItem } from '~/data/about'
+import { computed } from 'vue'
 import SectionHeader from '~/components/common/section/SectionHeader.vue'
-import { aboutValues } from '~/data/about'
+import { aboutValues as staticValues } from '~/data/about'
+
+// 015.20b：CMS props 稀疏覆盖（后台行编辑）；缺省回退 data 静态。同名遮蔽保持模板/锁不变
+const props = withDefaults(
+  defineProps<{ items?: AboutValueItem[], subtitle?: string, title?: string }>(),
+  {
+    items: undefined,
+    subtitle: '这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。',
+    title: '我们的核心价值观',
+  },
+)
+
+const aboutValues = computed(() => props.items ?? staticValues)
 </script>
 
 <template>
@@ -8,9 +22,9 @@ import { aboutValues } from '~/data/about'
     <div class="container">
       <div class="mb-12 text-center lg:mb-16">
         <SectionHeader
-          title="我们的核心价值观"
+          :title="title"
           title-id="about-values-title"
-          subtitle="这些原则指引着我们的一言一行，从产品创新到客户关系，贯穿始终。"
+          :subtitle="subtitle"
           align="center"
           :nowrap-subtitle="true"
         />
