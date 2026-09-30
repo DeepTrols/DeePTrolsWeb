@@ -423,10 +423,11 @@ export function registerBackendAdminVisualContracts() {
     const catchAll = readComponent('pages/[...slug].vue')
     const cmsView = readComponent('components/common/CmsPageView.vue')
 
-    // 注册组件元数据：纯 TS（禁 .vue import）+ 全名覆盖 Record
+    // 注册组件元数据：纯 TS（禁 .vue import；015.19d 的 contentEntry.dataPath 是纯路径字符串非 import）
     expect(customProps).toContain('CUSTOM_COMPONENT_META')
     expect(customProps).toContain('Record<CustomSectionName, RegisteredComponentMeta>')
-    expect(customProps).not.toContain(".vue'")
+    expect(customProps).not.toMatch(/from '[^'\n]*\.vue'/)
+    expect(customProps).not.toMatch(/import\('[^'\n]*\.vue'\)/)
     // 协议：custom 稀疏 props + per-name superRefine 校验
     expect(sectionsUtil).toContain('superRefine')
     expect(sectionsUtil).toContain('props: z.record(')
@@ -434,9 +435,11 @@ export function registerBackendAdminVisualContracts() {
     expect(cmsRenderer).toContain('v-bind="customProps(section)"')
     // 发现 API：registry + usage
     expect(componentUtil).toContain('export function listComponentRegistry(')
+    expect(componentUtil).toContain('export function listComponentCatalog(')
     expect(componentUtil).toContain('export function scanSectionUsage(')
     expect(componentUtil).toContain('export async function getComponentUsage(')
     expect(componentsGet).toContain('listComponentRegistry')
+    expect(componentsGet).toContain('listComponentCatalog')
     expect(componentsGet).toContain('usage')
 
     // 模板库：协议层 + 4 路由 requireAdmin（400/404/503 语义）

@@ -459,6 +459,9 @@ export function checkBackendAdminContracts(ctx) {
     backendComponentAdminUtil.includes('export const PAGE_COMPONENT_IDS') &&
       backendComponentAdminUtil.includes('export const disabledComponentsSchema') &&
       backendComponentAdminUtil.includes('CUSTOM_SECTION_NAMES') &&
+      backendComponentAdminUtil.includes('export function listComponentCatalog(') &&
+      backendComponentAdminUtil.includes('new Set([...PAGE_COMPONENT_IDS, ...HERO_VISUAL_NAMES])') &&
+      backendComponentAdminUtil.includes('section.visualType === \'component\'') &&
       backendComponentAdminUtil.includes('export async function getDisabledComponents(') &&
       backendComponentAdminUtil.includes('export async function setDisabledComponents(') &&
       backendComponentAdminUtil.includes('onConflictDoUpdate') &&
@@ -500,7 +503,8 @@ export function checkBackendAdminContracts(ctx) {
   assert(
     cmsCustomProps.includes('CUSTOM_COMPONENT_META') &&
       cmsCustomProps.includes('Record<CustomSectionName, RegisteredComponentMeta>') &&
-      !cmsCustomProps.includes(".vue'") &&
+      !/from '[^'\n]*\.vue'/.test(cmsCustomProps) &&
+      !/import\('[^'\n]*\.vue'\)/.test(cmsCustomProps) &&
       backendPageSectionsUtil.includes('superRefine') &&
       backendPageSectionsUtil.includes('props: z.record(') &&
       cmsPageRenderer.includes('v-bind="customProps(section)"') &&
@@ -508,6 +512,7 @@ export function checkBackendAdminContracts(ctx) {
       backendComponentAdminUtil.includes('export function scanSectionUsage(') &&
       backendComponentAdminUtil.includes('export async function getComponentUsage(') &&
       backendAdminComponentsGetApi.includes('listComponentRegistry') &&
+      backendAdminComponentsGetApi.includes('listComponentCatalog') &&
       backendAdminComponentsGetApi.includes('usage'),
     'Component registry (015.13) must keep a Vue-free CUSTOM_COMPONENT_META record, per-name props superRefine validation, renderer v-bind passthrough, and registry/usage on the admin components GET.',
   )

@@ -66,6 +66,10 @@ const sectionMode = ref<'json' | 'structured'>('structured');
 const disabledComponents = ref<string[]>([]);
 const customComponents = ref<ComponentRegistryEntry[]>([]);
 const heroVisuals = ref<HeroVisualEntry[]>([]);
+// 015.19d：hero 视觉纳入组件启停后，split-visual 视觉下拉同步按禁用过滤
+const enabledHeroVisuals = computed(() =>
+  heroVisuals.value.filter((visual) => !disabledComponents.value.includes(visual.name)),
+);
 const presets = ref<SectionPreset[]>([]);
 const enabledSectionTypeOptions = computed(() =>
   sectionTypeOptions.filter(
@@ -272,7 +276,7 @@ async function save(publish = false) {
           v-model:sections="form.sections"
           :custom-components="enabledCustomComponents"
           :custom-section-options="enabledCustomSectionOptions"
-          :hero-visuals="heroVisuals"
+          :hero-visuals="enabledHeroVisuals"
           :presets="presets"
           :section-type-options="enabledSectionTypeOptions"
           @preset-saved="loadPresets"

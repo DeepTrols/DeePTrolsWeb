@@ -25,6 +25,8 @@ export interface RegisteredComponentMeta {
   category: 'architecture' | 'content' | 'form' | 'marketing'
   schema: z.ZodObject<z.ZodRawShape>
   fields: ComponentFieldMeta[]
+  /** 015.19d：零 props 数据驱动组件的内容运维入口（后台路由或代码数据源），组件管理详情展示 */
+  contentEntry?: { label: string, adminRoute?: string, dataPath?: string }
 }
 
 const emptyMeta = {
@@ -63,60 +65,70 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
     description: '数据开发平台产品架构图（零 props 自包含）',
     category: 'architecture',
     ...emptyMeta,
+    contentEntry: { label: '组件源码（架构图内置）', dataPath: 'components/product/ddp/DdpArchitecture.vue' },
   },
   DlpArchitecture: {
     label: 'DLP 架构图',
     description: '数据开发套件产品架构图（零 props 自包含）',
     category: 'architecture',
     ...emptyMeta,
+    contentEntry: { label: '组件源码（架构图内置）', dataPath: 'components/product/dlp/DlpArchitecture.vue' },
   },
   DmsArchitecture: {
     label: 'DMS 架构图',
     description: '数据微服务平台产品架构图（零 props 自包含）',
     category: 'architecture',
     ...emptyMeta,
+    contentEntry: { label: '组件源码（架构图内置）', dataPath: 'components/product/dms/DmsArchitecture.vue' },
   },
   ContactFormSection: {
     label: '线索表单',
     description: '联系我们线索收集表单（提交 POST /api/leads）',
     category: 'form',
     ...emptyMeta,
+    contentEntry: { label: '线索管理（提交数据）', adminRoute: '/leads' },
   },
   AboutIntroSection: {
     label: '公司介绍',
     description: '关于我们页公司简介 + 图片轮播（数据驱动）',
     category: 'content',
     ...emptyMeta,
+    contentEntry: { label: '关于页静态数据', dataPath: 'data/about.ts' },
   },
   AboutValuesSection: {
     label: '价值观',
     description: '关于我们页价值观卡片（数据驱动）',
     category: 'content',
     ...emptyMeta,
+    contentEntry: { label: '关于页静态数据', dataPath: 'data/about.ts' },
   },
   AboutAddressSection: {
     label: '公司地址',
     description: '关于我们页地址信息（数据驱动）',
     category: 'content',
     ...emptyMeta,
+    contentEntry: { label: '关于页静态数据', dataPath: 'data/about.ts' },
   },
   AboutContactSection: {
     label: '联系方式',
     description: '关于我们页联系方式卡片（数据驱动）',
     category: 'content',
     ...emptyMeta,
+    contentEntry: { label: '关于页静态数据', dataPath: 'data/about.ts' },
   },
   WhyEngine: {
     label: '产品引擎矩阵',
     description: '为什么选择我们页的引擎矩阵区（数据驱动）',
     category: 'marketing',
     ...emptyMeta,
+    contentEntry: { label: 'why 页静态数据', dataPath: 'data/why.ts' },
   },
   WhyServiceReset: {
     label: '服务概览',
     description: '为什么选择我们页的服务重定义区（数据驱动）',
     category: 'marketing',
     ...emptyMeta,
+    contentEntry: { label: 'why 页静态数据', dataPath: 'data/why.ts' },
   },
   WhyTrustTabs: {
     label: '信任背书',
@@ -308,12 +320,14 @@ export const CUSTOM_COMPONENT_META: Record<CustomSectionName, RegisteredComponen
     description: '首页客户 Logo 展示（数据驱动）',
     category: 'marketing',
     ...emptyMeta,
+    contentEntry: { label: 'Logo 墙素材管理', adminRoute: '/showcase/logos' },
   },
   HomeDeliverables: {
     label: '交付成果',
     description: '首页交付成果展示（数据驱动）',
     category: 'marketing',
     ...emptyMeta,
+    contentEntry: { label: '首页静态数据', dataPath: 'data/home.ts' },
   },
   AboutTextBlock: {
     label: '段落文本块',

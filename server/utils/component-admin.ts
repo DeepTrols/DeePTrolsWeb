@@ -27,7 +27,7 @@ export const PAGE_COMPONENT_IDS = [
   ...CUSTOM_SECTION_NAMES,
 ] as const
 
-const knownIds: ReadonlySet<string> = new Set(PAGE_COMPONENT_IDS)
+const knownIds: ReadonlySet<string> = new Set([...PAGE_COMPONENT_IDS, ...HERO_VISUAL_NAMES])
 
 /** 单行 key：当前只有页面区块这一类组件 */
 export const COMPONENT_STATE_KEY = 'page-sections' as const
@@ -97,6 +97,7 @@ export interface ComponentRegistryEntry {
   description: string
   category: 'architecture' | 'content' | 'form' | 'marketing'
   fields: ComponentFieldMeta[]
+  contentEntry?: ComponentContentEntry
 }
 
 export function listComponentRegistry(): ComponentRegistryEntry[] {
@@ -108,6 +109,7 @@ export function listComponentRegistry(): ComponentRegistryEntry[] {
       description: meta.description,
       category: meta.category,
       fields: meta.fields,
+      contentEntry: meta.contentEntry,
     }
   })
 }
@@ -115,6 +117,80 @@ export function listComponentRegistry(): ComponentRegistryEntry[] {
 /** hero split-visual 视觉白名单发现（015.18）：name + 中文名下发给 vben hero 表单下拉 */
 export function listHeroVisuals(): { label: string, name: string }[] {
   return HERO_VISUAL_NAMES.map(name => ({ name, label: HERO_VISUAL_LABELS[name] }))
+}
+
+/** 标准区块型中文名（015.19d 组件清单下发用） */
+const STANDARD_COMPONENT_LABELS: Record<string, string> = {
+  hero: 'Hero 首屏',
+  metrics: '指标带',
+  featureGrid: '特性网格',
+  cta: 'CTA 横幅',
+  richText: '富文本',
+  logoStrip: 'Logo 墙',
+  imageBanner: '图片横幅',
+  custom: '定制组件容器',
+}
+
+/** 组件内容运维入口（015.19d）：零 props 数据驱动组件的内容不在 CMS，指向后台路由或代码数据源 */
+export interface ComponentContentEntry {
+  label: string
+  adminRoute?: string
+  dataPath?: string
+}
+
+/** 组件全量清单条目（015.19d）：标准区块 + 定制组件 + hero 视觉三类统一下发 */
+export interface ComponentCatalogEntry {
+  id: string
+  kind: 'custom' | 'hero-visual' | 'standard'
+  label: string
+  description: string
+  category: ComponentRegistryEntry['category'] | null
+  fields: ComponentFieldMeta[]
+  contentEntry?: ComponentContentEntry
+}
+
+/** hero 视觉组件源码路径（组件管理详情「内容入口」展示用） */
+const HERO_VISUAL_PATHS: Record<(typeof HERO_VISUAL_NAMES)[number], string> = {
+  DgpHeroVisual: 'components/product/dgp/DgpHeroVisual.vue',
+  DeviceAgentHeroVisual: 'components/product/device-agent/DeviceAgentHeroVisual.vue',
+  TanyaoHeroVisual: 'components/product/tanyao/TanyaoHeroVisual.vue',
+}
+
+/** 全量组件清单：8 标准 type + 定制注册表 + hero 视觉白名单（组件管理页「全部组件」数据源） */
+export function listComponentCatalog(): ComponentCatalogEntry[] {
+  const standards: ComponentCatalogEntry[] = PAGE_COMPONENT_IDS.map((id) => {
+    const custom = CUSTOM_SECTION_NAMES.includes(id as (typeof CUSTOM_SECTION_NAMES)[number])
+    if (custom) {
+      const meta = CUSTOM_COMPONENT_META[id as (typeof CUSTOM_SECTION_NAMES)[number]]
+      return {
+        id,
+        kind: 'custom' as const,
+        label: meta.label,
+        description: meta.description,
+        category: meta.category,
+        fields: meta.fields,
+        contentEntry: meta.contentEntry,
+      }
+    }
+    return {
+      id,
+      kind: 'standard' as const,
+      label: STANDARD_COMPONENT_LABELS[id] ?? id,
+      description: 'CMS 标准区块型（参数在页面编辑器区块表单维护）',
+      category: null,
+      fields: [],
+    }
+  })
+  const heroVisuals: ComponentCatalogEntry[] = HERO_VISUAL_NAMES.map(name => ({
+    id: name,
+    kind: 'hero-visual' as const,
+    label: HERO_VISUAL_LABELS[name],
+    description: 'hero split-visual 右侧动画视觉（零 props 自包含）',
+    category: null,
+    fields: [],
+    contentEntry: { label: '组件源码（动画内置）', dataPath: HERO_VISUAL_PATHS[name] },
+  }))
+  return [...standards, ...heroVisuals]
 }
 
 /** 组件使用统计：组件 ID（标准型=type，定制=组件名）→ 引用页数与 slug 列表 */
@@ -134,13 +210,20 @@ export function scanSectionUsage(rows: { sections: unknown, slug: string }[]): R
     const seen = new Set<string>()
     for (const section of parsed.data) {
       const id = section.type === 'custom' ? section.name : section.type
-      if (seen.has(id)) {
-        continue
+      if (!seen.has(id)) {
+        seen.add(id)
+        usage[id] ??= { count: 0, slugs: new Set() }
+        usage[id].count += 1
+        usage[id].slugs.add(row.slug)
       }
-      seen.add(id)
-      usage[id] ??= { count: 0, slugs: new Set() }
-      usage[id].count += 1
-      usage[id].slugs.add(row.slug)
+      // 015.19d：hero split-visual 选用组件视觉时，视觉组件也计使用（name 为 PascalCase 不与 type 撞）
+      const visualId = section.type === 'hero' && section.visualType === 'component' ? section.visualName : undefined
+      if (visualId && !seen.has(visualId)) {
+        seen.add(visualId)
+        usage[visualId] ??= { count: 0, slugs: new Set() }
+        usage[visualId].count += 1
+        usage[visualId].slugs.add(row.slug)
+      }
     }
   }
   return Object.fromEntries(

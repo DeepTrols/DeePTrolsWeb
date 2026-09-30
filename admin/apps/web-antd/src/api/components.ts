@@ -21,6 +21,7 @@ export interface ComponentFieldMeta {
 
 export interface ComponentRegistryEntry {
   category: 'architecture' | 'content' | 'form' | 'marketing';
+  contentEntry?: ComponentContentEntry;
   description: string;
   fields: ComponentFieldMeta[];
   label: string;
@@ -38,7 +39,26 @@ export interface HeroVisualEntry {
   name: string;
 }
 
+/** 组件内容运维入口（015.19d）：零 props 数据驱动组件的内容不在 CMS，指向后台路由或代码数据源 */
+export interface ComponentContentEntry {
+  adminRoute?: string;
+  dataPath?: string;
+  label: string;
+}
+
+/** 组件全量清单条目（015.19d）：标准区块 + 定制组件 + hero 视觉三类 */
+export interface ComponentCatalogEntry {
+  category: 'architecture' | 'content' | 'form' | 'marketing' | null;
+  contentEntry?: ComponentContentEntry;
+  description: string;
+  fields: { key: string; label: string; required?: boolean; type: string }[];
+  id: string;
+  kind: 'custom' | 'hero-visual' | 'standard';
+  label: string;
+}
+
 export interface AdminComponentsPayload {
+  catalog: ComponentCatalogEntry[];
   disabled: string[];
   heroVisuals: HeroVisualEntry[];
   registry: ComponentRegistryEntry[];

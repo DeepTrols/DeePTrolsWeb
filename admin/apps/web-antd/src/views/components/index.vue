@@ -1,13 +1,17 @@
 <script lang="ts" setup>
-import type { ComponentUsage } from '#/api/components';
+import type { ComponentCatalogEntry, ComponentUsage } from '#/api/components';
 
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import {
   Button,
+  Drawer,
+  Input,
   message,
   Modal,
   Popover,
+  Select,
   Spin,
   Switch,
   Table,
@@ -24,27 +28,22 @@ import {
 
 defineOptions({ name: 'ComponentManager' });
 
-interface ComponentRow {
-  category: 'architecture' | 'content' | 'form' | 'marketing' | null;
-  description: string;
+const router = useRouter();
+
+interface ComponentRow extends ComponentCatalogEntry {
   enabled: boolean;
-  id: string;
-  kind: 'custom' | 'standard';
-  name: string;
 }
 
-const STANDARD_IDS: (keyof typeof sectionTypeLabels)[] = [
-  'hero',
-  'metrics',
-  'featureGrid',
-  'cta',
-  'richText',
-  'logoStrip',
-  'imageBanner',
-  'custom',
-];
-const CUSTOM_IDS = Object.keys(customSectionLabels);
-
+const kindLabels: Record<ComponentRow['kind'], string> = {
+  custom: '定制组件',
+  'hero-visual': 'hero 视觉',
+  standard: '标准区块',
+};
+const kindColors: Record<ComponentRow['kind'], string> = {
+  custom: 'purple',
+  'hero-visual': 'gold',
+  standard: 'blue',
+};
 const categoryLabels: Record<string, string> = {
   architecture: '架构',
   content: '内容',
@@ -65,37 +64,48 @@ const saving = ref(false);
 const updatedAt = ref<null | string>(null);
 const source = ref<'db' | 'static'>('static');
 
+// 015.19d：筛选与搜索（client-side）
+const kindFilter = ref<ComponentRow['kind'] | 'all'>('all');
+const categoryFilter = ref<string>('all');
+const keyword = ref('');
+
+const filteredRows = computed(() =>
+  rows.value.filter((row) => {
+    if (kindFilter.value !== 'all' && row.kind !== kindFilter.value) {
+      return false;
+    }
+    if (categoryFilter.value !== 'all' && row.category !== categoryFilter.value) {
+      return false;
+    }
+    const kw = keyword.value.trim().toLowerCase();
+    if (!kw) {
+      return true;
+    }
+    return [row.id, row.label, row.description]
+      .join(' ')
+      .toLowerCase()
+      .includes(kw);
+  }),
+);
+
 async function load() {
   loading.value = true;
   try {
     const payload = await getComponentsApi();
     const disabled = new Set(payload.disabled);
     usage.value = payload.usage ?? {};
-    const registry = payload.registry ?? [];
-    // 注册组件（015.13）：API registry 为准；静态 maps 仅作 label/description fallback
-    const customIds =
-      registry.length > 0 ? registry.map((entry) => entry.name) : CUSTOM_IDS;
-    rows.value = [
-      ...STANDARD_IDS.map((id) => ({
-        category: null,
-        description: componentDescriptions[id] ?? '',
-        enabled: !disabled.has(id),
-        id,
-        kind: 'standard' as const,
-        name: sectionTypeLabels[id],
-      })),
-      ...customIds.map((id) => {
-        const entry = registry.find((item) => item.name === id);
-        return {
-          category: entry?.category ?? null,
-          description: entry?.description ?? componentDescriptions[id] ?? '',
-          enabled: !disabled.has(id),
-          id,
-          kind: 'custom' as const,
-          name: entry?.label ?? customSectionLabels[id] ?? id,
-        };
-      }),
-    ];
+    // 015.19d：行源改为服务端全量清单（标准+定制+hero 视觉）；静态 maps 仅作 label fallback
+    const catalog = payload.catalog ?? [];
+    rows.value = catalog.map((entry) => ({
+      ...entry,
+      label:
+        entry.label ||
+        sectionTypeLabels[entry.id as keyof typeof sectionTypeLabels] ||
+        customSectionLabels[entry.id] ||
+        entry.id,
+      description: entry.description || componentDescriptions[entry.id] || '',
+      enabled: !disabled.has(entry.id),
+    }));
     updatedAt.value = payload.updatedAt;
     source.value = payload.source;
   } finally {
@@ -135,16 +145,31 @@ async function save() {
     message.success('已保存：禁用组件不再出现在页面编辑器的新增区块中');
     await load();
   } catch {
-    message.error('保存失败：请检查数据库连接');
+    // 具体错误由请求拦截器统一提示；此处静默，避免双重弹窗与误导性归因
   } finally {
     saving.value = false;
   }
 }
 
+// 详情抽屉（015.19d）
+const detailOpen = ref(false);
+const detail = ref<null | ComponentRow>(null);
+function openDetail(record: ComponentRow) {
+  detail.value = record;
+  detailOpen.value = true;
+}
+function goContentEntry() {
+  const route = detail.value?.contentEntry?.adminRoute;
+  if (route) {
+    detailOpen.value = false;
+    router.push(route);
+  }
+}
+
 const columns = [
-  { dataIndex: 'id', title: '组件 ID', width: 180 },
-  { dataIndex: 'name', title: '名称', width: 160 },
-  { dataIndex: 'kind', title: '类型', width: 90 },
+  { dataIndex: 'id', title: '组件 ID', width: 200 },
+  { dataIndex: 'label', title: '名称', width: 180 },
+  { dataIndex: 'kind', title: '类型', width: 100 },
   { dataIndex: 'category', title: '分类', width: 90 },
   { dataIndex: 'description', ellipsis: true, title: '说明' },
   { dataIndex: 'usage', title: '使用次数', width: 100 },
@@ -168,20 +193,57 @@ onMounted(load);
         禁用仅影响编辑器「新增区块」下拉，已发布页面照常渲染
       </span>
     </div>
+    <div class="mb-3 flex items-center gap-2">
+      <Select
+        v-model:value="kindFilter"
+        :options="[
+          { label: '全部类型', value: 'all' },
+          { label: '标准区块', value: 'standard' },
+          { label: '定制组件', value: 'custom' },
+          { label: 'hero 视觉', value: 'hero-visual' },
+        ]"
+        class="w-32"
+      />
+      <Select
+        v-model:value="categoryFilter"
+        :options="[
+          { label: '全部分类', value: 'all' },
+          { label: '架构', value: 'architecture' },
+          { label: '内容', value: 'content' },
+          { label: '表单', value: 'form' },
+          { label: '营销', value: 'marketing' },
+        ]"
+        class="w-32"
+      />
+      <Input
+        v-model:value="keyword"
+        class="w-64"
+        placeholder="搜索 ID / 名称 / 说明"
+        allow-clear
+      />
+      <span class="text-xs text-gray-400">
+        {{ filteredRows.length }} / {{ rows.length }} 个组件
+      </span>
+    </div>
     <Spin :spinning="loading">
       <Table
         :columns="columns"
-        :data-source="rows"
+        :data-source="filteredRows"
         :pagination="false"
         row-key="id"
       >
         <template #bodyCell="{ column, record }">
           <template v-if="column.dataIndex === 'id'">
-            <code class="text-xs">{{ record.id }}</code>
+            <code class="cursor-pointer text-xs" @click="openDetail(record as ComponentRow)">
+              {{ record.id }}
+            </code>
+          </template>
+          <template v-else-if="column.dataIndex === 'label'">
+            <a @click="openDetail(record as ComponentRow)">{{ record.label }}</a>
           </template>
           <template v-else-if="column.dataIndex === 'kind'">
-            <Tag :color="record.kind === 'standard' ? 'blue' : 'purple'">
-              {{ record.kind === 'standard' ? '标准区块' : '定制组件' }}
+            <Tag :color="kindColors[(record as ComponentRow).kind]">
+              {{ kindLabels[(record as ComponentRow).kind] }}
             </Tag>
           </template>
           <template v-else-if="column.dataIndex === 'category'">
@@ -216,5 +278,72 @@ onMounted(load);
         </template>
       </Table>
     </Spin>
+
+    <Drawer
+      v-model:open="detailOpen"
+      :width="520"
+      placement="right"
+      title="组件详情"
+    >
+      <div v-if="detail" class="grid gap-4 text-sm">
+        <div>
+          <div class="mb-1 text-xs text-gray-400">组件 ID / 类型</div>
+          <code class="text-xs">{{ detail.id }}</code>
+          <Tag :color="kindColors[detail.kind]" class="ml-2">
+            {{ kindLabels[detail.kind] }}
+          </Tag>
+        </div>
+        <div>
+          <div class="mb-1 text-xs text-gray-400">名称 / 分类</div>
+          {{ detail.label }}
+          <Tag v-if="detail.category" :color="categoryColors[detail.category]" class="ml-2">
+            {{ categoryLabels[detail.category] }}
+          </Tag>
+        </div>
+        <div>
+          <div class="mb-1 text-xs text-gray-400">说明</div>
+          {{ detail.description }}
+        </div>
+        <div>
+          <div class="mb-1 text-xs text-gray-400">
+            使用情况（{{ usage[detail.id]?.count ?? 0 }} 页）
+          </div>
+          <div v-if="usage[detail.id]?.count" class="text-xs">
+            {{ usage[detail.id]?.slugs.join('、') }}
+          </div>
+          <div v-else class="text-xs text-gray-300">未被 CMS 页面引用</div>
+        </div>
+        <div>
+          <div class="mb-1 text-xs text-gray-400">可配置字段</div>
+          <div v-if="detail.fields.length === 0" class="text-xs text-gray-300">
+            无 props（零 props 数据驱动或标准区块专用表单）
+          </div>
+          <div v-else class="grid gap-1 text-xs">
+            <div v-for="field in detail.fields" :key="field.key">
+              <code>{{ field.key }}</code>
+              · {{ field.label }} · {{ field.type }}
+              <span v-if="field.required" class="text-red-400">必填</span>
+            </div>
+          </div>
+        </div>
+        <div v-if="detail.contentEntry">
+          <div class="mb-1 text-xs text-gray-400">内容运维入口</div>
+          <div class="flex items-center gap-2 text-xs">
+            {{ detail.contentEntry.label }}
+            <Button
+              v-if="detail.contentEntry.adminRoute"
+              size="small"
+              type="link"
+              @click="goContentEntry"
+            >
+              前往
+            </Button>
+          </div>
+          <code v-if="detail.contentEntry.dataPath" class="text-xs">
+            {{ detail.contentEntry.dataPath }}
+          </code>
+        </div>
+      </div>
+    </Drawer>
   </div>
 </template>
