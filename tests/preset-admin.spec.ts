@@ -1,49 +1,69 @@
 import { describe, expect, it } from 'vitest'
 import { presetInputSchema } from '../server/utils/preset-admin'
 
-describe('presetInputSchema（015.13 区块模板协议）', () => {
+describe('presetInputSchema（015.13 区块模板协议，015.19c 升级为多区块组合）', () => {
   it('接受合法模板并补默认 description', () => {
     const parsed = presetInputSchema.safeParse({
       name: '首页 CTA',
-      section: { type: 'cta', title: '行动起来' },
+      sections: [{ type: 'cta', title: '行动起来' }],
     })
     expect(parsed.success).toBe(true)
     if (parsed.success) {
       expect(parsed.data.description).toBe('')
-      expect(parsed.data.section.type).toBe('cta')
+      expect(parsed.data.sections[0]?.type).toBe('cta')
     }
   })
 
-  it('拒绝空名称/超长描述/非法 section', () => {
+  it('拒绝空名称/超长描述/非法 section/空区块数组', () => {
     expect(
       presetInputSchema.safeParse({
         name: '',
-        section: { type: 'cta', title: 'x' },
+        sections: [{ type: 'cta', title: 'x' }],
       }).success,
     ).toBe(false)
     expect(
       presetInputSchema.safeParse({
         name: 'x',
         description: 'x'.repeat(501),
-        section: { type: 'cta', title: 'x' },
+        sections: [{ type: 'cta', title: 'x' }],
       }).success,
     ).toBe(false)
     expect(
-      presetInputSchema.safeParse({ name: 'x', section: { type: 'nope' } }).success,
+      presetInputSchema.safeParse({ name: 'x', sections: [{ type: 'nope' }] }).success,
     ).toBe(false)
     expect(
-      presetInputSchema.safeParse({ name: 'x', section: { type: 'cta' } }).success,
+      presetInputSchema.safeParse({ name: 'x', sections: [{ type: 'cta' }] }).success,
+    ).toBe(false)
+    expect(presetInputSchema.safeParse({ name: 'x', sections: [] }).success).toBe(false)
+  })
+
+  it('复用页面级约束：模板含 2 个 hero → 拒绝（hero≤1）', () => {
+    const hero = {
+      type: 'hero',
+      variant: 'banner-dark',
+      title: 't',
+      backgroundImage: '/images/x.webp',
+    } as const
+    // 单 hero 且字段齐全 → 合法，证明下面失败确因 hero≤1
+    expect(presetInputSchema.safeParse({ name: '单 hero', sections: [hero] }).success).toBe(true)
+    expect(
+      presetInputSchema.safeParse({
+        name: '双 hero',
+        sections: [hero, hero],
+      }).success,
     ).toBe(false)
   })
 
-  it('section 支持 custom + props', () => {
+  it('sections 支持 custom + props', () => {
     const parsed = presetInputSchema.safeParse({
       name: '文本块模板',
-      section: {
-        type: 'custom',
-        name: 'AboutTextBlock',
-        props: { paragraphs: ['段落一'] },
-      },
+      sections: [
+        {
+          type: 'custom',
+          name: 'AboutTextBlock',
+          props: { paragraphs: ['段落一'] },
+        },
+      ],
     })
     expect(parsed.success).toBe(true)
   })

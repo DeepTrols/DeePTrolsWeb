@@ -132,12 +132,12 @@ export const componentStates = pgTable('component_states', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
-// 区块模板库（015.13）：运营可复用的区块快照；section 存单个 PageSection（写入侧经 zod 校验，见 server/utils/preset-admin.ts）
+// 区块模板库（015.13，015.19c 升级为多区块组合）：运营可复用的区块组合；sections 存 PageSection[]（写入侧经 zod 校验并复用页面级约束，见 server/utils/preset-admin.ts）
 export const sectionPresets = pgTable('section_presets', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 200 }).notNull(),
   description: varchar('description', { length: 500 }).notNull().default(''),
-  section: jsonb('section').notNull(),
+  sections: jsonb('sections').notNull().default([]),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })

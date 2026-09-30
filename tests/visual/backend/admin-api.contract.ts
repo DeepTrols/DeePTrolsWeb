@@ -442,7 +442,7 @@ export function registerBackendAdminVisualContracts() {
     // 模板库：协议层 + 4 路由 requireAdmin（400/404/503 语义）
     const presetUtil = readComponent('server/utils/preset-admin.ts')
     expect(presetUtil).toContain('export const presetInputSchema')
-    expect(presetUtil).toContain('section: pageSectionSchema')
+    expect(presetUtil).toContain('sections: pageSectionsSchema.min(1)')
     expect(presetUtil).toContain('export async function listPresets(')
     expect(presetUtil).toContain('export async function createPreset(')
     expect(presetUtil).toContain('export async function updatePreset(')

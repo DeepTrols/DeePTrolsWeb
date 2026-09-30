@@ -514,7 +514,7 @@ export function checkBackendAdminContracts(ctx) {
 
   assert(
     backendPresetAdminUtil.includes('export const presetInputSchema') &&
-      backendPresetAdminUtil.includes('section: pageSectionSchema') &&
+      backendPresetAdminUtil.includes('sections: pageSectionsSchema.min(1)') &&
       backendPresetAdminUtil.includes('export async function listPresets(') &&
       backendPresetAdminUtil.includes('export async function createPreset(') &&
       backendPresetAdminUtil.includes('export async function updatePreset(') &&
@@ -527,7 +527,7 @@ export function checkBackendAdminContracts(ctx) {
       backendAdminPresetUpdateApi.includes('statusCode: 404') &&
       backendAdminPresetDeleteApi.includes('requireAdmin') &&
       backendAdminPresetDeleteApi.includes('statusCode: 404'),
-    'Section presets (015.13) must keep the zod input schema (name/description/section) and four requireAdmin routes with 400/404/503 semantics.',
+    'Section presets (015.13/015.19c) must keep the zod input schema (name/description/sections reusing page-level constraints) and four requireAdmin routes with 400/404/503 semantics.',
   )
 
   assert(

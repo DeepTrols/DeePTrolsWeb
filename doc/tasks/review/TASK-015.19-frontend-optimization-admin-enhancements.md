@@ -53,9 +53,23 @@
 - 方案页 SSR 渲染指标带（/solutions/manufacturing 等四页）；picks 空 → 静态回退单卡带指标。
 - 后台编辑页回显 3 行指标（20+/教育智能体上线），达上限隐藏新增按钮。
 
-## 015.19c 区块模板多区块组合（待做）
+## 015.19c 区块模板多区块组合（已完成）
 
-迁移 0013 section→sections 幂等数组化；preset-admin 复用 pageSectionsSchema 页面级约束；presets.vue 嵌 SectionsEditor；拖入整组插入。
+### 需求
+页面由区块组成；模板应能把多个组件/区块组合成一个区块模块（section 组合），并可在后台编辑模板内容。
+
+### 改动
+- 迁移 `0013_preset_sections_array`（手写：drizzle-kit 对 rename 需交互确认，非 TTY 不可用）：section 列原位数组化（jsonb_typeof 守卫幂等）→ 改名 sections；快照 0013_snapshot.json 与 journal 手工维护。
+- `server/db/schema.ts`：sectionPresets.sections jsonb notNull default []。
+- `server/utils/preset-admin.ts`：presetInputSchema.sections 复用 `pageSectionsSchema.min(1)`（hero≤1、per-variant 必填组、custom props 页面级约束对模板生效）。
+- admin：`api/presets.ts` 类型改 sections；`SectionsEditor.vue` onAdd preset 分支整组插入、savePreset 存 `[clone]`；`SectionPalette.vue` 模板项摘要改类型拼接 + 「N 区块」徽标；`presets.vue` 编辑 Modal 升级 Drawer 内嵌 SectionsEditor（名称/描述+区块内容同屏编辑），表格类型列多 Tag、摘要拼接。
+- 坑：structuredClone 不能克隆 reactive 代理（DataCloneError），openEdit/saveEdit 均先 toRaw。
+- 锁同步：preset-admin.spec（sections 载荷 + 空数组拒绝 + 双 hero 拒绝且单 hero 合法）、audit-error-states.spec、admin-api.contract.ts、backend-admin.mjs。
+
+### 验证
+- 质量门全绿（含 build）。
+- `PUT /api/admin/presets/1` 双 hero → 400；POST 两区块模板 → id；GET 列表旧模板（id=3）自动数组化为 1 区块（向后兼容生效）。
+- 浏览器：模板列表多 Tag（富文本+CTA 横幅）与摘要拼接；编辑 Drawer 打开含 2 个区块卡片与面板「2 区块」徽标；改名保存回列表生效。
 
 ## 015.19d 组件管理扩覆盖（待做）
 

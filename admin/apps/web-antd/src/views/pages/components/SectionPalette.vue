@@ -10,7 +10,6 @@ import { useSortable } from '@vueuse/integrations/useSortable';
 
 import {
   customSectionLabels,
-  sectionSummary,
   sectionTypeLabels,
 } from '../sections';
 
@@ -42,6 +41,11 @@ const customOptions = computed(() => {
 });
 
 const presetOptions = computed(() => props.presets ?? []);
+
+// 015.19c：模板为多区块组合，摘要取区块类型拼接
+function presetSummary(preset: SectionPreset): string {
+  return preset.sections.map((s) => sectionTypeLabels[s.type]).join(' + ');
+}
 
 const sortableGroup = {
   animation: 150,
@@ -100,10 +104,13 @@ const itemClass =
         :key="p.id"
         :class="itemClass"
         :data-id="String(p.id)"
-        :title="p.description || sectionSummary(p.section)"
+        :title="p.description || presetSummary(p)"
         data-kind="preset"
       >
         {{ p.name }}
+        <span class="float-right text-xs text-gray-400">
+          {{ p.sections.length }} 区块
+        </span>
       </div>
       <div v-if="presetOptions.length === 0" class="text-xs text-gray-400">
         暂无模板（可在区块卡片上「存为模板」）

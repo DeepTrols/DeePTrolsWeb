@@ -2,20 +2,20 @@ import type { PageSection } from './pages';
 
 import { requestClient } from '#/api/request';
 
-/** 区块模板（015.13）：运营可复用的区块快照 */
+/** 区块模板（015.13，015.19c 升级为多区块组合）：运营可复用的区块组合 */
 export interface SectionPreset {
   createdAt: string;
   description: string;
   id: number;
   name: string;
-  section: PageSection;
+  sections: PageSection[];
   updatedAt: string;
 }
 
 export interface PresetInput {
   description: string;
   name: string;
-  section: PageSection;
+  sections: PageSection[];
 }
 
 export const listPresetsApi = () =>

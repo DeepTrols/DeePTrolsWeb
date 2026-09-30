@@ -2,17 +2,17 @@ import { asc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { useNewsDatabase } from '../db/client'
 import { sectionPresets } from '../db/schema'
-import { pageSectionSchema } from './page-sections'
+import { pageSectionsSchema } from './page-sections'
 import { internalServerError, logServerError } from './server-log'
 
 /**
- * 区块模板库（015.13）：运营把编辑器里的区块快照存成可复用模板。
- * section 存单个 PageSection（zod 校验）；一期模板内容不在列表页编辑——改内容 = 编辑器改完另存新模板。
+ * 区块模板库（015.13，015.19c 升级为多区块组合）：运营把编辑器里的区块组合存成可复用模板。
+ * sections 存 PageSection[]（zod 校验复用页面级约束：hero≤1、per-variant 必填组、custom props）。
  */
 export const presetInputSchema = z.object({
   name: z.string().trim().min(1).max(200),
   description: z.string().trim().max(500).default(''),
-  section: pageSectionSchema,
+  sections: pageSectionsSchema.min(1),
 })
 export type PresetInput = z.infer<typeof presetInputSchema>
 
@@ -23,17 +23,17 @@ export interface SectionPresetRecord extends PresetInput {
 }
 
 function toRecord(row: typeof sectionPresets.$inferSelect): SectionPresetRecord | null {
-  const section = pageSectionSchema.safeParse(row.section)
-  if (!section.success) {
+  const sections = pageSectionsSchema.safeParse(row.sections)
+  if (!sections.success) {
     // 脏数据行：记录后跳过（列表剔除/详情按未命中），不再静默吞掉
-    logServerError('preset-admin.toRecord', section.error, { id: row.id })
+    logServerError('preset-admin.toRecord', sections.error, { id: row.id })
     return null
   }
   return {
     id: row.id,
     name: row.name,
     description: row.description,
-    section: section.data,
+    sections: sections.data,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   }

@@ -96,17 +96,20 @@ useSortable(listEl, sections, {
     const { kind, id } = evt.item.dataset;
     evt.item.remove();
     const index = evt.newIndex ?? sections.value.length;
+    if (kind === 'preset' && id) {
+      const preset = props.presets?.find((p) => String(p.id) === id);
+      if (preset) {
+        // 015.19c：模板为多区块组合，拖入按序整组插入
+        sections.value.splice(index, 0, ...structuredClone(toRaw(preset.sections)));
+      }
+      return;
+    }
     let created: PageSection | undefined;
     if (kind === 'standard' && id) {
       created = createSection(id as SectionType);
     } else if (kind === 'custom' && id) {
       const entry = props.customComponents?.find((c) => c.name === id);
       created = createCustomSection(id, entry?.fields);
-    } else if (kind === 'preset' && id) {
-      const preset = props.presets?.find((p) => String(p.id) === id);
-      if (preset) {
-        created = structuredClone(toRaw(preset.section));
-      }
     }
     if (created) {
       sections.value.splice(index, 0, created);
@@ -137,7 +140,7 @@ async function savePreset() {
     await createPresetApi({
       description: presetDescription.value.trim(),
       name,
-      section: structuredClone(toRaw(source)),
+      sections: [structuredClone(toRaw(source))],
     });
     presetModalOpen.value = false;
     emit('presetSaved');

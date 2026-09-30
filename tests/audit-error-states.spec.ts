@@ -162,7 +162,7 @@ const validReportInput = reportInputSchema.parse({
   sortOrder: 5,
 })
 const validPageInput = pageInputSchema.parse({ slug: '/audit-error-page', title: '审计页面' })
-const validPresetInput = presetInputSchema.parse({ name: '审计模板', section: { type: 'cta', title: '行动起来' } })
+const validPresetInput = presetInputSchema.parse({ name: '审计模板', sections: [{ type: 'cta', title: '行动起来' }] })
 
 let errorSpy: ReturnType<typeof vi.spyOn>
 const bodyState = { current: null as unknown }
