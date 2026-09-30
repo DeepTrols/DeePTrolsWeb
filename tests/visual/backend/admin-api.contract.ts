@@ -500,6 +500,13 @@ export function registerBackendAdminVisualContracts() {
     const pagesEdit = readComponent('admin/apps/web-antd/src/views/pages/edit.vue')
     expect(pagesEdit).toContain('iframe')
     expect(pagesEdit).toContain('preview=1')
+    // 015.19e 实时预览：postMessage 桥 + 主站三重门 + origin 白名单 + 客户端消毒
+    expect(pagesEdit).toContain('dt-cms-live-preview')
+    expect(pagesEdit).toContain('liveTargetOrigin')
+    expect(catchAll).toContain("route.query.live === '1'")
+    expect(catchAll).toContain('LIVE_ALLOWED_ORIGINS')
+    expect(catchAll).toContain('function sanitizeSections(')
+    expect(cmsView).toContain('previewBanner')
   })
 
   it('guards the rich-text blocks editor with a blocks↔HTML converter and media-library upload', () => {

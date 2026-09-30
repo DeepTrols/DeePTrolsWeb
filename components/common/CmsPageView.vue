@@ -6,7 +6,11 @@ import CmsPageRenderer from '~/components/sections/CmsPageRenderer.vue'
 import type { PublishedPagePayload } from '~/server/utils/pages-admin'
 
 // CMS 页统一渲染器：catch-all 分发器与 /solutions/[slug] 回退分支共用（后者受 harness 约束不能自带 shell）
-const props = defineProps<{ page: PublishedPagePayload }>()
+const props = defineProps<{
+  page: PublishedPagePayload
+  /** 015.19e：实时预览态横幅文案（缺省为草稿预览文案） */
+  previewBanner?: string
+}>()
 
 // 页面含可见 hero 区块时由 hero 承担 h1，默认页头不再渲染（避免双主标题）
 const hasHero = computed(() =>
@@ -22,7 +26,7 @@ const hasHero = computed(() =>
       class="border-b border-amber-300 bg-amber-50 px-4 py-2 text-center text-sm font-medium text-amber-800"
       role="status"
     >
-      草稿预览 · 仅管理员可见
+      {{ previewBanner ?? '草稿预览 · 仅管理员可见' }}
     </div>
     <main id="main-content">
       <section

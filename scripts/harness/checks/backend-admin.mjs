@@ -556,8 +556,13 @@ export function checkBackendAdminContracts(ctx) {
       backendPagesPublicApi.includes("query.preview === '1'") &&
       backendPagesPublicApi.includes('getAdminPage') &&
       catchAllPage.includes(':preview') &&
-      cmsPageView.includes('page.preview'),
-    'Draft preview (015.13) must keep the soft isAdminRequest guard, the explicit ?preview=1 branch (admin page first), the dispatcher preview cache key, and the CmsPageView banner.',
+      cmsPageView.includes('page.preview') &&
+      adminPagesEditView.includes('dt-cms-live-preview') &&
+      adminPagesEditView.includes('liveTargetOrigin') &&
+      catchAllPage.includes("route.query.live === '1'") &&
+      catchAllPage.includes('LIVE_ALLOWED_ORIGINS') &&
+      catchAllPage.includes('function sanitizeSections('),
+    'Draft preview (015.13) must keep the soft isAdminRequest guard, the explicit ?preview=1 branch (admin page first), the dispatcher preview cache key, and the CmsPageView banner; live preview (015.19e) must keep the postMessage bridge with origin whitelist both ends and client-side sanitizing.',
   )
 
   assert(

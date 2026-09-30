@@ -1,6 +1,6 @@
 # TASK-015.19 前端优化与后台增强
 
-> 状态：进行中（a/b 已完成）
+> 状态：已完成（a–e 全部完成）
 > 范围：首页文案与 tab 改版、导航 mega 调整、方案页案例展示旧视觉回归+后台指标、区块模板多区块组合、组件管理扩覆盖、页面编辑实时预览
 
 ## 015.19a 首页与导航文案改版（已完成）
@@ -71,10 +71,42 @@
 - `PUT /api/admin/presets/1` 双 hero → 400；POST 两区块模板 → id；GET 列表旧模板（id=3）自动数组化为 1 区块（向后兼容生效）。
 - 浏览器：模板列表多 Tag（富文本+CTA 横幅）与摘要拼接；编辑 Drawer 打开含 2 个区块卡片与面板「2 区块」徽标；改名保存回列表生效。
 
-## 015.19d 组件管理扩覆盖（待做）
+## 015.19d 组件管理扩覆盖（已完成）
 
-catalog 含 hero 视觉 + visualName usage + 零 props 组件 contentEntry + vben 筛选/搜索/详情抽屉 + hero 下拉按启停过滤。
+### 需求
+组件管理覆盖全部组件（8 标准区块 + 20 定制组件 + hero 视觉），且可运维（看用法、跳内容入口）。
 
-## 015.19e 页面编辑实时预览（待做）
+### 改动
+- `server/utils/component-admin.ts`：knownIds 并入 HERO_VISUAL_NAMES；scanSectionUsage 统计 hero `visualName`；新增 `listComponentCatalog()`（标准/定制/hero 视觉三类，含 kind/label/description/category/fields/contentEntry）。
+- `components/sections/custom-props.ts`：meta 增可选 `contentEntry {label, adminRoute?, dataPath?}`；12 个零 props 数据驱动组件登记内容入口（ContactFormSection→/leads、HomeCustomerLogos→/showcase/logos、About*/Why*→data 源等）。
+- `server/api/admin/components/index.get.ts`：payload 增 `catalog`（旧字段保留兼容）。
+- admin `views/components/index.vue`：行源改 catalog（kind 三色 Tag）+ kind/分类筛选 + 关键词搜索 + 详情 Drawer（fields 表、usage slugs、contentEntry 跳转/展示）；顺带承接工作区既有 toast 清理 hunk。
+- admin `views/pages/edit.vue`：hero 视觉下拉按 disabled 过滤（停用即从表单消失）。
+- 锁同步：component-registry.spec、audit-component-schema.spec、admin-api.contract.ts（catalog + 纯度正则改意图锁）、backend-admin.mjs。
 
-postMessage 桥（live=1 + admin 门 + origin 双向白名单 + 客户端消毒），未保存 sections 即改即览。
+### 验证
+- 质量门全绿（含 build）。
+- `GET /api/admin/components` catalog 含 3 条 kind=hero-visual；停用某 hero 视觉后页面编辑器下拉少一项、usage 计数出现。
+- 浏览器：组件管理列表 31 行、筛选/搜索生效、详情 Drawer 展示 fields 与内容入口。
+
+## 015.19e 页面编辑实时预览（已完成）
+
+### 需求
+页面管理编辑区块时不保存即可在预览中看到当前内容（表单 + 实时预览同屏）。
+
+### 改动
+- 机制：postMessage 桥。admin `views/pages/edit.vue`：previewUrl 追加 `&live=1`；Drawer 打开后 watch sections/sectionsText/sectionMode（deep）+ 300ms debounce 向 iframe post `{type:'dt-cms-live-preview', payload:{title,seoDescription,sections}}`，targetOrigin DEV=`http://localhost:3000`/prod=同 origin（绝不 '*'）；JSON 模式解析失败不 post。
+- 主站 `pages/[...slug].vue`：仅 `preview:true`（服务端 admin 门）+ `live=1` 时注册 message 监听；origin 白名单（DEV `http://localhost:5666`/prod 同 origin）+ type 校验 + 客户端消毒（数组 1–50、剔 `on*` 键、visible 强转 boolean），非法载荷保持上一帧；横幅 live 态显示「实时预览 · 未保存内容」。
+- 验证期修复三处：
+  1. SSR 崩溃——`window` 在 setup 顶层被求值（`LIVE_ALLOWED_ORIGINS` 与 immediate watch）→ `import.meta.client` 门 + 客户端求值 origin。
+  2. DataCloneError——postMessage 不能克隆 reactive 代理 → 发送前 JSON 往返转纯对象。
+  3. 首帧丢失——iframe `@load` 首发早于主站 hydration，监听器未挂 → 反向握手：主站挂载后 post `dt-cms-live-preview-ready`，admin 收到补发。
+  4. 抽屉遮罩拦截表单点击 → Drawer `:mask="false"` 非模态 + 打开时容器 `pr-[56%]` 让表单回流到左侧，边改边看。
+- `components/common/CmsPageView.vue`：新增 `previewBanner` prop 承载 live 态文案。
+- 锁同步：admin-api.contract.ts（`dt-cms-live-preview` / `route.query.live === '1'` / `LIVE_ALLOWED_ORIGINS`）、backend-admin.mjs。
+
+### 验证
+- 质量门全绿（lint/typecheck/test/test:visual/harness/build，build 后重启双 dev）。
+- 浏览器：打开「预览草稿」→ iframe 横幅「实时预览 · 未保存内容」；改富文本段落/页面标题/SEO 描述（不保存）→ ~300ms 内 iframe 文案、`document.title`、meta description 同步，旧文案消失。
+- 负例：伪造 origin（http://evil.example）投喂被忽略；60 区块超上限被忽略；`onclick` 键被消毒剥离（渲染 DOM 无 `[onclick]`）；合法段落文本照常渲染。
+- 临时草稿页 `/live-preview-test` 已 DELETE（404 确认）。

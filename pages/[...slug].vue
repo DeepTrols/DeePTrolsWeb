@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import { useFetch, useRoute } from '#imports'
 import BaseButton from '~/components/common/BaseButton.vue'
 import CmsPageView from '~/components/common/CmsPageView.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
+import type { PageSection } from '~/server/utils/page-sections'
 import type { PublishedPagePayload } from '~/server/utils/pages-admin'
 
 const route = useRoute()
@@ -21,15 +22,115 @@ const { data: cmsPage } = await useFetch<PublishedPagePayload>(`/api/pages${rout
   query: isPreview.value ? { preview: '1' } : undefined,
 })
 
+// 015.19e 实时预览：仅 preview 命中（服务端 isAdminRequest 门，preview:true 仅管理员可得）+ live=1 时
+// 监听后台编辑器 postMessage，渲染「未保存」sections。三重门 + origin 白名单 + 客户端轻消毒：
+// 未登录访问者拿不到 preview:true → 不注册监听；跨 origin 投喂被忽略；非法载荷保持上一帧。
+const LIVE_PREVIEW_TYPE = 'dt-cms-live-preview'
+const LIVE_READY_TYPE = 'dt-cms-live-preview-ready'
+// SSR 阶段 window 不存在：仅客户端求值（Nuxt 会在服务端产物里静态消除该分支）
+const LIVE_ALLOWED_ORIGINS = import.meta.client
+  ? import.meta.dev
+    ? ['http://localhost:5666']
+    : [window.location.origin]
+  : []
+
+const liveSections = ref<null | PageSection[]>(null)
+const liveMeta = ref<{ seoDescription?: string, title?: string } | null>(null)
+
+function sanitizeSections(value: unknown): null | PageSection[] {
+  // 上限与 page-sections.ts 的 max(50) 对齐；剔 on* 键同 CmsPageRenderer 纵深防御
+  if (!Array.isArray(value) || value.length === 0 || value.length > 50) {
+    return null
+  }
+  const cleaned: PageSection[] = []
+  for (const item of value) {
+    if (typeof item !== 'object' || item === null) {
+      return null
+    }
+    const section: Record<string, unknown> = {}
+    for (const [key, val] of Object.entries(item)) {
+      if (key.startsWith('on')) {
+        continue
+      }
+      section[key] = val
+    }
+    section.visible = section.visible === undefined ? true : Boolean(section.visible)
+    cleaned.push(section as PageSection)
+  }
+  return cleaned
+}
+
+function onLiveMessage(event: MessageEvent) {
+  if (!LIVE_ALLOWED_ORIGINS.includes(event.origin)) {
+    return
+  }
+  const data = event.data as { payload?: unknown, type?: string } | null
+  if (!data || data.type !== LIVE_PREVIEW_TYPE || typeof data.payload !== 'object' || data.payload === null) {
+    return
+  }
+  const { sections, seoDescription, title } = data.payload as { sections?: unknown, seoDescription?: string, title?: string }
+  const cleaned = sanitizeSections(sections)
+  if (!cleaned) {
+    return
+  }
+  liveSections.value = cleaned
+  liveMeta.value = { seoDescription, title }
+}
+
+const isLivePreview = computed(() => isPreview.value && route.query.live === '1')
+const liveReady = computed(() => isLivePreview.value && cmsPage.value?.preview === true)
+// 握手：编辑器 iframe @load 首发常早于本页 hydration，监听器还没挂上就丢了首帧；
+// 挂载完成后反向通知父窗口补发（targetOrigin 同白名单，绝不 '*'）
+function notifyParentReady() {
+  const targetOrigin = LIVE_ALLOWED_ORIGINS[0]
+  if (!targetOrigin || window.parent === window) {
+    return
+  }
+  window.parent.postMessage({ type: LIVE_READY_TYPE }, targetOrigin)
+}
+if (import.meta.client) {
+  watch(liveReady, (ready) => {
+    if (ready) {
+      window.addEventListener('message', onLiveMessage)
+      notifyParentReady()
+    }
+    else {
+      window.removeEventListener('message', onLiveMessage)
+      liveSections.value = null
+    }
+  }, { immediate: true })
+  onUnmounted(() => window.removeEventListener('message', onLiveMessage))
+}
+
+const renderedPage = computed(() => {
+  const page = cmsPage.value
+  if (!page) {
+    return null
+  }
+  if (!liveSections.value) {
+    return page
+  }
+  return {
+    ...page,
+    sections: liveSections.value,
+    seoDescription: liveMeta.value?.seoDescription ?? page.seoDescription,
+    title: liveMeta.value?.title ?? page.title,
+  }
+})
+
 useSeoMeta({
-  title: () => `${cmsPage.value?.title ?? pageTitle.value} - DeepTrols`,
-  description: () => cmsPage.value?.seoDescription || 'DeepTrols 官网内容建设中。',
+  title: () => `${renderedPage.value?.title ?? pageTitle.value} - DeepTrols`,
+  description: () => renderedPage.value?.seoDescription || 'DeepTrols 官网内容建设中。',
   robots: () => (cmsPage.value ? 'index, follow' : 'noindex, nofollow'),
 })
 </script>
 
 <template>
-  <CmsPageView v-if="cmsPage" :page="cmsPage" />
+  <CmsPageView
+    v-if="renderedPage"
+    :page="renderedPage"
+    :preview-banner="liveSections ? '实时预览 · 未保存内容' : undefined"
+  />
   <div v-else class="site-shell">
     <SiteHeader />
     <main id="main-content" class="placeholder-page">

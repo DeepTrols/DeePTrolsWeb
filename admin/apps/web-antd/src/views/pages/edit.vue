@@ -3,7 +3,7 @@ import type { ComponentRegistryEntry, HeroVisualEntry } from '#/api/components';
 import type { PageInput, PageSection } from '#/api/pages';
 import type { SectionPreset } from '#/api/presets';
 
-import { computed, onActivated, onMounted, reactive, ref } from 'vue';
+import { computed, onActivated, onMounted, onUnmounted, reactive, ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import {
@@ -97,17 +97,81 @@ async function loadPresets() {
 }
 
 // 草稿预览（015.13）：iframe 加载主站 ?preview=1（cookie 同站共享）；未保存新页禁用
+// 实时预览（015.19e）：live=1 + Drawer 打开后把未保存 sections postMessage 给 iframe（origin 双向白名单，绝不 '*'）
 const previewOpen = ref(false);
 const previewStamp = ref(0);
 // 预览 slug 只接受站内绝对路径：route.query.slug 可被构造，不过滤协议会把
 // javascript:/data: 送进同源 iframe 的 src，形成管理员上下文执行面
 const PREVIEW_SLUG_RE = /^\/[a-z0-9-/]+$/;
+const previewFrame = useTemplateRef<HTMLIFrameElement>('previewFrame');
 const previewUrl = computed(() => {
   const base = import.meta.env.DEV ? 'http://localhost:3000' : '';
   const slug = form.slug || pageSlug.value || '';
   if (!PREVIEW_SLUG_RE.test(slug)) return '';
-  return `${base}${slug}?preview=1&_t=${previewStamp.value}`;
+  return `${base}${slug}?preview=1&live=1&_t=${previewStamp.value}`;
 });
+
+const LIVE_PREVIEW_TYPE = 'dt-cms-live-preview';
+const LIVE_READY_TYPE = 'dt-cms-live-preview-ready';
+const liveTargetOrigin = import.meta.env.DEV
+  ? 'http://localhost:3000'
+  : window.location.origin;
+
+function currentPreviewSections(): null | PageSection[] {
+  if (sectionMode.value === 'json') {
+    return parseJsonField(sectionsText.value) as null | PageSection[];
+  }
+  return form.sections;
+}
+
+function postLivePreview() {
+  const frame = previewFrame.value;
+  if (!previewOpen.value || !frame?.contentWindow) return;
+  const sections = currentPreviewSections();
+  if (!sections) return; // JSON 模式解析失败不 post，主站侧保持上一帧
+  // form.sections 是 reactive 代理，postMessage 结构化克隆会 DataCloneError → 先转纯对象
+  const plainSections = JSON.parse(JSON.stringify(sections)) as PageSection[];
+  frame.contentWindow.postMessage(
+    {
+      payload: {
+        seoDescription: form.seoDescription,
+        title: form.title,
+        sections: plainSections,
+      },
+      type: LIVE_PREVIEW_TYPE,
+    },
+    liveTargetOrigin,
+  );
+}
+
+let liveTimer: null | ReturnType<typeof setTimeout> = null;
+function scheduleLivePreview() {
+  if (liveTimer) clearTimeout(liveTimer);
+  liveTimer = setTimeout(postLivePreview, 300);
+}
+
+// 主站页 hydration 完成后回发 ready：iframe @load 首发常早于监听器挂载，靠握手补发首帧
+function onPreviewReady(event: MessageEvent) {
+  if (event.origin !== liveTargetOrigin) return;
+  const data = event.data as { type?: string } | null;
+  if (data?.type !== LIVE_READY_TYPE) return;
+  postLivePreview();
+}
+
+watch(
+  [() => form.sections, sectionsText, sectionMode],
+  scheduleLivePreview,
+  { deep: true },
+);
+watch(previewOpen, (open) => {
+  if (open) {
+    window.addEventListener('message', onPreviewReady);
+    scheduleLivePreview();
+  } else {
+    window.removeEventListener('message', onPreviewReady);
+  }
+});
+onUnmounted(() => window.removeEventListener('message', onPreviewReady));
 function openPreview() {
   if (!previewUrl.value) return;
   previewStamp.value = Date.now();
@@ -223,7 +287,8 @@ async function save(publish = false) {
 </script>
 
 <template>
-  <div class="p-4">
+  <!-- 预览打开时给右侧腾出抽屉宽度：非模态抽屉不遮罩，但会盖住表单，靠 padding 让表单回流到左侧 -->
+  <div :class="previewOpen ? 'p-4 pr-[56%]' : 'p-4'">
     <Form :label-col="{ span: 3 }" :wrapper-col="{ span: 16 }">
       <FormItem label="页面路径" required>
         <Input
@@ -308,7 +373,7 @@ async function save(publish = false) {
         <Button
           class="mr-2"
           :disabled="!isEdit"
-          title="预览最新保存内容（先保存草稿再预览）"
+          title="右侧非模态预览：不保存也能看到当前编辑内容"
           @click="openPreview"
         >
           预览草稿
@@ -317,17 +382,21 @@ async function save(publish = false) {
       </FormItem>
     </Form>
 
+    <!-- 非模态（:mask="false"）+ 右侧半宽：左边改表单，右边实时看效果；带遮罩会拦截表单点击 -->
     <Drawer
       v-model:open="previewOpen"
+      :mask="false"
       placement="right"
-      title="草稿预览（最新保存内容）"
-      width="80%"
+      title="草稿预览（实时同步未保存内容）"
+      width="55%"
     >
       <iframe
         v-if="previewOpen && previewUrl"
+        ref="previewFrame"
         class="h-full w-full border-0"
         :src="previewUrl"
         title="草稿预览"
+        @load="postLivePreview"
       ></iframe>
     </Drawer>
   </div>
