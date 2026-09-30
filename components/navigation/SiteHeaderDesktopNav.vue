@@ -33,7 +33,7 @@ function isActiveItem(item: NavItem) {
 
 <template>
   <nav class="site-header__nav" aria-label="主导航">
-    <div style="position:relative;">
+    <div class="relative">
       <ul class="site-header__nav-list">
         <li v-for="(item, index) in items" :key="item.label" class="site-header__nav-item">
           <button

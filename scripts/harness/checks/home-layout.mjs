@@ -190,7 +190,7 @@ assert(
     header.includes('SiteHeaderActions') &&
     header.includes('SiteHeaderMobileNav') &&
     header.includes('SiteHeaderMenuButton') &&
-    headerDesktopNav.includes('<div style="position:relative;">') &&
+    headerDesktopNav.includes('<div class="relative">') &&
     header.includes('/images/brand/deeptrols-logo-white.png') &&
     header.includes('/images/brand/deeptrols-logo-black.png') &&
     header.includes('has-mega') &&
