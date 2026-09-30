@@ -11,6 +11,7 @@ export function registerBackendAdminVisualContracts() {
     const leadsListApi = readComponent('server/api/admin/leads/index.get.ts')
     const leadPatchApi = readComponent('server/api/admin/leads/[id].patch.ts')
     const nuxtConfig = readComponent('nuxt.config.ts')
+    const adminViteConfig = readComponent('admin/apps/web-antd/vite.config.ts')
 
     expect(adminUtil).toContain("const SESSION_NAME = 'dt-admin'")
     expect(adminUtil).toContain('export async function requireAdmin(event: H3Event)')
@@ -18,14 +19,19 @@ export function registerBackendAdminVisualContracts() {
     expect(adminUtil).toContain('statusCode: 401')
     expect(adminUtil).toContain('statusCode: 503')
     expect(adminUtil).toContain('timingSafeEqual')
+    expect(adminUtil).toContain('export function verifyAdminUsername(input: unknown, expected: string): boolean')
+    expect(nuxtConfig).toContain('adminUsername')
     expect(nuxtConfig).toContain('adminPassword')
     expect(nuxtConfig).toContain('sessionPassword')
 
     expect(loginApi).toContain('consumeRateLimit(`admin-login:${ip}`)')
+    expect(loginApi).toContain('verifyAdminUsername(body?.username, adminUsername)')
     expect(loginApi).toContain('verifyAdminPassword(body?.password, adminPassword)')
     expect(loginApi).toContain('session.update({ admin: true })')
     expect(logoutApi).toContain('session.clear()')
     expect(sessionApi).toContain('requireAdmin')
+    expect(adminViteConfig).toContain('port: 5666')
+    expect(adminViteConfig).toContain('strictPort: true')
 
     expect(leadsAdminUtil).toContain("z.enum(['new', 'followed', 'closed'])")
     expect(leadsAdminUtil).toContain('export async function listLeads(): Promise<LeadRecord[]>')
@@ -54,6 +60,8 @@ export function registerBackendAdminVisualContracts() {
     )
     expect(casesUtil).toContain('caseSlugSchema')
     expect(casesUtil).toContain('caseUpdateSchema = caseInputSchema.omit({ slug: true })')
+    expect(casesUtil).toContain('export const caseMetricSchema = z.object({')
+    expect(casesUtil).toContain('metrics: z.array(caseMetricSchema).max(3).default([])')
     expect(casesUtil).toContain("Promise<'conflict' | string | null>")
     expect(reportsUtil).toContain("Promise<'conflict' | number | null>")
     expect(reportsUtil).toContain("Promise<'conflict' | boolean>")
@@ -525,6 +533,12 @@ export function registerBackendAdminVisualContracts() {
       expect(page).toContain('blocksValue.value === null')
       expect(page).not.toContain('blocksText')
     }
+
+    // 015.19b：案例编辑页三指标结构化行编辑（禁裸 JSON）
+    expect(casesEdit).toContain('form.metrics')
+    expect(casesEdit).toContain('新增指标（最多 3 条）')
+    expect(casesEdit).toContain('metric.value')
+    expect(casesEdit).toContain('metric.label')
   })
 
   it('guards the 23505 conflict mapping and featured single-column PATCH endpoints (audit #15/#16)', () => {

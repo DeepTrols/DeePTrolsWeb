@@ -1,6 +1,6 @@
 import { and, asc, eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { caseResources, type CaseResource } from '~/data/cases'
+import { caseResources, type CaseMetric, type CaseResource } from '~/data/cases'
 import { getCaseDetailBySlug, type CaseDetail, type CaseRelatedProduct } from '~/data/case-details'
 import { useNewsDatabase } from '../db/client'
 import { caseDetails, cases } from '../db/schema'
@@ -66,6 +66,8 @@ export async function listCaseResources(): Promise<CaseResource[]> {
         solutionKey: cases.solutionKey,
         // 公开投影含 featured（015.15）：CaseFeaturedSection 取 featured 案例；公开字段无保密问题
         featured: cases.featured,
+        // 公开投影含 metrics（015.19b）：方案页客户案例大卡三指标带
+        metrics: cases.metrics,
       })
       .from(cases)
       .where(eq(cases.status, 'published'))
@@ -74,6 +76,7 @@ export async function listCaseResources(): Promise<CaseResource[]> {
     return rows.map(row => ({
       solutionKey: row.solutionKey ?? undefined,
       featured: row.featured,
+      metrics: row.metrics as CaseMetric[],
       title: row.title,
       summary: row.summary,
       image: row.image,

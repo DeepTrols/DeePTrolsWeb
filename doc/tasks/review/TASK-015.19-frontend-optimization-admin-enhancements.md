@@ -1,6 +1,6 @@
 # TASK-015.19 前端优化与后台增强
 
-> 状态：进行中（a 已完成）
+> 状态：进行中（a/b 已完成）
 > 范围：首页文案与 tab 改版、导航 mega 调整、方案页案例展示旧视觉回归+后台指标、区块模板多区块组合、组件管理扩覆盖、页面编辑实时预览
 
 ## 015.19a 首页与导航文案改版（已完成）
@@ -30,9 +30,28 @@
 - `/solutions` 页 use-cases 与 footer 仍为旧话术（智慧环保/智慧能源/算力中心/数据治理）。
 - 导航「智慧储能解决方案」仍跳 `/solutions/energy`，与首页 tab 跳 `/cases?category=smart-energy-storage` 语义并存。
 
-## 015.19b 方案页案例旧视觉回归 + 后台指标（进行中）
+## 015.19b 方案页案例旧视觉回归 + 后台指标（已完成）
 
-见计划：迁移 0012（cases.metrics jsonb + 储能分类幂等 INSERT）、全链路投影/zod/seed、SolutionCasePicksSection 交替大卡重写、vben 3 组指标行编辑、五页锁同步。
+### 需求
+- 解决方案页案例展示回滚到旧视觉（全宽交替大卡：标题+摘要+三指标渐变带+案例图+详情按钮）。
+- 后台新建/编辑案例提供 3 组「指标名称+指标数量」输入，与方案页大卡三指标对应。
+
+### 决策
+- 旧视觉 + 后台数据：保留 015.17 推荐位链路（solution_case_picks），卡片数据改读 cases 表新增 `metrics` jsonb 列（非 case_details：resolveSolutionCases 单表读、免 join、免详情行缺失丢卡）。
+- 字段映射：title→title、description→summary、stats→metrics、占位图→image、按钮→/cases/[slug]、reversed→index 奇偶。
+
+### 改动
+- 迁移 `0012_dear_blizzard`：cases.metrics jsonb notNull default [] + 智慧储能分类幂等 INSERT。
+- `server/db/schema.ts`、`server/utils/cases-admin.ts`（caseMetricSchema + caseInputSchema + 读写投影；顺带承接工作区既有加固 relatedProducts.max(20)）、`cases-repo.ts`、`solution-cases-admin.ts`、`scripts/db-seed.ts`。
+- `data/cases.ts`：CaseMetric 类型 + 7 条案例各 3 指标。
+- `components/solution/SolutionCasePicksSection.vue`：template 重写为旧视觉（script 数据链路与 useFetch key 原样保留）。
+- admin：`api/content.ts` CaseMetricInput/CaseInput.metrics；`views/content/cases/edit.vue` 案例指标结构化行编辑（最多 3 条，禁裸 JSON）。
+- 锁同步：backend-admin.mjs（caseMetricSchema + 旧视觉四锁）、admin-api.contract.ts、content-admin.spec.ts（>3/空值拒绝）、solution-cases-admin.spec.ts（caseRow/toEqual 加 metrics）。
+
+### 验证
+- 质量门全绿（含 build）；迁移与 seed 后 `/api/solutions/smart-education/cases` items 含 metrics。
+- 方案页 SSR 渲染指标带（/solutions/manufacturing 等四页）；picks 空 → 静态回退单卡带指标。
+- 后台编辑页回显 3 行指标（20+/教育智能体上线），达上限隐藏新增按钮。
 
 ## 015.19c 区块模板多区块组合（待做）
 

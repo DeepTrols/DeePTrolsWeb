@@ -52,6 +52,7 @@ const form = reactive<
   featured: false,
   heroImage: '',
   image: '',
+  metrics: [],
   relatedProducts: [],
   slug: '',
   solutionKey: undefined,
@@ -186,6 +187,37 @@ async function save(publish = false) {
           :maxlength="500"
           placeholder="详情页 H1"
         />
+      </FormItem>
+      <FormItem label="案例指标">
+        <div class="flex flex-col gap-2">
+          <div
+            v-for="(metric, index) in form.metrics"
+            :key="index"
+            class="flex items-center gap-2"
+          >
+            <Input
+              v-model:value="metric.value"
+              placeholder="指标数量（如 40%、3×）"
+              style="max-width: 160px"
+            />
+            <Input
+              v-model:value="metric.label"
+              placeholder="指标名称（如 非计划停机时间下降）"
+              style="max-width: 240px"
+            />
+            <Button danger size="small" @click="form.metrics.splice(index, 1)">
+              删除
+            </Button>
+          </div>
+          <Button
+            v-if="form.metrics.length < 3"
+            size="small"
+            @click="form.metrics.push({ value: '', label: '' })"
+          >
+            新增指标（最多 3 条）
+          </Button>
+          <div v-else class="text-xs text-gray-400">已达 3 条指标上限</div>
+        </div>
       </FormItem>
       <FormItem label="详情分类" required>
         <Select

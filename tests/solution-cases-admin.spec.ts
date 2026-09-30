@@ -93,6 +93,7 @@ function caseRow(slug: string, overrides: Record<string, unknown> = {}) {
     summary: `摘要 ${slug}`,
     image: `/images/cases/${slug}.webp`,
     solutionKey: 'smart-manufacturing',
+    metrics: [],
     ...overrides,
   }
 }
@@ -287,6 +288,7 @@ describe('resolveSolutionCases', () => {
       title: '案例 case-b',
       summary: '摘要 case-b',
       image: '/images/cases/case-b.webp',
+      metrics: [],
       href: '/cases/case-b',
     })
   })

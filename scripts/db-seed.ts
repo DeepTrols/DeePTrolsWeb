@@ -97,6 +97,7 @@ for (const [index, item] of caseResources.entries()) {
       solutionKey: item.solutionKey ?? null,
       sortOrder: index,
       status: 'published',
+      metrics: item.metrics ?? [],
     })
     .onConflictDoUpdate({
       target: cases.slug,
@@ -107,6 +108,7 @@ for (const [index, item] of caseResources.entries()) {
         solutionKey: item.solutionKey ?? null,
         sortOrder: index,
         status: 'published',
+        metrics: item.metrics ?? [],
         updatedAt: new Date(),
       },
     })

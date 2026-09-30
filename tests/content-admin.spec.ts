@@ -25,6 +25,10 @@ const validCase = {
   heroImage: '/images/cases/acme-hero.png',
   blocks: validBlocks,
   relatedProducts: [{ name: 'DGP', desc: '数据治理平台', href: '/products/dgp' }],
+  metrics: [
+    { value: '40%', label: '非计划停机时间下降' },
+    { value: '3×', label: '异常事件响应提速' },
+  ],
 }
 
 const validReport = {
@@ -84,6 +88,12 @@ describe('case input protocol', () => {
     expect(caseInputSchema.safeParse({ ...validCase, categoryKey: '' }).success).toBe(false)
     expect(caseInputSchema.safeParse({ ...validCase, categoryKey: 'unknown' }).success).toBe(true)
     expect(caseInputSchema.safeParse({ ...validCase, relatedProducts: [{ name: '', desc: 'x', href: '/x' }] }).success).toBe(false)
+    expect(caseInputSchema.safeParse({ ...validCase, metrics: [{ value: '', label: 'x' }] }).success).toBe(false)
+    expect(caseInputSchema.safeParse({ ...validCase, metrics: [{ value: '1', label: '' }] }).success).toBe(false)
+    expect(
+      caseInputSchema.safeParse({ ...validCase, metrics: Array.from({ length: 4 }, () => ({ value: '1', label: 'x' })) }).success,
+    ).toBe(false)
+    expect(caseInputSchema.parse(validCase).metrics).toHaveLength(2)
   })
 })
 

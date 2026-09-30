@@ -2,6 +2,7 @@ import { asc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import type { ArticleBlock } from '~/types/article'
 import type { CaseRelatedProduct } from '~/data/case-details'
+import type { CaseMetric } from '~/data/cases'
 import { useNewsDatabase } from '../db/client'
 import { caseDetails, cases } from '../db/schema'
 import { articleBlocksSchema, parseArticleBlocks } from './article-blocks'
@@ -18,6 +19,12 @@ const relatedProductSchema = z.object({
   href: safeUrlSchema(),
 })
 
+/** 案例指标（015.19b）：方案页客户案例大卡三指标带；value 为展示值（含单位/倍数），label 为指标名称 */
+export const caseMetricSchema = z.object({
+  value: z.string().trim().min(1).max(100),
+  label: z.string().trim().min(1).max(200),
+})
+
 /** 案例写入协议（新建含 slug；slug 为主键不可改，更新走 caseUpdateSchema） */
 export const caseInputSchema = z.object({
   slug: caseSlugSchema,
@@ -28,11 +35,12 @@ export const caseInputSchema = z.object({
   sortOrder: z.number().int().min(0),
   status: contentStatusSchema.default('draft'),
   featured: z.boolean().default(false),
+  metrics: z.array(caseMetricSchema).max(3).default([]),
   detailTitle: z.string().trim().min(1).max(500),
   categoryKey: solutionKeySchema,
   heroImage: z.string().trim().min(1).max(1000),
   blocks: articleBlocksSchema,
-  relatedProducts: z.array(relatedProductSchema),
+  relatedProducts: z.array(relatedProductSchema).max(20),
 })
 export const caseUpdateSchema = caseInputSchema.omit({ slug: true })
 export type CaseInput = z.infer<typeof caseInputSchema>
@@ -109,6 +117,7 @@ export async function getAdminCase(slug: string): Promise<AdminCasePayload | nul
         sortOrder: cases.sortOrder,
         status: cases.status,
         featured: cases.featured,
+        metrics: cases.metrics,
         detailTitle: caseDetails.title,
         categoryKey: caseDetails.categoryKey,
         heroImage: caseDetails.heroImage,
@@ -133,6 +142,7 @@ export async function getAdminCase(slug: string): Promise<AdminCasePayload | nul
       sortOrder: row.sortOrder,
       status: row.status,
       featured: row.featured,
+      metrics: row.metrics as CaseMetric[],
       detailTitle: row.detailTitle,
       categoryKey: row.categoryKey,
       heroImage: row.heroImage,
@@ -158,8 +168,8 @@ export async function createCase(input: CaseInput): Promise<'conflict' | string 
       if (existing.length) {
         return 'conflict'
       }
-      const { slug, title, summary, image, solutionKey, sortOrder, status, featured, detailTitle, categoryKey, heroImage, blocks, relatedProducts } = input
-      await tx.insert(cases).values({ slug, title, summary, image, solutionKey, sortOrder, status, featured })
+      const { slug, title, summary, image, solutionKey, sortOrder, status, featured, metrics, detailTitle, categoryKey, heroImage, blocks, relatedProducts } = input
+      await tx.insert(cases).values({ slug, title, summary, image, solutionKey, sortOrder, status, featured, metrics })
       await tx.insert(caseDetails).values({
         caseSlug: slug,
         title: detailTitle,
@@ -185,10 +195,10 @@ export async function updateCase(slug: string, input: CaseUpdate): Promise<boole
 
   try {
     return await db.transaction(async (tx) => {
-      const { title, summary, image, solutionKey, sortOrder, status, featured, detailTitle, categoryKey, heroImage, blocks, relatedProducts } = input
+      const { title, summary, image, solutionKey, sortOrder, status, featured, metrics, detailTitle, categoryKey, heroImage, blocks, relatedProducts } = input
       const rows = await tx
         .update(cases)
-        .set({ title, summary, image, solutionKey, sortOrder, status, featured, updatedAt: new Date() })
+        .set({ title, summary, image, solutionKey, sortOrder, status, featured, metrics, updatedAt: new Date() })
         .where(eq(cases.slug, slug))
         .returning({ slug: cases.slug })
       if (!rows.length) {

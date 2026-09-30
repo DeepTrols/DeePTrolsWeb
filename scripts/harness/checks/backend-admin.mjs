@@ -118,6 +118,7 @@ export function checkBackendAdminContracts(ctx) {
     adminContentOptions,
     newsCategoryTabs,
     reportFilterBar,
+    adminWebAntdViteConfig,
     solutionCasePicksData,
     backendSolutionCasesAdminUtil,
     backendSolutionCasesPublicApi,
@@ -134,19 +135,28 @@ export function checkBackendAdminContracts(ctx) {
       backendAdminUtil.includes('session.data.admin !== true') &&
       backendAdminUtil.includes('statusCode: 401') &&
       backendAdminUtil.includes('export function verifyAdminPassword(input: unknown, expected: string): boolean') &&
+      backendAdminUtil.includes('export function verifyAdminUsername(input: unknown, expected: string): boolean') &&
       backendAdminUtil.includes('timingSafeEqual') &&
+      backendNuxtConfig.includes('adminUsername') &&
       backendNuxtConfig.includes('adminPassword') &&
       backendNuxtConfig.includes('sessionPassword'),
-    'Admin util must guard via sealed session (503 unconfigured / 401 unauthenticated) with a timing-safe password check wired to runtimeConfig.',
+    'Admin util must guard via sealed session (503 unconfigured / 401 unauthenticated) with timing-safe username and password checks wired to runtimeConfig.',
   )
 
   assert(
     backendAdminLoginApi.includes('consumeRateLimit(`admin-login:${ip}`)') &&
+      backendAdminLoginApi.includes('verifyAdminUsername(body?.username, adminUsername)') &&
       backendAdminLoginApi.includes('verifyAdminPassword(body?.password, adminPassword)') &&
       backendAdminLoginApi.includes('session.update({ admin: true })') &&
       backendAdminLogoutApi.includes('session.clear()') &&
       backendAdminSessionApi.includes('requireAdmin'),
-    'Login must be rate-limited and sealed-session based; logout clears the session; session.get probes auth for the external admin SPA.',
+    'Login must be rate-limited, verify username and password, and be sealed-session based; logout clears the session; session.get probes auth for the external admin SPA.',
+  )
+
+  assert(
+    adminWebAntdViteConfig.includes('port: 5666') &&
+      adminWebAntdViteConfig.includes('strictPort: true'),
+    'Admin dev server must pin its port with strictPort so the proxy target and page-preview iframes never drift to another port.',
   )
 
   assert(
@@ -173,6 +183,8 @@ export function checkBackendAdminContracts(ctx) {
       backendNewsAdminUtil.includes('export async function updateNews(id: number, input: NewsInput): Promise<boolean>') &&
       backendCasesAdminUtil.includes('caseSlugSchema') &&
       backendCasesAdminUtil.includes('caseUpdateSchema = caseInputSchema.omit({ slug: true })') &&
+      backendCasesAdminUtil.includes('export const caseMetricSchema = z.object({') &&
+      backendCasesAdminUtil.includes('metrics: z.array(caseMetricSchema).max(3).default([])') &&
       backendCasesAdminUtil.includes("Promise<'conflict' | string | null>") &&
       backendReportsAdminUtil.includes("Promise<'conflict' | number | null>") &&
       backendReportsAdminUtil.includes("Promise<'conflict' | boolean>"),
@@ -649,6 +661,10 @@ export function checkBackendAdminContracts(ctx) {
       solutionCasePicksSection.includes('useFetch(`/api/solutions/${props.pageKey}/cases`') &&
       solutionCasePicksSection.includes('key: `solution-cases-${props.pageKey}`') &&
       solutionCasePicksSection.includes('staticSolutionCaseFallback') &&
+      solutionCasePicksSection.includes('bg-clip-text text-transparent') &&
+      solutionCasePicksSection.includes('lg:flex-row-reverse') &&
+      solutionCasePicksSection.includes(':href="item.href"') &&
+      solutionCasePicksSection.includes('item.metrics') &&
       adminContentRoutes.includes('/content/solution-cases') &&
       adminSolutionCasesView.includes('getSolutionCasePicksApi') &&
       adminSolutionCasesView.includes('saveSolutionCasePicksApi') &&

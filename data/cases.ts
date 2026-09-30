@@ -1,6 +1,13 @@
 import type { ProductMetricItem } from '~/components/common/ProductMetricsSection.vue'
 import type { ReportSolutionFilterKey } from './reports'
 
+export interface CaseMetric {
+  /** 指标数量（展示值，含单位/倍数等后缀） */
+  value: string
+  /** 指标名称 */
+  label: string
+}
+
 export interface CaseResource {
   /** 所属筛选分类；分类与案例的归属关系待内容提供后补充 */
   solutionKey?: ReportSolutionFilterKey
@@ -8,6 +15,8 @@ export interface CaseResource {
   summary: string
   image: string
   href: string
+  /** 案例指标（015.19b）：方案页客户案例大卡三指标带，0-3 条 */
+  metrics?: CaseMetric[]
   /** 案例页精选推荐位标记（015.15）：仅 DB 数据源投影，静态种子不带 */
   featured?: boolean
 }
@@ -35,6 +44,11 @@ export const caseResources: CaseResource[] = [
       '基于探窑物联网关与 DeviceAgent 设备智能体，打通设备数据采集、异常事件处置与工单协同，助力产线非计划停机时间显著下降。',
     image: '/images/home/solutions/industrial.K00G2HaS.webp',
     href: '/cases/automotive-parts-device-agent',
+    metrics: [
+      { value: '40%', label: '非计划停机时间下降' },
+      { value: '3×', label: '异常事件响应提速' },
+      { value: '100%', label: '设备工单线上协同' },
+    ],
   },
   {
     solutionKey: 'data-infrastructure',
@@ -43,6 +57,11 @@ export const caseResources: CaseResource[] = [
       '以数遥 DGP 与 DMS 为核心构建集团数据标准、质量与资产目录体系，实现数据要素统一管理与服务化输出，支撑下游 AI 应用建设。',
     image: '/images/home/solutions/data.DHKY-NE1.webp',
     href: '/cases/energy-group-data-governance',
+    metrics: [
+      { value: '1200+', label: '数据资产统一目录' },
+      { value: '85%', label: '数据质量规则覆盖' },
+      { value: '6', label: '覆盖子公司数量' },
+    ],
   },
   {
     solutionKey: 'knowledge-engineering',
@@ -51,6 +70,11 @@ export const caseResources: CaseResource[] = [
       '覆盖知识采集、治理、检索与应用全链路，让组织知识成为 AI 可理解、可调用的核心资产，智能问答准确率与响应效率双提升。',
     image: '/images/solutions/data-engineering.jpg',
     href: '/cases/finance-knowledge-engineering',
+    metrics: [
+      { value: '90%', label: '智能问答准确率' },
+      { value: '50%', label: '问答响应效率提升' },
+      { value: '2万+', label: '沉淀知识资产条目' },
+    ],
   },
   {
     solutionKey: 'smart-water',
@@ -59,6 +83,11 @@ export const caseResources: CaseResource[] = [
       '融合物联感知与 AI 分析能力，构建水情监测、汛期预警与水资源调度一体化平台，提升流域管理的精细化与智能化水平。',
     image: '/images/home/solutions/smart-Water.DHKY-NE1.webp',
     href: '/cases/basin-smart-water',
+    metrics: [
+      { value: '24h', label: '水情在线监测' },
+      { value: '30%', label: '汛期预警提前量提升' },
+      { value: '40%', label: '调度决策效率提升' },
+    ],
   },
   {
     solutionKey: 'smart-education',
@@ -67,6 +96,11 @@ export const caseResources: CaseResource[] = [
       '面向教学管理与课堂答疑场景部署教育智能体，沉淀课程知识资产，为师生提供全天候智能问答与个性化学习支持。',
     image: '/images/solutions/education-hero.webp',
     href: '/cases/university-ai-education',
+    metrics: [
+      { value: '20+', label: '教育智能体上线' },
+      { value: '10+', label: '校园系统连接' },
+      { value: '50%', label: '智能应用开发效率提升' },
+    ],
   },
   {
     solutionKey: 'fde',
@@ -75,6 +109,11 @@ export const caseResources: CaseResource[] = [
       '以前沿部署工程师（FDE）驻场方式，从业务原型验证到生产级交付持续迭代，帮助客户在数周内完成 AI 应用规模化落地。',
     image: '/images/home/solutions/data-center-ai.CDu93Miw.webp',
     href: '/cases/retail-fde-delivery',
+    metrics: [
+      { value: '3周', label: '原型到生产级交付' },
+      { value: '5', label: '并行推进业务场景' },
+      { value: '30%', label: '门店运营效率提升' },
+    ],
   },
   {
     solutionKey: 'compute-power',
@@ -83,6 +122,11 @@ export const caseResources: CaseResource[] = [
       '围绕算力调度与能耗优化构建算电协同运营体系，结合 Token Hub 模型调用治理，实现算力资源利用率与运营成本的双向改善。',
     image: '/images/home/solutions/smart-energy.DHKY-NE1.webp',
     href: '/cases/datacenter-compute-power',
+    metrics: [
+      { value: '15%', label: '综合能耗成本下降' },
+      { value: '25%', label: '算力资源利用率提升' },
+      { value: '100%', label: '模型调用治理可视' },
+    ],
   },
 ]
 

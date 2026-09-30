@@ -1,6 +1,7 @@
 import { boolean, integer, jsonb, pgEnum, pgTable, primaryKey, serial, text, timestamp, varchar, date } from 'drizzle-orm/pg-core'
 import type { ArticleBlock } from '~/types/article'
 import type { CaseRelatedProduct } from '~/data/case-details'
+import type { CaseMetric } from '~/data/cases'
 
 // 015.16：分类完全动态化——news.category / cases.solutionKey / caseDetails.categoryKey / reports.solutionKey / reports.type
 // 已从 pgEnum 迁移为 varchar（迁移 0010 人工改写 USING ::text + DROP TYPE）；取值由 content_categories 表管理
@@ -43,6 +44,8 @@ export const cases = pgTable('cases', {
   status: contentStatusEnum('status').notNull().default('published'),
   // 案例页精选推荐位（015.15）：featured 且 published 的案例进入 CaseFeaturedSection，上限见 featured-limits.ts
   featured: boolean('featured').notNull().default(false),
+  // 案例指标（015.19b）：方案页客户案例大卡的三指标带（名称+数量），与 ProductMetricItem 同形
+  metrics: jsonb('metrics').$type<CaseMetric[]>().notNull().default([]),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })

@@ -42,6 +42,13 @@ export interface AdminCaseRecord {
   updatedAt: string;
 }
 
+export interface CaseMetricInput {
+  /** 指标数量（展示值，含单位/倍数等后缀） */
+  value: string;
+  /** 指标名称 */
+  label: string;
+}
+
 export interface CaseInput {
   slug: string;
   title: string;
@@ -51,6 +58,8 @@ export interface CaseInput {
   sortOrder: number;
   status: ContentStatus;
   featured: boolean;
+  /** 案例指标（015.19b）：方案页客户案例大卡三指标带，0-3 条 */
+  metrics: CaseMetricInput[];
   detailTitle: string;
   categoryKey: SolutionKey;
   heroImage: string;

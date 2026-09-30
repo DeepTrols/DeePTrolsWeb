@@ -1,6 +1,6 @@
 import { and, eq, inArray } from 'drizzle-orm'
 import { z } from 'zod'
-import type { CaseResource } from '~/data/cases'
+import type { CaseMetric, CaseResource } from '~/data/cases'
 import { SOLUTION_CASE_PAGE_KEYS, staticSolutionCaseFallback } from '~/data/solution-case-picks'
 import type { SolutionCasePageKey } from '~/data/solution-case-picks'
 import { useNewsDatabase } from '../db/client'
@@ -119,6 +119,7 @@ export async function resolveSolutionCases(key: SolutionCasePageKey): Promise<So
         summary: cases.summary,
         image: cases.image,
         solutionKey: cases.solutionKey,
+        metrics: cases.metrics,
       })
       .from(cases)
       .where(and(inArray(cases.slug, picks.items), eq(cases.status, 'published')))
@@ -135,6 +136,7 @@ export async function resolveSolutionCases(key: SolutionCasePageKey): Promise<So
         title: row.title,
         summary: row.summary,
         image: row.image,
+        metrics: row.metrics as CaseMetric[],
         href: `/cases/${row.slug}`,
       })
     }
