@@ -21,7 +21,7 @@ describe('home content contract', () => {
     expect(primaryNavigation.find((item) => item.label === '核心产品')).toMatchObject({
       href: '/products',
       layout: 'product',
-      megaTitle: '核心技术',
+      megaTitle: '核心产品',
     })
     expect(productColumns.map((column) => column.title)).toEqual([
       '数曜 ｜ 数智基建',
@@ -83,11 +83,11 @@ describe('home content contract', () => {
     ])
     expect(solutions.map((solution) => solution.href)).toEqual([
       '/solutions/manufacturing',
-      '/solutions/environment',
-      '/solutions/energy',
-      '/solutions/water',
-      '/solutions/compute',
-      '/solutions/data-governance',
+      '/cases?category=smart-energy-storage',
+      '/cases?category=compute-power',
+      '/cases?category=smart-water',
+      '/cases?category=smart-education',
+      '/cases?category=fde',
     ])
   })
 

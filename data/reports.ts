@@ -33,6 +33,7 @@ export const reportFilterTabs: ReportFilterTab[] = [
   { key: 'smart-education', label: '智慧教育' },
   { key: 'fde', label: 'FDE' },
   { key: 'compute-power', label: '算电协同' },
+  { key: 'smart-energy-storage', label: '智慧储能' },
 ]
 
 export const reportResources: ReportResource[] = [

@@ -46,6 +46,7 @@ describe('report service page content contract', () => {
       '智慧教育',
       'FDE',
       '算电协同',
+      '智慧储能',
     ])
     expect(featuredReportResources).toHaveLength(3)
     expect(featuredReportResources.map((item) => item.title)).toEqual(reportResources.slice(0, 3).map((item) => item.title))

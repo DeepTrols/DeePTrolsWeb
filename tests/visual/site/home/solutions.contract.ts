@@ -13,7 +13,7 @@ export function registerHomeSolutionsVisualContracts() {
     // 015.18：标题文案经 props 传入，缺省值住在 data/home-sections.ts
     expect(homeSolutions).toContain(':eyebrow="eyebrow"')
     expect(homeSolutions).toContain(':title="title"')
-    expect(homeSectionsData).toContain("eyebrow: 'Use Cases'")
+    expect(homeSectionsData).toContain("eyebrow: '解决方案'")
     expect(homeSectionsData).toContain("title: '驱动各行业智能提升'")
     expect(homeSectionsData).toContain('覆盖智能制造、企业运营、AI基础设施等核心领域，帮助企业快速构建可持续演进的智能化能力')
     expect(homeSolutions).toContain('nowrap-subtitle')

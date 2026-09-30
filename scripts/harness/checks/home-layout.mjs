@@ -73,7 +73,7 @@ assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTab
 assert(homeSolutions.includes('CarouselRoot') && !homeSolutions.includes('solutions__carousel-container'), 'HomeSolutions must render slides through the shared CarouselRoot component without hand-rolled tracks.')
 assert(
   homeSolutions.includes('background: var(--dt-color-bg)') && !homeSolutions.includes('background: #f0f5ff'),
-  'HomeSolutions Use Cases section must use the default page background.',
+  'HomeSolutions 解决方案 section must use the default page background.',
 )
 assert(baseTabs.includes('dt-tab-list') && baseTabs.includes('dt-tab'), 'BaseTabs must own shared dt-tab classes.')
 assert(
@@ -83,7 +83,7 @@ assert(
     productSystem.includes('ProductSystemCards') &&
     productSystem.includes('DeepTrolsArchitectureFlow') &&
     productSystem.includes(':label="flowLabel"') &&
-    homeSectionsData.includes("flowLabel: 'DeepTrols OPS 产品架构图'") &&
+    homeSectionsData.includes("flowLabel: '智能底座 产品架构图'") &&
     productSystem.includes('w-full overflow-hidden @container') &&
     productSystem.includes('scale-[min(1,calc(100cqw/1600px))]') &&
     !productSystem.includes(':grid="false"') &&
@@ -212,7 +212,7 @@ assert(
 )
 assert(
   navigationData.includes("label: '核心产品'") &&
-    navigationData.includes("megaTitle: '核心技术'") &&
+    navigationData.includes("megaTitle: '核心产品'") &&
     navigationData.includes('构建面向 AI 的企业数据基础设施') &&
     navigationData.includes('汇聚算力与模型能力，驱动企业智能应用') &&
     navigationData.includes('连接设备与场景，让 AI 感知真实世界') &&

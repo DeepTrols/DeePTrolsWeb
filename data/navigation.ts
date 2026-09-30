@@ -47,7 +47,7 @@ export const primaryNavigation: NavItem[] = [
     label: '核心产品',
     href: '/products',
     layout: 'product',
-    megaTitle: '核心技术',
+    megaTitle: '核心产品',
     columns: [
       {
         title: '数曜 ｜ 数智基建',

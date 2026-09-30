@@ -40,10 +40,10 @@ function initialActiveColumn(): number {
 
 <template>
   <div class="mega-shell">
-    <NuxtLink :to="item.href" class="mega-title" @click="$emit('navigate')">
+    <!-- 核心产品/解决方案均无 index 页：mega 标题仅作分组标题，不渲染链接 -->
+    <div class="mega-title">
       <span>{{ megaTitle }}</span>
-      <span class="mega-chevron" aria-hidden="true">&gt;</span>
-    </NuxtLink>
+    </div>
 
     <div v-if="item.layout === 'solutions'" class="mega-solutions" aria-label="解决方案">
       <NuxtLink
@@ -117,14 +117,7 @@ function initialActiveColumn(): number {
   font-size: 24px;
   font-weight: 400;
   line-height: 35px;
-  text-decoration: none;
   white-space: nowrap;
-  transition: color 200ms ease;
-
-  &:hover,
-  &:focus-visible {
-    color: var(--dt-color-primary);
-  }
 }
 
 .mega-chevron { flex: 0 0 auto; font-size: 18px; line-height: 1; }

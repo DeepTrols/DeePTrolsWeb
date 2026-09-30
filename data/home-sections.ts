@@ -86,10 +86,10 @@ export const homeCtaContent = {
 }
 
 export const homeProductSystemHeading = {
-  eyebrow: 'DeepTrols OPS',
+  eyebrow: '智能底座',
   title: '连接真实业务与人工智能',
   subtitle: '以数据与知识底座桥接企业业务与人工智能。赋能 AI Agent，实现对真实业务的支撑。',
-  flowLabel: 'DeepTrols OPS 产品架构图',
+  flowLabel: '智能底座 产品架构图',
 }
 
 export const homeProductCards: HomeProductCardData[] = [
@@ -124,7 +124,7 @@ export const homeProductCards: HomeProductCardData[] = [
 ]
 
 export const homeSolutionsHeading: HomeSectionHeading = {
-  eyebrow: 'Use Cases',
+  eyebrow: '解决方案',
   title: '驱动各行业智能提升',
   subtitle: '覆盖智能制造、企业运营、AI基础设施等核心领域，帮助企业快速构建可持续演进的智能化能力',
 }
@@ -141,53 +141,53 @@ export const homeSolutionItems: HomeSolutionItemData[] = [
   },
   {
     key: 'environment',
-    tab: '智慧环保',
-    title: '生态环境智能感知',
+    tab: '智慧储能',
+    title: '储能数据与感知',
     englishTitle: 'Environmental Intelligence Sensing',
-    description: '基于多源数据融合与 AI 推理，实现环境风险的智能识别、评估与预警。',
+    description: '贯通感知、数据、分析与优化的储能智能能力体系',
     image: '/images/home/solutions/smart-env.CWc2pooP.webp',
-    href: '/solutions/environment',
+    href: '/cases?category=smart-energy-storage',
   },
   {
     key: 'energy',
-    tab: '智慧能源',
-    title: '电网运维、储能管理和智能计量',
+    tab: '算电协同',
+    title: '算力与能源协同优化',
     englishTitle: 'Energy Intelligence',
-    description: '构建覆盖能源监测、分析、调度与优化的一体化智能能源体系。',
+    description: '统筹算力、电力、冷却与储能，降低综合成本',
     image: '/images/home/solutions/smart-energy.DHKY-NE1.webp',
-    href: '/solutions/energy',
+    href: '/cases?category=compute-power',
   },
   {
     key: 'water',
     tab: '智慧水利',
-    title: '空间推理智能体',
+    title: '智慧水利知识中枢',
     englishTitle: 'Spatial Reasoning Agent',
-    description: '让 AI 理解空间数据，并驱动 GIS 智能分析与交互决策。',
+    description: '从数据治理到知识决策，构建智慧水利核心能力',
     image: '/images/home/solutions/smart-Water.DHKY-NE1.webp',
-    href: '/solutions/water',
+    href: '/cases?category=smart-water',
   },
   {
     key: 'compute',
-    tab: '算力中心',
-    title: 'AI算力基础设施',
+    tab: '智慧教育',
+    title: '面向教育场景的AI智能体与智能工作流',
     englishTitle: 'AI Computing Infrastructure',
-    description: '提供海外 AI 服务器供应、算力中心建设及交付服务。',
+    description: '从模型调用到任务执行，构建教育 AI 原生能力体系',
     image: '/images/home/solutions/data-center-ai.CDu93Miw.webp',
-    href: '/solutions/compute',
+    href: '/cases?category=smart-education',
   },
   {
     key: 'data',
-    tab: '数据治理',
-    title: '数据工程',
+    tab: 'FDE',
+    title: 'FDE解决方案',
     englishTitle: 'Data Engineering',
-    description: '覆盖数据采集、治理、开发与管理，构建统一数据底座。',
+    description: '深入业务现场，让AI从概念验证走向生产价值',
     image: '/images/home/solutions/data.DHKY-NE1.webp',
-    href: '/solutions/data-governance',
+    href: '/cases?category=fde',
   },
 ]
 
 export const homeEcosystemHeading: HomeSectionHeading = {
-  eyebrow: 'ecosystem',
+  eyebrow: '深度服务',
   title: '连接企业 AI 全链路的开放生态',
   subtitle: '连接算力、模型、社区与行业知识，构建开放 AI 生态',
 }
@@ -239,7 +239,7 @@ export const homeAboutContent: HomeAboutContentData = {
 }
 
 export const homeInsightsHeading: HomeInsightsHeadingData = {
-  eyebrow: 'Resources',
+  eyebrow: '资源',
   title: '创新、洞察与新闻',
   moreLabel: '查看全部资源',
   moreHref: '/insights',

@@ -16,7 +16,7 @@ export function registerHomeInsightsCtaVisualContracts() {
     // 015.18：标题文案经 props 传入，缺省值住在 data/home-sections.ts
     expect(homeInsights).toContain(':eyebrow="eyebrow"')
     expect(homeInsights).toContain(':title="title"')
-    expect(homeSectionsData).toContain("eyebrow: 'Resources'")
+    expect(homeSectionsData).toContain("eyebrow: '资源'")
     expect(homeSectionsData).toContain("title: '创新、洞察与新闻'")
     expect(homeInsights).toContain('title-id="insights-title"')
     expect(homeInsights).toContain('class="insights__layout"')

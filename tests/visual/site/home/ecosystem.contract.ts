@@ -18,7 +18,7 @@ export function registerHomeEcosystemVisualContracts() {
     expect(homeEcosystem).toContain(':eyebrow="eyebrow"')
     expect(homeEcosystem).toContain(':title="title"')
     expect(homeEcosystem).toContain(':subtitle="subtitle"')
-    expect(homeSectionsData).toContain("eyebrow: 'ecosystem'")
+    expect(homeSectionsData).toContain("eyebrow: '深度服务'")
     expect(homeSectionsData).toContain("title: '连接企业 AI 全链路的开放生态'")
     expect(homeSectionsData).toContain("subtitle: '连接算力、模型、社区与行业知识，构建开放 AI 生态'")
     expect(homeEcosystem).toContain('nowrap-subtitle')

@@ -17,6 +17,7 @@ export const solutionCategories: ContentCategoryItem[] = [
   { key: 'smart-education', label: '智慧教育' },
   { key: 'fde', label: 'FDE' },
   { key: 'compute-power', label: '算电协同' },
+  { key: 'smart-energy-storage', label: '智慧储能' },
 ]
 
 /** 报告类型：key 即 label（中文取值，与历史数据一致） */

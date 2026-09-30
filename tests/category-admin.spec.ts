@@ -139,7 +139,7 @@ describe('015.16: 静态快照与协议对齐', () => {
     )
   })
 
-  it('solution/report-type 快照与迁移 0010 种子一致', () => {
+  it('solution/report-type 快照与迁移 0010/0012 种子一致', () => {
     expect(staticCategoriesFor('solution').map(item => item.key)).toEqual([
       'data-infrastructure',
       'knowledge-engineering',
@@ -148,6 +148,7 @@ describe('015.16: 静态快照与协议对齐', () => {
       'smart-education',
       'fde',
       'compute-power',
+      'smart-energy-storage',
     ])
     expect(staticCategoriesFor('solution').map(item => item.key)).toEqual(solutionCategories.map(item => item.key))
     expect(staticCategoriesFor('report-type')).toHaveLength(6)
