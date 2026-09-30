@@ -36,7 +36,7 @@ export interface NavItem {
   featuresTitle?: string;
   href: string;
   label: string;
-  layout?: 'product' | 'solutions';
+  layout?: 'product' | 'services' | 'solutions';
   megaTitle?: string;
 }
 
@@ -80,6 +80,7 @@ export const NAV_ICON_OPTIONS = [
   'Building2',
   'ChartNoAxesCombined',
   'CheckCircle2',
+  'Coins',
   'Cpu',
   'Database',
   'Droplets',

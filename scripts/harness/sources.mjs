@@ -274,6 +274,7 @@ export const harnessSourcePaths = {
   headerMobileNav: 'components/navigation/SiteHeaderMobileNav.vue',
   megaMenu: 'components/navigation/MegaMenuPanel.vue',
   megaPanelProduct: 'components/navigation/MegaPanelProduct.vue',
+  megaPanelServiceGrid: 'components/navigation/MegaPanelServiceGrid.vue',
   homeCta: 'components/home/HomeCta.vue',
   homeCases: 'components/home/HomeCases.vue',
   homeCaseSlide: 'components/home/HomeCaseSlide.vue',

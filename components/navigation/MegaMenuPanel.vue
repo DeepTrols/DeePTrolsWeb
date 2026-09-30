@@ -2,6 +2,7 @@
 import { ArrowRight } from '@lucide/vue'
 import MegaPanelNavLink from '~/components/navigation/MegaPanelNavLink.vue'
 import MegaPanelProduct from '~/components/navigation/MegaPanelProduct.vue'
+import MegaPanelServiceGrid from '~/components/navigation/MegaPanelServiceGrid.vue'
 import { resolveNavIcon } from '~/components/navigation/nav-icons'
 import type { NavColumn, NavItem, NavLink } from '~/data/navigation'
 
@@ -21,6 +22,8 @@ function linksFor(column: NavColumn): NavLink[] {
 <template>
   <div class="mega-panel" :class="`mega-panel--${item.layout ?? 'default'}`">
     <MegaPanelProduct v-if="item.layout === 'product' || item.layout === 'solutions'" :item="item" @navigate="$emit('navigate')" />
+
+    <MegaPanelServiceGrid v-else-if="item.layout === 'services'" :item="item" @navigate="$emit('navigate')" />
 
     <div v-else-if="item.columns?.length" class="mega-panel__columns">
       <section v-for="column in item.columns" :key="column.title" class="mega-panel__column">

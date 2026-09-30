@@ -13,7 +13,11 @@ describe('report service page content contract', () => {
     expect(casesLink?.href).toBe('/cases')
     expect(casesLink?.layout).toBeUndefined()
     expect(casesLink?.columns).toBeUndefined()
-    expect(primaryNavigation.find((item) => item.label === 'TokenHub')?.href).toBe('/services/token-hub')
+    // TokenHub 收进「服务」mega（2×2 网格），不再是顶级导航项
+    const serviceItem = primaryNavigation.find((item) => item.label === '服务')
+    const serviceLinks = serviceItem?.columns?.flatMap((column) => column.links ?? []) ?? []
+    expect(serviceItem?.layout).toBe('services')
+    expect(serviceLinks.find((link) => link.label === 'TokenHub')?.href).toBe('/services/token-hub')
   })
 
   it('uses the required hero copy from report.md', () => {

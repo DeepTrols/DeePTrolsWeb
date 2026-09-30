@@ -12,6 +12,7 @@ const items = defineModel<NavItem[]>('items', { required: true });
 
 const layoutOptions = [
   { label: 'product（产品布局）', value: 'product' },
+  { label: 'services（服务网格布局）', value: 'services' },
   { label: 'solutions（方案布局）', value: 'solutions' },
 ];
 

@@ -55,7 +55,7 @@ const navItemSchema = z.object({
   label: z.string().trim().min(1).max(100),
   href: safeUrlSchema(500),
   activePaths: z.array(z.string().trim().min(1).max(200)).max(20).optional(),
-  layout: z.enum(['product', 'solutions']).optional(),
+  layout: z.enum(['product', 'services', 'solutions']).optional(),
   megaTitle: z.string().trim().max(100).optional(),
   columns: z.array(navColumnSchema).max(20).optional(),
   features: z.array(navFeatureSchema).max(20).optional(),

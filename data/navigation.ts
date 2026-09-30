@@ -35,7 +35,7 @@ export interface NavItem {
   label: string
   href: string
   activePaths?: string[]
-  layout?: 'product' | 'solutions'
+  layout?: 'product' | 'services' | 'solutions'
   megaTitle?: string
   columns?: NavColumn[]
   features?: NavFeature[]
@@ -147,12 +147,45 @@ export const primaryNavigation: NavItem[] = [
     ],
   },
   {
-    label: '行业案例',
-    href: '/cases',
+    label: '服务',
+    href: '/services',
+    layout: 'services',
+    megaTitle: '服务',
+    columns: [
+      {
+        title: '服务',
+        links: [
+          {
+            label: 'TokenHub',
+            description: '统一管理企业 AI Token',
+            href: '/services/token-hub',
+            icon: 'Coins',
+          },
+          {
+            label: '智能体社区',
+            description: '汇聚行业智能体、实践案例与开发资源',
+            href: '/community',
+            icon: 'Bot',
+          },
+          {
+            label: '行业白皮书',
+            description: 'AI 行业前沿研究、技术实践与数字化建设参考',
+            href: '/resources/reports',
+            icon: 'FileText',
+          },
+          {
+            label: '算力与基础设施',
+            description: '海外算力设施供应链',
+            href: '/services/infrastructure',
+            icon: 'Cpu',
+          },
+        ],
+      },
+    ],
   },
   {
-    label: 'TokenHub',
-    href: '/services/token-hub',
+    label: '行业案例',
+    href: '/cases',
   },
   {
     label: '关于我们',

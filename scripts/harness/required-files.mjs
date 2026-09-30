@@ -417,6 +417,7 @@ export const requiredFiles = [
   'components/navigation/MegaMenuPanel.vue',
   'components/navigation/MegaPanelNavLink.vue',
   'components/navigation/MegaPanelProduct.vue',
+  'components/navigation/MegaPanelServiceGrid.vue',
   'components/home/HomeCaseSlide.vue',
   'components/home/HomeAbout.vue',
   'components/home/HomeProductSystemFlow.vue',

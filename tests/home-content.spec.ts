@@ -7,8 +7,8 @@ describe('home content contract', () => {
     expect(primaryNavigation.map((item) => item.label)).toEqual([
       '核心产品',
       '解决方案',
+      '服务',
       '行业案例',
-      'TokenHub',
       '关于我们',
     ])
   })
