@@ -80,8 +80,8 @@ function isActiveHref(href: string, activePaths: string[] = []): boolean {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   flex: 1 1 auto;
   min-width: 0;
-  column-gap: 56px;
-  row-gap: 24px;
+  column-gap: 20px;
+  row-gap: 16px;
   padding-right: 61px;
   padding-left: 72px;
 
@@ -100,12 +100,22 @@ function isActiveHref(href: string, activePaths: string[] = []): boolean {
   display: flex;
   align-items: flex-start;
   gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid #e8ecf1;
+  border-radius: 12px;
+  background: #ffffff;
   color: #000000;
   text-decoration: none;
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease;
 
   &:hover,
   &:focus-visible,
   &.is-active {
+    border-color: rgba(30, 68, 224, 0.35);
+    box-shadow: 0 0 20px rgba(30, 68, 224, 0.12);
+
     .mega-service-title {
       color: #1e44e0;
     }
@@ -142,7 +152,7 @@ function isActiveHref(href: string, activePaths: string[] = []): boolean {
 
 @media (max-width: 1439px) {
   .mega-services {
-    column-gap: 34px;
+    column-gap: 16px;
     padding-right: 24px;
     padding-left: 52px;
   }

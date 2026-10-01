@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useFetch, useRoute } from '#imports'
 import CmsPageView from '~/components/common/CmsPageView.vue'
+import AuthineAiApplicationDemo from '~/components/demo/AuthineAiApplicationDemo.vue'
 import SiteFooter from '~/components/layout/SiteFooter.vue'
 import SiteHeader from '~/components/navigation/SiteHeader.vue'
 import WhyTrustTabs from '~/components/why/WhyTrustTabs.vue'
@@ -56,7 +57,7 @@ useSeoMeta({
       <HomeHero />
       <HomeProductSystem />
       <HomeSolutions />
-      <HomeEcosystem />
+      <AuthineAiApplicationDemo />
       <WhyTrustTabs />
       <HomeAbout />
       <HomeInsights />

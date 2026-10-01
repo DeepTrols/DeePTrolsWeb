@@ -148,15 +148,6 @@ onBeforeUnmount(() => {
           </article>
         </div>
       </div>
-
-      <a
-        href="https://code.authine.com/message/"
-        target="_blank"
-        rel="noreferrer"
-        class="relative mx-auto flex h-14 w-[180px] items-center justify-center overflow-hidden rounded-lg bg-[linear-gradient(180deg,#0047FF_0%,#4B7DFF_100%)] text-base font-semibold text-white after:absolute after:left-1/2 after:top-1/2 after:size-[70px] after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:bg-[#A99AFF] after:opacity-0 after:blur-xl after:transition-opacity after:duration-300 hover:text-white hover:after:opacity-70 max-md:h-10 max-md:w-32 max-md:rounded max-md:text-sm"
-      >
-        <span class="relative z-[1]">立即体验</span>
-      </a>
     </div>
   </section>
 </template>
