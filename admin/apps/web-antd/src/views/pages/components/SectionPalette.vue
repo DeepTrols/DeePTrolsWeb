@@ -8,10 +8,7 @@ import { computed, useTemplateRef } from 'vue';
 
 import { useSortable } from '@vueuse/integrations/useSortable';
 
-import {
-  customSectionLabels,
-  sectionTypeLabels,
-} from '../sections';
+import { customSectionLabels, sectionTypeLabels } from '../sections';
 
 defineOptions({ name: 'SectionPalette' });
 

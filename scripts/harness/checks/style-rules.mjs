@@ -24,7 +24,7 @@ for (const file of filesToScan) {
     assert(lineCount <= 300, `${file} exceeds the 300-line component limit (${lineCount}).`)
   }
 
-  const sourceWithoutRequiredNavWrapper = source.replace(' style="position:relative;"', '')
+  const sourceWithoutRequiredNavWrapper = source
   assert(!/\sstyle=/.test(sourceWithoutRequiredNavWrapper), `${file} contains an inline style attribute.`)
 }
 

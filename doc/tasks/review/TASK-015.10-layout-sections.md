@@ -10,7 +10,7 @@
   - **custom 逃生门**：`name: z.enum(CUSTOM_SECTION_NAMES)`——名字必须登记，拒绝任意组件名注入
 - `components/sections/custom-names.ts`（新）：纯字符串常量模块（零 import），`CUSTOM_SECTION_NAMES = ['DdpArchitecture','DlpArchitecture','DmsArchitecture']` + 类型；**服务端 zod 与客户端注册表共享同一来源**（server utils 不能 import .vue SFC，Nitro 打包风险）
 - `pages-admin.ts`：删掉 Phase C 的本地 richText-only schema，改 import pageSectionsSchema（不做 re-export，否则 unimport 重复导入告警）；公开读 `getPublishedPage` 出库再过一次 pageSectionsSchema 的防线不变
-- 单测 `tests/page-sections.spec.ts`（13 个）：每型 accept/reject、visible 默认 true、cta 默认值、logo image||text refine、custom 名字白名单、联合拒未知 type、混合数组
+- 单测 `tests/page-sections.spec.ts`（17 个）：每型 accept/reject、visible 默认 true、cta 默认值、logo image||text refine、custom 名字白名单、联合拒未知 type、混合数组、hero 至多 1 个
 
 ## Phase D2：CmsPageRenderer + 主站 section 组件映射
 

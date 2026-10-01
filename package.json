@@ -6,7 +6,10 @@
   "scripts": {
     "postinstall": "nuxt prepare",
     "dev": "nuxt dev",
+    "dev:admin": "pnpm -C admin dev:antd",
     "build": "nuxt build",
+    "admin:build": "pnpm -C admin build:antd && node scripts/copy-admin-dist.mjs",
+    "build:deploy": "pnpm admin:build && pnpm build",
     "preview": "nuxt preview",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
@@ -35,6 +38,7 @@
     "drizzle-kit": "^0.31.11",
     "eslint": "^9.18.0",
     "eslint-plugin-vue": "^9.32.0",
+    "happy-dom": "^20.14.5",
     "sass": "^1.83.0",
     "tsx": "^4.23.15",
     "typescript": "^5.7.0",

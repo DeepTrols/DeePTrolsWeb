@@ -15,6 +15,15 @@ const authStore = useAuthStore();
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
+      component: 'VbenInput',
+      componentProps: {
+        placeholder: $t('authentication.usernameTip'),
+      },
+      fieldName: 'username',
+      label: $t('authentication.username'),
+      rules: z.string().min(1, { message: $t('authentication.usernameTip') }),
+    },
+    {
       component: 'VbenInputPassword',
       componentProps: {
         placeholder: $t('authentication.passwordTip'),

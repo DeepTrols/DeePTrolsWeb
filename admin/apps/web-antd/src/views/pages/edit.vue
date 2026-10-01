@@ -3,7 +3,16 @@ import type { ComponentRegistryEntry, HeroVisualEntry } from '#/api/components';
 import type { PageInput, PageSection } from '#/api/pages';
 import type { SectionPreset } from '#/api/presets';
 
-import { computed, onActivated, onMounted, onUnmounted, reactive, ref, useTemplateRef, watch } from 'vue';
+import {
+  computed,
+  onActivated,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  useTemplateRef,
+  watch,
+} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import {
@@ -68,7 +77,9 @@ const customComponents = ref<ComponentRegistryEntry[]>([]);
 const heroVisuals = ref<HeroVisualEntry[]>([]);
 // 015.19d：hero 视觉纳入组件启停后，split-visual 视觉下拉同步按禁用过滤
 const enabledHeroVisuals = computed(() =>
-  heroVisuals.value.filter((visual) => !disabledComponents.value.includes(visual.name)),
+  heroVisuals.value.filter(
+    (visual) => !disabledComponents.value.includes(visual.name),
+  ),
 );
 const presets = ref<SectionPreset[]>([]);
 const enabledSectionTypeOptions = computed(() =>
@@ -131,7 +142,7 @@ function postLivePreview() {
   const sections = currentPreviewSections();
   if (!sections) return; // JSON 模式解析失败不 post，主站侧保持上一帧
   // form.sections 是 reactive 代理，postMessage 结构化克隆会 DataCloneError → 先转纯对象
-  const plainSections = JSON.parse(JSON.stringify(sections)) as PageSection[];
+  const plainSections = structuredClone(sections) as PageSection[];
   frame.contentWindow.postMessage(
     {
       payload: {
@@ -154,16 +165,14 @@ function scheduleLivePreview() {
 // 主站页 hydration 完成后回发 ready：iframe @load 首发常早于监听器挂载，靠握手补发首帧
 function onPreviewReady(event: MessageEvent) {
   if (event.origin !== liveTargetOrigin) return;
-  const data = event.data as { type?: string } | null;
+  const data = event.data as null | { type?: string };
   if (data?.type !== LIVE_READY_TYPE) return;
   postLivePreview();
 }
 
-watch(
-  [() => form.sections, sectionsText, sectionMode],
-  scheduleLivePreview,
-  { deep: true },
-);
+watch([() => form.sections, sectionsText, sectionMode], scheduleLivePreview, {
+  deep: true,
+});
 watch(previewOpen, (open) => {
   if (open) {
     window.addEventListener('message', onPreviewReady);

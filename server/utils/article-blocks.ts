@@ -9,28 +9,28 @@ import { safeUrlSchema } from './safe-url'
 const headingBlock = z.object({
   type: z.literal('heading'),
   level: z.union([z.literal(2), z.literal(3), z.literal(4)]),
-  text: z.string().min(1),
+  text: z.string().min(1).max(500),
 })
 
 const paragraphBlock = z.object({
   type: z.literal('paragraph'),
-  text: z.string().min(1),
+  text: z.string().min(1).max(10000),
 })
 
 const listBlock = z.object({
   type: z.literal('list'),
   ordered: z.boolean().optional(),
-  items: z.array(z.string().min(1)).min(1),
+  items: z.array(z.string().min(1).max(2000)).min(1),
 })
 
 const quoteBlock = z.object({
   type: z.literal('quote'),
-  text: z.string().min(1),
+  text: z.string().min(1).max(10000),
 })
 
 const imageBlock = z.object({
   type: z.literal('image'),
-  src: safeUrlSchema(),
+  src: safeUrlSchema(2000),
   alt: z.string().min(1),
   caption: z.string().optional(),
 })

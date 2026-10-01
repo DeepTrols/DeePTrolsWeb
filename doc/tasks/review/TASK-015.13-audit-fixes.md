@@ -38,18 +38,28 @@
 
 新增行为测试：`audit-error-states`（52 例）、`audit-body-limit`、`audit-session-security`（7 例）、`audit-conflict-409`（9 例）、`audit-featured-patch`（16 例）；`leads.spec.ts` 同步扩展。
 
-## Wave 2 后新遗留（并入 #20 / 待决策）
+## Wave 2 后遗留（Wave 3 后终态）
 
 - 存量 URL 排查需在有 DB 环境执行：`NUXT_DATABASE_URL=... npx tsx scripts/check-unsafe-urls.ts`
 - news 主键 sequence 迁移（0008）根治方案待确认
-- 新端点/新脚本未登记 harness `sources.mjs`/`required-files.mjs`
-- `leads.ts` insertLead 的 DB 异常分支未接结构化日志
-- 富文本编辑器内暂无 caption 可视化编辑 UI（title 仅作往返载体）
+- ~~新端点/新脚本未登记 harness~~ → 已完成（required-files 补 0003~0007 迁移 + 全部 Wave1~3 新文件）
+- ~~leads.ts insertLead DB 异常分支无结构化日志~~ → 已完成（接入 logServerError）
+- 富文本编辑器内暂无 caption 可视化编辑 UI（title 仅作往返载体，悬停可见）
 - 管理类列表 GET 现在可能返回 500（此前静默空列表），admin 端错误提示体验待确认
+- 生产部署需设置 `NUXT_UPLOADS_DIR` 指向持久化挂载卷
 
-## Wave 3（P2）—— 待执行
+## Wave 3（P2）—— 已完成（2026-09-28，#21 待用户确认）
 
-订阅表单接入 leads + 首页大图 WebP（#18）/ 行为级测试补齐（#19）/ 低危批量清理（#20）/ 仓库卫生（#21）
+| # | 修复 | 关键改动 |
+|---|------|---------|
+| #18 | 订阅表单 + 大图压缩 | FooterSubscribe 接入 `POST /api/leads`（提交中/成功/失败三态 + aria-live + 客户端校验）；leadInputSchema 最小化适配订阅场景（name/message 可选、phone/email 至少其一，蜜罐与限流不动）；insertLead DB 异常接入结构化日志；public/images 全部 12 张 >500KB 大图转 WebP（约 -85%），零引用原图删除，测试/契约/harness 路径同步 |
+| #19 | 行为测试补齐 | insights 合并逻辑抽 `server/utils/home-insights.ts` 纯函数（端点响应结构不变）；新增 audit-component-schema（8 例）、audit-insights-merge（13 例）、audit-blocks-html（20 例，happy-dom 环境，caption/转义/clampHeadingLevel 全边界回环）；devDep 引入 happy-dom |
+| #20 | 低危批量清理（19 项全完成） | navColumnSchema 显式两层、relatedProducts max(20)、article-blocks 长度上限、hero ≤1 校验；pages/list 动态路由模式禁用链接 + dev 外链 origin、logout 参数位、双重弹窗、publishedAt 本地日期（dayjs）、4 处 catch 补齐、request.ts 死配置删除、VITE_APP_STORE_SECURE_KEY 随机化（本地 .env，未入库）；inline style 清零（home-layout/style-rules/core.contract 豁免同步移除）、ProductMetrics 边框取模 + key 兜底、HomeInsights key→href、solutions/[slug] useFetch 响应式对齐；required-files 补迁移 0003-0007 与新文件登记、015.10/015.12 文档计数修正、pages-admin.spec 用例改名、imageBanner 默认占位图 |
+| #21 | 仓库卫生 | **未执行**：`TresJS /` 内 27MB 素材去留待用户确认；`--host/` 空目录确认可删 |
+
+明确推迟（需产品决策或低价值高扰动）：响应 envelope 统一、admin 列表 total 分页、catch-all 软 404、NewsHero/RelatedAside 静态数据混用。
+
+## Wave 3（P2）—— 已完成（见文末终态表；#21 待用户确认）
 
 ## 验收
 

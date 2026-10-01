@@ -25,6 +25,13 @@ export const overridesPreferences = defineOverridesPreferences({
     enableRefreshToken: false,
     name: import.meta.env.VITE_APP_TITLE,
   },
+  // 覆盖 vendor 默认的 "Copyright © 2024 Vben"（含指向 vben.pro 的外链），
+  // 登录页与后台布局共用 preferences.copyright，一处覆盖两处生效
+  copyright: {
+    companyName: '武汉深度数智科技有限公司',
+    companySiteLink: '',
+    date: '2026',
+  },
 });
 
 export const preferencesExtension =

@@ -65,7 +65,7 @@ const updatedAt = ref<null | string>(null);
 const source = ref<'db' | 'static'>('static');
 
 // 015.19d：筛选与搜索（client-side）
-const kindFilter = ref<ComponentRow['kind'] | 'all'>('all');
+const kindFilter = ref<'all' | ComponentRow['kind']>('all');
 const categoryFilter = ref<string>('all');
 const keyword = ref('');
 
@@ -74,7 +74,10 @@ const filteredRows = computed(() =>
     if (kindFilter.value !== 'all' && row.kind !== kindFilter.value) {
       return false;
     }
-    if (categoryFilter.value !== 'all' && row.category !== categoryFilter.value) {
+    if (
+      categoryFilter.value !== 'all' &&
+      row.category !== categoryFilter.value
+    ) {
       return false;
     }
     const kw = keyword.value.trim().toLowerCase();
@@ -153,7 +156,7 @@ async function save() {
 
 // 详情抽屉（015.19d）
 const detailOpen = ref(false);
-const detail = ref<null | ComponentRow>(null);
+const detail = ref<ComponentRow | null>(null);
 function openDetail(record: ComponentRow) {
   detail.value = record;
   detailOpen.value = true;
@@ -234,12 +237,17 @@ onMounted(load);
       >
         <template #bodyCell="{ column, record }">
           <template v-if="column.dataIndex === 'id'">
-            <code class="cursor-pointer text-xs" @click="openDetail(record as ComponentRow)">
+            <code
+              class="cursor-pointer text-xs"
+              @click="openDetail(record as ComponentRow)"
+            >
               {{ record.id }}
             </code>
           </template>
           <template v-else-if="column.dataIndex === 'label'">
-            <a @click="openDetail(record as ComponentRow)">{{ record.label }}</a>
+            <a @click="openDetail(record as ComponentRow)">{{
+              record.label
+            }}</a>
           </template>
           <template v-else-if="column.dataIndex === 'kind'">
             <Tag :color="kindColors[(record as ComponentRow).kind]">
@@ -296,7 +304,11 @@ onMounted(load);
         <div>
           <div class="mb-1 text-xs text-gray-400">名称 / 分类</div>
           {{ detail.label }}
-          <Tag v-if="detail.category" :color="categoryColors[detail.category]" class="ml-2">
+          <Tag
+            v-if="detail.category"
+            :color="categoryColors[detail.category]"
+            class="ml-2"
+          >
             {{ categoryLabels[detail.category] }}
           </Tag>
         </div>

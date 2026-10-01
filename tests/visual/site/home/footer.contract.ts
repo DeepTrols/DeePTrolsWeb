@@ -107,7 +107,7 @@ export function registerHomeFooterVisualContracts() {
     expect(footerBottom).toContain('京ICP备20018888号-4')
     expect(footerBottom).toContain('https://beian.miit.gov.cn/')
     expect(footerBottom).toContain('class="site-footer__copyright"')
-    expect(footerBottom).toContain('@ 武汉深度数智科技有限公司 2026 版权所有')
+    expect(footerBottom).toContain('Copyright © 2026 武汉深度数智科技有限公司')
     expect(footerBottom).toContain('justify-content: space-between')
     expect(footerSources).not.toContain('© 2026 DeepTrols. All rights reserved')
     expect(footerSources).not.toContain('legalLinks')

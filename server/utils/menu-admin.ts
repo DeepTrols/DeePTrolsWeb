@@ -28,7 +28,6 @@ const navLinkSchema = z.object({
   hot: z.boolean().optional(),
 })
 
-type NavColumnInput = z.infer<typeof navColumnBaseSchema> & { groups?: NavColumnInput[] }
 const navColumnBaseSchema = z.object({
   title: z.string().trim().min(1).max(100),
   subtitle: z.string().trim().max(100).optional(),
@@ -39,9 +38,9 @@ const navColumnBaseSchema = z.object({
   footerLabel: z.string().trim().max(100).optional(),
   footerHref: safeUrlSchema(500).optional(),
 })
-// groups 自嵌套一层（NavColumn.groups?: NavColumn[]）
-const navColumnSchema: z.ZodType<NavColumnInput> = navColumnBaseSchema.extend({
-  groups: z.array(z.lazy(() => navColumnSchema)).max(20).optional(),
+// groups 自嵌套一层（NavColumn.groups?: NavColumn[]）：显式两层，groups 内的列不再含 groups
+const navColumnSchema = navColumnBaseSchema.extend({
+  groups: z.array(navColumnBaseSchema).max(20).optional(),
 })
 
 const navFeatureSchema = z.object({

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { verifyAdminPassword } from '../server/utils/admin'
+import { verifyAdminPassword, verifyAdminUsername } from '../server/utils/admin'
 import { leadStatusSchema } from '../server/utils/leads-admin'
 
 describe('admin password verification', () => {
@@ -17,6 +17,24 @@ describe('admin password verification', () => {
   it('rejects everything when the expected password is empty (unconfigured)', () => {
     expect(verifyAdminPassword('', '')).toBe(false)
     expect(verifyAdminPassword('anything', '')).toBe(false)
+  })
+})
+
+describe('admin username verification', () => {
+  it('accepts the exact username in constant time', () => {
+    expect(verifyAdminUsername('admin', 'admin')).toBe(true)
+  })
+
+  it('rejects wrong, length-mismatched, and non-string inputs', () => {
+    expect(verifyAdminUsername('root', 'admin')).toBe(false)
+    expect(verifyAdminUsername('admi', 'admin')).toBe(false)
+    expect(verifyAdminUsername(undefined, 'admin')).toBe(false)
+    expect(verifyAdminUsername(123, 'admin')).toBe(false)
+  })
+
+  it('rejects everything when the expected username is empty (unconfigured)', () => {
+    expect(verifyAdminUsername('', '')).toBe(false)
+    expect(verifyAdminUsername('admin', '')).toBe(false)
   })
 })
 

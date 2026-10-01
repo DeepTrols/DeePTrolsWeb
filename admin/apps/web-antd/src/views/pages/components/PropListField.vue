@@ -45,7 +45,7 @@ function cloneRows(source: unknown): unknown[] {
   if (!Array.isArray(source)) {
     return [];
   }
-  return JSON.parse(JSON.stringify(source)) as unknown[];
+  return structuredClone(source) as unknown[];
 }
 
 const rows = ref<unknown[]>([]);
@@ -79,10 +79,23 @@ function blankRow(): unknown {
   if (props.field.itemType === 'string') return '';
   const row: Record<string, unknown> = {};
   for (const sub of props.field.itemFields ?? []) {
-    if (sub.type === 'list') row[sub.key] = [];
-    else if (sub.type === 'boolean') row[sub.key] = false;
-    else if (sub.type === 'number') row[sub.key] = 0;
-    else row[sub.key] = sub.default ?? '';
+    switch (sub.type) {
+      case 'boolean': {
+        row[sub.key] = false;
+        break;
+      }
+      case 'list': {
+        row[sub.key] = [];
+        break;
+      }
+      case 'number': {
+        row[sub.key] = 0;
+        break;
+      }
+      default: {
+        row[sub.key] = sub.default ?? '';
+      }
+    }
   }
   return row;
 }
@@ -191,11 +204,7 @@ function setRow(row: unknown, key: string, value: unknown) {
       </template>
 
       <div v-else class="grid gap-1">
-        <div
-          v-for="sub in field.itemFields"
-          :key="sub.key"
-          class="grid gap-1"
-        >
+        <div v-for="sub in field.itemFields" :key="sub.key" class="grid gap-1">
           <span class="text-xs text-gray-400">
             {{ sub.label }}{{ sub.required ? '（必填）' : '' }}
           </span>

@@ -5,7 +5,8 @@ import tseslint from 'typescript-eslint'
 export default [
   {
     // admin/ 是独立的 vben 工程，自带 lint 体系，主站 lint 整体排除
-    ignores: ['.nuxt/**', '.output/**', 'dist/**', 'node_modules/**', 'coverage/**', 'admin/**'],
+    // public/admin/ 是后台 SPA 构建产物（压缩 JS），由 pnpm admin:build 生成，不参与 lint
+    ignores: ['.nuxt/**', '.output/**', 'dist/**', 'node_modules/**', 'coverage/**', 'admin/**', 'public/admin/**'],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

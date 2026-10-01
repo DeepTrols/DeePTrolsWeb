@@ -33,11 +33,11 @@ Thumbs.db
 .idea
 .vscode
 
-# Local duplicate source asset; production video lives in public/
-TresJS /
-
 # Admin 上传的媒体文件（入库记录见 media_assets，文件本体不入 git）
 public/uploads/
+
+# 后台 SPA 构建产物（由 pnpm admin:build 从 admin/apps/web-antd/dist 拷贝，不入 git）
+public/admin/
 
 # Qoder CLI 本机个人权限配置（不随仓库共享）
 .qoder/settings.local.json

@@ -4,7 +4,7 @@
 
 后台站点管理四项增强（015.9/015.10 布局管理与页面管理之后）：
 
-1. 页面管理列表拉取全部现有页面（20 个静态代码页 + 动态路由页 + DB CMS 页）；代码页只读
+1. 页面管理列表拉取全部现有页面（19 个静态代码页 + 动态路由页 + DB CMS 页）；代码页只读
 2. 组件管理：页面可插入组件（8 标准区块 + 3 定制架构组件）注册表清单 + 启停开关（入库）
 3. 每 section 三档间距枚举；SectionBody 对照 schema 字段补缺
 4. 首页「创新、洞察与新闻」改为从新闻/报告的 featured 标志推荐（DB 优先 + 静态回退）
@@ -13,7 +13,7 @@
 
 ### A. 页面列表全量（代码页只读）
 
-- `server/utils/pages-admin.ts`：`CODE_PAGE_CATALOG`（20 个 `CMS_RESERVED_EXACT_PATHS` 一一对应中文标题 + `/news` `/news/:id` `/cases` `/cases/:slug` `/solutions/:slug` 动态条目 + 11 个 `/demo/*` 演示页）
+- `server/utils/pages-admin.ts`：`CODE_PAGE_CATALOG`（19 个 `CMS_RESERVED_EXACT_PATHS` 一一对应中文标题 + `/news` `/news/:id` `/cases` `/cases/:slug` `/solutions/:slug` 动态条目 + 11 个 `/demo/*` 演示页）
 - `AdminPageRecord` 加 `source: 'cms' | 'code'`；code 行 `status/sortOrder/updatedAt` 为 null
 - `listAdminPages()` 合并：catalog 在前、DB 行在后（保留路径黑名单保证不撞 slug）
 - vben `/pages` 列表加「来源」列；code 行仅「查看」（新窗口），无编辑/删除

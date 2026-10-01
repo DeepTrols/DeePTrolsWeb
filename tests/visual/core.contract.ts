@@ -34,7 +34,6 @@ export function registerCoreVisualContracts() {
 
     for (const file of vueFiles) {
       const source = readComponent(file)
-      const sourceWithoutRequiredNavWrapper = source.replace(' style="position:relative;"', '')
       const lineCount = source.split(/\r?\n/).length
 
       if (file.startsWith('components/') && source.includes('<style')) {
@@ -42,7 +41,7 @@ export function registerCoreVisualContracts() {
       }
 
       expect(lineCount, `${file} exceeds 300 lines`).toBeLessThanOrEqual(300)
-      expect(sourceWithoutRequiredNavWrapper).not.toMatch(/\sstyle=/)
+      expect(source).not.toMatch(/\sstyle=/)
     }
   })
 

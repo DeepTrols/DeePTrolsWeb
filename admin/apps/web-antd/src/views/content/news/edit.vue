@@ -14,6 +14,7 @@ import {
   Switch,
   Textarea,
 } from 'ant-design-vue';
+import dayjs from 'dayjs';
 
 import { createNewsApi, getAdminNewsApi, updateNewsApi } from '#/api/content';
 
@@ -49,7 +50,8 @@ const form = reactive<NewsInput>({
   category: 'company',
   coverImage: '',
   featured: false,
-  publishedAt: new Date().toISOString().slice(0, 10),
+  // 本地日期（toISOString 是 UTC，东八区上午会差一天）
+  publishedAt: dayjs().format('YYYY-MM-DD'),
   status: 'draft',
   summary: '',
   title: '',

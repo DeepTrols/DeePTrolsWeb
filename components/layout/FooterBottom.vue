@@ -10,7 +10,7 @@
       </a>
     </div>
     <div class="site-footer__copyright">
-      <span>@ 武汉深度数智科技有限公司 2026 版权所有</span>
+      <span>Copyright © 2026 武汉深度数智科技有限公司</span>
     </div>
   </div>
 </template>

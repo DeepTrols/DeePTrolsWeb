@@ -38,9 +38,13 @@ async function fetchRows() {
 }
 
 async function handleDelete(id: number) {
-  await deleteReportApi(id);
-  message.success('已删除');
-  await fetchRows();
+  try {
+    await deleteReportApi(id);
+    message.success('已删除');
+    await fetchRows();
+  } catch {
+    // 失败提示由请求拦截器统一弹出；此处吞掉避免 unhandled rejection
+  }
 }
 
 /** 首页推荐开关：PATCH 单列切换（审计#16）——不再 GET→整条 PUT 读改写 */

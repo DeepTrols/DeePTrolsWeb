@@ -100,7 +100,11 @@ useSortable(listEl, sections, {
       const preset = props.presets?.find((p) => String(p.id) === id);
       if (preset) {
         // 015.19c：模板为多区块组合，拖入按序整组插入
-        sections.value.splice(index, 0, ...structuredClone(toRaw(preset.sections)));
+        sections.value.splice(
+          index,
+          0,
+          ...structuredClone(toRaw(preset.sections)),
+        );
       }
       return;
     }

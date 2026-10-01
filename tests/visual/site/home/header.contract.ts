@@ -80,7 +80,9 @@ export function registerHomeHeaderVisualContracts() {
     expect(headerActions).not.toContain('登录OPS')
     expect(headerActions).not.toContain('联系我们')
     expect(headerActions).not.toContain('免费咨询')
-    expect(headerDesktopNav).toContain('<div style="position:relative;">')
+    // 审计#20：导航下划线定位容器改用 Tailwind class（AGENTS 禁 inline style）
+    expect(headerDesktopNav).toContain('<div class="relative">')
+    expect(headerDesktopNav).not.toContain('style="position:relative;"')
     expect(headerDesktopNav).toContain('justify-content: center')
     expect(headerDesktopNav).toContain('flex: 0 0 auto')
     expect(headerDesktopNav).toContain('site-header__nav-underline')

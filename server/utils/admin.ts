@@ -3,11 +3,17 @@ import type { H3Event } from 'h3'
 
 /**
  * 管理后台会话与鉴权（Phase 3）：h3 sealed session（cookie 加密），
- * 密码经 runtimeConfig 私密注入（NUXT_ADMIN_PASSWORD / NUXT_SESSION_PASSWORD）。
+ * 用户名与密码经 runtimeConfig 私密注入
+ * （NUXT_ADMIN_USERNAME / NUXT_ADMIN_PASSWORD / NUXT_SESSION_PASSWORD）。
  */
 const SESSION_NAME = 'dt-admin'
 /** iron 封装密钥最短长度：h3 useSession 要求 ≥32 字符，更短会在运行时封装阶段抛异常 */
 const SESSION_PASSWORD_MIN_LENGTH = 32
+/**
+ * 会话 cookie 绝对寿命（12h）。sealed cookie 无服务端状态、logout 只清本地副本，
+ * 泄露后只能靠寿命收敛；全局吊销 = 轮换 NUXT_SESSION_PASSWORD。
+ */
+const SESSION_MAX_AGE_SECONDS = 12 * 60 * 60
 
 /** 配置指引每进程只输出一次（会话入口被 admin 每个请求触达，避免刷屏） */
 let passwordGuidanceLogged = false
@@ -51,6 +57,7 @@ export async function useAdminSession(event: H3Event) {
       sameSite: 'lax',
       path: '/',
       secure: !import.meta.dev,
+      maxAge: SESSION_MAX_AGE_SECONDS,
     },
   })
 }
@@ -84,12 +91,22 @@ export async function isAdminRequest(event: H3Event): Promise<boolean> {
   }
 }
 
-/** 恒定时间密码比对，防时序侧信道 */
-export function verifyAdminPassword(input: unknown, expected: string): boolean {
+/** 恒定时间字符串比对，防时序侧信道；长度不等直接 false（不泄露长度） */
+function timingSafeCompare(input: unknown, expected: string): boolean {
   if (typeof input !== 'string' || !expected) {
     return false
   }
   const inputBuffer = Buffer.from(input)
   const expectedBuffer = Buffer.from(expected)
   return inputBuffer.length === expectedBuffer.length && timingSafeEqual(inputBuffer, expectedBuffer)
+}
+
+/** 恒定时间密码比对，防时序侧信道 */
+export function verifyAdminPassword(input: unknown, expected: string): boolean {
+  return timingSafeCompare(input, expected)
+}
+
+/** 恒定时间用户名比对，与密码同一语义（expected 未配置时一律 false） */
+export function verifyAdminUsername(input: unknown, expected: string): boolean {
+  return timingSafeCompare(input, expected)
 }

@@ -24,8 +24,8 @@ import {
   updatePresetApi,
 } from '#/api/presets';
 
-import { sectionSummary, sectionTypeLabels } from './sections';
 import SectionsEditor from './components/SectionsEditor.vue';
+import { sectionSummary, sectionTypeLabels } from './sections';
 
 defineOptions({ name: 'PagePresets' });
 
@@ -149,7 +149,7 @@ onMounted(() => {
           <template v-else-if="column.dataIndex === 'summary'">
             {{
               (record as SectionPreset).sections
-                .map(section => sectionSummary(section))
+                .map((section) => sectionSummary(section))
                 .join(' / ')
             }}
           </template>

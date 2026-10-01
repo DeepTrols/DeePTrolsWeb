@@ -27,6 +27,27 @@ describe('headerMenuSchema', () => {
     expect(headerMenuSchema.safeParse(items).success).toBe(false)
   })
 
+  it('columns groups 仅嵌套一层：更深一层 groups 不被保留（显式两层协议）', () => {
+    const twoLevel = [{
+      label: 'X',
+      href: '/x',
+      columns: [{ title: 'C', groups: [{ title: 'G', links: [{ label: 'L', href: '/l' }] }] }],
+    }]
+    expect(headerMenuSchema.safeParse(twoLevel).success).toBe(true)
+    // 第三层 groups 不在协议内：解析成功但被剥离，入库数据保持两层
+    const threeLevel = [{
+      label: 'X',
+      href: '/x',
+      columns: [{ title: 'C', groups: [{ title: 'G', groups: [{ title: 'GG' }] }] }],
+    }]
+    const parsed = headerMenuSchema.safeParse(threeLevel)
+    expect(parsed.success).toBe(true)
+    if (parsed.success) {
+      const leaf = parsed.data[0]?.columns?.[0]?.groups?.[0] as { groups?: unknown } | undefined
+      expect(leaf?.groups).toBeUndefined()
+    }
+  })
+
   it('拒绝缺 label/href 的链接', () => {
     expect(headerMenuSchema.safeParse([{ label: 'X' }]).success).toBe(false)
     expect(headerMenuSchema.safeParse([{ label: '', href: '/x' }]).success).toBe(false)

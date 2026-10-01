@@ -18,7 +18,6 @@ import { NAV_ICON_OPTIONS } from '#/api/menus';
 import BlocksEditor from '../../content/shared/BlocksEditor.vue';
 import ImageField from '../../content/shared/ImageField.vue';
 import { del } from '../../menus/shared';
-import PropListField from './PropListField.vue';
 import {
   customSectionOptions as defaultCustomSectionOptions,
   heroVisualOptions as defaultHeroVisualOptions,
@@ -29,6 +28,7 @@ import {
   heroVisualTypeOptions,
   spacingOptions,
 } from '../sections';
+import PropListField from './PropListField.vue';
 
 defineOptions({ name: 'SectionBody' });
 

@@ -3,6 +3,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2026-07-29',
   devtools: { enabled: true },
+  // 钉死 dev 端口：后台 SPA 的 dev 代理与页面预览 iframe 都硬依赖 :3000。
+  // 注意 Nuxt 无 strictPort 开关，:3000 被陈旧进程占用时仍会递增，启动前先 lsof 清理。
+  devServer: { port: 3000 },
   // admin/ 是独立的 vben 后台工程（含自身 node_modules 与 .vue 源文件），
   // 主站所有扫描/监听（含 nitro dev watcher，走 nuxt.options.ignore）必须整体排除，否则 EMFILE
   ignore: ['admin/**'],
@@ -10,9 +13,17 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // 私密配置（仅服务端可用）：PostgreSQL 连接串，未配置时 server 层回退 data/*.ts 静态数据
     databaseUrl: '',
-    // 管理后台（Phase 3）：登录密码与 session 加密密码（≥32 位随机串）；未配置时 admin API 返回 503
+    // 管理后台（Phase 3）：登录用户名/密码与 session 加密密码（≥32 位随机串）；
+    // 三者缺一即视为后台未启用，admin API 返回 503
+    // （NUXT_ADMIN_USERNAME / NUXT_ADMIN_PASSWORD / NUXT_SESSION_PASSWORD）
+    adminUsername: '',
     adminPassword: '',
     sessionPassword: '',
+  },
+  nitro: {
+    // 审计中危#M3：.output 是交付产物，服务端 sourcemap 随产物分发会泄露服务端源码；
+    // dev 保留以便排错
+    sourceMap: process.env.NODE_ENV !== 'production',
   },
   vite: {
     // pnpm 将 vitest 依赖的 vite@5 提升到隐藏层，@nuxt/schema 的 vite 类型会解析到 vite@5，

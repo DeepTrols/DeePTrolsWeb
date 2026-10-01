@@ -17,9 +17,10 @@ const currentPage = computed(() => getSolutionUseCaseBySlug(routeSlug.value ?? '
 
 // 静态 miss → CMS 页回退（/solutions/<new-slug> 入库即可渲染）；再 miss 才 404。
 // immediate: false 时 useFetch 不发请求，data 保持 null（静态命中路径零开销）。
+// getter URL + watch：同实例路由参数变化（/solutions/a → /solutions/b）时重新拉取，对齐 pages/news/[id].vue。
 const { data: cmsPage } = await useFetch<PublishedPagePayload>(
-  `/api/pages/solutions/${routeSlug.value ?? ''}`,
-  { key: `cms-page-solutions-${routeSlug.value ?? ''}`, immediate: !currentPage.value },
+  () => `/api/pages/solutions/${routeSlug.value ?? ''}`,
+  { immediate: !currentPage.value, watch: [routeSlug] },
 )
 
 if (!currentPage.value && !cmsPage.value) {

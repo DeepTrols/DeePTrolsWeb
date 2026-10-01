@@ -195,6 +195,8 @@ describe('cookie Secure 显式化（import.meta.dev，审计中危#6）', () => 
       sameSite: 'lax',
       path: '/',
       secure: true,
+      // 审计中危#M1：sealed cookie 无服务端状态，必须有绝对寿命收敛泄露窗口
+      maxAge: 12 * 60 * 60,
     })
   })
 })
