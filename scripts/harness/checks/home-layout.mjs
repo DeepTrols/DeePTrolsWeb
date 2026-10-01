@@ -33,8 +33,8 @@ assert(
   'HOME page must dispatch to the CMS takeover renderer and keep the code-rendered sections as the v-else fallback.',
 )
 assert(
-  page.includes('<AuthineAiApplicationDemo />\n      <WhyTrustTabs />\n      <HomeAbout />\n      <HomeInsights />'),
-  'HOME page must mount the AI application demo marquee where the ecosystem section was, then WhyTrustTabs, HomeAbout and Resources.',
+  page.includes('<HomeEcosystem />\n      <WhyTrustTabs />\n      <HomeAbout />\n      <HomeInsights />'),
+  'HOME page must mount WhyTrustTabs after ecosystem and HomeAbout before Resources.',
 )
 assert(
   homeAbout.includes('SectionHeading') &&
