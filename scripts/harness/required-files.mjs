@@ -423,6 +423,7 @@ export const requiredFiles = [
   'components/navigation/MegaPanelProduct.vue',
   'components/home/HomeCaseSlide.vue',
   'components/home/HomeAbout.vue',
+  'components/home/HomeInsightsHeader.vue',
   'components/home/HomeProductSystemFlow.vue',
   'components/home/HomeProductSystemMobileFlow.vue',
   'components/home/HomeEcosystemVisual.vue',

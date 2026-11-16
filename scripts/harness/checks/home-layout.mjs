@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystemCard, homeAbout, homeData, homeSectionsData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
+  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeInsightsHeader, homeSolutions, productSystem, ecosystemCard, homeAbout, homeData, homeSectionsData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -67,7 +67,7 @@ assert(
     tailwind.includes('@keyframes home-about-marquee-right'),
   'HomeAbout content literals must be centralized in data/home-sections.ts (015.18 pure module), composed by data/home.ts, with marquee animation tokens in Tailwind v4 theme.',
 )
-assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
+assert(homeInsights.includes('HomeInsightsHeader') && homeInsightsHeader.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading through its focused header component.')
 assert(homeInsights.includes('class="section insights flow-root pt-24 pb-24 lg:pb-32"') && homeInsights.includes('class="container"'), 'HomeInsights must follow the HOME Unslop section rhythm (pt-24 pb-24 lg:pb-32 shell + plain container).')
 assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTabs') && homeSolutions.includes('variant="pill"'), 'HomeSolutions must compose the shared BaseTabs pill variant.')
 assert(homeSolutions.includes('CarouselRoot') && !homeSolutions.includes('solutions__carousel-container'), 'HomeSolutions must render slides through the shared CarouselRoot component without hand-rolled tracks.')

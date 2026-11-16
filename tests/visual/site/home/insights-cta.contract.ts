@@ -6,11 +6,13 @@ export function registerHomeInsightsCtaVisualContracts() {
     const {
       ctaSection,
       homeInsights,
+      homeInsightsHeader,
       homeCta,
       homeSectionsData,
     } = loadHomeVisualSources()
 
-    expect(homeInsights).toContain('SectionHeading')
+    expect(homeInsights).toContain('HomeInsightsHeader')
+    expect(homeInsightsHeader).toContain('SectionHeading')
     expect(homeInsights).toContain('class="section insights flow-root pt-24 pb-24 lg:pb-32"')
     expect(homeInsights).toContain('class="container"')
     // 015.18：标题文案经 props 传入，缺省值住在 data/home-sections.ts
@@ -18,12 +20,12 @@ export function registerHomeInsightsCtaVisualContracts() {
     expect(homeInsights).toContain(':title="title"')
     expect(homeSectionsData).toContain("eyebrow: '资源'")
     expect(homeSectionsData).toContain("title: '创新、洞察与新闻'")
-    expect(homeInsights).toContain('title-id="insights-title"')
+    expect(homeInsightsHeader).toContain('title-id="insights-title"')
     expect(homeInsights).toContain('class="insights__layout"')
     expect(homeInsights).toContain('grid-template-columns: 1fr')
     expect(homeInsights).toContain('grid-template-columns: repeat(2, minmax(0, 1fr))')
     expect(homeInsights).toContain('gap: 24px')
-    expect(homeInsights).toContain('margin-bottom: 40px')
+    expect(homeInsightsHeader).toContain('margin-bottom: 40px')
     expect(homeInsights).toContain('font-size: 16px')
     expect(homeInsights).toContain('class="group insights__featured"')
     expect(homeInsights).toContain('class="group insights__item"')
@@ -39,7 +41,7 @@ export function registerHomeInsightsCtaVisualContracts() {
     expect(homeInsights).toContain('-webkit-line-clamp: 3')
     expect(homeInsights).toContain('-webkit-line-clamp: 2')
     expect(homeInsights).toContain('-webkit-line-clamp: 1')
-    expect(homeInsights).toContain('class="insights__all-link insights__all-link--desktop"')
+    expect(homeInsightsHeader).toContain('class="insights-header__action"')
     expect(homeInsights).toContain('class="insights__mobile-action"')
     expect(homeInsights).toContain('BaseButton')
     expect(homeInsights).toContain('{{ moreLabel }}')

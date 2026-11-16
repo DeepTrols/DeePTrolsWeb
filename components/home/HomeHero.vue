@@ -1,6 +1,6 @@
 <template>
   <section class="home-hero" aria-labelledby="home-hero-title">
-    <div class="home-shell home-hero__content pt-40 pb-32 lg:pb-44">
+    <div class="home-shell home-hero__content">
       <h1 id="home-hero-title">
         <span>构建企业级AI能力体系</span>
         <span>让智能成为业务增长的新引擎</span>
@@ -36,7 +36,8 @@
   flex-direction: column;
   justify-content: center;
   max-width: none;
-  padding-top: calc(var(--dt-header-height) + 56px);
+  padding-top: var(--dt-header-height);
+  padding-bottom: 32px;
 }
 
 h1 {
@@ -47,7 +48,7 @@ h1 {
   font-family: "Noto Sans SC Variable", "Source Han Sans CN", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: clamp(28px, 2.5vw, 48px);
   font-weight: 500;
-  line-height: clamp(38px, 3.75vw, 72px);
+  line-height: 1.35;
   letter-spacing: 0;
 
   span {
@@ -71,14 +72,16 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  width: 240px;
-  height: 48px;
+  width: 208px;
+  height: 44px;
   gap: 8px;
+  flex: 0 0 auto;
   margin-top: 32px;
   border-radius: var(--dt-ui-radius);
-  background: var(--dt-color-primary);
-  color: #ffffff;
-  padding: 0 18px 0 24px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(247, 248, 250, 0.96);
+  color: #07111c;
+  padding: 0 16px 0 20px;
   font-family: "Noto Sans SC Variable", "Source Han Sans CN", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -90,13 +93,14 @@ h1 {
 
   &:hover,
   &:focus-visible {
-    background: var(--dt-color-primary-hover);
+    border-color: #ffffff;
+    background: #ffffff;
   }
 }
 
 .home-hero__cta-arrow {
   position: relative;
-  width: 24px;
+  width: 20px;
   height: 8px;
   flex: 0 0 auto;
 
@@ -105,7 +109,7 @@ h1 {
     position: absolute;
     top: 3px;
     left: 0;
-    width: 21px;
+    width: 17px;
     height: 2px;
     background: currentcolor;
   }
@@ -156,7 +160,7 @@ h1 {
 
   .home-hero__cta {
     margin-top: 28px;
-    width: min(277px, 100%);
+    width: min(208px, 100%);
     gap: 8px;
   }
 }

@@ -2,7 +2,7 @@
 import { useFetch } from '#imports'
 import { computed } from 'vue'
 import BaseButton from '~/components/common/BaseButton.vue'
-import SectionHeading from '~/components/common/SectionHeading.vue'
+import HomeInsightsHeader from '~/components/home/HomeInsightsHeader.vue'
 import { insights, type InsightItem } from '~/data/home'
 import { homeInsightsHeading } from '~/data/home-sections'
 
@@ -29,18 +29,7 @@ const sideInsights = computed(() => insightItems.value.slice(1))
 <template>
   <section class="section insights flow-root pt-24 pb-24 lg:pb-32" aria-labelledby="insights-title">
     <div class="container">
-      <div class="insights__header">
-        <SectionHeading
-          class="insights__heading"
-          :eyebrow="eyebrow"
-          :title="title"
-          title-id="insights-title"
-          eyebrow-transform="natural"
-        />
-        <BaseButton :href="moreHref" variant="secondary" size="lg" class="insights__all-link insights__all-link--desktop">
-          {{ moreLabel }}
-        </BaseButton>
-      </div>
+      <HomeInsightsHeader :eyebrow="eyebrow" :title="title" :more-label="moreLabel" :more-href="moreHref" />
 
       <div class="insights__layout">
         <NuxtLink v-if="featuredInsight" :to="featuredInsight.href" class="group insights__featured">
@@ -79,22 +68,6 @@ const sideInsights = computed(() => insightItems.value.slice(1))
 .insights {
   background: var(--dt-color-bg);
   color: var(--dt-color-text);
-}
-
-.insights__header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.insights__heading {
-  max-width: none;
-}
-
-.insights :deep(.section-heading__eyebrow) {
-  color: var(--dt-color-text-muted);
 }
 
 .insights__layout {
@@ -212,11 +185,6 @@ const sideInsights = computed(() => insightItems.value.slice(1))
   -webkit-line-clamp: 2;
 }
 
-.insights__all-link--desktop {
-  display: none;
-  flex-shrink: 0;
-}
-
 .insights__mobile-action {
   display: flex;
   justify-content: center;
@@ -261,13 +229,6 @@ const sideInsights = computed(() => insightItems.value.slice(1))
 }
 
 @media (min-width: 1024px) {
-  .insights__header {
-    align-items: flex-end;
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
-  }
-
   .insights__layout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -276,6 +237,7 @@ const sideInsights = computed(() => insightItems.value.slice(1))
     position: relative;
     flex-direction: row;
     border: 0;
+    min-height: 100%;
   }
 
   .insights__featured-image {
@@ -285,11 +247,21 @@ const sideInsights = computed(() => insightItems.value.slice(1))
   }
 
   .insights__featured-body {
-    display: none;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    align-self: flex-end;
+    background: linear-gradient(to top, rgba(3, 9, 15, 0.92), rgba(3, 9, 15, 0.56), transparent);
+    padding: 96px 24px 24px;
   }
 
-  .insights__all-link--desktop {
-    display: inline-flex;
+  .insights__featured-title {
+    color: #ffffff;
+  }
+
+  .insights__featured-summary {
+    color: rgba(255, 255, 255, 0.76);
   }
 
   .insights__mobile-action {
