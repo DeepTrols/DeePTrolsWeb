@@ -46,7 +46,6 @@ export function loadHomeVisualSources() {
     const carouselRoot = readComponent('components/common/carousel/CarouselRoot.vue')
     const carouselControls = readComponent('components/common/carousel/CarouselControls.vue')
     const homeInsights = readComponent('components/home/HomeInsights.vue')
-    const homeInsightsHeader = readComponent('components/home/HomeInsightsHeader.vue')
     const homeCta = readComponent('components/home/HomeCta.vue')
     const siteFooter = readComponent('components/layout/SiteFooter.vue')
     const footerSubscribe = readComponent('components/layout/FooterSubscribe.vue')
@@ -106,7 +105,6 @@ export function loadHomeVisualSources() {
     carouselRoot,
     carouselControls,
     homeInsights,
-    homeInsightsHeader,
     homeCta,
     siteFooter,
     footerSubscribe,

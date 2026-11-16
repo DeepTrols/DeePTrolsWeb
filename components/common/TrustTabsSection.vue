@@ -113,10 +113,6 @@ h3 {
 }
 
 .trust-tabs-section--home {
-  .trust-tabs-section__heading {
-    margin-bottom: 40px !important;
-  }
-
   :deep(h2) {
     margin-bottom: 24px;
   }
@@ -137,7 +133,6 @@ h3 {
   }
 
   :deep(.dt-product-card) {
-    padding: 24px !important;
     transition:
       border-color var(--dt-duration-base) ease,
       background-color var(--dt-duration-base) ease;
@@ -166,7 +161,6 @@ h3 {
 
   .trust-tabs-section__description {
     margin-top: 8px;
-    line-height: 1.65;
   }
 }
 

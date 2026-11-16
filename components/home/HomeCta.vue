@@ -8,15 +8,6 @@ import CtaSection from '~/components/common/CtaSection.vue'
 
 <style scoped lang="scss">
 .home-cta--unslopped {
-  &::before {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: rgba(3, 9, 15, 0.58);
-    content: "";
-    pointer-events: none;
-  }
-
   :deep(h2) {
     background: none;
     color: #ffffff;
@@ -28,17 +19,12 @@ import CtaSection from '~/components/common/CtaSection.vue'
   }
 
   :deep(.home-cta--contact) {
-    width: 208px;
+    width: 240px;
     border-radius: var(--dt-ui-radius);
-    border-color: rgba(255, 255, 255, 0.72);
-    background: rgba(247, 248, 250, 0.96);
-    color: #07111c;
   }
 
   :deep(.home-cta--contact:hover),
   :deep(.home-cta--contact:focus-visible) {
-    border-color: #ffffff;
-    background: #ffffff;
     box-shadow: none;
   }
 }

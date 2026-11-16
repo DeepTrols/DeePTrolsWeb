@@ -283,7 +283,6 @@ export const harnessSourcePaths = {
   homeCaseSlide: 'components/home/HomeCaseSlide.vue',
   homeAbout: 'components/home/HomeAbout.vue',
   homeInsights: 'components/home/HomeInsights.vue',
-  homeInsightsHeader: 'components/home/HomeInsightsHeader.vue',
   homeSolutions: 'components/home/HomeSolutions.vue',
   productSystem: 'components/home/HomeProductSystem.vue',
   homeProductSystemFlow: 'components/home/HomeProductSystemFlow.vue',

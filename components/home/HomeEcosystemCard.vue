@@ -60,7 +60,6 @@ defineProps<{
 
 <style scoped lang="scss">
 .ecosystem-card {
-  padding: 24px;
   color: var(--dt-color-text);
   box-shadow: none;
   transition:
@@ -227,22 +226,10 @@ li {
   border-radius: var(--dt-ui-radius);
   background: var(--dt-color-text-highlighted);
   color: #ffffff;
-  opacity: 0.45;
+  opacity: 0;
   transition:
     opacity 220ms ease,
     background-color 220ms ease;
-}
-
-.ecosystem-card :deep(.ecosystem-visual__base-line),
-.ecosystem-card :deep(.ecosystem-visual__map-line) {
-  opacity: 0.28;
-}
-
-.ecosystem-card :deep(.ecosystem-visual__outer-node),
-.ecosystem-card :deep(.ecosystem-visual__server-shell),
-.ecosystem-card :deep(.ecosystem-visual__device-shell),
-.ecosystem-card :deep(.ecosystem-visual__cloud-icon) {
-  stroke: rgba(26, 87, 235, 0.3);
 }
 
 @media (prefers-reduced-motion: reduce) {
