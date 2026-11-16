@@ -11,7 +11,7 @@ const columns = computed(() => footerMenu.value?.columns ?? footerColumns)
   <div class="site-footer__main">
     <div class="site-footer__identity">
       <NuxtLink class="site-footer__logo" to="/" aria-label="DeepTrols 首页">
-        <img src="/logo-while.svg" alt="DeepTrols" />
+        <img src="/images/brand/deeptrols-wordmark-light.png" alt="DeepTrols" />
       </NuxtLink>
     </div>
 

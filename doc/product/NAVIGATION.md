@@ -13,7 +13,7 @@ TokenHub
 ```
 
 Header 约束：
-- Header logo 使用运行时品牌图片：HOME 暗色 Hero 顶部默认 `/images/brand/deeptrols-logo-white.png`，Mega 展开、滚动、移动菜单或普通内页切换为 `/images/brand/deeptrols-logo-black.png`，高度为 `35px`。
+- Header logo 使用新版英文椭圆 Wordmark：HOME 暗色 Hero 顶部默认 `/images/brand/deeptrols-wordmark-light.png`，Mega 展开、滚动、移动菜单或普通内页切换为 `/images/brand/deeptrols-wordmark-dark.png`，高度为 `35px`。
 - 主导航 DOM 必须保持 `div style="position:relative;" > ul > li > button`。
 - 主导航 button 内不渲染 SVG。
 - Header 按 DeepCtrls 参考站使用 `fixed` 全视口宽度，桌面内边距为左 `43px`、右 `61px`；正文内容区使用 `--dt-page-gutter` 推导出的 `.container` 宽度。

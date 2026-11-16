@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, megaPanelServiceGrid, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, homeAbout, homeData, homeSectionsData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
+  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, homeAbout, homeData, homeSectionsData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -183,6 +183,14 @@ assert(
   'HomeCta must reuse the shared DeepCtrls-style contact CtaSection with Tailwind v4 utilities only.',
 )
 assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
+assert(
+  ecosystem.includes("card.comingSoon ? 'div' : NuxtLink") &&
+    ecosystem.includes('ecosystem-card__soon-badge') &&
+    ecosystem.includes('待开放') &&
+    ecosystem.includes('v-if="!card.comingSoon"') &&
+    homeSectionsData.includes('comingSoon: true'),
+  'Ecosystem cards must support the comingSoon state (待开放 badge, non-clickable div, hidden action arrow) with the 智能体社区 card flagged in data.',
+)
 assert(ecosystem.includes('ecosystem-card__icon-box dt-icon-box'), 'Ecosystem icon boxes must use the shared global icon box class.')
 assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')
 assert(
@@ -191,8 +199,8 @@ assert(
     header.includes('SiteHeaderMobileNav') &&
     header.includes('SiteHeaderMenuButton') &&
     headerDesktopNav.includes('<div class="relative">') &&
-    header.includes('/images/brand/deeptrols-logo-white.png') &&
-    header.includes('/images/brand/deeptrols-logo-black.png') &&
+    header.includes('/images/brand/deeptrols-wordmark-light.png') &&
+    header.includes('/images/brand/deeptrols-wordmark-dark.png') &&
     header.includes('has-mega') &&
     header.includes('isProductRoute') &&
     header.includes('is-product-page') &&
@@ -258,38 +266,20 @@ assert(
     megaPanelProduct.includes('line-height: 35px') &&
     megaPanelProduct.includes('font-size: 14px') &&
     megaPanelProduct.includes('line-height: 16px') &&
-    megaMenu.includes('MegaPanelServiceGrid') &&
-    megaMenu.includes("item.layout === 'services'") &&
-    megaPanelServiceGrid.includes('mega-services') &&
-    megaPanelServiceGrid.includes('grid-template-columns: repeat(2, minmax(0, 1fr))') &&
-    megaPanelServiceGrid.includes('mega-service-entry') &&
-    megaPanelServiceGrid.includes('mega-service-icon') &&
-    megaPanelServiceGrid.includes('mega-service-desc') &&
-    megaPanelServiceGrid.includes('resolveNavIcon') &&
+    !megaMenu.includes('MegaPanelServiceGrid') &&
+    !megaMenu.includes("item.layout === 'services'") &&
     !megaMenu.includes('MegaPanelSolutions') &&
     !megaMenu.includes('MegaPanelServices'),
-  'MegaMenu product/solutions layouts must share the DeepCtrls text-menu panel, the services layout must use the 2x2 icon grid panel, and legacy solutions/services panels must stay removed.',
+  'MegaMenu product/solutions layouts must share the DeepCtrls text-menu panel, and the legacy solutions/services panels must stay removed.',
 )
 assert(
-  navigationData.includes("label: '服务'") &&
-    navigationData.includes("layout: 'services'") &&
-    navigationData.includes("label: 'TokenHub',") &&
-    navigationData.includes('统一管理企业 AI Token') &&
-    navigationData.includes("label: '智能体社区'") &&
-    navigationData.includes('汇聚行业智能体、实践案例与开发资源') &&
-    navigationData.includes("label: '行业白皮书'") &&
-    navigationData.includes('AI 行业前沿研究、技术实践与数字化建设参考') &&
-    navigationData.includes("label: '算力与基础设施'") &&
-    navigationData.includes('海外算力设施供应链') &&
-    navigationData.includes("icon: 'Coins'") &&
-    navigationData.includes("icon: 'Bot'") &&
-    navigationData.includes("icon: 'FileText'") &&
-    navigationData.includes("icon: 'Cpu'") &&
-    navigationData.includes("href: '/services/token-hub'") &&
-    navigationData.includes("href: '/community'") &&
-    navigationData.includes("href: '/resources/reports'") &&
-    navigationData.includes("href: '/services/infrastructure'"),
-  'Navigation data must keep the 服务 mega entry with the four icon+title+description service links (TokenHub folded in from the top level).',
+  !navigationData.includes("label: '服务'") &&
+    !navigationData.includes("layout: 'services'") &&
+    navigationData.includes("label: '核心产品'") &&
+    navigationData.includes("label: '解决方案'") &&
+    navigationData.includes("label: '行业案例'") &&
+    navigationData.includes("label: '关于我们'"),
+  'Navigation data must keep exactly the four top-level menus (核心产品/解决方案/行业案例/关于我们) with the 服务 mega entry removed.',
 )
 assert(
   navigationData.includes("activePaths: ['/services/smart-education', '/services/enterprise-ai-delivery']") &&

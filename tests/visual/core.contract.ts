@@ -16,8 +16,8 @@ export function registerCoreVisualContracts() {
 
     for (const asset of [
       'public/images/home/deepctrls-hero-ai.webp',
-      'public/images/brand/deeptrols-logo-black.png',
-      'public/images/brand/deeptrols-logo-white.png',
+      'public/images/brand/deeptrols-wordmark-dark.png',
+      'public/images/brand/deeptrols-wordmark-light.png',
       'public/images/home/solutions/industrial.K00G2HaS.webp',
       'public/images/home/solutions/smart-env.CWc2pooP.webp',
       'public/images/home/solutions/smart-energy.DHKY-NE1.webp',

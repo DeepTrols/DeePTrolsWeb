@@ -52,7 +52,9 @@ const shouldUseDarkLogo = computed(
     isHeaderHovering.value,
 )
 const headerLogoSrc = computed(() =>
-  shouldUseDarkLogo.value ? '/images/brand/deeptrols-logo-black.png' : '/images/brand/deeptrols-logo-white.png',
+  shouldUseDarkLogo.value
+    ? '/images/brand/deeptrols-wordmark-dark.png'
+    : '/images/brand/deeptrols-wordmark-light.png',
 )
 const headerClasses = computed(() => ({
   'is-home': isHomeRoute.value,

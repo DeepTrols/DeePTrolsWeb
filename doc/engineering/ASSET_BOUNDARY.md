@@ -26,7 +26,7 @@
 | `assets/images/brand/` | DeepTrols 子品牌与模型生态 Logo |
 | `assets/images/compatibility/` | 博曜国产化适配 Logo |
 | `assets/images/why/` | Why DeepTrols 页面服务示意图 |
-| `public/images/brand/` | Header / Footer 等需要稳定 URL 的品牌 Logo |
+| `public/images/brand/` | Header / Footer 等需要稳定 URL 的品牌 Logo；当前全局 Wordmark 为 `deeptrols-wordmark-light.png` / `deeptrols-wordmark-dark.png` |
 | `public/images/home/` | HOME 首屏 Banner 等需要稳定 URL 的公开图片 |
 | `public/O1CN0.png` | HOME 关于我们区块宽幅 Banner |
 | `public/clients-label.webp` | HOME 关于我们区块客户标签图片 |

@@ -29,7 +29,7 @@ export function registerHomeFooterVisualContracts() {
     expect(footerSubscribe).toContain('dt-button dt-button--primary dt-button--lg')
     expect(footerMain).toContain('class="site-footer__main"')
     expect(footerMain).toContain('class="site-footer__identity"')
-    expect(footerMain).toContain('src="/logo-while.svg"')
+    expect(footerMain).toContain('src="/images/brand/deeptrols-wordmark-light.png"')
     expect(footerMain).toContain('width: 240px')
     expect(footerMainIndex).toBeGreaterThan(-1)
     expect(footerSocialsIndex).toBeGreaterThan(footerMainIndex)
