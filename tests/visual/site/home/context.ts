@@ -33,6 +33,7 @@ export function loadHomeVisualSources() {
     const homeProductSystemMobileFlow = readComponent('components/home/HomeProductSystemMobileFlow.vue')
     const homeSolutions = readComponent('components/home/HomeSolutions.vue')
     const homeEcosystem = readComponent('components/home/HomeEcosystem.vue')
+    const homeEcosystemCard = readComponent('components/home/HomeEcosystemCard.vue')
     const homeAbout = readComponent('components/home/HomeAbout.vue')
     const ecosystemVisual = readComponent('components/home/HomeEcosystemVisual.vue')
     const ecosystemTokenVisual = readComponent('components/home/ecosystem-visuals/EcosystemTokenVisual.vue')
@@ -91,6 +92,7 @@ export function loadHomeVisualSources() {
     homeProductSystemMobileFlow,
     homeSolutions,
     homeEcosystem,
+    homeEcosystemCard,
     homeAbout,
     ecosystemVisual,
     ecosystemTokenVisual,

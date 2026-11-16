@@ -426,6 +426,7 @@ export const requiredFiles = [
   'components/home/HomeProductSystemFlow.vue',
   'components/home/HomeProductSystemMobileFlow.vue',
   'components/home/HomeEcosystemVisual.vue',
+  'components/home/HomeEcosystemCard.vue',
   'components/home/ecosystem-visuals/EcosystemTokenVisual.vue',
   'components/home/ecosystem-visuals/EcosystemAgentVisual.vue',
   'components/home/ecosystem-visuals/EcosystemInfraVisual.vue',

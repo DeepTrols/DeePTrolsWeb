@@ -13,6 +13,7 @@ const props = withDefaults(
     subtitleSize?: 'default' | 'large'
     eyebrowSize?: 'default' | 'sm'
     eyebrowTone?: 'accent' | 'primary'
+    eyebrowTransform?: 'uppercase' | 'natural'
     tone?: 'dark' | 'light'
     nowrapSubtitle?: boolean
     width?: 'default' | 'wide' | 'full'
@@ -28,6 +29,7 @@ const props = withDefaults(
     subtitleSize: 'default',
     eyebrowSize: 'default',
     eyebrowTone: 'accent',
+    eyebrowTransform: 'uppercase',
     tone: 'dark',
     nowrapSubtitle: false,
     width: 'default',
@@ -49,6 +51,7 @@ const headingTag = computed(() => `h${props.level}`)
       `section-heading--subtitle-${subtitleSize}`,
       `section-heading--eyebrow-${eyebrowSize}`,
       `section-heading--eyebrow-${eyebrowTone}`,
+      `section-heading--eyebrow-${eyebrowTransform}`,
       { 'section-heading--nowrap-subtitle': nowrapSubtitle },
       { 'section-heading--with-actions': Boolean(slots.actions) },
     ]"
@@ -109,6 +112,10 @@ const headingTag = computed(() => `h${props.level}`)
   line-height: 22px;
   letter-spacing: 0;
   text-transform: uppercase;
+}
+
+.section-heading--eyebrow-natural .section-heading__eyebrow {
+  text-transform: none;
 }
 
 .section-heading--eyebrow-sm .section-heading__eyebrow {

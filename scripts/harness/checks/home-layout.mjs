@@ -1,5 +1,5 @@
 export function checkHomeLayoutContracts(ctx) {
-  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystem, homeAbout, homeData, homeSectionsData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
+  const { assert, tailwind, tokens, siteHeaderStyles, sectionShell, baseCard, iconBox, cardGrid, featureCard, baseTabs, carouselRoot, carouselControls, productFeatureGridSection, productSystemSection, productSystemFlowFrame, productSystemCards, systemCards, ctaSection, header, headerDesktopNav, headerActions, headerMobileNav, megaMenu, megaPanelProduct, homeCta, homeInsights, homeSolutions, productSystem, ecosystemCard, homeAbout, homeData, homeSectionsData, ecosystemVisual, ecosystemVisualData, footer, footerSubscribe, footerMain, footerSocials, footerBottom, footerData, navigationData, page } = ctx
 assert(carouselRoot.includes('role="region"') && carouselRoot.includes('data-active-slide') && !carouselRoot.includes(':style'), 'CarouselRoot must centralize carousel semantics without inline style attributes.')
 assert(carouselRoot.includes('--dt-carousel-align') && carouselRoot.includes('--dt-carousel-gutter'), 'CarouselRoot must expose align and gutter CSS variable hooks for host pages.')
 assert(carouselControls.includes('previousLabel') && carouselControls.includes('nextLabel') && carouselControls.includes('ChevronLeft') && carouselControls.includes('ChevronRight'), 'CarouselControls must centralize previous/next control semantics.')
@@ -33,7 +33,7 @@ assert(
   'HOME page must dispatch to the CMS takeover renderer and keep the code-rendered sections as the v-else fallback.',
 )
 assert(
-  page.includes('<HomeEcosystem />\n      <WhyTrustTabs />\n      <HomeAbout />\n      <HomeInsights />'),
+  page.includes('<HomeEcosystem />\n      <WhyTrustTabs variant="home" />\n      <HomeAbout />\n      <HomeInsights />'),
   'HOME page must mount WhyTrustTabs after ecosystem and HomeAbout before Resources.',
 )
 assert(
@@ -41,16 +41,16 @@ assert(
     homeAbout.includes(':eyebrow="homeAbout.eyebrow"') &&
     homeAbout.includes(':title="homeAbout.title"') &&
     homeAbout.includes('title-id="home-about-title"') &&
-    homeAbout.includes('class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] flow-root pb-10"') &&
+    homeAbout.includes('class="home-about flow-root bg-dt-bg-soft pb-16"') &&
     homeAbout.includes('class="container mb-10"') &&
     !homeAbout.includes('whitespace-pre-line') &&
     homeAbout.includes('company-stats__banner block aspect-[1402/357] w-full rounded-dt-md object-cover') &&
-    homeAbout.includes('clients-label mx-auto mb-[42px] mt-[62px] block h-auto max-h-[26px] w-auto max-w-full object-contain') &&
-    homeAbout.includes('partner-rows flex w-screen flex-col gap-[18px] overflow-hidden') &&
-    homeAbout.includes('partner-row__track flex w-max items-center gap-[22px] motion-reduce:animate-none') &&
+    homeAbout.includes('clients-label mx-auto mb-10 mt-12 block h-auto max-h-6 w-auto max-w-full object-contain') &&
+    homeAbout.includes('partner-rows flex w-screen flex-col gap-4 overflow-hidden') &&
+    homeAbout.includes('partner-row__track flex w-max items-center gap-5 motion-reduce:animate-none') &&
     homeAbout.includes('animate-home-about-marquee-right') &&
     homeAbout.includes('animate-home-about-marquee-left') &&
-    homeAbout.includes('partner-logo flex h-[55px] w-36 shrink-0') &&
+    homeAbout.includes('partner-logo flex h-14 w-36 shrink-0') &&
     !homeAbout.includes('<style'),
   'HomeAbout must reproduce the DeepCtrls company banner, clients label, and partner marquee with Tailwind-only structure.',
 )
@@ -68,7 +68,7 @@ assert(
   'HomeAbout content literals must be centralized in data/home-sections.ts (015.18 pure module), composed by data/home.ts, with marquee animation tokens in Tailwind v4 theme.',
 )
 assert(homeInsights.includes('SectionHeading'), 'HomeInsights must reuse SectionHeading.')
-assert(homeInsights.includes('class="section insights flow-root pt-32 pb-32 lg:pb-44"') && homeInsights.includes('class="container"'), 'HomeInsights must follow the unified section spacing rule (flow-root pt-32 pb-32 lg:pb-44 shell + plain container).')
+assert(homeInsights.includes('class="section insights flow-root pt-24 pb-24 lg:pb-32"') && homeInsights.includes('class="container"'), 'HomeInsights must follow the HOME Unslop section rhythm (pt-24 pb-24 lg:pb-32 shell + plain container).')
 assert(homeSolutions.includes('BaseTabs') && homeSolutions.includes('solutionTabs') && homeSolutions.includes('variant="pill"'), 'HomeSolutions must compose the shared BaseTabs pill variant.')
 assert(homeSolutions.includes('CarouselRoot') && !homeSolutions.includes('solutions__carousel-container'), 'HomeSolutions must render slides through the shared CarouselRoot component without hand-rolled tracks.')
 assert(
@@ -182,16 +182,16 @@ assert(
     !ctaSection.includes('BaseButton'),
   'HomeCta must reuse the shared DeepCtrls-style contact CtaSection with Tailwind v4 utilities only.',
 )
-assert(ecosystem.includes('dt-ecosystem-card') && ecosystem.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
+assert(ecosystemCard.includes('dt-ecosystem-card') && ecosystemCard.includes('dt-card-tag'), 'Ecosystem cards must use shared ecosystem card classes.')
 assert(
-  ecosystem.includes("card.comingSoon ? 'div' : NuxtLink") &&
-    ecosystem.includes('ecosystem-card__soon-badge') &&
-    ecosystem.includes('待开放') &&
-    ecosystem.includes('v-if="!card.comingSoon"') &&
+  ecosystemCard.includes("card.comingSoon ? 'div' : NuxtLink") &&
+    ecosystemCard.includes('ecosystem-card__soon-badge') &&
+    ecosystemCard.includes('待开放') &&
+    ecosystemCard.includes('v-if="!card.comingSoon"') &&
     homeSectionsData.includes('comingSoon: true'),
   'Ecosystem cards must support the comingSoon state (待开放 badge, non-clickable div, hidden action arrow) with the 智能体社区 card flagged in data.',
 )
-assert(ecosystem.includes('ecosystem-card__icon-box dt-icon-box'), 'Ecosystem icon boxes must use the shared global icon box class.')
+assert(ecosystemCard.includes('ecosystem-card__icon-box dt-icon-box'), 'Ecosystem icon boxes must use the shared global icon box class.')
 assert(ecosystemVisual.includes('visualComponents[variant]') && ecosystemVisualData.includes('serverLines'), 'Ecosystem visual must keep geometry data outside the wrapper component.')
 assert(
   header.includes('SiteHeaderDesktopNav') &&

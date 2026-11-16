@@ -11,26 +11,26 @@ export function registerHomeAboutVisualContracts() {
       tailwind,
     } = loadHomeVisualSources()
 
-    expect(page).toContain('<HomeEcosystem />\n      <WhyTrustTabs />\n      <HomeAbout />\n      <HomeInsights />')
+    expect(page).toContain('<HomeEcosystem />\n      <WhyTrustTabs variant="home" />\n      <HomeAbout />\n      <HomeInsights />')
     expect(homeAbout).toContain('SectionHeading')
     expect(homeAbout).toContain(':eyebrow="homeAbout.eyebrow"')
     expect(homeAbout).toContain(':title="homeAbout.title"')
     expect(homeAbout).toContain('title-id="home-about-title"')
     expect(homeAbout).toContain(
-      'class="home-about bg-[linear-gradient(180deg,#ffffff_52.91%,#eceeff_120.63%)] flow-root pb-10"',
+      'class="home-about flow-root bg-dt-bg-soft pb-16"',
     )
     expect(homeAbout).toContain('class="container mb-10"')
     expect(homeAbout).not.toContain('whitespace-pre-line')
     expect(homeAbout).toContain('company-stats__banner block aspect-[1402/357] w-full rounded-dt-md object-cover')
     expect(homeAbout).toContain(
-      'clients-label mx-auto mb-[42px] mt-[62px] block h-auto max-h-[26px] w-auto max-w-full object-contain',
+      'clients-label mx-auto mb-10 mt-12 block h-auto max-h-6 w-auto max-w-full object-contain',
     )
-    expect(homeAbout).toContain('partner-rows flex w-screen flex-col gap-[18px] overflow-hidden')
-    expect(homeAbout).toContain('partner-row__track flex w-max items-center gap-[22px] motion-reduce:animate-none')
+    expect(homeAbout).toContain('partner-rows flex w-screen flex-col gap-4 overflow-hidden')
+    expect(homeAbout).toContain('partner-row__track flex w-max items-center gap-5 motion-reduce:animate-none')
     expect(homeAbout).toContain('animate-home-about-marquee-right')
     expect(homeAbout).toContain('animate-home-about-marquee-left')
-    expect(homeAbout).toContain('partner-logo flex h-[55px] w-36 shrink-0')
-    expect(homeAbout).toContain('block h-[55px] w-36 object-contain')
+    expect(homeAbout).toContain('partner-logo flex h-14 w-36 shrink-0')
+    expect(homeAbout).toContain('block h-14 w-36 object-contain')
     expect(homeAbout).not.toContain('<style')
 
     // 015.18：homeAbout 字面值抽到 data/home-sections.ts（server 共享），partnerRows（?url 资产）留在 data/home.ts

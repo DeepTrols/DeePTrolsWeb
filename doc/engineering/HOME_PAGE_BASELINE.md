@@ -31,6 +31,7 @@
 11. HOME 在 `Ecosystem` 与 `Resources` 之间挂载 `components/home/HomeAbout.vue`。该区块参考 DeepCtrls 首页公司与合作客户区域：白色到浅蓝渐变背景、居中 SectionHeading、`/O1CN0.png` 宽幅 banner、`/clients-label.webp` 客户标签，以及三行 `partner-rows` 走马灯。组件必须保持 Tailwind-only，不写 `<style>`；走马灯动画 token 维护在 `assets/css/tailwind.css`。
 12. HOME About 标题不要主动插入换行，保持完整标题一行排版；窄屏仅允许浏览器按容器宽度自然换行。About section 遵循「Section 间距统一规则」，但底部间距按 HOME 专属节奏收窄为 `pb-10`：根节点 `flow-root pb-10`，内部 `.container` 仅保留 `mb-10` 与底部走马灯分隔，渐变背景完整覆盖底部间距区域；下方 `Resources` section 同样按统一规则渲染。
 13. 产品架构与解决方案流程图统一采用 DGP 产品架构的 `1704px` 内部坐标画布基准，并在公共 `ProductSystemFlowFrame` 内水平居中；后续不得为单个流程图另建不同宽度基准。
+14. HOME 于 `TASK-017.2` 完成 Unslop 视觉收敛：保留八个区块顺序、业务文案、产品架构 Flow 和能力动画；首页专用视觉使用实色标题、单色主按钮、自然大小写 eyebrow、矩形 Tab、中性阴影与无位移 hover。共享组件的 HOME 变体必须 opt-in，不得改变其他页面的默认效果。
 
 ---
 ## Typography
@@ -39,6 +40,7 @@
    - eyebrow：`14px / 500 / uppercase`
    - title：`35px / 500 / 1.28`
    - subtitle：`15px / 27px / 400`
+   - HOME 专用 eyebrow 通过 `eyebrowTransform="natural"` 使用原文大小写，不由 CSS 强制转为全大写。
 3. 所有 section 标题默认不得主动换行：公共 `SectionHeader` 与 `.dt-section-title` 在桌面端必须保持 `white-space: nowrap`；少数未使用公共标题组件的 section 标题必须显式补充 Tailwind v4 `whitespace-nowrap`。
 4. 需要桌面不换行的 subtitle 必须使用 `nowrap-subtitle` prop，不允许在页面内重复写局部规则。
 

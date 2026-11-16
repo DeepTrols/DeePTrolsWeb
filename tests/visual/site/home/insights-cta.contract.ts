@@ -11,7 +11,7 @@ export function registerHomeInsightsCtaVisualContracts() {
     } = loadHomeVisualSources()
 
     expect(homeInsights).toContain('SectionHeading')
-    expect(homeInsights).toContain('class="section insights flow-root pt-32 pb-32 lg:pb-44"')
+    expect(homeInsights).toContain('class="section insights flow-root pt-24 pb-24 lg:pb-32"')
     expect(homeInsights).toContain('class="container"')
     // 015.18：标题文案经 props 传入，缺省值住在 data/home-sections.ts
     expect(homeInsights).toContain(':eyebrow="eyebrow"')
@@ -23,7 +23,7 @@ export function registerHomeInsightsCtaVisualContracts() {
     expect(homeInsights).toContain('grid-template-columns: 1fr')
     expect(homeInsights).toContain('grid-template-columns: repeat(2, minmax(0, 1fr))')
     expect(homeInsights).toContain('gap: 24px')
-    expect(homeInsights).toContain('margin-bottom: 48px')
+    expect(homeInsights).toContain('margin-bottom: 40px')
     expect(homeInsights).toContain('font-size: 16px')
     expect(homeInsights).toContain('class="group insights__featured"')
     expect(homeInsights).toContain('class="group insights__item"')
@@ -32,8 +32,7 @@ export function registerHomeInsightsCtaVisualContracts() {
     expect(homeInsights).toContain('aspect-ratio: auto')
     expect(homeInsights).toContain('border-radius: var(--dt-ui-radius)')
     expect(homeInsights).toContain('border-color: var(--dt-color-line-strong)')
-    expect(homeInsights).toContain('transform: scale(1.05)')
-    expect(homeInsights).toContain('transition: transform 500ms ease')
+    expect(homeInsights).not.toContain('transform: scale(1.05)')
     expect(homeInsights).toContain('position: absolute')
     expect(homeInsights).toContain('inset: 0')
     expect(homeInsights).toContain('object-fit: cover')

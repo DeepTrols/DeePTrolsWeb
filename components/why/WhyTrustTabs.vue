@@ -22,11 +22,13 @@ const props = withDefaults(
     title?: string
     tablistLabel?: string
     tabs?: WhyTrustTabInput[]
+    variant?: 'default' | 'home'
   }>(),
   {
     title: '为什么DeepTrols值得信赖',
     tablistLabel: 'DeepTrols 信赖维度',
     tabs: undefined,
+    variant: 'default',
   },
 )
 
@@ -49,5 +51,6 @@ const resolvedTabs = computed(() =>
     :title="title"
     title-id="why-trust-title"
     :tablist-label="tablistLabel"
+    :variant="variant"
   />
 </template>

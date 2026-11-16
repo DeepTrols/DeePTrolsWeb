@@ -10,6 +10,7 @@ withDefaults(
     align?: 'left' | 'center'
     tone?: 'dark' | 'light'
     nowrapSubtitle?: boolean
+    eyebrowTransform?: 'uppercase' | 'natural'
   }>(),
   {
     eyebrow: undefined,
@@ -18,6 +19,7 @@ withDefaults(
     align: 'left',
     tone: 'dark',
     nowrapSubtitle: false,
+    eyebrowTransform: 'uppercase',
   },
 )
 </script>
@@ -31,6 +33,7 @@ withDefaults(
     :align="align"
     :tone="tone"
     :nowrap-subtitle="nowrapSubtitle"
+    :eyebrow-transform="eyebrowTransform"
     :width="nowrapSubtitle ? 'wide' : 'default'"
   />
 </template>

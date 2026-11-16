@@ -47,11 +47,14 @@ const resolvedCards = computed(() =>
 
 <template>
   <ProductSystemSection
+    class="home-product-system"
     :eyebrow="eyebrow"
     :title="title"
     title-id="product-system-title"
     :subtitle="subtitle"
     padded-top
+    spacing="compact"
+    eyebrow-transform="natural"
   >
     <ProductSystemFlowFrame
       :label="flowLabel"
@@ -65,3 +68,44 @@ const resolvedCards = computed(() =>
     <ProductSystemCards :cards="resolvedCards" />
   </ProductSystemSection>
 </template>
+
+<style scoped lang="scss">
+.home-product-system {
+  padding-top: 96px;
+
+  :deep(.section-heading__eyebrow) {
+    color: var(--dt-color-text-muted);
+  }
+
+  :deep(.product-system__content) {
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  :deep(.dt-product-card) {
+    transition:
+      border-color var(--dt-duration-base) ease,
+      background-color var(--dt-duration-base) ease;
+  }
+
+  :deep(.dt-product-card:hover) {
+    border-color: var(--dt-color-line-strong);
+    box-shadow: none;
+    transform: none;
+  }
+
+  :deep(.dt-product-card__accent) {
+    display: none;
+  }
+
+  :deep(.dt-icon-box) {
+    --dt-icon-box-bg: var(--dt-color-bg-elevated);
+    --dt-icon-box-color: var(--dt-color-text-highlighted);
+    --dt-icon-box-shadow: none;
+  }
+
+  :deep(.product-system__card h3) {
+    font-weight: 500;
+  }
+}
+</style>

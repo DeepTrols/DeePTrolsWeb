@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ArrowRight, CheckCircle2, FileText } from '@lucide/vue'
+import { FileText } from '@lucide/vue'
 import { computed } from 'vue'
 import SectionHeading from '~/components/common/SectionHeading.vue'
-import HomeEcosystemVisual from '~/components/home/HomeEcosystemVisual.vue'
+import HomeEcosystemCard from '~/components/home/HomeEcosystemCard.vue'
 import { resolveNavIcon } from '~/components/navigation/nav-icons'
 import { ecosystemCards } from '~/data/home'
 import { homeEcosystemHeading } from '~/data/home-sections'
@@ -16,6 +16,7 @@ export interface HomeEcosystemCardInput {
   points?: string[]
   icon?: string
   variant: 'token' | 'agent' | 'infra' | 'report'
+  comingSoon?: boolean
 }
 
 const props = withDefaults(
@@ -41,7 +42,7 @@ const resolvedCards = computed(() =>
 </script>
 
 <template>
-  <section class="section ecosystem flow-root pb-32 lg:pb-44" aria-labelledby="ecosystem-title">
+  <section class="section ecosystem flow-root pb-24 lg:pb-32" aria-labelledby="ecosystem-title">
     <div class="container">
       <SectionHeading
         id="ecosystem-title"
@@ -50,41 +51,15 @@ const resolvedCards = computed(() =>
         :subtitle="subtitle"
         align="center"
         nowrap-subtitle
+        eyebrow-transform="natural"
       />
 
       <div class="ecosystem__grid">
-        <NuxtLink
+        <HomeEcosystemCard
           v-for="card in resolvedCards"
           :key="card.title"
-          :to="card.href"
-          class="group ecosystem-card dt-ecosystem-card"
-          :class="`ecosystem-card--${card.variant}`"
-        >
-          <div class="ecosystem-card__intro">
-            <div class="ecosystem-card__icon-box dt-icon-box">
-              <component :is="card.icon" class="ecosystem-card__icon" :size="24" aria-hidden="true" />
-            </div>
-            <h3>{{ card.title }}</h3>
-            <p>{{ card.description }}</p>
-          </div>
-
-          <div class="ecosystem-card__meta">
-            <ul v-if="card.points?.length">
-              <li v-for="point in card.points" :key="point">
-                <CheckCircle2 :size="20" aria-hidden="true" />
-                <span>{{ point }}</span>
-              </li>
-            </ul>
-            <span data-slot="base" class="ecosystem-card__tag dt-card-tag">
-              <span data-slot="label">{{ card.tag }}</span>
-            </span>
-          </div>
-
-          <span class="ecosystem-card__action" :aria-label="`了解${card.title}`">
-            <ArrowRight :size="20" aria-hidden="true" />
-          </span>
-          <HomeEcosystemVisual :variant="card.variant" />
-        </NuxtLink>
+          :card="card"
+        />
       </div>
     </div>
   </section>
@@ -104,158 +79,15 @@ const resolvedCards = computed(() =>
   line-height: 27px;
 }
 
+.ecosystem :deep(.section-heading__eyebrow) {
+  color: var(--dt-color-text-muted);
+}
+
 .ecosystem__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
-  margin-top: 48px;
-}
-
-.ecosystem-card {
-  color: var(--dt-color-text);
-
-  &:hover {
-    .ecosystem-card__action {
-      opacity: 1;
-    }
-
-    :deep(.ecosystem-visual__cloud-grid) {
-      fill: rgba(26, 87, 235, 0.16);
-    }
-
-    :deep(.ecosystem-visual__base-line),
-    :deep(.ecosystem-visual__map-line) {
-      opacity: 0.4;
-    }
-
-    :deep(.ecosystem-visual__flow),
-    :deep(.ecosystem-visual__map-flow) {
-      opacity: 1;
-      animation-play-state: running;
-    }
-
-    :deep(.ecosystem-visual__led),
-    :deep(.ecosystem-visual__pulse) {
-      animation-play-state: running;
-    }
-
-    :deep(.ecosystem-visual__outer-node),
-    :deep(.ecosystem-visual__server-shell),
-    :deep(.ecosystem-visual__device-shell),
-    :deep(.ecosystem-visual__cloud-icon) {
-      stroke: rgba(26, 87, 235, 0.6);
-    }
-
-    :deep(.ecosystem-visual__inner-node) {
-      fill: var(--dt-color-primary);
-    }
-
-    :deep(.ecosystem-visual__device-label) {
-      opacity: 1;
-    }
-  }
-}
-
-.ecosystem-card__intro,
-.ecosystem-card__meta {
-  position: relative;
-  z-index: 2;
-}
-
-.ecosystem-card__intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.ecosystem-card__icon-box {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 16px;
-  --dt-icon-box-bg: var(--dt-color-bg-elevated);
-  --dt-icon-box-color: var(--dt-color-text-highlighted);
-  --dt-icon-box-shadow: none;
-}
-
-.ecosystem-card__icon {
-  flex: 0 0 auto;
-}
-
-.ecosystem-card h3 {
-  margin: 0;
-  color: var(--dt-color-text-highlighted);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: 0;
-}
-
-.ecosystem-card p {
-  max-width: 75%;
-  margin: 16px 0 0;
-  color: var(--dt-color-text-muted);
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.ecosystem-card__meta {
-  margin-top: auto;
-  padding-top: 24px;
-}
-
-ul {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--dt-color-text-highlighted);
-  font-size: 16px;
-  line-height: 1.5;
-
-  svg {
-    flex: 0 0 auto;
-    color: var(--dt-color-primary);
-  }
-}
-
-.ecosystem-card__tag {
-  gap: 4px;
-  margin-top: 24px;
-  letter-spacing: 0;
-}
-
-.ecosystem-card__action {
-  position: absolute;
-  right: 32px;
-  bottom: 32px;
-  z-index: 2;
-  display: flex;
-  width: 32px;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  background: var(--dt-color-primary);
-  color: #ffffff;
-  opacity: 0;
-  transition:
-    opacity 220ms ease,
-    background-color 220ms ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ecosystem-card,
-  .ecosystem-card__action {
-    transition: none;
-  }
+  gap: 16px;
+  margin-top: 40px;
 }
 
 @media (min-width: 640px) {

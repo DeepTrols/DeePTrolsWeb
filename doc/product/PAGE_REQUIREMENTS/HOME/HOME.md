@@ -25,6 +25,17 @@
 Header logo 地址：默认暗色 Hero 顶部使用 `/images/brand/deeptrols-wordmark-light.png`，Mega 展开、滚动、移动菜单或普通内页使用 `/images/brand/deeptrols-wordmark-dark.png`，Header logo 高度为 `35px`。Footer 使用浅色 Wordmark，宽度为 `240px`。
 
 Header 结构与交互必须与 `doc/product/NAVIGATION.md` 保持一致：主导航 DOM 为 `div style="position:relative;" > ul > li > button`，button 内不渲染 SVG；右侧为「免费获取专属方案」与「CN ｜ EN」。
+
+## HOME Unslop 约束
+
+自 `TASK-017.2` 起，HOME 在不改变内容顺序、不删除 Flow 与能力动画的前提下执行以下视觉收敛：
+
+- Hero 标题使用实色浅色文字，不使用渐变文字；主 CTA 使用单色品牌蓝，hover 仅变化背景色，不上浮、不发光。
+- HOME Section eyebrow 使用原文大小写，不通过 CSS 强制全大写。
+- HOME 产品、服务、信赖等卡片 hover 不位移、不使用彩色阴影；必要的能力动画只在对应视觉区域内运行。
+- HOME Tabs 使用 `8px` 内的矩形圆角，不使用大胶囊作为主要导航形态。
+- Flow、解决方案实景图、企业能力 Banner 和能力运行面板是页面的主要视觉 Moment，其他 UI chrome 应保持安静。
+- 上述规则仅限 HOME 或显式 HOME 变体，不得影响其他页面。
 ### banner示例
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐

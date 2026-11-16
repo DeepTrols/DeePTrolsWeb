@@ -57,7 +57,7 @@ useSeoMeta({
       <HomeProductSystem />
       <HomeSolutions />
       <HomeEcosystem />
-      <WhyTrustTabs />
+      <WhyTrustTabs variant="home" />
       <HomeAbout />
       <HomeInsights />
       <HomeCta />

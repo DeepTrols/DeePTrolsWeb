@@ -12,12 +12,16 @@ withDefaults(
     headingWide?: boolean
     nowrapSubtitle?: boolean
     paddedTop?: boolean
+    spacing?: 'default' | 'compact' | 'tight'
+    eyebrowTransform?: 'uppercase' | 'natural'
   }>(),
   {
     contentFlush: false,
     headingWide: true,
     nowrapSubtitle: true,
     paddedTop: false,
+    spacing: 'default',
+    eyebrowTransform: 'uppercase',
   },
 )
 </script>
@@ -29,6 +33,7 @@ withDefaults(
     :title-id="titleId"
     background="transparent"
     :padded-top="paddedTop"
+    :spacing="spacing"
   >
     <SectionHeader
       :title-id="titleId"
@@ -39,6 +44,7 @@ withDefaults(
       :nowrap-subtitle="nowrapSubtitle"
       :width="headingWide ? 'wide' : 'default'"
       subtitle-size="large"
+      :eyebrow-transform="eyebrowTransform"
     />
 
     <div class="product-system__content" :class="{ '!mt-0': contentFlush }">

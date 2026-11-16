@@ -33,7 +33,7 @@ const solutionTabs = computed(() => resolvedItems.value.map((solution) => ({ key
 </script>
 
 <template>
-  <section class="section solutions flow-root pb-32 lg:pb-44" aria-labelledby="solutions-title">
+  <section class="section solutions flow-root pb-24 lg:pb-32" aria-labelledby="solutions-title">
     <div class="container">
       <div class="solutions__heading">
         <SectionHeading
@@ -42,6 +42,7 @@ const solutionTabs = computed(() => resolvedItems.value.map((solution) => ({ key
           :title="title"
           :subtitle="subtitle"
           nowrap-subtitle
+          eyebrow-transform="natural"
         />
       </div>
 
@@ -83,7 +84,7 @@ const solutionTabs = computed(() => resolvedItems.value.map((solution) => ({ key
               <span class="solutions__learn-more">
                 阅读案例
                 <ArrowRight
-                  class="iconify iconify--lucide size-4 transition group-hover:translate-x-1"
+                  class="iconify iconify--lucide size-4"
                   :size="16"
                   aria-hidden="true"
                 />
@@ -109,7 +110,7 @@ const solutionTabs = computed(() => resolvedItems.value.map((solution) => ({ key
 }
 
 .solutions__heading {
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 .solutions :deep(.section-heading) {
@@ -121,8 +122,28 @@ const solutionTabs = computed(() => resolvedItems.value.map((solution) => ({ key
   line-height: 27px;
 }
 
+.solutions :deep(.section-heading__eyebrow) {
+  color: var(--dt-color-text-muted);
+}
+
 .solutions__tabs {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
+}
+
+.solutions :deep(.dt-tab) {
+  border-radius: var(--dt-ui-radius);
+  background: var(--dt-color-bg);
+}
+
+.solutions :deep(.dt-tab:hover) {
+  border-color: var(--dt-color-line-strong);
+  background: var(--dt-color-bg-elevated);
+}
+
+.solutions :deep(.dt-tab[aria-selected="true"]) {
+  border-color: var(--dt-color-primary);
+  background: var(--dt-color-bg);
+  color: var(--dt-color-primary-dark);
 }
 
 .solutions__carousel {
@@ -171,22 +192,21 @@ const solutionTabs = computed(() => resolvedItems.value.map((solution) => ({ key
 .solutions__panel-tag {
   display: inline-flex;
   margin-bottom: 16px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--dt-radius-sm);
+  background: rgba(3, 9, 15, 0.62);
   padding: 4px 12px;
   color: #ffffff;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0;
-  text-transform: uppercase;
-  backdrop-filter: blur(4px);
+  text-transform: none;
 }
 
 .solutions__panel h3 {
   margin: 0;
   color: #ffffff;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.35;
   letter-spacing: 0;
 }
@@ -206,22 +226,19 @@ const solutionTabs = computed(() => resolvedItems.value.map((solution) => ({ key
   margin-top: 24px;
   color: #ffffff;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5;
 
-  svg {
-    transition: transform 150ms ease;
-  }
-
-  .solutions__panel:hover & svg {
-    transform: translateX(4px);
-  }
 }
 
 .solutions__actions {
   display: flex;
   justify-content: center;
   margin-top: 40px;
+}
+
+.solutions :deep(.dt-button) {
+  border-radius: var(--dt-ui-radius);
 }
 
 @media (prefers-reduced-motion: reduce) {

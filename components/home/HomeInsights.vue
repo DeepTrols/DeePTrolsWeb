@@ -26,9 +26,8 @@ const { data: insightItems } = useFetch<InsightItem[]>('/api/home/insights', {
 const featuredInsight = computed(() => insightItems.value[0])
 const sideInsights = computed(() => insightItems.value.slice(1))
 </script>
-
 <template>
-  <section class="section insights flow-root pt-32 pb-32 lg:pb-44" aria-labelledby="insights-title">
+  <section class="section insights flow-root pt-24 pb-24 lg:pb-32" aria-labelledby="insights-title">
     <div class="container">
       <div class="insights__header">
         <SectionHeading
@@ -36,6 +35,7 @@ const sideInsights = computed(() => insightItems.value.slice(1))
           :eyebrow="eyebrow"
           :title="title"
           title-id="insights-title"
+          eyebrow-transform="natural"
         />
         <BaseButton :href="moreHref" variant="secondary" size="lg" class="insights__all-link insights__all-link--desktop">
           {{ moreLabel }}
@@ -85,12 +85,16 @@ const sideInsights = computed(() => insightItems.value.slice(1))
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
 .insights__heading {
   max-width: none;
+}
+
+.insights :deep(.section-heading__eyebrow) {
+  color: var(--dt-color-text-muted);
 }
 
 .insights__layout {
@@ -110,18 +114,12 @@ const sideInsights = computed(() => insightItems.value.slice(1))
 
   &:hover {
     border-color: var(--dt-color-line-strong);
-
-    img {
-      transform: scale(1.05);
-    }
   }
 }
-
 .insights__featured {
   display: flex;
   flex-direction: column;
 }
-
 .insights__featured-image,
 .insights__item-image {
   position: relative;
@@ -134,7 +132,6 @@ const sideInsights = computed(() => insightItems.value.slice(1))
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 500ms ease;
   }
 }
 
@@ -163,7 +160,7 @@ const sideInsights = computed(() => insightItems.value.slice(1))
 .insights__featured-title {
   color: var(--dt-color-text-highlighted);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.4;
   -webkit-line-clamp: 2;
 }
@@ -203,7 +200,7 @@ const sideInsights = computed(() => insightItems.value.slice(1))
 .insights__item-title {
   color: var(--dt-color-text-highlighted);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.375;
   -webkit-line-clamp: 3;
 }
@@ -224,6 +221,10 @@ const sideInsights = computed(() => insightItems.value.slice(1))
   display: flex;
   justify-content: center;
   margin-top: 40px;
+}
+
+.insights :deep(.dt-button) {
+  border-radius: var(--dt-ui-radius);
 }
 
 @media (prefers-reduced-motion: reduce) {

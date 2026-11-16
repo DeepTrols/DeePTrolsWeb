@@ -26,6 +26,7 @@ const props = defineProps<{
   title: string
   titleId: string
   tablistLabel: string
+  variant?: 'default' | 'home'
 }>()
 
 const activeKey = ref(props.tabs[0]?.key ?? '')
@@ -33,9 +34,20 @@ const activeTab = computed(() => props.tabs.find((tab) => tab.key === activeKey.
 </script>
 
 <template>
-  <SectionShell class="trust-tabs-section" :title-id="titleId">
+  <SectionShell
+    class="trust-tabs-section"
+    :class="{ 'trust-tabs-section--home': variant === 'home' }"
+    :title-id="titleId"
+    :spacing="variant === 'home' ? 'compact' : 'default'"
+  >
     <div class="trust-tabs-section__heading mb-12 text-center lg:mb-16">
-      <SectionHeader :title="title" :title-id="titleId" align="center" width="full" />
+      <SectionHeader
+        :title="title"
+        :title-id="titleId"
+        align="center"
+        width="full"
+        :eyebrow-transform="variant === 'home' ? 'natural' : 'uppercase'"
+      />
       <BaseTabs v-model="activeKey" :items="tabs" :id-prefix="titleId" :label="tablistLabel" variant="segmented" class="trust-tabs-section__tabs" />
     </div>
 
@@ -98,6 +110,58 @@ h3 {
   color: var(--dt-color-text-muted);
   font-size: 15px;
   line-height: 1.75;
+}
+
+.trust-tabs-section--home {
+  :deep(h2) {
+    margin-bottom: 24px;
+  }
+
+  :deep(.dt-segmented-tabs) {
+    border-radius: var(--dt-ui-radius);
+    padding: 4px;
+  }
+
+  :deep(.dt-segmented-tab) {
+    min-height: 40px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  :deep(.dt-segmented-tab[aria-selected="true"]) {
+    box-shadow: none;
+  }
+
+  :deep(.dt-product-card) {
+    transition:
+      border-color var(--dt-duration-base) ease,
+      background-color var(--dt-duration-base) ease;
+  }
+
+  :deep(.dt-product-card:hover) {
+    border-color: var(--dt-color-line-strong);
+    box-shadow: none;
+    transform: none;
+  }
+
+  :deep(.dt-product-card__accent) {
+    display: none;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .trust-tabs-section__subtitle {
+    margin-top: 16px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .trust-tabs-section__description {
+    margin-top: 8px;
+  }
 }
 
 @media (min-width: 1024px) {
